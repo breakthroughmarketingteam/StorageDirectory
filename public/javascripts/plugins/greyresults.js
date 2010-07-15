@@ -144,10 +144,10 @@ $('#more_results').click(function(){
 		if (response.success) { // returned some listings
 			// we get an array JSON objects, each represents a listing including related models attributes
 			$.each(response.data, function(i){
-				var info 				 = this.info, // listing attributes
-						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
-						map 				 = this.map, // related model attributes
-						specials		 = this.specials;
+				var info 		 = this.info, // listing attributes
+					this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
+					map 		 = this.map, // related model attributes
+					specials	 = this.specials;
 						
 				// update tab urls
 				var tabs = [
@@ -175,8 +175,8 @@ $('#more_results').click(function(){
 				$('.rslt-specials p', this_listing)			.text(specials.cotent);
 				
 				this_listing.appendTo(results_wrap).hide().slideDown('slow');
-
 				$('.inner:first', this_listing).effect('highlight', { color: '#c2cee9' }, 1700);
+				this_listing.greyresults();
 			});
 			
 			// this updates the page count so the next time the user clicks, we pull the correct data

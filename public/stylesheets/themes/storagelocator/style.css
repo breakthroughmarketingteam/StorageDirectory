@@ -29,7 +29,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #top-nav .left a:hover,#top-nav .left a:active{color:#333;}
 #top-nav ul{float:right;margin-right:40px;}
 #top-nav ul li{float:left;list-style:none;}
-#top-nav ul li a{width:67px;height:26px;line-height:26px;display:block;text-align:center;color:#fff;font-weight:bold;text-decoration:none;}
+#top-nav ul li a{width:67px;height:26px;display:block;text-align:center;color:#fff;font-weight:bold;text-decoration:none;}
 #top-nav ul li.top-nav-login a{background:url(/images/ui/storagelocator/login-button.png) no-repeat top left;}
 #top-nav ul li.top-nav-help a{background:url(/images/ui/storagelocator/help-button.png) no-repeat top left;}
 #main-nav{float:left;height:50px;line-height:50px;width:750px;position:relative;left:20px;top:-9px;}
@@ -459,9 +459,9 @@ input.slider_val{width:10px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .flash{margin-top:12px;width:94%;}
 .table_view{width:100%;}
 /* the container styles */
-.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in,#pages_controller #type-one-cnt-in{margin:15px 20px 0px 20px;}
+.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in{margin:15px 20px 0px 20px;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:0;}
-#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}
+/*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/
 #listings_controller.show_action #type-one-cnt-in{padding:0;}
 #listings_controller #narrow-box {margin-top:5px;}
 .index_action #content,.edit_action #content,.new_action #content{margin-bottom:0;float:none;width:auto;position:static;}
