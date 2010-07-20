@@ -17,35 +17,38 @@
     </div>
     
     <div id="sl-fac-detail">
-      <div id="sl-fac-detail-in-edit">
+      <div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
         <img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
         
+		<p class="address_label"><strong>Location</strong></p>
         <p class="address">
-          <span>ADDRESS:</span><br>
-          <%= @listing.map.address %><br>
-          <%= @listing.map.city_state_zip %><br>
+          <span rel="map[address]"><%= @listing.map.address %></span><br />
+          <span rel="map[city]"><%= @listing.map.city %></span> <span rel="map[state]"><%= @listing.map.state %></span> <span rel="map[zip]"><%= @listing.map.zip %></span><br />
         </p>
-        <p>
-          <a href="#">www.website.com</a>
+        
+        <p class="clear tags">
+          <strong>Category:</strong> <span rel="tag_list">Type 1, Type 2, Type 3</span>
         </p>
-        <div class="clear"></div>
-        <p>
-          <span>Category:</span> Type 1, Type 2, Type 3
-        </p>
+		
+		<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'address' %>
+		<% if action_name == 'edit' %>
+			<% form_for [@listing, @map], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+		<% end %>
       </div>
     </div>
     
     <div id="sl-fac-dist">
-      <div id="sl-fac-dist-in-edit">
-        <p class="sl-phone">
-          Call: 1800 1800 180
-        </p>
-        <p>
-          Get 50% off your first month of rent!
-        </p>
+      <div id="sl-fac-dist-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
+        <p class="sl-phone">Call: 1800 1800 180</p>
+        <p class="sl-special" rel="special">Get 50% off your first month of rent!</p>
         <p class="sl-dist">
           We are just <span id="rslt-number"><span>2</span></span> miles from you!
         </p>
+
+		<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'sl-special' %>
+		<% if action_name == 'edit' %>
+			<% form_for [@listing, @special], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+		<% end %>
       </div>
     </div>
     <div class="clear"></div>
@@ -74,7 +77,7 @@
 						<li class="st-size"><%= size.display_dimensions %></li>
 						<li class="st-type"><%= size.unit_type.blank? ? 'NONE' : size.unit_type %></li>
 						<li class="st-pric"><%= number_to_currency size.price %></li>
-						<li class="st-spec"><%= size.special.blank? ? 'NONE' : size.special %></li>
+						<li class="st-spec" title="<%= size.special.blank? ? 'Non available' : size.special %>"><%= size.special.blank? ? 'NONE' : size.special %></li>
 						<li class="st-rese">
 							<% if action_name == 'edit' %>
 								<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
@@ -94,7 +97,9 @@
 						</div>
 					<% end %>
 					
-					<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+					<% if action_name == 'edit' %>
+						<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+					<% end %>
 				</div>
            	 <% end %>
 			

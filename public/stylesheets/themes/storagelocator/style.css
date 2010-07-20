@@ -256,8 +256,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 ** ADDITIONS.CSS - added after the 2nd phase of the elance project to optimize html/css code
 /******************************************************************************************************************************/
 /* New left column styles included here to introduce that dotted line. SOme of these may be able to be ignored or removeed. Get in touch with me if you need a hand... */
-#type-two-l-col,
-#type-one-l-col{width:197px;float:left;position:relative;left:2px;background:url(/images/ui/storagelocator/page-bg.png) no-repeat left 350px;border-radius-bottomleft:20px;-moz-border-radius-bottomleft:20px;-webkit-border-bottom-left-radius:20px;}
+#type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;left:2px;background:url(/images/ui/storagelocator/page-bg.png) no-repeat left 350px;border-radius-bottomleft:20px;-moz-border-radius-bottomleft:20px;-webkit-border-bottom-left-radius:20px;}
 /* Change made in these two divs on the existing stylesheet in order to include that dotted line. These can possibly be ignored or changed back - get in touch if you need me to explain anything... */
 #narrow-box{background:url(/images/ui/storagelocator/narrow-search-header.png) no-repeat top left;width:164px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;position:relative;left:18px;color:#555;text-align:center;margin-top:7px;}
 #add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:300px;}
@@ -294,29 +293,22 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #sl-header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:47px;border:1px solid #ccc;color:#fff;}
 #sl-header h2{width:560px;float:left;text-shadow:1px 1px 2px #000;position:relative;left:15px;margin-bottom:15px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
-#sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:8px;right:8px;text-align:center;}
-#sl-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.2;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
-#sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 2px #000;position:relative;left:10px;display:block;width:160px;height:33px;}
+#sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
+#sl-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.3;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
+#sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 2px #000;position:relative;left:15px;display:block;width:160px;height:33px;}
 #sl-fac-detail{width:365px;float:left;}
 #sl-fac-detail-in-edit{border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;}
-#sl-fac-detail-in-edit img,
-#sl-fac-detail-in img{float:left;margin:10px;}
-#sl-fac-detail-in-edit p,
-#sl-fac-detail-in p{position:relative;left:10px;margin-bottom:10px;}
-#sl-fac-detail-in-edit p a,
-#sl-fac-detail-in p a{font-weight:bold;color:#33c;text-decoration:none;}
-#sl-fac-detail-in-edit p.address,
-#sl-fac-detail-in p.address{margin:10px 0px;line-height:1.5em;}
-#sl-fac-detail-in-edit p span,
-#sl-fac-detail-in p span{font-weight:bold;color:#33c;margin-right:10px;}
+#sl-fac-detail-in-edit img,#sl-fac-detail-in img{float:left;margin:0 14px 10px 0;}
+#sl-fac-detail-in-edit p a,#sl-fac-detail-in p a{font-weight:bold;color:#33c;text-decoration:none;}
+#sl-fac-detail-in-edit,#sl-fac-detail-in{padding:10px;}
+#sl-fac-detail-in-edit p.address_label,#sl-fac-detail-in p.address_label{margin-bottom:10px;}
+#sl-fac-detail-in-edit p.address,#sl-fac-detail-in p.address{line-height:1.5em;}
+#sl-fac-detail-in-edit p strong{font-weight:bold;color:#33c;margin-right:10px;}
 #sl-fac-dist{width:364px;float:left;text-align:center;position:relative;left:24px;}
 #sl-fac-dist-in-edit{text-align:center;border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;}
-#sl-fac-dist-in-edit p,
-#sl-fac-dist-in p{margin:20px;font-size:16px;font-weight:bold;color:#666;}
-#sl-fac-dist-in-edit p.sl-phone,
-#sl-fac-dist-in p.sl-phone{font-size:24px;font-weight:bold;color:#000;}
-#sl-fac-dist-in-edit p.sl-dist,
-#sl-fac-dist-in p.sl-dist{color:#33c;}
+#sl-fac-dist-in-edit p,#sl-fac-dist-in p{margin:20px;font-size:16px;font-weight:bold;color:#666;}
+#sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone{font-size:24px;font-weight:bold;color:#000;}
+#sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist{color:#33c;}
 p.blue-edit{background:url(/images/ui/storagelocator/blue-edit.png) no-repeat top left;width:68px;height:22px;line-height:22px;text-align:center;font-weight:bold;position:relative;left:20px;}
 p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22px;}
 #sl-footer{border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;background-color:#ddd;height:30px;clear:both;margin-bottom:15px;}
@@ -329,7 +321,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
 #sl-tabs-sizes-in{margin-top:18px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;width:725px;position:relative;left:14px;top:3px;}
 #sl-tabs-sizes-in ul{clear:both;width:719px;height:46px;line-height:46px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;left:2px;top:-5px;color:#666;}
-#sl-tabs-sizes-in ul li{display:block;float:left;}
+#sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
 #sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:12px;color:#666;top:0px;left:0px;width:725px;}
 #sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin-top:5px;font-weight:bold;cursor:pointer;font-size:90%;}
 .edit_action #sl-tabs-sizes-in ul.sl-table{cursor:default;}
@@ -337,13 +329,13 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul li.st-size{margin-left:25px;width:55px;}
 #sl-tabs-sizes-in ul li.st-type{width:180px;font-weight:normal;}
 #sl-tabs-sizes-in ul li.st-pric{width:125px;}
-#sl-tabs-sizes-in ul li.st-spec{width:200px;font-weight:normal;}
+#sl-tabs-sizes-in ul li.st-spec{width:200px;font-weight:normal;max-height:45px;overflow:hidden;}
 #sl-tabs-sizes-in ul li.st-rese{width:100px;text-align:center;}
 #sl-tabs-sizes-in ul li.st-rese a{position:relative;top:7px;right:-8px;display:block;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
 #sl-tabs-sizes-in ul.active li.st-rese a,#sl-tabs-sizes-in ul:hover li.st-rese a,#sl-tabs-sizes-in ul:active li.st-rese a{background:url(/images/ui/storagelocator/sl-table-reserve-active.png) no-repeat center;}
 #sl-tabs-sizes-in ul li.st-sele{width:25px;height:46px;}
-#sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-table-select.png) no-repeat center;}
-#sl-tabs-sizes-in ul:hover li.active_load{background:url(/images/ui/storagelocator/sl-table-select-active.png) no-repeat center;}
+#sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-load.gif) no-repeat center;}
+#sl-tabs-sizes-in ul:hover li.active_load{background:url(/images/ui/storagelocator/sl-load-active.gif) no-repeat center;}
 #sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-6px;margin-left:19px;}
 .sl-table-exp{background:url(/images/ui/storagelocator/sl-table-exp-bg.png) repeat-x bottom left;background-color:#fefeff;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border:1px solid #ccc;overflow:hidden;}
 div.sl-table-exp div input{width:60%;}
@@ -556,5 +548,8 @@ ul#add-fac-form a.search-button,#narrow-box a.search-btn{text-shadow:1px 1px 0 #
 .sl-table input.small_num{width:15px;padding:3px;}
 .sl-table .small_text_field{width:80%;float:left;margin-top:12px;}
 #listings_controller .sl-table a.hidden{margin:14px 2px 0 0;display:none;}
+.attr_editable{position:relative;}
+.attr_edit{position:absolute;top:8px;right:10px;color:#999;display:none;}
+.attr_editable:hover .attr_edit{display:inline;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
