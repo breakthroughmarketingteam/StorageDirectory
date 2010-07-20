@@ -316,9 +316,8 @@ class ApplicationController < ActionController::Base
     disabled_models = models.reject { |me| me.enabled_in? model }
   end
   
-  def model_errors(model, usePtags = true)
-    error = model.errors.full_messages.map { |e| usePtags ? "<p>#{e}</p>" : e }
-    usePtags ? error : error * ', '
+  def model_errors(*models)
+    error = models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?)
   end
   
   #--------------------- Authlogic ---------------------

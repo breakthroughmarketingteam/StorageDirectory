@@ -395,7 +395,7 @@ $.fn.appendParamAndGo = function() {
 $.fn.openDiv = function() {
 	return this.each(function(){
 		var $this = $(this),
-				div_to_open = $this.attr('rel');
+			div_to_open = $this.attr('rel');
 				
 		$this.click(function() {
 			$('#'+div_to_open).slideToggle();

@@ -66,14 +66,17 @@ $.convert_unit_size_row_values_to_inputs = function(container) {
 	});
 }
 
+$.clone_and_attach_inputs = function(inputs, context, form) {
+	$(inputs, context).each(function(){ form.append($(this).clone()); });
+}
+
 $.post_new_unit_size_values_and_revert = function(container, hidden_form) {
 	var sizes_li	= $('.st-size', container),
 		type_li 	= $('.st-type', container),
 		price_li 	= $('.st-pric', container),
 		specials_li = $('.st-spec', container);
 	
-	// clone the inputs and put into the hidden form in order to serialize the data
-	$('input.i', container).each(function(){ hidden_form.append($(this).clone()); });
+	$.clone_and_attach_inputs('input.i', container, hidden_form);
 	
 	$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 		if (response.success) {
@@ -93,7 +96,7 @@ $.post_new_unit_size_values_and_revert = function(container, hidden_form) {
 			$('.edit-btn', container).text('Edit');
 			$('.cancel_link', container).hide();
 			
-		} else alert('nay');
+		} else alert('Error: '+ response.data);
 		
 		$('.st-sele', container).removeClass('active_load');
 		
@@ -101,17 +104,6 @@ $.post_new_unit_size_values_and_revert = function(container, hidden_form) {
 }
 
 // edit functionality for the sizes in the facility edit page
-$('.attr_edit', '.authenticated').click(function(){
-	var $this = $(this);
-	
-	if ($this.attr('rel') == 'address') {
-		$('.address', $this.parent()).children().each(function(){
-			var attr = $(this).attr('rel');
-			
-		});
-	}
-});
-
 $('.edit-btn', '.authenticated .sl-table').click(function(){
 	var $this 		= $(this),
 		container 	= $this.parents('.sl-table'),
@@ -134,6 +126,71 @@ $('.edit-btn', '.authenticated .sl-table').click(function(){
 		cancel_btn.hide();
 		
 		$.post_new_unit_size_values_and_revert(container, hidden_form);
+	}
+	
+	return false;
+});
+
+// address and specials boxes, convert to form and handle ajax post
+$('.attr_edit', '.authenticated').click(function(){
+	var $this 	   = $(this).css('display', 'inline'),
+		container  = $this.parent(),
+		rel 	   = $this.attr('rel'),
+	 	cancel_btn = $('.cancel_btn', $this.parent());
+	
+	if ($this.text() == 'Edit') {
+		cancel_btn.show();
+		$this.text('Save').data('saving', false);
+		
+		if (rel == 'address') { // has spans for each address field, e.g. address, state, zip
+			$('.address, .tags', container).children('span').each(function(){
+				var el	  = $(this).hide(),
+					attr  = el.attr('rel'),
+					input = $('<input type="text" name="map['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
+			
+				el.after(input); // put input after span
+			
+			});
+		} else if (rel == 'special') {
+			var el	  = $('.sl-special', container).hide(),
+				attr  = el.attr('rel'),
+				input = $('<input type="text" name="listing['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
+				
+			el.after(input); // put input after span
+			
+		}
+		
+		cancel_btn.click(function(){
+			$this.text('Edit').data('saving', false).attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
+			cancel_btn.hide();
+			$('.value', container).show();
+			$('input.i', container).remove();
+		});
+	} else if ($this.text() == 'Save' && !$this.data('saving')) {
+		$this.data('saving', true);
+		$('.ajax_loader', container).show();
+		
+		var hidden_form = $('form[rel='+ rel +']', container);
+		$.clone_and_attach_inputs('input.i', container, hidden_form);
+		
+		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
+			if (response.success) {
+				$('input.i', container).each(function(){
+					var input = $(this),
+						val	  = input.val();
+						
+					input.prev('.value').text(val).show();
+					input.remove();
+				});
+				
+				$this.text('Edit').attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
+				cancel_btn.hide();
+				
+			} else alert('Error: '+ response.data);
+			
+			$this.data('saving', false);
+			$('.ajax_loader', container).hide();
+		});
 	}
 	
 	return false;
@@ -257,8 +314,7 @@ $('.open_tab', '.tabs').click(function(){
 		$this.text('x');
 	} else {
 		$panel.slideUp();
-		$('.tab_link, .listing, .panel').removeClass('active');
-		$('.tab_link').removeClass('borderButTop');
+		$('.tab_link, .listing, .panel, .tabs li').removeClass('active');
 		$this.data('active', false);
 		$('.open_tab').text('+');
 	}

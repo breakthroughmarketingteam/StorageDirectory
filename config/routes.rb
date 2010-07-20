@@ -51,7 +51,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :site_setting
   
   # greyresults
-  map.resources :listings, :collection => { :import => :post }, :has_many => [:sizes, :specials], :has_one => :map
+  map.resources :listings, :collection => { :import => :post }, :has_many => [:sizes, :specials, :maps]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   
