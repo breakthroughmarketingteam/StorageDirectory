@@ -1,4 +1,5 @@
 /***************** UTILITY FUNCTIONS *****************/
+$ = jQuery;
 $.option_tags_from_model = function(model_class, models, options) {
 	var attribute = options.attribute || 'name',
 	 		select_prompt = options.select_prompt || false,
