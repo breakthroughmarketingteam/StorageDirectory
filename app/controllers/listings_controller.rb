@@ -16,6 +16,8 @@ class ListingsController < ApplicationController
   end
 
   def edit
+    @special = @listing.specials.first || @listing.specials.new
+    @map = @listing.map
   end
   
   def update

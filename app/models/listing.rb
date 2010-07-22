@@ -12,8 +12,17 @@ class Listing < ActiveRecord::Base
   validates_presence_of :title
   
   access_shared_methods
+  acts_as_taggable_on :tags
   
   # Instance Methods
+  
+  def display_special
+    self.special && self.special.content ? self.special.content : 'No Specials'
+  end
+  
+  def special
+    self.specials.first
+  end
   
   def get_partial_link(name)
     "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}"

@@ -17,35 +17,42 @@
     </div>
     
     <div id="sl-fac-detail">
-      <div id="sl-fac-detail-in-edit">
-        <img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
+      <div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
+        <img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
         
+		<p class="address_label"><strong>Location</strong></p>
         <p class="address">
-          <span>ADDRESS:</span><br>
-          <%= @listing.map.address %><br>
-          <%= @listing.map.city_state_zip %><br>
+          <span rel="address" class="block value"><%= @listing.map.address %></span>
+          <span rel="city" class="value"><%= @listing.map.city %></span> <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
         </p>
-        <p>
-          <a href="#">www.website.com</a>
+        
+        <p class="clear tags">
+          <strong>Category:</strong> <span rel="tag_list" class="value"><%= @listing.tag_list %></span>
         </p>
-        <div class="clear"></div>
-        <p>
-          <span>Category:</span> Type 1, Type 2, Type 3
-        </p>
+		
+		<% if action_name == 'edit' %>
+			<%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
+			<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'address' %>
+			<%= link_to 'Cancel', '#', :class => 'cancel_btn hidden' %>
+			<% form_for [@listing, @map], :html => { :class => 'hidden hidden_form', :rel => 'address' }, :method => :put do |f| %><% end %>
+		<% end %>
       </div>
     </div>
     
     <div id="sl-fac-dist">
-      <div id="sl-fac-dist-in-edit">
-        <p class="sl-phone">
-          Call: 1800 1800 180
-        </p>
-        <p>
-          Get 50% off your first month of rent!
-        </p>
+      <div id="sl-fac-dist-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
+        <p class="sl-phone">Call: 1800 1800 180</p>
+        <p class="sl-special value" rel="special"><%= @listing.display_special %></p>
         <p class="sl-dist">
           We are just <span id="rslt-number"><span>2</span></span> miles from you!
         </p>
+
+		<% if action_name == 'edit' %>
+			<%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
+			<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'special' %>
+			<%= link_to 'Cancel', '#', :class => 'cancel_btn hidden' %>
+			<% form_for [@listing, @special], :html => { :class => 'hidden hidden_form', :rel => 'special' }, :method => :put do |f| %><% end %>
+		<% end %>
       </div>
     </div>
     <div class="clear"></div>
@@ -53,39 +60,28 @@
     <div id="sl-tabs">
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
-          <li class="active">
-            <a href="#" rel="sl-tabs-sizes">Unit Sizes</a>
-          </li>
-          <li>
-            <a href="#" rel="sl-tabs-map">Map</a>
-          </li>
-          <li>
-            <a href="#" rel="sl-tabs-feat">Features</a>
-          </li>
-          <li>
-            <a href="#" rel="sl-tabs-pict">Pictures</a>
-          </li>
+          <li class="active"><a href="#" rel="sl-tabs-sizes">Unit Sizes</a></li>
+          <li><a href="#" rel="sl-tabs-map">Map</a></li>
+          <li><a href="#" rel="sl-tabs-feat">Features</a></li>
+          <li><a href="#" rel="sl-tabs-pict">Pictures</a></li>
         </ul>
+
         <div id="sl-tabs-sizes" class="tab_content">
           <div id="sl-tabs-sizes-in">
             <ul class="sl-table-head">
-              <li class="st-size">Size
-              </li>
-              <li class="st-type">Type
-              </li>
-              <li class="st-pric">Price
-              </li>
-              <li class="st-spec">Special
-              </li>
+              <li class="st-size">Size</li>
+              <li class="st-type">Type</li>
+              <li class="st-pric">Price</li>
+              <li class="st-spec">Special</li>
             </ul>
 
 			<% @listing.sizes.each do |size| %>
 				<div class="sl-table-wrap">
 					<ul class="sl-table<%= ' open_reserve_form' if action_name == 'show' %>">
 						<li class="st-size"><%= size.display_dimensions %></li>
-						<li class="st-type"><%= size.unit_type || 'NONE' %></li>
-						<li class="st-pric"><%= size.display_price %></li>
-						<li class="st-spec"><%= size.special || 'NONE' %></li>
+						<li class="st-type"><%= size.unit_type.blank? ? 'NONE' : size.unit_type %></li>
+						<li class="st-pric"><%= number_to_currency size.price %></li>
+						<li class="st-spec" title="<%= size.special.blank? ? 'Non available' : size.special %>"><%= size.special.blank? ? 'NONE' : size.special %></li>
 						<li class="st-rese">
 							<% if action_name == 'edit' %>
 								<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
@@ -105,9 +101,11 @@
 						</div>
 					<% end %>
 					
-					<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+					<% if action_name == 'edit' %>
+						<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+					<% end %>
 				</div>
-           <% end %>
+           	 <% end %>
 			
           </div>
         </div>
