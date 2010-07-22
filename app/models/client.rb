@@ -1,11 +1,15 @@
 class Client < User
   
   has_many :listings, :foreign_key => 'user_id'
-  accepts_nested_attributes_for :listings
   has_many :mailing_addresses, :dependent => :destroy
   has_many :billing_infos, :dependent => :destroy
+  accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   
   attr_accessor :first_name, :last_name
+  
+  def before_save
+    self.name = self.first_name + ' ' + self.last_name
+  end
   
   def active_mailing_address
     self.mailing_addresses.first

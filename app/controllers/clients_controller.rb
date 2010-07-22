@@ -10,9 +10,15 @@ class ClientsController < ApplicationController
   end
 
   def new
+    @client = Client.new
   end
-
+  
+  def create
+    raise params.pretty_inspect
+  end
+    
   def edit
+    @client = params[:id].blank? ? current_user : Client.find(params[:id])
   end
   
   def update

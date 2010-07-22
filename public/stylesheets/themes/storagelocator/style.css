@@ -43,8 +43,8 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #top-nav ul li.hidden{display:none;}
 /* Start the main homepage styles here */
 #locater{background:url(/images/ui/storagelocator/search-box-bg.png) repeat-x bottom left #fff;width:360px;height:386px;border:1px solid #C2C2CC;float:left;}
-#locater,#locater-in{border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;background:url(/images/ui/storagelocator/locate-header.png) no-repeat center top;}
-#locater-in{padding:0 40px 20px;background:url(/images/ui/storagelocator/locate-header.png) no-repeat top center;}
+#locater,#locater-in{border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
+#locater-in{padding:0 40px 20px;background:url(/images/ui/storagelocator/locate-header.png) no-repeat 0 -1px;}
 #locater-in form{position:relative;}
 #locater h1{clear:both;color:#FFF;font-size:20px;height:80px;letter-spacing:0.7px;line-height:1.2;position:relative;top:12px;width:260px;font-weight:bold;left:54px;text-shadow:1px 1px 0 #666666;}
 input#postcode{border:none;margin-top:10px;width:260px;padding:6px 10px;height:1.7em;line-height:2em;color:#666;font-size:80%;font-weight:bold;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;-moz-box-shadow:1px 1px 6px #999 inset;box-shadow:1px 1px 6px rgba(60,60,60,0.1) inset;-webkit-box-shadow:1px 1px 6px rgba(60,60,60,0.1) inset;}
@@ -64,7 +64,7 @@ ul.city-list li{list-style:none;}
 ul.city-list li a{width:110px;display:block;}
 /* Start feature styles here */
 #feat{float:right;background:url(/images/ui/storagelocator/front-green-bg.png) no-repeat bottom center;width:565px;height:387px;position:relative;left:8px;}
-#feat-pic{height:317px;margin-bottom:10px;overflow:hidden;}
+#feat-pic{height:317px;}
 #feat-txt{position:relative;top:150px;background-color:#000;width:290px;text-shadow:1px 1px 2px #000;font-size:210%;padding:18px;background:rgb(0,0,0);/* RGBa with 0.5 opacity */background:rgba(0,0,0,0.5);/* For IE 5.5 - 7*/filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);/* For IE 8*/-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000)";border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;border-radius-bottomright:20px;-moz-border-radius-bottomright:20px;-webkit-border-bottom-right-radius:20px;}
 #feat-txt h2{color:#fff;}
 #feat p{text-align:center;color:#fff;font-size:190%;position:absolute;bottom:20px;left:55px;text-shadow:1px 1px 0 #666;}
@@ -89,8 +89,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #narrow-box{background:url(/images/ui/storagelocator/narrow-search-header.png) no-repeat top left;width:164px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;position:relative;left:20px;color:#555;text-align:center;}
 #add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;height:200px;}
 #narrow-box h2{width:114px;font-size:100%;color:#fff;height:47px;text-align:left;position:relative;left:50px;line-height:17px;text-shadow:1px 1px 0 #666;top:6px;}
-#add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #000;height:47px;text-align:left;position:relative;left:55px;top:7px;}
-#narrow-box p{margin:15px 10px;text-align:left;}
+#add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #000;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
+#narrow-box p,#add-fac-box p{margin:15px 10px;text-align:left;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
 ul#add-fac-form a.search-button,
 #narrow-box a.search-btn{background:url(/images/ui/storagelocator/search-btn.png) no-repeat top left;width:161px;margin:10px auto;height:38px;line-height:33px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;text-shadow:1px 1px 2px #000;position:relative;left:-10px;}
@@ -225,7 +225,7 @@ li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
 /* Start the add facility page styles here */
-ul#add-fac-form{width:430px;float:left;position:relative;left:45px;margin-bottom:20px;}
+form#new_client{width:430px;float:left;position:relative;left:45px;margin-bottom:20px;}
 ul#add-fac-form li{list-style:none;margin-bottom:20px;clear:both;}
 ul#add-fac-form li input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;}
 #add-fac-form-txt{width:246px;float:right;position:relative;left:-20px;top:-8px;}
@@ -266,7 +266,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 #type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;left:2px;background:url(/images/ui/storagelocator/page-bg.png) no-repeat left 350px;border-radius-bottomleft:20px;-moz-border-radius-bottomleft:20px;-webkit-border-bottom-left-radius:20px;}
 /* Change made in these two divs on the existing stylesheet in order to include that dotted line. These can possibly be ignored or changed back - get in touch if you need me to explain anything... */
 #narrow-box{background:url(/images/ui/storagelocator/narrow-search-header.png) no-repeat top left;width:164px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;position:relative;left:18px;color:#555;text-align:center;margin-top:7px;}
-#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:300px;}
+#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:300px;margin-top:-20px;}
 /* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:left;top:6px;margin-bottom:20px;}
@@ -297,7 +297,7 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 /* And finally... here are all the brand new pages CSS starting from here */
 #type-three-r-col-in{width:755px;float:right;margin:15px 15px 0 0;}
-#sl-header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:47px;border:1px solid #ccc;color:#fff;}
+#sl-header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;border:1px solid #ccc;color:#fff;}
 #sl-header h2{width:560px;float:left;text-shadow:1px 1px 2px #000;position:relative;left:15px;margin-bottom:15px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
@@ -466,6 +466,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #listings_controller.show_action #type-one-cnt-in{padding:0;}
 #listings_controller #narrow-box {margin-top:5px;}
 .index_action #content,.edit_action #content,.new_action #content{margin-bottom:0;float:none;width:auto;position:static;}
+#clients_controller.new_action #content{position:relative;}
 #rslt-head h2{font-size:20px;}
 #steps{padding-bottom:15px;}
 #list-name{background-position:99% 50%;}
@@ -498,7 +499,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #storage-info-content > h3{font-size:28px;margin-bottom:10px;}
 #storage-info-content p{font-size:12px;line-height:1.4;}
 #info-accordion{margin:40px 0;}
-#info-accordion > h4{height:32px;margin-bottom:12px;padding-left:10px;font-size:14px;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
+#info-accordion > h4{height:32px;margin-bottom:12px;padding-left:10px;font-size:120%;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
 #info-accordion h4 a{text-decoration:none;color:#333;display:block;padding:8px 0 10px 30px;background:url(/images/ui/storagelocator/info-closed.png) no-repeat left center;}
 #info-accordion h4 a.active{background:url(/images/ui/storagelocator/info-open.png) no-repeat left center;}
 #info-accordion .info{margin-bottom:10px;padding:10px 20px;}

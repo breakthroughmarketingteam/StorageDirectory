@@ -478,6 +478,7 @@ $.fn.instantForm = function() {
 		// serves as the edit mode button and submit button
 		submit_btn.click(function(){
 			if ($(this).text() == 'Edit') {
+				$(this).data('saving', false)
 				cancel_btn.fadeIn();
 				
 				// turn elements with a class of value into an input. use it's rel attr and text for the field name, the rel attr is the relation name, e.g. mailing_address, billing_info. the text is the attr name
@@ -489,11 +490,13 @@ $.fn.instantForm = function() {
 
 					input.prependTo($self.parent());
 				});
-
+				
+				$('.small_text_field', $this).eq(0).focus();
 				$(this).text('Save');
 				$.bindPlugins(); // so that hinty and formbouncer will work.
 				
-			} else if ($(this).text() == 'Save') {
+			} else if ($(this).text() == 'Save' && !$(this).data('saving')) {
+				$(this).data('saving', true);
 				ajax_loader.show();
 				
 				// put copies of the inputs into the form so we can serialize it and send the data
@@ -513,6 +516,7 @@ $.fn.instantForm = function() {
 					
 					ajax_loader.hide();
 					cancel_btn.fadeOut();
+					$(this).data('saving', false)
 					
 				}, 'json');
 			}
@@ -524,7 +528,7 @@ $.fn.instantForm = function() {
 			$('.small_text_field', $this).remove();
 			$('.value', $this).show();
 			$(this).fadeOut();
-			submit_btn.text('Edit');
+			submit_btn.text('Edit').data('saving', false);
 			return false;
 		});
 	});
@@ -639,7 +643,7 @@ $.bindPlugins = function() {
 	
 	// admin menu hover behaviors
 	var GR_content_menu_hover_interval,
-			GR_resource_list = $('#resource_list');
+		GR_resource_list = $('#resource_list');
 	
 	$('#content_menu_link').mouseover(function() {
 		GR_resource_list.slideDown();

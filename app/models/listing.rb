@@ -4,6 +4,7 @@ class Listing < ActiveRecord::Base
   
   has_one  :map
   acts_as_mappable :through => :map
+  accepts_nested_attributes_for :map
   
   has_many :specials
   has_many :pictures

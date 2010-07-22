@@ -8,6 +8,11 @@ ActionController::Routing::Routes.draw do |map|
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
+
+  # restful pages that replace pages from the Page model
+  map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
+  
+  map.client_account '/my_account', :controller => 'clients', :action => 'edit'
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
@@ -114,13 +119,13 @@ ActionController::Routing::Routes.draw do |map|
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'show', :title => 'home'
-
+  
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':title', :controller => 'pages', :action => 'show', :title => nil
+  map.connect ':title', :controller => 'pages', :action => 'show'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
