@@ -48,7 +48,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #locater-in form{position:relative;}
 #locater h1{clear:both;color:#FFF;font-size:20px;height:80px;letter-spacing:0.7px;line-height:1.2;position:relative;top:12px;width:260px;font-weight:bold;left:54px;text-shadow:1px 1px 0 #666666;}
 input#postcode{border:none;margin-top:10px;width:260px;padding:6px 10px;height:1.7em;line-height:2em;color:#666;font-size:80%;font-weight:bold;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;-moz-box-shadow:1px 1px 6px #999 inset;box-shadow:1px 1px 6px rgba(60,60,60,0.1) inset;-webkit-box-shadow:1px 1px 6px rgba(60,60,60,0.1) inset;}
-#locater p{margin-top:10px;color:#666;line-height:2.8;font-size:79%;}
+#locater p{margin-top:10px;color:#666;line-height:2.8;font-size:79%;width:101%;}
 #locater a{color:#666;text-decoration:none;}
 #locater a:hover{color:#333;text-decoration:underline;}
 #locater a.search-btn{background:url(/images/ui/storagelocator/search-medium-btn.png) no-repeat top left;width:130px;height:38px;line-height:38px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;float:left;font-weight:bold;text-shadow:1px 1px 0 #666;}
@@ -396,7 +396,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units-head p,#ov-item-head p{float:right;}
 #ov-item-head p{background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat top left;width:82px;height:30px;line-height:30px;font-weight:bold;text-align:center;float:right;margin:6px;}
 #ov-item-head p a{display:block;width:82px;height:30px;text-decoration:none;color:#fff;text-shadow:1px 1px 2px #000;}
-#ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;right:20px;}
+#ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
 #ov-info-cnt{float:left;position:relative;text-align:right;width:45%;}
 #ov-info-cnt p,#ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
@@ -562,11 +562,13 @@ ul#add-fac-form a.search-button,#narrow-box a.search-btn{text-shadow:1px 1px 0 #
 sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 .attr_editable:hover .attr_edit{display:inline;}
 #sl-fac-detail-in-edit input.small_text_field{width:44%;}
-#sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;}
+#sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
 #sl-fac-detail-in-edit input.state{margin-right:5px;}
 #sl-fac-detail-in-edit input.state,#sl-fac-detail-in-edit input.zip{width:19.5%;float:left;}
 #sl-fac-detail-in-edit input.tag_list{margin-bottom:0;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
+#ov-units-head #address_sort{float:left;}
+#ov-units-head #add_fac{float:right;margin:6px 15px 0 0;font-weight:bold;display:block;width:56px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.2;padding-left:27px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 /* extras */
