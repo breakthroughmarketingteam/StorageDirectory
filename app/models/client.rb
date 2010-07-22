@@ -7,10 +7,6 @@ class Client < User
   
   attr_accessor :first_name, :last_name
   
-  def before_save
-    self.name = self.first_name + ' ' + self.last_name
-  end
-  
   def active_mailing_address
     self.mailing_addresses.first
   end

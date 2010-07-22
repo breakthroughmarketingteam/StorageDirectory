@@ -7,6 +7,8 @@ p,a {font-size:80%;} p a {font-size:100%;}
 a:link, a:visited {text-decoration:none;}
 .hidden{display:none;}
 span.big-text{font-size:28px;line-height:1.1;margin-right:4px;font-weight:bold;}
+.QOverlay{background-color:#fff;z-index:9999;}
+.QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
 #head-ctr{height:231px;width:100%;background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x top;background-color:#fff;box-shadow:0px 10px 10px #2b682c;-webkit-box-shadow:0px 10px 8px #2b682c;-moz-box-shadow:0px 10px 8px #2b682c;}
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;}
@@ -572,6 +574,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
 #ov-units-head #add_fac{float:right;margin:6px 15px 0 0;font-weight:bold;display:block;width:56px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.2;padding-left:27px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
+.my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 /* extras */
