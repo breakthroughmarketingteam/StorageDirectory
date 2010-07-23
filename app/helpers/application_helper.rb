@@ -68,7 +68,7 @@ module ApplicationHelper
     end unless action_name == 'edit'
     
     # these blocks can be shown on regular restful pages rather than a page's or post's show action (custom page)
-    # they require a controller and action attribute, comma separated to allow the block to be in multiple places
+    # they require a controller and action attribute, comma separated to allow the block to be in multiple routes
     Block.find_all_by_restful(true).each do |block|
       if block.restful_region == region.to_s && block.controller.split(/,\W?/).include?(controller_name) && block.action.split(/,\W?/).include?(action_name)
         blocks << block 

@@ -165,7 +165,9 @@ $('.attr_edit', '.authenticated').click(function(){
 			cancel_btn.hide();
 			$('.value', container).show();
 			$('input.i', container).remove();
+			return false;
 		});
+		
 	} else if ($this.text() == 'Save' && !$this.data('saving')) {
 		$this.data('saving', true);
 		$('.ajax_loader', container).show();

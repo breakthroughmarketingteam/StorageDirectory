@@ -1,0 +1,115 @@
+<% declare_content_for %>
+<% display_message flash %>
+
+<h1 class="hidden">Add Your Self Storage Facility</h1>
+<a name="top" id="top"></a>
+
+<div id="type-one-r-col">
+	<div id="type-one-r-col-in">
+		<div class="green-head" id="add-fac-head">
+			<div class="inner" id="add-fac-head-in">
+				<h2>Add Your Self Storage Facility</h2>
+				<p>Lorem ipsum text in here...</p>
+			</div>
+		</div>
+		<p class="sub-head-txt">Questions? Call 1-800-855-888</p>
+	</div>
+	
+	<div id="type-one-top-bar">
+		<div id="type-three-top-bar-head">&nbsp;</div>
+
+		<% form_for @client do |f| %>
+			<ul id="add-fac-form">
+				<li>First name: <input class="required" type="text" id="client_first_name" name="client[first_name]"></li>
+				<li>Last name: <input class="required" type="text" id="client_last_name" name="client[last_name]"></li>
+				<li>Company name: <input class="required" type="text" id="client_company" name="client[company]"></li>
+				<li>Phone number: <input class="numeric_phone" type="text" id="client_phone" name="client[phone]"></li>
+				<li>Email address: <input class="email" type="text" id="client_email" name="client[email]"></li>
+				<li>Password: <input type="password" id="client_password" name="client[password]"></li>
+				<li>Re-type password:<input class="confirm" type="password" id="client_password_confirmation" name="client[password_confirmation]"></li>
+				<li><a class="search-button" href="#">Submit</a><input type="submit" name="commit" class="hidden"></li>
+			</ul>
+		<% end %>
+		
+		<div id="add-fac-form-txt">
+			<h2>
+				Lorem ipsum text heading goes here
+			</h2>
+			<p>
+				Lorem ipsum text here...
+			</p>
+			<p class="call-button">
+				<span>CALL<br>
+				1-800-888-5555<br>
+				FOR MORE INFO</span>
+			</p>
+		</div>
+		
+		<div id="add-fac-form-extra">
+			<div class="tabular_content" id="add-fac-form-extra-in">
+				<ul class="tabular">
+					<li class="active"><a href="#" rel="fac-overview">Overview</a></li>
+					<li><a href="#" rel="fac-options">Options</a></li>
+					<li><a href="#" rel="fac-results">Results</a></li>
+				</ul>
+				<div class="tab_content active" id="fac-overview">
+					<h3>
+						<span>Overview heading goes here</span>
+					</h3>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Lorem ipsum text in here...
+					</p>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Lorem ipsum text in here...
+					</p>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Lorem ipsum text in here...
+					</p>
+				</div>
+				<div class="tab_content" id="fac-options">
+					<h3>
+						<span>Options heading goes here</span>
+					</h3>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+					</p>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+					</p>
+				</div>
+				<div class="tab_content" id="fac-results">
+					<h3>
+						<span>Results heading goes here</span>
+					</h3>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+					</p>
+					<h4>
+						And a sub heading here
+					</h4>
+					<p>
+						Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

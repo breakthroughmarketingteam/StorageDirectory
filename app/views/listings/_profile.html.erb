@@ -30,12 +30,7 @@
           <strong>Category:</strong> <span rel="tag_list" class="value"><%= @listing.tag_list %></span>
         </p>
 		
-		<% if action_name == 'edit' %>
-			<%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
-			<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'address' %>
-			<%= link_to 'Cancel', '#', :class => 'cancel_btn hidden' %>
-			<% form_for [@listing, @map], :html => { :class => 'hidden hidden_form', :rel => 'address' }, :method => :put do |f| %><% end %>
-		<% end %>
+		<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>
       </div>
     </div>
     
@@ -47,12 +42,7 @@
           We are just <span id="rslt-number"><span>2</span></span> miles from you!
         </p>
 
-		<% if action_name == 'edit' %>
-			<%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
-			<%= link_to 'Edit', '#', :class => 'attr_edit', :rel => 'special' %>
-			<%= link_to 'Cancel', '#', :class => 'cancel_btn hidden' %>
-			<% form_for [@listing, @special], :html => { :class => 'hidden hidden_form', :rel => 'special' }, :method => :put do |f| %><% end %>
-		<% end %>
+		<%= render :partial => 'info_edit', :locals => { :model => [@listing, @special], :info => 'special' } if action_name == 'edit' %>
       </div>
     </div>
     <div class="clear"></div>
