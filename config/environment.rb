@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'geokit'
   require 'geokit'
   config.gem 'will_paginate'
-  config.gem 'ajaxful_rating', :version => '2.2.8'
+  config.gem 'ajaxful_rating'
   config.gem 'memcached'
   require 'memcached'
   
