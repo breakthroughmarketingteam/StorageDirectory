@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   # config.gem 'facebooker'
   #config.gem 'aws-s3'
   config.gem 'geokit'
-  require 'geokit'
+  #require 'geokit'
   config.gem 'will_paginate'
   #config.gem 'memcached'
   #require 'memcached'
