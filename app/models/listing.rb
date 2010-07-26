@@ -10,7 +10,7 @@ class Listing < ActiveRecord::Base
   has_many :pictures
   has_many :sizes
   
-  validates_presence_of :title
+  validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
   acts_as_taggable_on :tags
@@ -30,7 +30,7 @@ class Listing < ActiveRecord::Base
   end
   
   def city_and_state
-    [self.map.city, self.map.state]
+    self.map.nil? ? [] : [self.map.city, self.map.state]
   end
   
   def lat() map.lat end

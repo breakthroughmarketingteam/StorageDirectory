@@ -8,30 +8,28 @@
   <div id="type-three-r-col-in">
     
     <div id="sl-header">
-      <h2><span>Overview -</span> Uncle Bob's Self Storage</h2>
+      <h2>Account Overview</h2>
     </div>
     
     <div id="ov-page-cnt">
 
       <div id="ov-top">
         <ul id="ov-top-list">
-          <li>Account #: <span><%= @client.id %></span>
-          </li>
-          <li>Number of listings: <span><%= @client.listings.size %></span>
-          </li>
+          <li>Account #: <span id="client_id"><%= @client.id %></span></li>
+          <li>Number of listings: <span id="listings_size"><%= @client.listings.size %></span></li>
         </ul>
       </div>
      
- 	  <div id="ov-info" class="instant_form">
+ 	    <div id="ov-info" class="instant_form hideable">
 	
         <div id="ov-item-head">
           <h3><span>Owner Info</span></h3>
-			
-		  <%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
+		
+  	      <%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
           <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] %>" href="#">Edit</a></p>
         </div>
 
-        <div id="ov-info-cnt">
+        <div class="ov-info-cnt">
           <p>Mailing Address</p>
           <ul>
             <li><span class="label">Name:</span><span class="value" rel="mailing_address"><%= @client.active_mailing_address.name if @client.has_mailing_address? %></span></li>
@@ -42,70 +40,51 @@
           </ul>
         </div>
 
-        <div id="ov-info-cnt">
+        <div class="ov-info-cnt">
           <p>Billing Info</p>
           <ul>
             <li><span class="label">Name:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.name if @client.has_billing_info? %></span></li>
             <li><span class="label">Address:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.address if @client.has_billing_info? %></span></li>
-			<li><span class="label">Phone:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span></li>
+  		<li><span class="label">Phone:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span></li>
             <li><span class="label">Card Type:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_type if @client.has_billing_info? %></span></li>
             <li><span class="label">Card Number:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_number if @client.has_billing_info? %></span></li>
           </ul>
         </div>
-		<% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
+  	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
 		
       </div>
 
-      <div id="ov-units">
-        
-	    <div id="ov-units-head">
-          <h3>
-            <span>Facilities</span>
-          </h3>
-          <p id="address_sort"><a href="#">Sort by address</a></p>
-		  <a href="#" id="add_fac" title="Add a new facility">New</a>
+      <div id="ov-units" class="hideable">
+	      <div id="ov-units-head">
+          <h3><span>Facilities</span></h3>
+          <% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
+          <%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
+		      <a href="#" id="add_fac" title="Add a new facility">New</a>
         </div>
-
-        <div id="rslt-list-bg">
-		
-			<% @client.listings.each_with_index do |listing, i| %>
-	          <!-- The following div can be copied for each item -->
-	          <div class="listing">
-	            <div class="inner">
-	              <img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77" />
-	              <div class="rslt-contact">
-	                <h3><%= listing.title %></h3>
-	                <p>
-	                  <%= listing.map.address %><br />
-	                  <%= listing.map.city_state_zip %>
-	                </p>
-                
-	              </div>
-	              <ul>
-	                <li class="rslt-miles">
-	                  <span class="shifted-text"><strong>2</strong> miles</span>
-	                </li>
-	                <li class="rslt-offer">
-	                  <span>FIRST MONTH FREE<br />
-	                  Lowest price guaranteed!<br />
-	                  Online Only Special</span>
-	                </li>
-	                <li class="rslt-reserve">
-	                  <%= link_to 'Edit', edit_client_listing_path(@client, listing) %>
-	                </li>
-	              </ul>
-	            </div>
-	          </div>
-	        <% end %>
-
+        
+        <div id="client_listing_box">
+          <% unless @listings.empty? %>
+            <div id="rslt-list-bg">
+              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true } %>
+              <%= will_paginate @listings %>
+            </div>
+          <% else %>
+            <div id="empty_listings">
+              <% unless @client.potential_listings.empty? %>
+                <div id="client_listing_picker">
+                  <%= render :partial => 'listings/listing', :collection => @client.potential_listings, :locals => { :owned => false } %>
+                </div>
+              <% else %>
+                <p class="client_tip">Click NEW to add your first facility listing.</p>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
       
-      <div id="ov-reports">
+      <div id="ov-reports" class="hideable">
         <div id="ov-item-head">
-          <h3>
-            <span>Reports</span>
-          </h3>
+          <h3><span>Reports</span></h3>
         </div>
         <div id="ov-reports-cnt">
           <ul>
@@ -116,25 +95,15 @@
         </div>
       </div>
       
-      <div id="ov-settings">
+      <div id="ov-settings" class="hideable">
         <div id="ov-item-head">
-          <h3>
-            <span>Settings</span>
-          </h3>
+          <h3><span>Settings</span></h3>
         </div>
         <div id="ov-settings-cnt">
-          <p>
-            Content will go here...
-          </p>
-          <p>
-            Content will go here...
-          </p>
-          <p>
-            Content will go here...
-          </p>
-          <p>
-            Content will go here...
-          </p>
+          <p>Content will go here...</p>
+          <p>Content will go here...</p>
+          <p>Content will go here...</p>
+          <p>Content will go here...</p>
         </div>
       </div>
       

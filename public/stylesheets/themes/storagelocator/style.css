@@ -38,11 +38,19 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav{float:left;height:50px;line-height:50px;width:750px;position:relative;left:20px;top:-9px;}
 #main-nav ul{float:right;margin-top:27px;}
 #main-nav ul li{float:left;display:inline;}
+/* navbar */
 #main-nav ul li a{text-decoration:none;color:#666;text-align:center;line-height:29px;height:29px;display:block;margin-left:25px;font-size:80%;}
 #main-nav ul li#home,#main-nav ul li#Page_1{width:109px;background:url(/images/ui/storagelocator/home-button.png) no-repeat top left;}
-#main-nav ul li#locate,#main-nav ul li#Page_2,#main-nav ul li#Page_12{width:138px;background:url(/images/ui/storagelocator/locate-button.png) no-repeat top left;}
+#main-nav ul li#locate,#main-nav ul li#Page_2{width:138px;background:url(/images/ui/storagelocator/locate-button.png) no-repeat top left;}
+#main-nav ul li#Page_12{width:119px;background:url(/images/ui/storagelocator/info-button.png) no-repeat top left;}
 #main-nav ul li#tips,#main-nav ul li#Page_3{width:121px;background:url(/images/ui/storagelocator/tips-button.png) no-repeat top left;}
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
+/* hovers */
+#main-nav ul li#home:hover,#main-nav ul li#Page_1:hover{background-image:url(/images/ui/storagelocator/home-button-hover.png);}
+#main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
+#main-nav ul li#Page_12:hover{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
+#main-nav ul li#tips:hover,#main-nav ul li#Page_3:hover{background-image:url(/images/ui/storagelocator/tips-button-hover.png);}
+#main-nav ul li#add:hover,#main-nav ul li#Page_11:hover{background-image:url(/images/ui/storagelocator/add-button-hover.png);}
 #top-nav ul li.hidden{display:none;}
 /* Start the main homepage styles here */
 #locater{background:url(/images/ui/storagelocator/search-box-bg.png) repeat-x bottom left #fff;width:360px;height:386px;border:1px solid #C2C2CC;float:left;}
@@ -148,7 +156,7 @@ li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
 li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
-li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:160px;height:100px;line-height:105px;margin:0px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;left:1px;}
+li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:160px;height:100px;line-height:105px;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
 li.rslt-specials{width:130px;height:100px;line-height:105px;margin-top:0px;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 ul.tabs{margin:0 0 5px 31px;float:left;}
@@ -273,11 +281,11 @@ p.foot-text{margin:40px;font-weight:bold;}
 /* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:left;top:6px;margin-bottom:20px;}
-#tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;margin-top:20px;}
+#tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;margin-top:20px;}
 #tips-box-bottom{background:url(/images/ui/storagelocator/tips-bottom.png) no-repeat top left;width:164px;height:36px;}
 #tips-box-bottom p a{width:21px;height:20px;display:block;float:left;position:relative;left:98px;top:8px;margin-right:5px;}
 #welcome-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;line-height:47px;text-align:left;position:relative;left:60px;}
-#admin-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;line-height:47px;text-align:left;position:relative;left:60px;margin-bottom:10px;}
+#admin-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;line-height:47px;text-align:left;position:relative;left:56px;margin-bottom:10px;}
 #tips-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;line-height:47px;text-align:left;position:relative;left:60px;margin-bottom:10px;}
 #welcome-box p{margin:15px 10px;font-size:1em;text-align:left;line-height:1.8em;}
 #tips-box p{margin:15px 10px;font-size:1em;text-align:left;line-height:1.8em;}
@@ -286,7 +294,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 /* New list item type added (this can be combined with an existing group of selectors) */
 li.rslt-offer{float:left;list-style:none;display:inline;margin-left:20px;}
 /* Two new additions */
-li.rslt-offer{background:url(/images/ui/storagelocator/results-divider-white-bg.png) no-repeat top left;width:120px;height:100px;}
+li.rslt-offer{background:url(/images/ui/storagelocator/results-divider-white-bg.png) no-repeat top left;width:120px;}
 li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 /* Change made to the existing city box */
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:50px;}
@@ -301,7 +309,7 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 /* And finally... here are all the brand new pages CSS starting from here */
 #type-three-r-col-in{width:755px;float:right;margin:15px 15px 0 0;}
 #sl-header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;border:1px solid #ccc;color:#fff;}
-#sl-header h2{width:560px;float:left;text-shadow:1px 1px 2px #000;position:relative;left:15px;margin-bottom:15px;font-size:120%;}
+#sl-header h2{width:560px;float:left;line-height:2.3;text-shadow:1px 1px 2px #333;position:relative;left:15px;margin-bottom:15px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
 #sl-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.3;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
@@ -315,8 +323,10 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #sl-fac-detail-in-edit p.address,#sl-fac-detail-in p.address{line-height:1.5em;}
 #sl-fac-detail-in-edit p strong{font-weight:bold;color:#33c;margin-right:10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
+#sl-fac-detail-in-edit p.tags .value{}
 #sl-fac-dist{width:364px;float:left;text-align:center;position:relative;left:24px;}
-#sl-fac-dist-in-edit{text-align:center;height:169px;border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;position:relative;}
+#sl-fac-dist-in-edit{text-align:center;border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;position:relative;}
+#sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:152px;padding:10px;}
 #sl-fac-dist-in-edit p,#sl-fac-dist-in p{margin:20px;font-size:16px;font-weight:bold;color:#666;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone{font-size:24px;font-weight:bold;color:#000;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist{color:#33c;}
@@ -374,6 +384,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-tabs-feat-in ul{float:left;width:230px;margin:0;}
 #sl-tabs-feat-in ul li{background:url(/images/ui/storagelocator/sl-feature-blank-icon.png) no-repeat left top;height:25px;line-height:25px;margin:7px 0 0 0;list-style:none;position:relative;left:10px;color:#666;}
 #sl-tabs-feat-in ul li span{position:relative;left:35px;}
+#sl-tabs-pict{overflow:hidden;}
 #sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;top:21px;margin-bottom:19px;background-color:#ddd;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall{width:212px;float:left;margin-top:20px;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall li{width:106px;float:left;list-style:none;margin:10px 0px;text-align:center;}
@@ -395,24 +406,24 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-top ul#ov-top-list li span{color:#33c;font-size:1.1em;}
 #ov-top ul#ov-top-list{width:725px;background:#000;}
 #ov-reports,#ov-info,#ov-settings{border:1px solid #ccc;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;margin-top:20px;margin-bottom:10px;clear:both;width:99.4%;}
-#ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;margin-bottom:10px;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;position:relative;}
-#ov-units-head{border:1px solid #ccc;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;margin-top:20px;margin-bottom:10px;}
+#ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;position:relative;}
+#ov-units-head{border:1px solid #ccc;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;margin-top:20px;margin-bottom:10px;}
 #ov-units-head h3,#ov-item-head h3{position:relative;left:20px;float:left;font-size:1.4em;}
 #ov-units-head p,#ov-item-head p{float:right;}
 #ov-item-head p{background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat top left;width:82px;height:30px;line-height:30px;font-weight:bold;text-align:center;float:right;margin:6px;}
 #ov-item-head p a{display:block;width:82px;height:30px;text-decoration:none;color:#fff;text-shadow:1px 1px 2px #000;}
 #ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
-#ov-info-cnt{float:left;position:relative;text-align:right;width:45%;}
-#ov-info-cnt p,#ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
-#ov-info-cnt p{text-align:left;position:relative;left:50px;color:#33c;font-size:1.2em;margin:10px 0px;}
-#ov-info-cnt ul li span.value{width:60%;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
+.ov-info-cnt{float:left;position:relative;text-align:right;width:45%;}
+.ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
+.ov-info-cnt p{text-align:left;position:relative;left:50px;color:#33c;font-size:1.2em;margin:10px 0px;}
+.ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
 #ov-units #rslt-list-bg{background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;position:relative;left:0px;border-right:1px solid #ccc;border-left:1px solid #ccc;}
-#ov-units #rslt-list-bg .listing .inner{position:relative;left:-1px;}
+#ov-units #rslt-list-bg .listing .inner{position:relative;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{width:188px;padding-right:5px;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
-#ov-units .listing .inner .rslt-reserve{width:108px;}
+#ov-units .listing .inner .rslt-reserve{width:108px;position:absolute;right:20px;}
 #ov-reports ul li{list-style:none;display:inline;}
 #ov-reports ul li a{width:31.1%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
 #ov-reports ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
@@ -438,7 +449,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #admin-box ul li{list-style:none;}
 #admin-box ul li a{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat 0 -31px;width:163px;height:31px;line-height:31px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;display:block;margin:5px 0px;}
 #admin-box ul li a span{position:relative;left:10px;}
-#admin-box ul li a:hover{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
+#admin-box ul li a:hover,#admin-box ul li a.active{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
 /************************************************** END additions.css *********************************************************/
 /* Customizations - D.S */
 .region_content_bottom{margin-top:0;}
@@ -539,7 +550,7 @@ img.right{margin:0 10px 10px 0;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units #rslt-list-bg {width:99.4%;}
-#ov-units .listing{padding-bottom:10px;}
+#ov-units .listing{padding:0 2px 10px 0;}
 #ov-units .listing > .inner{width:100%;}
 #ov-units .listing .rslt-reserve{width:145px;}
 #ov-reports-cnt{padding:15px 9px;overflow:hidden;}
@@ -555,8 +566,8 @@ img.right{margin:0 10px 10px 0;}
 ul#add-fac-form a.search-button,#narrow-box a.search-btn{text-shadow:1px 1px 0 #666;}
 /* client edit form */
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
-#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num{font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
-#ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
+#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+.ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
 #ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
 .sl-table input.small_num{width:15px;padding:3px;}
 .sl-table .small_text_field{width:80%;float:left;margin-top:12px;}
@@ -576,6 +587,11 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #ov-units-head #address_sort{float:left;}
 #ov-units-head #add_fac{float:right;margin:6px 15px 0 0;font-weight:bold;display:block;width:56px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.2;padding-left:27px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
 .my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
+#client_listing_picker{padding:0 3px 0 0;}
+.client_tip{padding:7px 12px;font-weight:bold;border:2px solid #333;width:96%;}
+.rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
+#ov-units-head .ajax_loader{position:absolute;right:110px;top:14px;}
+.new_listing_tip{padding:10px 15px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 /* extras */

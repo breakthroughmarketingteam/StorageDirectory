@@ -1,5 +1,5 @@
 <% declare_content_for %>
-<% content_for :scripts, @Gmap.to_html %>
+<% content_for :scripts, @Gmap.to_html rescue nil %>
 <%= display_message flash %>
 
 <div class="staticContent">

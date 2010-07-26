@@ -46,4 +46,58 @@ module ListingsHelper
     html 
   end
   
+  def edit_listing_title(listing)
+    if listing.nil? || listing.new_record?
+      text_field_tag 'listing[title]', nil, :class => 'required hintable small_text_field', :title => 'Facility Name'
+    else
+      content_tag :h3, listing.title
+    end
+  end
+  
+  def edit_listing_address(listing)
+    if listing.nil? || listing.new_record?
+      text_field_tag 'listing[map_attributes][address]', nil, :class => 'required hintable small_text_field', :title => 'Street Address'
+    else
+      listing.map ? "#{listing.map.address}<br />" : ''
+    end
+  end
+  
+  def edit_listing_city_state_zip(listing)
+    if listing.nil? || listing.new_record?
+      (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field', :title => 'City')
+      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field', :title => 'State', :rel => 'states')
+      html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field', :title => 'Zip')
+      html
+    else
+      listing.map.try :city_state_zip
+    end
+  end
+  
+  def render_tab_nav
+    @sizes_link    = link_to('Unit Sizes', '#', :rel => 'sl-tabs-sizes') unless @sizes.blank?
+    @map_link      = link_to('Map', '#', :rel => 'sl-tabs-map') unless @map.blank? || @map.lat.nil?
+    @features_link = link_to('Features', '#', :rel => 'sl-tabs-feat') unless @features.blank?
+    @pictures_link = link_to('Pictures', '#', :rel => 'sl-tabs-pict' ) unless @pictures.blank?
+    html = ''; activated = false
+    
+    ['sizes', 'map', 'features', 'pictures'].each do |tab|
+      @model = eval "@#{tab}"
+      
+      unless @model.nil?
+        unless activated
+          html << content_tag(:li, eval("@#{tab}_link"), :class => 'active')
+          activated = true
+        else
+          html << content_tag(:li, eval("@#{tab}_link"))
+        end
+      end
+    end
+    
+    html
+  end
+  
+  def if_tabs_empty_text
+    '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
+  end
+  
 end

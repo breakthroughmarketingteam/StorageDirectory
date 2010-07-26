@@ -534,6 +534,27 @@ $.fn.instantForm = function() {
 	});
 }
 
+// hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
+// if no rel attr all divs of class hideable are shown
+$.fn.selectiveHider = function() {
+	return this.each(function(){
+		$(this).click(function(){
+			var dont_hide = $(this).attr('rel'),
+					hide_these = $('.hideable');
+
+			if (dont_hide) {
+				hide_these.each(function(){
+					if (this.id != dont_hide) $(this).slideUp();
+					else $(this).slideDown();
+				});
+
+			} else hide_these.slideDown();
+
+			return false;
+		});
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {
@@ -579,6 +600,7 @@ $.bindPlugins = function() {
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
+	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
 	$('.sortable', '.authenticated').sortable({
@@ -598,6 +620,67 @@ $.bindPlugins = function() {
 	
 	$('.mini_calendar').datepicker();
 	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
+	
+	// client edit page
+	$('#add_fac', '#ov-units').click(function(){
+		var $this 			 	 = $(this),
+				listing_box 	 = $('#client_listing_box', $this.parent().parent()),
+				ajax_loader 	 = $this.prev('.ajax_loader').show(),
+				empty_listings = $('#empty_listings', listing_box);
+		
+		$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
+			if (empty_listings) $('.client_tip', empty_listings).remove();
+			
+			var partial 		= $(partial).hide(),
+					title_input = $('input[name="listing[title]"]', partial);
+					
+			empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+			partial.show();
+			
+			// save the listing to the db after the user types in a title
+			title_input.focus().bind('blur', function(){
+				var title_input = $(this);
+				ajax_loader.show();
+				
+				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+					if (response.success) {
+						var edit_link = $('.rslt-reserve a', partial);
+						edit_link.attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ response.data.listing_id +'/edit');
+						
+						ajax_loader.hide();
+						title_input.unbind('blur');
+						
+						// when the user clicks edit, bring all the form values through
+						edit_link.click(function(){
+							var href 				 = $(this).attr('href'),
+									address 		 = $('input[name="listing[map_attributes][address]"]', partial).val(),
+									city				 = $('input[name="listing[map_attributes][city]"]', partial).val(),
+									state 			 = $('input[name="listing[map_attributes][state]"]', partial).val(),
+									zip 				 = $('input[name="listing[map_attributes][zip]"]', partial).val(),
+									query_string = '?map[address]='+ address + '&map[city]='+ city +'&map[state]='+ state +'&map[zip]='+ zip;
+							
+							edit_link.attr('href', href + query_string);
+						});
+
+					} else {
+						$.ajax_error(response);
+						ajax_loader.hide();
+					}
+				}, 'json');
+			});
+			
+			$.bindPlugins();
+			ajax_loader.hide();
+		});
+		
+		return false;
+	});
+	
+	$('a', '#admin-box').click(function(){
+		var $this = $(this),
+				other_links = $('a:not(this)', '#admin-box').removeClass('active');
+		$this.addClass('active');
+	});
 	
 	// front page
 	$('a', '#click-more').click(function(){

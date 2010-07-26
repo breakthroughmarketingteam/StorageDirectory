@@ -34,7 +34,8 @@ class ClientsController < ApplicationController
     
   def edit
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
-    redirect_to new_client_path
+    @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC')
+    redirect_to new_client_path if @client.nil?
   end
   
   def update

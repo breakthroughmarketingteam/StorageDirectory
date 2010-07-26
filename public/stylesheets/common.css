@@ -271,7 +271,7 @@ input[type='reset'],a.cancel:link{color:#a63217;}
 #view_type_link_wrap .active{border:1px solid #dadada;padding:1px 8px;}
 .subfields{margin:0 0 7px 0;}
 /* Rails defaults */
-.flash{padding:7px 12px;font-weight:bold;margin:0 0 10px 0;border:2px solid;opacity:.7;box-shadow:3px 3px 5px #333;}
+.flash{padding:7px 12px;font-weight:bold;border:2px solid;margin:0 0 10px 0;opacity:.7;box-shadow:3px 3px 5px #333;}
 .flash p{margin:3px 0;opacity:1;}
 .notice{color:#334215;border-color:#334215;}
 .warning{color:#A55112;background-color:#ff9646;border-color:#A55112;}

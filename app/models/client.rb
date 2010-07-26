@@ -29,4 +29,8 @@ class Client < User
     mailing_address.update_attributes(info[:mailing_address]) && billing_info.update_attributes(info[:billing_info])
   end
   
+  def potential_listings
+    Listing.find :all, :conditions => ['title LIKE ?', self.company]
+  end
+  
 end
