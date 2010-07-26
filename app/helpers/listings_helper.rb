@@ -48,7 +48,7 @@ module ListingsHelper
   
   def edit_listing_title(listing)
     if listing.nil? || listing.new_record?
-      text_field_tag 'listing[title]', nil, :class => 'required hintable small_text_field', :title => 'Facility Name'
+      text_field_tag 'listing[title]', nil, :class => 'required hintable small_text_field i', :title => 'Facility Name'
     else
       content_tag :h3, listing.title
     end
@@ -56,7 +56,7 @@ module ListingsHelper
   
   def edit_listing_address(listing)
     if listing.nil? || listing.new_record?
-      text_field_tag 'listing[map_attributes][address]', nil, :class => 'required hintable small_text_field', :title => 'Street Address'
+      text_field_tag 'listing[map_attributes][address]', nil, :class => 'required hintable small_text_field i', :title => 'Street Address'
     else
       listing.map ? "#{listing.map.address}<br />" : ''
     end
@@ -64,9 +64,9 @@ module ListingsHelper
   
   def edit_listing_city_state_zip(listing)
     if listing.nil? || listing.new_record?
-      (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field', :title => 'City')
-      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field', :title => 'State', :rel => 'states')
-      html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field', :title => 'Zip')
+      (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field i', :title => 'City')
+      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :rel => 'states')
+      html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else
       listing.map.try :city_state_zip

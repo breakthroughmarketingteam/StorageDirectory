@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update]
+  before_filter :get_model, :only => [:show, :edit]
   before_filter :get_client, :only => [:edit]
   before_filter :get_map, :only => [:show, :edit]
   
@@ -29,6 +29,16 @@ class ListingsController < ApplicationController
   end
   
   def update
+    @listing = current_user.listings.find(params[:id])
+    case params[:from]
+    when 'quick_create'
+      @map = @listing.map
+      @map.update_attributes params[:listing][:map_attributes]
+      
+      render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
+    else
+      raise ['params[:from] is nil or unrecognized', params].pretty_inspect
+    end
   end
   
   def quick_create

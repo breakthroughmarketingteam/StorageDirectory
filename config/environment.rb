@@ -47,7 +47,15 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  
 end
+
+ActionMailer::Base.smtp_settings = {
+  :address => '192.168.1.10',
+  :port => 25,
+  :domain => 'local',
+  :authentication => :plain,
+}
 
 if defined? Hirb
   Hirb.enable :pager => true

@@ -24,7 +24,7 @@
         <% end %>
       </li>
       <li class="rslt-reserve">
-        <%= link_to 'Edit', (edit_client_listing_path(current_user.id, listing.id) rescue '#') %>
+        <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (edit_client_listing_path(current_user.id, listing.id) rescue '#') %>
       </li>
     </ul>
   </div>

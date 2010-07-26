@@ -132,17 +132,17 @@ $.toggleAction = function(href, scroll_to_it) {
 // first implemented for the sortable nav bar to update position via ajax
 $.updateModels = function(e, ui) {
 	var list_items  = ui.item.parent().children(),
-			$this			 	= $(ui.item),
-			data 				= '';
+		$this		= $(ui.item),
+		data 		= '';
 			
 	// build query string
 	$(list_items).each(function(i){ // html element id is <ModelClass>_<int ID>
 		var model_class = this.id.split('_')[0],
-				model_id 		= this.id.split('_')[1],
-				model_attr 	= $this.attr('rel'); // attribute to update
+			model_id 	= this.id.split('_')[1],
+			model_attr 	= $this.attr('rel'); // attribute to update
 				
 		data += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
-						'&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
+				'&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
 	});
 	
 	$.post('/ajax/update_many', data, function(response){
@@ -623,50 +623,76 @@ $.bindPlugins = function() {
 	
 	// client edit page
 	$('#add_fac', '#ov-units').click(function(){
-		var $this 			 	 = $(this),
-				listing_box 	 = $('#client_listing_box', $this.parent().parent()),
-				ajax_loader 	 = $this.prev('.ajax_loader').show(),
-				empty_listings = $('#empty_listings', listing_box);
+		var $this 		   = $(this),
+			listing_box    = $('#client_listing_box', $this.parent().parent()),
+			ajax_loader    = $this.prev('.ajax_loader').show(),
+			empty_listings = $('#empty_listings', listing_box);
 		
+		// GET PARTIAL
 		$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
-			if (empty_listings) $('.client_tip', empty_listings).remove();
+			var partial 	= $(partial).hide(),
+				title_input = $('input[name="listing[title]"]', partial),
+				button		= $('.rslt-reserve a', partial);
+				
+			// insert the new listing into either the #empty_listings box or #rslt-list-bg
+			if (empty_listings.length > 0) {
+				$('.client_tip', empty_listings).remove();
+				empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+				
+			} else $('#rslt-list-bg', listing_box).prepend(partial);
 			
-			var partial 		= $(partial).hide(),
-					title_input = $('input[name="listing[title]"]', partial);
-					
-			empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
 			partial.show();
 			
 			// save the listing to the db after the user types in a title
 			title_input.focus().bind('blur', function(){
-				var title_input = $(this);
+				var title_input = $(this).removeClass('invalid');
 				ajax_loader.show();
 				
+				// SAVE TITLE ON BLUR
 				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
 					if (response.success) {
-						var edit_link = $('.rslt-reserve a', partial);
-						edit_link.attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ response.data.listing_id +'/edit');
-						
+						partial.attr('id', 'Listing_'+ response.data.listing_id)
 						ajax_loader.hide();
 						title_input.unbind('blur');
-						
-						// when the user clicks edit, bring all the form values through
-						edit_link.click(function(){
-							var href 				 = $(this).attr('href'),
-									address 		 = $('input[name="listing[map_attributes][address]"]', partial).val(),
-									city				 = $('input[name="listing[map_attributes][city]"]', partial).val(),
-									state 			 = $('input[name="listing[map_attributes][state]"]', partial).val(),
-									zip 				 = $('input[name="listing[map_attributes][zip]"]', partial).val(),
-									query_string = '?map[address]='+ address + '&map[city]='+ city +'&map[state]='+ state +'&map[zip]='+ zip;
-							
-							edit_link.attr('href', href + query_string);
-						});
 
-					} else {
-						$.ajax_error(response);
+					} else { // they blurred the title input without typing anything in it, refocus and notify
+						title_input.addClass('invalid').focus();
 						ajax_loader.hide();
 					}
 				}, 'json');
+			});
+			
+			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
+			button.click(function(){
+				if (!button.data('saving')) {
+					button.data('saving', true);
+					ajax_loader.show();
+					
+					var listing_id = partial.attr('id').replace('Listing_', ''),
+						attributes = {
+							address : $('input[name="listing[map_attributes][address]"]', partial).val(),
+							city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
+							state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
+							zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+						};
+					
+					// SAVE ADDRESS WHEN USER CLICKS SAVE
+					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+						if (response.success) {
+							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
+							
+							listing_html = $(response.data);
+							partial.html(listing_html.html());
+
+						} else $.ajax_error(response);
+						
+						button.data('saving', false);
+						ajax_loader.hide();
+
+					}, 'json');
+				}
+				
+				return false;
 			});
 			
 			$.bindPlugins();
