@@ -24,7 +24,8 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #cnt-space{height:80px;}
 /* Start header styles */
 #logo{float:left;height:187px;width:139px;margin-left:35px;position:relative;z-index:9999;}
-#title{background:url(/images/ui/storagelocator/us-self-storage-locator-heading.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:513px;}
+#title{background:url(/images/ui/storagelocator/us-self-storage-locator-heading.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:513px;position:relative;}
+#title h2{bottom:6px;color:#333;font-weight:normal;left:10px;position:absolute;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 #top-nav .left{text-shadow:none;color:#999;}
 #top-nav .left a{text-decoration:none;}
@@ -47,11 +48,11 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
 /* hovers */
 #main-nav ul li a:hover{color:#000;}
-#main-nav ul li#home:hover,#main-nav ul li#Page_1:hover{background-image:url(/images/ui/storagelocator/home-button-hover.png);}
-#main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
-#main-nav ul li#Page_12:hover{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
-#main-nav ul li#tips:hover,#main-nav ul li#Page_3:hover{background-image:url(/images/ui/storagelocator/tips-button-hover.png);}
-#main-nav ul li#add:hover,#main-nav ul li#Page_11:hover{background-image:url(/images/ui/storagelocator/add-button-hover.png);}
+#main-nav ul li#home:hover,#main-nav ul li#Page_1:hover,#main-nav ul li#home.active,#main-nav ul li#Page_1.active{background-image:url(/images/ui/storagelocator/home-button-hover.png);}
+#main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover,#main-nav ul li#locate.active,#main-nav ul li#Page_2.active{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
+#main-nav ul li#Page_12:hover,#main-nav ul li#Page_12.active{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
+#main-nav ul li#tips:hover,#main-nav ul li#Page_3:hover,#main-nav ul li#tips.active,#main-nav ul li#Page_3.active{background-image:url(/images/ui/storagelocator/tips-button-hover.png);}
+#main-nav ul li#add:hover,#main-nav ul li#Page_11:hover,#main-nav ul li#add.active,#main-nav ul li#Page_11.active{background-image:url(/images/ui/storagelocator/add-button-hover.png);}
 #top-nav ul li.hidden{display:none;}
 /* Start the main homepage styles here */
 #locater{background:url(/images/ui/storagelocator/search-box-bg.png) repeat-x bottom left #fff;width:360px;height:386px;border:1px solid #C2C2CC;float:left;}
@@ -65,6 +66,7 @@ input#postcode{border:none;margin-top:10px;width:260px;padding:6px 10px;height:1
 #locater a{color:#666;text-decoration:none;}
 #locater a:hover{color:#333;text-decoration:underline;}
 #locater a.search-btn{background:url(/images/ui/storagelocator/search-medium-btn.png) no-repeat top left;width:130px;height:38px;line-height:38px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;float:left;font-weight:bold;text-shadow:1px 1px 0 #666;}
+#locater a.search-btn:hover,#locater a.search-btn:active{background-image:url(/images/ui/storagelocator/search-medium-btn-hover.png)}
 #locater a.op-btn{float:right;height:38px;line-height:1;width:65px;text-decoration:none;text-align:center;margin-right:-8px;font-size:90%;position:absolute;}
 #locater #map-btn{right:20px;top:9px;right:-1px;}
 #locater a.op-btn img{margin-top:5px;}
@@ -87,7 +89,7 @@ ul.city-list li a{width:110px;display:block;}
 #three-box-search{background:url(/images/ui/storagelocator/step1-bg.jpg) no-repeat top center;}
 #three-box-locate{background:url(/images/ui/storagelocator/step2-bg.jpg) no-repeat top center;}
 #three-box-reserve{background:url(/images/ui/storagelocator/step3-bg.jpg) no-repeat top center;}
-p#click-more{width:226px;position:absolute;height:35px;line-height:25px;background:url(/images/ui/storagelocator/click-for-more.png) no-repeat bottom center;text-align:center;margin-left:50px;font-size:14px;font-weight:bold;}
+p#click-more{width:226px;position:absolute;height:35px;line-height:25px;background:url(/images/ui/storagelocator/click-for-more.png) no-repeat bottom center;text-align:center;margin-left:38%;font-size:14px;font-weight:bold;}
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
 #type-two-l-col,#type-one-l-col,#content_bottom{width:197px;float:left;margin-top:10px;position:relative;left:2px;}
@@ -195,16 +197,16 @@ li.map-print a{width:89px;}
 li.map-plus{background:url(/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
 /* End the results page styles here */
-#add-fac-head-in{float:left;min-width:384px;padding:20px;}
-#type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-3px;}
+#add-fac-head-in{float:left;min-width:250px;padding:20px;}
+#type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-3px;font-size:80%;}
 #type-two-top-bar-head ul li#sort{position:relative;left:30px;width:260px;}
 #type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;}
 #type-two-top-bar-head ul li#search{width:325px;float:left;}
 #type-two-top-bar-head ul li#search a{background:url(/images/ui/storagelocator/go-button.png) no-repeat center left;width:45px;height:26px;display:block;float:right;text-align:center;color:#fff;text-decoration:none;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:-20px;}
 #type-two-top-bar-head ul input{height:18px;line-height:18px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 2px 1px 2px;position:relative;left:10px;}
 #type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;}
-div.green-head div.inner h2{font-weight:bold;margin-bottom:0px;font-size:220%;left:20px;}
-.green-head .inner p{font-size:12px;left:20px;color:#666;position:relative;left:20px;width:240px;}
+div.green-head div.inner h2{font-weight:bold;margin-bottom:7px;font-size:220%;left:20px;}
+.green-head .inner p{font-size:12px;left:20px;color:#666;position:relative;left:20px;width:240px;line-height:1.2;}
 .sub-head-txt{color:#fff;font-size:100%;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:20px;top:-3px;padding-bottom:10px;}
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:20px;}
 #city-box-in{width:163px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top left;position:relative;left:20px;top:17px;}
@@ -229,7 +231,7 @@ div.green-head div.inner h2{font-weight:bold;margin-bottom:0px;font-size:220%;le
 .blog-lock h3 a{color:#000;text-decoration:none;font-size:1.6em;}
 .blog-lock ul{overflow:hidden;}
 .blog-lock li{list-style:none;display:block;float:left;color:#999;font-size:0.9em;}
-.blog-lock li.share{margin-left:30px;width:155px;}
+.blog-lock li.share{margin-left:30px;width:167px;}
 .blog-lock li.five-star{/*background:url(/images/ui/storagelocator/5-stars.png) no-repeat top left;background-position:4em 0px;*/}
 li.share a{width:19px;height:16px;display:block;float:right;position:relative;top:-2px;}
 li.share a.delicious{background:url(/images/ui/storagelocator/delicious.png) no-repeat top left;}
@@ -419,7 +421,8 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-item-head p a{display:block;width:82px;height:30px;text-decoration:none;color:#fff;text-shadow:1px 1px 2px #000;}
 #ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
-.ov-info-cnt{float:left;position:relative;text-align:right;width:45%;}
+.ov-info-cnt{float:left;position:relative;width:45%;}
+.ov-info-cnt .label{margin-left:52px;}
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;color:#33c;font-size:1.2em;margin:10px 0px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
@@ -572,7 +575,7 @@ img.right{margin:0 10px 10px 0;}
 ul#add-fac-form a.search-button,#narrow-box a.search-btn{text-shadow:1px 1px 0 #666;}
 /* client edit form */
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
-#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:auto;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;position:relative;left:6px;}
 #clients_controller #ov-units .rslt-contact p .small_text_field{width:86.5%;}
 #clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
@@ -609,6 +612,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #client_listing_box{padding-top:10px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
+#info-accordion h5{font-size:22px;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}

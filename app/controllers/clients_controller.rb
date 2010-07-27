@@ -14,6 +14,9 @@ class ClientsController < ApplicationController
   end
   
   def create
+    params[:client].delete :city
+    params[:client].delete :state
+    
     phone = params[:client].delete(:phone)
     @client = Client.new params[:client]
     @client.name = @client.first_name + ' ' + @client.last_name

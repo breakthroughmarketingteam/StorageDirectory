@@ -630,28 +630,41 @@ $.bindPlugins = function() {
 	$('.mini_calendar').datepicker();
 	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
 	
-	// add you facility
+	$('ul li a', '#ov-reports-cnt').click(function(){
+		get_pop_up(this);
+		return false;
+	});
+	
+	// add your facility
 	$('form#new_client').submit(function(){
 		var signup_form    = $(this),
 			pop_up_title   = 'Add Your Facility',
 			workflow_dir   = '/views/partials/signup_steps/',
 			ajax_loader	   = $('.ajax_loader', this).show();
 		
-		$.get('/ajax/get_partial?model=Client&partial=/shared/pop_up', function(response){
-			var pop_up = $(response).dialog({
-				title: pop_up_title,
-				width: 785,
-				height: 400,
-				resizable: false,
-				open: begin_signup_workflow
-			});
-		});
+			get_pop_up(this);
 		
 		return false;
 	});
 	
-	function begin_signup_workflow(){
-		
+	function get_pop_up(button) {
+		$.get('/ajax/get_partial?model=Client&partial=/shared/pop_up', function(response){
+			var pop_up = $(response).dialog({
+				title: button.href,
+				width: 785,
+				height: 400,
+				resizable: false,
+				show: 'slide',
+				open: begin_signup_workflow
+			});
+		});
+	}
+	
+	function begin_signup_workflow() {
+		$('#go', '#pop_up').click(function(){
+			$('#pop_up').dialog('close');
+			$('#new_client').submit(); 
+		});
 	}
 	
 	// client edit page
@@ -804,10 +817,12 @@ $.bindPlugins = function() {
 	// front page
 	$('a', '#click-more').click(function(){
 		var $this = $(this);
-		if ($this.text() == 'Click here for more') {
-			$this.text('Click again to close');
+		if (!$this.data('open')) {
+			$this.data('open', true)
+			$this.text('Click to close');
 		} else {
-			$this.text('Click here for more')
+			$this.data('open', false)
+			$this.text('Click to open')
 		}
 	});
 	
