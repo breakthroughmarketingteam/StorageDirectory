@@ -1,0 +1,31 @@
+<div class="listing">
+  <div class="inner">
+    <img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77" />
+    <div class="rslt-contact">
+      <%= edit_listing_title(listing) %>
+      <p>
+        <%= edit_listing_address(listing) %>
+        <%= edit_listing_city_state_zip(listing) %>
+      </p>
+    </div>
+    <ul>
+      <% unless listing.new_record? %>
+        <li class="rslt-miles">
+          <span class="shifted-text"><strong>2</strong> miles</span>
+        </li>
+      <% end %>
+      <li class="rslt-offer">
+        <% unless listing.new_record? %>
+          <span>FIRST MONTH FREE<br />
+          Lowest price guaranteed!<br />
+          Online Only Special</span>
+        <% else %>
+          <p class="new_listing_tip">Enter your facility's name and address and then click EDIT to add additional details.</p>
+        <% end %>
+      </li>
+      <li class="rslt-reserve">
+        <%= link_to 'Edit', (edit_client_listing_path(current_user.id, listing.id) rescue '#') %>
+      </li>
+    </ul>
+  </div>
+</div>

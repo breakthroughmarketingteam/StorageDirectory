@@ -10,6 +10,7 @@
 
 		<%= site_meta_tags %>
 		<%= yield :scripts %>
+		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
     
 		<link rel="shortcut icon" type="image/x-ico" href="/favicon.ico" />
 		
@@ -33,7 +34,7 @@
     				 <!-- To align everything in the header correctly, it needs an inner container as well -->
     				 <div id="head-ctr-in">
         				 <div id="logo">
-                   <img src="/images/ui/storagelocator/us-self-storage-locator-logo.png" alt="US Self Storage Locator" />
+                   <a href="/"><img src="/images/ui/storagelocator/us-self-storage-locator-logo.png" alt="US Self Storage Locator" /></a>
         				 </div>
         					
         					<div id="title">
@@ -47,7 +48,11 @@
         					  
       							<ul>
       									<li class="hidden"><a href="#top">Skip Navigation</a></li>
-      									<li class="top-nav-login"><a href="/login">Login</a></li>
+      									<li class="top-nav-login">
+      									  <%= link_to_if current_user.nil?, 'Login', login_path do
+      									    link_to 'Logout', logout_path
+      									  end %>
+      									</li>
       									<li class="top-nav-help"><a href="">Help</a></li>
       							</ul>
         					</div>
@@ -111,10 +116,13 @@
     <!-- Now end the page-container-outer -->
     
     <%= yield :footer %>
-	  
-	<%= javascript_include_tag 'ckeditor/ckeditor.js', 'jquery.all', @plugins %>
+	
+	<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
+	<%= javascript_include_tag 'jquery.all', @plugins %>
+	<%#= javascript_include_tag 'queryLoader' if @page %>
   	<%= @widgets_js.map { |js| javascript_include_tag js } %>
   	<%= javascript_include_tag 'application' %>
+	<!--<script>try{QueryLoader.selectorPreload = "body";QueryLoader.init();}catch(e){}</script>-->
 	
 	</body>
 </html>

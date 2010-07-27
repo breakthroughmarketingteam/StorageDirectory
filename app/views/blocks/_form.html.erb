@@ -31,13 +31,12 @@
 		
 			<div class="check_box_wrap left">
 				<%= f.check_box :show_title %>
-				<%= f.label :show_title, 'and show title' %>
+				<%= f.label :show_title, 'show title' %>
 			</div>
 		</div>
 		
 		<div class="uncollapse">
 			<div class="check_box_wrap left">
-			  <%= f.label :restful, 'and ' %>
 			  <%= f.check_box :restful, :class => 'toggle_div', :title => 'Show on certain resource\'s pages' %> 
 				<%= f.label :restful, 'show in restful region ' %>
 			</div>

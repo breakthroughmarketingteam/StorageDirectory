@@ -4,10 +4,6 @@ class Size < ActiveRecord::Base
   
   attr_accessor :special
   
-  def display_price
-    "$#{self.price.to_f}"
-  end
-  
   def display_dimensions
     "#{x} x #{y}"
   end

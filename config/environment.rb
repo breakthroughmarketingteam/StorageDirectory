@@ -20,15 +20,18 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   # config.gem 'liquid'
-   config.gem 'authlogic'
+  # config.gem 'authlogic'
   # config.gem 'facebooker'
   #config.gem 'aws-s3'
   config.gem 'geokit'
+<<<<<<< HEAD
   require 'geokit'
+=======
+  #require 'geokit'
+>>>>>>> 486357738a0e0e697abb8e67bffa9a0a7b6a31e6
   config.gem 'will_paginate'
-  config.gem 'ajaxful_rating'
-  config.gem 'memcached'
-  require 'memcached'
+  #config.gem 'memcached'
+  #require 'memcached'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

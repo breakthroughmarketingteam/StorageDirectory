@@ -6,7 +6,6 @@ class Map < ActiveRecord::Base
   validates_presence_of :address, :city, :state, :zip
   validates_numericality_of :zip
   validates_length_of :state, :is => 2
-  validates_length_of :zip, :within => 4..5
   
   attr_reader :full_address
   
@@ -17,10 +16,10 @@ class Map < ActiveRecord::Base
   end
   
   def city_state_zip
-    "#{city}, #{state} #{prep_zip(zip)}"
+    "#{city}, #{state} #{prep_zip}"
   end
   
-  def prep_zip(zip)
+  def prep_zip
     zip.to_s.size < 5 ? "0#{zip}" : zip
   end
   

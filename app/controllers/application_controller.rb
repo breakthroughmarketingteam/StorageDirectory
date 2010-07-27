@@ -133,6 +133,7 @@ class ApplicationController < ActionController::Base
     @nav_pages         = Page.nav_pages
     @global_blocks     = Block.all :conditions => ['show_in_all in (?)', regions(false).map(&:to_s)]
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
+    @flash_msgs        = { :new_client => 'Welcome! Your account is almost ready...' }
   end
   
   # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }
@@ -316,9 +317,8 @@ class ApplicationController < ActionController::Base
     disabled_models = models.reject { |me| me.enabled_in? model }
   end
   
-  def model_errors(model, usePtags = true)
-    error = model.errors.full_messages.map { |e| usePtags ? "<p>#{e}</p>" : e }
-    usePtags ? error : error * ', '
+  def model_errors(*models)
+    error = models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?)
   end
   
   #--------------------- Authlogic ---------------------
@@ -395,8 +395,8 @@ class ApplicationController < ActionController::Base
     "themes/#{name}/style"
   end
   
-  def plugin_css(name)
-    "plugins/#{name}"
+  def plugin_css(*names)
+    names.map { |name| "plugins/#{name}" }
   end
   
   def refresh_without_params

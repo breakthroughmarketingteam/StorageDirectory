@@ -24,93 +24,176 @@ $('.open_reserve_form').click(function(){
 	return false;
 });
 
-// edit functionality for the sizes in the facility edit page
-$('.edit-btn', '.authenticated .sl-table').click(function(){
-	var $this 			= $(this),
-		container 		= $this.parent().parent(),
-		hidden_form		= $('.hidden_form', container.parent()),
-		cancel_btn		= $('.cancel_link', container.parent()),
-		size_id			= $('input[name=size_id]', container).val(),
-		sizes_li 		= $('.st-size', container),
-		type_li 		= $('.st-type', container),
-		price_li 		= $('.st-pric', container),
-		specials_li 	= $('.st-spec', container),
-		reset_li 		= $('.st-rese', container),
-		load_li 		= $('.st-sele', container),
+$.convert_unit_size_row_values_to_inputs = function(container) {
+	// values and such
+	var sizes_li	= $('.st-size', container),
+		type_li 	= $('.st-type', container),
+		price_li 	= $('.st-pric', container),
+		specials_li = $('.st-spec', container),
+		load_li		= $('.st-sele', container),
 		
 		// to revert the content on cancel
 		sizes_orig		= sizes_li.text(),
 		type_orig		= type_li.text(),
 		price_orig		= price_li.html(),
-		specials_orig  = specials_li.html(),
-		
-		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
+		specials_orig  	= specials_li.html(),
 	
-	if ($(this).text() == 'Edit') {
 		// build the input fields with the original values preset
-		var x = sizes_orig.split(/\W?x\W?/)[0],
-			y = sizes_orig.split(/\W?x\W?/)[1],
-			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[x]" value="'+ x +'" />',
-			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[y]" value="'+ y +'" />',
-			ti = '<input type="text" class="small_text_field i" name="size[unit_type]" value="'+ (type_orig == 'NONE' ? '' : type_orig) +'" />',
-			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
-			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
-		
+		x = sizes_orig.split(/\W?x\W?/)[0],
+		y = sizes_orig.split(/\W?x\W?/)[1],
+		xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[x]" value="'+ x +'" />',
+		yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[y]" value="'+ y +'" />',
+		ti = '<input type="text" class="small_text_field i" name="size[unit_type]" value="'+ (type_orig == 'NONE' ? '' : type_orig) +'" />',
+		pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
+		si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
+	
 		// replace the content in the unit size row
 		sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
 		type_li.html(ti);
 		price_li.html('<span class="left">$ </span>'+ pi);
 		specials_li.html(si);
 		
-		cancel_btn.show();
-		$this.text('Save');
-		
-	} else if ($(this).text() == 'Save') {
-		// loading anim
-		load_li.addClass('active_load');
-		cancel_btn.hide();
-		
-		// clone the inputs and put into the hidden form in order to serialize the data
-		$('input.i', container).each(function(){ hidden_form.append($(this).clone()); });
-		
-		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-			if (response.success) {
-				// update the row with the new values
-				var sizes_html = $('input[name="size[x]"]', container).val() +' x '+ $('input[name="size[y]"]', container).val();
-				sizes_li.css(sizes_li_revertment).html(sizes_html);
-				
-				var type_html = $('input[name="size[unit_type]"]', container).val();
-				type_li.html(type_html);
-				
-				var price_html = $('input[name="size[price]"]', container).val();
-				price_li.html(price_html);
-				
-				var specials_html = $('input[name="size[special]"]', container).val();
-				specials_li.html(specials_html);
-				
-				$this.text('Edit');
-				cancel_btn.hide();
-				
-			} else alert('nay');
-			
-			load_li.removeClass('active_load');
-			
-		}, 'json');
-	}
-	
-	cancel_btn.click(function(){
+	$('.cancel_link', container).click(function(){
 		// revert to original content
 		sizes_li.html(sizes_orig).css(sizes_li_revertment);
 		type_li.html(type_orig);
 		price_li.html(price_orig);
 		specials_li.html(specials_orig);
-		
-		$this.text('Edit');
-		cancel_btn.hide();
+
+		$('.edit-btn', container).text('Edit');
+		$(this).hide();
 		return false;
 	});
+}
+
+$.clone_and_attach_inputs = function(inputs, context, form) {
+	$(inputs, context).each(function(){ form.append($(this).clone()); });
+}
+
+$.post_new_unit_size_values_and_revert = function(container, hidden_form) {
+	var sizes_li	= $('.st-size', container),
+		type_li 	= $('.st-type', container),
+		price_li 	= $('.st-pric', container),
+		specials_li = $('.st-spec', container);
+	
+	$.clone_and_attach_inputs('input.i', container, hidden_form);
+	
+	$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
+		if (response.success) {
+			// update the row with the new values
+			var sizes_html = $('input[name="size[x]"]', container).val() +' x '+ $('input[name="size[y]"]', container).val();
+			sizes_li.css(sizes_li_revertment).html(sizes_html);
+			
+			var type_html = $('input[name="size[unit_type]"]', container).val();
+			type_li.html(type_html);
+			
+			var price_html = $('input[name="size[price]"]', container).val();
+			price_li.html(price_html);
+			
+			var specials_html = $('input[name="size[special]"]', container).val();
+			specials_li.html(specials_html);
+			
+			$('.edit-btn', container).text('Edit');
+			$('.cancel_link', container).hide();
+			
+		} else alert('Error: '+ response.data);
+		
+		$('.st-sele', container).removeClass('active_load');
+		
+	}, 'json');
+}
+
+// edit functionality for the sizes in the facility edit page
+$('.edit-btn', '.authenticated .sl-table').click(function(){
+	var $this 		= $(this),
+		container 	= $this.parents('.sl-table'),
+		hidden_form	= $('form:hidden', container.parent()),
+		cancel_btn	= $('.cancel_link', container),
+		load_li		= $('.st-sele', container);
+	
+	// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
+	sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
+	sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
+	
+	if ($(this).text() == 'Edit') {
+		$.convert_unit_size_row_values_to_inputs(container);
+		
+		cancel_btn.show();
+		$this.text('Save');
+		
+	} else if ($(this).text() == 'Save') {
+		load_li.addClass('active_load'); // loading anim
+		cancel_btn.hide();
+		
+		$.post_new_unit_size_values_and_revert(container, hidden_form);
+	}
+	
+	return false;
+});
+
+// address and specials boxes, convert to form and handle ajax post
+$('.attr_edit', '.authenticated').click(function(){
+	var $this 	   = $(this).css('display', 'inline'),
+		container  = $this.parent(),
+		rel 	   = $this.attr('rel'),
+	 	cancel_btn = $('.cancel_btn', $this.parent());
+	
+	if ($this.text() == 'Edit') {
+		cancel_btn.show();
+		$this.text('Save').data('saving', false);
+		
+		if (rel == 'address') { // has spans for each address field, e.g. address, state, zip
+			$('.address, .tags', container).children('span').each(function(){
+				var el	  = $(this).hide(),
+					attr  = el.attr('rel'),
+					input = $('<input type="text" name="map['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
+			
+				el.after(input); // put input after span
+			
+			});
+		} else if (rel == 'special') {
+			var el	  = $('.sl-special', container).hide(),
+				attr  = el.attr('rel'),
+				input = $('<input type="text" name="listing['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
+				
+			el.after(input); // put input after span
+			
+		}
+		
+		cancel_btn.click(function(){
+			$this.text('Edit').data('saving', false).attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
+			cancel_btn.hide();
+			$('.value', container).show();
+			$('input.i', container).remove();
+			return false;
+		});
+		
+	} else if ($this.text() == 'Save' && !$this.data('saving')) {
+		$this.data('saving', true);
+		$('.ajax_loader', container).show();
+		
+		var hidden_form = $('form[rel='+ rel +']', container);
+		$.clone_and_attach_inputs('input.i', container, hidden_form);
+		
+		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
+			if (response.success) {
+				$('input.i', container).each(function(){
+					var input = $(this),
+						val	  = input.val();
+						
+					input.prev('.value').text(val).show();
+					input.remove();
+				});
+				
+				$this.text('Edit').attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
+				cancel_btn.hide();
+				
+			} else alert('Error: '+ response.data);
+			
+			$this.data('saving', false);
+			$('.ajax_loader', container).hide();
+		});
+	}
 	
 	return false;
 });
@@ -144,10 +227,10 @@ $('#more_results').click(function(){
 		if (response.success) { // returned some listings
 			// we get an array JSON objects, each represents a listing including related models attributes
 			$.each(response.data, function(i){
-				var info 				 = this.info, // listing attributes
-						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
-						map 				 = this.map, // related model attributes
-						specials		 = this.specials;
+				var info 		 = this.info, // listing attributes
+					this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
+					map 		 = this.map, // related model attributes
+					specials	 = this.specials;
 						
 				// update tab urls
 				var tabs = [
@@ -165,18 +248,18 @@ $('#more_results').click(function(){
 				}
 				
 				// update the content in the copy of the listing html and add it to the dom
-				$('.rslt-title a', this_listing)				.text(info.title);
-				$('.rslt-title a', this_listing)				.attr('href', '/self-storage/show/' + info.id);
-				$('.rslt-address', this_listing)				.text(map.address);
-				$('.rslt-citystate', this_listing)			.text(map.city + ', ' + map.state + ' ' + map.zip);
-				$('.rslt-phone', this_listing)					.text(map.phone);
+				$('.rslt-title a', this_listing)		.text(info.title);
+				$('.rslt-title a', this_listing)		.attr('href', '/self-storage/show/' + info.id);
+				$('.rslt-address', this_listing)		.text(map.address);
+				$('.rslt-citystate', this_listing)		.text(map.city + ', ' + map.state + ' ' + map.zip);
+				$('.rslt-phone', this_listing)			.text(map.phone);
 				$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
-				$('.rslt-specials h5', this_listing)		.text(specials.title);
-				$('.rslt-specials p', this_listing)			.text(specials.cotent);
+				$('.rslt-specials h5', this_listing)	.text(specials.title);
+				$('.rslt-specials p', this_listing)		.text(specials.cotent);
 				
 				this_listing.appendTo(results_wrap).hide().slideDown('slow');
-
 				$('.inner:first', this_listing).effect('highlight', { color: '#c2cee9' }, 1700);
+				this_listing.greyresults();
 			});
 			
 			// this updates the page count so the next time the user clicks, we pull the correct data
@@ -233,8 +316,7 @@ $('.open_tab', '.tabs').click(function(){
 		$this.text('x');
 	} else {
 		$panel.slideUp();
-		$('.tab_link, .listing, .panel').removeClass('active');
-		$('.tab_link').removeClass('borderButTop');
+		$('.tab_link, .listing, .panel, .tabs li').removeClass('active');
 		$this.data('active', false);
 		$('.open_tab').text('+');
 	}

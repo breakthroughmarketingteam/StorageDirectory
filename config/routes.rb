@@ -8,6 +8,11 @@ ActionController::Routing::Routes.draw do |map|
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
+
+  # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
+  map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
+  
+  map.client_account '/my_account', :controller => 'clients', :action => 'edit'
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
@@ -23,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
                                    :requirements => { :zip => /^\d{5}$/ }
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
+  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
@@ -51,7 +57,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :site_setting
   
   # greyresults
-  map.resources :listings, :collection => { :import => :post }, :has_many => :sizes
+  map.resources :listings, :collection => { :import => :post }, :has_many => [:sizes, :specials, :maps]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   
@@ -114,13 +120,14 @@ ActionController::Routing::Routes.draw do |map|
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'show', :title => 'home'
-
+  
   # See how all your routes lay out with "rake routes"
-
+  
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':title', :controller => 'pages', :action => 'show', :title => nil
+  
+  map.connect ':title', :controller => 'pages', :action => 'show'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
