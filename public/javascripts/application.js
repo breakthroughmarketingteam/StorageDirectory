@@ -607,6 +607,7 @@ $.bindPlugins = function() {
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	
+	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
 	
@@ -628,6 +629,30 @@ $.bindPlugins = function() {
 	
 	$('.mini_calendar').datepicker();
 	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
+	
+	// add you facility
+	$('form#new_client').submit(function(){
+		var signup_form    = $(this),
+			pop_up_title   = 'Add Your Facility',
+			workflow_dir   = '/views/partials/signup_steps/',
+			ajax_loader	   = $('.ajax_loader', this).show();
+		
+		$.get('/ajax/get_partial?model=Client&partial=/shared/pop_up', function(response){
+			var pop_up = $(response).dialog({
+				title: pop_up_title,
+				width: 785,
+				height: 400,
+				resizable: false,
+				open: begin_signup_workflow
+			});
+		});
+		
+		return false;
+	});
+	
+	function begin_signup_workflow(){
+		
+	}
 	
 	// client edit page
 	
@@ -658,6 +683,7 @@ $.bindPlugins = function() {
 					title_input.focus();
 				});
 				
+				bind_listing_input_events();
 				$.bindPlugins();
 				ajax_loader.hide();
 			});
@@ -680,10 +706,8 @@ $.bindPlugins = function() {
 					ajax_loader.show();
 
 					$.post('/listings/quick_create', { title: title_input.val() }, function(response){
-						if (response.success) {
-							partial.attr('id', 'Listing_'+ response.data.listing_id);
-
-						} else { // SERVER VALIDATION DID NOT PASS
+						if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
+						else { // SERVER VALIDATION DID NOT PASS
 							title_input.addClass('invalid').focus();
 						}
 						
@@ -696,100 +720,84 @@ $.bindPlugins = function() {
 				}
 			
 			});
-		
-			// ADDRESS: when the input is blurred, move the tip_text down to the city state input
-			$('input[name="listing[map_attributes][address]"]', '.listing:eq(0)').live('blur', function(){
-				var tip_text	  = $('.new_listing_tip', '.listing:eq(0)'),
-					tip_inner	  = tip_text.find('strong'),
-					address_input = $('input[name="listing[map_attributes][address]"]', '.listing:eq(0)').removeClass('invalid');
-
-				if (address_input.val() != '' && address_input.val() != address_input.attr('title')) {
-					tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
-					tip_inner.text('Type in the city.');
-
-				} else address_input.focus().addClass('invalid');
-
-			});
 			
-			// CITY: if not empty, update the tip inner
-			$('input[name="listing[map_attributes][city]"]', '.listing:eq(0)').live('blur', function(){
-				var tip_inner	  = $('.new_listing_tip strong', '.listing:eq(0)'),
-					city_input	  = $('input[name="listing[map_attributes][city]"]', '.listing:eq(0)').removeClass('invalid');
-
-				if (city_input.val() != '' && city_input.val() != city_input.attr('title')) {
-					tip_inner.text('Enter the 2 letter State abbrev.');
-
-				} else city_input.addClass('invalid').focus();
-
-			});
+			// a collection of the input names and the msg to change the tip to, and the method with which to change the tip
+			var listing_tip_inner_tag = 'strong',
+				listing_input_msgs = [
+					['address', 'Type in the city.', function(tip_text, msg){
+						tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['city', 'Enter the 2 letter State abbrev.', function(tip_text, msg){
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['state', 'Enter the 5 digit zip code.', function(tip_text, msg){
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['zip', '<strong>Almost Done! Click Save.</strong>', function(tip_text, msg){
+						tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
+					}]
+				];
 			
-			// STATE: when they finish typing in the last input (zip code) change the tip_text
-			$('input[name="listing[map_attributes][state]"]', '.listing:eq(0)').live('blur', function(){
-				var tip_inner	  = $('.new_listing_tip strong', '.listing:eq(0)'),
-					state_input	  = $('input[name="listing[map_attributes][state]"]', '.listing:eq(0)').removeClass('invalid');
-
-				if (state_input.val() != '' && state_input.val() != state_input.attr('title')) {
-					tip_inner.text('Enter the 5 digit zip code.');
-
-				} else state_input.addClass('invalid').focus();
-
-			});
-		
-			// ZIP: when they finish typing in the last input (zip code) change the tip_text
-			$('input[name="listing[map_attributes][zip]"]', '.listing:eq(0)').live('blur', function(){
-				var tip_text	  = $('.new_listing_tip', '.listing:eq(0)'),
-					zip_input	  = $('input[name="listing[map_attributes][zip]"]', '.listing:eq(0)').removeClass('invalid');
-
-				if (zip_input.val() != '' && zip_input.val() != zip_input.attr('title')) {
-					tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
-
-				} else zip_input.focus().addClass('invalid');
-
-			});
-		
-			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
-			$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
-				var partial 	= $('.listing:eq(0)', '#client_listing_box'),
-					button  	= $('.rslt-reserve a', '.listing:eq(0)'),
-					ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
+			function bind_listing_input_events() {
+				$.each(listing_input_msgs, function(){
+					var input_name = this[0], blur_msg = this[1], done_action = this[2],
+						tip_text   = $('.new_listing_tip', '.listing:eq(0)');
 					
-				if (!button.data('saving')) {
-					button.data('saving', true);
-					ajax_loader.show();
-				
-					var listing_id = partial.attr('id').replace('Listing_', ''),
-						attributes = {
-							address : $('input[name="listing[map_attributes][address]"]', partial).val(),
-							city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
-							state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
-							zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
-						};
-				
-					// SAVE ADDRESS WHEN USER CLICKS SAVE
-					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
-						if (response.success) {
-							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
-						
-							listing_html = $(response.data);
-							partial.html(listing_html.html());
+					$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+						var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
 
-						} else $.ajax_error(response);
-					
-						button.data('saving', false);
-						ajax_loader.hide();
+						if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
+						else input.focus().addClass('invalid');
 
-					}, 'json');
-				}
-			
-				return false;
-			});
+					});
+				});
+				
+				// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
+				$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+					var partial 	= $('.listing:eq(0)', '#client_listing_box'),
+						button  	= $(this),
+						ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
+
+					if (!button.data('saving') && button.text() == 'Save') {
+						button.data('saving', true);
+						ajax_loader.show();
+
+						var listing_id = partial.attr('id').replace('Listing_', ''),
+							attributes = {
+								address : $('input[name="listing[map_attributes][address]"]', partial).val(),
+								city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
+								state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
+								zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+							};
+
+						// SAVE ADDRESS WHEN USER CLICKS SAVE
+						$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+							if (response.success) {
+								button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
+
+								listing_html = $(response.data);
+								partial.html(listing_html.html()).removeClass('active');
+
+							} else $.ajax_error(response);
+
+							button.data('saving', false);
+							ajax_loader.hide();
+
+						}, 'json');
+
+						return false;
+					}
+				});
+			} // END bind_listing_input_events()
+		 
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow
 	
 	$('a', '#admin-box').click(function(){
 		var $this = $(this),
-				other_links = $('a:not(this)', '#admin-box').removeClass('active');
+			other_links = $('a:not(this)', '#admin-box').removeClass('active');
 		$this.addClass('active');
 	});
 	

@@ -101,7 +101,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #narrow-box{background:url(/images/ui/storagelocator/narrow-search-header.png) no-repeat top left;width:164px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;position:relative;left:20px;color:#555;text-align:center;}
 #add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;height:200px;}
 #narrow-box h2{width:114px;font-size:100%;color:#fff;height:47px;text-align:left;position:relative;left:50px;line-height:17px;text-shadow:1px 1px 0 #666;top:6px;}
-#add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #000;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
+#add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
 #narrow-box p,#add-fac-box p{margin:15px 10px;text-align:left;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
 ul#add-fac-form a.search-button,
@@ -239,7 +239,9 @@ li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
 /* Start the add facility page styles here */
-form#new_client{width:430px;float:left;position:relative;left:45px;margin-bottom:20px;}
+form#new_client{width:430px;float:left;position:relative;left:30px;margin-bottom:20px;text-align:right;}
+form#new_client .label{padding-right:20px;}
+form#new_client .ajax_loader{margin:16px 11px 0 0;}
 ul#add-fac-form li{list-style:none;margin-bottom:20px;clear:both;}
 ul#add-fac-form li input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;}
 #add-fac-form-txt{width:246px;float:right;position:relative;left:-20px;top:-8px;}
@@ -478,7 +480,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .table_view{width:100%;}
 /* the container styles */
 .home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in{margin:15px 20px 0px 20px;}
-#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:0;}
+#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:3px 0 0 0;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
 /*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/
 #listings_controller.show_action #type-one-cnt-in{padding:0;}
@@ -610,3 +612,9 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}
+#pop_up{text-align:left;padding:10px 15px;z-index:9999;background:url("/images/ui/storagelocator/pop-up-in-bg-strip.png") repeat-x top;border-radius-bottomright:15px;-moz-border-radius-bottomright:15px;-webkit-border-bottom-right-radius:15px;border-radius-bottomleft:15px;-moz-border-radius-bottomleft:15px;-webkit-border-bottom-left-radius:15px;}
+.ui-dialog{padding:15px;border:1px solid #ccc;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
+.ui-widget-content,.ui-dialog{background:#fff;}
+.ui-dialog .ui-widget-header{color:#fff;text-shadow:1px 1px 2px #333;font-size:120%;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x top;border:1px solid #ccc;border-bottom:0 none;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px; /* bottom */ border-radius-bottomright:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-radius-bottomleft:0;-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;}
+.ui-dialog .ui-dialog-titlebar{padding:10px 15px;}
+.ui-dialog .ui-dialog-titlebar-close{margin:-10px 6px 0;}

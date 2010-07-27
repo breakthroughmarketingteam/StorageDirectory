@@ -25,7 +25,7 @@
         <div id="ov-item-head">
           <h3><span>Owner Info</span></h3>
 		
-  	      <%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
+  	      <%= ajax_loader %>
           <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] %>" href="#">Edit</a></p>
         </div>
 
@@ -55,11 +55,11 @@
       </div>
 
       <div id="ov-units" class="hideable">
-	      <div id="ov-units-head">
-          <h3><span>Facilities</span></h3>
-          <% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
-          <%= image_tag '/images/ui/ajax-loader-facebook.gif', :class => 'ajax_loader' %>
-		      <a href="#" id="add_fac" title="Add a new facility">New</a>
+		<div id="ov-units-head">
+			<h3><span>Facilities</span></h3>
+			<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
+			<%= ajax_loader %>
+			<a href="#" id="add_fac" title="Add a new facility">New</a>
         </div>
         
         <div id="client_listing_box">

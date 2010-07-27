@@ -31,7 +31,7 @@
         </p>
         
         <p class="clear tags">
-          <strong>Category:</strong> <span rel="tag_list" class="value"><%= @listing.tag_list || '&nbsp;' %></span>
+          <strong>Types:</strong> <span rel="tag_list" class="value"><%= @listing.tag_list || '&nbsp;' %></span>
         </p>
 		
 		    <%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>
