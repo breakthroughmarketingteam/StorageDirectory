@@ -46,6 +46,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#tips,#main-nav ul li#Page_3{width:121px;background:url(/images/ui/storagelocator/tips-button.png) no-repeat top left;}
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
 /* hovers */
+#main-nav ul li a:hover{color:#000;}
 #main-nav ul li#home:hover,#main-nav ul li#Page_1:hover{background-image:url(/images/ui/storagelocator/home-button-hover.png);}
 #main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
 #main-nav ul li#Page_12:hover{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
