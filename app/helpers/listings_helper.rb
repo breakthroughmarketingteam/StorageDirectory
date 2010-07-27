@@ -58,7 +58,7 @@ module ListingsHelper
     if listing.nil? || listing.new_record?
       text_field_tag 'listing[map_attributes][address]', nil, :class => 'required hintable small_text_field i', :title => 'Street Address'
     else
-      listing.map ? "#{listing.map.address}<br />" : ''
+      listing.map && !listing.map.address.blank? ? "#{listing.map.address}<br />" : ''
     end
   end
   
@@ -69,7 +69,7 @@ module ListingsHelper
       html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else
-      listing.map.try :city_state_zip
+      listing.map.city_state_zip unless listing.map.city.blank? && listing.map.state.blank? && listing.map.zip.blank?
     end
   end
   

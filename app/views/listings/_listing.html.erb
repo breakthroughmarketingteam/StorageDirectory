@@ -8,20 +8,15 @@
         <%= edit_listing_city_state_zip(listing) %>
       </p>
     </div>
-    <ul>
-      <% unless listing.new_record? %>
-        <li class="rslt-miles">
-          <span class="shifted-text"><strong>2</strong> miles</span>
-        </li>
-      <% end %>
-      <li class="rslt-offer">
-        <% unless listing.new_record? %>
-          <span>FIRST MONTH FREE<br />
-          Lowest price guaranteed!<br />
-          Online Only Special</span>
-        <% else %>
-          <p class="new_listing_tip">Enter your facility's name and address and then click EDIT to add additional details.</p>
-        <% end %>
+    <ul class="listing_options">
+      <li class="<%= listing.new_record? ? 'new_listing_tips' : 'rslt-offer' %>">
+        <% if listing.new_record? %>
+          <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
+        <% elsif listing.special.nil? %>
+			<p class="listing_advice"><strong>You haven't added any details yet! Click Edit.</strong></p>
+		<% else %>
+			<%= listing.display_special %>
+		<% end %>
       </li>
       <li class="rslt-reserve">
         <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (edit_client_listing_path(current_user.id, listing.id) rescue '#') %>

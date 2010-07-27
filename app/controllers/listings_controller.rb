@@ -33,9 +33,13 @@ class ListingsController < ApplicationController
     case params[:from]
     when 'quick_create'
       @map = @listing.map
-      @map.update_attributes params[:listing][:map_attributes]
       
-      render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
+      if @map.update_attributes params[:listing][:map_attributes]
+        render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
+      else
+        render :json => { :success => true, :data => model_errors(@map) }
+      end
+      
     else
       raise ['params[:from] is nil or unrecognized', params].pretty_inspect
     end

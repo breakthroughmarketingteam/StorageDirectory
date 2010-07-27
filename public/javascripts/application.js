@@ -107,23 +107,30 @@ $.toggleAction = function(href, scroll_to_it) {
 	var url_hash = href.split('#');
 	
 	if (url_hash[1]) {
-		url_hash					= url_hash[1],
-		 		action				= url_hash.split('_')[0],
-				elementClass	= url_hash.split('_')[1],
-				contextClass	= url_hash.split('_')[2],
-				target			  = $('.' + elementClass, '.' + contextClass);
+		url_hash	 = url_hash[1],
+ 		action		 = url_hash.split('_')[0],
+		elementClass = url_hash.split('_')[1],
+		contextClass = url_hash.split('_')[2],
+		target		 = $('.' + elementClass, '.' + contextClass);
 		
 		// validate action name and do it.
 		if ($.validateAnimationAction(action)) {
-			var context = $('.' + contextClass);
-			var actionLink = $('.toggle_action', context);
-			
-			// change the state of the toggle_action link
-			if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
-			
-			if (scroll_to_it) $(document).scrollTo(context, 800);
-			
-			target[action]();
+			if (elementClass.match(/^ov-.*/)) { // used on the client options (#admin-box)
+				setTimeout(function(){
+					$('a[rel='+ elementClass +']', '#admin-box').click();
+				}, 1)
+				
+			} else {
+				var context = $('.' + contextClass);
+				var actionLink = $('.toggle_action', context);
+
+				// change the state of the toggle_action link
+				if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
+
+				if (scroll_to_it) $(document).scrollTo(context, 800);
+
+				target[action]();
+			}
 		}
 	}
 	
@@ -579,8 +586,6 @@ $.bindPlugins = function() {
 	$('.hide_if_js').hide();
 	$('.flash').hide().slideDown();
 	
-	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
-	
 	try { // to load external plugins, ignore failure (if plugins weren't selected in site settings)
 		$.bindPlugins(); // calls a few common plugins, also used after a new element that uses a plugin is created in the dom
 	} catch (e){};
@@ -602,6 +607,9 @@ $.bindPlugins = function() {
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	
+	// we call the toggleAction in case we need to trigger any plugins declared above
+	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
+	
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
 	$('.sortable', '.authenticated').sortable({
 		opacity: 0.3,
@@ -622,52 +630,133 @@ $.bindPlugins = function() {
 	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
 	
 	// client edit page
-	$('#add_fac', '#ov-units').click(function(){
-		var $this 		   = $(this),
-			listing_box    = $('#client_listing_box', $this.parent().parent()),
-			ajax_loader    = $this.prev('.ajax_loader').show(),
-			empty_listings = $('#empty_listings', listing_box);
+	
+	// NEW LISTING WORKFLOW
+		// 1). Click NEW button, get a partial from the server and prepend to the listing box
+		$('#add_fac', '#ov-units').click(function(){
+			var $this 		   = $(this),
+				listing_box    = $('#client_listing_box', $this.parent().parent()),
+				empty_listings = $('#empty_listings', listing_box),
+				ajax_loader    = $this.prev('.ajax_loader').show();
 		
-		// GET PARTIAL
-		$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
-			var partial 	= $(partial).hide(),
-				title_input = $('input[name="listing[title]"]', partial),
-				button		= $('.rslt-reserve a', partial);
-				
-			// insert the new listing into either the #empty_listings box or #rslt-list-bg
-			if (empty_listings.length > 0) {
-				$('.client_tip', empty_listings).remove();
-				empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
-				
-			} else $('#rslt-list-bg', listing_box).prepend(partial);
+			// GET PARTIAL
+			$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
+				var partial 	  = $(partial).hide(),
+					title_input   = $('input[name="listing[title]"]', partial),
+					tip_text	  = $('.new_listing_tip', partial);
 			
-			partial.show();
-			
-			// save the listing to the db after the user types in a title
-			title_input.focus().bind('blur', function(){
-				var title_input = $(this).removeClass('invalid');
-				ajax_loader.show();
+				// insert the new listing into either the #empty_listings box or #rslt-list-bg
+				if (empty_listings.length > 0) {
+					$('.client_tip', empty_listings).remove();
+					empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
 				
-				// SAVE TITLE ON BLUR
-				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
-					if (response.success) {
-						partial.attr('id', 'Listing_'+ response.data.listing_id)
-						ajax_loader.hide();
-						title_input.unbind('blur');
+				} else $('#rslt-list-bg', listing_box).prepend(partial);
+				
+				$('.listing', listing_box).removeClass('active');
+				partial.addClass('active').slideDown(300, function() { 
+					tip_text.fadeIn(600);
+					title_input.focus();
+				});
+				
+				$.bindPlugins();
+				ajax_loader.hide();
+			});
+		
+			return false;
+		});
+	
+		// 2). bind events to the inputs in the new partial: 
+			// SAVE TITLE ON BLUR
+			$('.listing:eq(0) input[name="listing[title]"]', '#client_listing_box').live('blur', function(){
+				var partial 	  = $('.listing:eq(0)', '#client_listing_box'),
+					title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
+					tip_text	  = $('.new_listing_tip', partial),
+					tip_inner	  = tip_text.find('strong'),
+					ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
+			
+				if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
+					tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
+					tip_inner.text('Enter the street address.');
+					ajax_loader.show();
 
-					} else { // they blurred the title input without typing anything in it, refocus and notify
-						title_input.addClass('invalid').focus();
+					$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+						if (response.success) {
+							partial.attr('id', 'Listing_'+ response.data.listing_id);
+
+						} else { // SERVER VALIDATION DID NOT PASS
+							title_input.addClass('invalid').focus();
+						}
+						
 						ajax_loader.hide();
-					}
-				}, 'json');
+					}, 'json');
+				
+				} else {
+					title_input.addClass('invalid').focus();
+					ajax_loader.hide();
+				}
+			
+			});
+		
+			// ADDRESS: when the input is blurred, move the tip_text down to the city state input
+			$('input[name="listing[map_attributes][address]"]', '.listing:eq(0)').live('blur', function(){
+				var tip_text	  = $('.new_listing_tip', '.listing:eq(0)'),
+					tip_inner	  = tip_text.find('strong'),
+					address_input = $('input[name="listing[map_attributes][address]"]', '.listing:eq(0)').removeClass('invalid');
+
+				if (address_input.val() != '' && address_input.val() != address_input.attr('title')) {
+					tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
+					tip_inner.text('Type in the city.');
+
+				} else address_input.focus().addClass('invalid');
+
 			});
 			
+			// CITY: if not empty, update the tip inner
+			$('input[name="listing[map_attributes][city]"]', '.listing:eq(0)').live('blur', function(){
+				var tip_inner	  = $('.new_listing_tip strong', '.listing:eq(0)'),
+					city_input	  = $('input[name="listing[map_attributes][city]"]', '.listing:eq(0)').removeClass('invalid');
+
+				if (city_input.val() != '' && city_input.val() != city_input.attr('title')) {
+					tip_inner.text('Enter the 2 letter State abbrev.');
+
+				} else city_input.addClass('invalid').focus();
+
+			});
+			
+			// STATE: when they finish typing in the last input (zip code) change the tip_text
+			$('input[name="listing[map_attributes][state]"]', '.listing:eq(0)').live('blur', function(){
+				var tip_inner	  = $('.new_listing_tip strong', '.listing:eq(0)'),
+					state_input	  = $('input[name="listing[map_attributes][state]"]', '.listing:eq(0)').removeClass('invalid');
+
+				if (state_input.val() != '' && state_input.val() != state_input.attr('title')) {
+					tip_inner.text('Enter the 5 digit zip code.');
+
+				} else state_input.addClass('invalid').focus();
+
+			});
+		
+			// ZIP: when they finish typing in the last input (zip code) change the tip_text
+			$('input[name="listing[map_attributes][zip]"]', '.listing:eq(0)').live('blur', function(){
+				var tip_text	  = $('.new_listing_tip', '.listing:eq(0)'),
+					zip_input	  = $('input[name="listing[map_attributes][zip]"]', '.listing:eq(0)').removeClass('invalid');
+
+				if (zip_input.val() != '' && zip_input.val() != zip_input.attr('title')) {
+					tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
+
+				} else zip_input.focus().addClass('invalid');
+
+			});
+		
 			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
-			button.click(function(){
+			$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+				var partial 	= $('.listing:eq(0)', '#client_listing_box'),
+					button  	= $('.rslt-reserve a', '.listing:eq(0)'),
+					ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
+					
 				if (!button.data('saving')) {
 					button.data('saving', true);
 					ajax_loader.show();
-					
+				
 					var listing_id = partial.attr('id').replace('Listing_', ''),
 						attributes = {
 							address : $('input[name="listing[map_attributes][address]"]', partial).val(),
@@ -675,32 +764,28 @@ $.bindPlugins = function() {
 							state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
 							zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
 						};
-					
+				
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
 						if (response.success) {
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
-							
+						
 							listing_html = $(response.data);
 							partial.html(listing_html.html());
 
 						} else $.ajax_error(response);
-						
+					
 						button.data('saving', false);
 						ajax_loader.hide();
 
 					}, 'json');
 				}
-				
+			
 				return false;
 			});
-			
-			$.bindPlugins();
-			ajax_loader.hide();
-		});
+		// END 2). bind events to listing inputs
 		
-		return false;
-	});
+	// END new listing workflow
 	
 	$('a', '#admin-box').click(function(){
 		var $this = $(this),

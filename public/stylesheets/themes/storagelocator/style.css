@@ -140,10 +140,12 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar-head li#list-miles{border:1px solid #ccc;margin-left:10px;width:100px;}
 #type-one-top-bar-head li#list-miles a{width:100px;}
 #type-one-top-bar{-moz-border-radius-bottomleft:22px;-moz-border-radius-bottomright:22px;border-color:-moz-use-text-color #CCCCCC #CCCCCC;border-right:1px solid #CCCCCC;border-style:none solid solid;border-width:0 1px 1px;left:2px;position:relative;width:770px;margin-bottom:2px;}
-#rslt-list-bg{clear:both;background:url(/images/ui/storagelocator/results-list-innerbg.png) repeat-y top left;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;width:756px;position:relative;left:10px;border-bottom:1px solid #ccc;margin-top:10px;}
+#rslt-list-bg{clear:both;background:url(/images/ui/storagelocator/results-list-innerbg.png) repeat-y top left;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;width:756px;position:relative;left:10px;border-bottom:1px solid #ccc;}
 .listing > .inner{background:url(/images/ui/storagelocator/result-inner-bg.png) repeat-x top left;width:752px;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;border:1px solid #ccc;height:100px;}
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/highlighted-result-inner-bg.png) repeat-x top left;}
-.listing ul li{display:inline;}
+.listing ul li{float:left;}
+.listing ul li.new_listing_tips{position:relative;margin-left:10px;}
+.listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;left:34px;width:3em;color:#666;}
 .progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin-right:44px;}
 .progress.active{background-position:0 100%;}
@@ -407,7 +409,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-top ul#ov-top-list{width:725px;background:#000;}
 #ov-reports,#ov-info,#ov-settings{border:1px solid #ccc;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;margin-top:20px;margin-bottom:10px;clear:both;width:99.4%;}
 #ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;position:relative;}
-#ov-units-head{border:1px solid #ccc;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;margin-top:20px;margin-bottom:10px;}
+#ov-units-head{border:1px solid #ccc;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;margin-top:20px;}
 #ov-units-head h3,#ov-item-head h3{position:relative;left:20px;float:left;font-size:1.4em;}
 #ov-units-head p,#ov-item-head p{float:right;}
 #ov-item-head p{background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat top left;width:82px;height:30px;line-height:30px;font-weight:bold;text-align:center;float:right;margin:6px;}
@@ -418,10 +420,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;color:#33c;font-size:1.2em;margin:10px 0px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
-#ov-units #rslt-list-bg{background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;position:relative;left:0px;border-right:1px solid #ccc;border-left:1px solid #ccc;}
+#ov-units #rslt-list-bg{background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;position:relative;left:0px;border-right:1px solid #ccc;border-left:1px solid #ccc;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
+#ov-units .listing{overflow:auto;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
-#ov-units .listing .inner .rslt-offer{width:188px;padding-right:5px;}
+#ov-units .listing .inner .rslt-offer{width:188px;height:100px;position:relative;padding-right:5px;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
 #ov-units .listing .inner .rslt-reserve{width:108px;position:absolute;right:20px;}
 #ov-reports ul li{list-style:none;display:inline;}
@@ -496,7 +499,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp textarea{width:202px;font-size:90%;}
 .panel .sl-table-exp input#submit-btn{margin-right:23px;}
 .listing:hover .inner{border-color:#aaa;}
-.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;}
+.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:107%;}
 .panel h5{padding:12px 17px;margin-bottom:0;font-size:140%;background:#cc3300;}
 .panel h5 a{color:#fff;text-decoration:none;}
 .panel .inner h6{font-size:120%;}
@@ -550,7 +553,7 @@ img.right{margin:0 10px 10px 0;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units #rslt-list-bg {width:99.4%;}
-#ov-units .listing{padding:0 2px 10px 0;}
+#ov-units .listing{padding:0 2px 10px 0;height:102px;}
 #ov-units .listing > .inner{width:100%;}
 #ov-units .listing .rslt-reserve{width:145px;}
 #ov-reports-cnt{padding:15px 9px;overflow:hidden;}
@@ -566,7 +569,9 @@ img.right{margin:0 10px 10px 0;}
 ul#add-fac-form a.search-button,#narrow-box a.search-btn{text-shadow:1px 1px 0 #666;}
 /* client edit form */
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
-#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:auto;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#clients_controller #ov-units .rslt-contact p .small_text_field{width:86.5%;}
+#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
 #ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
 .sl-table input.small_num{width:15px;padding:3px;}
@@ -591,7 +596,14 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 .client_tip{padding:7px 12px;font-weight:bold;border:2px solid #333;width:96%;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
 #ov-units-head .ajax_loader{position:absolute;right:110px;top:14px;}
-.new_listing_tip{padding:10px 15px;}
+.new_listing_tip{position:absolute;top:10px;width:260px;line-height:1.8;display:none;}
+.listing .listing_options{margin-left:10px;float:left;}
+.listing #listing_map_attributes_address{width:93.4%;}
+#ov-units .listing .rslt-contact p #listing_map_attributes_city{width:39%;}
+.listing #listing_map_attributes_state{margin-right:4px;}
+.listing #listing_map_attributes_zip{width:35px;}
+.listing .listing_advice{padding:40px 0 0 16px;width:110%;}
+#client_listing_box{padding-top:10px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 /* extras */
