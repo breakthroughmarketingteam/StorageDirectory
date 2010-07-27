@@ -4,6 +4,7 @@ class ListingsController < ApplicationController
   before_filter :get_model, :only => [:show, :edit]
   before_filter :get_client, :only => [:edit]
   before_filter :get_map, :only => [:show, :edit]
+  before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
   end
@@ -23,9 +24,6 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    @special = @listing.specials.first || @listing.specials.new
-    @map = @listing.map
-    @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
   end
   
   def update
@@ -58,6 +56,12 @@ class ListingsController < ApplicationController
   end
   
   private
+  
+  def get_listing_relations
+    @special = @listing.specials.first || @listing.specials.new
+    @map = @listing.map
+    @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
+  end
   
   def get_client
     @client = @listing.client
