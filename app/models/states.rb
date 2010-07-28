@@ -54,12 +54,12 @@ class States
   ]
   
   def self.all
-    # reverse the items within the states array to use in option_tags
+    # reverse the items within the states array to put the abbrev first
     NAMES.map(&:reverse)
   end
   
-  def names
-     @state_names ||= NAMES.map { |n| n[2] }
+  def self.names
+     @state_names ||= NAMES.map { |n| n[0] }.reject(&:nil?)
   end
   
   def self.abbrevs

@@ -4,6 +4,10 @@ class UsCity < ActiveRecord::Base
     all(:select => 'DISTINCT state', :order => 'state').map(&:state)
   end
   
+  def self.names
+    all(:select => 'DISTINCT name', :order => 'name').map(&:name).reject(&:nil?)
+  end
+  
   def self.states_by_letter(a)
     all(:select => 'DISTINCT state', :conditions => "LOWER(state) LIKE '#{a.downcase}%'", :order => 'state').map(&:state)
   end

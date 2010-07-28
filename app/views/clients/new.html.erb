@@ -20,21 +20,33 @@
 
 		<% form_for @client do |f| %>
 			<ul id="add-fac-form">
-				<li>First name: <input class="required" type="text" id="client_first_name" name="client[first_name]"></li>
-				<li>Last name: <input class="required" type="text" id="client_last_name" name="client[last_name]"></li>
-				<li>Company name: <input class="required" type="text" id="client_company" name="client[company]"></li>
-				<li>Phone number: <input class="numeric_phone" type="text" id="client_phone" name="client[phone]"></li>
-				<li>Email address: <input class="email" type="text" id="client_email" name="client[email]"></li>
-				<li>Password: <input type="password" id="client_password" name="client[password]"></li>
-				<li>Re-type password:<input class="confirm" type="password" id="client_password_confirmation" name="client[password_confirmation]"></li>
-				<li><a class="search-button" href="#">Submit</a><input type="submit" name="commit" class="hidden"></li>
+				<li>
+					<%= f.label :company, 'Facility Name', :class => 'label' %>
+					<%= f.text_field :company, :class => 'required' %>
+				</li>
+				<li>
+					<%= f.label :email, 'Contact Email', :class => 'label' %>
+					<%= f.text_field :email, :class => 'email' %>
+				</li>
+				<li>
+					<span class="label">City</span> 
+					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names' %>
+				</li>
+				<li>
+					<span class="label">State</span> 
+					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete', :rel => 'States_names' %>
+				</li>
+				
+				<li>
+					<%= ajax_loader %>
+					<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+					<input type="submit" name="commit" class="hidden">
+				</li>
 			</ul>
 		<% end %>
 		
 		<div id="add-fac-form-txt">
-			<h2>
-				Lorem ipsum text heading goes here
-			</h2>
+			<h2>Lorem ipsum text heading goes here</h2>
 			<p>
 				Lorem ipsum text here...
 			</p>

@@ -1,9 +1,10 @@
 class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update]
+  before_filter :get_model, :only => [:show, :edit]
   before_filter :get_client, :only => [:edit]
   before_filter :get_map, :only => [:show, :edit]
+  before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
   end
@@ -23,12 +24,23 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    @special = @listing.specials.first || @listing.specials.new
-    @map = @listing.map
-    @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
   end
   
   def update
+    @listing = current_user.listings.find(params[:id])
+    case params[:from]
+    when 'quick_create'
+      @map = @listing.map
+      
+      if @map.update_attributes params[:listing][:map_attributes]
+        render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
+      else
+        render :json => { :success => true, :data => model_errors(@map) }
+      end
+      
+    else
+      raise ['params[:from] is nil or unrecognized', params].pretty_inspect
+    end
   end
   
   def quick_create
@@ -44,6 +56,12 @@ class ListingsController < ApplicationController
   end
   
   private
+  
+  def get_listing_relations
+    @special = @listing.specials.first || @listing.specials.new
+    @map = @listing.map
+    @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
+  end
   
   def get_client
     @client = @listing.client

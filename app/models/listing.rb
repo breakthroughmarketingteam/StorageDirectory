@@ -33,7 +33,12 @@ class Listing < ActiveRecord::Base
     self.map.nil? ? [] : [self.map.city, self.map.state]
   end
   
-  def lat() map.lat end
-  def lng() map.lng end
+  def address() self.map.address end
+  def city()    self.map.city end
+  def state()   self.map.state end
+  def zip()     self.map.zip end
+    
+  def lat() self.map.lat end
+  def lng() self.map.lng end
   
 end

@@ -30,7 +30,8 @@ $.log = function(msg) {
 }
 
 $.ajax_error = function(response) {
-	alert(response.data);
+	if (console == undefined) alert(response.data);
+	else console.log(response);
 	//$('#body').prepend('<div class="flash error hide">'+ response.data +'</div>').slideDown();
 }
 
@@ -107,23 +108,30 @@ $.toggleAction = function(href, scroll_to_it) {
 	var url_hash = href.split('#');
 	
 	if (url_hash[1]) {
-		url_hash					= url_hash[1],
-		 		action				= url_hash.split('_')[0],
-				elementClass	= url_hash.split('_')[1],
-				contextClass	= url_hash.split('_')[2],
-				target			  = $('.' + elementClass, '.' + contextClass);
+		url_hash	 = url_hash[1],
+ 		action		 = url_hash.split('_')[0],
+		elementClass = url_hash.split('_')[1],
+		contextClass = url_hash.split('_')[2],
+		target		 = $('.' + elementClass, '.' + contextClass);
 		
 		// validate action name and do it.
 		if ($.validateAnimationAction(action)) {
-			var context = $('.' + contextClass);
-			var actionLink = $('.toggle_action', context);
-			
-			// change the state of the toggle_action link
-			if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
-			
-			if (scroll_to_it) $(document).scrollTo(context, 800);
-			
-			target[action]();
+			if (elementClass.match(/^ov-.*/)) { // used on the client options (#admin-box)
+				setTimeout(function(){
+					$('a[rel='+ elementClass +']', '#admin-box').click();
+				}, 1)
+				
+			} else {
+				var context = $('.' + contextClass);
+				var actionLink = $('.toggle_action', context);
+
+				// change the state of the toggle_action link
+				if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
+
+				if (scroll_to_it) $(document).scrollTo(context, 800);
+
+				target[action]();
+			}
 		}
 	}
 	
@@ -132,17 +140,17 @@ $.toggleAction = function(href, scroll_to_it) {
 // first implemented for the sortable nav bar to update position via ajax
 $.updateModels = function(e, ui) {
 	var list_items  = ui.item.parent().children(),
-			$this			 	= $(ui.item),
-			data 				= '';
+		$this		= $(ui.item),
+		data 		= '';
 			
 	// build query string
 	$(list_items).each(function(i){ // html element id is <ModelClass>_<int ID>
 		var model_class = this.id.split('_')[0],
-				model_id 		= this.id.split('_')[1],
-				model_attr 	= $this.attr('rel'); // attribute to update
+			model_id 	= this.id.split('_')[1],
+			model_attr 	= $this.attr('rel'); // attribute to update
 				
 		data += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
-						'&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
+				'&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
 	});
 	
 	$.post('/ajax/update_many', data, function(response){
@@ -579,8 +587,6 @@ $.bindPlugins = function() {
 	$('.hide_if_js').hide();
 	$('.flash').hide().slideDown();
 	
-	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
-	
 	try { // to load external plugins, ignore failure (if plugins weren't selected in site settings)
 		$.bindPlugins(); // calls a few common plugins, also used after a new element that uses a plugin is created in the dom
 	} catch (e){};
@@ -602,6 +608,10 @@ $.bindPlugins = function() {
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	
+	
+	// we call the toggleAction in case we need to trigger any plugins declared above
+	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
+	
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
 	$('.sortable', '.authenticated').sortable({
 		opacity: 0.3,
@@ -621,74 +631,251 @@ $.bindPlugins = function() {
 	$('.mini_calendar').datepicker();
 	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
 	
-	// client edit page
-	$('#add_fac', '#ov-units').click(function(){
-		var $this 			 	 = $(this),
-				listing_box 	 = $('#client_listing_box', $this.parent().parent()),
-				ajax_loader 	 = $this.prev('.ajax_loader').show(),
-				empty_listings = $('#empty_listings', listing_box);
-		
-		$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
-			if (empty_listings) $('.client_tip', empty_listings).remove();
-			
-			var partial 		= $(partial).hide(),
-					title_input = $('input[name="listing[title]"]', partial);
-					
-			empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
-			partial.show();
-			
-			// save the listing to the db after the user types in a title
-			title_input.focus().bind('blur', function(){
-				var title_input = $(this);
-				ajax_loader.show();
-				
-				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
-					if (response.success) {
-						var edit_link = $('.rslt-reserve a', partial);
-						edit_link.attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ response.data.listing_id +'/edit');
-						
-						ajax_loader.hide();
-						title_input.unbind('blur');
-						
-						// when the user clicks edit, bring all the form values through
-						edit_link.click(function(){
-							var href 				 = $(this).attr('href'),
-									address 		 = $('input[name="listing[map_attributes][address]"]', partial).val(),
-									city				 = $('input[name="listing[map_attributes][city]"]', partial).val(),
-									state 			 = $('input[name="listing[map_attributes][state]"]', partial).val(),
-									zip 				 = $('input[name="listing[map_attributes][zip]"]', partial).val(),
-									query_string = '?map[address]='+ address + '&map[city]='+ city +'&map[state]='+ state +'&map[zip]='+ zip;
-							
-							edit_link.attr('href', href + query_string);
-						});
-
-					} else {
-						$.ajax_error(response);
-						ajax_loader.hide();
-					}
-				}, 'json');
-			});
-			
-			$.bindPlugins();
-			ajax_loader.hide();
-		});
-		
+	$('ul li a', '#ov-reports-cnt').click(function(){
+		get_pop_up(this);
 		return false;
 	});
 	
+	$('.autocomplete').focus(function(){
+		var $this   = $(this),
+			model   = $this.attr('rel').split('_')[0],
+			method  = $this.attr('rel').split('_')[1];
+		
+		$.getJSON('/ajax/get_autocomplete', { model: model, method: method }, function(response){
+			if (response.success) 
+				$this.autocomplete({
+					source: response.data,
+					minLength: 2
+				});
+			else $.ajax_error(response);
+		})
+	});
+	
+	// add your facility
+	
+	// NEW CLIENT Workflow (sign up through the add-your-facility page)
+	$('form#new_client').submit(function(){
+		if ($(this).data('valid')) {
+			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
+			var signup_form   = $(this),
+				pop_up_title  = 'Add Your Facility',
+				sub_partial   = '/clients/signup_steps',
+				ajax_loader	  = $('.ajax_loader', this).show(),
+				form_data     = { 
+					company : $('#client_company', signup_form).val(),
+					email 	: $('#client_email', signup_form).val(),
+					city 	: $('#listing_city', signup_form).val(),
+					state 	: $('#listing_state', signup_form).val()
+				};
+			
+			$.post('/ajax/find_listings', form_data, function(response){
+				if (response.success) {
+					get_pop_up_and_do(sub_partial, function(pop_up){
+						var listings_box = $('#show_potential_listings', pop_up),
+							listing_prototype = $('.listing_div', pop_up).eq(0).remove();
+						
+						$.each(response.data, function(i){
+							var listing = this.listing,
+								listing_div = listing_prototype.clone();
+						
+							$('.num', listing_div).text(i+1);
+							$('.listing_title', listing_div).html(listing.title +'<span>'+ listing.phone +'</span>');
+							$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
+							
+							listing_div.appendTo(listings_box).hide().fadeIn();
+						});
+						
+					});
+					
+				} else $.ajax_error(response);
+				
+			}, 'json');
+
+			return false;
+		} 
+	});
+	
+	function get_pop_up_and_do(sub_partial, callback) {
+		$.get('/ajax/get_multipartial?partial=/shared/pop_up&sub_partial='+ sub_partial, function(response){
+			var pop_up = $(response).dialog({
+				title: 'Title',
+				width: 785,
+				height: 400,
+				resizable: false,
+				show: 'slide',
+				open: begin_signup_workflow,
+				close: function(){
+					$('.ajax_loader').hide()
+				}
+			});
+			
+			if (typeof callback == 'function') callback.call(this, pop_up);
+		});
+	}
+	
+	function begin_signup_workflow() {
+		$('#go', '#pop_up').click(function(){
+			$('#pop_up').dialog('close');
+			$('#new_client').submit(); 
+		});
+	}
+	
+	// client edit page
+	
+	// NEW LISTING WORKFLOW
+		// 1). Click NEW button, get a partial from the server and prepend to the listing box
+		$('#add_fac', '#ov-units').click(function(){
+			var $this 		   = $(this),
+				listing_box    = $('#client_listing_box', $this.parent().parent()),
+				empty_listings = $('#empty_listings', listing_box),
+				ajax_loader    = $this.prev('.ajax_loader').show();
+		
+			// GET PARTIAL
+			$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
+				var partial 	  = $(partial).hide(),
+					title_input   = $('input[name="listing[title]"]', partial),
+					tip_text	  = $('.new_listing_tip', partial);
+			
+				// insert the new listing into either the #empty_listings box or #rslt-list-bg
+				if (empty_listings.length > 0) {
+					$('.client_tip', empty_listings).remove();
+					empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+				
+				} else $('#rslt-list-bg', listing_box).prepend(partial);
+				
+				$('.listing', listing_box).removeClass('active');
+				partial.addClass('active').slideDown(300, function() { 
+					tip_text.fadeIn(600);
+					title_input.focus();
+				});
+				
+				bind_listing_input_events();
+				$.bindPlugins();
+				ajax_loader.hide();
+			});
+		
+			return false;
+		});
+	
+		// 2). bind events to the inputs in the new partial: 
+			// SAVE TITLE ON BLUR
+			$('.listing:eq(0) input[name="listing[title]"]', '#client_listing_box').live('blur', function(){
+				var partial 	  = $('.listing:eq(0)', '#client_listing_box'),
+					title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
+					tip_text	  = $('.new_listing_tip', partial),
+					tip_inner	  = tip_text.find('strong'),
+					ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
+			
+				if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
+					tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
+					tip_inner.text('Enter the street address.');
+					ajax_loader.show();
+
+					$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+						if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
+						else { // SERVER VALIDATION DID NOT PASS
+							title_input.addClass('invalid').focus();
+						}
+						
+						ajax_loader.hide();
+					}, 'json');
+				
+				} else {
+					title_input.addClass('invalid').focus();
+					ajax_loader.hide();
+				}
+			
+			});
+			
+			// a collection of the input names and the msg to change the tip to, and the method with which to change the tip
+			var listing_tip_inner_tag = 'strong',
+				listing_input_msgs = [
+					['address', 'Type in the city.', function(tip_text, msg){
+						tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['city', 'Enter the 2 letter State abbrev.', function(tip_text, msg){
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['state', 'Enter the 5 digit zip code.', function(tip_text, msg){
+						tip_text.find(listing_tip_inner_tag).text(msg);
+					}],
+					['zip', '<strong>Almost Done! Click Save.</strong>', function(tip_text, msg){
+						tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
+					}]
+				];
+			
+			function bind_listing_input_events() {
+				$.each(listing_input_msgs, function(){
+					var input_name = this[0], blur_msg = this[1], done_action = this[2],
+						tip_text   = $('.new_listing_tip', '.listing:eq(0)');
+					
+					$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+						var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+
+						if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
+						else input.focus().addClass('invalid');
+
+					});
+				});
+				
+				// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
+				$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+					var partial 	= $('.listing:eq(0)', '#client_listing_box'),
+						button  	= $(this),
+						ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
+
+					if (!button.data('saving') && button.text() == 'Save') {
+						button.data('saving', true);
+						ajax_loader.show();
+
+						var listing_id = partial.attr('id').replace('Listing_', ''),
+							attributes = {
+								address : $('input[name="listing[map_attributes][address]"]', partial).val(),
+								city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
+								state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
+								zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+							};
+
+						// SAVE ADDRESS WHEN USER CLICKS SAVE
+						$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+							if (response.success) {
+								button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
+
+								listing_html = $(response.data);
+								partial.html(listing_html.html()).removeClass('active');
+
+							} else $.ajax_error(response);
+
+							button.data('saving', false);
+							ajax_loader.hide();
+
+						}, 'json');
+
+						return false;
+					}
+				});
+			} // END bind_listing_input_events()
+		 
+		// END 2). bind events to listing inputs
+		
+	// END new listing workflow
+	
 	$('a', '#admin-box').click(function(){
 		var $this = $(this),
-				other_links = $('a:not(this)', '#admin-box').removeClass('active');
+			other_links = $('a:not(this)', '#admin-box').removeClass('active');
 		$this.addClass('active');
 	});
 	
 	// front page
 	$('a', '#click-more').click(function(){
 		var $this = $(this);
-		if ($this.text() == 'Click here for more') {
-			$this.text('Click again to close');
+		if (!$this.data('open')) {
+			$this.data('open', true)
+			$this.text('Click to close');
 		} else {
-			$this.text('Click here for more')
+			$this.data('open', false)
+			$this.text('Click to open')
 		}
 	});
 	
