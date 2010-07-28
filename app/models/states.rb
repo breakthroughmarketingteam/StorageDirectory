@@ -59,7 +59,7 @@ class States
   end
   
   def self.names
-     @state_names ||= NAMES.map { |n| n[2] }
+     @state_names ||= NAMES.map { |n| n[0] }.reject(&:nil?)
   end
   
   def self.abbrevs

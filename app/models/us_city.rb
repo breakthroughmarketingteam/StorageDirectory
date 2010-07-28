@@ -5,7 +5,7 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.names
-    all(:select => 'DISTINCT name', :order => 'name').map(&:name)
+    all(:select => 'DISTINCT name', :order => 'name').map(&:name).reject(&:nil?)
   end
   
   def self.states_by_letter(a)

@@ -30,7 +30,8 @@ $.log = function(msg) {
 }
 
 $.ajax_error = function(response) {
-	alert(response.data);
+	if (console == undefined) alert(response.data);
+	else console.log(response);
 	//$('#body').prepend('<div class="flash error hide">'+ response.data +'</div>').slideDown();
 }
 
@@ -641,32 +642,74 @@ $.bindPlugins = function() {
 			method  = $this.attr('rel').split('_')[1];
 		
 		$.getJSON('/ajax/get_autocomplete', { model: model, method: method }, function(response){
-			if (response.success) $this.autocomplete({ source: response.data });
+			if (response.success) 
+				$this.autocomplete({
+					source: response.data,
+					minLength: 2
+				});
+			else $.ajax_error(response);
 		})
 	});
 	
 	// add your facility
+	
+	// NEW CLIENT Workflow (sign up through the add-your-facility page)
 	$('form#new_client').submit(function(){
-		var signup_form    = $(this),
-			pop_up_title   = 'Add Your Facility',
-			workflow_dir   = '/views/partials/signup_steps/',
-			ajax_loader	   = $('.ajax_loader', this).show();
-		
-			get_pop_up(this);
-		
-		return false;
+		if ($(this).data('valid')) {
+			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
+			var signup_form   = $(this),
+				pop_up_title  = 'Add Your Facility',
+				sub_partial   = '/clients/signup_steps',
+				ajax_loader	  = $('.ajax_loader', this).show(),
+				form_data     = { 
+					company : $('#client_company', signup_form).val(),
+					email 	: $('#client_email', signup_form).val(),
+					city 	: $('#listing_city', signup_form).val(),
+					state 	: $('#listing_state', signup_form).val()
+				};
+			
+			$.post('/ajax/find_listings', form_data, function(response){
+				if (response.success) {
+					get_pop_up_and_do(sub_partial, function(pop_up){
+						var listings_box = $('#show_potential_listings', pop_up),
+							listing_prototype = $('.listing_div', pop_up).eq(0).remove();
+						
+						$.each(response.data, function(i){
+							var listing = this.listing,
+								listing_div = listing_prototype.clone();
+						
+							$('.num', listing_div).text(i+1);
+							$('.listing_title', listing_div).html(listing.title +'<span>'+ listing.phone +'</span>');
+							$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
+							
+							listing_div.appendTo(listings_box).hide().fadeIn();
+						});
+						
+					});
+					
+				} else $.ajax_error(response);
+				
+			}, 'json');
+
+			return false;
+		} 
 	});
 	
-	function get_pop_up(button) {
-		$.get('/ajax/get_partial?model=Client&partial=/shared/pop_up', function(response){
+	function get_pop_up_and_do(sub_partial, callback) {
+		$.get('/ajax/get_multipartial?partial=/shared/pop_up&sub_partial='+ sub_partial, function(response){
 			var pop_up = $(response).dialog({
-				title: button.href,
+				title: 'Title',
 				width: 785,
 				height: 400,
 				resizable: false,
 				show: 'slide',
-				open: begin_signup_workflow
+				open: begin_signup_workflow,
+				close: function(){
+					$('.ajax_loader').hide()
+				}
 			});
+			
+			if (typeof callback == 'function') callback.call(this, pop_up);
 		});
 	}
 	

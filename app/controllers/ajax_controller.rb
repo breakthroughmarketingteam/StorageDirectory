@@ -1,9 +1,9 @@
 class AjaxController < ApplicationController
   
-  skip_before_filter :authorize_user, :except => :get_partial
+  skip_before_filter :authorize_user, :except => [:get_partial, :find_listings]
   skip_before_filter :init
   
-  before_filter :validate_params
+  before_filter :validate_params, :except => :find_listings
   before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy]
   before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
   
@@ -29,6 +29,16 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
+  end
+  
+  def find_listings
+    @listings = Listing.find_by_sql 'SELECT l.id, l.title, l.description, m.phone, m.address, m.city, m.state, m.zip FROM listings l ' +
+                                    'LEFT JOIN maps m ON m.listing_id = l.id ' +
+                                    "WHERE (m.state = '#{params[:state]}' AND m.city LIKE '#{params[:city]}' " +
+                                           "AND LOWER(l.title) LIKE '%#{params[:company].downcase}%') " +
+                                    "OR LOWER(l.title) LIKE '%#{params[:company].downcase}%'"
+    
+    render :json => { :success => true, :data => @listings }
   end
   
   def get_listing
@@ -85,13 +95,20 @@ class AjaxController < ApplicationController
     render :text => "<div class='flash error'>#{e.message}</div>"
   end
   
-  def get_autocomplete
-    model_class = params[:model].camelize.constantize
-    data = eval "model_class.try :#{params[:method]}"
-    render :json => { :success => !data.blank?, :data => data }
+  def get_multipartial
+    render :partial => params[:partial], :locals => { :sub_partial => params[:sub_partial] }
     
   rescue => e
     render :text => "<div class='flash error'>#{e.message}</div>"
+  end
+  
+  def get_autocomplete
+    model_class = params[:model].camelize.constantize
+    data = eval "model_class.try :#{params[:method]}"
+    render :json => { :success => true, :data => data }
+    
+  rescue => e
+    render :json => { :success => false, :data => "<div class='flash error'>#{e.message}</div>" }
   end
   
   def update
