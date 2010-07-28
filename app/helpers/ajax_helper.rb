@@ -15,4 +15,8 @@ module AjaxHelper
     url_for(hash)
   end
   
+  def ajax_loader(img = 'ajax-loader-facebook.gif')
+    image_tag "/images/ui/#{img}", :class => 'ajax_loader'
+  end
+  
 end

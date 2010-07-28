@@ -20,14 +20,19 @@
 
 		<% form_for @client do |f| %>
 			<ul id="add-fac-form">
-				<li>First name: <input class="required" type="text" id="client_first_name" name="client[first_name]"></li>
-				<li>Last name: <input class="required" type="text" id="client_last_name" name="client[last_name]"></li>
-				<li>Company name: <input class="required" type="text" id="client_company" name="client[company]"></li>
-				<li>Phone number: <input class="numeric_phone" type="text" id="client_phone" name="client[phone]"></li>
-				<li>Email address: <input class="email" type="text" id="client_email" name="client[email]"></li>
-				<li>Password: <input type="password" id="client_password" name="client[password]"></li>
-				<li>Re-type password:<input class="confirm" type="password" id="client_password_confirmation" name="client[password_confirmation]"></li>
-				<li><a class="search-button" href="#">Submit</a><input type="submit" name="commit" class="hidden"></li>
+				<li><span class="label">First name</span> <input class="required" type="text" id="client_first_name" name="client[first_name]" /></li>
+				<li><span class="label">Last name</span> <input class="required" type="text" id="client_last_name" name="client[last_name]" /></li>
+				<li><span class="label">Facility name</span> <input class="required" type="text" id="client_company" name="client[company]" title="Let's start with one location, what's the name?" /></li>
+				<li><span class="label">Email</span> <input class="email" type="text" id="client_email" name="client[email]" /></li>
+				<li><span class="label">Password</span> <input class="password" type="text" id="client_state" name="client[password]" /></li>
+				<li><span class="label">Confirm</span> <input class="confirm" type="text" id="client_password_confirmation" name="client[password_confirmation]" /></li>
+				<!--><li><span class="label">City</span> <input class="required" type="text" id="client_city" name="client[city]" title="What city is the facility located it in?" /></li>
+				<li><span class="label">State</span> <input class="required" type="text" id="client_state" name="client[state]" /></li>-->
+				<li>
+					<%= ajax_loader %>
+					<a id="signup_button" class="search-button" href="#">Sign Up</a>
+					<input type="submit" name="commit" class="hidden">
+				</li>
 			</ul>
 		<% end %>
 		

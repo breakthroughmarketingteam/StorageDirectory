@@ -34,26 +34,25 @@
     				 <!-- To align everything in the header correctly, it needs an inner container as well -->
     				 <div id="head-ctr-in">
         				 <div id="logo">
-                   <a href="/"><img src="/images/ui/storagelocator/us-self-storage-locator-logo.png" alt="US Self Storage Locator" /></a>
+                   			<a href="/"><img src="/images/ui/storagelocator/us-self-storage-locator-logo.png" alt="US Self Storage Locator" /></a>
         				 </div>
         					
         					<div id="title">
-        							<p class="hidden">US Self Storage Locator - Find self storage anywhere</p>
+        						<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
+								<h2>Find and Reserve Self Storage Anywhere, Anytime.</h2>
         					</div>
         					
         					<div id="top-nav">
-        					  <span class="left">
-        					   <%= link_to 'English', '#' %>&nbsp;|&nbsp;<%= link_to 'Español', '#' %>
-        					  </span>
-        					  
+        					  	<span class="left"><%= link_to 'English', '#' %>&nbsp;|&nbsp;<%= link_to 'Español', '#' %></span>
+								<%= conditional_account_path %>
       							<ul>
-      									<li class="hidden"><a href="#top">Skip Navigation</a></li>
-      									<li class="top-nav-login">
-      									  <%= link_to_if current_user.nil?, 'Login', login_path do
-      									    link_to 'Logout', logout_path
-      									  end %>
-      									</li>
-      									<li class="top-nav-help"><a href="">Help</a></li>
+									<li class="hidden"><a href="#top">Skip Navigation</a></li>
+									<li class="top-nav-login">
+										<%= link_to_if current_user.nil?, 'Login', login_path do
+											link_to 'Logout', logout_path
+										end %>
+									</li>
+									<li class="top-nav-help"><a href="">Help</a></li>
       							</ul>
         					</div>
         					
