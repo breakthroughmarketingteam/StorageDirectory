@@ -2,7 +2,7 @@
 html{overflow-y: scroll;overflow-x: hidden;}
 /* Start by defining the main page layout */
 *{padding:0;margin:0;}
-body{text-align:center;font-family:arial,sans-serif;font-size:100.01%;color:#222;}
+body{text-align:center;font-family:"Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#222;}
 h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
 a:link, a:visited {text-decoration:none;}
