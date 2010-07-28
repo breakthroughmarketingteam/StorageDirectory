@@ -85,6 +85,15 @@ class AjaxController < ApplicationController
     render :text => "<div class='flash error'>#{e.message}</div>"
   end
   
+  def get_autocomplete
+    model_class = params[:model].camelize.constantize
+    data = eval "model_class.try :#{params[:method]}"
+    render :json => { :success => !data.blank?, :data => data }
+    
+  rescue => e
+    render :text => "<div class='flash error'>#{e.message}</div>"
+  end
+  
   def update
     authorize_and_perform_restful_action_on_model @model.class.to_controller_str, 'update' do
       render :json => { :success => @model.update_attribute(params[:attribute], params[:value]) }

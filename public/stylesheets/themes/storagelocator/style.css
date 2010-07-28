@@ -27,10 +27,12 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #title{background:url(/images/ui/storagelocator/us-self-storage-locator-heading.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:513px;position:relative;}
 #title h2{bottom:6px;color:#333;font-weight:normal;left:10px;position:absolute;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
-#top-nav .left{text-shadow:none;color:#999;}
-#top-nav .left a{text-decoration:none;}
-#top-nav .left a:link,#top-nav .left a:visited{color:#999;}
-#top-nav .left a:hover,#top-nav .left a:active{color:#333;}
+.authenticated #top-nav{width:370px;margin-left:-80px;}
+#top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
+#top-nav .account_link{padding:0 10px;}
+#top-nav .left a,#top-nav .account_link a{text-decoration:none;}
+#top-nav .left a:link,#top-nav .left a:visited,#top-nav .account_link a:link,#top-nav .account_link a:visited{color:#999;}
+#top-nav .left a:hover,#top-nav .left a:active,#top-nav .account_link a:hover,#top-nav .account_link a:active{color:#333;}
 #top-nav ul{float:right;margin-right:40px;}
 #top-nav ul li{float:left;list-style:none;}
 #top-nav ul li a{width:67px;height:26px;display:block;text-align:center;color:#fff;font-weight:bold;text-decoration:none;}

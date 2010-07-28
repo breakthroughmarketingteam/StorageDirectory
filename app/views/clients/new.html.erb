@@ -20,14 +20,23 @@
 
 		<% form_for @client do |f| %>
 			<ul id="add-fac-form">
-				<li><span class="label">First name</span> <input class="required" type="text" id="client_first_name" name="client[first_name]" /></li>
-				<li><span class="label">Last name</span> <input class="required" type="text" id="client_last_name" name="client[last_name]" /></li>
-				<li><span class="label">Facility name</span> <input class="required" type="text" id="client_company" name="client[company]" title="Let's start with one location, what's the name?" /></li>
-				<li><span class="label">Email</span> <input class="email" type="text" id="client_email" name="client[email]" /></li>
-				<li><span class="label">Password</span> <input class="password" type="text" id="client_state" name="client[password]" /></li>
-				<li><span class="label">Confirm</span> <input class="confirm" type="text" id="client_password_confirmation" name="client[password_confirmation]" /></li>
-				<!--><li><span class="label">City</span> <input class="required" type="text" id="client_city" name="client[city]" title="What city is the facility located it in?" /></li>
-				<li><span class="label">State</span> <input class="required" type="text" id="client_state" name="client[state]" /></li>-->
+				<li>
+					<%= f.label :company, 'Facility Name', :class => 'label' %>
+					<%= f.text_field :company, :class => 'required' %>
+				</li>
+				<li>
+					<%= f.label :email, 'Contact Email', :class => 'label' %>
+					<%= f.text_field :email, :class => 'email' %>
+				</li>
+				<li>
+					<span class="label">City</span> 
+					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names' %>
+				</li>
+				<li>
+					<span class="label">State</span> 
+					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete', :rel => 'States_names' %>
+				</li>
+				
 				<li>
 					<%= ajax_loader %>
 					<a id="signup_button" class="search-button" href="#">Sign Up</a>
@@ -37,9 +46,7 @@
 		<% end %>
 		
 		<div id="add-fac-form-txt">
-			<h2>
-				Lorem ipsum text heading goes here
-			</h2>
+			<h2>Lorem ipsum text heading goes here</h2>
 			<p>
 				Lorem ipsum text here...
 			</p>

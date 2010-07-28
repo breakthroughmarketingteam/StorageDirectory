@@ -635,6 +635,16 @@ $.bindPlugins = function() {
 		return false;
 	});
 	
+	$('.autocomplete').focus(function(){
+		var $this   = $(this),
+			model   = $this.attr('rel').split('_')[0],
+			method  = $this.attr('rel').split('_')[1];
+		
+		$.getJSON('/ajax/get_autocomplete', { model: model, method: method }, function(response){
+			if (response.success) $this.autocomplete({ source: response.data });
+		})
+	});
+	
 	// add your facility
 	$('form#new_client').submit(function(){
 		var signup_form    = $(this),

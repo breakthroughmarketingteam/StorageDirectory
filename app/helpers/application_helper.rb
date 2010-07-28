@@ -462,7 +462,7 @@ module ApplicationHelper
   end
   
   def conditional_account_path(options = {})
-    '<span class="account_link">'+ client_account_path(options) +'</span>' if current_user && current_user.has_role?('advertiser')
+    '<span class="account_link">'+ link_to('My Account', client_account_path(options)) +'</span>' if current_user && current_user.has_role?('advertiser')
   end
   
 end
