@@ -38,18 +38,18 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #top-nav ul li a{width:67px;height:26px;display:block;text-align:center;color:#fff;font-weight:bold;text-decoration:none;}
 #top-nav ul li.top-nav-login a{background:url(/images/ui/storagelocator/login-button.png) no-repeat top left;}
 #top-nav ul li.top-nav-help a{background:url(/images/ui/storagelocator/help-button.png) no-repeat top left;}
-#main-nav{float:left;height:50px;line-height:50px;width:750px;position:relative;left:20px;top:-9px;}
+#main-nav{float:left;height:50px;line-height:50px;width:750px;position:relative;left:20px;top:-10px;}
 #main-nav ul{float:right;margin-top:27px;}
 #main-nav ul li{float:left;display:inline;}
 /* navbar */
-#main-nav ul li a{text-decoration:none;color:#666;text-align:center;line-height:29px;height:29px;display:block;margin-left:25px;font-size:80%;}
+#main-nav ul li a{text-decoration:none;color:#666;text-align:center;line-height:31px;height:29px;display:block;margin-left:25px;font-size:80%;}
 #main-nav ul li#home,#main-nav ul li#Page_1{width:109px;background:url(/images/ui/storagelocator/home-button.png) no-repeat top left;}
 #main-nav ul li#locate,#main-nav ul li#Page_2{width:138px;background:url(/images/ui/storagelocator/locate-button.png) no-repeat top left;}
 #main-nav ul li#Page_12{width:119px;background:url(/images/ui/storagelocator/info-button.png) no-repeat top left;}
 #main-nav ul li#tips,#main-nav ul li#Page_3{width:121px;background:url(/images/ui/storagelocator/tips-button.png) no-repeat top left;}
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
 /* hovers */
-#main-nav ul li a:hover{color:#000;}
+#main-nav ul li a:hover,#main-nav ul li a:active{color:#000;}
 #main-nav ul li#home:hover,#main-nav ul li#Page_1:hover,#main-nav ul li#home.active,#main-nav ul li#Page_1.active{background-image:url(/images/ui/storagelocator/home-button-hover.png);}
 #main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover,#main-nav ul li#locate.active,#main-nav ul li#Page_2.active{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
 #main-nav ul li#Page_12:hover,#main-nav ul li#Page_12.active{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
@@ -488,7 +488,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .table_view{width:100%;}
 /* the container styles */
 .home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in{margin:15px 20px 0px 20px;}
-#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:3px 0 0 0;}
+#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
 /*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/
 #listings_controller.show_action #type-one-cnt-in{padding:0;}
