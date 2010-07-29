@@ -32,11 +32,16 @@ class AjaxController < ApplicationController
   end
   
   def find_listings
-    @listings = Listing.find_by_sql 'SELECT l.id, l.title, l.description, m.phone, m.address, m.city, m.state, m.zip FROM listings l ' +
-                                    'LEFT JOIN maps m ON m.listing_id = l.id ' +
-                                    "WHERE (m.state = '#{params[:state]}' AND m.city LIKE '#{params[:city]}' " +
-                                           "AND LOWER(l.title) LIKE '%#{params[:company].downcase}%') " +
-                                    "OR LOWER(l.title) LIKE '%#{params[:company].downcase}%'"
+    @listings = Listing.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l 
+                                     LEFT JOIN maps m ON m.listing_id = l.id 
+                                     WHERE (LOWER(m.state) = '%#{params[:state].downcase}%' 
+                                            AND LOWER(m.city) LIKE '%#{params[:city].downcase}%' 
+                                            AND LOWER(l.title) LIKE '%#{params[:company].downcase}%') 
+                                        OR (LOWER(m.state) LIKE '%#{params[:state].downcase}%' 
+                                          AND LOWER(l.title) LIKE LOWER('%#{params[:company].downcase}%'))
+                                        OR (LOWER(m.city) LIKE '%#{params[:city].downcase}%' 
+                                          AND LOWER(l.title) LIKE LOWER('%#{params[:company].downcase}%'))
+                                          ORDER BY l.title LIMIT 100"
     
     render :json => { :success => true, :data => @listings }
   end

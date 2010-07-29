@@ -16,11 +16,13 @@
       <% end %>
 				
 	</div>
-		 
-  <div class="pagination">
-    <p class="rslt-foot">
-      <%= more_results_link(@model_data) %>
-    </p>
-    <span id="per_page" class="hidden"><%= @model_data.per_page if @model_data.respond_to?(:per_page) %></span>
-  </div>
+	
+	<% unless @model_data.blank? %>
+    <div class="pagination">
+      <p class="rslt-foot">
+        <%= more_results_link(@model_data) %>
+      </p>
+      <span id="per_page" class="hidden"><%= @model_data.per_page if @model_data.respond_to?(:per_page) %></span>
+    </div>
+  <% end %>
 </div>

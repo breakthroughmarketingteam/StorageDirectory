@@ -1,5 +1,7 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
+$.e = function(){ if (typeof console == 'undefined') alert(arguments); else console.log(arguments); };
+
 $.option_tags_from_model = function(model_class, models, options) {
 	var attribute = options.attribute || 'name',
 	 		select_prompt = options.select_prompt || false,
@@ -257,7 +259,7 @@ $.fn.rowCheckable = function() {
 		var $this = $(this),
 		 		checkbox = $('input[type=checkbox]', $this).eq(0);
 		
-		$this.click(function(e) { // trigger checkbox unless a link is clicked
+		$this.live('click', function(e) { // trigger checkbox unless a link is clicked
 			if (e.target.tagName == e.currentTarget.tagName) {
 				checkbox.trigger('change').attr('checked', !checkbox.is(':checked'));
 			}
@@ -654,6 +656,7 @@ $.bindPlugins = function() {
 	// add your facility
 	
 	// NEW CLIENT Workflow (sign up through the add-your-facility page)
+	workflow_slide_speed = 1500;
 	$('form#new_client').submit(function(){
 		if ($(this).data('valid')) {
 			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
@@ -670,20 +673,10 @@ $.bindPlugins = function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				if (response.success) {
-					get_pop_up_and_do(sub_partial, function(pop_up){
-						var listings_box = $('#show_potential_listings', pop_up),
-							listing_prototype = $('.listing_div', pop_up).eq(0).remove();
+					get_pop_up_and_do(sub_partial, pop_up_title, function(pop_up){
 						
-						$.each(response.data, function(i){
-							var listing = this.listing,
-								listing_div = listing_prototype.clone();
-						
-							$('.num', listing_div).text(i+1);
-							$('.listing_title', listing_div).html(listing.title +'<span>'+ listing.phone +'</span>');
-							$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
-							
-							listing_div.appendTo(listings_box).hide().fadeIn();
-						});
+						if (response.data[0]) do_workflow_step2(response.data, pop_up);
+						else  do_workflow_step3(pop_up);
 						
 					});
 					
@@ -695,28 +688,64 @@ $.bindPlugins = function() {
 		} 
 	});
 	
-	function get_pop_up_and_do(sub_partial, callback) {
+	function do_workflow_step2(listings, pop_up) {
+		var listings_box = $('#show_potential_listings', pop_up),
+				listing_prototype = $('.listing_div', pop_up).eq(0).removeClass('hidden').remove();
+		
+		pop_up.dialog('option', 'title', 'Add Your Facility - Step 2');
+		
+		$.each(listings, function(i){
+			var listing = this.listing,
+				listing_div = listing_prototype.clone();
+				
+			$('.check input', listing_div).val(listing.id);
+			$('.num', listing_div).text(i+1);
+			$('.listing_title', listing_div).text(listing.title);
+			$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
+			
+			listing_div.appendTo(listings_box);
+		});
+		
+		$('.listing_div', pop_up).selectable({ autoRefresh: false });
+		$('.skip, .next', pop_up).click(function(){
+			do_workflow_step3(pop_up);
+		});
+	}
+	
+	function do_workflow_step3(pop_up) {
+		var step2 = $('#signupstep_2', pop_up),
+				step3 = $('#signupstep_3', pop_up),
+				back 	= $('.back', pop_up);
+				
+		// animate step off to the left and step 3 into view from the right
+		step2.animate({ left: '-755px' }, workflow_slide_speed);
+		step3.css({ top: '-327px', left: '755px' }).animate({ left: 0 }, workflow_slide_speed, function(){ back.fadeIn('slow') });
+		
+		pop_up.dialog('option', 'title', 'Add Your Facility - Step 3');
+		back.click(function(){
+			back.fadeOut('fast');
+			$('#signupstep_3').animate({ left: '755px' }, workflow_slide_speed, function(){ $('#signupstep_3').css({ left: 'auto', top: 'auto' }) });
+			$('#signupstep_2').animate({ left: 0 }, workflow_slide_speed, function(){
+				pop_up.dialog('option', 'title', 'Add Your Facility - Step 2');
+			});
+		});
+		
+		
+	}
+	
+	function get_pop_up_and_do(sub_partial, pop_up_title, callback) {
 		$.get('/ajax/get_multipartial?partial=/shared/pop_up&sub_partial='+ sub_partial, function(response){
 			var pop_up = $(response).dialog({
-				title: 'Title',
+				title: pop_up_title,
 				width: 785,
 				height: 400,
 				resizable: false,
-				show: 'slide',
-				open: begin_signup_workflow,
 				close: function(){
 					$('.ajax_loader').hide()
 				}
 			});
 			
 			if (typeof callback == 'function') callback.call(this, pop_up);
-		});
-	}
-	
-	function begin_signup_workflow() {
-		$('#go', '#pop_up').click(function(){
-			$('#pop_up').dialog('close');
-			$('#new_client').submit(); 
 		});
 	}
 	

@@ -1,23 +1,49 @@
 <div id="workflow_steps">
-	<div id="signupstep_2" class="workflow_steps">
+	<div id="signupstep_2" class="workflow_step">
 		<h3>Choose any facilities we may already have listed.</h3>
 	
-		<div id="show_potential_listings">
-			<div class="listing_div">
-				<div class="left block num"></div>
-				<p class="listing_title"></p>
-				<p class="listing_address">
-					
-				</p>
-			</div>
+		<div id="show_potential_listings"></div>
+		<div class="right">
+		  <h4>There are many variations</h4> 
+		  <p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
 		</div>
-	</div>
+		
+		<div class="hidden listing_div">
+		  <div class="listing_in">
+  			<div class="left block num"></div>
+  			<p class="listing_title"></p>
+  			<p class="listing_address"></p>
+  			<p class="check"><input type="hidden" name="listing_id" value="" /></p>
+  		</div>
+		</div>
+		
+	</div> <!-- END step 2 -->
 
-	<div id="signupstep_3">
-	
-	</div>
+	<div id="signupstep_3" class="workflow_step">
+	  <h3>Let us know some basic contact information so we can help you as much as possible!</h4>
+	  
+	  <div class="contact_info_form">
+	    <p>
+	      <label>First Name</label>
+	      <input type="text" id="first_name" name="first_name" />
+	    </p>
+	    <p>
+	      <label>Last Name</label>
+	      <input type="text" id="first_name" name="first_name" />
+	    </p>
+	    <p>
+	      <label>Phone Number</label>
+	      <input type="text" id="first_name" name="first_name" />
+	    </p>
+	  </div>
+	  
+	</div> <!-- END step 3 -->
 
-	<div id="signupstep_4">
+	<div id="signupstep_4" class="workflow_step">
+	  
+	</div> <!-- END step 4 -->
 	
-	</div>
+	<a class="button back" href="#back">Back</a>
+	<a class="button skip" href="#skip">Skip</a>
+  <a class="button next" href="#next">Next</a>
 </div>
