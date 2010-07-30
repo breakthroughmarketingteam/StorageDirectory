@@ -565,6 +565,24 @@ $.fn.selectiveHider = function() {
 	});
 }
 
+// because jquery's selectable sucks, it doesn't let you deselect an item like a regular check box would let you
+$.fn.mySelectable = function(){
+	return this.each(function(){
+		$(this).click(function(){
+			var $this = $(this),
+				checkbox = $('input[type=checkbox]', $this);
+
+			if (!$this.data('selected')) {
+				$this.data('selected', true).addClass('selected');
+				checkbox.trigger('change').attr('checked', true);
+			} else {
+				$this.data('selected', false).removeClass('selected');
+				checkbox.trigger('change').attr('checked', false);
+			}
+		});
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {
@@ -638,7 +656,7 @@ $.bindPlugins = function() {
 		return false;
 	});
 	
-	$('.autocomplete').focus(function(){
+	$('.autocomplete').live('focus', function(){
 		var $this   = $(this),
 			model   = $this.attr('rel').split('_')[0],
 			method  = $this.attr('rel').split('_')[1];
@@ -653,10 +671,124 @@ $.bindPlugins = function() {
 		})
 	});
 	
-	// add your facility
+	// first implemented for the client sign up page (add your facility)
+	var GreyWizard = function(settings) {
+		var self = this;
+		self.settings = settings;
+		self.slide_data = settings.slides;
+		self.num_slides = this.slide_data.length;
+
+		this.begin_workflow = function(container, on_step) {
+			self.workflow = $(container);
+			self.title_bar = $('#ui-dialog-title-pop_up', self.workflow.parent().parent()),
+			self.current  = on_step || 1;
+			self.width	  = self.workflow.width();
+			self.height   = self.workflow.height();
+			self.slides   = $('.'+ settings.slides_class, self.workflow);
+			self.nav_bar  = $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
+			self.skipped_first = on_step > 1 ? true : false;
+			
+			// arrange the slides so they are horizontal to each other
+			this.slides.each(function(i){
+				var left = -(self.width * ((self.current-1) - i)).toString() + 'px'
+				$(this).css({ position: 'absolute', top: 0, left: left });
+			});
+			
+			// bind events
+			self.nav_bar.find('.next, .skip').click(self.next);
+			self.nav_bar.find('.back').click(self.prev);
+			self.title_bar.bind('slide_change', function(){
+				$(this).text(self.settings.title + ' - Step '+ (self.current + (self.skipped_first ? 0 : 1)));
+			}).trigger('slide_change');
+			
+			self.slide_data[self.current-1].action(self);
+			self.set_nav();
+		}
+		
+		this.set_nav = function() {
+			$.each(self.slide_data[self.current-1].nav_vis, function(){ // get the current slide's nav actions
+				var btn = $('#'+ this[0]),
+					action = this[1];
+				
+				if (action) { // if null don't do anything
+					if (typeof action == 'function') {
+						console.log('func', btn, action)
+						action.call(this, btn, self); 
+					}
+					else if (typeof action == 'string') {
+						console.log('str', btn, action)
+						btn[action](self.settings.btn_speed);
+					}
+				}
+			});
+		}
+		
+		this.next = function() {
+			self.move(); 
+			return false;
+		}
+		
+		this.prev = function() {
+			self.move('prev');
+			return false;
+		}
+		
+		this.move = function(direction) {
+			direction == 'prev' ? this.current-- : this.current++;
+			self.set_nav();
+			
+			self.slides.each(function(i){
+				var left = (direction == 'prev' ? parseInt($(this).css('left')) + self.width : parseInt($(this).css('left')) - self.width).toString() + 'px';
+				$(this).animate({ left: left }, self.settings.slide_speed);
+			});
+			
+			self.slide_data[self.current-1].action(self);
+			self.title_bar.trigger('slide_change');
+		}
+	}
 	
 	// NEW CLIENT Workflow (sign up through the add-your-facility page)
-	workflow_slide_speed = 1500;
+	var workflow_settings = {
+		slide_speed  : 1500,
+		btn_speed	 : 900,
+		title		 : 'Add Your Facility',
+		slides_class : 'workflow_step',
+		nav_id : 'workflow_nav',
+		slides : [
+			{ 
+				div_id  : 'signupstep_2',
+				heading : 'Find an Existing Listing',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['skip', 'fadeIn'],
+					['back', 'hide'] 
+				],
+				action  : workflow_step2
+			},
+			{ 
+				div_id : 'signupstep_3',
+				heading : 'Just some basic information',
+				nav_vis : [
+					['next', function(btn, wizard) { btn.text('Next').show(); }],
+					['skip', 'fadeOut'],
+					['back', function(btn, wizard){ wizard.skipped_first ? btn.hide() : btn.fadeIn() }]
+				],
+				action  : workflow_step3 
+			},
+			{ 
+				div_id : 'signupstep_4',
+				heading : 'Did we get it all correct?',
+				nav_vis : [
+					['next', function(btn, wizard) { btn.text('Done').click(finish_workflow) }],
+					['skip', 'fadeOut'],
+					['back', 'fadeIn']
+				],
+				action  : workflow_step4
+			}
+		]
+	};
+	
+	// add your facility
 	$('form#new_client').submit(function(){
 		if ($(this).data('valid')) {
 			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
@@ -664,6 +796,7 @@ $.bindPlugins = function() {
 				pop_up_title  = 'Add Your Facility',
 				sub_partial   = '/clients/signup_steps',
 				ajax_loader	  = $('.ajax_loader', this).show(),
+				current_step  = 1,
 				form_data     = { 
 					company : $('#client_company', signup_form).val(),
 					email 	: $('#client_email', signup_form).val(),
@@ -673,10 +806,14 @@ $.bindPlugins = function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				if (response.success) {
-					get_pop_up_and_do(sub_partial, pop_up_title, function(pop_up){
+					get_pop_up_and_do(sub_partial, pop_up_title, function(pop_up){ // preping step 2
+						var wizard = new GreyWizard(workflow_settings);
 						
-						if (response.data[0]) do_workflow_step2(response.data, pop_up);
-						else  do_workflow_step3(pop_up);
+						if (response.data[0]) {
+							workflow_settings.slides[0].data = response.data;
+							wizard.begin_workflow($('#workflow_steps', pop_up), 1);
+							
+						} else wizard.begin_workflow($('#workflow_steps', pop_up), 2);
 						
 					});
 					
@@ -688,13 +825,11 @@ $.bindPlugins = function() {
 		} 
 	});
 	
-	function do_workflow_step2(listings, pop_up) {
-		var listings_box = $('#show_potential_listings', pop_up),
-				listing_prototype = $('.listing_div', pop_up).eq(0).removeClass('hidden').remove();
+	function workflow_step2() {
+		var listings_box = $('#show_potential_listings', arguments[0].workflow),
+			listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 		
-		pop_up.dialog('option', 'title', 'Add Your Facility - Step 2');
-		
-		$.each(listings, function(i){
+		$.each(arguments[0].slide_data[0].data, function(i){
 			var listing = this.listing,
 				listing_div = listing_prototype.clone();
 				
@@ -706,30 +841,22 @@ $.bindPlugins = function() {
 			listing_div.appendTo(listings_box);
 		});
 		
-		$('.listing_div', pop_up).selectable({ autoRefresh: false });
-		$('.skip, .next', pop_up).click(function(){
-			do_workflow_step3(pop_up);
-		});
+		$('.listing_div', arguments[0].workflow).mySelectable();
 	}
 	
-	function do_workflow_step3(pop_up) {
-		var step2 = $('#signupstep_2', pop_up),
-				step3 = $('#signupstep_3', pop_up),
-				back 	= $('.back', pop_up);
-				
-		// animate step off to the left and step 3 into view from the right
-		step2.animate({ left: '-755px' }, workflow_slide_speed);
-		step3.css({ top: '-327px', left: '755px' }).animate({ left: 0 }, workflow_slide_speed, function(){ back.fadeIn('slow') });
+	function workflow_step3() {
+		var workflow = arguments[0].workflow;
 		
-		pop_up.dialog('option', 'title', 'Add Your Facility - Step 3');
-		back.click(function(){
-			back.fadeOut('fast');
-			$('#signupstep_3').animate({ left: '755px' }, workflow_slide_speed, function(){ $('#signupstep_3').css({ left: 'auto', top: 'auto' }) });
-			$('#signupstep_2').animate({ left: 0 }, workflow_slide_speed, function(){
-				pop_up.dialog('option', 'title', 'Add Your Facility - Step 2');
-			});
-		});
+		// bind plugins and change pop_up title
+		$('.hintable', workflow).hinty();
+		$('.city_state_zip .autocomplete', workflow).autocomplete();
+	}
+	
+	function workflow_step4() {
 		
+	}
+	
+	function finish_workflow() {
 		
 	}
 	
@@ -740,9 +867,8 @@ $.bindPlugins = function() {
 				width: 785,
 				height: 400,
 				resizable: false,
-				close: function(){
-					$('.ajax_loader').hide()
-				}
+				modal: true,
+				close: function(){ $('.ajax_loader').hide(); }
 			});
 			
 			if (typeof callback == 'function') callback.call(this, pop_up);

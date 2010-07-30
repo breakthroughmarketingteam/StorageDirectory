@@ -9,41 +9,63 @@
 		</div>
 		
 		<div class="hidden listing_div">
-		  <div class="listing_in">
-  			<div class="left block num"></div>
-  			<p class="listing_title"></p>
-  			<p class="listing_address"></p>
-  			<p class="check"><input type="hidden" name="listing_id" value="" /></p>
-  		</div>
+		  	<div class="listing_in">
+  				<div class="left block num"></div>
+  				<p class="listing_title"></p>
+  				<p class="listing_address"></p>
+  				<div class="check"><span><input type="checkbox" class="hidden" name="listing_id" value="" /></span></div>
+  			</div>
 		</div>
 		
 	</div> <!-- END step 2 -->
 
 	<div id="signupstep_3" class="workflow_step">
-	  <h3>Let us know some basic contact information so we can help you as much as possible!</h4>
+	  	<h3>More Information</h4>
 	  
-	  <div class="contact_info_form">
-	    <p>
-	      <label>First Name</label>
-	      <input type="text" id="first_name" name="first_name" />
-	    </p>
-	    <p>
-	      <label>Last Name</label>
-	      <input type="text" id="first_name" name="first_name" />
-	    </p>
-	    <p>
-	      <label>Phone Number</label>
-	      <input type="text" id="first_name" name="first_name" />
-	    </p>
-	  </div>
+		<div class="contact_info_form">
+			<p>
+				<label class="block left w120">Contact Name</label>
+				<input type="text" id="first_name" name="first_name" class="hintable required" title="First Name" />
+				<input type="text" id="last_name" name="last_name" class="hintable required" title="Last Name" />
+			</p>
+			<p>
+				<label class="block left w120">Phone Number</label>
+				<input type="text" id="listing_phone" name="listing_phone" />
+			</p>
+			<p>
+				<label class="block left w120">Facility Address</label>
+				<input type="text" id="listing_address" name="listing_address" class="hintable required" title="Street Address" />
+			</p>
+			<p class="city_state_zip">
+				<input type="text" id="listing_city" name="listing_city" class="hintable required autocomplete" rel="UsCity_names" title="City" />
+				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs" title="State" />
+				<input type="text" id="listing_zip" name="listing_zip" class="hintable numeric_zip" title="Zip" />
+			</p>
+		</div>
+
+		<div class="right">
+		  <h4>There are many variations</h4> 
+		  <p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words which don't look even slightly believable. </p>
+		</div>
 	  
 	</div> <!-- END step 3 -->
 
 	<div id="signupstep_4" class="workflow_step">
-	  
+		<h3>Make sure everything's cool before you finish.</h3>
+		
+		<div class="left">
+			stuff
+		</div>
+		
+		<div class="right">
+			stuff 2
+		</div>
+		
 	</div> <!-- END step 4 -->
 	
-	<a class="button back" href="#back">Back</a>
-	<a class="button skip" href="#skip">Skip</a>
-  <a class="button next" href="#next">Next</a>
+	<div id="workflow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+		<a class="button skip" id="skip" href="#skip">Skip</a>
+	  	<a class="button next" id="next" href="#next">Next</a>
+	</div>
 </div>

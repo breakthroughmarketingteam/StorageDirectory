@@ -6,7 +6,21 @@
  */
 
 jQuery.fn.formBouncer = function(){
-	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	return this.each(function(){
+		jQuery(this).submit(function(){
+			$('.invalid', this).removeClass('invalid');
+			$('.error', this).remove();
+			
+			var validation = $(this).myValidate();
+			return validation;
+		});
+	});
+}
+
+jQuery.fn.myValidate = function() {
+	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+		form  = $(this),
+		errors = '';
 
 	function password_input_exists(form) {
 		return jQuery('input[type=password]', form).length > 0
@@ -24,54 +38,55 @@ jQuery.fn.formBouncer = function(){
 		return input.attr('class')
 	}
 
-	return this.each(function(){
-		var form = jQuery(this);
+	jQuery('input, select, textarea', form).each(function(){
+		var input = jQuery(this),
+			error = '';
 
-		form.submit(function(){
-			var error = '';
-
-			jQuery('input, select, textarea', form).each(function(){
-				var input = jQuery(this);
-				input.removeClass('invalid');
-				
-				if (!input.attr('disabled')) {
-					
-					if (input.hasClass('required') && (input.val() == '' || input.val() == input.attr('title')) ) {
-						error += '<p>' + input.attr('id').replace('_', ' ') + ' is required.</p>';
-						markInvalid(input, form);
-					}
-
-					if (input.hasClass('email') && valid_email.test(input.val()) == false) {
-						error += '<p>' + input.attr('id').replace('_', ' ') + ' is not a valid email.</p>';
-						markInvalid(input, form);
-					}
-
-					if (input.hasClass('numeric') && isNaN(input.val())) {
-						error += '<p>' + input.attr('id').replace('_', ' ') + ' must be numeric.</p>';
-						markInvalid(input, form);
-					}
-
-					if (input.hasClass('confirm') && password_input_exists(form) && jQuery('input[type=password]', form)[0].value != input.val() ) {
-						error += '<p>Passwords do not match.</p>';
-						markInvalid(input, form);
-					}
-				}
-
-			});
-
-			if (error != '') {
-				form.data('valid', false);
-
-				if (!form.hasClass('silent')) {
-					jQuery('.error', form).remove();
-					form.prepend('<div class=\'flash error\'>' + error + '</div>');
-					jQuery('.error', form).hide().slideDown();
-				}
-				return false;
+		input.removeClass('invalid');
+		
+		if (!input.attr('disabled')) {
+			
+			if (input.hasClass('required') && (input.val() == '' || input.val() == input.attr('title')) ) {
+				error = '<p>' + input.attr('id').replace('_', ' ') + ' is required.</p>';
+				errors += error;
+				markInvalid(input, form);
 			}
 
-			form.data('valid', true);
-			return true;
-		});
+			if (input.hasClass('email') && valid_email.test(input.val()) == false) {
+				error = '<p>' + input.attr('id').replace('_', ' ') + ' is not a valid email.</p>';
+				errors += error;
+				markInvalid(input, form);
+			}
+
+			if (input.hasClass('numeric') && isNaN(input.val())) {
+				error = '<p>' + input.attr('id').replace('_', ' ') + ' must be numeric.</p>';
+				errors += error;
+				markInvalid(input, form);
+			}
+
+			if (input.hasClass('confirm') && password_input_exists(form) && jQuery('input[type=password]', form)[0].value != input.val() ) {
+				error = '<p>Passwords do not match.</p>';
+				errors += error;
+				markInvalid(input, form);
+			}
+		}
+		
+		if (error != '') {
+			if (!form.hasClass('silent')) {
+				jQuery('.error', input.parent()).remove();
+				console.log(input.width())
+				input.before('<div class=\'flash error hidden\' style=\'width:'+ input.width() +'px;float:'+ input.css('float') +'\'>' + error + '</div>');
+				jQuery('.error', input.parent()).slideDown();
+			}
+		}
+
 	});
+
+	if (errors != '') {
+		form.data('valid', false);
+		return false;
+	}
+
+	form.data('valid', true);
+	return true;
 }

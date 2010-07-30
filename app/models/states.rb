@@ -59,10 +59,10 @@ class States
   end
   
   def self.names
-     @state_names ||= NAMES.map { |n| n[0] }.reject(&:nil?)
+     @state_names ||= NAMES.map(&:first).reject(&:nil?)
   end
   
   def self.abbrevs
-    @state_abbrevs ||= NAMES.map { |n| n[1] }
+    @state_abbrevs ||= NAMES.map(&:last).reject(&:nil?)
   end
 end
