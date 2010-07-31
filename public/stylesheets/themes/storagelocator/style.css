@@ -633,6 +633,7 @@ ul.ui-autocomplete{padding-bottom:3px;}
 ul.ui-autocomplete .ui-menu-item{width:100%;}
 .ui-menu-item a{padding:3px 7px;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
+.ui-autocomplete-loading{background:url("/images/ui//jquery/south_street/ui-anim_basic_16x16.gif") no-repeat scroll 96% 50% white;}
 /*signup workflow*/
 #workflow_steps{overflow:hidden;position:relative;height:327px;}
 #workflow_steps .button{font-weight:bold;display:block;position:absolute;top:296px;right:0;width:58px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.1;padding-left:25px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}

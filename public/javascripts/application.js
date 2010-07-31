@@ -1121,9 +1121,9 @@ var GreyWizard = function(settings) {
 		self.current  	   = on_step || 1;
 		self.width	  	   = self.workflow.width();
 		self.height   	   = self.workflow.height();
-		self.slides   	   = $('.'+ settings.slides_class, self.workflow);
+		self.slides   	   = $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
 		self.nav_bar  	   = $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
-		self.current_slide = $('#'+ self.slide_data[self.current-1].div_id, self.workflow).data('valid', true);
+		self.current_slide = $('#'+ self.slide_data[self.current-1].div_id, self.workflow);
 		self.skipped_first = on_step > 1 ? true : false;
 		
 		self.set_slides();
@@ -1162,6 +1162,12 @@ var GreyWizard = function(settings) {
 		}
 	}
 	
+	this.may_move = function(step) {
+		console.log('may move', step, self.current_slide.data('valid'), (!self.current_slide.data('valid') && step > 0) )
+		if (!self.current_slide.data('valid') && step > 0) return false;
+		return ((self.current-1) + step) > 0 && ((self.current-1) + step) < self.num_slides
+	}
+	
 	this.next = function(step) {
 		if (typeof step != 'number') var step = 1;
 		
@@ -1177,9 +1183,7 @@ var GreyWizard = function(settings) {
 	}
 	
 	this.move = function(step) {
-		if (!self.current_slide.data('valid') && step > 0) return;
-		
-		if ((self.current + step) > 0 && (self.current + step) < self.num_slides) {
+		if (self.may_move(step)) {
 			self.set_slides(); // on current step
 			self.current += step;
 			self.set_nav();
@@ -1241,6 +1245,8 @@ function workflow_step2() {
 	var listings_box = $('#show_potential_listings', arguments[0].workflow).hide(),
 		listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 	
+	$('h3 span', arguments[0].workflow).text(arguments[0].slide_data[0].data.length);
+	
 	$.each(arguments[0].slide_data[0].data, function(i){
 		var listing = this.listing,
 			listing_div = listing_prototype.clone();
@@ -1260,18 +1266,8 @@ function workflow_step3() {
 	var wizard = arguments[0];
 	
 	// bind plugins and change pop_up title
-	$('.next', wizard.workflow).unbind('click', validate_on_click).click(validate_on_click);
 	$('.hintable', arguments[0].workflow).hinty();
 	$('.city_state_zip .autocomplete', arguments[0].workflow).autocomplete();
-	
-	function validate_on_click() {
-		if (wizard.current_slide.attr('id') == 'signupstep_3') {
-			var valid = $('#contact_info_form', wizard.workflow).myValidate();
-			wizard.current_slide.data('valid', valid);
-		}
-
-		return false;	
-	}
 }
 
 function workflow_step4() {
