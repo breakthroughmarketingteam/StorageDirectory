@@ -528,9 +528,11 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #storage-info-content p{font-size:12px;line-height:1.4;}
 #info-accordion{margin:40px 0;}
 #info-accordion li > h4{height:32px;margin-bottom:12px;padding-left:10px;font-size:120%;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
-#info-accordion h4 a{text-decoration:none;color:#333;display:block;padding:8px 0 10px 30px;background:url(/images/ui/storagelocator/info-closed.png) no-repeat left center;}
-#info-accordion h4 a.active{background:url(/images/ui/storagelocator/info-open.png) no-repeat left center;}
-#info-accordion .info{margin-bottom:10px;padding:10px 20px;}
+#info-accordion li{list-style:disc outside none;margin:10px 0 0 30px;}
+#info-accordion li > h4 a{text-decoration:none;color:#333;display:block;padding:8px 0 10px 30px;background:url(/images/ui/storagelocator/info-closed.png) no-repeat left center;}
+#info-accordion li > h4 a.active{background:url(/images/ui/storagelocator/info-open.png) no-repeat left center;}
+#info-accordion .info{margin-bottom:10px;padding:10px 20px;overflow:hidden;}
+#info-accordion img{display:inline;}
 #three-box{position:relative;z-index:2;}
 #more_info_div{width:95%;padding:10px 12px 10px;margin:0 auto;position:relative;left:4px;z-index:1;background:url(/images/ui/storagelocator/more-info-bg.png) repeat-x bottom #e6e6e6;border:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
 #more_info_div .inner{overflow:hidden;padding:20px 24px;background:url(/images/ui/storagelocator/more-info-inner-bg.png) repeat-x top center #e5e5e5;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -617,7 +619,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #client_listing_box{padding-top:10px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
-#info-accordion h5{font-size:22px;}
+#info-accordion h5{font-size:22px;line-height:25px;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}
