@@ -528,7 +528,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #storage-info-content p{font-size:12px;line-height:1.4;}
 #info-accordion{margin:40px 0;}
 #info-accordion li > h4{height:32px;margin-bottom:12px;padding-left:10px;font-size:120%;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
-#info-accordion li{list-style:disc outside none;margin:10px 0 0 30px;}
+#info-accordion li ul li{list-style:disc outside none;margin:10px 0 0 30px;}
 #info-accordion li > h4 a{text-decoration:none;color:#333;display:block;padding:8px 0 10px 30px;background:url(/images/ui/storagelocator/info-closed.png) no-repeat left center;}
 #info-accordion li > h4 a.active{background:url(/images/ui/storagelocator/info-open.png) no-repeat left center;}
 #info-accordion .info{margin-bottom:10px;padding:10px 20px;overflow:hidden;}
