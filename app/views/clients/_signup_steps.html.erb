@@ -8,7 +8,7 @@
 		  <p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
 		</div>
 		
-		<div class="hidden listing_div">
+		<div class="hidden listing_div selectable">
 		  	<div class="listing_in">
   				<div class="left block num"></div>
   				<p class="listing_title"></p>
@@ -22,7 +22,7 @@
 	<div id="signupstep_3" class="workflow_step">
 	  	<h3>More Information</h4>
 	  
-		<div class="contact_info_form">
+		<form action="" method="" id="contact_info_form" class="silent">
 			<p>
 				<label class="block left w120">Contact Name</label>
 				<input type="text" id="first_name" name="first_name" class="hintable required" title="First Name" />
@@ -30,7 +30,7 @@
 			</p>
 			<p>
 				<label class="block left w120">Phone Number</label>
-				<input type="text" id="listing_phone" name="listing_phone" />
+				<input type="text" id="listing_phone" name="listing_phone" class="hintable numeric_phone" title="Phone Number" />
 			</p>
 			<p>
 				<label class="block left w120">Facility Address</label>
@@ -38,10 +38,14 @@
 			</p>
 			<p class="city_state_zip">
 				<input type="text" id="listing_city" name="listing_city" class="hintable required autocomplete" rel="UsCity_names" title="City" />
-				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs" title="State" />
+				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs|1" title="State" />
 				<input type="text" id="listing_zip" name="listing_zip" class="hintable numeric_zip" title="Zip" />
 			</p>
-		</div>
+			<p class="opt_in">
+				<input type="checkbox" name="opt_in" id="opt_in" value="1" />
+				<span>Send me the latest news from USSelfStorageLocator.com</span>
+			</p>
+		</form>
 
 		<div class="right">
 		  <h4>There are many variations</h4> 

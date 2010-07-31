@@ -11,6 +11,11 @@
 		<%= site_meta_tags %>
 		<%= yield :scripts %>
 		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
+		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
+		<%= javascript_include_tag 'jquery.all', @plugins %>
+		<%#= javascript_include_tag 'queryLoader' if @page %>
+	  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
+	  	<%= javascript_include_tag 'application' %>
     
 		<link rel="shortcut icon" type="image/x-ico" href="/favicon.ico" />
 		
@@ -116,11 +121,6 @@
     
     <%= yield :footer %>
 	
-	<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
-	<%= javascript_include_tag 'jquery.all', @plugins %>
-	<%#= javascript_include_tag 'queryLoader' if @page %>
-  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
-  	<%= javascript_include_tag 'application' %>
 	<!--<script>try{QueryLoader.selectorPreload = "body";QueryLoader.init();}catch(e){}</script>-->
 	
 	</body>

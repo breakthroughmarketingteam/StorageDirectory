@@ -651,12 +651,15 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #show_potential_listings .listing_title{font-weight:bold;color:#060;margin-bottom:3px;}
 #show_potential_listings .listing_title span{font-weight:normal;font-size:80%;padding-left:10px;}
 #show_potential_listings .listing_address{}
-#signupstep_3 .contact_info_form{margin-left:15px;width:52%;float:left;}
-#signupstep_3 .contact_info_form p{overflow:hidden;}
+#signupstep_3 #contact_info_form{margin-left:15px;width:52%;float:left;}
+#signupstep_3 #contact_info_form p{overflow:hidden;}
 #signupstep_3 label,#signupstep_3 input{margin:5px 0;}
 #signupstep_3 input{float:none;}
 #signupstep_3 #first_name{float:left;margin-right:10px;}
 #signupstep_3 #first_name,#signupstep_3 #last_name{width:119px;}
-#signupstep_3 .city_state_zip input{width:10%;}
+#signupstep_3 .city_state_zip input{width:10%;display:inline;}
 #signupstep_3 .city_state_zip #listing_city{margin-left:120px;margin-right:8px;width:34%;}
 #signupstep_3 .city_state_zip #listing_state{margin-right:8px;}
+#signupstep_3 .opt_in{padding-top:20px;}
+#signupstep_3 .opt_in span{display:block;float:left;font-size:80%;padding-top:2px;}
+#signupstep_3 #opt_in{width:auto;margin-right:7px;float:left;}
