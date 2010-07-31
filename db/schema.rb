@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100714215015) do
+ActiveRecord::Schema.define(:version => 20100731013600) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -69,12 +69,12 @@ ActiveRecord::Schema.define(:version => 20100714215015) do
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "title",            :limit => 50, :default => ""
-    t.string   "comment",                        :default => ""
-    t.datetime "created_at",                                     :null => false
-    t.integer  "commentable_id",                 :default => 0,  :null => false
-    t.string   "commentable_type", :limit => 15, :default => "", :null => false
-    t.integer  "user_id",                        :default => 0,  :null => false
+    t.string   "title",            :limit => 50
+    t.string   "comment"
+    t.datetime "created_at",                                    :null => false
+    t.integer  "commentable_id",                 :default => 0, :null => false
+    t.string   "commentable_type", :limit => 15,                :null => false
+    t.integer  "user_id",                        :default => 0, :null => false
     t.string   "email"
   end
 
@@ -158,6 +158,14 @@ ActiveRecord::Schema.define(:version => 20100714215015) do
     t.integer  "group_id"
     t.string   "resource"
     t.integer  "target_id"
+  end
+
+  create_table "listing_sizes", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "size_id"
+    t.integer  "position",   :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "listings", :force => true do |t|
@@ -259,6 +267,7 @@ ActiveRecord::Schema.define(:version => 20100714215015) do
     t.datetime "updated_at"
     t.integer  "comments_count",   :default => 0
     t.boolean  "comments_enabled"
+    t.integer  "position",         :default => 0
   end
 
   create_table "rates", :force => true do |t|
@@ -333,8 +342,8 @@ ActiveRecord::Schema.define(:version => 20100714215015) do
     t.datetime "created_at"
   end
 
+  add_index "taggings", ["context", "taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
     t.string "name"
@@ -372,11 +381,18 @@ ActiveRecord::Schema.define(:version => 20100714215015) do
   end
 
   create_table "views", :force => true do |t|
+    t.string   "table_catalog"
+    t.string   "table_schema"
     t.string   "model_name"
+    t.string   "table_name"
     t.string   "name"
+    t.string   "view_definition"
     t.text     "description"
     t.datetime "created_at"
+    t.string   "check_option"
     t.datetime "updated_at"
+    t.string   "is_updatable"
+    t.string   "is_insertable_into"
     t.string   "scope"
     t.integer  "owner_id"
   end

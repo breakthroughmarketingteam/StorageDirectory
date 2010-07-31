@@ -37,9 +37,8 @@ $(document).ready(function(){
 	
 	$('.block_sortable', '.authenticated').sortable({
 		opacity: 0.3,
-		cursorAt: 'center',
-		delay:500,
-		grid: [50, 50],
+		placeholder: 'ui-state-highlight',
+		helper: 'clone',
 		update: function(e, ui) {
 			$.updateModels(e, ui);
 		}
@@ -69,6 +68,301 @@ $(document).ready(function(){
 			else $.ajax_error(response);
 		})
 	});
+	
+	$('a', '#admin-box').click(function(){
+		var $this = $(this),
+			other_links = $('a:not(this)', '#admin-box').removeClass('active');
+		$this.addClass('active');
+	});
+	
+	$('.selectable').live('click', function(){
+		var $this = $(this),
+			checkbox = $('input[type=checkbox]', $this);
+
+		if (!$this.data('selected')) {
+			$this.data('selected', true).addClass('selected');
+			checkbox.trigger('change').attr('checked', true);
+		} else {
+			$this.data('selected', false).removeClass('selected');
+			checkbox.trigger('change').attr('checked', false);
+		}
+	});
+	
+	// admin menu hover behaviors
+	var GR_content_menu_hover_interval,
+		GR_resource_list = $('#resource_list');
+	
+	$('#content_menu_link').mouseover(function() {
+		GR_resource_list.slideDown();
+		return false;
+	});
+	
+	$('#content_menu_link').click(function() {
+		GR_resource_list.slideDown();
+		return false;
+	});
+	
+	$('#resource_list, #content_menu_link').mouseout(function(){
+		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
+	});
+	
+	$('#resource_list, #content_menu_link').mouseover(function(){
+		clearInterval(GR_content_menu_hover_interval);
+	});
+	
+	$('li', '#resource_list').hover(function(){
+		var li = $(this).css('position', 'relative');
+		var link = $('a', li);
+		
+		if (link.hasClass('access_denied')) return;
+		
+		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
+				new_option.appendTo(link)
+									.hide().show()
+									.click(function(){ window.location = this.href; return false; });
+	}, function(){
+		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
+	});
+	// END admin menu
+	
+	// helpers
+	$('.unique_checkbox').click(function() {
+		var $this = $(this);
+		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
+		$this.attr('checked', !$this.is(':checked'))
+	});
+	
+	$('.unique_checkbox').click(function() {
+		var $this = $(this);
+		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
+		$this.attr('checked', !$this.is(':checked'))
+	});
+	
+	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
+	$('textarea.wysiwyg').each(function(i) {
+		var textarea = jQuery(this),
+				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+		
+		textarea.parent().parent().prepend(toggle);
+		
+		toggle.click(function() {
+			CKEDITOR.replace(textarea.attr('name'));
+			return false;
+		});
+	});
+	
+	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
+	// e.g. #show_examples_helptext => $('.examples', '.helptext').show();
+	$('.toggle_action').click(function() {
+		$.toggleAction(this.href, false);
+		return false;
+	});
+	
+	// ajax links point to the ajax_controller, the href contains an action, and other key-values pairs such as model class,
+	// model id, the attribute to update, and the value, see the ajax_controller for other actions and required params
+	// use conditional logic to handle the success callback based on attributes of the clicked link, 
+	// such as what element to update on success, or what part of the dom should change 
+	$('.ajax_action').live('click', function(){
+		var $this = $(this);
+		$this.addClass('loading');
+		
+		if ($.mayContinue($this)) {
+			$.getJSON(this.href + '&authenticity_token=' + $.get_auth_token(), {},
+				function(response) {
+					$this.removeClass('loading');
+					
+					if (response.success) {
+						// need better conditional logic for these links
+						if ($this.attr('rel') == 'helptext') {
+							$.toggleHelptext($this);
+							
+						} else if ($this.hasClass('delete_link')) {
+							$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
+						}
+						
+					} else {
+						$.ajax_error(response);
+						$this.removeClass('loading');
+					}
+				}
+			);
+		} else $this.removeClass('loading');
+		
+		return false;
+	});
+	
+	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
+	$('.add_link', '.partial_addable').live('click', function(){
+		var $this 			= $(this),
+				context 		= '#' + $this.attr('rel'),
+				partial_form = $($('.partial_form_html', context).html());
+	
+		$('input, select, checkbox', partial_form).each(function(){ $(this).attr('disabled', false); });
+	
+		partial_form.hide().prependTo('.partial_forms_wrap', context).slideDown(600);
+		$.bindPlugins(); // first implemented to call hinty
+		
+		return false;
+	});
+	
+	$('.cancel_link', '.partial_addable').live('click', function(){
+		$(this).parent().parent().slideUp(300, function(){ $(this).remove(); }); 
+		return false; 
+	});
+	
+	// retrieves a partial via ajax and inserts it into the target div
+	$('.insert_partial').live('click', function(){
+		var $this = $(this);
+		
+		$.get(this.href, function(response){
+			$('#' + $this.attr('rel')).html(response);
+		})
+		
+		return false;
+	});
+	
+	$('.inline_delete_link').live('click', function(){
+		var $this = $(this);
+		
+		if ($.mayContinue($this)) {
+			if (this.rel.split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
+			else $('#'+ $this.attr('rel')).slideUpAndRemove();
+		}
+		
+		return false;
+	});
+	
+/******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
+	
+	// front page
+	$('a', '#click-more').click(function(){
+		var $this = $(this);
+		if (!$this.data('open')) {
+			$this.data('open', true)
+			$this.text('Click to close');
+		} else {
+			$this.data('open', false)
+			$this.text('Click to open')
+		}
+	});
+	
+	// listings show page
+	// the google map breaks when it's loaded in a hidden div, then shown by js
+	$('a[rel=sl-tabs-map]').click(function(){
+		var map = $('#sl-tabs-map');
+		// this is a function produced by the Gmap.html() method called from the template, it's provided by the google_map plugin
+		// check the header area of the source html for the method definition
+		if (!map.is(':hidden')) center_google_map();
+	});
+	
+	// edit site settings page
+	// turns a label into a textfield on mouseover, then uses callback to bind an event
+	// to the new textfield to turn it back into a label when it blurs
+	$('.textFieldable', '#SiteSettingFields .new_setting_field').live('mouseover', function(){
+		var $this = $(this),
+				settings_field_html = '<input name="new_site_settings[][key]" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
+		
+		$(this).textFieldable(settings_field_html, function(text_field){
+			$.revertSettingsTextFieldToLabel(text_field, $this.text());
+		});
+	});
+	
+	$('.textFieldable', '#SiteSettingFields .existing_setting_field').live('click', function(){
+		var $this = $(this),
+				existing_settings_html = '<input name="site_settings['+ $this.text() +']" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
+		
+		$this.textFieldable(existing_settings_html, function(text_field){
+			$.revertSettingsTextFieldToLabel(text_field, $this.text());
+		});
+		
+		return false;
+	});
+	
+	// Views/Forms/Links Edit
+	if ($.on_page([['edit, new', 'views, forms, links']])) {
+		var scope_down = ''; 
+		if ($.on_page([['edit, new', 'views']])) scope_down = 'owner';
+		else scope_down = 'target';
+		
+		// when the user chooses a scope (aka resource), show the scope-dependent owner_id or target_id dropdown
+		// which is populated by models of the selected scope class
+		var scoping_fields = $('#scope_' + scope_down + '_fields', '#body');
+		
+		if ($('.scope_down_hidden', scoping_fields).val()) { // preselect owner or target from dropdown
+			var scoper_id = $('.scope_down_hidden', scoping_fields).val();
+			
+			scoping_fields.children().each(function(){
+				if (this.value == scoper_id) this.selected = 'selected';
+			});
+		} else scoping_fields.hide();
+		
+		// grab model instances that are of the selected class
+		$('.scope_dropdown', '#scope_fields').change(function(){
+			var $this = $(this);
+			
+			if ($this.val() != '') { // retrieve all models of this class
+				scoping_fields.show(100);
+				scoping_dropdown = $('.scoping_dropdown', scoping_fields);
+				scoping_dropdown.html('<option>Loading ' + $this.val() + '...</option>');
+				
+				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() },
+					function(response) {
+						if (response.success) {
+							var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
+							var option_tags = $.option_tags_from_model($this.val(), response.data, args);
+							scoping_dropdown.html(option_tags);
+							
+						} else {
+							scoping_dropdown.html('<option>Error Loading Records</option>')
+						}
+					}
+				);
+			} else scoping_fields.hide(300);
+		}); // END .scope_dropdown.change()
+		
+		// get the attributes of the resource selected from #form_controller in the form new/edit page
+		$('#form_controller', '#FormsForm').change(function(){
+			fillInFormFieldSelectLists($(this).val()); 
+		});
+		
+		// create a custom event on the select lists so that when they finish loading the options, we can select the
+		// field's field_name that matches in the list
+		$('.field_attr_name', '#form_builder').bind('filled', function(){
+			$('.field_attr_name', '#form_builder').each(function(){
+				var $this = $(this),
+						name = $this.prev('span.field_name').text(); // we stored the field_name value in a hidden span
+				
+				$this.children('option').each(function(){
+					var $this_option = $(this);
+					if ($this_option.val() == name) $this_option.attr('selected', true);
+				});
+			});
+			
+			// this field name is useful for specifying a hidden field with a return path for after submit the form
+			$(this).append('<option value="return_to">return_to</option>');
+		});
+		
+		$('.delete_link', '#form_builder').live('click', function(){
+			var $this = $(this),
+					field_id = $(this).attr('rel').replace('field_', '');
+
+			$this.parent().parent().html();
+			return false;
+		});
+	} // END Edit/New Views/Forms/Links
+	
+	// Edit Forms
+	if ($.on_page([['edit', 'forms']])) {
+		// fill in the field name select lists
+		var resource = $('#form_controller', '#FormsForm').val();
+		fillInFormFieldSelectLists(resource);
+		
+	} // END Edit Forms
+	
+	// New Permissions
+	if ($.on_page([['new', 'permissions, roles']])) {
+		$('a.add_link', '.partial_addable').click();
+	} // END New Permissions
 	
 	// add your facility
 	$('form#new_client').submit(function(){
@@ -247,301 +541,6 @@ $(document).ready(function(){
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow
-	
-	$('a', '#admin-box').click(function(){
-		var $this = $(this),
-			other_links = $('a:not(this)', '#admin-box').removeClass('active');
-		$this.addClass('active');
-	});
-	
-	$('.selectable').live('click', function(){
-		var $this = $(this),
-			checkbox = $('input[type=checkbox]', $this);
-
-		if (!$this.data('selected')) {
-			$this.data('selected', true).addClass('selected');
-			checkbox.trigger('change').attr('checked', true);
-		} else {
-			$this.data('selected', false).removeClass('selected');
-			checkbox.trigger('change').attr('checked', false);
-		}
-	});
-	
-	// front page
-	$('a', '#click-more').click(function(){
-		var $this = $(this);
-		if (!$this.data('open')) {
-			$this.data('open', true)
-			$this.text('Click to close');
-		} else {
-			$this.data('open', false)
-			$this.text('Click to open')
-		}
-	});
-	
-	// listings show page
-	// the google map breaks when it's loaded in a hidden div, then shown by js
-	$('a[rel=sl-tabs-map]').click(function(){
-		var map = $('#sl-tabs-map');
-		// this is a function produced by the Gmap.html() method called from the template, it's provided by the google_map plugin
-		// check the header area of the source html for the method definition
-		if (!map.is(':hidden')) center_google_map();
-	});
-	
-	// edit site settings page
-	// turns a label into a textfield on mouseover, then uses callback to bind an event
-	// to the new textfield to turn it back into a label when it blurs
-	$('.textFieldable', '#SiteSettingFields .new_setting_field').live('mouseover', function(){
-		var $this = $(this),
-				settings_field_html = '<input name="new_site_settings[][key]" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
-		
-		$(this).textFieldable(settings_field_html, function(text_field){
-			$.revertSettingsTextFieldToLabel(text_field, $this.text());
-		});
-	});
-	
-	$('.textFieldable', '#SiteSettingFields .existing_setting_field').live('click', function(){
-		var $this = $(this),
-				existing_settings_html = '<input name="site_settings['+ $this.text() +']" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
-		
-		$this.textFieldable(existing_settings_html, function(text_field){
-			$.revertSettingsTextFieldToLabel(text_field, $this.text());
-		});
-		
-		return false;
-	});
-	
-	// admin menu hover behaviors
-	var GR_content_menu_hover_interval,
-		GR_resource_list = $('#resource_list');
-	
-	$('#content_menu_link').mouseover(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#content_menu_link').click(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#resource_list, #content_menu_link').mouseout(function(){
-		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
-	});
-	
-	$('#resource_list, #content_menu_link').mouseover(function(){
-		clearInterval(GR_content_menu_hover_interval);
-	});
-	
-	$('li', '#resource_list').hover(function(){
-		var li = $(this).css('position', 'relative');
-		var link = $('a', li);
-		
-		if (link.hasClass('access_denied')) return;
-		
-		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
-				new_option.appendTo(link)
-									.hide().show()
-									.click(function(){ window.location = this.href; return false; });
-	}, function(){
-		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
-	});
-	// END admin menu
-	
-	// helpers
-	$('.unique_checkbox').click(function() {
-		var $this = $(this);
-		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
-		$this.attr('checked', !$this.is(':checked'))
-	});
-	
-	$('.unique_checkbox').click(function() {
-		var $this = $(this);
-		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
-		$this.attr('checked', !$this.is(':checked'))
-	});
-	
-	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
-	$('textarea.wysiwyg').each(function(i) {
-		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
-		
-		textarea.parent().parent().prepend(toggle);
-		
-		toggle.click(function() {
-			CKEDITOR.replace(textarea.attr('name'));
-			return false;
-		});
-	});
-	
-	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
-	// e.g. #show_examples_helptext => $('.examples', '.helptext').show();
-	$('.toggle_action').click(function() {
-		$.toggleAction(this.href, false);
-		return false;
-	});
-	
-	// ajax links point to the ajax_controller, the href contains an action, and other key-values pairs such as model class,
-	// model id, the attribute to update, and the value, see the ajax_controller for other actions and required params
-	// use conditional logic to handle the success callback based on attributes of the clicked link, 
-	// such as what element to update on success, or what part of the dom should change 
-	$('.ajax_action').live('click', function(){
-		var $this = $(this);
-		$this.addClass('loading');
-		
-		if ($.mayContinue($this)) {
-			$.getJSON(this.href + '&authenticity_token=' + $.get_auth_token(), {},
-				function(response) {
-					$this.removeClass('loading');
-					
-					if (response.success) {
-						// need better conditional logic for these links
-						if ($this.attr('rel') == 'helptext') {
-							$.toggleHelptext($this);
-							
-						} else if ($this.hasClass('delete_link')) {
-							$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
-						}
-						
-					} else {
-						$.ajax_error(response);
-						$this.removeClass('loading');
-					}
-				}
-			);
-		} else $this.removeClass('loading');
-		
-		return false;
-	});
-	
-	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
-	$('.add_link', '.partial_addable').live('click', function(){
-		var $this 			= $(this),
-				context 		= '#' + $this.attr('rel'),
-				partial_form = $($('.partial_form_html', context).html());
-	
-		$('input, select, checkbox', partial_form).each(function(){ $(this).attr('disabled', false); });
-	
-		partial_form.hide().prependTo('.partial_forms_wrap', context).slideDown(600);
-		$.bindPlugins(); // first implemented to call hinty
-		
-		return false;
-	});
-	
-	$('.cancel_link', '.partial_addable').live('click', function(){
-		$(this).parent().parent().slideUp(300, function(){ $(this).remove(); }); 
-		return false; 
-	});
-	
-	// retrieves a partial via ajax and inserts it into the target div
-	$('.insert_partial').live('click', function(){
-		var $this = $(this);
-		
-		$.get(this.href, function(response){
-			$('#' + $this.attr('rel')).html(response);
-		})
-		
-		return false;
-	});
-	
-	$('.inline_delete_link').live('click', function(){
-		var $this = $(this);
-		
-		if ($.mayContinue($this)) {
-			if (this.rel.split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
-			else $('#'+ $this.attr('rel')).slideUpAndRemove();
-		}
-		
-		return false;
-	});
-	
-/******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
-	
-	// Views/Forms/Links Edit
-	if ($.on_page([['edit, new', 'views, forms, links']])) {
-		var scope_down = ''; 
-		if ($.on_page([['edit, new', 'views']])) scope_down = 'owner';
-		else scope_down = 'target';
-		
-		// when the user chooses a scope (aka resource), show the scope-dependent owner_id or target_id dropdown
-		// which is populated by models of the selected scope class
-		var scoping_fields = $('#scope_' + scope_down + '_fields', '#body');
-		
-		if ($('.scope_down_hidden', scoping_fields).val()) { // preselect owner or target from dropdown
-			var scoper_id = $('.scope_down_hidden', scoping_fields).val();
-			
-			scoping_fields.children().each(function(){
-				if (this.value == scoper_id) this.selected = 'selected';
-			});
-		} else scoping_fields.hide();
-		
-		// grab model instances that are of the selected class
-		$('.scope_dropdown', '#scope_fields').change(function(){
-			var $this = $(this);
-			
-			if ($this.val() != '') { // retrieve all models of this class
-				scoping_fields.show(100);
-				scoping_dropdown = $('.scoping_dropdown', scoping_fields);
-				scoping_dropdown.html('<option>Loading ' + $this.val() + '...</option>');
-				
-				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() },
-					function(response) {
-						if (response.success) {
-							var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
-							var option_tags = $.option_tags_from_model($this.val(), response.data, args);
-							scoping_dropdown.html(option_tags);
-							
-						} else {
-							scoping_dropdown.html('<option>Error Loading Records</option>')
-						}
-					}
-				);
-			} else scoping_fields.hide(300);
-		}); // END .scope_dropdown.change()
-		
-		// get the attributes of the resource selected from #form_controller in the form new/edit page
-		$('#form_controller', '#FormsForm').change(function(){
-			fillInFormFieldSelectLists($(this).val()); 
-		});
-		
-		// create a custom event on the select lists so that when they finish loading the options, we can select the
-		// field's field_name that matches in the list
-		$('.field_attr_name', '#form_builder').bind('filled', function(){
-			$('.field_attr_name', '#form_builder').each(function(){
-				var $this = $(this),
-						name = $this.prev('span.field_name').text(); // we stored the field_name value in a hidden span
-				
-				$this.children('option').each(function(){
-					var $this_option = $(this);
-					if ($this_option.val() == name) $this_option.attr('selected', true);
-				});
-			});
-			
-			// this field name is useful for specifying a hidden field with a return path for after submit the form
-			$(this).append('<option value="return_to">return_to</option>');
-		});
-		
-		$('.delete_link', '#form_builder').live('click', function(){
-			var $this = $(this),
-					field_id = $(this).attr('rel').replace('field_', '');
-
-			$this.parent().parent().html();
-			return false;
-		});
-	} // END Edit/New Views/Forms/Links
-	
-	// Edit Forms
-	if ($.on_page([['edit', 'forms']])) {
-		// fill in the field name select lists
-		var resource = $('#form_controller', '#FormsForm').val();
-		fillInFormFieldSelectLists(resource);
-		
-	} // END Edit Forms
-	
-	// New Permissions
-	if ($.on_page([['new', 'permissions, roles']])) {
-		$('a.add_link', '.partial_addable').click();
-	} // END New Permissions
 	
 });
 
@@ -973,9 +972,9 @@ $.fn.accordion = function() {
 	return this.each(function() {
 		$(this).click(function() {
 			var $this = $(this),
-					info_div = $this.parent().next('.info');
+				info_div = $('.info', $this.parent().parent());
 					
-			$('a', $this.parent().parent()).removeClass('active');
+			$('a', $this.parent().parent().parent()).removeClass('active');
 			$('.info').slideUp();
 			
 			if (info_div.is(':hidden')) {
