@@ -25,6 +25,7 @@ $(document).ready(function(){
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
+	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
@@ -37,9 +38,8 @@ $(document).ready(function(){
 	
 	$('.block_sortable', '.authenticated').sortable({
 		opacity: 0.3,
-		cursorAt: 'center',
-		delay:500,
-		grid: [50, 50],
+		placeholder: 'ui-state-highlight',
+		helper: 'clone',
 		update: function(e, ui) {
 			$.updateModels(e, ui);
 		}
@@ -61,14 +61,309 @@ $(document).ready(function(){
 			method  = info.split('_')[1];
 		
 		$.getJSON('/ajax/get_autocomplete', { model: model, method: method }, function(response){
-			if (response.success && response.data.length) 
+			if (response.success && response.data.length > 0) { 
 				$this.autocomplete({
 					source: response.data,
 					minLength: minLen
 				});
-			else $.ajax_error(response);
+			} else $.ajax_error(response);
 		})
 	});
+	
+	$('a', '#admin-box').click(function(){
+		var $this = $(this),
+			other_links = $('a:not(this)', '#admin-box').removeClass('active');
+		$this.addClass('active');
+	});
+	
+	$('.selectable').live('click', function(){
+		var $this = $(this),
+			checkbox = $('input[type=checkbox]', $this);
+
+		if (!$this.data('selected')) {
+			$this.data('selected', true).addClass('selected');
+			checkbox.trigger('change').attr('checked', true);
+		} else {
+			$this.data('selected', false).removeClass('selected');
+			checkbox.trigger('change').attr('checked', false);
+		}
+	});
+	
+	// admin menu hover behaviors
+	var GR_content_menu_hover_interval,
+		GR_resource_list = $('#resource_list');
+	
+	$('#content_menu_link').mouseover(function() {
+		GR_resource_list.slideDown();
+		return false;
+	});
+	
+	$('#content_menu_link').click(function() {
+		GR_resource_list.slideDown();
+		return false;
+	});
+	
+	$('#resource_list, #content_menu_link').mouseout(function(){
+		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
+	});
+	
+	$('#resource_list, #content_menu_link').mouseover(function(){
+		clearInterval(GR_content_menu_hover_interval);
+	});
+	
+	$('li', '#resource_list').hover(function(){
+		var li = $(this).css('position', 'relative');
+		var link = $('a', li);
+		
+		if (link.hasClass('access_denied')) return;
+		
+		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
+				new_option.appendTo(link)
+									.hide().show()
+									.click(function(){ window.location = this.href; return false; });
+	}, function(){
+		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
+	});
+	// END admin menu
+	
+	// helpers
+	$('.unique_checkbox').click(function() {
+		var $this = $(this);
+		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
+		$this.attr('checked', !$this.is(':checked'))
+	});
+	
+	$('.unique_checkbox').click(function() {
+		var $this = $(this);
+		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
+		$this.attr('checked', !$this.is(':checked'))
+	});
+	
+	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
+	$('textarea.wysiwyg').each(function(i) {
+		var textarea = jQuery(this),
+				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+		
+		textarea.parent().parent().prepend(toggle);
+		
+		toggle.click(function() {
+			CKEDITOR.replace(textarea.attr('name'));
+			return false;
+		});
+	});
+	
+	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
+	// e.g. #show_examples_helptext => $('.examples', '.helptext').show();
+	$('.toggle_action').click(function() {
+		$.toggleAction(this.href, false);
+		return false;
+	});
+	
+	// ajax links point to the ajax_controller, the href contains an action, and other key-values pairs such as model class,
+	// model id, the attribute to update, and the value, see the ajax_controller for other actions and required params
+	// use conditional logic to handle the success callback based on attributes of the clicked link, 
+	// such as what element to update on success, or what part of the dom should change 
+	$('.ajax_action').live('click', function(){
+		var $this = $(this);
+		$this.addClass('loading');
+		
+		if ($.mayContinue($this)) {
+			$.getJSON(this.href + '&authenticity_token=' + $.get_auth_token(), {},
+				function(response) {
+					$this.removeClass('loading');
+					
+					if (response.success) {
+						// need better conditional logic for these links
+						if ($this.attr('rel') == 'helptext') {
+							$.toggleHelptext($this);
+							
+						} else if ($this.hasClass('delete_link')) {
+							$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
+						}
+						
+					} else {
+						$.ajax_error(response);
+						$this.removeClass('loading');
+					}
+				}
+			);
+		} else $this.removeClass('loading');
+		
+		return false;
+	});
+	
+	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
+	$('.add_link', '.partial_addable').live('click', function(){
+		var $this 			= $(this),
+				context 		= '#' + $this.attr('rel'),
+				partial_form = $($('.partial_form_html', context).html());
+	
+		$('input, select, checkbox', partial_form).each(function(){ $(this).attr('disabled', false); });
+	
+		partial_form.hide().prependTo('.partial_forms_wrap', context).slideDown(600);
+		$.bindPlugins(); // first implemented to call hinty
+		
+		return false;
+	});
+	
+	$('.cancel_link', '.partial_addable').live('click', function(){
+		$(this).parent().parent().slideUp(300, function(){ $(this).remove(); }); 
+		return false; 
+	});
+	
+	// retrieves a partial via ajax and inserts it into the target div
+	$('.insert_partial').live('click', function(){
+		var $this = $(this);
+		
+		$.get(this.href, function(response){
+			$('#' + $this.attr('rel')).html(response);
+		})
+		
+		return false;
+	});
+	
+	$('.inline_delete_link').live('click', function(){
+		var $this = $(this);
+		
+		if ($.mayContinue($this)) {
+			if (this.rel.split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
+			else $('#'+ $this.attr('rel')).slideUpAndRemove();
+		}
+		
+		return false;
+	});
+	
+/******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
+	
+	// front page
+	$('a', '#click-more').click(function(){
+		var $this = $(this);
+		if (!$this.data('open')) {
+			$this.data('open', true)
+			$this.text('Click to close');
+		} else {
+			$this.data('open', false)
+			$this.text('Click to open')
+		}
+	});
+	
+	// listings show page
+	// the google map breaks when it's loaded in a hidden div, then shown by js
+	$('a[rel=sl-tabs-map]').click(function(){
+		var map = $('#sl-tabs-map');
+		// this is a function produced by the Gmap.html() method called from the template, it's provided by the google_map plugin
+		// check the header area of the source html for the method definition
+		if (!map.is(':hidden')) center_google_map();
+	});
+	
+	// edit site settings page
+	// turns a label into a textfield on mouseover, then uses callback to bind an event
+	// to the new textfield to turn it back into a label when it blurs
+	$('.textFieldable', '#SiteSettingFields .new_setting_field').live('mouseover', function(){
+		var $this = $(this),
+				settings_field_html = '<input name="new_site_settings[][key]" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
+		
+		$(this).textFieldable(settings_field_html, function(text_field){
+			$.revertSettingsTextFieldToLabel(text_field, $this.text());
+		});
+	});
+	
+	$('.textFieldable', '#SiteSettingFields .existing_setting_field').live('click', function(){
+		var $this = $(this),
+				existing_settings_html = '<input name="site_settings['+ $this.text() +']" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
+		
+		$this.textFieldable(existing_settings_html, function(text_field){
+			$.revertSettingsTextFieldToLabel(text_field, $this.text());
+		});
+		
+		return false;
+	});
+	
+	// Views/Forms/Links Edit
+	if ($.on_page([['edit, new', 'views, forms, links']])) {
+		var scope_down = ''; 
+		if ($.on_page([['edit, new', 'views']])) scope_down = 'owner';
+		else scope_down = 'target';
+		
+		// when the user chooses a scope (aka resource), show the scope-dependent owner_id or target_id dropdown
+		// which is populated by models of the selected scope class
+		var scoping_fields = $('#scope_' + scope_down + '_fields', '#body');
+		
+		if ($('.scope_down_hidden', scoping_fields).val()) { // preselect owner or target from dropdown
+			var scoper_id = $('.scope_down_hidden', scoping_fields).val();
+			
+			scoping_fields.children().each(function(){
+				if (this.value == scoper_id) this.selected = 'selected';
+			});
+		} else scoping_fields.hide();
+		
+		// grab model instances that are of the selected class
+		$('.scope_dropdown', '#scope_fields').change(function(){
+			var $this = $(this);
+			
+			if ($this.val() != '') { // retrieve all models of this class
+				scoping_fields.show(100);
+				scoping_dropdown = $('.scoping_dropdown', scoping_fields);
+				scoping_dropdown.html('<option>Loading ' + $this.val() + '...</option>');
+				
+				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() },
+					function(response) {
+						if (response.success) {
+							var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
+							var option_tags = $.option_tags_from_model($this.val(), response.data, args);
+							scoping_dropdown.html(option_tags);
+							
+						} else {
+							scoping_dropdown.html('<option>Error Loading Records</option>')
+						}
+					}
+				);
+			} else scoping_fields.hide(300);
+		}); // END .scope_dropdown.change()
+		
+		// get the attributes of the resource selected from #form_controller in the form new/edit page
+		$('#form_controller', '#FormsForm').change(function(){
+			fillInFormFieldSelectLists($(this).val()); 
+		});
+		
+		// create a custom event on the select lists so that when they finish loading the options, we can select the
+		// field's field_name that matches in the list
+		$('.field_attr_name', '#form_builder').bind('filled', function(){
+			$('.field_attr_name', '#form_builder').each(function(){
+				var $this = $(this),
+						name = $this.prev('span.field_name').text(); // we stored the field_name value in a hidden span
+				
+				$this.children('option').each(function(){
+					var $this_option = $(this);
+					if ($this_option.val() == name) $this_option.attr('selected', true);
+				});
+			});
+			
+			// this field name is useful for specifying a hidden field with a return path for after submit the form
+			$(this).append('<option value="return_to">return_to</option>');
+		});
+		
+		$('.delete_link', '#form_builder').live('click', function(){
+			var $this = $(this),
+					field_id = $(this).attr('rel').replace('field_', '');
+
+			$this.parent().parent().html();
+			return false;
+		});
+	} // END Edit/New Views/Forms/Links
+	
+	// Edit Forms
+	if ($.on_page([['edit', 'forms']])) {
+		// fill in the field name select lists
+		var resource = $('#form_controller', '#FormsForm').val();
+		fillInFormFieldSelectLists(resource);
+		
+	} // END Edit Forms
+	
+	// New Permissions
+	if ($.on_page([['new', 'permissions, roles']])) {
+		$('a.add_link', '.partial_addable').click();
+	} // END New Permissions
 	
 	// add your facility
 	$('form#new_client').submit(function(){
@@ -89,13 +384,13 @@ $(document).ready(function(){
 			$.post('/ajax/find_listings', form_data, function(response){
 				if (response.success) {
 					get_pop_up_and_do(sub_partial, pop_up_title, function(pop_up){ // preping step 2
-						var wizard = new GreyWizard(workflow_settings);
+						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (response.data[0]) {
 							workflow_settings.slides[0].data = response.data;
-							wizard.begin_workflow($('#workflow_steps', pop_up), 1);
+							wizard.begin_workflow_on(0);
 							
-						} else wizard.begin_workflow($('#workflow_steps', pop_up), 2);
+						} else wizard.begin_workflow_on(1);
 						
 					});
 					
@@ -247,301 +542,6 @@ $(document).ready(function(){
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow
-	
-	$('a', '#admin-box').click(function(){
-		var $this = $(this),
-			other_links = $('a:not(this)', '#admin-box').removeClass('active');
-		$this.addClass('active');
-	});
-	
-	$('.selectable').live('click', function(){
-		var $this = $(this),
-			checkbox = $('input[type=checkbox]', $this);
-
-		if (!$this.data('selected')) {
-			$this.data('selected', true).addClass('selected');
-			checkbox.trigger('change').attr('checked', true);
-		} else {
-			$this.data('selected', false).removeClass('selected');
-			checkbox.trigger('change').attr('checked', false);
-		}
-	});
-	
-	// front page
-	$('a', '#click-more').click(function(){
-		var $this = $(this);
-		if (!$this.data('open')) {
-			$this.data('open', true)
-			$this.text('Click to close');
-		} else {
-			$this.data('open', false)
-			$this.text('Click to open')
-		}
-	});
-	
-	// listings show page
-	// the google map breaks when it's loaded in a hidden div, then shown by js
-	$('a[rel=sl-tabs-map]').click(function(){
-		var map = $('#sl-tabs-map');
-		// this is a function produced by the Gmap.html() method called from the template, it's provided by the google_map plugin
-		// check the header area of the source html for the method definition
-		if (!map.is(':hidden')) center_google_map();
-	});
-	
-	// edit site settings page
-	// turns a label into a textfield on mouseover, then uses callback to bind an event
-	// to the new textfield to turn it back into a label when it blurs
-	$('.textFieldable', '#SiteSettingFields .new_setting_field').live('mouseover', function(){
-		var $this = $(this),
-				settings_field_html = '<input name="new_site_settings[][key]" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
-		
-		$(this).textFieldable(settings_field_html, function(text_field){
-			$.revertSettingsTextFieldToLabel(text_field, $this.text());
-		});
-	});
-	
-	$('.textFieldable', '#SiteSettingFields .existing_setting_field').live('click', function(){
-		var $this = $(this),
-				existing_settings_html = '<input name="site_settings['+ $this.text() +']" value="'+ $this.text() +'" class="hintable required" title="Enter a setting name" />';
-		
-		$this.textFieldable(existing_settings_html, function(text_field){
-			$.revertSettingsTextFieldToLabel(text_field, $this.text());
-		});
-		
-		return false;
-	});
-	
-	// admin menu hover behaviors
-	var GR_content_menu_hover_interval,
-		GR_resource_list = $('#resource_list');
-	
-	$('#content_menu_link').mouseover(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#content_menu_link').click(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#resource_list, #content_menu_link').mouseout(function(){
-		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
-	});
-	
-	$('#resource_list, #content_menu_link').mouseover(function(){
-		clearInterval(GR_content_menu_hover_interval);
-	});
-	
-	$('li', '#resource_list').hover(function(){
-		var li = $(this).css('position', 'relative');
-		var link = $('a', li);
-		
-		if (link.hasClass('access_denied')) return;
-		
-		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
-				new_option.appendTo(link)
-									.hide().show()
-									.click(function(){ window.location = this.href; return false; });
-	}, function(){
-		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
-	});
-	// END admin menu
-	
-	// helpers
-	$('.unique_checkbox').click(function() {
-		var $this = $(this);
-		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
-		$this.attr('checked', !$this.is(':checked'))
-	});
-	
-	$('.unique_checkbox').click(function() {
-		var $this = $(this);
-		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
-		$this.attr('checked', !$this.is(':checked'))
-	});
-	
-	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
-	$('textarea.wysiwyg').each(function(i) {
-		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
-		
-		textarea.parent().parent().prepend(toggle);
-		
-		toggle.click(function() {
-			CKEDITOR.replace(textarea.attr('name'));
-			return false;
-		});
-	});
-	
-	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
-	// e.g. #show_examples_helptext => $('.examples', '.helptext').show();
-	$('.toggle_action').click(function() {
-		$.toggleAction(this.href, false);
-		return false;
-	});
-	
-	// ajax links point to the ajax_controller, the href contains an action, and other key-values pairs such as model class,
-	// model id, the attribute to update, and the value, see the ajax_controller for other actions and required params
-	// use conditional logic to handle the success callback based on attributes of the clicked link, 
-	// such as what element to update on success, or what part of the dom should change 
-	$('.ajax_action').live('click', function(){
-		var $this = $(this);
-		$this.addClass('loading');
-		
-		if ($.mayContinue($this)) {
-			$.getJSON(this.href + '&authenticity_token=' + $.get_auth_token(), {},
-				function(response) {
-					$this.removeClass('loading');
-					
-					if (response.success) {
-						// need better conditional logic for these links
-						if ($this.attr('rel') == 'helptext') {
-							$.toggleHelptext($this);
-							
-						} else if ($this.hasClass('delete_link')) {
-							$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
-						}
-						
-					} else {
-						$.ajax_error(response);
-						$this.removeClass('loading');
-					}
-				}
-			);
-		} else $this.removeClass('loading');
-		
-		return false;
-	});
-	
-	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
-	$('.add_link', '.partial_addable').live('click', function(){
-		var $this 			= $(this),
-				context 		= '#' + $this.attr('rel'),
-				partial_form = $($('.partial_form_html', context).html());
-	
-		$('input, select, checkbox', partial_form).each(function(){ $(this).attr('disabled', false); });
-	
-		partial_form.hide().prependTo('.partial_forms_wrap', context).slideDown(600);
-		$.bindPlugins(); // first implemented to call hinty
-		
-		return false;
-	});
-	
-	$('.cancel_link', '.partial_addable').live('click', function(){
-		$(this).parent().parent().slideUp(300, function(){ $(this).remove(); }); 
-		return false; 
-	});
-	
-	// retrieves a partial via ajax and inserts it into the target div
-	$('.insert_partial').live('click', function(){
-		var $this = $(this);
-		
-		$.get(this.href, function(response){
-			$('#' + $this.attr('rel')).html(response);
-		})
-		
-		return false;
-	});
-	
-	$('.inline_delete_link').live('click', function(){
-		var $this = $(this);
-		
-		if ($.mayContinue($this)) {
-			if (this.rel.split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
-			else $('#'+ $this.attr('rel')).slideUpAndRemove();
-		}
-		
-		return false;
-	});
-	
-/******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
-	
-	// Views/Forms/Links Edit
-	if ($.on_page([['edit, new', 'views, forms, links']])) {
-		var scope_down = ''; 
-		if ($.on_page([['edit, new', 'views']])) scope_down = 'owner';
-		else scope_down = 'target';
-		
-		// when the user chooses a scope (aka resource), show the scope-dependent owner_id or target_id dropdown
-		// which is populated by models of the selected scope class
-		var scoping_fields = $('#scope_' + scope_down + '_fields', '#body');
-		
-		if ($('.scope_down_hidden', scoping_fields).val()) { // preselect owner or target from dropdown
-			var scoper_id = $('.scope_down_hidden', scoping_fields).val();
-			
-			scoping_fields.children().each(function(){
-				if (this.value == scoper_id) this.selected = 'selected';
-			});
-		} else scoping_fields.hide();
-		
-		// grab model instances that are of the selected class
-		$('.scope_dropdown', '#scope_fields').change(function(){
-			var $this = $(this);
-			
-			if ($this.val() != '') { // retrieve all models of this class
-				scoping_fields.show(100);
-				scoping_dropdown = $('.scoping_dropdown', scoping_fields);
-				scoping_dropdown.html('<option>Loading ' + $this.val() + '...</option>');
-				
-				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() },
-					function(response) {
-						if (response.success) {
-							var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
-							var option_tags = $.option_tags_from_model($this.val(), response.data, args);
-							scoping_dropdown.html(option_tags);
-							
-						} else {
-							scoping_dropdown.html('<option>Error Loading Records</option>')
-						}
-					}
-				);
-			} else scoping_fields.hide(300);
-		}); // END .scope_dropdown.change()
-		
-		// get the attributes of the resource selected from #form_controller in the form new/edit page
-		$('#form_controller', '#FormsForm').change(function(){
-			fillInFormFieldSelectLists($(this).val()); 
-		});
-		
-		// create a custom event on the select lists so that when they finish loading the options, we can select the
-		// field's field_name that matches in the list
-		$('.field_attr_name', '#form_builder').bind('filled', function(){
-			$('.field_attr_name', '#form_builder').each(function(){
-				var $this = $(this),
-						name = $this.prev('span.field_name').text(); // we stored the field_name value in a hidden span
-				
-				$this.children('option').each(function(){
-					var $this_option = $(this);
-					if ($this_option.val() == name) $this_option.attr('selected', true);
-				});
-			});
-			
-			// this field name is useful for specifying a hidden field with a return path for after submit the form
-			$(this).append('<option value="return_to">return_to</option>');
-		});
-		
-		$('.delete_link', '#form_builder').live('click', function(){
-			var $this = $(this),
-					field_id = $(this).attr('rel').replace('field_', '');
-
-			$this.parent().parent().html();
-			return false;
-		});
-	} // END Edit/New Views/Forms/Links
-	
-	// Edit Forms
-	if ($.on_page([['edit', 'forms']])) {
-		// fill in the field name select lists
-		var resource = $('#form_controller', '#FormsForm').val();
-		fillInFormFieldSelectLists(resource);
-		
-	} // END Edit Forms
-	
-	// New Permissions
-	if ($.on_page([['new', 'permissions, roles']])) {
-		$('a.add_link', '.partial_addable').click();
-	} // END New Permissions
 	
 });
 
@@ -973,9 +973,9 @@ $.fn.accordion = function() {
 	return this.each(function() {
 		$(this).click(function() {
 			var $this = $(this),
-					info_div = $this.parent().next('.info');
+				info_div = $('.info', $this.parent().parent());
 					
-			$('a', $this.parent().parent()).removeClass('active');
+			$('a', $this.parent().parent().parent()).removeClass('active');
 			$('.info').slideUp();
 			
 			if (info_div.is(':hidden')) {
@@ -1108,49 +1108,89 @@ $.fn.selectiveHider = function() {
 	});
 }
 
+// as the user types in numbers, the input is formated as XXX-XXX-XXXX
+$.fn.formatPhoneNum = function() {
+	return this.each(function(){
+		$(this).keyup(function(e){
+			var input = $(this),
+				allowed_keys = [9, 8, 46]; // 9 = tab, 8 = backspace, 46 = delete
+			
+			if (allowed_keys.indexOf(e.which) < 0 && isNaN(input.val().replace('-', '').replace('-', ''))) {
+				input.val(input.val().substring(0, input.val().length - 1));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 3 && input.val().length < 7 && input.val().indexOf('-') < 0) {
+				input.val(input.val().substring(0, 3) + '-' + input.val().substring(3));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 7 && input.val().indexOf('-') < 7) {
+				input.val(input.val().substring(0, 7) + '-' + input.val().substring(8));
+			}
+		});
+	});
+}
+
 // first implemented for the client sign up page (add your facility)
-var GreyWizard = function(settings) {
+var GreyWizard = function(container, settings) {
 	var self = this;
-	self.settings = settings;
+	self.form_data 	= {};
+	self.settings 	= settings;
 	self.slide_data = settings.slides;
 	self.num_slides = self.slide_data.length;
-
-	this.begin_workflow = function(container, on_step) {
-		self.workflow 	   = $(container);
-		self.title_bar 	   = $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
-		self.current  	   = on_step || 1;
-		self.width	  	   = self.workflow.width();
-		self.height   	   = self.workflow.height();
-		self.slides   	   = $('.'+ settings.slides_class, self.workflow);
-		self.nav_bar  	   = $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
-		self.current_slide = $('#'+ self.slide_data[self.current-1].div_id, self.workflow).data('valid', true);
-		self.skipped_first = on_step > 1 ? true : false;
+	self.workflow 	= $(container);
+	self.title_bar 	= $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
+	self.width	  	= self.workflow.width();
+	self.height   	= self.workflow.height();
+	self.slides   	= $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
+	self.nav_bar  	= $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
+	
+	this.begin_workflow_on = function(step) {
+		self.current  	   = step || 0;
+		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
+		self.skipped_first = step > 0 ? true : false;
 		
-		self.set_slides();
+		self.set_slides(true);
 		
 		// bind events
-		self.nav_bar.find('.next, .skip').click(function(){ console.log('bind click'); if (!$(this).data('done')) self.next(); return false; });
+		self.nav_bar.find('.next, .skip').click(self.next);
 		self.nav_bar.find('.back').click(self.prev);
+		
 		self.title_bar.change(function(){
 			$(this).text(self.settings.title + ' - Step '+ (self.current + (self.skipped_first ? 0 : 1)));
 		}).trigger('change');
 		
-		if (typeof self.slide_data[self.current-1].action == 'function') self.slide_data[self.current-1].action.call(this, self);
+		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
 		self.set_nav();
 	}
 	
-	this.set_slides = function() {
+	this.set_slides = function(set_display) {
+		if (typeof set_display == 'undefined') set_display = false;
+		
 		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
 		self.slides.each(function(i){
 			// calculate the left position so that the initial slide is at 0
-			var left = -(self.width * ((self.current-1) - i)).toString() + 'px'
+			var left = -(self.width * ((self.current) - i)).toString() + 'px'
 			$(this).css({ position: 'absolute', top: 0, left: left });
 		});
+		
+		/*if (set_display) {
+			var slide_display_html = '';
+			
+			for (var i = 0; i < self.num_slides; i++) {
+				if (self.skipped_first) continue;
+				
+				slide_display_html += '<div class="slide_display">'+
+										   '<p>Step '+ self.current+1 +'</p>'+
+											self.slide_data[self.current].slide_display +
+									   '</div>';
+											
+			}
+			
+			$('#slide_nav', self.workflow).html(slide_display_html);
+		}*/
 	}
 	
 	this.set_nav = function() {
-		if (typeof self.slide_data[self.current-1] != 'undefined') {
-			$.each(self.slide_data[self.current-1].nav_vis, function(){ // get the current slide's nav actions
+		if (typeof self.slide_data[self.current] != 'undefined') {
+			$.each(self.slide_data[self.current].nav_vis, function(){ // get the current slide's nav actions
 				var btn = $('#'+ this[0]),
 					action = this[1];
 			
@@ -1162,10 +1202,17 @@ var GreyWizard = function(settings) {
 		}
 	}
 	
+	this.may_move = function(step) {
+		var validated = true;
+		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) validated = self.slide_data[self.current].validate.call(this, self);
+		
+		return validated && ((self.current + step) >= 0 && (self.current + step) <= self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
+	}
+	
 	this.next = function(step) {
 		if (typeof step != 'number') var step = 1;
 		
-		self.move(step); 
+		self.move(step);
 		return false;
 	}
 	
@@ -1177,22 +1224,21 @@ var GreyWizard = function(settings) {
 	}
 	
 	this.move = function(step) {
-		if (!self.current_slide.data('valid') && step > 0) return;
-		
-		if ((self.current + step) > 0 && (self.current + step) < self.num_slides) {
+		if (self.may_move(step)) {
 			self.set_slides(); // on current step
 			self.current += step;
-			self.set_nav();
-			self.current_slide = $('#'+ self.slide_data[self.current-1].div_id, self.workflow);
+			self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 			
 			self.slides.each(function(i){
 				var left = self.width * (-step) + parseInt($(this).css('left'));
-				$(this).animate({ left: left + 'px' }, self.settings.slide_speed);
+				$(this).stop().animate({ left: left + 'px' }, self.settings.slide_speed);
 			});
-
-			self.slide_data[self.current-1].action.call(this, self);
+			
+			self.set_nav();
+			self.slide_data[self.current].action.call(this, self);
 			self.title_bar.trigger('change');
-		}
+			
+		} else self.settings.finish_action.call(this, self);
 	}
 }
 
@@ -1200,14 +1246,15 @@ var GreyWizard = function(settings) {
 var workflow_settings = {
 	slide_speed  : 1500,
 	btn_speed	 : 900,
+	fade_speed	 : 1000,
 	title		 : 'Add Your Facility',
 	slides_class : 'workflow_step',
 	nav_id : 'workflow_nav',
 	slides : [
 		{ 
 			div_id  : 'signupstep_2',
-			heading : 'Find an Existing Listing',
 			action  : workflow_step2,
+			slide_display : 'Found possible listings',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeIn'],
@@ -1216,70 +1263,122 @@ var workflow_settings = {
 		},
 		{ 
 			div_id  : 'signupstep_3',
-			heading : 'Just some basic information',
 			action  : workflow_step3,
+			slide_display : 'Contact information',
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Next').data('done', false).show().unbind('click', finish_workflow) }],
+				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
-				['back', function(btn, wizard){ wizard.skipped_first ? btn.hide() : btn.fadeIn(); console.log('nav vis ', wizard.current_slide) }]
-			]
+				['back', function(btn, wizard){ wizard.skipped_first ? btn.hide() : btn.fadeIn(); }]
+			],
+			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
 		},
 		{ 
 			div_id  : 'signupstep_4',
-			heading : 'Did we get it all correct?',
 			action  : workflow_step4,
+			slide_display : 'Review your information',
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Done').data('done', true).click(finish_workflow) }],
+				['next', function(btn, wizard){ btn.text('Done').data('done', true) }],
 				['skip', 'fadeOut'],
 				['back', 'fadeIn']
 			]
 		}
-	]
+	],
+	finish_action : function(wizard){ finish_workflow(wizard); }
 };
 
 function workflow_step2() {
-	var listings_box = $('#show_potential_listings', arguments[0].workflow).hide(),
+	var wizard 			  = arguments[0],
+		listings_box 	  = $('#show_potential_listings', arguments[0].workflow).hide(),
 		listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 	
-	$.each(arguments[0].slide_data[0].data, function(i){
+	$('h3 span', wizard.workflow).text(wizard.slide_data[0].data.length);
+	
+	$.each(wizard.slide_data[0].data, function(i){
 		var listing = this.listing,
 			listing_div = listing_prototype.clone();
-			
+		
 		$('.check input', listing_div).val(listing.id);
 		$('.num', listing_div).text(i+1);
 		$('.listing_title', listing_div).text(listing.title);
 		$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
 		
-		listing_div.appendTo(listings_box);
+		listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
 	});
 	
-	listings_box.fadeIn(arguments[0].settings.btn_speed)
+	setTimeout(function(){ listings_box.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 
 function workflow_step3() {
-	var wizard = arguments[0];
+	var wizard = arguments[0],
+		city = $('#listing_city', '#new_client').val(),
+		state = $('#listing_state', '#new_client').val();
+		
+	$('#listing_city', wizard.workflow).val(city);
+	$('#listing_state', wizard.workflow).val(state.toUpperCase());
 	
 	// bind plugins and change pop_up title
-	$('.next', wizard.workflow).unbind('click', validate_on_click).click(validate_on_click);
-	$('.hintable', arguments[0].workflow).hinty();
-	$('.city_state_zip .autocomplete', arguments[0].workflow).autocomplete();
+	$('.hintable', wizard.workflow).hinty();
+	$('.numeric_phone', wizard.workflow).formatPhoneNum();
+	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
 	
-	function validate_on_click() {
-		if (wizard.current_slide.attr('id') == 'signupstep_3') {
-			var valid = $('#contact_info_form', wizard.workflow).myValidate();
-			wizard.current_slide.data('valid', valid);
-		}
-
-		return false;	
-	}
+	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
 
-function workflow_step4() {
+function workflow_step4() { // form data review
+	var wizard    = arguments[0],
+		review	  = $('#signupstep_4 .left', wizard.workflow).html(''), // reset before filling in again if the user clicked back
+		listings  = $('#signupstep_2 #show_potential_listings', wizard.workflow).find('input:checked'),
+		info	  = $('#signupstep_3 #contact_info_form', wizard.workflow).find('input'),
+		company	  = $('#client_company', '#new_client').val(),
+		email 	  = $('#client_email', '#new_client').val();
 	
+	review.append('<h3>Your Facility: '+ titleize(company) +'</h3>');
+	
+	if (listings.length > 0) {
+		wizard.form_data.listings = [];
+		var listings_html = '<h4>Your Listings</h4><ol id="review_listings">';
+		
+		listings.each(function(i){
+			var title 	= $('#Listing_'+ this.value +' .listing_title', wizard.workflow).text(),
+				address = $('#Listing_'+ this.value +' .listing_address', wizard.workflow).html();
+			
+			wizard.form_data.listings.push(this.value);
+			listings_html += '<li class="'+ (i % 2 ? 'odd' : 'even') +'"><p class="listing_title">'+ title +'</p><p class="listing_address">'+ address +'</p></li>';
+		});
+		
+		listings_html += '</ol>';
+		review.append(listings_html);
+	}
+	
+	info_html = '<h4>Contact Information</h4><div id="review_contact">';
+	info_html += '<p><label class="block left w110">Email</label><span>'+ email +'</span></p>';
+	
+	wizard.form_data.contact_info = {};
+	wizard.form_data.contact_info['company'] = company;
+	wizard.form_data.contact_info['email'] = email;
+	
+	info.each(function(){
+		wizard.form_data.contact_info[this.name] = this.value;
+		if (this.name == 'opt_in') info_html += '<p><label class="block left w110">Newsletter</label><span>'+ (this.checked ? 'Yes' : 'No') +'</span></p>';
+		else info_html += '<p><label class="block left w110">'+ capitalize(this.name.replace('listing_', '').replace('_', ' ')) +'</label><span>'+ this.value +'</span></p>';
+	});
+	
+	info_html += '</div>';
+	review.append(info_html);
+	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 
 function finish_workflow() {
-	alert('fin');
+	arguments[0].form_data['authenticity_token'] = $.get_auth_token();
+	
+	$.post('/clients', arguments[0].form_data, function(response){
+		if (response.success) {
+			alert(response.data);
+			
+			
+		} else $.ajax_error(response);
+	});
+	
 	return false;
 }
 
@@ -1332,6 +1431,22 @@ function fillInFormFieldSelectLists(resource) {
 		// in each of the fields field_name select list
 		$field_name_selects.trigger('filled');
 	});
+}
+
+function capitalize(string) {
+	return string.substring(0,1).toUpperCase() + string.substring(1);
+}
+
+function titleize(string) {
+	var parts = string.split(' '),
+		titleized = '';
+	
+	for (var i = 0, len = parts.length; i < len; i++) {
+		titleized += capitalize(parts[i])
+		if (i < len) titleized += ' ';
+	}
+	
+	return titleized;
 }
 
 /**************** adapter functions ****************/
