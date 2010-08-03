@@ -30,7 +30,7 @@
 			</p>
 			<p>
 				<label class="block left w120">Phone Number</label>
-				<input type="text" id="listing_phone" name="listing_phone" class="hintable numeric_phone" title="Phone Number" />
+				<input type="text" id="listing_phone" maxlength="12" name="listing_phone" class="hintable numeric_phone" title="Phone Number" />
 			</p>
 			<p>
 				<label class="block left w120">Facility Address</label>
@@ -39,11 +39,11 @@
 			<p class="city_state_zip">
 				<input type="text" id="listing_city" name="listing_city" class="hintable required autocomplete" rel="UsCity_names" title="City" />
 				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs|1" title="State" />
-				<input type="text" id="listing_zip" name="listing_zip" class="hintable numeric_zip" title="Zip" />
+				<input type="text" id="listing_zip" maxlength="5" name="listing_zip" class="hintable numeric_zip" title="Zip" />
 			</p>
 			<p class="opt_in">
 				<input type="checkbox" name="opt_in" id="opt_in" value="1" />
-				<span>Send me the latest news from USSelfStorageLocator.com</span>
+				<label for="opt_in">Send me the latest news from USSelfStorageLocator.com</label>
 			</p>
 		</form>
 
@@ -57,12 +57,13 @@
 	<div id="signupstep_4" class="workflow_step">
 		<h3>Make sure everything's cool before you finish.</h3>
 		
-		<div class="left">
-			stuff
+		<div class="left hidden">
+			
 		</div>
 		
 		<div class="right">
-			stuff 2
+			<h4>There are many variations</h4> 
+			<p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words which don't look even slightly believable. </p>
 		</div>
 		
 	</div> <!-- END step 4 -->
@@ -72,4 +73,6 @@
 		<a class="button skip" id="skip" href="#skip">Skip</a>
 	  	<a class="button next" id="next" href="#next">Next</a>
 	</div>
+	
 </div>
+<div id="slide_nav"></div>

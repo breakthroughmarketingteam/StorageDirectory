@@ -11,13 +11,13 @@ jQuery.fn.formBouncer = function(){
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
-			var validation = $(this).myValidate();
-			return validation;
+			var validated = $(this).runValidation();
+			return validated.data('valid');
 		});
 	});
 }
 
-jQuery.fn.myValidate = function() {
+jQuery.fn.runValidation = function() {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
 		form  = $(this),
 		errors = '';
@@ -71,22 +71,15 @@ jQuery.fn.myValidate = function() {
 			}
 		}
 		
-		if (error != '') {
-			if (!form.hasClass('silent')) {
-				jQuery('.error', input.parent()).remove();
-				console.log(input.width())
-				input.before('<div class=\'flash error hidden\' style=\'width:'+ input.width() +'px;float:'+ input.css('float') +'\'>' + error + '</div>');
-				jQuery('.error', input.parent()).slideDown();
-			}
+		if (error != '' && !form.hasClass('silent')) {
+			jQuery('.error', input.parent()).remove();
+			input.before('<div class=\'flash error hidden\' style=\'width:'+ input.width() +'px;float:'+ input.css('float') +'\'>' + error + '</div>');
+			jQuery('.error', input.parent()).slideDown();
 		}
 
 	});
 
-	if (errors != '') {
-		form.data('valid', false);
-		return false;
-	}
-
-	form.data('valid', true);
-	return true;
+	errors != '' ? form.data('valid', false) : form.data('valid', true);
+	
+	return form;
 }
