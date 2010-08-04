@@ -14,9 +14,17 @@ class ClientsController < ApplicationController
   end
   
   def create
-    render :json => { :success => true, :data => "Thanks for signing up #{params[:contact_info][:first_name]}! This is the part where you would receive an email at #{params[:contact_info][:email]} to confirm your account." }
-=begin    
-    if @client.save && @user_session.save
+    @client = Client.new params[:client]
+    @mailing_address = @client.mailing_addresses.build params[:mailing_address]
+    @client.activation_code = Client.make_token
+    
+    raise [@client, @mailing_address].pretty_inspect
+    
+    if @client.save
+      params[:listings].each do |id|
+        Listing.find(id).update_attribute :user_id, @client.id
+      end
+      
       flash[:notice] = @flash_msgs[:new_client]
       redirect_to client_account_path
     else
@@ -24,7 +32,6 @@ class ClientsController < ApplicationController
       flash[:error] = model_errors(@client, @user_session)
       redirect_to :action => 'new'
     end
-=end
   end
     
   def edit

@@ -1181,13 +1181,13 @@ var GreyWizard = function(container, settings) {
 		if (set_display) { // build the slide tabbed nav
 			var slide_display_html = '<div id="slide_nav">',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
-				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.65),
+				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.64),
 				done_skipping 	   = false;
 			
 			for (var i = 0; i < self.num_slides; i++) {
 				if (self.skipped_first && !done_skipping) { done_skipping = true; continue; }
 				
-				slide_display_html += '<div rel="step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
+				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
 										   '<p>Step '+ (i+1) +'</p>'+
 											self.slide_data[i].slide_display +
 									   '</div>';
@@ -1206,7 +1206,6 @@ var GreyWizard = function(container, settings) {
 					action = this[1];
 			
 				if (action) {
-					console.log('setnav', btn.is(':visible'), btn, action)
 					if (typeof action == 'function') action.call(this, btn, self); 
 					else if (typeof action == 'string') btn[action]((action == 'hide' || action == 'show' ? null : self.settings.btn_speed));
 				}
@@ -1214,8 +1213,8 @@ var GreyWizard = function(container, settings) {
 		}
 		
 		setTimeout(function() {
-			$('.slide_display', '#slide_nav').removeClass('active');
-			$('div[rel=step_'+ self.current + ']', '#slide_nav').addClass('active');
+			$('.slide_display', self.workflow.parent()).removeClass('active');
+			$('#tab_step_'+ self.current, self.workflow.parent()).addClass('active');
 		}, self.settings.fade_speed);
 	}
 	
@@ -1242,9 +1241,9 @@ var GreyWizard = function(container, settings) {
 	
 	this.move = function(step) {
 		if (self.may_move(step)) {
-			self.set_slides(); // on current step
+			self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically 
+			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
 			self.current += step;
-			self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 			
 			self.slides.each(function(i){
 				var left = self.width * (-step) + parseInt($(this).css('left'));
@@ -1255,7 +1254,7 @@ var GreyWizard = function(container, settings) {
 			self.slide_data[self.current].action.call(this, self);
 			self.title_bar.trigger('change');
 			
-		} else if (step == self.num_slides) self.settings.finish_action.call(this, self);
+		} else if (self.current == self.num_slides-1) self.settings.finish_action.call(this, self);
 	}
 }
 
@@ -1295,7 +1294,7 @@ var workflow_settings = {
 			action  : workflow_step4,
 			slide_display : 'Review your information',
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Done').data('done', true) }],
+				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
 				['skip', 'fadeOut'],
 				['back', 'fadeIn']
 			]
@@ -1305,25 +1304,28 @@ var workflow_settings = {
 };
 
 function workflow_step2() {
-	var wizard 			  = arguments[0],
-		listings_box 	  = $('#show_potential_listings', arguments[0].workflow).hide(),
-		listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
+	var wizard 	     = arguments[0],
+		listings_box = $('.small_listings', arguments[0].workflow);
 	
-	$('h3 span', wizard.workflow).text(wizard.slide_data[0].data.length);
-	
-	$.each(wizard.slide_data[0].data, function(i){
-		var listing = this.listing,
-			listing_div = listing_prototype.clone();
-		
-		$('.check input', listing_div).val(listing.id);
-		$('.num', listing_div).text(i+1);
-		$('.listing_title', listing_div).text(listing.title);
-		$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
-		
-		listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
-	});
-	
-	setTimeout(function(){ listings_box.fadeIn(wizard.settings.fade_speed) }, 350);
+	if (!$('#tab_step_0', wizard.workflow.parent()).hasClass('done')) {
+		listings_box.hide();
+		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
+		$('h3 span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
+
+		$.each(wizard.slide_data[0].data, function(i){
+			var listing = this.listing,
+				listing_div = listing_prototype.clone();
+
+			$('.check input', listing_div).val(listing.id);
+			$('.num', listing_div).text(i+1);
+			$('.listing_title', listing_div).text(listing.title);
+			$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
+
+			listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
+		});
+
+		setTimeout(function(){ listings_box.fadeIn(wizard.settings.fade_speed) }, 350);
+	}
 }
 
 function workflow_step3() {
@@ -1345,49 +1347,60 @@ function workflow_step3() {
 function workflow_step4() { // form data review
 	var wizard    = arguments[0],
 		review	  = $('#signupstep_4 .left', wizard.workflow).html(''), // reset before filling in again if the user clicked back
-		listings  = $('#signupstep_2 #show_potential_listings', wizard.workflow).find('input:checked'),
+		listings  = $('#signupstep_2 .small_listings', wizard.workflow).find('input:checked'),
 		info	  = $('#signupstep_3 #contact_info_form', wizard.workflow).find('input'),
 		company	  = $('#client_company', '#new_client').val(),
 		email 	  = $('#client_email', '#new_client').val();
 	
-	wizard.form_data.contact_info = {};
-	wizard.form_data.contact_info['company'] = company;
-	wizard.form_data.contact_info['email'] = email;
-
+	wizard.form_data.client = {};
+	wizard.form_data.mailing_address = {};
+	wizard.form_data.client['company'] = company;
+	wizard.form_data.client['email'] = email;
+	
 	info.each(function() {
-		if ($(this).attr('type') == 'checkbox') wizard.form_data.contact_info[this.name] = this.checked;
-		else wizard.form_data.contact_info[this.name] = this.value;
+		switch (this.name) {
+			case 'first_name' : wizard.form_data.client['name'] = capitalize(this.value); break;
+			case 'last_name' : wizard.form_data.client['name'] += ' '+ capitalize(this.value); break;
+			case 'listing_address' : wizard.form_data.mailing_address['address'] = this.value; break;
+			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
+			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;
+			case 'listing_zip' : wizard.form_data.mailing_address['zip'] = this.value; break;
+			case 'listing_phone' : wizard.form_data.mailing_address['phone'] = this.value; break;
+			case 'wants_newsletter' : wizard.form_data.client[this.name] = this.checked; break;
+		}
 	});
 	
 	var review_html = '<h4>Contact Information:</h4>';
 		
 	review_html += '<div id="review_contact">';
-		review_html += '<p class="name">'+ capitalize(wizard.form_data.contact_info['first_name']) +' '+ capitalize(wizard.form_data.contact_info['last_name']) +'</p>';
-		review_html += '<p class="phone">'+ wizard.form_data.contact_info['listing_phone'] +'</p>';
+		review_html += '<p class="name">'+ wizard.form_data.client['name'] +'</p>';
+		review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
 		review_html += '<p class="email">'+ email +'</p>';
 		review_html += '<p class="listing_title">'+ titleize(company) +'</p>';
 		review_html += '<p class="listing_address">' + 
-						wizard.form_data.contact_info['listing_address'] +'<br />'+ 
-						capitalize(wizard.form_data.contact_info['listing_city']) +', '+ 
-						capitalize(wizard.form_data.contact_info['listing_state']) +' '+ 
-						wizard.form_data.contact_info['listing_zip'] +'</p>';
+						wizard.form_data.mailing_address['address'] +'<br />'+ 
+						capitalize(wizard.form_data.mailing_address['city']) +', '+ 
+						capitalize(wizard.form_data.mailing_address['state']) +' '+ 
+						wizard.form_data.mailing_address['zip'] +'</p>';
 	review_html += '</div>';
 	
-	review_html += '<p class="opt_in">'+ (wizard.form_data.contact_info['opt_in'] ? 'Send' : 'Don\'t send') +' me the monthly newletter.</p>';
+	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newletter.</p>';
 	
 	if (listings.length > 0) {
 		wizard.form_data.listings = [];
-		review_html += '<h4>My Listings:</h4><ol id="review_listings">';
+		review_html += '<h4>My Listings:</h4><div class="small_listings">';
 		
 		listings.each(function(i) {
 			var title 	= titleize($('#Listing_'+ this.value +' .listing_title', wizard.workflow).text()),
 				address = titleize($('#Listing_'+ this.value +' .listing_address', wizard.workflow).html());
 			
 			wizard.form_data.listings.push(this.value);
-			review_html += '<li class="'+ (i % 2 ? 'odd' : 'even') +'"><p class="listing_title">'+ title +'</p><p class="listing_address">'+ address +'</p></li>';
+			
+			review_html += '<div class="listing_div"><div class="listing_in"><div class="left block num">'+ (i+1) +'</div>';
+			review_html += '<p class="listing_title">'+ title +'</p><p class="listing_address">'+ address +'</p></div></div>';
 		});
 		
-		review_html += '</ol>';
+		review_html += '</div>';
 	}
 	
 	review.append(review_html);
@@ -1396,12 +1409,16 @@ function workflow_step4() { // form data review
 
 function finish_workflow() {
 	arguments[0].form_data['authenticity_token'] = $.get_auth_token();
+	var next_button = $('.next', arguments[0].workflow);
+
+	next_button.before('<img src="/images/ui/ajax-loader-facebook.gif" class="ajax_loader" alt="Loading..." />');
+	next_button.prev('.ajax_loader').show();
 	
 	$.post('/clients', arguments[0].form_data, function(response){
 		if (response.success) {
 			alert(response.data);
-			
-			
+			next_button.prev('.ajax_loader').hide();
+
 		} else $.ajax_error(response);
 	});
 	
@@ -1461,19 +1478,23 @@ function fillInFormFieldSelectLists(resource) {
 }
 
 function capitalize(string) {
-	return string.substring(0,1).toUpperCase() + string.substring(1);
+	if (typeof string != 'undefined') {
+		return string.substring(0,1).toUpperCase() + string.substring(1);
+	}
 }
 
 function titleize(string) {
-	var parts = string.split(' '),
-		titleized = '';
+	if (typeof string != 'undefined') {
+		var parts = string.split(' '),
+			titleized = '';
 	
-	for (var i = 0, len = parts.length; i < len; i++) {
-		titleized += capitalize(parts[i])
-		if (i < len) titleized += ' ';
+		for (var i = 0, len = parts.length; i < len; i++) {
+			titleized += capitalize(parts[i])
+			if (i < len) titleized += ' ';
+		}
+	
+		return titleized;
 	}
-	
-	return titleized;
 }
 
 /**************** adapter functions ****************/
