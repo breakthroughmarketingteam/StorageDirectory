@@ -441,105 +441,112 @@ $(document).ready(function(){
 		});
 	
 		// 2). bind events to the inputs in the new partial: 
-			// SAVE TITLE ON BLUR
-			$('.listing:eq(0) input[name="listing[title]"]', '#client_listing_box').live('blur', function(){
-				var partial 	  = $('.listing:eq(0)', '#client_listing_box'),
-					title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
-					tip_text	  = $('.new_listing_tip', partial),
-					tip_inner	  = tip_text.find('strong'),
-					ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
-			
-				if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
-					tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
-					tip_inner.text('Enter the street address.');
-					ajax_loader.show();
+		// SAVE TITLE ON BLUR
+		$('.listing:eq(0) input[name="listing[title]"]', '#client_listing_box').live('blur', function(){
+			var partial 	  = $('.listing:eq(0)', '#client_listing_box'),
+				title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
+				tip_text	  = $('.new_listing_tip', partial),
+				tip_inner	  = tip_text.find('strong'),
+				ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
+		
+			if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
+				tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
+				tip_inner.text('Enter the street address.');
+				ajax_loader.show();
 
-					$.post('/listings/quick_create', { title: title_input.val() }, function(response){
-						if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
-						else { // SERVER VALIDATION DID NOT PASS
-							title_input.addClass('invalid').focus();
-						}
-						
-						ajax_loader.hide();
-					}, 'json');
-				
-				} else {
-					title_input.addClass('invalid').focus();
+				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
+					else { // SERVER VALIDATION DID NOT PASS
+						title_input.addClass('invalid').focus();
+					}
+					
 					ajax_loader.hide();
-				}
+				}, 'json');
 			
+			} else {
+				title_input.addClass('invalid').focus();
+				ajax_loader.hide();
+			}
+		
+		});
+		
+		// a collection of the input names and the msg to change the tip to, and the method with which to change the tip
+		var listing_tip_inner_tag = 'strong',
+			listing_input_msgs = [
+				['address', 'Type in the city.', function(tip_text, msg){
+					tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
+					tip_text.find(listing_tip_inner_tag).text(msg);
+				}],
+				['city', 'Enter the 2 letter State abbrev.', function(tip_text, msg){
+					tip_text.find(listing_tip_inner_tag).text(msg);
+				}],
+				['state', 'Enter the 5 digit zip code.', function(tip_text, msg){
+					tip_text.find(listing_tip_inner_tag).text(msg);
+				}],
+				['zip', '<strong>Almost Done! Click Save.</strong>', function(tip_text, msg){
+					tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
+				}]
+			];
+		
+		function bind_listing_input_events() {
+			$.each(listing_input_msgs, function(){
+				var input_name = this[0], blur_msg = this[1], done_action = this[2],
+					tip_text   = $('.new_listing_tip', '.listing:eq(0)');
+				
+				$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+					var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+
+					if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
+					else input.focus().addClass('invalid');
+
+				});
 			});
 			
-			// a collection of the input names and the msg to change the tip to, and the method with which to change the tip
-			var listing_tip_inner_tag = 'strong',
-				listing_input_msgs = [
-					['address', 'Type in the city.', function(tip_text, msg){
-						tip_text.animate({ top: '60px' }); // MOVE TIP TEXT down to city state zip row
-						tip_text.find(listing_tip_inner_tag).text(msg);
-					}],
-					['city', 'Enter the 2 letter State abbrev.', function(tip_text, msg){
-						tip_text.find(listing_tip_inner_tag).text(msg);
-					}],
-					['state', 'Enter the 5 digit zip code.', function(tip_text, msg){
-						tip_text.find(listing_tip_inner_tag).text(msg);
-					}],
-					['zip', '<strong>Almost Done! Click Save.</strong>', function(tip_text, msg){
-						tip_text.css('text-align', 'right').html('<strong>Almost Done! Click Save.</strong>');
-					}]
-				];
-			
-			function bind_listing_input_events() {
-				$.each(listing_input_msgs, function(){
-					var input_name = this[0], blur_msg = this[1], done_action = this[2],
-						tip_text   = $('.new_listing_tip', '.listing:eq(0)');
-					
-					$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
-						var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
+			$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+				var partial 	= $('.listing:eq(0)', '#client_listing_box'),
+					button  	= $(this),
+					ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
 
-						if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
-						else input.focus().addClass('invalid');
+				if (!button.data('saving') && button.text() == 'Save' && form_inputs_valid('.rslt_contact')) {
+					button.data('saving', true);
+					ajax_loader.show();
 
-					});
-				});
-				
-				// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
-				$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
-					var partial 	= $('.listing:eq(0)', '#client_listing_box'),
-						button  	= $(this),
-						ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
+					var listing_id = partial.attr('id').replace('Listing_', ''),
+						attributes = {
+							address : $('input[name="listing[map_attributes][address]"]', partial).val(),
+							city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
+							state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
+							zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+						};
 
-					if (!button.data('saving') && button.text() == 'Save') {
-						button.data('saving', true);
-						ajax_loader.show();
+					// SAVE ADDRESS WHEN USER CLICKS SAVE
+					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+						if (response.success) {
+							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 
-						var listing_id = partial.attr('id').replace('Listing_', ''),
-							attributes = {
-								address : $('input[name="listing[map_attributes][address]"]', partial).val(),
-								city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
-								state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
-								zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
-							};
+							listing_html = $(response.data);
+							partial.html(listing_html.html()).removeClass('active');
 
-						// SAVE ADDRESS WHEN USER CLICKS SAVE
-						$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
-							if (response.success) {
-								button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
+						} else $.ajax_error(response);
 
-								listing_html = $(response.data);
-								partial.html(listing_html.html()).removeClass('active');
+						button.data('saving', false);
+						ajax_loader.hide();
 
-							} else $.ajax_error(response);
+					}, 'json');
 
-							button.data('saving', false);
-							ajax_loader.hide();
-
-						}, 'json');
-
-						return false;
-					}
-				});
-			} // END bind_listing_input_events()
-		 
+					return false;
+				}
+			});
+		} // END bind_listing_input_events()
+		
+		function form_inputs_valid(context) {
+			$('.i', context).each(function(){
+				if ($(this).hasClass('invalid')) return false;
+			});
+			return true;
+		}
+		
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow

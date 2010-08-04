@@ -29,12 +29,9 @@
 					<%= f.text_field :email, :class => 'email' %>
 				</li>
 				<li>
-					<span class="label">City</span> 
-					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
-				</li>
-				<li>
-					<span class="label">State</span> 
-					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete', :rel => 'States_names|1' %>
+					<span class="label">Location</span> 
+					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
+					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1' %>
 				</li>
 				
 				<li>

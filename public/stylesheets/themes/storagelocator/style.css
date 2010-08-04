@@ -134,7 +134,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #narrow-box p span{margin:8px;}
 #rslt-head p{margin-top:23px;background:url(/images/ui/storagelocator/results-header-search.png) no-repeat top right;text-shadow:1px 1px 0 #666;width:300px;}
 #rslt-head p a{margin-left:15px;color:#fff;font-weight:bold;font-size:120%;text-decoration:none;}
-input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:185px;height:28px;padding:0 12px;line-height:28px;color:#777;}
+input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:185px;height:28px;padding:0 12px;line-height:28px;color:#777;font-size:120%;}
 #type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:774px;background:url(/images/ui/storagelocator/results-list-bg.png) no-repeat top left;height:40px;line-height:20px;position:relative;left:-3px;}
 #type-one-top-bar-head{margin-bottom:10px;}
 #type-three-top-bar-head{left:-1px;}
@@ -163,6 +163,7 @@ li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;
 .rslt-contact{width:188px;color:#555;margin-top:10px;}
 .rslt-contact h3{margin:4px 0 7px;}
 .rslt-contact h3 a{color:#060;}
+#clients_controller .rslt-contact #listing_title{width:93%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
 li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
@@ -173,12 +174,12 @@ ul.tabs{margin:0 0 5px 31px;float:left;}
 ul.tabs li{height:16px;line-height:16px;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;border:1px solid #ccc;border-top:0 none;border-radius-bottomright:8px;-moz-border-radius-bottomright:8px;-webkit-border-bottom-right-radius:8px;border-radius-bottomleft:8px;-moz-border-radius-bottomleft:8px;-webkit-border-bottom-left-radius:8px;}
 ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
 ul.tabs li.open_tab_li{padding:0;}
-ul.tabs li.open_tab_li a{padding:0 5px;font-size:100%;font-weight:bold;}
+ul.tabs li.open_tab_li a{padding:0 5px;font-size:100%;font-weight:bold;line-height:0.8;}
 ul.tabs li a{float:left;display:block;height:16px;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:1px 5px 1px 25px;}
-li.fac-map a{background:url(/images/ui/storagelocator/map-icon.png) no-repeat 0% 53%;}
+li.fac-map a{background:url(/images/ui/storagelocator/map-icon.png) no-repeat 0% 56%;}
 li.fac-specials a{background:url(/images/ui/storagelocator/specials-icon.png) no-repeat 0 41%;}
-li.fac-sizes a{background:url(/images/ui/storagelocator/sizes-icon.png) no-repeat 0 30%;}
-li.fac-pictures a{background:url(/images/ui/storagelocator/pictures-icon.png) no-repeat 0 34%;}
+li.fac-sizes a{background:url(/images/ui/storagelocator/sizes-icon.png) no-repeat 0 33%;}
+li.fac-pictures a{background:url(/images/ui/storagelocator/pictures-icon.png) no-repeat 0 37%;}
 p.rslt-foot{text-align:right;margin-top:20px 10px 10px 0;padding-right:10px;}
 p.rslt-foot a{color:#666;text-decoration:none;font-size:1.2em;}
 .exp-rslt{width:727px;border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;position:relative;left:13px;background:url(/images/ui/storagelocator/expanded-result-bottom-bg.png) repeat-y top right;background-color:#FFFFDA;}
@@ -246,11 +247,14 @@ li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
 /* Start the add facility page styles here */
-form#new_client{width:430px;float:left;position:relative;left:30px;margin-bottom:20px;text-align:right;}
-form#new_client .label{padding-right:20px;}
-form#new_client .ajax_loader{margin:16px 11px 0 0;}
+form#new_client{width:430px;float:left;position:relative;left:30px;margin-bottom:20px;text-align:left;}
+form#new_client .label{padding-left:8px;}
+form#new_client .ajax_loader{bottom:21px;position:absolute;right:150px;}
 ul#add-fac-form li{list-style:none;height:48px;clear:both;position:relative;}
 ul#add-fac-form li input,#signupstep_3 input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;font-size:80%;}
+ul#add-fac-form #listing_state,ul#add-fac-form #listing_city{float:none;}
+ul#add-fac-form #listing_city{margin-left:84px;width:42.7%;}
+ul#add-fac-form #listing_state{margin-left:16px;width:10%;}
 #signupstep_3 input{font-size:100%;}
 #add-fac-form-txt{width:246px;float:right;position:relative;left:-20px;top:-8px;}
 #add-fac-form-txt h2{font-size:140%;}

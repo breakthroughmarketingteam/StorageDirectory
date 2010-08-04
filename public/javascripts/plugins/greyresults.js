@@ -322,59 +322,54 @@ $('.open_tab', '.tabs').click(function(){
 	}
 	
 	return false
-})
+});
 
-$.fn.greyresults = function() {
-	return this.each(function() {
-		// slide open the panel below a result containing a partial loaded via ajax, as per the rel in the clicked tab link
-		$('.tab_link', this).live('click', function() {
-			$('.open_tab').data('active', false);
-			var $this		= $(this),
-				$listing	= $this.parents('.listing'),
-				$panel		= $('.panel', $listing).addClass('active'),
-				$progress = $('.progress', $listing);
-				
-			// show progress and do ajax call unless we're clicking on the same tab again
-			if ($.clicked_on_different_tab($this, $listing, $panel)) {
-				$progress.addClass('active');
-				$panel.attr('rel', this.rel);
-				
-				$.get(this.href, function(response) {
-					$('.tab_link, .listing, .panel').removeClass('active');
-					$('li', '.tabs').removeClass('active');
-					$this.parent().addClass('active');
-					
-					$this.addClass('active');
-					$listing.addClass('active');
-					$panel.addClass('active');
-
-					$('.panel:not(.active)').slideUp();
-					$panel.html(response);
-					
-					$('.listing:not(.active) .open_tab').text('+');
-					$('.open_tab', $listing).data('active', true).text('x');
-					
-					if ($panel.is(':hidden')) $panel.slideDown();
-					$('.progress', '.listing').removeClass('active');
-					
-					// load the google map into an iframe
-					if ($this.attr('rel') == 'map') {
-						var $map_wrap = $('.map_wrap', $panel);
-						$map_wrap.append('<iframe />');
-						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
-						
-					} else if ($this.attr('rel') == 'reserve') {
-						$('.mini_calendar', $panel).datepicker();
-						$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
-					}
-				});
-			}
+// slide open the panel below a result containing a partial loaded via ajax, as per the rel in the clicked tab link
+$('.tab_link', '.listing').live('click', function() {
+	$('.open_tab', this).data('active', false);
+	var $this		= $(this),
+		$listing	= $this.parents('.listing'),
+		$panel		= $('.panel', $listing).addClass('active'),
+		$progress = $('.progress', $listing);
+		
+	// show progress and do ajax call unless we're clicking on the same tab again
+	if ($.clicked_on_different_tab($this, $listing, $panel)) {
+		$progress.addClass('active');
+		$panel.attr('rel', this.rel);
+		
+		$.get(this.href, function(response) {
+			$('.tab_link, .listing, .panel').removeClass('active');
+			$('li', '.tabs').removeClass('active');
+			$this.parent().addClass('active');
 			
-			return false;
-		})
-	});
-}
-$('.listing', '#rslt-list-bg').greyresults();
+			$this.addClass('active');
+			$listing.addClass('active');
+			$panel.addClass('active');
+
+			$('.panel:not(.active)').slideUp();
+			$panel.html(response);
+			
+			$('.listing:not(.active) .open_tab').text('+');
+			$('.open_tab', $listing).data('active', true).text('x');
+			
+			if ($panel.is(':hidden')) $panel.slideDown();
+			$('.progress', '.listing').removeClass('active');
+			
+			// load the google map into an iframe
+			if ($this.attr('rel') == 'map') {
+				var $map_wrap = $('.map_wrap', $panel);
+				$map_wrap.append('<iframe />');
+				$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
+				
+			} else if ($this.attr('rel') == 'reserve') {
+				$('.mini_calendar', $panel).datepicker();
+				$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
+			}
+		});
+	}
+	
+	return false;
+})
 
 // narrow search form sliders
 $('.slider').each(function(){
