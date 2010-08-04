@@ -14,6 +14,8 @@ class ClientsController < ApplicationController
   end
   
   def create
+    render :json => { :success => true, :data => "Thanks for signing up #{params[:client][:name]}! This is where we send you an activation email to #{params[:client][:email]}..." }
+=begin
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address]
     @client.activation_code = Client.make_token
@@ -32,6 +34,7 @@ class ClientsController < ApplicationController
       flash[:error] = model_errors(@client, @user_session)
       redirect_to :action => 'new'
     end
+=end
   end
     
   def edit
