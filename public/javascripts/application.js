@@ -576,7 +576,7 @@ $.log = function(msg) {
 }
 
 $.ajax_error = function(response) {
-	if (console == undefined) alert(response.data);
+	if (typeof console == 'undefined') alert(response.data);
 	else console.log(response);
 	//$('#body').prepend('<div class="flash error hide">'+ response.data +'</div>').slideDown();
 }
@@ -1425,7 +1425,6 @@ function finish_workflow() {
 		next_button.prev('.ajax_loader').show();
 
 		$.post('/clients', wizard.form_data, function(response){
-			console.log(response)
 			if (response.success) {
 				wizard.workflow.parents('#pop_up').dialog('close');
 				$('#new_client').css('text-align', 'left').html('<p>'+ response.data +'</p>');
