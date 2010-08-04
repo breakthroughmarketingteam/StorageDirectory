@@ -1428,7 +1428,7 @@ function finish_workflow() {
 			console.log(response)
 			if (response.success) {
 				wizard.workflow.parents('#pop_up').dialog('close');
-				$('#new_client').html(response.data);
+				$('#new_client').css('text-align', 'left').html('<p>'+ response.data +'</p>');
 
 			} else $.ajax_error(response);
 
