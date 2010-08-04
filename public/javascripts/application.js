@@ -1188,7 +1188,7 @@ var GreyWizard = function(container, settings) {
 				if (self.skipped_first && !done_skipping) { done_skipping = true; continue; }
 				
 				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
-										   '<p>Step '+ (i+1) +'</p>'+
+										   '<p>Step '+ (i+(self.skipped_first ? 1 : 2)) +'</p>'+
 											self.slide_data[i].slide_display +
 									   '</div>';
 											
