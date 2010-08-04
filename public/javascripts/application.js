@@ -1181,7 +1181,7 @@ var GreyWizard = function(container, settings) {
 		if (set_display) { // build the slide tabbed nav
 			var slide_display_html = '<div id="slide_nav">',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
-				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.64),
+				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
 				done_skipping 	   = false;
 			
 			for (var i = 0; i < self.num_slides; i++) {
@@ -1319,7 +1319,7 @@ function workflow_step2() {
 			$('.check input', listing_div).val(listing.id);
 			$('.num', listing_div).text(i+1);
 			$('.listing_title', listing_div).text(listing.title);
-			$('.listing_address', listing_div).html(listing.address +'<br />'+ listing.city +', '+ listing.state +' '+ listing.zip);
+			$('.listing_address', listing_div).html('<span class="street_address">'+ listing.address +'</span><br />'+ listing.city +', '+ listing.state +' <span class="zip">'+ listing.zip +'</span>');
 
 			listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
 		});
@@ -1329,10 +1329,18 @@ function workflow_step2() {
 }
 
 function workflow_step3() {
-	var wizard = arguments[0],
-		city = $('#listing_city', '#new_client').val(),
-		state = $('#listing_state', '#new_client').val();
-		
+	var wizard    = arguments[0],
+		addresses = get_checked_listings_addresses(wizard),
+		city 	  = $('#listing_city', '#new_client').val(),
+		state 	  = $('#listing_state', '#new_client').val(),
+		zips	  = get_checked_listings_addresses(wizard, 'zip');
+	
+	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(addresses[0]);
+	else $('#listing_address', wizard.workflow).autocomplete({ source: addresses });
+	
+	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
+	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
+	
 	$('#listing_city', wizard.workflow).val(city);
 	$('#listing_state', wizard.workflow).val(state.toUpperCase());
 	
@@ -1356,6 +1364,7 @@ function workflow_step4() { // form data review
 	wizard.form_data.mailing_address = {};
 	wizard.form_data.client['company'] = company;
 	wizard.form_data.client['email'] = email;
+	wizard.form_data['authenticity_token'] = $.get_auth_token();
 	
 	info.each(function() {
 		switch (this.name) {
@@ -1408,21 +1417,39 @@ function workflow_step4() { // form data review
 }
 
 function finish_workflow() {
-	arguments[0].form_data['authenticity_token'] = $.get_auth_token();
-	var next_button = $('.next', arguments[0].workflow);
-
-	next_button.before('<img src="/images/ui/ajax-loader-facebook.gif" class="ajax_loader" alt="Loading..." />');
-	next_button.prev('.ajax_loader').show();
+	var wizard = arguments[0],
+		next_button = $('.next', arguments[0].workflow);
 	
-	$.post('/clients', arguments[0].form_data, function(response){
-		if (response.success) {
-			alert(response.data);
-			next_button.prev('.ajax_loader').hide();
+	if (!next_button.data('saving')) {
+		next_button.data('saving', true).before('<img src="/images/ui/ajax-loader-facebook.gif" class="ajax_loader" alt="Loading..." />');
+		next_button.prev('.ajax_loader').show();
 
-		} else $.ajax_error(response);
-	});
+		$.post('/clients', wizard.form_data, function(response){
+			console.log(response)
+			if (response.success) {
+				wizard.workflow.parents('#pop_up').dialog('close');
+				$('#new_client').html(response.data);
+
+			} else $.ajax_error(response);
+
+			next_button.prev('.ajax_loader').hide().data('saving', false);
+		});
+	}
 	
 	return false;
+}
+
+function get_checked_listings_addresses(wizard, address_part) {
+	if (typeof address_part == 'undefined') var address_part = 'street_address'
+	var checked = $('#signupstep_2 :checkbox:checked', wizard.workflow),
+		addresses = [];
+	
+	checked.each(function(){
+		var part = $('.'+ address_part, '#Listing_'+ this.value).text();
+		addresses.push(part);
+	});
+	
+	return addresses;
 }
 
 // pulls the pop_up template and runs the callback

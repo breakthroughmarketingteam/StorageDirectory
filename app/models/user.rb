@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   
+  require 'digest'
   acts_as_authentic
   ajaxful_rater
   
@@ -24,7 +25,17 @@ class User < ActiveRecord::Base
     all :select => 'name, email, last_login_at, id'
   end
   
+  def self.rand_password
+    words = File.read("#{RAILS_ROOT}/lib/words").split.select{ |w| w.size < 9 }
+    max = words.size
+    "#{words[rand(max)]}_#{words[rand(max)]}" 
+  end
+  
   # Instance Methods
+  
+  def make_activation_code
+    Digest::SHA1.hexdigest(self.to_s)
+  end
   
   def update_attributes(params)
     self.images.build(params[:profile_image]) unless params[:profile_image].blank? || params[:profile_image][:image].blank?

@@ -133,7 +133,6 @@ class ApplicationController < ActionController::Base
     @nav_pages         = Page.nav_pages
     @global_blocks     = Block.all :conditions => ['show_in_all in (?)', regions(false).map(&:to_s)]
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    @flash_msgs        = { :new_client => 'Welcome! Your account is almost ready...' }
   end
   
   # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

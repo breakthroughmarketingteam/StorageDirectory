@@ -14,27 +14,28 @@ class ClientsController < ApplicationController
   end
   
   def create
-    render :json => { :success => true, :data => "Thanks for signing up #{params[:client][:name]}! This is where we send you an activation email to #{params[:client][:email]}..." }
-=begin
+    #render :json => { :success => true, :data => "Thanks for signing up #{params[:client][:name]}! This is where we send you an activation email to #{params[:client][:email]}..." }
+
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address]
-    @client.activation_code = Client.make_token
-    
-    raise [@client, @mailing_address].pretty_inspect
+    @temp_password = Client.rand_password
+    @client.password = @temp_password
+    @client.password_confirmation = @temp_password
+    @client.activation_code = @client.make_activation_code
+    @client.status = 'unverified'
+    @client.role_id = Role.get_advertiser_role_id
     
     if @client.save
       params[:listings].each do |id|
-        Listing.find(id).update_attribute :user_id, @client.id
+        Listing.find(id.to_i).update_attributes :user_id => @client.id, :status => 'unverified'
       end
       
-      flash[:notice] = @flash_msgs[:new_client]
-      redirect_to client_account_path
+      Notifier.deliver_client_notification @client, @temp_password
+      
+      render :json => { :success => true, :data => "Great job, you're almost ready! We sent you an email with an activation link. You'll be able to play around with your account after you click on that link. See you soon!" }
     else
-      raise model_errors(@client, @user_session).pretty_inspect
-      flash[:error] = model_errors(@client, @user_session)
-      redirect_to :action => 'new'
+      render :json => { :success => false, :data => model_errors(@client) }
     end
-=end
   end
     
   def edit
