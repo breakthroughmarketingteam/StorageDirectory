@@ -14,19 +14,20 @@ class ClientsController < ApplicationController
   end
   
   def create
-    #render :json => { :success => true, :data => "Thanks for signing up #{params[:client][:name]}! This is where we send you an activation email to #{params[:client][:email]}..." }
-
-    @client = Client.new params[:client]
-    @mailing_address = @client.mailing_addresses.build params[:mailing_address]
-    @temp_password = Client.rand_password
-    @client.password = @temp_password
+    @client                       = Client.new params[:client]
+    @mailing_address              = @client.mailing_addresses.build params[:mailing_address]
+    @listing                      = @client.listings.build :title => @client.company, :status => 'unverified'
+    @temp_password                = Client.rand_password
+    @client.password              = @temp_password
     @client.password_confirmation = @temp_password
-    @client.activation_code = @client.make_activation_code
-    @client.status = 'unverified'
-    @client.role_id = Role.get_advertiser_role_id
+    @client.activation_code       = @client.make_activation_code
+    @client.status                = 'unverified'
+    @client.role_id               = Role.get_advertiser_role_id
+    
+    @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
     
     if @client.save
-      params[:listings].each do |id|
+      (params[:listings] || []).each do |id|
         Listing.find(id.to_i).update_attributes :user_id => @client.id, :status => 'unverified'
       end
       
