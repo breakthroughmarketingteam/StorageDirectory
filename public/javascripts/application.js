@@ -1432,6 +1432,7 @@ function finish_workflow() {
 			} else $.ajax_error(response);
 
 			next_button.prev('.ajax_loader').hide().data('saving', false);
+			$('.ui-autocomplete').click();
 		});
 	}
 	
