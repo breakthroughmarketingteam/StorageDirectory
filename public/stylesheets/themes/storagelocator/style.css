@@ -47,7 +47,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#locate,#main-nav ul li#Page_2{width:138px;background:url(/images/ui/storagelocator/locate-button.png) no-repeat top left;}
 #main-nav ul li#Page_12{width:119px;background:url(/images/ui/storagelocator/info-button.png) no-repeat top left;}
 #main-nav ul li#tips,#main-nav ul li#Page_3{width:121px;background:url(/images/ui/storagelocator/tips-button.png) no-repeat top left;}
-#main-nav ul li#Page_14{width:127px;background:url(/images/ui/storagelocator/truck-rentals.png) no-repeat top left;}
+#main-nav ul li#Page_14{width:127px;background:url(/images/ui/storagelocator/truck-button.png) no-repeat top left;}
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
 /* hovers */
 #main-nav ul li a:hover,#main-nav ul li a:active{color:#000;}
@@ -55,7 +55,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover,#main-nav ul li#locate.active,#main-nav ul li#Page_2.active{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
 #main-nav ul li#Page_12:hover,#main-nav ul li#Page_12.active{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
 #main-nav ul li#tips:hover,#main-nav ul li#Page_3:hover,#main-nav ul li#tips.active,#main-nav ul li#Page_3.active{background-image:url(/images/ui/storagelocator/tips-button-hover.png);}
-#main-nav ul li#Page_14:hover,#main-nav ul li#Page_14.active{background-image:url(/images/ui/storagelocator/truck-rentals-hover.png);}
+#main-nav ul li#Page_14:hover,#main-nav ul li#Page_14.active{background-image:url(/images/ui/storagelocator/truck-button-hover.png);}
 #main-nav ul li#add:hover,#main-nav ul li#Page_11:hover,#main-nav ul li#add.active,#main-nav ul li#Page_11.active{background-image:url(/images/ui/storagelocator/add-button-hover.png);}
 #top-nav ul li.hidden{display:none;}
 /* Start the main homepage styles here */
@@ -250,7 +250,7 @@ form#new_client{width:430px;float:left;position:relative;left:30px;margin-bottom
 form#new_client .label{padding-right:20px;}
 form#new_client .ajax_loader{margin:16px 11px 0 0;}
 ul#add-fac-form li{list-style:none;height:48px;clear:both;position:relative;}
-ul#add-fac-form li input,#signupstep_3 input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;font-size:80%;}
+ul#add-fac-form li input,#signupstep_3 input{padding:5px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;font-size:80%;}
 #signupstep_3 input{font-size:100%;}
 #add-fac-form-txt{width:246px;float:right;position:relative;left:-20px;top:-8px;}
 #add-fac-form-txt h2{font-size:140%;}
@@ -627,6 +627,8 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 #info-accordion h5{font-size:22px;line-height:25px;}
+.fieldWithErrors, .invalid{background-color:#FFCDCD;border:1px solid #FF9999 !important;color:#FF0000;}
+
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}
@@ -638,7 +640,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #slide_nav .active{background-color:#ccc;}
 #slide_nav .done{background-image:url(/images/ui/storagelocator/green-check.png);background-repeat:no-repeat;background-position:99% 1%;}
 .ui-widget-overlay{background:#000;opacity:.6;}
-.ui-dialog{padding:15px;border:1px solid #ccc;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
+.ui-dialog{padding:15px;border:1px solid #ccc;border-radius:28px;-moz-border-radius:28px;-webkit-border-radius:28px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
 .ui-widget-content,.ui-dialog{background:#fff;text-align:left;}
 .ui-dialog .ui-widget-header{color:#fff;text-shadow:1px 1px 2px #333;font-size:120%;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x top;border:1px solid #ccc;border-bottom:0 none;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px; /* bottom */ border-radius-bottomright:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-radius-bottomleft:0;-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;}
 .ui-dialog .ui-dialog-titlebar{padding:10px 15px;height:28px;line-height:1.1;}
@@ -650,8 +652,8 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 /*signup workflow*/
-#add-fac-form .error,#workflow_steps .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-23px;}
-#workflow_steps{overflow:hidden;position:relative;height:400px;}
+#add-fac-form .error,#workflow_steps .error{width:auto;margin:0;padding:0;background:none;color:#FF0000;border:0 none;opacity:1;position:absolute;right:0;top:-23px;}
+#workflow_steps{overflow:hidden;position:relative;height:405px;}
 #workflow_steps .button{font-weight:bold;display:block;position:absolute;top:352px;right:0;width:58px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.1;padding-left:25px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
 #workflow_steps .skip{right:95px;}
 #workflow_steps .back{right:auto;left:0;}
