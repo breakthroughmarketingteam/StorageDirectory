@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :images
   has_one :profile_image, :class_name => 'Image', :order => 'id'
+  has_many :user_hint_placements, :dependent => :destroy
+  has_many :user_hints, :through => :user_hint_placements
   
   validates_presence_of :name, :email, :role_id
   

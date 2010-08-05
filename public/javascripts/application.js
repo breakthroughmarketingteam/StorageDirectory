@@ -369,11 +369,14 @@ $(document).ready(function(){
 	
 	// add your facility
 	$('form#new_client').submit(function(){
-		if ($(this).data('valid')) {
+		var signup_form = $(this);
+		
+		if (signup_form.data('valid') && !signup_form.data('saving')) {
+			signup_form.data('saving', true);
+			
 			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
-			var signup_form   = $(this),
-				pop_up_title  = 'Add Your Facility',
-				pop_up_height = 571,
+			var pop_up_title  = 'Add Your Facility',
+				pop_up_height = 600,
 				sub_partial   = '/clients/signup_steps',
 				ajax_loader	  = $('.ajax_loader', this).show(),
 				current_step  = 1,
@@ -395,14 +398,15 @@ $(document).ready(function(){
 							
 						} else wizard.begin_workflow_on(1);
 						
+						signup_form.data('saving', false);
 					});
 					
 				} else $.ajax_error(response);
 				
 			}, 'json');
-
-			return false;
 		} 
+		
+		return false;
 	});
 	
 	// client edit page
@@ -1154,6 +1158,7 @@ var GreyWizard = function(container, settings) {
 	self.width	  	= self.workflow.width();
 	self.height   	= self.workflow.height();
 	self.slides   	= $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
+	self.spacer		= 100;
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
@@ -1170,7 +1175,7 @@ var GreyWizard = function(container, settings) {
 		self.nav_bar.find('.back').click(self.prev);
 		
 		self.title_bar.change(function(){
-			$(this).text(self.settings.title + ' - Step '+ self.settings.starting_step.call(this, self));
+			$(this).text(self.settings.title + ' - Step '+ (self.current+1));
 		}).trigger('change');
 		
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
@@ -1183,8 +1188,8 @@ var GreyWizard = function(container, settings) {
 		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
 		self.slides.each(function(i){
 			// calculate the left position so that the initial slide is at 0
-			var left = -(self.width * ((self.current) - i)).toString() + 'px'
-			$(this).css({ position: 'absolute', top: 0, left: left });
+			var left = -((self.width + self.spacer) * ((self.current) - i))
+			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
 		});
 		
 		if (set_display) { // build the slide tabbed nav
@@ -1197,7 +1202,7 @@ var GreyWizard = function(container, settings) {
 				if (self.skipped_first && !done_skipping) { done_skipping = true; continue; }
 				
 				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
-										   '<p>Step '+ (i+(self.skipped_first ? 1 : 2)) +'</p>'+
+										   '<p>Step '+ (i+1) +'</p>'+
 											self.slide_data[i].slide_display +
 									   '</div>';
 											
@@ -1255,7 +1260,7 @@ var GreyWizard = function(container, settings) {
 			self.current += step;
 			
 			self.slides.each(function(i){
-				var left = self.width * (-step) + parseInt($(this).css('left'));
+				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
 				$(this).stop().animate({ left: left + 'px' }, self.settings.slide_speed);
 			});
 			
@@ -1272,7 +1277,6 @@ var workflow_settings = {
 	slide_speed  : 1500,
 	btn_speed	 : 900,
 	fade_speed	 : 1000,
-	starting_step : function(wizard) { return wizard.current + (wizard.skipped_first ? 1 : 2) },
 	title		 : 'Add Your Facility',
 	slides_class : 'workflow_step',
 	nav_id : 'workflow_nav',
@@ -1324,7 +1328,7 @@ function workflow_step2() {
 	if (!$('#tab_step_0', wizard.workflow.parent()).hasClass('done')) {
 		listings_box.hide();
 		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
-		$('h3 span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
+		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
 
 		$.each(wizard.slide_data[0].data, function(i){
 			var listing = this.listing,
@@ -1446,7 +1450,7 @@ function finish_workflow() {
 			} else $.ajax_error(response);
 
 			next_button.prev('.ajax_loader').hide().data('saving', false);
-			$('.ui-corner-all', '.ui-autocomplete').eq(0).click();
+			$('.ui-autocomplete').remove();
 		});
 	}
 	

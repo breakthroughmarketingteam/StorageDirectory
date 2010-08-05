@@ -366,6 +366,8 @@ ActiveRecord::Schema.define(:version => 20100805010645) do
   create_table "user_hint_placements", :force => true do |t|
     t.boolean  "hide"
     t.integer  "position"
+    t.integer  "user_id"
+    t.integer  "user_hint_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

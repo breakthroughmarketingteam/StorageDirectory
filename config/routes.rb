@@ -34,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
   map.resources :users
+  map.resources :user_hints
   map.resources :user_sessions
   map.resources :permissions
   map.resources :roles

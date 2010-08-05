@@ -16,7 +16,6 @@ class ClientsController < ApplicationController
   def create
     @client                       = Client.new params[:client]
     @mailing_address              = @client.mailing_addresses.build params[:mailing_address]
-    @listing                      = @client.listings.build :title => @client.company, :status => 'unverified'
     @temp_password                = Client.rand_password
     @client.password              = @temp_password
     @client.password_confirmation = @temp_password
@@ -24,22 +23,22 @@ class ClientsController < ApplicationController
     @client.status                = 'unverified'
     @client.role_id               = Role.get_advertiser_role_id
     
-    @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
-    
-    if @client.save
-      (params[:listings] || []).each do |id|
+    if params[:listings]
+      params[:listings].each do |id|
         Listing.find(id.to_i).update_attributes :user_id => @client.id, :status => 'unverified'
       end
-      
+    else
+      @listing = @client.listings.build :title => @client.company, :status => 'unverified'
+      @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
+    end
+    
+    if @client.save_without_session_maintenance
       Notifier.deliver_client_notification @client, @temp_password
-      session.clear # user is logged in automatically for some reason, need to stop that
-      cookies.delete(:user_credentials)
-      cookies.delete(:_greycms_session)
       
-      msg = "Great job, you're almost ready! We sent you an email with an activation link. \
+      msg = "<p>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \
               See you soon! \
-              <a href='/clients/activate/#{@client.activation_code}'>Activate Test</a>"
+              <a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else
       render :json => { :success => false, :data => model_errors(@client) }

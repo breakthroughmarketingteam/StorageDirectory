@@ -20,15 +20,15 @@
         </ul>
       </div>
      
- 	    <div id="ov-info" class="instant_form hideable">
-	
+	<%= render_hints_in 'owner info' %>
+ 	  <div id="ov-info" class="instant_form hideable">
         <div id="ov-item-head">
           <h3><span>Owner / Management Info.</span></h3>
 		
   	      <%= ajax_loader %>
           <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] rescue false %>" href="#">Edit</a></p>
         </div>
-
+		
         <div class="ov-info-cnt">
           <p>Mailing Address</p>
           <ul>
@@ -45,15 +45,15 @@
           <ul>
             <li><span class="label">Name:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.name if @client.has_billing_info? %></span></li>
             <li><span class="label">Address:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.address if @client.has_billing_info? %></span></li>
-  		<li><span class="label">Phone:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span></li>
+  			<li><span class="label">Phone:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span></li>
             <li><span class="label">Card Type:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_type if @client.has_billing_info? %></span></li>
             <li><span class="label">Card Number:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_number if @client.has_billing_info? %></span></li>
           </ul>
         </div>
   	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
-		
       </div>
-
+		
+	<%= render_hints_in 'facilities' %>
       <div id="ov-units" class="hideable">
 		<div id="ov-units-head">
 			<h3><span>Facilities</span></h3>
@@ -82,6 +82,7 @@
         </div>
       </div>
       
+	<%= render_hints_in 'reports' %>
       <div id="ov-reports" class="hideable">
         <div id="ov-item-head">
           <h3><span>Reports</span></h3>
@@ -94,7 +95,8 @@
           </ul>
         </div>
       </div>
-      
+     
+	<%= render_hints_in 'settings' %>
       <div id="ov-settings" class="hideable">
         <div id="ov-item-head">
           <h3><span>Settings</span></h3>

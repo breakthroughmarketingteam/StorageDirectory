@@ -47,8 +47,8 @@
 				</p>
 				<p>
 					<label class="hidden">Location</label> 
-					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
-					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+					<%= text_field_tag 'listing[city]', 'miami', :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
+					<%= text_field_tag 'listing[state]', 'fl', :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 				</p>
 				<div>
 					<%= ajax_loader %>
