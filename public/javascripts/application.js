@@ -45,8 +45,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('.mini_calendar').datepicker();
-	$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
+	if ($('.mini_calendar').length > 0) {
+		$('.mini_calendar').datepicker();
+		$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
+	}
 	
 	$('ul li a', '#ov-reports-cnt').click(function(){
 		get_pop_up(this);
@@ -1282,7 +1284,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeIn'],
-				['back', 'hide'] 
+				['back', function(btn, wizard){ btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }] 
 			]
 		},
 		{ 
@@ -1292,7 +1294,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
-				['back', function(btn, wizard){ wizard.skipped_first ? btn.hide() : btn.fadeIn(); }]
+				['back', function(btn, wizard){ /*wizard.skipped_first ? btn.hide() : btn.fadeIn();*/ btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
 			],
 			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
 		},
@@ -1309,6 +1311,11 @@ var workflow_settings = {
 	],
 	finish_action : function(wizard){ finish_workflow(wizard); }
 };
+
+function close_pop_up_and_focus_on_fac_name(event){
+	$('#pop_up').dialog('close');
+	$('#client_company', '#new_client').focus();
+}
 
 function workflow_step2() {
 	var wizard 	     = arguments[0],
@@ -1439,7 +1446,7 @@ function finish_workflow() {
 			} else $.ajax_error(response);
 
 			next_button.prev('.ajax_loader').hide().data('saving', false);
-			$('.ui-autocomplete').click();
+			$('.ui-corner-all', '.ui-autocomplete').eq(0).click();
 		});
 	}
 	

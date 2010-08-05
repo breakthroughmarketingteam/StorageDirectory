@@ -110,8 +110,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
 #narrow-box p,#add-fac-box p{margin:15px 10px;text-align:left;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
-ul#add-fac-form a.search-button,#narrow-box a.search-btn{background:url(/images/ui/storagelocator/search-btn.png) no-repeat top left;width:161px;margin:10px auto;height:38px;line-height:33px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;text-shadow:1px 1px 2px #000;position:relative;left:-10px;}
-ul#add-fac-form a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat top left;float:right;width:138px;height:45px;line-height:45px;left:5px;top:-10px;margin-bottom:0px;}
+#new_client a.search-button,#narrow-box a.search-btn{background:url(/images/ui/storagelocator/search-btn.png) no-repeat top left;width:161px;margin:10px auto;height:38px;line-height:33px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;text-shadow:1px 1px 2px #000;position:relative;left:-10px;}
+#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat top left;float:right;width:138px;height:45px;line-height:45px;left:5px;top:-10px;margin-bottom:0px;}
 input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:130px;padding:2px 5px;font-weight:bold;height:20px;line-height:20px;color:#333;margin-bottom:10px;-moz-box-shadow:1px 1px 2px #999 inset;box-shadow:1px 1px 2px #999 inset;-webkit-box-shadow:1px 1px 2px #999 inset;}
 .slider{margin-bottom:15px;clear:both;}
 #type-one-r-col-in,#sidebar{position:relative;left:2px;top:2px;width:772px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left;background-color:#42A238;}
@@ -205,12 +205,12 @@ li.map-plus a{width:22px;}
 /* End the results page styles here */
 #add-fac-head-in{float:left;min-width:250px;padding:20px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-3px;font-size:80%;}
-#type-two-top-bar-head ul li#sort{position:relative;left:30px;width:260px;}
-#type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;}
-#type-two-top-bar-head ul li#search{width:325px;float:left;}
-#type-two-top-bar-head ul li#search a{background:url(/images/ui/storagelocator/go-button.png) no-repeat center left;width:45px;height:26px;display:block;float:right;text-align:center;color:#fff;text-decoration:none;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:-20px;}
-#type-two-top-bar-head ul input{height:18px;line-height:18px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 2px 1px 2px;position:relative;left:10px;}
-#type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;}
+#type-two-top-bar-head ul li#sort{position:relative;left:30px;width:253px;}
+#type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;font-size:100%;}
+#type-two-top-bar-head ul li#search{width:345px;float:left;}
+#type-two-top-bar-head ul li#search a{background:url(/images/ui/storagelocator/go-button.png) no-repeat center left;width:45px;height:26px;display:block;float:right;text-align:center;color:#fff;text-decoration:none;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:-20px;font-size:100%;line-height:1.8;}
+#type-two-top-bar-head ul input{height:19px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 26px 1px 4px;position:relative;left:10px;}
+#type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;font-size:100%;}
 div.green-head div.inner h2{font-weight:bold;margin-bottom:7px;font-size:220%;left:20px;}
 .green-head .inner p{font-size:12px;left:20px;color:#666;position:relative;left:20px;width:240px;line-height:1.2;}
 .sub-head-txt{color:#fff;font-size:100%;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:20px;top:-3px;padding-bottom:10px;}
@@ -247,21 +247,21 @@ li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
 /* Start the add facility page styles here */
-form#new_client{width:430px;float:left;position:relative;left:30px;margin-bottom:20px;text-align:left;}
-form#new_client .label{padding-left:8px;}
+form#new_client{width:39%;float:left;position:relative;left:30px;margin-bottom:20px;text-align:left;padding:0 10px;}
 form#new_client .ajax_loader{bottom:21px;position:absolute;right:150px;}
-ul#add-fac-form li{list-style:none;height:48px;clear:both;position:relative;}
-ul#add-fac-form li input,#signupstep_3 input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;float:right;width:260px;position:relative;top:-5px;font-size:80%;}
-ul#add-fac-form #listing_state,ul#add-fac-form #listing_city{float:none;}
-ul#add-fac-form #listing_city{margin-left:84px;width:42.7%;}
-ul#add-fac-form #listing_state{margin-left:16px;width:10%;}
+#new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
+#new_client input,#signupstep_3 input{padding:5px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;font-size:100%;}
+#new_client input{width:96%;}
+#signupstep_3 input{width:260px;font-size:80%;}
+#new_client #listing_state,#new_client #listing_city{float:none;}
+#new_client #listing_city{width:69%;}
+#new_client #listing_state{margin-left:16px;width:16%;}
 #signupstep_3 input{font-size:100%;}
-#add-fac-form-txt{width:246px;float:right;position:relative;left:-20px;top:-8px;}
-#add-fac-form-txt h2{font-size:140%;}
-#add-fac-form-txt p{color:#555;margin:10px 0px;font-size:100%;}
-#add-fac-form-extra{clear:both;}
-#add-fac-form-txt p.call-button{background:url(/images/ui/storagelocator/call-text-bg.png) no-repeat top left;width:246px;height:89px;text-align:center;color:#fff;font-size:18px;text-shadow:1px 1px 2px #000;}
-#add-fac-form-txt p.call-button span{position:relative;top:11px;line-height:1.2;}
+#add-fac-form-txt{width:44%;float:left;margin:0 10px 0 37px;}
+#add-fac-form-txt h2{font-size:140%;margin-bottom:15px;}
+#add-fac-form-txt p{color:#555;margin:10px 0px;font-size:80%;line-height:1.3;padding:0 10px 0 1px;}
+#add-fac-form-txt p.call-button{background:url(/images/ui/storagelocator/call-text-bg.png) no-repeat top left;margin:25px 0;padding:0;width:246px;height:89px;text-align:center;color:#fff;font-size:18px;text-shadow:1px 1px 2px #000;}
+#add-fac-form-txt p.call-button span{position:relative;top:8px;}
 #add-fac-form-extra,#add-fac-form-extra-in,#add-fac-form-extra ul{width:715px;}
 #add-fac-form-extra{background:url(/images/ui/storagelocator/facility-extras-bg.png) repeat-y top left;margin-bottom:30px;position:relative;left:35px;}
 #add-fac-form-extra-in{background:url(/images/ui/storagelocator/facility-extras-bg-bottom.png) no-repeat bottom left;}
@@ -509,7 +509,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #list-miles{background-position:97% 50%;}
 .listing{cursor:pointer;overflow:hidden;}
 .listing .inner{padding:0;}
-.panel{width:94%;overflow:hidden;margin:0 auto;background:#fff;position:relative;z-index:600;padding:10px 12px;border-bottom:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
+.panel{width:94%;overflow:hidden;cursor:default;margin:0 auto;background:#fff;position:relative;z-index:600;padding:10px 12px;border-bottom:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel #map_partial{overflow:visible;height:183px;}
 .panel .sl-table-exp p label{font-size:90%;}
@@ -589,7 +589,7 @@ img.right{margin:0 10px 10px 0;}
 .sl-table-exp p label{line-height:2.4;font-size:80%;}
 #new_reservation select{margin-left:5px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 80% 0;cursor:pointer;}
-ul#add-fac-form a.search-button{text-shadow:1px 1px 0 #666;line-height:2.2;}
+#new_client a.search-button{text-shadow:1px 1px 0 #666;line-height:2.2;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #666;line-height:1.8;}
 /* client edit form */
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
@@ -631,6 +631,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 #info-accordion h5{font-size:22px;line-height:25px;}
+#new_client .error{text-align:right;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}
@@ -654,7 +655,7 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 /*signup workflow*/
-#add-fac-form .error,#workflow_steps .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-23px;}
+#new_client .error,#workflow_steps .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-17px;font-size:80%;}
 #workflow_steps{overflow:hidden;position:relative;height:400px;}
 #workflow_steps .button{font-weight:bold;display:block;position:absolute;top:352px;right:0;width:58px;height:30px;color:#fff;text-shadow:1px 1px 2px #000;line-height:2.1;padding-left:25px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
 #workflow_steps .skip{right:95px;}

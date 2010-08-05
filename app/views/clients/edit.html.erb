@@ -26,7 +26,7 @@
           <h3><span>Owner / Management Info.</span></h3>
 		
   	      <%= ajax_loader %>
-          <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] %>" href="#">Edit</a></p>
+          <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] rescue false %>" href="#">Edit</a></p>
         </div>
 
         <div class="ov-info-cnt">

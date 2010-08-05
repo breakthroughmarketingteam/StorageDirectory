@@ -73,7 +73,7 @@ jQuery.fn.runValidation = function() {
 		
 		if (error != '' && !form.hasClass('silent')) {
 			jQuery('.error', input.parent()).remove();
-			input.before('<div class=\'flash error hidden\' style=\'width:'+ input.width() +'px;float:'+ input.css('float') +'\'>' + error + '</div>');
+			input.before('<div class=\'flash error hidden\' style=\'float:'+ input.css('float') +'\'>' + error + '</div>');
 			jQuery('.error', input.parent()).slideDown();
 		}
 

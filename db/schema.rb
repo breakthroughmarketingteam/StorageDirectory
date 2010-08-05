@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100804021353) do
+ActiveRecord::Schema.define(:version => 20100805010645) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -362,6 +362,22 @@ ActiveRecord::Schema.define(:version => 20100804021353) do
 
   add_index "us_cities", ["name"], :name => "index_us_cities_on_name"
   add_index "us_cities", ["state"], :name => "index_us_cities_on_state"
+
+  create_table "user_hint_placements", :force => true do |t|
+    t.boolean  "hide"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_hints", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "content"
+    t.string   "place"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

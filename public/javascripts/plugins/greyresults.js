@@ -199,7 +199,7 @@ $('.attr_edit', '.authenticated').click(function(){
 });
 
 /* AJAX pagination, load next page results in the same page */
-$('#more_results').click(function(){
+$('#more_results').live('click', function(){
 	var $this = $(this),
 		ajax_loader = $('.ajax_loader', $this.parent()).show();
 	
@@ -259,7 +259,7 @@ $('#more_results').click(function(){
 				
 				this_listing.appendTo(results_wrap).hide().slideDown('slow');
 				$('.inner:first', this_listing).effect('highlight', { color: '#c2cee9' }, 1700);
-				this_listing.greyresults();
+				//this_listing.greyresults();
 			});
 			
 			// this updates the page count so the next time the user clicks, we pull the correct data
@@ -304,7 +304,7 @@ $.clicked_on_different_tab = function($tab_link, $listing) {
 }
 
 // panel openers
-$('.open_tab', '.tabs').click(function(){
+$('.open_tab', '.tabs').live('click', function(){
 	var $this = $(this),
 		$panel = $('.panel', $this.parent().parent().parent());
 	

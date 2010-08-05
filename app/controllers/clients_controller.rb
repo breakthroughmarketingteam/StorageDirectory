@@ -32,8 +32,15 @@ class ClientsController < ApplicationController
       end
       
       Notifier.deliver_client_notification @client, @temp_password
+      session.clear # user is logged in automatically for some reason, need to stop that
+      cookies.delete(:user_credentials)
+      cookies.delete(:_greycms_session)
       
-      render :json => { :success => true, :data => "Great job, you're almost ready! We sent you an email with an activation link. You'll be able to play around with your account after you click on that link. See you soon!" }
+      msg = "Great job, you're almost ready! We sent you an email with an activation link. \
+              You'll be able to play around with your account after you click on that link. \
+              See you soon! \
+              <a href='/clients/activate/#{@client.activation_code}'>Activate Test</a>"
+      render :json => { :success => true, :data => msg }
     else
       render :json => { :success => false, :data => model_errors(@client) }
     end
@@ -68,6 +75,21 @@ class ClientsController < ApplicationController
           render :json => { :success => false, :data => model_errors(@client) }
         end
       end
+    end
+  end
+  
+  def activate
+    @client = Client.find_by_activation_code params[:code]
+    
+    if @client.status == 'unverified'
+      @client.update_attribute :status, 'active'
+      flash[:notice] = "Congratulations! Your account is now active. Go ahead and log in."
+      redirect_to login_path
+      
+    elsif @client.status == 'active'
+      
+    elsif @client.status == 'suspended'
+      
     end
   end
 
