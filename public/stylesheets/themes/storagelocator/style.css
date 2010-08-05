@@ -47,7 +47,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#locate,#main-nav ul li#Page_2{width:138px;background:url(/images/ui/storagelocator/locate-button.png) no-repeat top left;}
 #main-nav ul li#Page_12{width:119px;background:url(/images/ui/storagelocator/info-button.png) no-repeat top left;}
 #main-nav ul li#tips,#main-nav ul li#Page_3{width:121px;background:url(/images/ui/storagelocator/tips-button.png) no-repeat top left;}
-#main-nav ul li#Page_14{width:127px;background:url(/images/ui/storagelocator/truck-rentals.png) no-repeat top left;}
+#main-nav ul li#Page_14{width:127px;background:url(/images/ui/storagelocator/truck-button.png) no-repeat top left;}
 #main-nav ul li#add,#main-nav ul li#Page_11{width:146px;background:url(/images/ui/storagelocator/add-button.png) no-repeat top left;}
 /* hovers */
 #main-nav ul li a:hover,#main-nav ul li a:active{color:#000;}
@@ -55,7 +55,7 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #main-nav ul li#locate:hover,#main-nav ul li#Page_2:hover,#main-nav ul li#locate.active,#main-nav ul li#Page_2.active{background-image:url(/images/ui/storagelocator/locate-button-hover.png);}
 #main-nav ul li#Page_12:hover,#main-nav ul li#Page_12.active{background-image:url(/images/ui/storagelocator/info-button-hover.png);}
 #main-nav ul li#tips:hover,#main-nav ul li#Page_3:hover,#main-nav ul li#tips.active,#main-nav ul li#Page_3.active{background-image:url(/images/ui/storagelocator/tips-button-hover.png);}
-#main-nav ul li#Page_14:hover,#main-nav ul li#Page_14.active{background-image:url(/images/ui/storagelocator/truck-rentals-hover.png);}
+#main-nav ul li#Page_14:hover,#main-nav ul li#Page_14.active{background-image:url(/images/ui/storagelocator/truck-button-hover.png);}
 #main-nav ul li#add:hover,#main-nav ul li#Page_11:hover,#main-nav ul li#add.active,#main-nav ul li#Page_11.active{background-image:url(/images/ui/storagelocator/add-button-hover.png);}
 #top-nav ul li.hidden{display:none;}
 /* Start the main homepage styles here */
@@ -637,6 +637,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #new_user_session input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px;width:100%;}
 #new_user_session #user_session_remember_me{width:auto;margin:0 5px;float:left;}
 #new_user_session #user_session_submit{width:auto;float:right;margin-right:-10px;}
+.fieldWithErrors, .invalid{background-color:#FFCDCD;border:1px solid #FF9999 !important;color:#FF0000;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
 #aops p{margin-top:0;}
@@ -648,7 +649,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #slide_nav .active{background:;}
 #slide_nav .done{}
 .ui-widget-overlay{background:#000;opacity:.6;}
-.ui-dialog{padding:15px;border:1px solid #ccc;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
+.ui-dialog{padding:15px;border:1px solid #ccc;border-radius:28px;-moz-border-radius:28px;-webkit-border-radius:28px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
 .ui-widget-content,.ui-dialog{background:#fff;text-align:left;}
 .ui-dialog .ui-widget-header{color:#fff;text-shadow:1px 1px 2px #333;font-size:120%;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x top;border:1px solid #ccc;border-bottom:0 none;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px; /* bottom */ border-radius-bottomright:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-radius-bottomleft:0;-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;}
 .ui-dialog .ui-dialog-titlebar{padding:10px 15px;height:28px;line-height:1.1;}
