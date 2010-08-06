@@ -22,6 +22,7 @@ class ClientsController < ApplicationController
     @client.activation_code       = @client.make_activation_code
     @client.status                = 'unverified'
     @client.role_id               = Role.get_advertiser_role_id
+    @client.user_hints << UserHint.all
     
     if params[:listings]
       params[:listings].each do |id|
