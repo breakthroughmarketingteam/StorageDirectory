@@ -55,7 +55,7 @@ ActionMailer::Base.smtp_settings = {
   :port => 25,
   :domain => 'local',
   :authentication => :plain,
-}
+} if RAILS_ENV == 'development'
 
 if defined? Hirb
   Hirb.enable :pager => true
