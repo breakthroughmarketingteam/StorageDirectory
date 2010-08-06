@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100731013600) do
+ActiveRecord::Schema.define(:version => 20100805010645) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20100731013600) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
   end
 
   create_table "mailing_addresses", :force => true do |t|
@@ -186,6 +187,9 @@ ActiveRecord::Schema.define(:version => 20100731013600) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
   end
 
   create_table "maps", :force => true do |t|
@@ -359,6 +363,24 @@ ActiveRecord::Schema.define(:version => 20100731013600) do
   add_index "us_cities", ["name"], :name => "index_us_cities_on_name"
   add_index "us_cities", ["state"], :name => "index_us_cities_on_state"
 
+  create_table "user_hint_placements", :force => true do |t|
+    t.boolean  "hide"
+    t.integer  "position"
+    t.integer  "user_id"
+    t.integer  "user_hint_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_hints", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "content"
+    t.string   "place"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -378,6 +400,9 @@ ActiveRecord::Schema.define(:version => 20100731013600) do
     t.integer  "role_id"
     t.string   "type"
     t.string   "company"
+    t.boolean  "wants_newsletter"
+    t.string   "activation_code"
+    t.string   "status"
   end
 
   create_table "views", :force => true do |t|

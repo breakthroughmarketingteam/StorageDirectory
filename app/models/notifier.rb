@@ -12,6 +12,12 @@ class Notifier < ActionMailer::Base
     @body[:host] = host
   end
   
+  def client_notification(user, temp_password)
+    setup_email user.email, 'admin@usselfstoragelocator.com', 'Activate Your Account'
+    @body[:user] = user
+    @body[:temp_password] = temp_password
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from = from

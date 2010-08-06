@@ -1,11 +1,13 @@
 <div id="workflow_steps">
 	<div id="signupstep_2" class="workflow_step">
-		<h3>We found <span></span> facilities that may be yours...</h3>
-	
-		<div id="show_potential_listings"></div>
-		<div class="right">
+		<div class="left">
 		  <h4>There are many variations</h4> 
 		  <p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
+		</div>
+		
+		<div class="found_box">
+			<p class="display">We found <span></span> facilities that might belong to you.</p>
+			<div class="small_listings"></div>
 		</div>
 		
 		<div class="hidden listing_div selectable">
@@ -24,16 +26,12 @@
 	  
 		<form action="" method="" id="contact_info_form" class="silent">
 			<p>
-				<label class="block left w120">Contact Name</label>
+				<label class="hidden">Contact Name</label>
 				<input type="text" id="first_name" name="first_name" class="hintable required" title="First Name" />
 				<input type="text" id="last_name" name="last_name" class="hintable required" title="Last Name" />
 			</p>
 			<p>
-				<label class="block left w120">Phone Number</label>
-				<input type="text" id="listing_phone" maxlength="12" name="listing_phone" class="hintable numeric_phone" title="Phone Number" />
-			</p>
-			<p>
-				<label class="block left w120">Facility Address</label>
+				<label class="hidden">Facility Address</label>
 				<input type="text" id="listing_address" name="listing_address" class="hintable required" title="Street Address" />
 			</p>
 			<p class="city_state_zip">
@@ -41,9 +39,14 @@
 				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs|1" title="State" />
 				<input type="text" id="listing_zip" maxlength="5" name="listing_zip" class="hintable numeric_zip" title="Zip" />
 			</p>
+			<p>
+				<label class="hidden">Phone Number</label>
+				<input type="text" id="listing_phone" maxlength="12" name="listing_phone" class="hintable numeric_phone" title="Phone Number" />
+			</p>
+			
 			<p class="opt_in">
-				<input type="checkbox" name="opt_in" id="opt_in" value="1" />
-				<label for="opt_in">Send me the latest news from USSelfStorageLocator.com</label>
+				<input type="checkbox" name="wants_newsletter" id="wants_newsletter" value="1" />
+				<label for="wants_newsletter">Send me the latest news from USSelfStorageLocator.com</label>
 			</p>
 		</form>
 
@@ -75,4 +78,3 @@
 	</div>
 	
 </div>
-<div id="slide_nav"></div>

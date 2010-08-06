@@ -17,44 +17,45 @@
 	
 	<div id="type-one-top-bar">
 		<div id="type-three-top-bar-head">&nbsp;</div>
-
-		<% form_for @client do |f| %>
-			<ul id="add-fac-form">
-				<li>
-					<%= f.label :company, 'Facility Name', :class => 'label' %>
-					<%= f.text_field :company, :class => 'required' %>
-				</li>
-				<li>
-					<%= f.label :email, 'Contact Email', :class => 'label' %>
-					<%= f.text_field :email, :class => 'email' %>
-				</li>
-				<li>
-					<span class="label">City</span> 
-					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
-				</li>
-				<li>
-					<span class="label">State</span> 
-					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete', :rel => 'States_names|1' %>
-				</li>
-				
-				<li>
+		
+		<div class="uncollapse">
+			<div id="add-fac-form-txt">
+				<h2>Lorem ipsum text heading goes here</h2>
+				<p>
+					Vivamus eleifend sagittis sodales. Sed quis leo urna, id fringilla nisi. Proin vitae neque vehicula enim ultrices placerat. Proin in tellus sit amet ante viverra adipiscing nec at est.
+				</p>
+				<p>
+					In condimentum varius aliquet. Fusce tincidunt elementum faucibus. Aenean a turpis in arcu ornare ultrices.
+				</p>
+				<p class="call-button">
+					<span>CALL<br>
+					1-800-888-5555<br>
+					FOR MORE INFO</span>
+				</p>
+			</div>
+		
+			<% form_for @client do |f| %>
+				<p>Start by checking if we already have you listed...</p>
+			
+				<p>
+					<%= f.label :company, 'Facility Name', :class => 'hidden' %>
+					<%= f.text_field :company, :class => 'required hintable', :title => 'Facility Name' %>
+				</p>
+				<p>
+					<%= f.label :email, 'Contact Email', :class => 'hidden' %>
+					<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
+				</p>
+				<p>
+					<label class="hidden">Location</label> 
+					<%= text_field_tag 'listing[city]', 'miami', :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
+					<%= text_field_tag 'listing[state]', 'fl', :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+				</p>
+				<div>
 					<%= ajax_loader %>
 					<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
 					<input type="submit" name="commit" class="hidden">
-				</li>
-			</ul>
-		<% end %>
-		
-		<div id="add-fac-form-txt">
-			<h2>Lorem ipsum text heading goes here</h2>
-			<p>
-				Lorem ipsum text here...
-			</p>
-			<p class="call-button">
-				<span>CALL<br>
-				1-800-888-5555<br>
-				FOR MORE INFO</span>
-			</p>
+				</div>
+			<% end %>
 		</div>
 		
 		<div id="add-fac-form-extra">

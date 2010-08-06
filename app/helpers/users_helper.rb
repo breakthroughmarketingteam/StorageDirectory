@@ -5,4 +5,10 @@ module UsersHelper
     user.id == current_user.id ? 'Your Account' : "#{user.name.possessive} Account"
   end
   
+  def render_hints_in(place)
+    return if place.nil?
+    
+    
+  end
+  
 end

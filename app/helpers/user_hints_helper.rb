@@ -1,0 +1,2 @@
+module UserHintsHelper
+end

@@ -12,7 +12,7 @@ class Map < ActiveRecord::Base
   # Instance Methods
   
   def full_address
-    "#{address}, #{city}, #{state}"
+    "#{address.gsub('#', '')} #{city}, #{state}"
   end
   
   def city_state_zip

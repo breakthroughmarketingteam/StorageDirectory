@@ -13,7 +13,7 @@ development: !map:HashWithIndifferentAccess
   description: some description
   keywords: some keywords
 test: 
-  plugins: inflector, jquery.formbouncer, jquery.hinty, jquery.iframe
+  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe
   theme: storagelocator
   title: US Self Storage Locator
   widgets: 
