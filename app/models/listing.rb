@@ -95,7 +95,7 @@ class Listing < ActiveRecord::Base
     @@query += "&sFacilityId=#{@@facility_ids[which]}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    response = self.post query, :format => :xml
+    response = self.post @@host + @@url + 'ISSN_getFacilityInfo', { "sUsername" => username, "sUserPassword" => password, "sFacilityId" => @@facility_ids[which], "sIssnId" => ''}, :format => :xml
     data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
     raise data.pretty_inspect
   end
