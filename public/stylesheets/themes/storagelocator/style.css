@@ -627,7 +627,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #pop_up{position:relative;text-align:left;padding:13px 15px 10px;z-index:9999;border-bottom:0 none;background:url(/images/ui/storagelocator/pop-up-in-bg-strip.png) repeat-x top;border-radius-bottomright:15px;-moz-border-radius-bottomright:15px;-webkit-border-bottom-right-radius:15px;border-radius-bottomleft:15px;-moz-border-radius-bottomleft:15px;-webkit-border-bottom-left-radius:15px;}
 /*#pop_up #slide_nav{height:100px;border:1px solid #ccc;border-radius-bottomright:15px;-moz-border-radius-bottomright:15px;-webkit-border-bottom-right-radius:15px;border-radius-bottomleft:15px;-moz-border-radius-bottomleft:15px;-webkit-border-bottom-left-radius:15px;}
 #slide_nav .slide_display{float:left;height:100px;border:1px solid #ccc;}*/
-.ui-widget-overlay{background:#fff;}
+.ui-widget-overlay{background:#000;opacity:.5;}
 .ui-dialog{padding:15px;border:1px solid #ccc;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
 .ui-widget-content,.ui-dialog{background:#fff;text-align:left;}
 .ui-dialog .ui-widget-header{color:#fff;text-shadow:1px 1px 2px #333;font-size:120%;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x top;border:1px solid #ccc;border-bottom:0 none;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px; /* bottom */ border-radius-bottomright:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-radius-bottomleft:0;-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;}
