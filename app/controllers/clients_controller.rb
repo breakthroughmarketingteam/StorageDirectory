@@ -36,12 +36,12 @@ class ClientsController < ApplicationController
     if @client.save_without_session_maintenance
       Notifier.deliver_client_notification @client, @temp_password
       
-      msg = "<p>Great job, you're almost ready! We sent you an email with an activation link. \
+      msg = "<p class='stack'>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \
               See you soon!</p> \
-              <p>Click below to sign in:</p> \
+              <p class='stack'><strong>Click below to sign in:</strong</p> \
               <p>Email: #{@client.email}</p> \
-              <p>Password: #{@temp_password}</p>
+              <p class='stack'>Password: #{@temp_password}</p>
               <p><a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else
