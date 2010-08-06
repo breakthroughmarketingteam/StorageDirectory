@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
+  map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products

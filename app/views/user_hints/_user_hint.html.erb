@@ -1,0 +1,13 @@
+<div id="UserHint_<%= user_hint.id %>" class="user_hint">
+	<div class="hint_title_bar uncollapse">
+		<p class="left hint_title"><%= user_hint.title %></p>
+		<p class="right">
+			<%= ajax_loader %>
+			<button class="hint_close" id="UserHintPlacement_<%= user_hint.placement(current_user).id %>" rel="hide">X</button>
+		</p>
+	</div>
+	
+	<div class="hint_content">
+		<%= user_hint.content %>
+	</div>
+</div>

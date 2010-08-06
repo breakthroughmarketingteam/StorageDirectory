@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
                 :_themes,  # for the site_settings form
                 :_plugins, # for the site_settings form
                 :_widgets, # for the site_settings form
+                :_user_hint_places, # client account control panel
                 :in_edit_mode?,
                 :user_allowed?,
                 :reject_blocks_enabled_on_this, # for the blocks_fields
@@ -50,6 +51,9 @@ class ApplicationController < ActionController::Base
   
   # restful actions for the authorization system
   $_crud = [:all, :create, :read, :update, :delete]
+  
+  # client account control panel
+  $_user_hint_places = [:owner_info, :facilities, :reports, :settings]
   
   # loads website title and theme, meta info, widgets and plugins
   before_filter :load_app_config
@@ -143,8 +147,10 @@ class ApplicationController < ActionController::Base
       session[:view_type] = params[:view_type]
     elsif controller_name == 'site_settings'
       session[:view_type] = 'table'
-    elsif controller_name =~ /posts/ || (controller_name == 'tags' && action_name == 'show')
+    elsif controller_name == 'tags' && action_name == 'show'
       session[:view_type] = 'blog_roll'
+    elsif controller_name == 'posts' || controller_name == 'user_hints'
+      session[:view_type] = 'list'
     elsif controller_name =~ /(images)|(galleries)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
@@ -236,6 +242,10 @@ class ApplicationController < ActionController::Base
   
   def _widgets(for_select = true)
     fetch_array_for get_list_of_file_names('public/javascripts/widgets', '.js'), for_select
+  end
+  
+  def _user_hint_places(for_select = true)
+    fetch_array_for $_user_hint_places, for_select
   end
   
   def _models_having_assoc(for_select = false)

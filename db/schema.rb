@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100805010645) do
+ActiveRecord::Schema.define(:version => 20100805160506) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20100805010645) do
 
   create_table "user_hint_placements", :force => true do |t|
     t.boolean  "hide"
-    t.integer  "position"
+    t.integer  "position",     :default => 0
     t.integer  "user_id"
     t.integer  "user_hint_id"
     t.datetime "created_at"

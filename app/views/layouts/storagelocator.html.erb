@@ -25,7 +25,6 @@
 		
 		<!--[if lte IE 7]>
 			<link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
-			<script type="text/javascript" src="javascripts/IE8.js"></script>
 		<![endif]-->
 	</head>
 	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %>">

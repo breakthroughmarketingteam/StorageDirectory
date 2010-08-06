@@ -37,7 +37,10 @@ class ClientsController < ApplicationController
       
       msg = "<p>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \
-              See you soon! \
+              See you soon!<br /> \
+              Click below to sign in:<br /> \
+              Email: #{@client.email} \
+              Password: #{@temp_password}
               <a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else

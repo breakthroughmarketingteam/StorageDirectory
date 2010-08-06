@@ -12,34 +12,21 @@ class UserHintsController < ApplicationController
     @user_hint = UserHint.new
   end
   
-  # TODO: too much code in this controller, fix it!
   def create
-    error = ''
-    
-    if params[:user_hints]
-      params[:user_hints].each do |user_hint|
-        @user_hint = UserHint.new(user_hint) unless user_hint[:title].blank?
-        error << model_errors(@user_hint) unless @user_hint.save
-      end
+    @user_hint = UserHint.new params[:user_hint]
+    if @user_hint.save
+      flash[:notice] = @user_hint.title + ' has been created.'
+      redirect_back_or_default :action => 'index'
     else
-      @user_hint = UserHint.new(params[:user_hints])
-      error << model_errors(@user_hint) unless @user_hint.save
+      render :action => 'edit'
     end
-    
-    if error.blank?
-      flash[:notice] = "#{params[:user_hints].nil? ? 'UserHint has' : 'UserHints have'} been created."
-      redirect_back_or_default user_hints_path
-    else
-      flash[:error] = 'Oops, something went wrong.'
-      @user_hint.nil? ? render(:action => 'edit') : redirect_back_or_default(user_hints_path)
-    end    
   end
 
   def edit
   end
 
   def update
-    if @user_hint.update_attributes(params[:user_hint])
+    if @user_hint.update_attributes params[:user_hint]
       flash[:notice] = @user_hint.title + ' has been updated.'
       redirect_back_or_default :action => 'show'
     else
@@ -54,6 +41,17 @@ class UserHintsController < ApplicationController
     else
       flash[:error] = 'Error destroying ' + @user_hint.title
       render :action => 'edit'
+    end
+  end
+  
+  def hide
+    return unless current_user
+    @placement = current_user.user_hint_placements.find(params[:placement_id])
+    
+    if @placement.update_attribute :hide, true
+      render :json => { :success => true }
+    else
+      render :json => { :success => false, :data => model_errors(@placement) }
     end
   end
 
