@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   #config.gem 'aws-s3'
   config.gem 'geokit'
   config.gem 'will_paginate'
+  config.gem 'httparty'
   #config.gem 'memcached'
   #require 'memcached'
   

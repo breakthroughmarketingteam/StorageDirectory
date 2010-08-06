@@ -41,4 +41,63 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+
+  @@facility_ids = %w(
+    a2c018ba-54ca-44eb-9972-090252ef00c5
+    42e2550d-e233-dd11-a002-0015c5f270db
+  )
+
+  @@username = 'USSL'+ (RAILS_ENV == 'development' ? '_TEST' : '')
+  @@password = 'U$$L722'
+  @@host = "http://issn.opentechalliance.com"
+  @@url = '/issn_ws1/issn_ws1.asmx/'
+  @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
+  
+=begin  
+  def self.issn(method = 'findFacilities')
+    method = 'ISSN_'+ method
+    
+    case method
+    when 'ISSN_findFacilities'
+      query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=5&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+      
+    when 'ISSN_getFacilityInfo'
+      fac_id = facility_ids[ARGV[1] || 0]
+      query += "&sFacilityId=#{CGI.escape(fac_id)}&sIssnId="
+    end
+
+    
+    url = "/issn_ws1/issn_ws1.asmx/#{method}#{query}"
+    
+    raise Nestful.pretty_inspect
+  end
+=end
+
+  include HTTParty
+  require 'cobravsmongoose'
+  
+  def self.findFacilities
+    @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+    
+    query = @@host + @@url + 'ISSN_findFacilities' + @@query
+    response = self.get query, :format => :xml
+    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
+    els = []
+
+    data.each do |d|
+      els << d["sFacilityID"]["$"]
+    end
+    
+    raise els.pretty_inspect
+  end
+  
+  def self.getFacilityInfo(which = 0)
+    @@query += "&sFacilityId=#{@@facility_ids[which]}&sIssnId="
+
+    query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
+    response = self.post query, :format => :xml
+    data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
+    raise data.pretty_inspect
+  end
+
 end

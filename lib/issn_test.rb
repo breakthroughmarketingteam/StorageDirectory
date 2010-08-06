@@ -1,31 +1,36 @@
-require 'PP'
-require "net/https"
-require "uri"
+include Nestful
 
-raise ARGV.pretty_inspect
-# Example Facility ID: a2c018ba-54ca-44eb-9972-090252ef00c5
+facility_ids = %w(
+  a2c018ba-54ca-44eb-9972-090252ef00c5
+)
 
 method = 'ISSN_'+ ARGV[0]
 username = 'USSL_TEST'
 password = 'U$$L722'
-query = "?sUserLogin=#{username}&sUserPassword=#{password}&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=5&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-url = "http://issn.opentechalliance.com/issn_ws1/issn_ws1.asmx/#{method}#{query}"
-puts "send request to #{url}"
+query = "?sUserLogin=#{username}&sUserPassword=#{password}"
 
 
-uri = URI.parse(url)
-  puts uri.inspect
+case method
+when 'ISSN_findFacilities'
+  query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=5&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+when 'ISSN_getFacilityInfo'
+  fac_id = facility_ids[ARGV[1] || 0]
+  query += "&sFacilityId=#{CGI.escape(fac_id)}&sIssnId="
+end
 
-http = Net::HTTP.new(uri.host, uri.port)
-  puts http.inspect
+host = "http://issn.opentechalliance.com"
+url = "/issn_ws1/issn_ws1.asmx/#{method}#{query}"
 
-request = Net::HTTP::Get.new(uri.request_uri)
+puts "GET #{url}"
+puts "Host: #{host}"
+=begin
+uri = URI.parse "#{host}#{url}"
+request = Net::HTTP::Get.new uri.request_uri
 request.initialize_http_header({"User-Agent" => "Firefox/3.6.8"})
-  puts request.inspect
+response = Net::HTTP.new(uri.host, uri.port).request(request)
 
-response = http.request(request)
-
-puts response.inspect
 puts response.code
-puts response["location"] # All headers are lowercase
 puts response
+=end
+
+raise Nestful.pretty_inspect
