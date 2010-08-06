@@ -9,7 +9,7 @@ module UsersHelper
     return if here.nil?
     
     hint = current_user.user_hints.find_by_place(here.to_s)
-    render :partial => hint unless hint.placement(current_user).hide?
+    render :partial => hint unless hint.placement(current_user).hide? rescue nil
   end
   
 end
