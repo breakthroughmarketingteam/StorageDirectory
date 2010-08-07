@@ -1,0 +1,47 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  O_FacilityName: MyString
+  O_FacilityId: MyString
+  O_ISSNID: 1
+  O_WebReservationsAllowed: false
+  O_WebRentalsAllowed: false
+  O_Address: MyString
+  O_Address2: MyString
+  O_City: MyString
+  O_StateOrProvince: MyString
+  O_PostalCode: 1
+  O_IssnLongitude: 1.5
+  O_IssnLatitude: 1.5
+  O_AcceptVisa: false
+  O_AcceptMC: false
+  O_AcceptAmex: false
+  O_AcceptDiscover: false
+  O_MaximumReserveAheadDays: 1
+  O_PMS: MyString
+  O_ReservationFee_Min: 1
+  O_ReservationFee_Max: 1
+  O_ReservationOverrideFee: 1
+
+two:
+  O_FacilityName: MyString
+  O_FacilityId: MyString
+  O_ISSNID: 1
+  O_WebReservationsAllowed: false
+  O_WebRentalsAllowed: false
+  O_Address: MyString
+  O_Address2: MyString
+  O_City: MyString
+  O_StateOrProvince: MyString
+  O_PostalCode: 1
+  O_IssnLongitude: 1.5
+  O_IssnLatitude: 1.5
+  O_AcceptVisa: false
+  O_AcceptMC: false
+  O_AcceptAmex: false
+  O_AcceptDiscover: false
+  O_MaximumReserveAheadDays: 1
+  O_PMS: MyString
+  O_ReservationFee_Min: 1
+  O_ReservationFee_Max: 1
+  O_ReservationOverrideFee: 1

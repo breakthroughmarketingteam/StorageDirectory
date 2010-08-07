@@ -1,6 +1,6 @@
 <fieldset>
 	<div class="stack">
-		<%= f.label :title, 'Nav Title' %>
+		<%= f.label :title %>
 		<div class="shadow_wrap">
 			<%= f.text_field :title, :class => 'required' %>
 		</div>
@@ -21,7 +21,10 @@
 	</div>
 	
 	<div class="stack uncollapse">
-	  <%= render :partial => 'shared/models_module_fields', :locals => { :f => f, :model => @page } %>
+	  	<%= f.label :place, 'Place to show' %>
+		<div class="shadow_wrap">
+			<%= f.select :place, _user_hint_places, { :include_blank => true }, :class => 'required', :title => 'Choose the place on the account control panel to show this hint' %>
+		</div>
 	</div>
 	
 </fieldset>

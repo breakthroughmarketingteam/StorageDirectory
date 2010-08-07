@@ -410,6 +410,17 @@ $(document).ready(function(){
 	});
 	
 	// client edit page
+	$('.hint_close').click(function(){
+		var btn = $(this),
+			hint = btn.parents('.user_hint'),
+			placement_id = btn.attr('id').replace('UserHintPlacement_', ''),
+			ajax_loader = $('.ajax_loader', hint).show();
+		
+		$.updateModel('/user_hints/hide/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+			ajax_loader.hide();
+			hint.slideUp(300, function(){ $(this).remove() });
+		});	
+	});
 	
 	// NEW LISTING WORKFLOW
 		// 1). Click NEW button, get a partial from the server and prepend to the listing box
@@ -533,6 +544,7 @@ $(document).ready(function(){
 
 							listing_html = $(response.data);
 							partial.html(listing_html.html()).removeClass('active');
+							$('#listings_size').text(parseInt($('#listings_size').text())+1);
 
 						} else $.ajax_error(response);
 
@@ -556,6 +568,19 @@ $(document).ready(function(){
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow
+	
+	// Listing Pictures
+	$('#picture_image', '#new_picture').change(function(){
+		$('#new_picture').ajaxSubmit({
+			beforeSubmit: function(arr, $form, options){
+				$('.ajax_loader', $form).show();
+				$('label, input', $form).hide();
+			},
+			success: function(response){
+				alert(response)
+			}
+		})
+	});
 	
 });
 
@@ -718,6 +743,18 @@ $.updateModels = function(e, ui) {
 		} else {
 			$.ajax_error(response);
 		}
+	}, 'json');
+}
+
+// update attributes on a single model
+$.updateModel = function(path, params, callback) {
+	$.post(path, params, function(response){
+		if (response.success) {
+			if (typeof callback == 'function') callback.call(this, response.data);
+			else alert(response.data);
+			
+		} else $.ajax_error(response);
+		
 	}, 'json');
 }
 
@@ -1011,6 +1048,7 @@ $.fn.tabular_content = function() {
 				tabs = $('.tabular', $this), // ul
 				panels = $('.tab_content', $this); // tab content divs
 		
+		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
 				
 		$('a', tabs).click(function(){
@@ -1411,7 +1449,7 @@ function workflow_step4() { // form data review
 						wizard.form_data.mailing_address['zip'] +'</p>';
 	review_html += '</div>';
 	
-	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newletter.</p>';
+	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newsletter.</p>';
 	
 	if (listings.length > 0) {
 		wizard.form_data.listings = [];
@@ -1423,7 +1461,7 @@ function workflow_step4() { // form data review
 			
 			wizard.form_data.listings.push(this.value);
 			
-			review_html += '<div class="listing_div"><div class="listing_in"><div class="left block num">'+ (i+1) +'</div>';
+			review_html += '<div class="listing_div"><div class="left block num">'+ (i+1) +'</div><div class="listing_in">';
 			review_html += '<p class="listing_title">'+ title +'</p><p class="listing_address">'+ address +'</p></div></div>';
 		});
 		
@@ -1445,7 +1483,7 @@ function finish_workflow() {
 		$.post('/clients', wizard.form_data, function(response){
 			if (response.success) {
 				wizard.workflow.parents('#pop_up').dialog('close');
-				$('#new_client').css('text-align', 'left').html('<p>'+ response.data +'</p>');
+				$('#top_fac_page').html(response.data);
 
 			} else $.ajax_error(response);
 

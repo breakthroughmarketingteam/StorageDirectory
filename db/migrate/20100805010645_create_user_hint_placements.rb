@@ -2,7 +2,7 @@ class CreateUserHintPlacements < ActiveRecord::Migration
   def self.up
     create_table :user_hint_placements do |t|
       t.boolean :hide
-      t.integer :position
+      t.integer :position, :default => 0
       t.integer :user_id
       t.integer :user_hint_id
       

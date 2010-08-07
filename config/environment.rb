@@ -5,6 +5,7 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require 'aws/s3'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -22,9 +23,10 @@ Rails::Initializer.run do |config|
   # config.gem 'liquid'
   # config.gem 'authlogic'
   # config.gem 'facebooker'
-  #config.gem 'aws-s3'
+  config.gem 'aws-s3'
   config.gem 'geokit'
   config.gem 'will_paginate'
+  config.gem 'httparty'
   #config.gem 'memcached'
   #require 'memcached'
   
@@ -54,7 +56,7 @@ ActionMailer::Base.smtp_settings = {
   :port => 25,
   :domain => 'local',
   :authentication => :plain,
-}
+} if RAILS_ENV == 'development'
 
 if defined? Hirb
   Hirb.enable :pager => true

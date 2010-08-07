@@ -2,6 +2,7 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
+  has_one  :facility_info
   has_one  :map
   acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
@@ -41,4 +42,49 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+  def facility_id() self.facility_info.sFacilityId end
+  
+  def update_facility_info(facility_id)
+    
+  end
+
+  @@facility_ids = %w(
+    a2c018ba-54ca-44eb-9972-090252ef00c5
+    42e2550d-e233-dd11-a002-0015c5f270db
+  )
+
+  @@username = 'USSL'+ (RAILS_ENV == 'development' ? '_TEST' : '')
+  @@password = 'U$$L722'
+  @@host = "http://issn.opentechalliance.com"
+  @@url = '/issn_ws1/issn_ws1.asmx/'
+  @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
+
+  include HTTParty
+  require 'cobravsmongoose'
+  
+  def self.findFacilities
+    @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+    
+    query = @@host + @@url + 'ISSN_findFacilities' + @@query
+    response = self.get query, :format => :xml
+    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
+    els = []
+
+    data.each do |d|
+      els << d["sFacilityID"]["$"]
+    end
+    
+    raise els.pretty_inspect
+  end
+  
+  def self.getFacilityInfo(facility_id = nil)
+    facility_id ? facility_id : self.facility_id
+    @@query += "&sFacilityId=#{facility_id}&sIssnId="
+
+    query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
+    response = self.get query, :format => :xml
+    data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
+    raise data.pretty_inspect
+  end
+
 end

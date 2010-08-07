@@ -5,6 +5,8 @@ class Image < ActiveRecord::Base
   has_many :galleries, :through => :gallery_images
   
   has_attached_file :image, 
+    :storage => :s3, 
+    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
     :styles => { :medium => '700x400>', :thumb => '150x150#' },
     :url => "/:class/gallery/:id/:style_:basename.:extension",
     :path => ":rails_root/public/:class/gallery/:id/:style_:basename.:extension"

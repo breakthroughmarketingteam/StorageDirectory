@@ -58,7 +58,7 @@ module ApplicationHelper
   end
   
   def combine_global_and_local_blocks_for(region)
-    blocks = @global_blocks.select { |b| b.show_in_all == region.to_s }
+    blocks = Block.find_all_by_show_in_all region
     
     ['page', 'post'].each do |model_name| # the types of models that can have blocks
       model_instance = eval("@#{model_name}")

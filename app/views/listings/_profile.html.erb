@@ -54,15 +54,15 @@
     <div id="sl-tabs">
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
-          <%= content_tag :li, link_to('Unit Sizes', '#', :rel => 'sl-tabs-sizes') %>
-          <%= content_tag :li, link_to('Map', '#', :rel => 'sl-tabs-map') %>
-          <%= content_tag :li, link_to('Features', '#', :rel => 'sl-tabs-feat') %>
-          <%= content_tag :li, link_to('Pictures', '#', :rel => 'sl-tabs-pict') %>
+			<%= content_tag :li, link_to('Map', '#', :rel => 'sl-tabs-map') %>
+          	<%= content_tag :li, link_to('Unit Sizes', '#', :rel => 'sl-tabs-sizes') %>
+          	<%= content_tag :li, link_to('Features', '#', :rel => 'sl-tabs-feat') %>
+          	<%= content_tag :li, link_to('Pictures', '#', :rel => 'sl-tabs-pict') %>
         </ul>
         
         <!-- tab content -->
+		<%= render :partial => 'big_map' %>
         <%= render :partial => 'sizes' %>
-        <%= render :partial => 'big_map' %>
         <%= render :partial => 'features' %>
         <%= render :partial => 'pictures' %>
         

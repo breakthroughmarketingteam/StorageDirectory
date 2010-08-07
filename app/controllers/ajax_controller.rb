@@ -31,11 +31,12 @@ class AjaxController < ApplicationController
     render_error e
   end
   
+  # find listings in a city or state which don't have an owner
   def find_listings
     @listings = Listing.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l 
                                      LEFT JOIN maps m ON m.listing_id = l.id 
                                      LEFT JOIN users u ON u.id = l.user_id 
-                                     WHERE ((LOWER(m.state) = '%#{params[:state].downcase}%' 
+                                     WHERE ((LOWER(m.state) LIKE '%#{params[:state].downcase}%' 
                                             AND LOWER(m.city) LIKE '%#{params[:city].downcase}%' 
                                             AND LOWER(l.title) LIKE '%#{params[:company].downcase}%') 
                                         OR (LOWER(m.state) LIKE '%#{params[:state].downcase}%' 

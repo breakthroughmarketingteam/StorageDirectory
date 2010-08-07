@@ -15,8 +15,9 @@ module AjaxHelper
     url_for(hash)
   end
   
-  def ajax_loader(img = 'ajax-loader-facebook.gif')
-    image_tag "/images/ui/#{img}", :class => 'ajax_loader'
+  def ajax_loader(img = 'ajax-loader-facebook.gif', options = {})
+    options.merge! :class => 'ajax_loader'
+    image_tag "/images/ui/#{img}", options
   end
   
 end
