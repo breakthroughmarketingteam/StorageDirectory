@@ -23,7 +23,10 @@ background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-b
 #rslt-page-cnt-in{margin:5px 0px;}
 #cnt-space{height:80px;}
 /* Start header styles */
-#logo{float:left;height:187px;width:139px;margin-left:35px;position:relative;z-index:500;}
+#logo{float:left;height:170px;width:124px;margin:-1px 0 0 38px;position:relative;z-index:500;}
+#logotop{position:absolute;top:1px;z-index:999;}
+#logoimg{position:relative;top:6px;}
+#logoshadow{position:relative;top:8px;}
 #title{background:url(/images/ui/storagelocator/us-self-storage-locator-heading.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:513px;position:relative;}
 #title h2{bottom:6px;color:#333;font-weight:normal;left:10px;position:absolute;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}

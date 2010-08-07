@@ -132,7 +132,7 @@ $('.edit-btn', '.authenticated .sl-table').click(function(){
 });
 
 // address and specials boxes, convert to form and handle ajax post
-$('.attr_edit', '.authenticated').click(function(){
+$('.attr_edit', '.authenticated').live('click', function(){
 	var $this 	   = $(this).css('display', 'inline'),
 		container  = $this.parent(),
 		rel 	   = $this.attr('rel'),

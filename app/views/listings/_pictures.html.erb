@@ -1,10 +1,25 @@
 <div id="sl-tabs-pict" class="tab_content">
   <div id="sl-tabs-pict-in">
-    <ul id="sl-tabs-pict-gall">
-      <% 1.upto(8) do |i| %>
-        <li><img alt="Picture <%= i %>" title="Picture <%= i %>" src="/images/ui/storagelocator/example-gallery-tn.png"></li>
-      <% end %>
-    </ul>
-    <img src="/images/ui/storagelocator/example-gallery.png" class="big-pic">
+	<% unless @listing.pictures.empty? %>
+	
+	    <ul id="sl-tabs-pict-gall">
+	      <% @listing.pictures.each_with_index do |picture, i| %>
+			<% next if i == 0 %>
+	        <li><%= image_tag picture.image.url(:thumb80) %></li>
+	      <% end %>
+	    </ul>
+	    <%= image_tag @listing.pictures.first.image.url(:thumb80) %>
+	
+	<% else %>
+		<% form_for Picture.new, :html => { :multipart => true } do |f| %>
+			<div class="framed">
+				<%= f.label :image, 'Upload your first picture!' %>
+				<%= f.file_field :image %>
+				<%= f.hidden_field :listing_id, :value => @listing.id %>
+				<%= ajax_loader 'ajax-loader-facebook.gif' %>
+			</div>
+		<% end %>
+	<% end %>
+	
   </div>
 </div>

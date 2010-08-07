@@ -2,6 +2,7 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
+  has_one  :facility_info
   has_one  :map
   acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
@@ -41,6 +42,11 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+  def facility_id() self.facility_info.sFacilityId end
+  
+  def update_facility_info(facility_id)
+    
+  end
 
   @@facility_ids = %w(
     a2c018ba-54ca-44eb-9972-090252ef00c5
@@ -71,8 +77,9 @@ class Listing < ActiveRecord::Base
     raise els.pretty_inspect
   end
   
-  def self.getFacilityInfo(which = 0)
-    @@query += "&sFacilityId=#{@@facility_ids[which]}&sIssnId="
+  def self.getFacilityInfo(facility_id = nil)
+    facility_id ? facility_id : self.facility_id
+    @@query += "&sFacilityId=#{facility_id}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
     response = self.get query, :format => :xml

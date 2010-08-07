@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.resources :products
   map.resources :users
   map.resources :user_hints
+  map.resources :pictures
   map.resources :user_sessions
   map.resources :permissions
   map.resources :roles

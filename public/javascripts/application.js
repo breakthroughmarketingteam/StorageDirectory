@@ -544,6 +544,7 @@ $(document).ready(function(){
 
 							listing_html = $(response.data);
 							partial.html(listing_html.html()).removeClass('active');
+							$('#listings_size').text(parseInt($('#listings_size').text())+1);
 
 						} else $.ajax_error(response);
 
@@ -567,6 +568,19 @@ $(document).ready(function(){
 		// END 2). bind events to listing inputs
 		
 	// END new listing workflow
+	
+	// Listing Pictures
+	$('#picture_image', '#new_picture').change(function(){
+		$('#new_picture').ajaxSubmit({
+			beforeSubmit: function(arr, $form, options){
+				$('.ajax_loader', $form).show();
+				$('label, input', $form).hide();
+			},
+			success: function(response){
+				alert(response)
+			}
+		})
+	});
 	
 });
 
@@ -1034,6 +1048,7 @@ $.fn.tabular_content = function() {
 				tabs = $('.tabular', $this), // ul
 				panels = $('.tab_content', $this); // tab content divs
 		
+		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
 				
 		$('a', tabs).click(function(){
