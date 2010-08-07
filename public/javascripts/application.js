@@ -1261,7 +1261,7 @@ var GreyWizard = function(container, settings) {
 			
 			self.slides.each(function(i){
 				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
-				$(this).stop().animate({ left: left + 'px' }, self.settings.slide_speed+1000);
+				$(this).stop().animate({ left: left + 'px' }, self.settings.slide_speed);
 			});
 			
 			self.set_nav();
