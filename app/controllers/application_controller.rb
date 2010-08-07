@@ -135,7 +135,6 @@ class ApplicationController < ActionController::Base
     @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
     @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
     @nav_pages         = Page.nav_pages
-    @global_blocks     = Block.all :conditions => ['show_in_all in (?)', regions(false).map(&:to_s)]
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
   end
   

@@ -52,26 +52,6 @@ class Listing < ActiveRecord::Base
   @@host = "http://issn.opentechalliance.com"
   @@url = '/issn_ws1/issn_ws1.asmx/'
   @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
-  
-=begin  
-  def self.issn(method = 'findFacilities')
-    method = 'ISSN_'+ method
-    
-    case method
-    when 'ISSN_findFacilities'
-      query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=5&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-      
-    when 'ISSN_getFacilityInfo'
-      fac_id = facility_ids[ARGV[1] || 0]
-      query += "&sFacilityId=#{CGI.escape(fac_id)}&sIssnId="
-    end
-
-    
-    url = "/issn_ws1/issn_ws1.asmx/#{method}#{query}"
-    
-    raise Nestful.pretty_inspect
-  end
-=end
 
   include HTTParty
   require 'cobravsmongoose'
@@ -95,7 +75,7 @@ class Listing < ActiveRecord::Base
     @@query += "&sFacilityId=#{@@facility_ids[which]}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    response = self.post @@host + @@url + 'ISSN_getFacilityInfo', { "sUsername" => username, "sUserPassword" => password, "sFacilityId" => @@facility_ids[which], "sIssnId" => ''}, :format => :xml
+    response = self.get query, :format => :xml
     data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
     raise data.pretty_inspect
   end
