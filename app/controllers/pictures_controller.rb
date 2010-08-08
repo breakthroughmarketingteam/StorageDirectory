@@ -1,6 +1,6 @@
 class PicturesController < ApplicationController
   before_filter :get_models, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :edit, :update]
   
   def index
   end
@@ -40,21 +40,41 @@ class PicturesController < ApplicationController
   def create
     @listing = Listing.find(params[:picture][:listing_id])
     @picture = @listing.pictures.build params[:picture]
-    raise @picture.pretty_inspect
-    if @picture.save
-      
-    else
-      
+    
+    respond_to do |format|
+      format.html
+      format.js do
+        if @picture.save
+          render :json => { :success => true, :data => { :thumb => @picture.image.url(:thumb), :image => @picture.image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
+        else
+          render :json => { :success => false, :data => model_errors(@picture) }
+        end
+      end
     end
   end
 
   def destroy
-    if @picture.destroy
-      flash[:notice] = 'Picture DESTROYED!'
-      redirect_to root_path
-    else
-      flash[:error] = 'Error destroying Picture'
-      render :action => 'edit'
+    return if current_user.nil?
+    
+    @listing = current_user.listings.find(params[:listing_id])
+    @picture = @listing.pictures.find(params[:id])
+    
+    respond_to do |format|
+      format.html do
+        if @picture.destroy
+          flash[:notice] = 'Picture DESTROYED!'
+          redirect_to root_path
+        else
+          flash[:error] = 'Error destroying Picture'
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        @picture.destroy
+        @picture.image = nil
+        render :json => { :success => true }
+      end
     end
   end
 

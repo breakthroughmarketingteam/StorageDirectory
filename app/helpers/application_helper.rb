@@ -58,7 +58,7 @@ module ApplicationHelper
   end
   
   def combine_global_and_local_blocks_for(region)
-    blocks = Block.find_all_by_show_in_all region
+    blocks = Block.find_all_by_show_in_all region.to_s
     
     ['page', 'post'].each do |model_name| # the types of models that can have blocks
       model_instance = eval("@#{model_name}")
@@ -462,7 +462,13 @@ module ApplicationHelper
   end
   
   def conditional_account_path(options = {})
-    '<span class="account_link">'+ link_to('My Account', client_account_path(options)) +'</span>' if current_user && current_user.has_role?('advertiser')
+    return '' if current_user.nil?
+    
+    case current_user.role.title when 'advertiser'
+      '<span class="account_link">'+ link_to('My Account', client_account_path(options)) +'</span>'
+    when 'admin'
+      '<span class="account_link">'+ link_to('Administer', '#') +'</span>'
+    end
   end
   
 end

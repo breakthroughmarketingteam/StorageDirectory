@@ -1,25 +1,28 @@
+<% @listing = (@listing || @model) %>
 <div id="sl-tabs-pict" class="tab_content">
   <div id="sl-tabs-pict-in">
-	<% unless @listing.pictures.empty? %>
-	
+	<div class="uncollapse gallery">
 	    <ul id="sl-tabs-pict-gall">
-	      <% @listing.pictures.each_with_index do |picture, i| %>
-			<% next if i == 0 %>
-	        <li><%= image_tag picture.image.url(:thumb80) %></li>
-	      <% end %>
+	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
+	        <li>
+				<%= image_tag picture.image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0) %>
+				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'iconOnly16 delete_link right', :title => 'Delete this picture' if action_name == 'edit' %>
+			</li>
+	      <% end unless @listing.pictures.empty? %>
 	    </ul>
-	    <%= image_tag @listing.pictures.first.image.url(:thumb80) %>
-	
-	<% else %>
-		<% form_for Picture.new, :html => { :multipart => true } do |f| %>
-			<div class="framed">
-				<%= f.label :image, 'Upload your first picture!' %>
-				<%= f.file_field :image %>
-				<%= f.hidden_field :listing_id, :value => @listing.id %>
-				<%= ajax_loader 'ajax-loader-facebook.gif' %>
-			</div>
-		<% end %>
-	<% end %>
+		<% big_pic = @listing.pictures.sort_by(&:position).first %>
+	    <%= image_tag big_pic.image.url(:medium), :id => "BigPicture_#{big_pic.id}", :class => 'big-pic' unless @listing.pictures.empty? %>
+	</div>
+
+	<% form_for Picture.new, :html => { :multipart => true } do |f| %>
+		<div class="framed">
+			<%= f.label :image, 'Upload' %>
+			<%= f.file_field :image, :size => 10 %>
+			<%= f.hidden_field :listing_id, :value => @listing.id %>
+			<%= ajax_loader 'ajax-loader-facebook.gif' %>
+			<%= hidden_field_tag 'format', 'js' %>
+		</div>
+	<% end if action_name == 'edit' %>
 	
   </div>
 </div>

@@ -570,16 +570,69 @@ $(document).ready(function(){
 	// END new listing workflow
 	
 	// Listing Pictures
+	// upload pics
 	$('#picture_image', '#new_picture').change(function(){
 		$('#new_picture').ajaxSubmit({
+			dataType: 'json',
 			beforeSubmit: function(arr, $form, options){
 				$('.ajax_loader', $form).show();
-				$('label, input', $form).hide();
 			},
 			success: function(response){
-				alert(response)
+				if (response.success) {
+					var thumb = $('<li><img src="'+ response.data.thumb +'" id="Picture_'+ response.data.id +'" alt="" /><a class="iconOnly16 delete_link right" href="/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id +'" title="Delete this picture">Delete</a></li>'),
+						image = $('<img class="big-pic" id="BigPicture_'+ response.data.id +'" src="'+ response.data.image +'" alt="" />');
+					
+					$('#sl-tabs-pict-gall').append(thumb);
+					thumb.hide().fadeIn(600)
+					
+					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+						$('.gallery', '#sl-tabs-pict-in').append(image);
+						image.hide().fadeIn('slow');
+						thumb.find('img').addClass('active');
+					}
+					
+					
+				} else $.ajax_error(response);
+				
+				$('.ajax_loader', '#new_picture').hide();
+				$('#picture_image', '#new_picture').val('');
 			}
 		})
+	});
+	
+	// change big-pic when thumb is hovered
+	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
+		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
+		if (big_pic.length == 0) return false;
+		
+		
+		$('img', '#sl-tabs-pict-gall').removeClass('active')
+		var thumb = $(this),
+			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
+		
+		thumb.addClass('active');
+		big_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
+	});
+	
+	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
+		if (!$(this).data('deleting') && confirm('Are you sure you want to delete this picture?')) {
+			$(this).data('deleting', true);
+			
+			var img = $(this).prev('img'),
+				id = img.attr('id').replace('Picture_', '');
+
+			$.post($(this).attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
+				if (response.success) {
+					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
+					img.parent().fadeOut(600, function(){ $(this).remove() });
+
+				} else $.ajax_error(response);
+				
+				$(this).data('deleting', false);
+			}, 'json');
+		}
+		
+		return false;
 	});
 	
 });

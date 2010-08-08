@@ -1175,6 +1175,7 @@ b.dequeue()})})}})(jQuery);
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
+
 (function($) {
 
 /*
@@ -2013,3 +2014,7 @@ function log() {
 	};
 
 })( jQuery );
+
+jQuery.ajaxSetup({ 
+  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+});
