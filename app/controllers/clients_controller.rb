@@ -90,8 +90,12 @@ class ClientsController < ApplicationController
       redirect_to login_path
       
     elsif @client.status == 'active'
+      flash[:notice] = "Your account is already active. Go ahead and log in."
+      redirect_to login_path
       
     elsif @client.status == 'suspended'
+      flash[:error] = 'Your account is suspended'
+      redirect_to root_path
       
     end
   end
