@@ -48,6 +48,17 @@ class SearchResults < ApplicationController
   
   private
   
+  def self.is_address_query?(query)
+    # zip code
+    return true if query.match /\d{5}/
+    
+    # has a state name or abbrev or city name
+    sregex = States::NAMES.map { |s| "(#{s[0]})|\s#{s[1]}$" } * '|'
+    us_cities = UsCity.all.map { |c| c.name }
+    
+    query.match(/#{sregex}/i) || us_cities.any? { |c| c =~ /#{query}/i }
+  end
+  
   def self._check_setup(model)
     _setup_block_for model unless _has_enabled_block(model)
   end

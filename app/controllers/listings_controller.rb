@@ -9,6 +9,10 @@ class ListingsController < ApplicationController
   def index
     Listing.getFacilityInfo
   end
+  
+  def locator
+    
+  end
 
   def show
     redirect_to facility_path(@listing.title.parameterize, @listing.id) if params[:title] == 'show'

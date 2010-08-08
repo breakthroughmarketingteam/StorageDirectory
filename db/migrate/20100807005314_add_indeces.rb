@@ -11,7 +11,7 @@ class AddIndeces < ActiveRecord::Migration
     add_index :images, [:id, :user_id, :title]
     add_index :listings, [:id, :user_id, :title]
     add_index :listing_sizes, [:listing_id, :size_id]
-    add_index :mailing_addresses, [:client_id, :name, :city, :state]
+    add_index :mailing_addresses, [:client_id, :city, :state]
     add_index :maps, [:listing_id, :city, :zip, :lat, :lng]
     add_index :models_modules, [:model_id, :model_type]
     add_index :models_views, [:model_id, :view_id, :model_type]
