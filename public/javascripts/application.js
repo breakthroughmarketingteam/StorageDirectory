@@ -24,19 +24,18 @@ $(document).ready(function(){
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
-	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
 	
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
-	$('.sortable', '.authenticated').sortable({
+	$('.sortable', '.admin').sortable({
 		opacity: 0.3,
 		update: function(e, ui) { $.updateModels(e, ui); }
 	});
 	
-	$('.block_sortable', '.authenticated').sortable({
+	$('.block_sortable', '.admin').sortable({
 		opacity: 0.3,
 		placeholder: 'ui-state-highlight',
 		helper: 'clone',
@@ -410,6 +409,30 @@ $(document).ready(function(){
 	});
 	
 	// client edit page
+	$('.selective_hider').live('click', function(){
+		var dont_hide  = $(this).attr('rel'),
+			hide_these = $('.hideable');
+			
+		if (dont_hide) {
+			hide_these.each(function(){
+				if (this.id != dont_hide) {
+					$(this).slideUp();
+					$(this).prev('.user_hint').slideUp();
+					
+				} else {
+					$(this).slideDown();
+					$(this).prev('.user_hint').slideDown();
+				}
+			});
+
+		} else {
+			hide_these.slideDown();
+			$('.user_hint').slideDown();
+		}
+
+		return false;
+	});
+	
 	$('.hint_close').click(function(){
 		var btn = $(this),
 			hint = btn.parents('.user_hint'),
@@ -1187,27 +1210,6 @@ $.fn.instantForm = function() {
 			$('.value', $this).show();
 			$(this).fadeOut();
 			submit_btn.text('Edit').data('saving', false);
-			return false;
-		});
-	});
-}
-
-// hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
-// if no rel attr all divs of class hideable are shown
-$.fn.selectiveHider = function() {
-	return this.each(function(){
-		$(this).live('click', function(){
-			var dont_hide  = $(this).attr('rel'),
-				hide_these = $('.hideable');
-
-			if (dont_hide) {
-				hide_these.each(function(){
-					if (this.id != dont_hide) $(this).slideUp();
-					else $(this).slideDown();
-				});
-
-			} else hide_these.slideDown();
-
 			return false;
 		});
 	});

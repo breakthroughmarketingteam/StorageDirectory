@@ -28,7 +28,7 @@
 			<link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
 		<![endif]-->
 	</head>
-	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %>">
+	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
   	<%#= render :partial => 'menus/menu' if current_user %>
 		
 		<!-- First set up a page container to take the header and main content -->
