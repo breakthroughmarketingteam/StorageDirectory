@@ -42,6 +42,19 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+  def map_data
+    { 
+      :title => self.title,
+      :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
+      :address => self.address,
+      :city => self.city,
+      :state => self.state,
+      :zip => self.zip,
+      :lat => self.lat,
+      :lng => self.lng
+    }
+  end
+  
   #
   # Search methods
   #

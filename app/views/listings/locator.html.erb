@@ -1,0 +1,19 @@
+<% declare_content_for %>
+<% content_for :scripts, @Gmap.to_html %>
+<%= display_message flash %>
+
+
+<div id="type-one-r-col-in">
+  <div id="results_header">
+    <h2>We found <%= @listings.total_entries %> self storage facilities <%= "in #{@location.city}, #{@location.state}" unless @location.blank? %></h2>
+  </div>
+</div>
+
+<div id="main_map">
+	<script type="text/javascript">
+		var maps_data = <%= @maps_data.to_json %>;
+	</script>
+	<%= @Gmap.div :width => '758px', :height => '300px' %>
+</div>
+
+<p class="rslt-head-txt">Your <span>nearest</span> self storage is being displayed first</p>
