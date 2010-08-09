@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100805160506) do
+ActiveRecord::Schema.define(:version => 20100807031231) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "updated_at"
   end
 
+  add_index "billing_infos", ["client_id", "name", "card_expiration"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"
     t.integer  "form_id"
@@ -31,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "block_forms", ["block_id", "form_id"], :name => "index_block_forms_on_block_id_and_form_id"
 
   create_table "block_widgets", :force => true do |t|
     t.integer  "block_id"
@@ -56,6 +60,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.string   "restful_region"
   end
 
+  add_index "blocks", ["id", "title", "show_in_all", "restful_region"], :name => "index_blocks_on_id_and_title_and_show_in_all_and_restful_region"
+
   create_table "blocks_models", :force => true do |t|
     t.integer  "model_id"
     t.string   "model_type"
@@ -68,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.integer  "position",   :default => 0
   end
 
+  add_index "blocks_models", ["block_id", "model_id", "model_type"], :name => "index_blocks_models_on_block_id_and_model_id_and_model_type"
+
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50
     t.string   "comment"
@@ -78,7 +86,34 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.string   "email"
   end
 
+  add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
+
+  create_table "facility_infos", :force => true do |t|
+    t.string   "O_FacilityName"
+    t.string   "O_FacilityId"
+    t.integer  "O_ISSNID"
+    t.boolean  "O_WebReservationsAllowed"
+    t.boolean  "O_WebRentalsAllowed"
+    t.string   "O_Address"
+    t.string   "O_Address2"
+    t.string   "O_City"
+    t.string   "O_StateOrProvince"
+    t.integer  "O_PostalCode"
+    t.float    "O_IssnLongitude"
+    t.float    "O_IssnLatitude"
+    t.boolean  "O_AcceptVisa"
+    t.boolean  "O_AcceptMC"
+    t.boolean  "O_AcceptAmex"
+    t.boolean  "O_AcceptDiscover"
+    t.integer  "O_MaximumReserveAheadDays"
+    t.string   "O_PMS"
+    t.integer  "O_ReservationFee_Min"
+    t.integer  "O_ReservationFee_Max"
+    t.integer  "O_ReservationOverrideFee"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fields", :force => true do |t|
     t.string   "field_type"
@@ -106,12 +141,16 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.boolean  "show_title"
   end
 
+  add_index "forms", ["id", "name"], :name => "index_forms_on_id_and_name"
+
   create_table "galleries", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
   end
+
+  add_index "galleries", ["id", "title"], :name => "index_galleries_on_id_and_title"
 
   create_table "gallery_images", :force => true do |t|
     t.integer  "gallery_id"
@@ -120,6 +159,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "gallery_images", ["gallery_id", "image_id"], :name => "index_gallery_images_on_gallery_id_and_image_id"
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -149,6 +190,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.text     "content"
   end
 
+  add_index "images", ["id", "user_id", "title"], :name => "index_images_on_id_and_user_id_and_title"
+
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "path"
@@ -168,6 +211,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "updated_at"
   end
 
+  add_index "listing_sizes", ["listing_id", "size_id"], :name => "index_listing_sizes_on_listing_id_and_size_id"
+
   create_table "listings", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -177,6 +222,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "updated_at"
     t.string   "status"
   end
+
+  add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
 
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "client_id"
@@ -192,6 +239,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.string   "zip"
   end
 
+  add_index "mailing_addresses", ["client_id", "name", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_name_and_city_and_state"
+
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"
     t.string   "address"
@@ -205,6 +254,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.float    "lng"
   end
 
+  add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
+
   create_table "models_modules", :force => true do |t|
     t.string   "name"
     t.integer  "model_id"
@@ -212,6 +263,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -229,6 +282,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.boolean  "paginate"
   end
 
+  add_index "models_views", ["model_id", "view_id", "model_type"], :name => "index_models_views_on_model_id_and_view_id_and_model_type"
+
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.integer  "parent_id"
@@ -244,6 +299,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.boolean  "use_placeholders"
   end
 
+  add_index "pages", ["id", "title", "parent_id", "show_in_nav"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"
+
   create_table "permissions", :force => true do |t|
     t.string   "resource"
     t.string   "action"
@@ -253,14 +310,21 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "updated_at"
   end
 
+  add_index "permissions", ["id", "role_id"], :name => "index_permissions_on_id_and_role_id"
+
   create_table "pictures", :force => true do |t|
     t.integer  "listing_id"
     t.string   "title"
     t.text     "description"
-    t.integer  "position",    :default => 0
+    t.integer  "position",           :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
   end
+
+  add_index "pictures", ["id", "listing_id", "title"], :name => "index_pictures_on_id_and_listing_id_and_title"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -273,6 +337,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.boolean  "comments_enabled"
     t.integer  "position",         :default => 0
   end
+
+  add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
   create_table "rates", :force => true do |t|
     t.integer  "rater_id"
@@ -315,6 +381,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.integer  "listing_id"
   end
 
+  add_index "sizes", ["listing_id", "price"], :name => "index_sizes_on_listing_id_and_price"
+
   create_table "specials", :force => true do |t|
     t.integer  "listing_id"
     t.string   "title"
@@ -326,6 +394,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"
 
   create_table "suggestions", :force => true do |t|
     t.string   "title"
@@ -353,6 +423,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.string "name"
   end
 
+  add_index "tags", ["name"], :name => "index_tags_on_name"
+
   create_table "us_cities", :force => true do |t|
     t.string   "state"
     t.string   "name"
@@ -361,6 +433,7 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
   end
 
   add_index "us_cities", ["name"], :name => "index_us_cities_on_name"
+  add_index "us_cities", ["state", "name"], :name => "index_us_cities_on_state_and_name"
   add_index "us_cities", ["state"], :name => "index_us_cities_on_state"
 
   create_table "user_hint_placements", :force => true do |t|
@@ -371,6 +444,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_hint_placements", ["user_id"], :name => "index_user_hint_placements_on_user_id"
 
   create_table "user_hints", :force => true do |t|
     t.string   "title"
@@ -404,6 +479,8 @@ ActiveRecord::Schema.define(:version => 20100805160506) do
     t.string   "activation_code"
     t.string   "status"
   end
+
+  add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
 
   create_table "views", :force => true do |t|
     t.string   "table_catalog"

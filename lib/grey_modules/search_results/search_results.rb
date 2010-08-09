@@ -25,7 +25,7 @@ class SearchResults < ApplicationController
         @location = Geokit::Geocoders::MultiGeocoder.geocode(q)
         options.merge! :origin => @location
       else # query by name?
-        conditions = { :conditions => ['title LIKE ?', "%#{q}%"] }
+        conditions = { :conditions => ['listings.title LIKE ?', "%#{q}%"] }
         options.merge! conditions
         
         unless session[:geo_location].blank?

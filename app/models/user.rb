@@ -44,6 +44,16 @@ class User < ActiveRecord::Base
     super(params[:user])
   end
   
+  def listings(options)
+    if self.has_role?('admin')
+      Listing.find(options)
+    elsif self.type == 'Client'
+      self.listings.find(options)
+    else
+      raise NoMethodError
+    end
+  end
+  
   def has_role?(*roles)
     roles.include? self.role.title
   end

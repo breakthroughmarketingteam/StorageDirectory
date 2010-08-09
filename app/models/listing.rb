@@ -2,6 +2,7 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
+  has_one  :facility_info
   has_one  :map
   acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
@@ -41,6 +42,11 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+  def facility_id() self.facility_info.sFacilityId end
+  
+  def update_facility_info(facility_id)
+    
+  end
 
   @@facility_ids = %w(
     a2c018ba-54ca-44eb-9972-090252ef00c5
@@ -52,26 +58,6 @@ class Listing < ActiveRecord::Base
   @@host = "http://issn.opentechalliance.com"
   @@url = '/issn_ws1/issn_ws1.asmx/'
   @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
-  
-=begin  
-  def self.issn(method = 'findFacilities')
-    method = 'ISSN_'+ method
-    
-    case method
-    when 'ISSN_findFacilities'
-      query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=5&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-      
-    when 'ISSN_getFacilityInfo'
-      fac_id = facility_ids[ARGV[1] || 0]
-      query += "&sFacilityId=#{CGI.escape(fac_id)}&sIssnId="
-    end
-
-    
-    url = "/issn_ws1/issn_ws1.asmx/#{method}#{query}"
-    
-    raise Nestful.pretty_inspect
-  end
-=end
 
   include HTTParty
   require 'cobravsmongoose'
@@ -91,11 +77,12 @@ class Listing < ActiveRecord::Base
     raise els.pretty_inspect
   end
   
-  def self.getFacilityInfo(which = 0)
-    @@query += "&sFacilityId=#{@@facility_ids[which]}&sIssnId="
+  def self.getFacilityInfo(facility_id = nil)
+    facility_id ? facility_id : self.facility_id
+    @@query += "&sFacilityId=#{facility_id}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    response = self.post query, :format => :xml
+    response = self.get query, :format => :xml
     data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
     raise data.pretty_inspect
   end

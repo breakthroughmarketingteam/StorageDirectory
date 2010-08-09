@@ -4,3 +4,4 @@ will_paginate
 memcached
 aws-s3
 httparty
+cobravsmongoose

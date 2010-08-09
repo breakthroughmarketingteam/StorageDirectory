@@ -22,6 +22,7 @@ class ClientsController < ApplicationController
     @client.activation_code       = @client.make_activation_code
     @client.status                = 'unverified'
     @client.role_id               = Role.get_advertiser_role_id
+    @client.user_hints = UserHint.all
     
     if params[:listings]
       params[:listings].each do |id|
@@ -35,13 +36,13 @@ class ClientsController < ApplicationController
     if @client.save_without_session_maintenance
       Notifier.deliver_client_notification @client, @temp_password
       
-      msg = "<p>Great job, you're almost ready! We sent you an email with an activation link. \
+      msg = "<p class='stack'>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \
-              See you soon!<br /> \
-              Click below to sign in:<br /> \
-              Email: #{@client.email} \
-              Password: #{@temp_password}
-              <a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
+              See you soon!</p> \
+              <p class='stack'><strong>Click below to sign in:</strong</p> \
+              <p>Email: #{@client.email}</p> \
+              <p class='stack'>Password: #{@temp_password}</p>
+              <p><a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else
       render :json => { :success => false, :data => model_errors(@client) }
@@ -89,8 +90,12 @@ class ClientsController < ApplicationController
       redirect_to login_path
       
     elsif @client.status == 'active'
+      flash[:notice] = "Your account is already active. Go ahead and log in."
+      redirect_to login_path
       
     elsif @client.status == 'suspended'
+      flash[:error] = 'Your account is suspended'
+      redirect_to root_path
       
     end
   end

@@ -12,9 +12,10 @@
 		<%= yield :scripts %>
 		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
 		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
-		<%= javascript_include_tag 'jquery.all', @plugins %>
+		<%= javascript_include_tag 'jquery.all' %>
 		<%#= javascript_include_tag 'queryLoader' if @page %>
 	  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
+		<%= javascript_include_tag @plugins %>
 	  	<%= javascript_include_tag 'application' %>
     
 		<link rel="shortcut icon" type="image/x-ico" href="/favicon.ico" />
@@ -27,7 +28,7 @@
 			<link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
 		<![endif]-->
 	</head>
-	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %>">
+	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
   	<%#= render :partial => 'menus/menu' if current_user %>
 		
 		<!-- First set up a page container to take the header and main content -->
@@ -38,7 +39,11 @@
     				 <!-- To align everything in the header correctly, it needs an inner container as well -->
     				 <div id="head-ctr-in">
         				 <div id="logo">
-                   			<a href="/"><img src="/images/ui/storagelocator/us-self-storage-locator-logo.png" alt="US Self Storage Locator" /></a>
+                   			<a href="/">
+								<img id="logotop" src="/images/ui/storagelocator/page-headlogo-top.png" alt="" />
+								<img id="logoimg" src="/images/ui/storagelocator/us-self-storage-locator-logo.gif" alt="US Self Storage Locator" />
+								<img id="logoshadow" src="/images/ui/storagelocator/logo-shadow.png" alt="" />
+							</a>
         				 </div>
         					
         					<div id="title">
