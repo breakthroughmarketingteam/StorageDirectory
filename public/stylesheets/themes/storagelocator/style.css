@@ -1,7 +1,6 @@
 /* Style sheet. Created by ns-designs 2010 */
-html{overflow-y: scroll;overflow-x: hidden;}
+html{overflow-x:hidden;margin:0;}
 /* Start by defining the main page layout */
-*{padding:0;margin:0;}
 body{text-align:center;font-family:"Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#222;}
 h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
@@ -332,7 +331,7 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #type-three-r-col-in{width:755px;float:right;margin:15px 15px 0 0;}
 #sl-header,#results_header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;border:1px solid #ccc;color:#fff;}
 #results_header{margin-top:13px;width:98%;}
-#main_map{width:97.4%;margin:15px 0 15px 2px;height:300px;border:1px solid #ccc;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
+#main_map{width:97.4%;margin:15px 0 15px 3px;height:300px;border:1px solid #ccc;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
 #sl-header h2,#results_header h2{width:560px;line-height:2.3;text-shadow:1px 1px 2px #333;margin-left:15px;margin-bottom:15px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
@@ -506,7 +505,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .table_view{width:100%;}
 /* the container styles */
 .home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in{margin:15px 20px 0px 20px;}
-#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;}
+#clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
 /*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/
 #listings_controller.show_action #type-one-cnt-in{padding:0;}

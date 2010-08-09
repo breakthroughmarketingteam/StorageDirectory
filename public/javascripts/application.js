@@ -280,6 +280,15 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	// move with window
+	if ($.on_page([['locator', 'listings']])) {
+		var move_me = $('#content_bottom .region_content_bottom');
+		$(window).scroll(function(e){
+			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
+			else move_me.css({ position: 'static'  });
+		});
+	}
+	
 	// Views/Forms/Links Edit
 	if ($.on_page([['edit, new', 'views, forms, links']])) {
 		var scope_down = ''; 

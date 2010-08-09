@@ -4,10 +4,9 @@
 
 // multiple marker map on results page
 $(function(){
-	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && maps_data && $('#main_map').length > 0) {
-		setTimeout(function(){
-			setGmap(maps_data);
-		}, 2000);
+	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && Gmaps_data && $('#main_map').length > 0) {
+		// Gmaps_data comes from a script rendered by the controller
+		$.setGmap(Gmaps_data);
 	}
 
 	// bind event handlers and implement ajax functionality for search results.
@@ -290,8 +289,8 @@ $(function(){
 				if (remaining < per_page) $this.text('+ Show ' + remaining + ' more');
 				
 				// combine new map data with existing
-				$.each(response.maps_data.maps, function(){ maps_data.maps.push(this) });
-				setGmap(maps_data);
+				$.each(response.maps_data.maps, function(){ Gmaps_data.maps.push(this) });
+				$.setGmap(Gmaps_data);
 				
 			} else alert('Ooops, try again');
 		});
@@ -453,7 +452,7 @@ try {
 	var iconOptions = {};
 	iconOptions.width = 32;
 	iconOptions.height = 32;
-	iconOptions.primaryColor = "#ff0000";
+	iconOptions.primaryColor = "#0000ff";
 	iconOptions.cornerColor = "#FFFFFF";
 	iconOptions.strokeColor = "#000000";
 	var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
@@ -485,20 +484,28 @@ function addMarker(icon, lat, lng, title, body){
 	return marker;
 }
 
-function setGmap(data) {
-	Gmap = new GMap2(document.getElementById('google_map'));
+function center_google_map(Gmap ,lat, lng) {
+  Gmap.checkResize();
+  Gmap.setCenter(new GLatLng(lat, lng), 12);
+}
+
+
+$.setGmap = function(data) {
+	Gmap = new GMap2(document.getElementById('main_map'));
 	Gmap.addControl(new GLargeMapControl());
 	Gmap.addControl(new GScaleControl());
 	Gmap.addControl(new GMapTypeControl());
-	
 	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), 12);
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Start Address', 'You are here');
+	Gmap.enableDoubleClickZoom();
+	Gmap.disableContinuousZoom();
+	Gmap.disableScrollWheelZoom();
+	//addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Start Address', 'You are here');
 	
 	//add result markers
 	var markers = data.maps;
 	GmapMarkers = [];
 	
-	for(i in markers){
+	for (var i = 0, len = markers.length; i < len; i++){
 		if(markers[i].photo) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
 		else photo = '';
 		
@@ -507,9 +514,6 @@ function setGmap(data) {
 		var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
 		GmapMarkers[i] = marker;
 	}
-	
-	google_map = Gmap;
-	center_google_map();
 	
 	//bind mouseover result row to highlight map marker
 	jQuery('.listing').hover(function(){

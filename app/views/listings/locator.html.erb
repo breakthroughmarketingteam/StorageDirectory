@@ -1,5 +1,6 @@
 <% declare_content_for %>
-<% content_for :scripts, @Gmap.to_html %>
+<% content_for :scripts, "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}' type='text/javascript'></script>
+" %>
 <%= display_message flash %>
 
 
@@ -9,11 +10,10 @@
   </div>
 </div>
 
+<script type="text/javascript">
+var Gmaps_data = <%= @maps_data.to_json %>;
+</script>
 <div id="main_map">
-	<script type="text/javascript">
-		var maps_data = <%= @maps_data.to_json %>;
-	</script>
-	<%= @Gmap.div :width => '758px', :height => '300px' %>
 </div>
 
 <p class="rslt-head-txt">Your <span>nearest</span> self storage is being displayed first</p>
