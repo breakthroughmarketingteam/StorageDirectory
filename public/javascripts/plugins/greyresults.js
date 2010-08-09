@@ -4,7 +4,7 @@
 
 // multiple marker map on results page
 $(function(){
-	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && Gmaps_data && $('#main_map').length > 0) {
+	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
 		// Gmaps_data comes from a script rendered by the controller
 		$.setGmap(Gmaps_data);
 	}
@@ -483,12 +483,6 @@ function addMarker(icon, lat, lng, title, body){
 	Gmap.addOverlay(marker);
 	return marker;
 }
-
-function center_google_map(Gmap ,lat, lng) {
-  Gmap.checkResize();
-  Gmap.setCenter(new GLatLng(lat, lng), 12);
-}
-
 
 $.setGmap = function(data) {
 	Gmap = new GMap2(document.getElementById('main_map'));

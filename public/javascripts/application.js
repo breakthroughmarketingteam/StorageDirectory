@@ -248,6 +248,20 @@ $(document).ready(function(){
 		}
 	});
 	
+	/*/ storage tips page
+	var tips_head = $('#tips-head'),
+		tips_inner_html = '<div class="purple_bgs" id="bg1"></div>'+
+	    		'<div class="purple_bgs" id="bg2"></div>'+
+			    '<div class="purple_bgs" id="bg3"></div>'+
+			    '<div class="bubble" id="bub1"></div>'+
+			    '<div class="bubble" id="bub2"></div>'+
+			    '<div class="bubble" id="bub3"></div>';
+		console.log(tips_head)
+		tips_head.append(tips_inner_html);
+	*/
+	
+	
+	
 	// listings show page
 	// the google map breaks when it's loaded in a hidden div, then shown by js
 	$('a[rel=sl-tabs-map]').click(function(){
@@ -648,7 +662,7 @@ $(document).ready(function(){
 	
 	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
 		if (!$(this).data('deleting') && confirm('Are you sure you want to delete this picture?')) {
-			$(this).data('deleting', true);
+			$(this).data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
 			
 			var img = $(this).prev('img'),
 				id = img.attr('id').replace('Picture_', '');
@@ -657,6 +671,8 @@ $(document).ready(function(){
 				if (response.success) {
 					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
+					
+					if ($('img', '#sl-tabs-pict-gall').length == 1) $('.big-pic', '#sl-tabs-pict-in').eq(0).fadeOut(900, function(){ $(this).remove() });
 
 				} else $.ajax_error(response);
 				

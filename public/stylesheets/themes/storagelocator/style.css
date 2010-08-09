@@ -123,7 +123,17 @@ p.rslt-head-txt span{color:#333;}
 #type-one-r-col-in h2{font-weight:normal;}
 .green-head{border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;width:742px;height:190px;margin:15px 0 13px 0;float:left;position:relative;left:15px;background-color:#fff;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
-#tips-head{background:url(/images/ui/storagelocator/tips-hdr-img.png) no-repeat;}
+#tips-head{background:#000;position:relative;overflow:hidden;width:740px;}
+#tips-head #tips-hdr{position:absolute;z-index:750;}
+#tips-head .purple_bgs,#tips-head .bubble{position:absolute;height:100px;width:100px;display:none;}
+#tips-head .bubble{z-index:800;}
+#tips-head .purple_bgs{background:#4949cd;z-index:700;}
+#tips-head #bg1{height:110px;left:51px;top:37px;width:130px;}
+#tips-head #bg2{height:158px;left:224px;top:25px;}
+#tips-head #bg3{height:184px;left:382px;top:5px;width:213px;}
+#tips-head #bub1{width:529px;height:143px;bottom:0;left:0;background:url(/images/ui/storagelocator/tips-hdr-img-bubble1.png) no-repeat;}
+#tips-head #bub2{width:596px;height:159px;bottom:0;left:40%;background:url(/images/ui/storagelocator/tips-hdr-img-bubble2.png) no-repeat;}
+#tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(/images/ui/storagelocator/info-hdr-img.png) no-repeat;}
 #add-fac-head{background:url(/images/ui/storagelocator/add-hdr-img.png) no-repeat;}
 #rslt-head{background:url(/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
@@ -302,7 +312,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 /* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:left;top:6px;margin-bottom:20px;}
-#tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;margin-top:20px;}
+#tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;margin-top:5px;}
 #tips-box-bottom{background:url(/images/ui/storagelocator/tips-bottom.png) no-repeat top left;width:164px;height:36px;}
 #tips-box-bottom p a{width:21px;height:20px;display:block;float:left;position:relative;left:98px;top:8px;margin-right:5px;}
 #welcome-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;line-height:47px;text-align:left;position:relative;left:60px;}
@@ -329,10 +339,10 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 /* And finally... here are all the brand new pages CSS starting from here */
 #type-three-r-col-in{width:755px;float:right;margin:15px 15px 0 0;}
-#sl-header,#results_header{border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;border:1px solid #ccc;color:#fff;}
+#sl-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #ccc;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
 #results_header{margin-top:13px;width:98%;}
-#main_map{width:97.4%;margin:15px 0 15px 3px;height:300px;border:1px solid #ccc;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
-#sl-header h2,#results_header h2{width:560px;line-height:2.3;text-shadow:1px 1px 2px #333;margin-left:15px;margin-bottom:15px;font-size:120%;}
+#main_map{width:97.4%;margin:7px 0 15px 3px;height:300px;border:1px solid #ccc;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
+#sl-header h2,#results_header h2{float:left;line-height:2.3;text-shadow:1px 1px 2px #333;margin-left:15px;margin-bottom:15px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
 #sl-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.3;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
@@ -477,7 +487,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #reserveonline-box p span{color:#33c;}
 #girl-pic{background:url(/images/ui/storagelocator/girl.png) no-repeat center 70px ;height:435px;width:169px;position:relative;left:15px;margin-bottom:20px;}
 #admin-box ul li{list-style:none;}
-#admin-box ul li a{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat 0 -31px;width:163px;height:31px;line-height:31px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;display:block;margin:5px 0px;}
+#admin-box ul li a{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat 0 -31px;width:163px;height:31px;line-height:31px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;display:block;margin:5px 0px;cursor:pointer;}
 #admin-box ul li a span{position:relative;left:10px;}
 #admin-box ul li a:hover,#admin-box ul li a.active{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
 /************************************************** END additions.css *********************************************************/
