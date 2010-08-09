@@ -42,6 +42,73 @@ class Listing < ActiveRecord::Base
   def lat() self.map.lat end
   def lng() self.map.lng end
   
+  def map_data
+    { 
+      :title => self.title,
+      :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
+      :address => self.address,
+      :city => self.city,
+      :state => self.state,
+      :zip => self.zip,
+      :lat => self.lat,
+      :lng => self.lng
+    }
+  end
+  
+  #
+  # Search methods
+  #
+  
+  def self.geo_search(params, session)
+    q = params[:q]
+    options = {
+      :page     => params[:page], 
+      :per_page => (params[:per_page] || 5),
+      :include  => [:map, :specials, :sizes, :pictures],
+      :within   => (params[:within]   || 5)
+    }
+    
+    unless q.blank?
+      if is_address_query?(q)
+        @location = Geokit::Geocoders::MultiGeocoder.geocode(q)
+        options.merge! :origin => @location
+      else # query by name?
+        conditions = { :conditions => ['listings.title LIKE ?', "%#{q}%"] }
+        options.merge! conditions
+        
+        unless session[:geo_location].blank?
+          options.merge! :origin => [session[:geo_location][:lat], session[:geo_location][:lng]]
+        else
+          guessed = Listing.first(conditions).map.full_address rescue nil
+          @location = Geokit::Geocoders::MultiGeocoder.geocode(guessed)
+          options.merge! :origin => @location
+        end
+      end
+    else
+      @location = session[:geo_location] || Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
+      options.merge! :origin => @location
+    end
+    
+    @model_data = Listing.paginate(:all, options)
+    @model_data.sort_by_distance_from @location if !params[:order] || params[:order] == 'distance'
+    { :data => @model_data, :location => @location }
+  end
+
+  def self.is_address_query?(query)
+    # zip code
+    return true if query.match /\d{5}/
+    
+    # has a state name or abbrev or city name
+    sregex = States::NAMES.map { |s| "(#{s[0]})|\s#{s[1]}$" } * '|'
+    us_cities = UsCity.all.map { |c| c.name }
+    
+    query.match(/#{sregex}/i) || us_cities.any? { |c| c =~ /#{query}/i }
+  end
+  
+  #
+  # ISSN wrapper code
+  #
+  
   def facility_id() self.facility_info.sFacilityId end
   
   def update_facility_info(facility_id)

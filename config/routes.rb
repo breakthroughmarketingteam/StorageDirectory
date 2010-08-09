@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   # This route can be invoked with purchase_url(:id => product.id)
 
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
+  map.new_client '/self-storage/:q', :controller => 'listings', :action => 'locator', :q => nil
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
@@ -60,7 +61,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :site_setting
   
   # greyresults
-  map.resources :listings, :collection => { :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures]
+  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   

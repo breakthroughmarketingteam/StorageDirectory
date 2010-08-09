@@ -9,6 +9,33 @@ class ListingsController < ApplicationController
   def index
     Listing.getFacilityInfo
   end
+  
+  def locator
+    # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
+    @page = Page.find_by_title 'Self Storage'
+    
+    result = Listing.geo_search params, session
+    @listings = result[:data]
+    @location = result[:location]
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng }, :maps => @listings.collect(&:map_data) }
+    
+    get_map @location
+    
+    respond_to do |format|
+      format.html
+      format.js do # implementing these ajax responses for the search results 'More Link'
+        # include listing's related data
+        @listings.map! do |m|
+          mm = { :info => m.attributes, :map => m.map.attributes }
+          mm[:map].merge!(:distance => m.distance)
+          mm.merge!(:specials => m.specials)
+          mm
+        end
+        
+        render :json => { :success => !@listings.blank?, :data => @listings, :maps_data => @maps_data }
+      end
+    end
+  end
 
   def show
     redirect_to facility_path(@listing.title.parameterize, @listing.id) if params[:title] == 'show'
@@ -68,17 +95,17 @@ class ListingsController < ApplicationController
     @client = @listing.client
   end
   
-  def get_map
-    unless @listing.map.nil? || @listing.map.lat.nil?
-      @map = @listing.map
+  def get_map(loc = nil)
+    unless (@listing.map.nil? || @listing.map.lat.nil? rescue false) && loc.nil?
+      @map = (@listing.try(:map) || loc)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
-  		@Gmap.zoom = 16 # 2 miles
+  		@Gmap.zoom = (loc.nil? ? 16 : 12) # 2 miles
   		@Gmap.markers << GoogleMap::Marker.new(:map => @Gmap, 
                                              :lat => @map.lat, 
                                              :lng => @map.lng,
-                                             :html => "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
-                                             :marker_hover_text => @listing.title,
+                                             :html => (@listing.nil? ? 'You Are here' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>"),
+                                             :marker_hover_text => @listing.try(:title),
                                              :marker_icon_path => '/images/ui/map_marker.png')
     end
   end

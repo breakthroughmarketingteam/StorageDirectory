@@ -2,8 +2,6 @@ class PagesController < ApplicationController
   before_filter :get_page, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
-  before_filter :get_modules, :only => [:new, :edit]
-  before_filter :load_grey_module, :only => :show
 
   include Geokit
   geocode_ip_address :only => :show
@@ -13,20 +11,6 @@ class PagesController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.js do # implementing these ajax responses for the search results 'More Link'
-        # include listing's related data
-        @model_data.map! do |m|
-          mm = { :info => m.attributes, :map => m.map.attributes }
-          mm[:map].merge!(:distance => m.distance)
-          mm.merge!(:specials => m.specials)
-          mm
-        end
-        
-        render :json => { :success => !@model_data.blank?, :data => @model_data }
-      end
-    end
   end
 
   def new

@@ -8,8 +8,8 @@
 		 
 	<div id="rslt-list-bg">
 			
-	  <%= render :partial => 'listings/result', :collection => @model_data %>
-	  <% if @model_data.blank? %>
+	  <%= render :partial => 'listings/result', :collection => @listings %>
+	  <% if @listings.blank? %>
         <div class="no_results framed">
           Sorry, that search didn't return any results. Try using less filter options.
         </div>
@@ -17,12 +17,12 @@
 				
 	</div>
 	
-	<% unless @model_data.blank? %>
+	<% unless @listings.blank? %>
     <div class="pagination">
       <p class="rslt-foot">
-        <%= more_results_link(@model_data) %>
+        <%= more_results_link(@listings) %>
       </p>
-      <span id="per_page" class="hidden"><%= @model_data.per_page if @model_data.respond_to?(:per_page) %></span>
+      <span id="per_page" class="hidden"><%= @listings.per_page if @listings.respond_to?(:per_page) %></span>
     </div>
   <% end %>
 </div>
