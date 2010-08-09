@@ -7,8 +7,28 @@ $(function(){
 	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
 		// Gmaps_data comes from a script rendered by the controller
 		$.setGmap(Gmaps_data);
-	}
+		
+		$('.compare', '.listing').live('click', function(){
+			var compare = $(this),
+				listing = compare.parents('.listing'),
+				i = $('.listing').index(listing);
+			
+			if (!compare.data('on')) {
+				listing.addClass('active');
+				compare.data('on', true);
+				GmapMarkers[i].GmapState = 'selected';
+				highlightMarker(i);
 
+			} else {
+				listing.removeClass('active');
+				compare.data('on', false);
+				GmapMarkers[i].GmapState = '';
+				unhighlightMarker(i);
+
+			}
+		});
+	}
+	
 	// bind event handlers and implement ajax functionality for search results.
 	// first implemented for storage locator
 	
@@ -483,6 +503,7 @@ function addMarker(icon, lat, lng, title, body){
 	return marker;
 }
 
+GmapMarkers = [];
 $.setGmap = function(data) {
 	Gmap = new GMap2(document.getElementById('main_map'));
 	Gmap.addControl(new GLargeMapControl());
@@ -492,49 +513,30 @@ $.setGmap = function(data) {
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
-	//addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Start Address', 'You are here');
+	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Your Are here', 'You are here');
 	
 	//add result markers
 	var markers = data.maps;
-	GmapMarkers = [];
 	
 	for (var i = 0, len = markers.length; i < len; i++){
 		if(markers[i].photo) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
 		else photo = '';
 		
 		var title = markers[i].title;
-		var body = '<p>'+ photo + title +'<br/>'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</p>';
+		var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
 		var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
 		GmapMarkers[i] = marker;
 	}
 	
 	//bind mouseover result row to highlight map marker
 	jQuery('.listing').hover(function(){
-		var this_listing = $(this),
-			ind = 0;
-		
-		$('.listing').each(function(i){ if (this_listing.attr('id') == this.id) { ind = i; return; } });
-		highlightMarker(ind);
+		var i = $('.listing').index(this);
+		highlightMarker(i);
 		
 	}, function(){
-		var this_listing = $(this),
-			ind = 0;
+		var i = $('.listing').index(this);
+		unhighlightMarker(i);
 		
-		$('.listing').each(function(i){ if (this_listing.attr('id') == this.id) { ind = i; return; } });
-		unhighlightMarker(ind);
-		
-	}).click(function(){
-		var i = this.id.split('_')[1];
-		
-		if(!$(this).data('selected')){	// checked state change happens after click event so need to do opposite
-			GmapMarkers[i].GmapState = 'selected';
-			unhighlightMarker(i);
-			
-		} else {
-			GmapMarkers[i].GmapState = '';
-			highlightMarker(i);
-			
-		}
-
 	});
+	
 } // END setGmap()

@@ -168,8 +168,8 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li{float:left;}
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
-.listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;left:34px;width:3em;color:#666;}
-.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin-right:55px;}
+.listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;left:15px;width:3em;color:#666;}
+.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin-right:71px;}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-specials,.rslt-contact,.listing img{float:left;list-style:none;display:inline;margin-left:20px;}
 .listing img{margin-top:10px;float:left;margin-left:20px;}
@@ -180,10 +180,11 @@ li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;
 #clients_controller .rslt-contact #listing_title{width:93%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
-li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
-li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:160px;height:100px;line-height:105px;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
-li.rslt-specials{width:16%;height:100px;line-height:105px;margin-top:0px;}
+li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:70px;height:100px;color:#333;}
+li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:110px;height:100px;line-height:105px;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
+li.rslt-specials{width:20%;height:100px;line-height:105px;margin-top:0px;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
+li.compare_li{margin:37px 0 0 13px;}
 ul.tabs{margin:0 0 5px 31px;float:left;}
 ul.tabs li{height:16px;line-height:16px;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;border:1px solid #ccc;border-top:0 none;border-radius-bottomright:8px;-moz-border-radius-bottomright:8px;-webkit-border-bottom-right-radius:8px;border-radius-bottomleft:8px;-moz-border-radius-bottomleft:8px;-webkit-border-bottom-left-radius:8px;}
 ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
@@ -530,6 +531,8 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #list-miles{background-position:97% 50%;}
 .listing{cursor:pointer;overflow:hidden;}
 .listing .inner{padding:0;}
+.listing .compare{padding:12px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+.listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .panel{width:94%;overflow:hidden;cursor:default;margin:0 auto;background:#fff;position:relative;z-index:600;padding:10px 12px;border-bottom:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel #map_partial{overflow:visible;height:183px;}
@@ -715,7 +718,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #workflow_steps .listing_in .left{width:auto;}
 #workflow_steps .listing_in .listing_address{font-size:70%;}
 #workflow_steps .num{color:#FFF;font-size:120%;height:60px;line-height:2.7;margin:0;text-align:center;width:39px;text-shadow:1px 1px 2px #333;}
-#workflow_steps .listing_title{font-weight:bold;color:#060;margin-bottom:3px;}
+.listing_title, .listing_title a{font-weight:bold;color:#060;margin-bottom:3px;display:block;}
 #workflow_steps .listing_title{margin:3px 0 6px 0;}
 #workflow_steps .listing_title span{font-weight:normal;font-size:80%;padding-left:10px;}
 #signupstep_2 .found_box{width:52%;float:right}

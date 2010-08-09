@@ -25,6 +25,14 @@
 			<li class="rslt-reserve">
 				<%= results_main_button(result) %>
 			</li>
+			
+			<% if action_name == 'locator' %>
+				<li class="compare_li">
+					<div class="compare selectable">
+						<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
+					</div>
+				</li>
+			<% end %>
 		</ul>
 	</div>
 	

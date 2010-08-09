@@ -260,8 +260,6 @@ $(document).ready(function(){
 		tips_head.append(tips_inner_html);
 	*/
 	
-	
-	
 	// listings show page
 	// the google map breaks when it's loaded in a hidden div, then shown by js
 	$('a[rel=sl-tabs-map]').click(function(){
@@ -272,11 +270,21 @@ $(document).ready(function(){
 	});
 	
 	$('#top_map_btn').click(function(){
-		var $map = $('#main_map'),
-			location = $(this).attr('location').split(','),
+		var $this = $(this),
+			$map = $('#main_map'),
+			location = $this.attr('location').split(','),
 			lat = parseFloat(location[0]),
 			lng = parseFloat(location[1]);
 		
+		if (!$this.data('open')) {
+			$this.data('open', true);
+			$('span', $this).text('Hide Map');
+		} else {
+			$this.data('open', false);
+			$('span', $this).text('Show Map');
+		}
+		
+		// center the map the first time it opens
 		if (!$map.data('open')) setTimeout(function(){
 			$map.data('open', true);
 			Gmap.checkResize();
