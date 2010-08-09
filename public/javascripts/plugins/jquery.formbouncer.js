@@ -7,11 +7,12 @@
 
 jQuery.fn.formBouncer = function(){
 	return this.each(function(){
-		jQuery(this).submit(function(){
+		jQuery(this).live('submit', function(){
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
 			var validated = $(this).runValidation();
+			
 			return validated.data('valid');
 		});
 	});

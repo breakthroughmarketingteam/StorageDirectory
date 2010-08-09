@@ -10,6 +10,7 @@ class Listing < ActiveRecord::Base
   has_many :specials
   has_many :pictures
   has_many :sizes
+  has_many :reservations
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   

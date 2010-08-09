@@ -11,6 +11,10 @@ class Role < ActiveRecord::Base
     Role.find_by_title('advertiser').try :id
   end
   
+  def self.get_role_id(title)
+    Role.find_by_title(title).try :id
+  end
+  
   def select_list_options
     self.map { |r| "#{r.id}-#{r.title}"}
   end

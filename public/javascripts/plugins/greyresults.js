@@ -422,6 +422,26 @@ $(function(){
 			}
 		});
 	});
+	
+	$('form.new_reservation').live('submit', function(){
+		var form = $(this).runValidation(),
+			data = form.serialize();
+			
+		if (form.data('valid')/* && !form.data('saving')*/) {
+			//form.data('saving', true);
+			
+			$.post(form.attr('action'), data, function(response){
+				if (response.success) {
+					form.parents('.panel').html(response.data);
+				
+				} else $.ajax_error(response);
+				
+				form.data('saving', false);
+			}, 'json');
+		}
+		
+		return false;
+	})
 });
 
 var MapIconMaker = {};

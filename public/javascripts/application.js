@@ -1139,6 +1139,7 @@ $.fn.submitBtn = function() {
 		
 		$this.click(function(){
 			$this.parents('form').submit();
+			console.log(this)
 			return false;
 		})
 	});
@@ -1527,8 +1528,8 @@ function workflow_step4() { // form data review
 	
 	info.each(function() {
 		switch (this.name) {
-			case 'first_name' : wizard.form_data.client['name'] = capitalize(this.value); break;
-			case 'last_name' : wizard.form_data.client['name'] += ' '+ capitalize(this.value); break;
+			case 'first_name' : wizard.form_data.client['first_name'] = capitalize(this.value); break;
+			case 'last_name' : wizard.form_data.client['last_name'] = capitalize(this.value); break;
 			case 'listing_address' : wizard.form_data.mailing_address['address'] = this.value; break;
 			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
 			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;
