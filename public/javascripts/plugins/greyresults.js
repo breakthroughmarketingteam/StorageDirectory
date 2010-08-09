@@ -28,7 +28,6 @@ $(function(){
 		}
 
 		$('input[type=text]:first', rform).focus();
-
 		return false;
 	});
 

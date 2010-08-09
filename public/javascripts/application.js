@@ -271,6 +271,21 @@ $(document).ready(function(){
 		if (!map.is(':hidden')) center_google_map();
 	});
 	
+	$('#top_map_btn').click(function(){
+		var $map = $('#main_map'),
+			location = $(this).attr('location').split(','),
+			lat = parseFloat(location[0]),
+			lng = parseFloat(location[1]);
+		
+		if (!$map.data('open')) setTimeout(function(){
+			$map.data('open', true);
+			Gmap.checkResize();
+			Gmap.setCenter(new GLatLng(lat, lng), 12);
+		}, 500);
+	});
+	
+	
+	
 	// edit site settings page
 	// turns a label into a textfield on mouseover, then uses callback to bind an event
 	// to the new textfield to turn it back into a label when it blurs
@@ -1103,7 +1118,7 @@ $.fn.openDiv = function() {
 			div_to_open = $this.attr('rel');
 				
 		$this.click(function() {
-			$('#'+div_to_open).slideToggle();
+			$('#'+div_to_open).slideToggle(600);
 			return false;
 		});
 	});

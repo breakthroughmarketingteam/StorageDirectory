@@ -18,6 +18,10 @@ class Listing < ActiveRecord::Base
   
   # Instance Methods
   
+  def accepts_reservations?
+    self.client && self.client.accepts_reservations?
+  end
+  
   def display_special
     self.special && self.special.content ? self.special.content : 'No Specials'
   end

@@ -23,12 +23,14 @@
 			</li>
 			
 			<li class="rslt-reserve">
-				<%= link_to 'Reserve', result.get_partial_link(:reserve), :class => 'tab_link', :rel => 'reserve' %>
+				<%= results_main_button(result) %>
 			</li>
 		</ul>
 	</div>
+	
 	<div class="panel hidden"></div>
 	<div class="clear"></div>
+	
 	<ul class="tabs">
 		<li class="open_tab_li">
 			<%= link_to '+', '#', :class => 'open_tab' %>
@@ -36,17 +38,23 @@
 		<li class="fac-map">
 			<%= link_to 'Map', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
-		<li class="fac-sizes">
-			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => 'tab_link' %>
-		</li>
-		<li class="fac-specials">
-			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => 'tab_link' %>
-		</li>
-		<li class="fac-pictures">
-			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => 'tab_link' %>
-		</li>
+		
+
+			<li class="fac-sizes">
+				<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => 'tab_link' %>
+			</li>
+
+		
+
+			<li class="fac-specials">
+				<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => 'tab_link' %>
+			</li>
+
+
+			<li class="fac-pictures">
+				<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => 'tab_link' %>
+			</li>
+
 	</ul>
-	<div class="highlight-green progress">
-		&nbsp;
-	</div>
+	<div class="highlight-green progress">&nbsp;</div>
 </div>
