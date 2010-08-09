@@ -24,6 +24,14 @@ module ListingsHelper
     data.respond_to?(:total_entries) ? data.total_entries : 0
   end
   
+  def results_main_button(listing)
+    if listing.accepts_reservations?
+      link_to 'Reserve', listing.get_partial_link(:reserve), :class => 'tab_link', :rel => 'reserve'
+    else
+      link_to 'Quote', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
+    end
+  end
+  
   def more_results_link(data)
     per_page = data.per_page
     page = params[:page] ? params[:page].to_i : 1
