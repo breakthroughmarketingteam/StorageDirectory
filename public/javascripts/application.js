@@ -260,8 +260,6 @@ $(document).ready(function(){
 		tips_head.append(tips_inner_html);
 	*/
 	
-	
-	
 	// listings show page
 	// the google map breaks when it's loaded in a hidden div, then shown by js
 	$('a[rel=sl-tabs-map]').click(function(){
@@ -270,6 +268,31 @@ $(document).ready(function(){
 		// check the header area of the source html for the method definition
 		if (!map.is(':hidden')) center_google_map();
 	});
+	
+	$('#top_map_btn').click(function(){
+		var $this = $(this),
+			$map = $('#main_map'),
+			location = $this.attr('location').split(','),
+			lat = parseFloat(location[0]),
+			lng = parseFloat(location[1]);
+		
+		if (!$this.data('open')) {
+			$this.data('open', true);
+			$('span', $this).text('Hide Map');
+		} else {
+			$this.data('open', false);
+			$('span', $this).text('Show Map');
+		}
+		
+		// center the map the first time it opens
+		if (!$map.data('open')) setTimeout(function(){
+			$map.data('open', true);
+			Gmap.checkResize();
+			Gmap.setCenter(new GLatLng(lat, lng), 12);
+		}, 500);
+	});
+	
+	
 	
 	// edit site settings page
 	// turns a label into a textfield on mouseover, then uses callback to bind an event
@@ -1103,7 +1126,7 @@ $.fn.openDiv = function() {
 			div_to_open = $this.attr('rel');
 				
 		$this.click(function() {
-			$('#'+div_to_open).slideToggle();
+			$('#'+div_to_open).slideToggle(600);
 			return false;
 		});
 	});
@@ -1116,6 +1139,7 @@ $.fn.submitBtn = function() {
 		
 		$this.click(function(){
 			$this.parents('form').submit();
+			console.log(this)
 			return false;
 		})
 	});
@@ -1504,8 +1528,8 @@ function workflow_step4() { // form data review
 	
 	info.each(function() {
 		switch (this.name) {
-			case 'first_name' : wizard.form_data.client['name'] = capitalize(this.value); break;
-			case 'last_name' : wizard.form_data.client['name'] += ' '+ capitalize(this.value); break;
+			case 'first_name' : wizard.form_data.client['first_name'] = capitalize(this.value); break;
+			case 'last_name' : wizard.form_data.client['last_name'] = capitalize(this.value); break;
 			case 'listing_address' : wizard.form_data.mailing_address['address'] = this.value; break;
 			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
 			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;

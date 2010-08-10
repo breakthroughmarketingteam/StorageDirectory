@@ -7,6 +7,7 @@
 <div id="type-one-r-col-in">
   <div id="results_header">
     <h2>We found <%= @listings.total_entries %> self storage facilities <%= "in #{@location.city}, #{@location.state}" unless @location.blank? %></h2>
+	<%= link_to '<span>Show Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#show_open-map', :id => 'top_map_btn', :class => 'openDiv', :location => "#{@location.lat},#{@location.lng}", :rel => 'main_map' %>
   </div>
 </div>
 

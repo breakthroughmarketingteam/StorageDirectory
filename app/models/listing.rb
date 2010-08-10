@@ -10,6 +10,7 @@ class Listing < ActiveRecord::Base
   has_many :specials
   has_many :pictures
   has_many :sizes
+  has_many :reservations
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -17,6 +18,10 @@ class Listing < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   # Instance Methods
+  
+  def accepts_reservations?
+    self.client && self.client.accepts_reservations?
+  end
   
   def display_special
     self.special && self.special.content ? self.special.content : 'No Specials'
@@ -43,16 +48,15 @@ class Listing < ActiveRecord::Base
   def lng() self.map.lng end
   
   def map_data
-    { 
-      :title => self.title,
-      :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
+    { :id      => self.id,
+      :title   => self.title,
+      :thumb   => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
       :address => self.address,
-      :city => self.city,
-      :state => self.state,
-      :zip => self.zip,
-      :lat => self.lat,
-      :lng => self.lng
-    }
+      :city    => self.city,
+      :state   => self.state,
+      :zip     => self.zip,
+      :lat     => self.lat,
+      :lng     => self.lng }
   end
   
   #

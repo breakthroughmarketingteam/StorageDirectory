@@ -18,9 +18,16 @@
   	</div>
 		
 		<div class="left stack right_space">
-			<%= f.label :name %>
+			<%= f.label :first_name %>
 			<div class="shadow_wrap">
-				<%= f.text_field :name, :class => 'required' %>
+				<%= f.text_field :first_name, :class => 'required' %>
+			</div>
+		</div>
+		
+		<div class="left stack right_space">
+			<%= f.label :last_name %>
+			<div class="shadow_wrap">
+				<%= f.text_field :last_name, :class => 'required' %>
 			</div>
 		</div>
 

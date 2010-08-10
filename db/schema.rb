@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100807031231) do
+ActiveRecord::Schema.define(:version => 20100809210351) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -447,7 +447,7 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
+    t.string   "first_name"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -468,6 +468,8 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
     t.boolean  "wants_newsletter"
     t.string   "activation_code"
     t.string   "status"
+    t.string   "temp_password"
+    t.string   "last_name"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
