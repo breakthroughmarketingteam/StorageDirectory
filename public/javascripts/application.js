@@ -248,17 +248,18 @@ $(document).ready(function(){
 		}
 	});
 	
-	/*/ storage tips page
-	var tips_head = $('#tips-head'),
-		tips_inner_html = '<div class="purple_bgs" id="bg1"></div>'+
-	    		'<div class="purple_bgs" id="bg2"></div>'+
-			    '<div class="purple_bgs" id="bg3"></div>'+
-			    '<div class="bubble" id="bub1"></div>'+
-			    '<div class="bubble" id="bub2"></div>'+
-			    '<div class="bubble" id="bub3"></div>';
-		console.log(tips_head)
+	// storage tips page
+	var tips_head = $('#tips-head');
+	if (tips_head.length > 0) {
+		var tips_inner_html = '<div class="purple_bgs" id="bg1"></div>'+
+	    						'<div class="purple_bgs" id="bg2"></div>'+
+							    '<div class="purple_bgs" id="bg3"></div>'+
+							    '<div class="bubble" id="bub1"></div>'+
+							    '<div class="bubble" id="bub2"></div>'+
+							    '<div class="bubble" id="bub3"></div>';
+		
 		tips_head.append(tips_inner_html);
-	*/
+	}
 	
 	// listings show page
 	// the google map breaks when it's loaded in a hidden div, then shown by js
@@ -414,7 +415,7 @@ $(document).ready(function(){
 	
 	// add your facility
 	$('form#new_client').submit(function(){
-		var signup_form = $(this);
+		var signup_form = $(this).runValidation();
 		
 		if (signup_form.data('valid') && !signup_form.data('saving')) {
 			signup_form.data('saving', true);
@@ -1139,7 +1140,6 @@ $.fn.submitBtn = function() {
 		
 		$this.click(function(){
 			$this.parents('form').submit();
-			console.log(this)
 			return false;
 		})
 	});

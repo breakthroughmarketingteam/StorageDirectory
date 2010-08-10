@@ -165,6 +165,14 @@ module SharedModelMethods #:nodoc:
       self.get_tags(rem).map { |t| "<a href='#{baseUrl + t}' class='tag_link'>#{t}</a>" } * ', '
     end
     
+    def city_state_zip
+      "#{city}, #{state} #{prep_zip}" if self.respond_to? :zip
+    end
+
+    def prep_zip
+      (zip.to_s.size < 5 ? "0#{zip}" : zip) if self.respond_to? :zip
+    end
+    
     private
     
     def _should_be_selected?(object, attribute, option, selected) 

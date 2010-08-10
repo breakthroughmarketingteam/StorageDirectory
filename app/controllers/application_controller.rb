@@ -262,7 +262,7 @@ class ApplicationController < ActionController::Base
   def _models_with_title(for_select = false)
     models_array = filter_dir_entries('app/models') do |entry|
       model_class = entry.camelcase.constantize
-      model_class.respond_to?('title')
+      model_class.respond_to?(:title) || model_class.respond_to?(:name)
     end
     
     fetch_array_for models_array, for_select

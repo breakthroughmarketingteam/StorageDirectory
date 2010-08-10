@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
   has_many :reservations
-  has_many :mailing_addresses, :dependent => :destroy
+  has_many :mailing_addresses, :dependent => :destroy, :foreign_key => 'client_id'
   accepts_nested_attributes_for :mailing_addresses
   
   validates_presence_of :name, :email, :role_id

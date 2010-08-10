@@ -1,0 +1,15 @@
+<div class="stack">
+	<%= render :partial => 'reservations/reservation', :locals => { :reservation => @reservation } %>
+</div>
+
+<div class="stack">
+	<h3>By:</h3>
+	<p class="name"><%= @reservation.user.name %></p>
+	<p class="email"><%= @reservation.user.email %></p>
+	<%= render :partial => 'mailing_addresses/mailing_address', :locals => { :mailing_address => @reservation.user.mailing_addresses.first }%>
+</div>
+
+<div>
+	<h3>Listing:</h3>
+	<%= render :partial => 'listings/listing', :locals => { :listing => @reservation.listing } %>
+</div>

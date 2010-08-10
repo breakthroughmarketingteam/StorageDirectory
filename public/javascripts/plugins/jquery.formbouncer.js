@@ -11,9 +11,7 @@ jQuery.fn.formBouncer = function(){
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
-			var validated = $(this).runValidation();
-			
-			return validated.data('valid');
+			return $(this).runValidation().data('valid');
 		});
 	});
 }

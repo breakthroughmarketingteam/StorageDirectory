@@ -231,7 +231,7 @@ input.tiny_text_field{width:30px;}
 .helptext .examples p{margin:3px 3px 7px 3px;}
 .helptext_text p{margin:0 0 7px 0;}
 .helptext_text p:first-child{margin:0;}
-#add_helptext_link{position:absolute;top:4px;right:29px;z-index:9999;}
+#add_helptext_link{position:absolute;top:15px;right:29px;z-index:9999;}
 /* icons */
 .icon16{padding-left:22px;background-position:left;background-repeat:no-repeat;}
 .iconOnly16,a.iconOnly16,

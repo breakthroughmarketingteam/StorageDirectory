@@ -10,7 +10,7 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
-#head-ctr{height:231px;width:100%;background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x top;background-color:#fff;box-shadow:0px 10px 10px #2b682c;-webkit-box-shadow:0px 10px 8px #2b682c;-moz-box-shadow:0px 10px 8px #2b682c;}
+#head-ctr{height:231px;background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x top #fff;}
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;}
 #page-ctr-in{/*background:url(/images/ui/storagelocator/container-inner-bg.png) no-repeat bottom center;*/
@@ -101,7 +101,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #type-two-l-col,#type-one-l-col,#content_bottom{width:197px;float:left;margin-top:10px;position:relative;left:2px;}
 #type-two-l-col{margin-top:7px;}
 #listings_controller #content_bottom.region{margin-top:10px;}
-#type-one-r-col, #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
+#pages_controller #type-one-r-col,#pages_controller #content,#listings_controller.locator_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
 #type-one-r-col{left:0;}
 /* Customizations - D.S */
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
@@ -118,8 +118,10 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .slider{margin-bottom:15px;clear:both;}
 #type-one-r-col-in,#sidebar{position:relative;left:2px;top:2px;width:772px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left;background-color:#42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
-p.rslt-head-txt{font-weight:bold;margin:15px 0 13px 20px;}
-p.rslt-head-txt span{color:#333;}
+.rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
+.rslt-head-txt > p{float:left;font-weight:bold;margin:4px 0;}
+.rslt-head-txt .pagination{margin:4px 0;}
+.rslt-head-txt > p span{color:#333;}
 #type-one-r-col-in h2{font-weight:normal;}
 .green-head{border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;width:742px;height:190px;margin:15px 0 13px 0;float:left;position:relative;left:15px;background-color:#fff;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
@@ -148,13 +150,14 @@ p.rslt-head-txt span{color:#333;}
 #rslt-head p{margin-top:23px;background:url(/images/ui/storagelocator/results-header-search.png) no-repeat top right;text-shadow:1px 1px 0 #666;width:300px;}
 #rslt-head p a{margin-left:15px;color:#fff;font-weight:bold;font-size:120%;text-decoration:none;}
 input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:185px;height:28px;padding:0 12px;line-height:28px;color:#777;font-size:120%;}
-#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:774px;background:url(/images/ui/storagelocator/results-list-bg.png) no-repeat top left;height:40px;line-height:20px;position:relative;left:-3px;}
+/*#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:774px;background:url(/images/ui/storagelocator/results-list-bg.png) no-repeat top left;height:40px;line-height:20px;position:relative;left:-3px;}*/
+#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:769px;height:40px;background:url(/images/ui/storagelocator/sort-head-bg.png) repeat-x;border:1px solid #ccc;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;}
 #type-one-top-bar-head{margin-bottom:10px;}
 #type-three-top-bar-head{left:-1px;}
 #type-three-top-bar-head{background:url(/images/ui/storagelocator/add-facility-bg.png) no-repeat top left;}
 #type-one-top-bar-head li{background-image:url(/images/ui/storagelocator/options-list.png);background-repeat:no-repeat;background-color:#fff;float:left;margin-top:10px;display:inline;}
 #type-two-top-bar-head li{list-style:none;float:left;margin-top:10px;}
-#type-one-top-bar-head li a{color:#333;margin-left:2px;display:block;float:left;padding-left:5px;text-decoration:none;}
+#type-one-top-bar-head li a{color:#333;margin-left:2px;display:block;float:left;padding:3px 0 5px 5px;text-decoration:none;}
 #type-one-top-bar-head li#list-name{border:1px solid #ccc;margin-left:40px;width:315px;}
 #type-one-top-bar-head li#list-name a{width:315px;}
 #type-one-top-bar-head li#list-miles{border:1px solid #ccc;margin-left:10px;width:100px;}
@@ -173,6 +176,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-specials,.rslt-contact,.listing img{float:left;list-style:none;display:inline;margin-left:20px;}
 .listing img{margin-top:10px;float:left;margin-left:20px;}
+.listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;margin-top:-1px;}
 .rslt-contact{width:188px;color:#555;margin-top:10px;}
 .rslt-contact h3{margin:4px 0 7px;}
@@ -517,7 +521,8 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .flash{margin-top:12px;width:94%;}
 .table_view{width:100%;}
 /* the container styles */
-.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in{margin:15px 20px 0px 20px;}
+.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,
+.edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in,#reservations_controller #type-one-cnt-in{margin:15px 20px 0px 20px;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
 /*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/

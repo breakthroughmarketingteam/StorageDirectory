@@ -5,7 +5,7 @@
 // multiple marker map on results page
 $(function(){
 	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
-		// Gmaps_data comes from a script rendered by the controller
+		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
 		$.setGmap(Gmaps_data);
 		
 		$('.compare', '.listing').live('click', function(){
@@ -226,17 +226,16 @@ $(function(){
 	});
 
 	/* AJAX pagination, load next page results in the same page */
-	$('#more_results').live('click', function(){
-		var $this = $(this),
+	$('.more_results').live('click', function(){
+		var $this 		= $('.more_results'),
+			plus_sign 	= $this.find('span').hide(),
 			ajax_loader = $('.ajax_loader', $this.parent()).show();
 
-		$this.find('span').hide(); // the plus sign
-
 		// params to build the url that will query the same data the visitor searched for, advanced one page
-		var pagetitle = $('#params_pagetitle', $this.parent()).text(),
-			query 	  = $('#params_query', $this.parent()).text(),
-			within 	  = $('#params_within', $this.parent()).text(),
-			page 	  = $('#params_page', $this.parent()).text();
+		var pagetitle = $('#params_pagetitle', $this.parent()).val(),
+			query 	  = $('#params_query', $this.parent()).val(),
+			within 	  = $('#params_within', $this.parent()).val(),
+			page 	  = $('#params_page', $this.parent()).val();
 
 		// to build each listing object
 		var listing_clone = $('.listing:first').clone(),
@@ -249,7 +248,7 @@ $(function(){
 		
 		$.getJSON(url, function(response){
 			ajax_loader.hide();
-			$this.find('span').show(); // the plus sign
+			plus_sign.show();
 
 			if (response.success) { // returned some listings
 				// we get an array JSON objects, each represents a listing including related models attributes
@@ -268,10 +267,7 @@ $(function(){
 					];
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i]) {
-							var new_tab_href = tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id);
-							tabs[i].attr('href', new_tab_href);
-						}
+						if (tabs[i]) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
@@ -292,13 +288,13 @@ $(function(){
 				// this updates the page count so the next time the user clicks, we pull the correct data
 				$('#params_page', $this.parent()).text(parseInt(page) + 1);
 
-				var range 		= $('#results_range'),
-					range_start = parseInt(range.text().split('-')[0]),
-					range_end 	= parseInt(range.text().split('-')[1]),
+				var range 		= $('.results_range'),
+					range_start = parseInt(range.eq(0).text().split('-')[0]),
+					range_end 	= parseInt(range.eq(0).text().split('-')[1]),
 					per_page	= parseInt($('#per_page').text()),
-					total 		= parseInt($('#results_total').text()),
+					total 		= parseInt($('.results_total').eq(0).text()),
 					remaining	= total - (range_end + per_page);		
-
+				
 				// update the range text and adjust the range end if we're near the end of the data set
 				range_end += parseInt($('#per_page').text());
 				if (range_end >= total) range_end = total;
@@ -425,10 +421,11 @@ $(function(){
 	
 	$('form.new_reservation').live('submit', function(){
 		var form = $(this).runValidation(),
-			data = form.serialize();
+			data = form.serialize(),
+			ajax_loader = $('.ajax_loader', form).show();
 			
-		if (form.data('valid')/* && !form.data('saving')*/) {
-			//form.data('saving', true);
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
 			
 			$.post(form.attr('action'), data, function(response){
 				if (response.success) {

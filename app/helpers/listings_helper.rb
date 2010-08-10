@@ -40,15 +40,15 @@ module ListingsHelper
     range_end = (per_page * page) > data.total_entries ? data.total_entries : per_page * page
     remaining = data.total_entries - (range_start + per_page - 1)
     
-    html = "<span>Showing <span id='results_range'>#{range_start}-#{range_end}</span> of <span id='results_total'>#{data.total_entries}</span> results. </span>"
+    html = "<span>Showing <span class='results_range'>#{range_start}-#{range_end}</span> of <span class='results_total'>#{data.total_entries}</span> results. </span>"
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page+1
-      html << link_to("#{ajax_loader}<span>+</span> Show #{remaining < per_page ? remaining : per_page} more", '#more', :id => 'more_results')
-      html << "<span class='hidden' id='params_pagetitle'>#{@page.title.parameterize}</span>"
-      html << "<span class='hidden' id='params_query'>#{params[:q]}</span>"
-      html << "<span class='hidden' id='params_page'>#{(params[:page] ? params[:page].to_i : 1) + 1}</span>"
-      html << "<span class='hidden' id='params_within'>#{params[:within]}</span>"
+      html << link_to("#{ajax_loader}<span>+</span> Show #{remaining < per_page ? remaining : per_page} more", '#more', :class => 'more_results')
+      html << "<input type='hidden' id='params_pagetitle' value='#{@page.title.parameterize}' />"
+      html << "<input type='hidden' id='params_query' value='#{params[:q]}' />"
+      html << "<input type='hidden' id='params_page' value='#{(params[:page] ? params[:page].to_i : 1) + 1}' />"
+      html << "<input type='hidden' id='params_within' value='#{params[:within]}' />"
     end
     
     html 
@@ -77,7 +77,7 @@ module ListingsHelper
       html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else
-      listing.map.city_state_zip unless listing.map.city.blank? && listing.map.state.blank? && listing.map.zip.blank?
+      listing.map.city_state_zip
     end
   end
   
