@@ -24,19 +24,18 @@ $(document).ready(function(){
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
-	$('.selective_hider').selectiveHider(); // hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
 	
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
-	$('.sortable', '.authenticated').sortable({
+	$('.sortable', '.admin').sortable({
 		opacity: 0.3,
 		update: function(e, ui) { $.updateModels(e, ui); }
 	});
 	
-	$('.block_sortable', '.authenticated').sortable({
+	$('.block_sortable', '.admin').sortable({
 		opacity: 0.3,
 		placeholder: 'ui-state-highlight',
 		helper: 'clone',
@@ -249,6 +248,20 @@ $(document).ready(function(){
 		}
 	});
 	
+	/*/ storage tips page
+	var tips_head = $('#tips-head'),
+		tips_inner_html = '<div class="purple_bgs" id="bg1"></div>'+
+	    		'<div class="purple_bgs" id="bg2"></div>'+
+			    '<div class="purple_bgs" id="bg3"></div>'+
+			    '<div class="bubble" id="bub1"></div>'+
+			    '<div class="bubble" id="bub2"></div>'+
+			    '<div class="bubble" id="bub3"></div>';
+		console.log(tips_head)
+		tips_head.append(tips_inner_html);
+	*/
+	
+	
+	
 	// listings show page
 	// the google map breaks when it's loaded in a hidden div, then shown by js
 	$('a[rel=sl-tabs-map]').click(function(){
@@ -280,6 +293,15 @@ $(document).ready(function(){
 		
 		return false;
 	});
+	
+	// move with window
+	if ($.on_page([['locator', 'listings']])) {
+		var move_me = $('#content_bottom .region_content_bottom');
+		$(window).scroll(function(e){
+			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
+			else move_me.css({ position: 'static'  });
+		});
+	}
 	
 	// Views/Forms/Links Edit
 	if ($.on_page([['edit, new', 'views, forms, links']])) {
@@ -410,6 +432,30 @@ $(document).ready(function(){
 	});
 	
 	// client edit page
+	$('.selective_hider').live('click', function(){
+		var dont_hide  = $(this).attr('rel'),
+			hide_these = $('.hideable');
+			
+		if (dont_hide) {
+			hide_these.each(function(){
+				if (this.id != dont_hide) {
+					$(this).slideUp();
+					$(this).prev('.user_hint').slideUp();
+					
+				} else {
+					$(this).slideDown();
+					$(this).prev('.user_hint').slideDown();
+				}
+			});
+
+		} else {
+			hide_these.slideDown();
+			$('.user_hint').slideDown();
+		}
+
+		return false;
+	});
+	
 	$('.hint_close').click(function(){
 		var btn = $(this),
 			hint = btn.parents('.user_hint'),
@@ -570,16 +616,71 @@ $(document).ready(function(){
 	// END new listing workflow
 	
 	// Listing Pictures
+	// upload pics
 	$('#picture_image', '#new_picture').change(function(){
 		$('#new_picture').ajaxSubmit({
+			dataType: 'json',
 			beforeSubmit: function(arr, $form, options){
 				$('.ajax_loader', $form).show();
-				$('label, input', $form).hide();
 			},
 			success: function(response){
-				alert(response)
+				if (response.success) {
+					var thumb = $('<li><img src="'+ response.data.thumb +'" id="Picture_'+ response.data.id +'" alt="" /><a class="iconOnly16 delete_link right" href="/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id +'" title="Delete this picture">Delete</a></li>'),
+						image = $('<img class="big-pic" id="BigPicture_'+ response.data.id +'" src="'+ response.data.image +'" alt="" />');
+					
+					$('#sl-tabs-pict-gall').append(thumb);
+					thumb.hide().fadeIn(600)
+					
+					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+						$('.gallery', '#sl-tabs-pict-in').append(image);
+						image.hide().fadeIn('slow');
+						thumb.find('img').addClass('active');
+					}
+					
+					
+				} else $.ajax_error(response);
+				
+				$('.ajax_loader', '#new_picture').hide();
+				$('#picture_image', '#new_picture').val('');
 			}
 		})
+	});
+	
+	// change big-pic when thumb is hovered
+	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
+		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
+		if (big_pic.length == 0) return false;
+		
+		
+		$('img', '#sl-tabs-pict-gall').removeClass('active')
+		var thumb = $(this),
+			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
+		
+		thumb.addClass('active');
+		big_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
+	});
+	
+	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
+		if (!$(this).data('deleting') && confirm('Are you sure you want to delete this picture?')) {
+			$(this).data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
+			
+			var img = $(this).prev('img'),
+				id = img.attr('id').replace('Picture_', '');
+
+			$.post($(this).attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
+				if (response.success) {
+					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
+					img.parent().fadeOut(600, function(){ $(this).remove() });
+					
+					if ($('img', '#sl-tabs-pict-gall').length == 1) $('.big-pic', '#sl-tabs-pict-in').eq(0).fadeOut(900, function(){ $(this).remove() });
+
+				} else $.ajax_error(response);
+				
+				$(this).data('deleting', false);
+			}, 'json');
+		}
+		
+		return false;
 	});
 	
 });
@@ -1134,27 +1235,6 @@ $.fn.instantForm = function() {
 			$('.value', $this).show();
 			$(this).fadeOut();
 			submit_btn.text('Edit').data('saving', false);
-			return false;
-		});
-	});
-}
-
-// hides all other divs of class hideable except for the one with the id matching the clicked links rel attr
-// if no rel attr all divs of class hideable are shown
-$.fn.selectiveHider = function() {
-	return this.each(function(){
-		$(this).live('click', function(){
-			var dont_hide  = $(this).attr('rel'),
-				hide_these = $('.hideable');
-
-			if (dont_hide) {
-				hide_these.each(function(){
-					if (this.id != dont_hide) $(this).slideUp();
-					else $(this).slideDown();
-				});
-
-			} else hide_these.slideDown();
-
 			return false;
 		});
 	});

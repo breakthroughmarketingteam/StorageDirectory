@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
   
   def has_role?(*roles)
-    roles.include? self.role.title
+    roles.map(&:downcase).include? self.role.title.downcase
   end
   
   # only allow a user to view and update their own profile
