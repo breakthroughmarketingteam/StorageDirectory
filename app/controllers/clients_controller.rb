@@ -14,15 +14,9 @@ class ClientsController < ApplicationController
   end
   
   def create
-    @client                       = Client.new params[:client]
-    @mailing_address              = @client.mailing_addresses.build params[:mailing_address]
-    @temp_password                = Client.rand_password
-    @client.password              = @temp_password
-    @client.password_confirmation = @temp_password
-    @client.activation_code       = @client.make_activation_code
-    @client.status                = 'unverified'
-    @client.role_id               = Role.get_advertiser_role_id
+    @client            = Client.new params[:client]
     @client.user_hints = UserHint.all
+    @mailing_address   = @client.mailing_addresses.build params[:mailing_address]
     
     if params[:listings]
       params[:listings].each do |id|
@@ -34,7 +28,7 @@ class ClientsController < ApplicationController
     end
     
     if @client.save_without_session_maintenance
-      Notifier.deliver_client_notification @client, @temp_password
+      Notifier.deliver_client_notification @client
       
       msg = "<p class='stack'>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \

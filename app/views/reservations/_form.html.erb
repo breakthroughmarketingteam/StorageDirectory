@@ -33,7 +33,7 @@
 	        <span class="hidden">Move Out Date</span> <%= label_tag 'reservation[end_date]', 'Move-Out Date', :class => 'block left w80' %> <%= text_field_tag 'reservation[end_date]', nil, :id => "move_out_#{listing.id}", :class => 'mini_calendar numeric_date' %>
 		</p>
 		<p>
-	        <%= label_tag 'reservation[comments][][comment]', 'Comments', :class => 'block left w80' %> <%= text_area_tag 'reservation[comment_attributes][][comment]' %>
+	        <%= label_tag 'reservation[comments_attributes][][comment]', 'Comments', :class => 'block left w80' %> <%= text_area_tag 'reservation[comments_attributes][][comment]' %>
 		</p>
 		
 		<div class="clear"></div>

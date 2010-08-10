@@ -432,7 +432,21 @@ $(function(){
 			
 			$.post(form.attr('action'), data, function(response){
 				if (response.success) {
-					form.parents('.panel').html(response.data);
+					var inner_panel = form.parent();
+					inner_panel.children().fadeOut(300);
+					inner_panel.animate({ height: '150px' }, 600, function(){
+						
+						inner_panel.html(
+							'<div id="quote_done">\
+								<h3>Got it! We\'ll send you the info ASAP</h3>\
+								<p>\
+									It is a long established fact that a reader will be distracted by the readable \
+									content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal \
+									distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\
+								</p>\
+							</div>'
+						);
+					});
 				
 				} else $.ajax_error(response);
 				

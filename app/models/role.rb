@@ -1,3 +1,4 @@
+
 class Role < ActiveRecord::Base
   
   has_many :users
@@ -6,10 +7,6 @@ class Role < ActiveRecord::Base
   named_scope :non_admin_roles, :conditions => 'title != "Admin"'
   
   access_shared_methods
-  
-  def self.get_advertiser_role_id
-    Role.find_by_title('advertiser').try :id
-  end
   
   def self.get_role_id(title)
     Role.find_by_title(title).try :id

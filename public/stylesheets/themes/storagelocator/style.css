@@ -745,3 +745,5 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #review_contact .name{font-size:100%;}
 #review_contact .listing_title{margin-bottom:0;}
 #signupstep_4 .left .opt_in{font-size:80%;}
+/*request form*/
+#quote_done{padding:10px;float:left;width:61%;}

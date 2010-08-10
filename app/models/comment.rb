@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
   
   access_shared_methods
   
-  validates_presence_of :email, :comment
+  validates_presence_of :comment
   
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.

@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :mailing_addresses
   
   validates_presence_of :name, :email, :role_id
+  validates_uniqueness_of :email, :scope => :type
   
   acts_as_authentic
   ajaxful_rater
@@ -37,6 +38,20 @@ class User < ActiveRecord::Base
   end
   
   # Instance Methods
+  
+  def initialize(options = {})
+    super
+    self.temp_password         = self.class.rand_password
+    self.password              = self.temp_password
+    self.password_confirmation = self.temp_password
+    self.activation_code       = self.make_activation_code
+    self.status                = 'unverified'
+    self.role_id               = self.class.name == 'Client' ? Role.get_role_id('advertiser') : Role.get_role_id('reserver')
+  end
+  
+  def name
+    self.first_name + ' ' + self.last_name
+  end
   
   def make_activation_code
     Digest::SHA1.hexdigest(self.to_s)
