@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    Listing.getFacilityInfo
+    Listing.findFacilities
   end
   
   def locator
@@ -35,6 +35,12 @@ class ListingsController < ApplicationController
         render :json => { :success => !@listings.blank?, :data => @listings, :maps_data => @maps_data }
       end
     end
+  end
+  
+  def compare
+    @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
+    @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng }, :maps => @listings.collect(&:map_data) }
   end
 
   def show

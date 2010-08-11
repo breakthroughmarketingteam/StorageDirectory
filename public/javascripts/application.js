@@ -270,31 +270,6 @@ $(document).ready(function(){
 		if (!map.is(':hidden')) center_google_map();
 	});
 	
-	$('#top_map_btn').click(function(){
-		var $this = $(this),
-			$map = $('#main_map'),
-			location = $this.attr('location').split(','),
-			lat = parseFloat(location[0]),
-			lng = parseFloat(location[1]);
-		
-		if (!$this.data('open')) {
-			$this.data('open', true);
-			$('span', $this).text('Hide Map');
-		} else {
-			$this.data('open', false);
-			$('span', $this).text('Show Map');
-		}
-		
-		// center the map the first time it opens
-		if (!$map.data('open')) setTimeout(function(){
-			$map.data('open', true);
-			Gmap.checkResize();
-			Gmap.setCenter(new GLatLng(lat, lng), 12);
-		}, 500);
-	});
-	
-	
-	
 	// edit site settings page
 	// turns a label into a textfield on mouseover, then uses callback to bind an event
 	// to the new textfield to turn it back into a label when it blurs
@@ -318,8 +293,39 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	// move with window
+	$('#top_map_btn').click(function(){
+		var $this = $(this),
+			location = $this.attr('rel').split(','),
+			lat = parseFloat(location[0]),
+			lng = parseFloat(location[1]),
+			main_map = $('#main_map');
+
+		if ($this.text() == 'Show Map') {
+			if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', true, { expires: 30 });
+			$('span', $this).text('Hide Map');
+			main_map.slideDown();
+		} else {
+			if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', null);
+			$('span', $this).text('Show Map');
+			main_map.slideUp();
+		}
+
+		// center the map the first time it opens
+		if (main_map.is(':visible')) setTimeout(function(){
+			Gmap.checkResize();
+			Gmap.setCenter(new GLatLng(lat, lng), 12);
+		}, 500);
+	});
+	
+	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
+	
 	if ($.on_page([['locator', 'listings']])) {
+		var main_map = $('#main_map');
+		
+		if ($.cookie('main_map_open')) $.open_map(main_map);
+		else main_map.hide();
+		
+		// move the sidebar with the page
 		var move_me = $('#content_bottom .region_content_bottom');
 		$(window).scroll(function(e){
 			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
@@ -924,6 +930,19 @@ $.revertSettingsTextFieldToLabel = function(text_field, old_val) {
 
 $.mayContinue = function(link) {
 	return !link.hasClass('before_confirm') || (link.hasClass('before_confirm') && confirm(link.attr('title')))
+}
+
+$.open_map = function(map) {
+	map.show();
+	
+	var map_btn = $('#top_map_btn'),
+		location = map_btn.attr('rel').split(','),
+		lat = parseFloat(location[0]),
+		lng = parseFloat(location[1]);
+
+	$('span', map_btn).text('Hide Map');
+	Gmap.checkResize();
+	Gmap.setCenter(new GLatLng(lat, lng), 12);
 }
 
 /******************************************* JQUERY PLUGINS *******************************************/

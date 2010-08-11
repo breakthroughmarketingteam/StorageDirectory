@@ -28,7 +28,7 @@ module ListingsHelper
     if listing.accepts_reservations?
       link_to 'Reserve', listing.get_partial_link(:reserve), :class => 'tab_link', :rel => 'reserve'
     else
-      link_to 'Quote', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
+      link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
     end
   end
   
@@ -44,11 +44,11 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page+1
-      html << link_to("#{ajax_loader}<span>+</span> Show #{remaining < per_page ? remaining : per_page} more", '#more', :class => 'more_results')
-      html << "<input type='hidden' id='params_pagetitle' value='#{@page.title.parameterize}' />"
-      html << "<input type='hidden' id='params_query' value='#{params[:q]}' />"
-      html << "<input type='hidden' id='params_page' value='#{(params[:page] ? params[:page].to_i : 1) + 1}' />"
-      html << "<input type='hidden' id='params_within' value='#{params[:within]}' />"
+      html << link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results')
+      html << "<span class='hidden' name='params_pagetitle'>#{@page.title.parameterize}</span>"
+      html << "<span class='hidden' name='params_query'>#{params[:q]}</span>"
+      html << "<span class='hidden' name='params_page'>#{((params[:page] ? params[:page].to_i : 1) + 1)}</span>"
+      html << "<span class='hidden' name='params_within'>#{params[:within]}</span>"
     end
     
     html 

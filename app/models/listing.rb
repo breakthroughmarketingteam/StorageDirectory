@@ -59,6 +59,12 @@ class Listing < ActiveRecord::Base
       :lng     => self.lng }
   end
   
+  def compare_attributes
+    attrs = []
+    attrs << { :title => self.title }
+    attrs << { :reservations => self.client.try(:accepts_reservations?) ? 'Yes' : 'No' }
+  end
+  
   #
   # Search methods
   #
@@ -113,8 +119,6 @@ class Listing < ActiveRecord::Base
   # ISSN wrapper code
   #
   
-  def facility_id() self.facility_info.sFacilityId end
-  
   def update_facility_info(facility_id)
     
   end
@@ -134,13 +138,14 @@ class Listing < ActiveRecord::Base
   require 'cobravsmongoose'
   
   def self.findFacilities
-    @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+    @@query += '&sForUser='#{}"&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
     
-    query = @@host + @@url + 'ISSN_findFacilities' + @@query
+    query = @@host + @@url + 'ISSNadmin_getUsersFacilities' + @@query
     response = self.get query, :format => :xml
-    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
+    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys#[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
     els = []
-
+    
+    raise data.pretty_inspect
     data.each do |d|
       els << d["sFacilityID"]["$"]
     end
@@ -149,7 +154,7 @@ class Listing < ActiveRecord::Base
   end
   
   def self.getFacilityInfo(facility_id = nil)
-    facility_id ? facility_id : self.facility_id
+    facility_id = @@facility_ids[0]
     @@query += "&sFacilityId=#{facility_id}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
