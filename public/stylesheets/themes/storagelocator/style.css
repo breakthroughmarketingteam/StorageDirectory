@@ -102,6 +102,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #type-two-l-col{margin-top:7px;}
 #listings_controller #content_bottom.region{margin-top:10px;}
 #pages_controller #type-one-r-col,#pages_controller #content,#listings_controller.locator_action #content,#listings_controller.compare_action #content,#clients_controller.new_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
+#pages_controller.home #content{float:none;position:static;width:auto;}
 #type-one-r-col{left:0;}
 /* Customizations - D.S */
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}

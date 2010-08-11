@@ -35,7 +35,7 @@ class ClientsController < ApplicationController
               See you soon!</p> \
               <p class='stack'><strong>Click below to sign in:</strong</p> \
               <p>Email: #{@client.email}</p> \
-              <p class='stack'>Password: #{@temp_password}</p>
+              <p class='stack'>Password: #{@client.temp_password}</p>
               <p><a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else

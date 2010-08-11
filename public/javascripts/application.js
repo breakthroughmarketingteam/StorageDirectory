@@ -1553,7 +1553,7 @@ function workflow_step4() { // form data review
 			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
 			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;
 			case 'listing_zip' : wizard.form_data.mailing_address['zip'] = this.value; break;
-			case 'listing_phone' : wizard.form_data.mailing_address['phone'] = this.value; break;
+			case 'listing_phone' : wizard.form_data.mailing_address['phone'] = this.value || ''; break;
 			case 'wants_newsletter' : wizard.form_data.client[this.name] = this.checked; break;
 		}
 	});
@@ -1561,8 +1561,8 @@ function workflow_step4() { // form data review
 	var review_html = '<h4>Contact Information:</h4>';
 		
 	review_html += '<div id="review_contact">';
-		review_html += '<p class="name">'+ wizard.form_data.client['name'] +'</p>';
-		review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
+		review_html += '<p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
+		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
 		review_html += '<p class="email">'+ email +'</p>';
 		review_html += '<p class="listing_title">'+ titleize(company) +'</p>';
 		review_html += '<p class="listing_address">' + 

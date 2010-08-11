@@ -153,12 +153,14 @@ class Listing < ActiveRecord::Base
     raise els.pretty_inspect
   end
   
-  def self.getFacilityInfo(facility_id = nil)
+  def getFacilityInfo
     facility_id = @@facility_ids[0]
-    @@query += "&sFacilityId=#{facility_id}&sIssnId="
+    @@query += "&sFacilityId=#{facility_id}&sIssnId=&"
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    response = self.get query, :format => :xml
+    self.class.headers "Content-Length" => query.size
+    response = self.class.post query, :format => :xml
+    raise response.pretty_inspect
     data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
     raise data.pretty_inspect
   end
