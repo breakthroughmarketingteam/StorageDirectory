@@ -248,17 +248,112 @@ $(document).ready(function(){
 		}
 	});
 	
+	// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
+	var GreyShow = function(options) {
+		var self = this;
+		this.context 	= options.context;
+		this.slides  	= options.slides;
+		this.delay 	 	= options.delay;
+		this.num_slides = options.slides.length;
+		this.time_int 	= 0;
+		
+		this.start = function() {
+			self.current = 0;
+			self.startSlide();
+		}
+		
+		this.gotoSlide = function(n) {
+			self.current = n;
+			
+			if (n == self.num_slides) {
+				self.current = 0;
+				self.gotoSlide(0);
+				
+			} else self.startSlide();
+		}
+		
+		this.startSlide = function() {
+			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
+			
+			self.hidePrevSlide();
+			self.slide_objects = self.slides[self.current].objects;
+			self.current_object = 0;
+			self.runObject(self.slide_objects[0]);
+		}
+		
+		this.runObject = function(o) {
+			var $object = $('#'+ o.id);
+			$object.children().hide();
+			
+			if (typeof o.callback == 'function')
+				o.callback.call(this, $object, self);
+			
+			$object[o.action](o.speed, function() {
+				self.current_object++;
+				
+				if (self.slide_objects[self.current_object]) {
+					setTimeout(function(){
+						self.runObject(self.slide_objects[self.current_object]);
+					}, o.delay);
+					
+				} else {
+					setTimeout(function(){
+						self.slides[self.current].end.call(this, self);
+					}, self.delay);
+				}
+			});
+		}
+		
+		this.hidePrevSlide = function(callback) {
+			var prev= self.current == 0 ? self.num_slides-1 : self.current-1;
+			
+			for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
+				var $object = $('#'+ self.slides[prev].objects[i].id);
+				$object.fadeOut(900);
+			}
+		}
+	}
+	
 	// storage tips page
 	var tips_head = $('#tips-head');
 	if (tips_head.length > 0) {
-		var tips_inner_html = '<div class="purple_bgs" id="bg1"></div>'+
-	    						'<div class="purple_bgs" id="bg2"></div>'+
-							    '<div class="purple_bgs" id="bg3"></div>'+
-							    '<div class="bubble" id="bub1"></div>'+
-							    '<div class="bubble" id="bub2"></div>'+
-							    '<div class="bubble" id="bub3"></div>';
+		var tips_show = {
+			delay : 5000,
+			context : tips_head,
+			slides : [
+				{
+					start : function(s){
+						if ($('.bubble, .purple_bgs', s.context).length < 6) {
+							var tips_inner_html = '<div class="purple_bgs" id="bg1"></div><div class="purple_bgs" id="bg2"></div><div class="purple_bgs" id="bg3"></div><div class="bubble" id="bub1"></div><div class="bubble" id="bub2"></div><div class="bubble" id="bub3"></div>';
+							$('.bubble, .purple_bgs', s.context).remove();
+							tips_head.append(tips_inner_html);
+						}
+					},
+					objects : [
+						{ id : 'bg3', action: 'fadeIn', speed: 500, delay: 500 },
+						{ id : 'bub1', action: 'fadeIn', speed: 1000, delay: 6000, callback: function(o, s){ o.html('<blockquote>I found it on USSelfStorageLocator.com</blockquote>').children().hide().fadeIn('slow') } }
+					],
+					end : function(s) { s.gotoSlide(1); }
+				},
+				{
+					objects : [
+						{ id : 'bg1', action: 'fadeIn', speed: 500, delay: 500 },
+						{ id : 'bub2', action: 'fadeIn', speed: 1000, delay: 6000, callback: function(o, s){ o.html('<blockquote>Online reservations are so convenient</blockquote>').children().hide().fadeIn('slow') } }
+					],
+					end : function(s) { s.gotoSlide(2); }
+				},
+				{
+					objects : [
+						{ id : 'bg2', action: 'fadeIn', speed: 500, delay: 500 },
+						{ id : 'bub3', action: 'fadeIn', speed: 1000, delay: 6000, callback: function(o, s){ o.html('<blockquote>They helped me get a really great deal!</blockquote>').children().hide().fadeIn('slow') } }
+					],
+					end : function(s) { s.gotoSlide(0); }
+				}
+			]
+		};
 		
-		tips_head.append(tips_inner_html);
+		var slideshow = new GreyShow(tips_show);
+		slideshow.start();
 	}
 	
 	// listings show page
