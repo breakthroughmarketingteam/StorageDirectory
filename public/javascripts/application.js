@@ -743,7 +743,7 @@ $(document).ready(function(){
 	// Listing Pictures
 	// upload pics
 	$('#picture_facility_image', '#new_picture').change(function(){
-		$('#new_picture').ajaxSubmit({
+		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
 			dataType: 'json',
 			beforeSubmit: function(arr, $form, options){
 				$('.ajax_loader', $form).show();
@@ -766,7 +766,7 @@ $(document).ready(function(){
 				} else $.ajax_error(response);
 				
 				$('.ajax_loader', '#new_picture').hide();
-				$('#picture_image', '#new_picture').val('');
+				$('#picture_facility_image', '#new_picture').val('');
 			}
 		})
 	});
