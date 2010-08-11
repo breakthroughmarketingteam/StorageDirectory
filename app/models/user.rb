@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
   
   # Instance Methods
   
-  def initialize(options = {})
-    super
+  def initialize(params = {})
+    super params
     self.temp_password         = self.class.rand_password
     self.password              = self.temp_password
     self.password_confirmation = self.temp_password
