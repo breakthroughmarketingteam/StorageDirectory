@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100809210351) do
+ActiveRecord::Schema.define(:version => 20100811183414) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(:version => 20100809210351) do
     t.string   "zip"
   end
 
-  add_index "mailing_addresses", ["client_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
+  add_index "mailing_addresses", ["client_id", "name", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_name_and_city_and_state"
 
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"
@@ -255,16 +255,6 @@ ActiveRecord::Schema.define(:version => 20100809210351) do
   end
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
-
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -316,12 +306,12 @@ ActiveRecord::Schema.define(:version => 20100809210351) do
     t.integer  "listing_id"
     t.string   "title"
     t.text     "description"
-    t.integer  "position",           :default => 0
+    t.integer  "position",                    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.string   "facility_image_file_name"
+    t.string   "facility_image_content_type"
+    t.integer  "facility_image_file_size"
   end
 
   add_index "pictures", ["id", "listing_id", "title"], :name => "index_pictures_on_id_and_listing_id_and_title"

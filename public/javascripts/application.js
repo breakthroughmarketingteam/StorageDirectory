@@ -647,7 +647,7 @@ $(document).ready(function(){
 	
 	// Listing Pictures
 	// upload pics
-	$('#picture_image', '#new_picture').change(function(){
+	$('#picture_facility_image', '#new_picture').change(function(){
 		$('#new_picture').ajaxSubmit({
 			dataType: 'json',
 			beforeSubmit: function(arr, $form, options){

@@ -45,7 +45,7 @@ class PicturesController < ApplicationController
       format.html
       format.js do
         if @picture.save
-          render :json => { :success => true, :data => { :thumb => @picture.image.url(:thumb), :image => @picture.image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
+          render :json => { :success => true, :data => { :thumb => @picture.facility_image.url(:thumb), :image => @picture.facility_image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
         else
           render :json => { :success => false, :data => model_errors(@picture) }
         end
@@ -72,7 +72,7 @@ class PicturesController < ApplicationController
       
       format.js do
         @picture.destroy
-        @picture.image = nil
+        @picture.facility_image = nil
         render :json => { :success => true }
       end
     end
