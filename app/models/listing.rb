@@ -155,10 +155,12 @@ class Listing < ActiveRecord::Base
   
   def getFacilityInfo
     facility_id = @@facility_ids[0]
-    @@query += "&sFacilityId=#{facility_id}&sIssnId=&"
+    @@query += "&sFacilityId=#{facility_id}&sIssnId="
 
     query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    self.class.headers "Content-Length" => query.size
+    self.class.headers 'Content-Length' => "#{query.size}", 'Content-Type' => 'application/x-www-form-urlencoded'
+    self.class.default_timeout 60
+    $stdout.puts query
     response = self.class.post query, :format => :xml
     raise response.pretty_inspect
     data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys

@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
   
   def name
-    self.first_name + ' ' + self.last_name
+    "#{self.first_name} #{self.last_name}"
   end
   
   def make_activation_code

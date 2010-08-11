@@ -4,8 +4,6 @@ class Client < User
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   
-  attr_accessor :first_name, :last_name
-  
   def accepts_reservations?
     false
   end

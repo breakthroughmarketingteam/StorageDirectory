@@ -18,10 +18,8 @@ class ClientsController < ApplicationController
     @client.user_hints = UserHint.all
     @mailing_address   = @client.mailing_addresses.build params[:mailing_address]
     
-    if params[:listings]
-      params[:listings].each do |id|
-        Listing.find(id.to_i).update_attributes :user_id => @client.id, :status => 'unverified'
-      end
+    unless params[:listings].blank?
+      @client.listing_ids = params[:listings]
     else
       @listing = @client.listings.build :title => @client.company, :status => 'unverified'
       @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
