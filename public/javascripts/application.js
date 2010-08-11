@@ -315,7 +315,7 @@ $(document).ready(function(){
 	}
 	
 	// storage tips page
-	var tips_head = $('#tips-head');
+	var tips_head = $('#tips-head'); 
 	if (tips_head.length > 0) {
 		var tips_show = {
 			delay : 5000,
