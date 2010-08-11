@@ -101,7 +101,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #type-two-l-col,#type-one-l-col,#content_bottom{width:197px;float:left;margin-top:10px;position:relative;left:2px;}
 #type-two-l-col{margin-top:7px;}
 #listings_controller #content_bottom.region{margin-top:10px;}
-#pages_controller #type-one-r-col,#pages_controller #content,#listings_controller.locator_action #content,#listings_controller.compare_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
+#pages_controller #type-one-r-col,#pages_controller #content,#listings_controller.locator_action #content,#listings_controller.compare_action #content,#clients_controller.new_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
 #type-one-r-col{left:0;}
 /* Customizations - D.S */
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
@@ -143,9 +143,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 /* End the header images for each page */
 #rslt-number{border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;color:#3333CB;background:#eee;}
 #narrow-box p span#rslt-number,.sl-dist #rslt-number{color:#000;}
-#narrow-box p span span,
-#rslt-head h2 span span,
-.sl-dist #rslt-number span{margin:8px;}
+#narrow-box p span span,#rslt-head h2 span span,.sl-dist #rslt-number span{margin:8px;}
 #narrow-box p span{margin:8px;}
 #rslt-head p{margin-top:23px;background:url(/images/ui/storagelocator/results-header-search.png) no-repeat top right;text-shadow:1px 1px 0 #666;width:300px;}
 #rslt-head p a{margin-left:15px;color:#fff;font-weight:bold;font-size:120%;text-decoration:none;}
@@ -154,7 +152,6 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:769px;height:40px;background:url(/images/ui/storagelocator/sort-head-bg.png) repeat-x;border:1px solid #ccc;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;}
 #type-one-top-bar-head{margin-bottom:10px;}
 #type-three-top-bar-head{left:-1px;}
-#type-three-top-bar-head{background:url(/images/ui/storagelocator/add-facility-bg.png) no-repeat top left;}
 #type-one-top-bar-head li{background-image:url(/images/ui/storagelocator/options-list.png);background-repeat:no-repeat;background-color:#fff;float:left;margin-top:10px;display:inline;}
 #type-two-top-bar-head li{list-style:none;float:left;margin-top:10px;}
 #type-one-top-bar-head li a{color:#333;margin-left:2px;display:block;float:left;padding:3px 0 5px 5px;text-decoration:none;}
@@ -703,7 +700,7 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 /*signup workflow*/
-#top_fac_page{margin:0px 28px 15px 37px;}
+#top_fac_page{margin:25px 28px 15px 37px;}
 div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-17px;font-size:80%;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
 #workflow_nav{position:absolute;top:376px;left:0;width:100%;}
