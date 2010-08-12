@@ -575,7 +575,7 @@ $.setGmap = function(data) {
 	Gmap.addControl(new GLargeMapControl());
 	Gmap.addControl(new GScaleControl());
 	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), 12);
+	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 12));
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();

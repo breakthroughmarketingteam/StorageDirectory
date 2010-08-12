@@ -17,7 +17,7 @@ class ListingsController < ApplicationController
     result = Listing.geo_search params, session
     @listings = result[:data]
     @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
@@ -38,9 +38,14 @@ class ListingsController < ApplicationController
   end
   
   def compare
-    @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
+    if params[:ids] && params[:ids].match(/\d+/)
+      session[:compare_listing_ids] = params[:ids].split(',').reject(&:blank?)
+      redirect_to compare_listings_path(:ids => '')
+    end
+    
+    @listings = Listing.find(session[:compare_listing_ids])
     @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
   end
 
   def show
