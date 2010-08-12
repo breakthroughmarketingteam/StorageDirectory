@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   # This route can be invoked with purchase_url(:id => product.id)
 
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
-  map.new_client '/self-storage/:q', :controller => 'listings', :action => 'locator', :q => nil
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
@@ -20,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean seo friendly
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => :show
-  map.quick_search '/self-storage/:q', :controller => 'pages', :action => 'show'
+  map.quick_search '/self-storage/:q', :controller => 'listings', :action => 'locator', :q => nil
   
   # grey module
   map.locate '/locate/:state/:city/:address', :controller => 'pages', 

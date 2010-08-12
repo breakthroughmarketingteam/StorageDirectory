@@ -20,8 +20,8 @@ Gmaps_data = <%= @maps_data.to_json %>;
 <div id="compare_view">
 	<% @listings.each_with_index do |listing, i| %>
 		
-		<div class="compare_listing<%= ' last' if i == @listings.size-1 %>">
-			<h3><%= listing.title %></h2>
+		<div id="listing_<%= listing.id %>" class="compare_listing<%= ' last' if i == @listings.size-1 %>">
+			<h3><%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %></h2>
 			<ul>
 				<% listing.compare_attributes.each_with_index do |attrs, j| %>
 				<li class="<%= j % 2 == 0 ? 'even' : 'odd' %>"><span class="key"><%= attrs.keys.first %></span><span class="val"><%= attrs.values.first %></span></li>

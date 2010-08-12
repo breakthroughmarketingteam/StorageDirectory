@@ -589,8 +589,8 @@ img.right{margin:0 10px 10px 0;}
 .ajax_loader{display:none;}
 #latch-img{position:absolute;right:0;z-index:0;top:50%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
 #compare_view{margin:15px 0 20px 0;overflow:hidden;}
-.compare_listing{float:left;margin:0 15px 0 0;}
-.compare_listing h3{color:#fff;height:40px;line-height:2.4;padding:0 15px;text-shadow:1px 1px 2px #333;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;-moz-border-radius-topleft:20px;border-radius-topleft:20px;-webkit-border-top-left-radius:20px;-moz-border-radius-topright:20px;border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
+.compare_listing{float:left;margin:0 15px 0 0;max-width:32.7%;}
+.compare_listing h3 a{display:block;font-size:90%;color:#fff;height:40px;line-height:2.7;padding:0 15px;text-shadow:1px 1px 2px #333;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;-moz-border-radius-topleft:20px;border-radius-topleft:20px;-webkit-border-top-left-radius:20px;-moz-border-radius-topright:20px;border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
 .compare_listing ul{margin:10px;}
 .compare_listing ul li{padding:3px 0;}
 .compare_listing .key{font-weight:bold;margin-right:7px;}

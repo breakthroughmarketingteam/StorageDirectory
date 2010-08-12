@@ -597,7 +597,7 @@ $.setGmap = function(data) {
 	}
 	
 	//bind mouseover result row to highlight map marker
-	jQuery('.listing').hover(function(){
+	jQuery('.listing, .compare_listing').hover(function(){
 		var id = $(this).attr('id').split('_')[1];
 		highlightMarker(id);
 		
