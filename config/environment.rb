@@ -1,6 +1,6 @@
 # Be sure to restart your server when you modify this file
 
-# Specifies gem version of Rails to use when vendor/rails is not present=
+# Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
@@ -53,9 +53,7 @@ end
 
 ActionMailer::Base.smtp_settings = {
   :address => '192.168.1.10',
-  :port => 25,
-  :domain => 'local',
-  :authentication => :plain,
+  :port => 25
 } if RAILS_ENV == 'development'
 
 if defined? Hirb

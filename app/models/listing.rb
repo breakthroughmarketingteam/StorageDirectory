@@ -118,11 +118,19 @@ class Listing < ActiveRecord::Base
   #
   # ISSN wrapper code
   #
-  
-  def update_facility_info(facility_id)
-    
-  end
+=begin  
+  require 'soap/rpc/driver'
 
+  def get_facility_info
+     driver = SOAP::RPC::Driver.new(@@host + @@url)
+     
+     # Add remote sevice methods
+     driver.add_method('ISSN_getFacilityInfo', 'sUserLogin', 'sUserPassword', 'sFacilityId', 'sIssnId')
+     
+     # Call remote service methods
+     raise driver.ISSN_getFacilityInfo(@@username, @@password, @@facility_ids[1], '').pretty_inspect
+  end
+=end
   @@facility_ids = %w(
     a2c018ba-54ca-44eb-9972-090252ef00c5
     42e2550d-e233-dd11-a002-0015c5f270db
@@ -131,40 +139,74 @@ class Listing < ActiveRecord::Base
   @@username = 'USSL'+ (RAILS_ENV == 'development' ? '_TEST' : '')
   @@password = 'U$$L722'
   @@host = "http://issn.opentechalliance.com"
-  @@url = '/issn_ws1/issn_ws1.asmx/'
+  @@url = '/issn_ws1/issn_ws1.asmx'
   @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
 
   include HTTParty
   require 'cobravsmongoose'
   
   def self.findFacilities
-    @@query += '&sForUser='#{}"&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
+    @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
     
-    query = @@host + @@url + 'ISSNadmin_getUsersFacilities' + @@query
+    query = @@host + @@url + 'ISSN_findFacilities' + @@query
+
+    $stdout.puts "************** SENDING GET REQUEST *****************"
+    $stdout.puts query
+    
     response = self.get query, :format => :xml
-    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys#[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
+    body = response.body
+    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
+
+    $stdout.puts body
     els = []
     
-    raise data.pretty_inspect
     data.each do |d|
       els << d["sFacilityID"]["$"]
     end
     
-    raise els.pretty_inspect
+    data
+  end
+
+  def prep_soap_request(body)
+    @headers = ['Content-Type: application/soap+xml; charset=utf-8' 'Content-Length: length']
+    @request = '<?xml version="1.0" encoding="utf-8"?>'+
+      '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'+
+        '<soap12:Body>'+ body +'</soap12:Body>'+
+      '</soap12:Envelope>'
   end
   
-  def getFacilityInfo
-    facility_id = @@facility_ids[0]
-    @@query += "&sFacilityId=#{facility_id}&sIssnId="
+  def get_facility_info
 
-    query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    self.class.headers 'Content-Length' => "#{query.size}", 'Content-Type' => 'application/x-www-form-urlencoded'
-    self.class.default_timeout 60
-    $stdout.puts query
-    response = self.class.post query, :format => :xml
-    raise response.pretty_inspect
-    data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
-    raise data.pretty_inspect
+    prep_soap_request('<ISSN_getFacilityInfo xmlns="INSOMNIAC_Self_Storage_Network">'+
+                        '<sUserLogin><string>'+ @@username +'</string></sUserLogin>'+
+                        '<sUserPassword><string>'+ @@password +'</string></sUserPassword>'+
+                        '<sFacilityId><string>'+ @@facility_ids[1] +'</string></sFacilityId>'+
+                        '<sIssnId><string></string></sIssnId>'+
+                      '</ISSN_getFacilityInfo>')
+
+    #self.class.headers 'Content-Length' => "#{@request.size}", 'Content-Type' => 'application/soap+xml; charset=utf-8'
+    #self.class.default_timeout 120
+
+    http = Net::HTTP.new(@@host, 80)
+
+    headers = {
+      'Content-Length' => "#{@request.size}", 'Content-Type' => 'application/soap+xml; charset=utf-8'
+    }
+
+    resp, data = http.post(@@url, @request, headers)
+
+    raise [resp, data].pretty_inspect
+    # Output on the screen -> we should get either a 302 redirect (after a successful login) or an error page
+    
+    #$stdout.puts "\n************** SENDING POST REQUEST *****************"
+    #$stdout.puts @@host + @@url
+    #$stdout.puts self.class.headers.to_a.map { |h| h * ' => ' } * '; ' + "\n"
+    #$stdout.puts @request
+    
+    #response = self.class.post @@host + @@url
+    
+    #data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
+    #raise data.pretty_inspect
   end
-
+  
 end

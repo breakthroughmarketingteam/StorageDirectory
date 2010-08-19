@@ -7,7 +7,8 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    Listing.new.getFacilityInfo
+    data = Listing.new.get_facility_info
+    render :text => data
   end
   
   def locator
