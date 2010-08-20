@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100811183414) do
+ActiveRecord::Schema.define(:version => 20100819192713) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(:version => 20100811183414) do
   end
 
   add_index "blocks_models", ["block_id", "model_id", "model_type"], :name => "index_blocks_models_on_block_id_and_model_id_and_model_type"
+
+  create_table "clicks", :force => true do |t|
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
+  end
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50
@@ -192,6 +200,14 @@ ActiveRecord::Schema.define(:version => 20100811183414) do
 
   add_index "images", ["id", "user_id", "title"], :name => "index_images_on_id_and_user_id_and_title"
 
+  create_table "impressions", :force => true do |t|
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
+  end
+
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "path"
@@ -221,6 +237,9 @@ ActiveRecord::Schema.define(:version => 20100811183414) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
+    t.integer  "clicks_count",       :default => 0
+    t.integer  "impressions_count",  :default => 0
+    t.integer  "reservations_count", :default => 0
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
@@ -351,6 +370,8 @@ ActiveRecord::Schema.define(:version => 20100811183414) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
   end
 
   create_table "roles", :force => true do |t|

@@ -706,6 +706,7 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 .ui-menu-item a{padding:3px 7px;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
+#stats_graph{width:700px;height:300px;}
 /*signup workflow*/
 #top_fac_page{margin:25px 28px 15px 37px;}
 div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-17px;font-size:80%;}

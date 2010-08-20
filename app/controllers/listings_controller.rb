@@ -17,6 +17,8 @@ class ListingsController < ApplicationController
     
     result = Listing.geo_search params, session
     @listings = result[:data]
+    # updates the impressions only for listings on current page
+    @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
@@ -50,7 +52,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    redirect_to facility_path(@listing.title.parameterize, @listing.id) if params[:title] == 'show'
+    @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
   def new

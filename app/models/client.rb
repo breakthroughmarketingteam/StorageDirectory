@@ -34,4 +34,27 @@ class Client < User
     Listing.find :all, :conditions => ['title LIKE ?', self.company]
   end
   
+  def get_stats_for_graph(stats_models, start_date, end_date)
+    start_date, end_date = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
+    start_month_days, end_month_days = days_in_month(start_date[2], start_date[1]), days_in_month(end_date[2], end_date[1])
+    data = []
+    
+    stats_models.each do |stat|
+      stats = eval <<-RUBY
+        self.listings.map do |listing| 
+          listing.#{stat}.all(:conditions => ['created_at >= ? AND created_at <= ?', start_date * '-', end_date * '-'], :order => 'created_at')
+        end.flatten
+      RUBY
+      
+      raise stats.pretty_inspect
+      stats.each do |s|
+        
+      end
+    end
+  end
+  
+  def days_in_month(year, month)
+    (Date.new(year, 12, 31) << (12-month)).day
+  end
+  
 end

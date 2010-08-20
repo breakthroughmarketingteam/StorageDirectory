@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
   
-  belongs_to :listing
+  belongs_to :listing, :counter_cache => true
   belongs_to :user
   
   has_many :comments

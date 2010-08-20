@@ -808,6 +808,28 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	var stats_graph = $('#stats_graph');
+	if (stats_graph.length > 0) {
+		var stats_models = 'clicks, impressions, reservations',
+			date = new Date(),
+			end_date = new Date(date.getYear(), date.getMonth(), date.getDay()+1),
+			start_date = new Date(date.getYear(), date.getMonth()-1, date.getDay());
+		
+		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
+			if (response.success) {
+				console.log(response.data);
+				
+				stats_graph.plot('chartdiv', response.data, {
+					title: stats_models,
+					axes: {
+						xaxis: { renderer: $.jqplot.DateAxisRenderer }
+					}
+				})
+				
+			} else $.ajax_error(response);
+		});
+	}
+	
 });
 
 $.option_tags_from_model = function(model_class, models, options) {

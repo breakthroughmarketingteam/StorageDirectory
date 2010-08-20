@@ -11,6 +11,8 @@ class Listing < ActiveRecord::Base
   has_many :pictures
   has_many :sizes
   has_many :reservations
+  has_many :clicks
+  has_many :impressions
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -39,18 +41,17 @@ class Listing < ActiveRecord::Base
     self.map.nil? ? [] : [self.map.city, self.map.state]
   end
   
-  def address() self.map.address end
-  def city()    self.map.city end
-  def state()   self.map.state end
-  def zip()     self.map.zip end
-    
-  def lat() self.map.lat end
-  def lng() self.map.lng end
+  def address; self.map.address end
+  def city;    self.map.city end
+  def state;   self.map.state end
+  def zip;     self.map.zip end
+  def lat;     self.map.lat end
+  def lng;     self.map.lng end
   
   def map_data
     { :id      => self.id,
       :title   => self.title,
-      :thumb   => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
+      :thumb   => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb)),
       :address => self.address,
       :city    => self.city,
       :state   => self.state,
@@ -65,17 +66,20 @@ class Listing < ActiveRecord::Base
     attrs << { :reservations => self.client.try(:accepts_reservations?) ? 'Yes' : 'No' }
   end
   
+  # create a stat record => clicks, impressions
+  def update_stat stat, request
+    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
+  end
+  
   #
   # Search methods
   #
   
   def self.geo_search(params, session)
-    q = params[:q]
+    q = extrapolate_query(params)
     options = {
-      :page     => params[:page], 
-      :per_page => (params[:per_page] || 5),
-      :include  => [:map, :specials, :sizes, :pictures],
-      :within   => (params[:within]   || 5)
+      :include => [:map, :specials, :sizes, :pictures],
+      :within  => (params[:within] || 5)
     }
     
     unless q.blank?
@@ -99,8 +103,9 @@ class Listing < ActiveRecord::Base
       options.merge! :origin => @location
     end
     
-    @model_data = Listing.paginate(:all, options)
+    @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if !params[:order] || params[:order] == 'distance'
+    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
     { :data => @model_data, :location => @location }
   end
 
@@ -115,21 +120,18 @@ class Listing < ActiveRecord::Base
     query.match(/#{sregex}/i) || us_cities.any? { |c| c =~ /#{query}/i }
   end
   
+  def self.extrapolate_query(params)
+    return params[:q] unless params[:q].blank?
+    params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
+  end
+  
   #
   # ISSN wrapper code
   #
 =begin  
   require 'soap/rpc/driver'
 
-  def get_facility_info
-     driver = SOAP::RPC::Driver.new(@@host + @@url)
-     
-     # Add remote sevice methods
-     driver.add_method('ISSN_getFacilityInfo', 'sUserLogin', 'sUserPassword', 'sFacilityId', 'sIssnId')
-     
-     # Call remote service methods
-     raise driver.ISSN_getFacilityInfo(@@username, @@password, @@facility_ids[1], '').pretty_inspect
-  end
+  ef
 =end
   @@facility_ids = %w(
     a2c018ba-54ca-44eb-9972-090252ef00c5
