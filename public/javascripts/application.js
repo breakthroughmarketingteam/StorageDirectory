@@ -830,10 +830,7 @@ $(document).ready(function(){
 						xaxis: { 
 							renderer: $.jqplot.DateAxisRenderer,
 							rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
-				            tickOptions: {
-				                formatString:'%b %#d, %Y', 
-				                fontSize:'12px'
-				            }
+				            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
 						},
 						yaxis: { min: 0, max: parseInt(response.data['max']) + 1 },
 					},

@@ -166,40 +166,47 @@ class Listing < ActiveRecord::Base
     response = self.class.call_issn method
 
     case method when 'ISSN_getFacilityInfo', 'ISSN_getFacilityFeatures'
-      data = self.class.get_data_from_soap_response(response, :FacilityFeatures)
+      key = :FacilityFeatures
     when 'ISSN_getFacilityDataGroup'
-      data = self.class.get_data_from_soap_response(response, :FacilityDG)
+      key = :FacilityDG
     when 'ISSN_getFacilityInsurance'
-      data = self.class.get_data_from_soap_response(response, :Facility_Insurance)
+      key = :Facility_Insurance
     when 'ISSN_getFacilityPromos'
-      data = self.class.get_data_from_soap_response(response, :Facility_Promos)
+      key = :Facility_Promos
     when 'ISSN_getFacilityUnitTypes'
-      data = self.class.get_data_from_soap_response(response, :Facility_UnitTypes)
+      key = :Facility_UnitTypes
     end
     
+    data = self.class.get_data_from_soap_response(response, key)
     raise data.pretty_inspect
   end
   
+  ## ISSN methods that require a facility id and a sFacilityUnitTypesId
   def get_unit_info(method = 'ISSN_getFacilityUnitTypesFeatures')
     @@query += "&sFacilityId=#{@@facility_ids[1]}&sFacilityUnitTypesId=#{@@facility_unit_types_ids[0]}"
-    res = self.class.call_issn method
+    response = self.class.call_issn method
     
     case method when 'ISSN_getFacilityUnitTypesFeatures'
-      data = self.class.get_data_from_soap_response(res, :Facility_UT_Features)
+      key = :Facility_UT_Features
     end
     
+    data = self.class.get_data_from_soap_response(response, key)
     raise data.pretty_inspect
   end
   
-  def get_standard_info(method = 'ISSN_getStdFacilityFeatures')
-    res = self.class.call_issn method
+  # ISSN methods that have std in the name, they dont required further parameters
+  def self.get_standard_info(method = 'ISSN_getStdFacilityFeatures')
+    response = call_issn method
     
     case method when 'ISSN_getStdFacilityFeatures'
-      data = self.class.get_data_from_soap_response(res, :StdFacilityFeatures)
+      key = :StdFacilityFeatures
     when 'ISSN_getStdUnitTypeFeatures'
-      data = self.class.get_data_from_soap_response(res, :StdUnitTypeFeatures)
+      key = :StdUnitTypeFeatures
+    when 'ISSN_getStdUnitTypeSizes'
+      key = :StdUnitTypeSizes
     end
     
+    data = get_data_from_soap_response(response, key)
     raise data.pretty_inspect
   end
   

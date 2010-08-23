@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    data = Listing.find_facilities
+    data = Listing.get_standard_info 'ISSN_getStdUnitTypeSizes'
     render :text => data
   end
   
