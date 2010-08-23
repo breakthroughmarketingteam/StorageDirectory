@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :scope => :type
   
   acts_as_authentic
-  ajaxful_rater
+  #ajaxful_rater
   acts_as_commentable
   acts_as_tagger
   access_shared_methods

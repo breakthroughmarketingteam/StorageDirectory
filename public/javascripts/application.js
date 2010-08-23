@@ -810,23 +810,46 @@ $(document).ready(function(){
 	
 	var stats_graph = $('#stats_graph');
 	if (stats_graph.length > 0) {
+		stats_graph.css('background', 'url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 45%');
+		
 		var stats_models = 'clicks, impressions, reservations',
-			date = new Date(),
-			end_date = new Date(date.getYear(), date.getMonth(), date.getDay()+1),
-			start_date = new Date(date.getYear(), date.getMonth()-1, date.getDay());
+			d = new Date(), // getMonth returns 0-11
+			end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
+			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate());
 		
 		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
 			if (response.success) {
-				console.log(response.data);
+				var plot_data = [],
+					stats_arr = stats_models.split(/,\W?/);
 				
-				stats_graph.plot('chartdiv', response.data, {
-					title: stats_models,
+				for (i in stats_arr) 
+					plot_data.push(response.data['data'][stats_arr[i]]);
+				
+				$.jqplot('stats_graph', plot_data, {
 					axes: {
-						xaxis: { renderer: $.jqplot.DateAxisRenderer }
-					}
+						xaxis: { 
+							renderer: $.jqplot.DateAxisRenderer,
+							rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
+				            tickOptions: {
+				                formatString:'%b %#d, %Y', 
+				                fontSize:'12px'
+				            }
+						},
+						yaxis: { min: 0, max: parseInt(response.data['max']) + 1 },
+					},
+					legend: { show: true, location: 'nw' },
+					series: [ 
+				        { label: '&nbsp;Clicks', lineWidth: 2, markerOptions: { style: 'diamond' } }, 
+				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'}}, 
+				        { label: '&nbsp;Reservations', lineWidth: 2, markerOptions: { style: 'circle'} }
+				    ],
+					highlighter: { sizeAdjust: 7.5 },
+					cursor: { show: true, zoom: true }
 				})
 				
 			} else $.ajax_error(response);
+			
+			stats_graph.css('background', 'none');
 		});
 	}
 	

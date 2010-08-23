@@ -128,87 +128,110 @@ class Listing < ActiveRecord::Base
   #
   # ISSN wrapper code
   #
-=begin  
-  require 'soap/rpc/driver'
-
-  ef
-=end
+  require "uri"
+  require "net/https"
+  
   @@facility_ids = %w(
     a2c018ba-54ca-44eb-9972-090252ef00c5
     42e2550d-e233-dd11-a002-0015c5f270db
+    95D25467-04A2-DD11-A709-0015C5F270DB
+  )
+  
+  # for unit with id = 42e2550d-e233-dd11-a002-0015c5f270db
+  @@facility_unit_types_ids = %w(
+    74e90c41-bf5c-4102-90f2-1cc229f2284d
+    ce68c0eb-5c17-4c0a-bfb0-6b7a06b33ed4
+    baa1afe5-0d33-4dec-a20b-b765fdd6c260
+    23459fec-148d-4d74-97cb-ed3041725d1e
   )
 
-  @@username = 'USSL'+ (RAILS_ENV == 'development' ? '_TEST' : '')
+  @@username = 'USSL_TEST'
   @@password = 'U$$L722'
-  @@host = "http://issn.opentechalliance.com"
+  @@host = "https://issn.opentechalliance.com"
   @@url = '/issn_ws1/issn_ws1.asmx'
   @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
 
   include HTTParty
   require 'cobravsmongoose'
   
-  def self.findFacilities
+  def self.find_facilities
     @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-    
-    query = @@host + @@url + 'ISSN_findFacilities' + @@query
-
-    $stdout.puts "************** SENDING GET REQUEST *****************"
-    $stdout.puts query
-    
-    response = self.get query, :format => :xml
-    body = response.body
-    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
-
-    $stdout.puts body
-    els = []
-    
-    data.each do |d|
-      els << d["sFacilityID"]["$"]
-    end
-    
-    data
-  end
-
-  def prep_soap_request(body)
-    @headers = ['Content-Type: application/soap+xml; charset=utf-8' 'Content-Length: length']
-    @request = '<?xml version="1.0" encoding="utf-8"?>'+
-      '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'+
-        '<soap12:Body>'+ body +'</soap12:Body>'+
-      '</soap12:Envelope>'
+    response = call_issn 'ISSN_findFacilities'
+    get_data_from_soap_response(response, :FindFacility)
   end
   
-  def get_facility_info
+  # ISSN methods that only require a facility id
+  def get_facility_info(method = 'ISSN_getFacilityInfo')
+    @@query += "&sFacilityId=#{@@facility_ids[1]}&sIssnId="
+    response = self.class.call_issn method
 
-    prep_soap_request('<ISSN_getFacilityInfo xmlns="INSOMNIAC_Self_Storage_Network">'+
-                        '<sUserLogin><string>'+ @@username +'</string></sUserLogin>'+
-                        '<sUserPassword><string>'+ @@password +'</string></sUserPassword>'+
-                        '<sFacilityId><string>'+ @@facility_ids[1] +'</string></sFacilityId>'+
-                        '<sIssnId><string></string></sIssnId>'+
-                      '</ISSN_getFacilityInfo>')
-
-    #self.class.headers 'Content-Length' => "#{@request.size}", 'Content-Type' => 'application/soap+xml; charset=utf-8'
-    #self.class.default_timeout 120
-
-    http = Net::HTTP.new(@@host, 80)
-
-    headers = {
-      'Content-Length' => "#{@request.size}", 'Content-Type' => 'application/soap+xml; charset=utf-8'
-    }
-
-    resp, data = http.post(@@url, @request, headers)
-
-    raise [resp, data].pretty_inspect
-    # Output on the screen -> we should get either a 302 redirect (after a successful login) or an error page
+    case method when 'ISSN_getFacilityInfo', 'ISSN_getFacilityFeatures'
+      data = self.class.get_data_from_soap_response(response, :FacilityFeatures)
+    when 'ISSN_getFacilityDataGroup'
+      data = self.class.get_data_from_soap_response(response, :FacilityDG)
+    when 'ISSN_getFacilityInsurance'
+      data = self.class.get_data_from_soap_response(response, :Facility_Insurance)
+    when 'ISSN_getFacilityPromos'
+      data = self.class.get_data_from_soap_response(response, :Facility_Promos)
+    when 'ISSN_getFacilityUnitTypes'
+      data = self.class.get_data_from_soap_response(response, :Facility_UnitTypes)
+    end
     
-    #$stdout.puts "\n************** SENDING POST REQUEST *****************"
-    #$stdout.puts @@host + @@url
-    #$stdout.puts self.class.headers.to_a.map { |h| h * ' => ' } * '; ' + "\n"
-    #$stdout.puts @request
+    raise data.pretty_inspect
+  end
+  
+  def get_unit_info(method = 'ISSN_getFacilityUnitTypesFeatures')
+    @@query += "&sFacilityId=#{@@facility_ids[1]}&sFacilityUnitTypesId=#{@@facility_unit_types_ids[0]}"
+    res = self.class.call_issn method
     
-    #response = self.class.post @@host + @@url
+    case method when 'ISSN_getFacilityUnitTypesFeatures'
+      data = self.class.get_data_from_soap_response(res, :Facility_UT_Features)
+    end
     
-    #data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
-    #raise data.pretty_inspect
+    raise data.pretty_inspect
+  end
+  
+  def get_standard_info(method = 'ISSN_getStdFacilityFeatures')
+    res = self.class.call_issn method
+    
+    case method when 'ISSN_getStdFacilityFeatures'
+      data = self.class.get_data_from_soap_response(res, :StdFacilityFeatures)
+    when 'ISSN_getStdUnitTypeFeatures'
+      data = self.class.get_data_from_soap_response(res, :StdUnitTypeFeatures)
+    end
+    
+    raise data.pretty_inspect
+  end
+  
+  def self.call_issn(method)
+    uri = URI.parse(@@host + @@url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.start { |h| h.get(uri.path + '/' + method + @@query) }
+  end
+  
+  # parse the complex soap schema into a simple ruby hash
+  def self.get_data_from_soap_response(response, key)
+    data = get_soap_data(response.body)[key.to_sym]
+    data.is_a?(Array) ? get_data_from_soap_array(data) : get_data_from_soap_hash(data)
+  end
+  
+  def self.get_soap_data(response_body)
+    CobraVsMongoose.xml_to_hash(response_body).deep_symbolize_keys[:DataSet][:"diffgr:diffgram"][:NewDataSet]
+  end
+  
+  def self.get_data_from_soap_array(data)
+    parsed = []
+    data.each do |hash|
+      parsed << get_data_from_soap_hash(hash.deep_symbolize_keys) rescue nil
+    end
+    parsed
+  end
+  
+  def self.get_data_from_soap_hash(data)
+    parsed = {}
+    data.each { |k, v| parsed.store k, v[:"$"] }
+    parsed
   end
   
 end

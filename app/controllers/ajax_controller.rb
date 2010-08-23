@@ -65,8 +65,8 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    @data = @client.get_stats_for_graph(params[:stats_models].split(/\W?,/), params[:start_date], params[:end_date])
-    render :json => { :success => !@data.blank?, :data => @data }
+    @data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    render :json => { :success => (@data[:max] != 0), :data =>  @data }
   end
   
   # this is called by js to load an iframed map into the map partial in greyresults
