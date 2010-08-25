@@ -59,7 +59,7 @@
 		<% form_tag '/self-storage', :id => 'front_search' do %>
 			<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 			<div id="search_field">
-				<%= text_field_tag :q, nil, :class => 'hintable', :title => 'Enter Zip Code, City, or Address' %>
+				<%= text_field_tag :q, nil, :class => 'hintable', :title => 'Enter Zip Code, City, or Street Address' %>
 				<%= submit_tag 'Locate', :class => 'grn_btn' %>
 				<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
 			</div>
