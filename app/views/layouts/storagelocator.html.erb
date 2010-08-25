@@ -15,7 +15,7 @@
 		<%= javascript_include_tag 'jquery.all' %>
 		<%= yield :scripts %>
 		<%= javascript_include_tag @plugins %>
-	  	<%= javascript_include_tag 'application' %>
+	  	<%= javascript_include_tag 'greymatter', 'application' %>
 		<%#= javascript_include_tag 'queryLoader' if @page %>
 	  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
     
@@ -39,7 +39,7 @@
         <div id="head-ctr">
     				 <!-- To align everything in the header correctly, it needs an inner container as well -->
     				 <div id="head-ctr-in">
-        				 <div id="logo">
+        				 <div id="oldlogo">
                    			<a href="/">
 								<img id="logotop" src="/images/ui/storagelocator/page-headlogo-top.png" alt="" />
 								<img id="logoimg" src="/images/ui/storagelocator/us-self-storage-locator-logo.gif" alt="US Self Storage Locator" />

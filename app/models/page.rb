@@ -25,7 +25,6 @@ class Page < ActiveRecord::Base
   
   def self.nav_pages
     pages = all(:conditions => 'show_in_nav IS TRUE', :order => 'position, id')
-    
   end
   
   # Instance Methods
