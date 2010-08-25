@@ -45,8 +45,8 @@
 					
 					<div id="features">
 						<% 1.upto(20) do |i| %>
-							<div class="feature_check">
-								<%= check_box_tag 'storage_features', "feature_#{i}" %>
+							<div class="selectable_wrap">
+								<div class="selectable"><%= check_box_tag 'storage_features', "feature_#{i}" %></div>
 								<%= label_tag "Feature #{i}" %>
 							</div>
 						<% end %>
