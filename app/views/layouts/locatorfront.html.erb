@@ -44,13 +44,7 @@
 		
 		<%= render :partial => 'pages/front_search' if params[:title] == 'home' %>
 		
-		<div id="content" class="wrapper">
-			<%= yield %>
-		</div>
-		
-		<div id="content_bottom" class="region">
-			<%= yield :content_bottom %>
-		</div>
+		<%= yield %>
 		
 	</div> <!-- /#body -->
 		

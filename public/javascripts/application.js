@@ -1,7 +1,7 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
 $(document).ready(function(){	
-	$('#dock').jqDock({ fadeIn: 400, size: 60, attenuation: 400 });
+	$('#dock').jqDock({ size: 60, attenuation: 400 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	

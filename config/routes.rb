@@ -50,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :forms
   map.resources :suggestions
   map.resources :reservations
+  map.resources :payments
   
   map.resource :site_setting
   
@@ -79,6 +80,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :clients do |clients|
     clients.resources :listings
+    clients.resources :payments
   end
   
   map.resources :pages do |page|

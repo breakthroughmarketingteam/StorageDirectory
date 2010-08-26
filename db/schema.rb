@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100819192713) do
+ActiveRecord::Schema.define(:version => 20100826194832) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -258,7 +258,7 @@ ActiveRecord::Schema.define(:version => 20100819192713) do
     t.string   "zip"
   end
 
-  add_index "mailing_addresses", ["client_id", "name", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_name_and_city_and_state"
+  add_index "mailing_addresses", ["client_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
 
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"
@@ -309,6 +309,18 @@ ActiveRecord::Schema.define(:version => 20100819192713) do
   end
 
   add_index "pages", ["id", "title", "parent_id", "show_in_nav"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "amount"
+    t.string   "transaction_type"
+    t.string   "occurrence_type"
+    t.integer  "occurrence_number"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["user_id"], :name => "index_payments_on_user_id"
 
   create_table "permissions", :force => true do |t|
     t.string   "resource"

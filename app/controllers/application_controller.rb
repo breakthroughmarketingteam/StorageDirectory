@@ -291,7 +291,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_model
-    eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find(params[:id])"
+    eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find(params[:id])" rescue nil
   end
   
   # for the shared blocks_model_form

@@ -768,10 +768,11 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 /* NEW DESIGN */
 body{background:;}
 #body{width:872px;margin:0 auto;text-align:left;}
-#topbar{border-bottom:1px solid #c0bedf;overflow:hidden;background:#fff;}
+#topbar{min-width:965px;border-bottom:1px solid #c0bedf;overflow:hidden;background:#fff;}
 #topbar ul{list-style:none;overflow:hidden;float:left;}
 #topbar #storage_types{width:588px;}
-#topbar #moving_help{width:41%;border-left:1px solid #ccc;}
+#topbar #moving_help{width:312px;border-left:1px solid #ccc;}
+#topbar .right{float:right;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:none;}
 #topbar ul li a:hover,#topbar ul li a:active{text-decoration:underline;}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
