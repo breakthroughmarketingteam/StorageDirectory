@@ -15,7 +15,7 @@ class Post < ActiveRecord::Base
   acts_as_taggable_on :tags, :categories
   access_shared_methods
   
-  ajaxful_rateable :dimensions => [:usefulness]
+  #ajaxful_rateable :dimensions => [:usefulness]
   
   # Class Methods
   def self.all_for_index_view

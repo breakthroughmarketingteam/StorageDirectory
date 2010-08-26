@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   # This route can be invoked with purchase_url(:id => product.id)
 
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
-  map.new_client '/self-storage/:q', :controller => 'listings', :action => 'locator', :q => nil
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
@@ -19,19 +18,14 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean seo friendly
-  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => :show
-  map.quick_search '/self-storage/:q', :controller => 'pages', :action => 'show'
-  
-  # grey module
-  map.locate '/locate/:state/:city/:address', :controller => 'pages', 
-                                   :action => 'show',
-                                   :title => 'storage-locator',
-                                   :requirements => { :zip => /^\d{5}$/ }
+  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => :show, :requirements => { :id => /\d*/ }
+  map.storage_state_or_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
+  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
@@ -55,13 +49,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :helptexts
   map.resources :forms
   map.resources :suggestions
-  
   map.resources :reservations
   
   map.resource :site_setting
   
   # greyresults
-  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures]
+  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   
@@ -122,9 +115,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.ajax '/ajax/:action', :controller => 'ajax', :action => nil 
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
-  
-  # search results module
-  map.connect ':title/:query', :controller => 'pages', :action => 'show', :title => nil, :query => nil
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'show', :title => 'home'

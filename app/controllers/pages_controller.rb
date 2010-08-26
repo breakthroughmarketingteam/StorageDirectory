@@ -11,6 +11,7 @@ class PagesController < ApplicationController
   end
 
   def show
+    render :layout => 'storagelocatorNEW' if params[:title] == 'home' || params[:id].to_i == 1
   end
 
   def new

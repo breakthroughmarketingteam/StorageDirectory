@@ -17,12 +17,5 @@
 				
 	</div>
 	
-	<% unless @listings.blank? %>
-    <div class="pagination">
-      <p class="rslt-foot">
-        <%= more_results_link(@listings) %>
-      </p>
-      <span id="per_page" class="hidden"><%= @listings.per_page if @listings.respond_to?(:per_page) %></span>
-    </div>
-  <% end %>
+	<%= render :partial => 'listings/paginator' unless @listings.blank? %>
 </div>

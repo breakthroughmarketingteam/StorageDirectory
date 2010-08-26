@@ -471,4 +471,12 @@ module ApplicationHelper
     end
   end
   
+  def js_plugins(*scripts)
+    content_for :scripts, scripts.map { |js| javascript_include_tag "plugins/#{js}" }
+  end
+  
+  def plugin_stylesheets(*stylesheets)
+    content_for :stylesheets, stylesheets.map { |css| stylesheet_link_tag "plugins/#{css}" }
+  end
+  
 end

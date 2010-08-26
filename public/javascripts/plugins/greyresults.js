@@ -4,11 +4,47 @@
 
 // multiple marker map on results page
 $(function(){
+	$compare_btns = $('.compare', '.listing');
+	
 	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
-		// Gmaps_data comes from a script rendered by the controller
+		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
 		$.setGmap(Gmaps_data);
 	}
-
+	
+	if ($('.listing.active').length > 1) $('#compare-btn').show();
+	else $('#compare-btn').hide();
+	
+	$compare_btns.live('click', function(){
+		var compare 		= $(this),
+			listing 		= compare.parents('.listing'),
+			id 				= listing.attr('id').split('_')[1];
+		
+		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
+		
+		if (!compare.data('on')) {
+			listing.addClass('active');
+			compare.data('on', true);
+			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = 'selected';
+				highlightMarker(marker);
+			}
+		} else {
+			listing.removeClass('active');
+			compare.data('on', false);
+			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = '';
+				unhighlightMarker(marker);
+			}
+		}
+		
+		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
+		else $('#compare-btn').slideUp();
+	});
+	
 	// bind event handlers and implement ajax functionality for search results.
 	// first implemented for storage locator
 	
@@ -206,17 +242,16 @@ $(function(){
 	});
 
 	/* AJAX pagination, load next page results in the same page */
-	$('#more_results').live('click', function(){
-		var $this = $(this),
-			ajax_loader = $('.ajax_loader', $this.parent()).show();
-
-		$this.find('span').hide(); // the plus sign
+	$('.more_results').live('click', function(){
+		var $this 		= $('.more_results'),
+			plus_sign 	= $this.find('span > span').hide(),
+			ajax_loader = $('.ajax_loader', $this).show();
 
 		// params to build the url that will query the same data the visitor searched for, advanced one page
-		var pagetitle = $('#params_pagetitle', $this.parent()).text(),
-			query 	  = $('#params_query', $this.parent()).text(),
-			within 	  = $('#params_within', $this.parent()).text(),
-			page 	  = $('#params_page', $this.parent()).text();
+		var pagetitle = $('span[name=params_pagetitle]', $this.parent()).eq(0).text(),
+			query 	  = $('span[name=params_query]', $this.parent()).eq(0).text(),
+			within 	  = $('span[name=params_within]', $this.parent()).eq(0).text(),
+			page 	  = $('span[name=params_page]', $this.parent()).eq(0).text();
 
 		// to build each listing object
 		var listing_clone = $('.listing:first').clone(),
@@ -229,9 +264,9 @@ $(function(){
 		
 		$.getJSON(url, function(response){
 			ajax_loader.hide();
-			$this.find('span').show(); // the plus sign
+			plus_sign.show();
 
-			if (response.success) { // returned some listings
+			if (response.success) {
 				// we get an array JSON objects, each represents a listing including related models attributes
 				$.each(response.data, function(i){
 					var info 		 = this.info, // listing attributes
@@ -248,10 +283,7 @@ $(function(){
 					];
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i]) {
-							var new_tab_href = tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id);
-							tabs[i].attr('href', new_tab_href);
-						}
+						if (tabs[i]) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
@@ -263,29 +295,30 @@ $(function(){
 					$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
 					$('.rslt-specials h5', this_listing)	.text(specials.title);
 					$('.rslt-specials p', this_listing)		.text(specials.cotent);
-
+					
+					$(this_listing).removeClass('active').find('.active').removeClass('active');
+					$('.panel', this_listing).hide();
 					this_listing.appendTo(results_wrap).hide().slideDown('slow');
 					$('.inner:first', this_listing).effect('highlight', { color: '#c2cee9' }, 1700);
-					//this_listing.greyresults();
 				});
 
 				// this updates the page count so the next time the user clicks, we pull the correct data
-				$('#params_page', $this.parent()).text(parseInt(page) + 1);
+				$('span[name=params_page]').text(parseInt(page) + 1);
 
-				var range 		= $('#results_range'),
-					range_start = parseInt(range.text().split('-')[0]),
-					range_end 	= parseInt(range.text().split('-')[1]),
+				var range 		= $('.results_range'),
+					range_start = parseInt(range.eq(0).text().split('-')[0]),
+					range_end 	= parseInt(range.eq(0).text().split('-')[1]),
 					per_page	= parseInt($('#per_page').text()),
-					total 		= parseInt($('#results_total').text()),
+					total 		= parseInt($('.results_total').eq(0).text()),
 					remaining	= total - (range_end + per_page);		
-
+				
 				// update the range text and adjust the range end if we're near the end of the data set
 				range_end += parseInt($('#per_page').text());
 				if (range_end >= total) range_end = total;
 				range.text(range_start + '-' + range_end);
 
 				if (remaining <= 0) $this.hide();
-				if (remaining < per_page) $this.text('+ Show ' + remaining + ' more');
+				if (remaining < per_page) $this.find('span').html('<span class="plus">+</span> Show ' + remaining + ' more');
 				
 				// combine new map data with existing
 				$.each(response.maps_data.maps, function(){ Gmaps_data.maps.push(this) });
@@ -402,6 +435,41 @@ $(function(){
 			}
 		});
 	});
+	
+	$('form.new_reservation').live('submit', function(){
+		var form = $(this).runValidation(),
+			data = form.serialize(),
+			ajax_loader = $('.ajax_loader', form).show();
+			
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			
+			$.post(form.attr('action'), data, function(response){
+				if (response.success) {
+					var inner_panel = form.parent();
+					inner_panel.children().fadeOut(300);
+					inner_panel.animate({ height: '150px' }, 600, function(){
+						
+						inner_panel.html(
+							'<div id="quote_done">\
+								<h3>Got it! We\'ll send you the info ASAP</h3>\
+								<p>\
+									It is a long established fact that a reader will be distracted by the readable \
+									content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal \
+									distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\
+								</p>\
+							</div>'
+						);
+					});
+				
+				} else $.ajax_error(response);
+				
+				form.data('saving', false);
+			}, 'json');
+		}
+		
+		return false;
+	})
 });
 
 var MapIconMaker = {};
@@ -460,15 +528,31 @@ try {
 	var normalIconImage = normalIcon.image,
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
+		
 } catch (e){}
 
-function highlightMarker(ind){
-	GmapMarkers[ind].setImage(highlightIconImage);
+function highlightMarker(id){
+	var marker = typeof id == 'object' ? id : getMarkerById(id);
+	marker.setImage(highlightIconImage);
 }
 
-function unhighlightMarker(ind){
-	if (GmapMarkers[ind].GmapState == 'selected') GmapMarkers[ind].setImage(selectedIconImage);
-	else GmapMarkers[ind].setImage(normalIconImage);
+function unhighlightMarker(id){
+	var marker = typeof id == 'object' ? id : getMarkerById(id);
+	if (marker.GmapState == 'selected') marker.setImage(selectedIconImage);
+	else marker.setImage(normalIconImage);
+}
+
+function getMarkerById(id) {
+	var marker;
+	
+	$.each(GmapMarkers, function(){
+		if (this.listing_id == id) {
+			marker = this;
+			return;
+		}
+	});
+	
+	return marker;
 }
 
 function addMarker(icon, lat, lng, title, body){
@@ -477,64 +561,50 @@ function addMarker(icon, lat, lng, title, body){
 	
 	GEvent.addListener(marker, 'click', function(){
 		marker.openInfoWindowHtml(body);
+		$('.listing').removeClass('active');
+		$('#listing_'+ marker.listing_id).addClass('active');
 	});
 	
 	Gmap.addOverlay(marker);
 	return marker;
 }
 
+GmapMarkers = [];
 $.setGmap = function(data) {
 	Gmap = new GMap2(document.getElementById('main_map'));
 	Gmap.addControl(new GLargeMapControl());
 	Gmap.addControl(new GScaleControl());
 	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), 12);
+	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 12));
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
-	//addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Start Address', 'You are here');
+	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Your Are here', 'You are here');
 	
 	//add result markers
 	var markers = data.maps;
-	GmapMarkers = [];
 	
 	for (var i = 0, len = markers.length; i < len; i++){
-		if(markers[i].photo) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
+		if (markers[i].thumb) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
 		else photo = '';
 		
 		var title = markers[i].title;
-		var body = '<p>'+ photo + title +'<br/>'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</p>';
+		var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
 		var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
+		marker.listing_id = markers[i].id;
+		
 		GmapMarkers[i] = marker;
 	}
 	
 	//bind mouseover result row to highlight map marker
-	jQuery('.listing').hover(function(){
-		var this_listing = $(this),
-			ind = 0;
-		
-		$('.listing').each(function(i){ if (this_listing.attr('id') == this.id) { ind = i; return; } });
-		highlightMarker(ind);
+	jQuery('.listing, .compare_listing').hover(function(){
+		var id = $(this).attr('id').split('_')[1];
+		highlightMarker(id);
 		
 	}, function(){
-		var this_listing = $(this),
-			ind = 0;
+		var id = $(this).attr('id').split('_')[1];
+		unhighlightMarker(id);
 		
-		$('.listing').each(function(i){ if (this_listing.attr('id') == this.id) { ind = i; return; } });
-		unhighlightMarker(ind);
-		
-	}).click(function(){
-		var i = this.id.split('_')[1];
-		
-		if(!$(this).data('selected')){	// checked state change happens after click event so need to do opposite
-			GmapMarkers[i].GmapState = 'selected';
-			unhighlightMarker(i);
-			
-		} else {
-			GmapMarkers[i].GmapState = '';
-			highlightMarker(i);
-			
-		}
-
 	});
+	
 } // END setGmap()

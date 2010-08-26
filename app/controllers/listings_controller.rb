@@ -7,7 +7,8 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    Listing.getFacilityInfo
+    data = Listing.new.get_unit_info 'ISSN_getFacilityUnitTypesFeatures'
+    render :text => data
   end
   
   def locator
@@ -16,8 +17,10 @@ class ListingsController < ApplicationController
     
     result = Listing.geo_search params, session
     @listings = result[:data]
+    # updates the impressions only for listings on current page
+    @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
@@ -36,9 +39,20 @@ class ListingsController < ApplicationController
       end
     end
   end
+  
+  def compare
+    if params[:ids] && params[:ids].match(/\d+/)
+      session[:compare_listing_ids] = params[:ids].split(',').reject(&:blank?)
+      redirect_to compare_listings_path(:ids => '')
+    end
+    
+    @listings = Listing.find(session[:compare_listing_ids])
+    @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
+  end
 
   def show
-    redirect_to facility_path(@listing.title.parameterize, @listing.id) if params[:title] == 'show'
+    @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
   def new

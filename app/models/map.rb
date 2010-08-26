@@ -7,20 +7,13 @@ class Map < ActiveRecord::Base
   validates_numericality_of :zip
   validates_length_of :state, :is => 2
   
+  access_shared_methods
   attr_reader :full_address
   
   # Instance Methods
   
   def full_address
     "#{address.gsub('#', '')} #{city}, #{state}"
-  end
-  
-  def city_state_zip
-    "#{city}, #{state} #{prep_zip}"
-  end
-  
-  def prep_zip
-    zip.to_s.size < 5 ? "0#{zip}" : zip
   end
   
 end

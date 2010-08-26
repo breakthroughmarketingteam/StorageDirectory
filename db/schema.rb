@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100807031231) do
+ActiveRecord::Schema.define(:version => 20100819192713) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
   end
 
   add_index "blocks_models", ["block_id", "model_id", "model_type"], :name => "index_blocks_models_on_block_id_and_model_id_and_model_type"
+
+  create_table "clicks", :force => true do |t|
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
+  end
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50
@@ -192,6 +200,14 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
 
   add_index "images", ["id", "user_id", "title"], :name => "index_images_on_id_and_user_id_and_title"
 
+  create_table "impressions", :force => true do |t|
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
+  end
+
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "path"
@@ -221,6 +237,9 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
+    t.integer  "clicks_count",       :default => 0
+    t.integer  "impressions_count",  :default => 0
+    t.integer  "reservations_count", :default => 0
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
@@ -306,12 +325,12 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
     t.integer  "listing_id"
     t.string   "title"
     t.text     "description"
-    t.integer  "position",           :default => 0
+    t.integer  "position",                    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.string   "facility_image_file_name"
+    t.string   "facility_image_content_type"
+    t.integer  "facility_image_file_size"
   end
 
   add_index "pictures", ["id", "listing_id", "title"], :name => "index_pictures_on_id_and_listing_id_and_title"
@@ -351,6 +370,8 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "referrer"
+    t.string   "request_uri"
   end
 
   create_table "roles", :force => true do |t|
@@ -447,7 +468,7 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
+    t.string   "first_name"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -468,6 +489,8 @@ ActiveRecord::Schema.define(:version => 20100807031231) do
     t.boolean  "wants_newsletter"
     t.string   "activation_code"
     t.string   "status"
+    t.string   "temp_password"
+    t.string   "last_name"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

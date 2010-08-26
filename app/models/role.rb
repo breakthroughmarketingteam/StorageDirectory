@@ -7,8 +7,8 @@ class Role < ActiveRecord::Base
   
   access_shared_methods
   
-  def self.get_advertiser_role_id
-    Role.find_by_title('advertiser').try :id
+  def self.get_role_id(title)
+    Role.find_by_title(title).try :id
   end
   
   def select_list_options

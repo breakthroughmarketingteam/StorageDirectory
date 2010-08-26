@@ -10,6 +10,9 @@ class Listing < ActiveRecord::Base
   has_many :specials
   has_many :pictures
   has_many :sizes
+  has_many :reservations
+  has_many :clicks
+  has_many :impressions
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -38,38 +41,44 @@ class Listing < ActiveRecord::Base
     self.map.nil? ? [] : [self.map.city, self.map.state]
   end
   
-  def address() self.map.address end
-  def city()    self.map.city end
-  def state()   self.map.state end
-  def zip()     self.map.zip end
-    
-  def lat() self.map.lat end
-  def lng() self.map.lng end
+  def address; self.map.address end
+  def city;    self.map.city end
+  def state;   self.map.state end
+  def zip;     self.map.zip end
+  def lat;     self.map.lat end
+  def lng;     self.map.lng end
   
   def map_data
-    { 
-      :title => self.title,
-      :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.image.url(:thumb)),
+    { :id      => self.id,
+      :title   => self.title,
+      :thumb   => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb)),
       :address => self.address,
-      :city => self.city,
-      :state => self.state,
-      :zip => self.zip,
-      :lat => self.lat,
-      :lng => self.lng
-    }
+      :city    => self.city,
+      :state   => self.state,
+      :zip     => self.zip,
+      :lat     => self.lat,
+      :lng     => self.lng }
+  end
+  
+  def compare_attributes
+    attrs = []
+    attrs << { :title => self.title }
+    attrs << { :reservations => self.client.try(:accepts_reservations?) ? 'Yes' : 'No' }
+  end
+  
+  # create a stat record => clicks, impressions
+  def update_stat stat, request
+    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
   end
   
   #
   # Search methods
   #
-  
   def self.geo_search(params, session)
-    q = params[:q]
+    q = extrapolate_query(params)
     options = {
-      :page     => params[:page], 
-      :per_page => (params[:per_page] || 5),
-      :include  => [:map, :specials, :sizes, :pictures],
-      :within   => (params[:within]   || 5)
+      :include => [:map, :specials, :sizes, :pictures],
+      :within  => (params[:within] || 5)
     }
     
     unless q.blank?
@@ -93,8 +102,9 @@ class Listing < ActiveRecord::Base
       options.merge! :origin => @location
     end
     
-    @model_data = Listing.paginate(:all, options)
+    @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if !params[:order] || params[:order] == 'distance'
+    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
     { :data => @model_data, :location => @location }
   end
 
@@ -109,53 +119,66 @@ class Listing < ActiveRecord::Base
     query.match(/#{sregex}/i) || us_cities.any? { |c| c =~ /#{query}/i }
   end
   
+  def self.extrapolate_query(params)
+    return params[:q] unless params[:q].blank?
+    params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
+  end
+  
   #
   # ISSN wrapper code
   #
+  require 'issn_adapter'
   
-  def facility_id() self.facility_info.sFacilityId end
-  
-  def update_facility_info(facility_id)
-    
-  end
+  # ISSN methods that only require a facility id
+  def self.get_facility_info(method = 'ISSN_getFacilityInfo')
+    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sIssnId="
+    response = IssnAdapter.call_issn method
 
-  @@facility_ids = %w(
-    a2c018ba-54ca-44eb-9972-090252ef00c5
-    42e2550d-e233-dd11-a002-0015c5f270db
-  )
-
-  @@username = 'USSL'+ (RAILS_ENV == 'development' ? '_TEST' : '')
-  @@password = 'U$$L722'
-  @@host = "http://issn.opentechalliance.com"
-  @@url = '/issn_ws1/issn_ws1.asmx/'
-  @@query = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
-
-  include HTTParty
-  require 'cobravsmongoose'
-  
-  def self.findFacilities
-    @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-    
-    query = @@host + @@url + 'ISSN_findFacilities' + @@query
-    response = self.get query, :format => :xml
-    data = CobraVsMongoose.xml_to_hash(response.body)['DataSet'].deep_symbolize_keys[:"diffgr:diffgram"][:NewDataSet][:FindFacility]
-    els = []
-
-    data.each do |d|
-      els << d["sFacilityID"]["$"]
+    case method when 'ISSN_getFacilityInfo', 'ISSN_getFacilityFeatures'
+      key = :FacilityFeatures
+    when 'ISSN_getFacilityDataGroup'
+      key = :FacilityDG
+    when 'ISSN_getFacilityInsurance'
+      key = :Facility_Insurance
+    when 'ISSN_getFacilityPromos'
+      key = :Facility_Promos
+    when 'ISSN_getFacilityUnitTypes'
+      key = :Facility_UnitTypes
     end
     
-    raise els.pretty_inspect
-  end
-  
-  def self.getFacilityInfo(facility_id = nil)
-    facility_id ? facility_id : self.facility_id
-    @@query += "&sFacilityId=#{facility_id}&sIssnId="
-
-    query = @@host + @@url + 'ISSN_getFacilityInfo' + @@query
-    response = self.get query, :format => :xml
-    data = CobraVsMongoose.xml_to_hash(response.body).deep_symbolize_keys
+    data = IssnAdapter.get_data_from_soap_response(response, key)
     raise data.pretty_inspect
   end
-
+  
+  ## ISSN methods that require a facility id and a sFacilityUnitTypesId
+  def get_unit_info(method = 'ISSN_getFacilityUnitTypesFeatures')
+    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sFacilityUnitTypesId=#{IssnAdapter.facility_unit_types_ids[0]}"
+    response = IssnAdapter.call_issn method
+    
+    case method when 'ISSN_getFacilityUnitTypesFeatures'
+      key = :Facility_UT_Features
+    when 'ISSN_getFacilityUnits'
+      key = :FacilityUnits
+    end
+    
+    data = IssnAdapter.get_data_from_soap_response(response, key)
+    raise data.pretty_inspect
+  end
+  
+  # ISSN methods that have std in the name, they dont required further parameters
+  def self.get_standard_info(method = 'ISSN_getStdFacilityFeatures')
+    response = IssnAdapter.call_issn method
+    
+    case method when 'ISSN_getStdFacilityFeatures'
+      key = :StdFacilityFeatures
+    when 'ISSN_getStdUnitTypeFeatures'
+      key = :StdUnitTypeFeatures
+    when 'ISSN_getStdUnitTypeSizes'
+      key = :StdUnitTypeSizes
+    end
+    
+    data = IssnAdapter.get_data_from_soap_response(response, key)
+    raise [key, data].pretty_inspect
+  end
+  
 end

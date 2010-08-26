@@ -14,34 +14,26 @@ class ClientsController < ApplicationController
   end
   
   def create
-    @client                       = Client.new params[:client]
-    @mailing_address              = @client.mailing_addresses.build params[:mailing_address]
-    @temp_password                = Client.rand_password
-    @client.password              = @temp_password
-    @client.password_confirmation = @temp_password
-    @client.activation_code       = @client.make_activation_code
-    @client.status                = 'unverified'
-    @client.role_id               = Role.get_advertiser_role_id
+    @client            = Client.new params[:client]
     @client.user_hints = UserHint.all
+    @mailing_address   = @client.mailing_addresses.build params[:mailing_address]
     
-    if params[:listings]
-      params[:listings].each do |id|
-        Listing.find(id.to_i).update_attributes :user_id => @client.id, :status => 'unverified'
-      end
+    unless params[:listings].blank?
+      @client.listing_ids = params[:listings]
     else
       @listing = @client.listings.build :title => @client.company, :status => 'unverified'
       @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
     end
     
     if @client.save_without_session_maintenance
-      Notifier.deliver_client_notification @client, @temp_password
+      Notifier.deliver_client_notification @client
       
       msg = "<p class='stack'>Great job, you're almost ready! We sent you an email with an activation link. \
               You'll be able to play around with your account after you click on that link. \
               See you soon!</p> \
               <p class='stack'><strong>Click below to sign in:</strong</p> \
               <p>Email: #{@client.email}</p> \
-              <p class='stack'>Password: #{@temp_password}</p>
+              <p class='stack'>Password: #{@client.temp_password}</p>
               <p><a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
       render :json => { :success => true, :data => msg }
     else

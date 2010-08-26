@@ -3,7 +3,7 @@ class AjaxController < ApplicationController
   skip_before_filter :authorize_user, :except => [:get_partial, :find_listings]
   skip_before_filter :init
   
-  before_filter :validate_params, :except => :find_listings
+  before_filter :validate_params, :except => [:find_listings, :get_client_stats]
   before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy]
   before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
   
@@ -33,16 +33,20 @@ class AjaxController < ApplicationController
   
   # find listings in a city or state which don't have an owner
   def find_listings
+    city = params[:city].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
+    state = params[:state].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
+    company =params[:company].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
+    
     @listings = Listing.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l 
                                      LEFT JOIN maps m ON m.listing_id = l.id 
                                      LEFT JOIN users u ON u.id = l.user_id 
-                                     WHERE ((LOWER(m.state) LIKE '%#{params[:state].downcase}%' 
-                                            AND LOWER(m.city) LIKE '%#{params[:city].downcase}%' 
-                                            AND LOWER(l.title) LIKE '%#{params[:company].downcase}%') 
-                                        OR (LOWER(m.state) LIKE '%#{params[:state].downcase}%' 
-                                          AND LOWER(l.title) LIKE LOWER('%#{params[:company].downcase}%'))
-                                        OR (LOWER(m.city) LIKE '%#{params[:city].downcase}%' 
-                                          AND LOWER(l.title) LIKE LOWER('%#{params[:company].downcase}%'))) AND l.user_id IS NULL
+                                     WHERE ((LOWER(m.state) LIKE '%#{state}%' 
+                                            AND LOWER(m.city) LIKE '%#{city}%' 
+                                            AND LOWER(l.title) LIKE '%#{company}%') 
+                                        OR (LOWER(m.state) LIKE '%#{state}%' 
+                                          AND LOWER(l.title) LIKE LOWER('%#{company}%'))
+                                        OR (LOWER(m.city) LIKE '%#{city}%' 
+                                          AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL
                                           ORDER BY l.title LIMIT 100"
     
     render :json => { :success => true, :data => @listings }
@@ -57,6 +61,12 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
+  end
+  
+  def get_client_stats
+    @client = Client.find params[:client_id]
+    @data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    render :json => { :success => (@data[:max] != 0), :data =>  @data }
   end
   
   # this is called by js to load an iframed map into the map partial in greyresults
