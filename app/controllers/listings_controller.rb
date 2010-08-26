@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    data = Listing.new.get_unit_info 'ISSN_getFacilityUnitTypesFeatures'
+    data = Listing.get_facility_info 'getFacilityUnitTypes'
     render :text => data
   end
   

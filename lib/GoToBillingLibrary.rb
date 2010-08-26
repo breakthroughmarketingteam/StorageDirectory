@@ -165,7 +165,6 @@ module GoToBillingLibrary
 		def GetDebug
 			return @debug
 		end
-	
 		
 		# Get and Set CUSTOMER INFORMATION
 	
@@ -264,7 +263,6 @@ module GoToBillingLibrary
 		def GetEmail
 			return @email	
 		end
-	
 	
 		# Get or Set TRANSACTION INFORMATION
 	

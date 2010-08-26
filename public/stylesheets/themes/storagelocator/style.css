@@ -605,6 +605,8 @@ img.right{margin:0 10px 10px 0;}
 #add_new_tip .submit input{width:auto;}
 #add_new_tip{margin:13px 13px 0 14px;padding:7px 10px;border:1px solid #ccc;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
+/* add size */
+#sl-tabs-sizes #new_unit{}
 /* state page */
 #state_picker h2{font-size:20px;margin-bottom:14px;}
 #state_picker h3{font-size:14px;margin-bottom:7px;}

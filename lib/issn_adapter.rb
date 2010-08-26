@@ -5,39 +5,90 @@ class IssnAdapter
 
   def self.find_facilities
     @@query += "&sPostalCode=85021&sCity=&sState=&sStreetAddress=&sMilesDistance=25&sSizeCodes=&sFacilityFeatureCodes=&sSizeTypeFeatureCodes=&sOrderBy="
-    response = call_issn 'ISSN_findFacilities'
-    get_data_from_soap_response(response, :FindFacility)
+    response = call_issn 'findFacilities'
+    parse_response(response, :FindFacility)
   end
 
   def self.call_issn(method)
     uri = URI.parse(@@host + @@url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.start { |h| h.get(uri.path + '/' + method + @@query) }
+    
+    full_url = uri.path + '/ISSN_' + method + @@query
+    puts '*******************************************'
+    puts " SENDING ISSN REQUEST: #{full_url}"
+    puts '*******************************************'
+    res = http.start { |h| h.get(full_url) }
+    puts res.body
+    
+    res
   end
 
   # parse the complex soap schema into a simple ruby hash
-  def self.get_data_from_soap_response(response, key)
-    data = get_soap_data(response.body)[key.to_sym]
-    data.is_a?(Array) ? get_data_from_soap_array(data) : get_data_from_soap_hash(data)
+  def self.parse_response(response, method)
+    data = soap_data_set(response.body, method)
+    data.is_a?(Array) ? parse_soap_array(data) : parse_soap_hash(data)
   end
 
-  def self.get_soap_data(response_body)
-    CobraVsMongoose.xml_to_hash(response_body).deep_symbolize_keys[:DataSet][:"diffgr:diffgram"][:NewDataSet]
+  def self.soap_data_set(body, method)
+    CobraVsMongoose.xml_to_hash(body).deep_symbolize_keys[:DataSet][:"diffgr:diffgram"][:NewDataSet][data_key_for(method)]
   end
 
-  def self.get_data_from_soap_array(data)
+  def self.parse_soap_array(data)
     parsed = []
     data.each do |hash|
-      parsed << get_data_from_soap_hash(hash.deep_symbolize_keys) rescue nil
+      parsed << parse_soap_hash(hash.deep_symbolize_keys) rescue nil
     end
     parsed
   end
 
-  def self.get_data_from_soap_hash(data)
+  def self.parse_soap_hash(data)
     parsed = {}
-    data.each { |k, v| parsed.store k, v[:"$"] }
+    data.each { |k, v| parsed.store(k, v[:"$"]) unless useless_keys.include? k }
     parsed
+  end
+  
+  def self.data_key_for(method)
+  # get_facility_info
+    case method when 'getFacilityInfo', 'getFacilityFeatures'
+        :FacilityFeatures
+      when 'getFacilityDataGroup'
+        :FacilityDG
+      when 'getFacilityInsurance'
+        :Facility_Insurance
+      when 'getFacilityPromos'
+        :Facility_Promos
+      when 'getFacilityUnitTypes'
+        :Facility_UnitTypes
+      when 'getFacilityUnits'
+        :FacilityUnits
+    # END get_facility_info
+    
+    # get_standard_info
+      when 'getStdFacilityFeatures'
+        :StdFacilityFeatures
+      when 'getStdUnitTypeFeatures'
+        :StdUnitTypeFeatures
+      when 'getStdUnitTypeSizes'
+        :StdUnitTypeSizes
+    # END get_standard_info
+    
+    # get_features, in sizes model
+      when 'getFacilityUnitTypesFeatures'
+        :Facility_UT_Features
+    # END get_Features
+    
+    # get_unit_info
+      when 'getFacilityUnits'
+        :FacilityUnits
+      
+    else # already is a key
+      method
+    end
+  end
+  
+  def self.useless_keys
+    [:"@diffgr:id", :@xmlns, :"@msdata:rowOrder", :sReplyCode]
   end
 
   cattr_accessor :query, :facility_ids, :facility_unit_types_ids
