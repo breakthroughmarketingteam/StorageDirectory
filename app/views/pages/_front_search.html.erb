@@ -1,0 +1,58 @@
+<% form_tag '/self-storage', :id => 'front_search' do %>
+	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
+	<div id="search_field">
+		<%= text_field_tag :q, nil, :class => 'hintable', :title => 'Enter Zip Code, City, or Street Address' %>
+		<%= submit_tag 'Locate', :class => 'grn_btn' %>
+		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
+	</div>
+	
+	<div id="advanced_opts">
+		<p id="ao_top">Choose your options for a refined Self Storage search:</p>
+			<div class="left">
+				<div>
+					<%= label_tag 'Type:' %>
+					<%= select_tag 'storage_type', ['<option>Self Storage</option><option>Mobile Storage</option>'] %>
+				</div>
+				
+				<div id="size_picker">
+					<img src="/images/ui/storagelocator/unit_sizes/5x10-sm.png" alt="Size" />
+				</div>
+				
+				<div>
+					<%= label_tag 'Unit Size:' %>
+					<%= select_tag 'storage_size', option_tags(@unit_sizes) %>
+				</div>
+			</div>
+			
+			<div class="right">
+				<div class="top">
+					<div id="slide_wrap">
+						<%= label_tag 'Within' %>
+						<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less" />
+						<div class="advanced_slider"></div>
+						<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
+						<%= label_tag 'miles.' %>
+						<%= hidden_field_tag :within, nil, :class => 'slider_val', :disabled => true %>
+					</div>
+					
+					<div id="loc_btn">
+						<%= submit_tag 'Locate', :class => 'grn_btn' %>
+					</div>
+				</div>
+				
+				<div class="bottom">
+					<p><%= label_tag 'Features:' %></p>
+					
+					<div id="features">
+						<% 1.upto(20) do |i| %>
+							<div class="selectable_wrap">
+								<div class="selectable"><%= check_box_tag 'storage_features', "feature_#{i}" %></div>
+								<%= label_tag "Feature #{i}" %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

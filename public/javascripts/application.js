@@ -6,6 +6,66 @@ $(document).ready(function(){
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
+	$('#jqDock0 > div').click(function(){
+		$(this).effect('bounce');
+	});
+	
+	// advanced options
+	var $size_picker = $('#size_picker'),
+		$size_img = $('img', $size_picker);
+		
+	$('option', '#storage_size').mouseover(function(){
+		var $this = $(this),
+			size  = this.value,
+			new_img = $('<img src="/images/ui/storagelocator/unit_sizes/'+ size +'-sm.png" alt="'+ size +'" />');
+		
+		if ($size_img.attr('src').split('.')[0].replace('/images/ui/storagelocator/unit_sizes/', '').replace('-sm', '') != size) {
+			$size_img.fadeOut(100, function(){
+				$size_picker.html(new_img)
+				new_img.hide().fadeIn(120);
+				console.log(new_img.width())
+				$size_img = $('img', $size_picker);
+				if (new_img.width() > 183) new_img.width(183);
+			});
+		}
+	});
+	
+	var advanced_slider = $('.advanced_slider', '#advanced_opts').slider({
+		max: 50,
+		min:5,
+		step: 5,
+		value: 5,
+		animate: true,
+		start: function(e, ui) {
+			var slider = $('.slider_val', $(e.target).parent());
+			if (slider.attr('disabled')) slider.attr('disabled', false);
+		},
+		slide: function(e, ui) {
+			$('.slider_val', $(this).parent()).val(ui.value);
+			$slider_handle.text(ui.value);
+		}
+	});
+	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').text('5');
+	
+	$('.arrow', '#advanced_opts').click(function(){
+		var $this = $(this),
+			action = $(this).attr('alt'),
+			value = advanced_slider.slider('value');
+			
+		if (action == 'less') {
+			if (value > 5) {
+				advanced_slider.slider('value', value - 5);
+				$slider_handle.text(value - 5);
+			}
+			
+		} else if (action == 'more') {
+			if (value < 50) {
+				advanced_slider.slider('value', value + 5);
+				$slider_handle.text(value + 5);
+			}
+		} 
+	})
+	
 	// more info button
 	var more_info_tab = $('#red_tab'),
 		more_info_div = $('#'+ more_info_tab.attr('rel')).hide();
@@ -68,20 +128,22 @@ $(document).ready(function(){
 			if (typeof o.callback == 'function')
 				o.callback.call(this, $object, self);
 			
-			$object[o.action](o.speed, function() {
-				self.current_object++;
+			$object[o.action](o.speed, function(){ self.nextObject(o) });
+		}
+		
+		this.nextObject = function(o) {
+			self.current_object++;
+			
+			if (self.slide_objects[self.current_object]) {
+				setTimeout(function(){
+					self.runObject(self.slide_objects[self.current_object]);
+				}, o.delay);
 				
-				if (self.slide_objects[self.current_object]) {
-					setTimeout(function(){
-						self.runObject(self.slide_objects[self.current_object]);
-					}, o.delay);
-					
-				} else {
-					setTimeout(function(){
-						self.slides[self.current].end.call(this, self);
-					}, self.delay);
-				}
-			});
+			} else {
+				setTimeout(function(){
+					self.slides[self.current].end.call(this, self);
+				}, self.delay);
+			}
 		}
 		
 		this.hidePrevSlide = function(callback) {
@@ -111,7 +173,7 @@ $(document).ready(function(){
 					},
 					objects : [
 						{ id : 'bg3', action: 'fadeIn', speed: 500, delay: 500 },
-						{ id : 'bub1', action: 'fadeIn', speed: 8000, delay: 5000, callback: function(o, s){ o.html('<blockquote>I found it on USSelfStorageLocator.com</blockquote>').children().hide().fadeIn('slow') } }
+						{ id : 'bub1', action: 'fadeIn', speed: 800, delay: 5000, callback: function(o, s){ o.html('<blockquote>I found it on USSelfStorageLocator.com</blockquote>').children().hide().fadeIn('slow') } }
 					],
 					end : function(s) { s.gotoSlide(1); }
 				},
