@@ -23,8 +23,8 @@ $(document).ready(function(){
 			$size_img.fadeOut(100, function(){
 				$size_picker.html(new_img)
 				new_img.hide().fadeIn(120);
-				console.log(new_img.width())
 				$size_img = $('img', $size_picker);
+				
 				if (new_img.width() > 183) new_img.width(183);
 			});
 		}

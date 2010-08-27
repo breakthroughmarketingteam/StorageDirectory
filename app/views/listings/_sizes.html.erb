@@ -1,4 +1,7 @@
 <div id="sl-tabs-sizes" class="tab_content">
+	
+	<%= link_to 'Add Unit', '#', :id => 'new_unit' if action_name == 'edit' %>
+	
   <div id="sl-tabs-sizes-in">
     <ul class="sl-table-head">
       <li class="st-size">Size</li>
@@ -6,7 +9,7 @@
       <li class="st-pric">Price</li>
       <li class="st-spec">Special</li>
     </ul>
-
+	
     <% @sizes.each do |size| %>
 			<div class="sl-table-wrap">
 				<ul class="sl-table<%= ' open_reserve_form' if action_name == 'show' %>">

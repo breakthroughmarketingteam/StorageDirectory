@@ -130,55 +130,29 @@ class Listing < ActiveRecord::Base
   require 'issn_adapter'
   
   # ISSN methods that only require a facility id
-  def self.get_facility_info(method = 'ISSN_getFacilityInfo')
+  def self.get_facility_info(method = 'getFacilityInfo')
     IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sIssnId="
     response = IssnAdapter.call_issn method
-
-    case method when 'ISSN_getFacilityInfo', 'ISSN_getFacilityFeatures'
-      key = :FacilityFeatures
-    when 'ISSN_getFacilityDataGroup'
-      key = :FacilityDG
-    when 'ISSN_getFacilityInsurance'
-      key = :Facility_Insurance
-    when 'ISSN_getFacilityPromos'
-      key = :Facility_Promos
-    when 'ISSN_getFacilityUnitTypes'
-      key = :Facility_UnitTypes
-    end
     
-    data = IssnAdapter.get_data_from_soap_response(response, key)
-    raise data.pretty_inspect
+    data = IssnAdapter.parse_response(response, method)
+    raise [method, data].pretty_inspect
   end
   
   ## ISSN methods that require a facility id and a sFacilityUnitTypesId
-  def get_unit_info(method = 'ISSN_getFacilityUnitTypesFeatures')
-    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sFacilityUnitTypesId=#{IssnAdapter.facility_unit_types_ids[0]}"
+  def get_unit_info(method = 'getFacilityUnits')
+    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sFacilityUnitTypeId=#{IssnAdapter.facility_unit_types_ids[0]}"
     response = IssnAdapter.call_issn method
     
-    case method when 'ISSN_getFacilityUnitTypesFeatures'
-      key = :Facility_UT_Features
-    when 'ISSN_getFacilityUnits'
-      key = :FacilityUnits
-    end
-    
-    data = IssnAdapter.get_data_from_soap_response(response, key)
-    raise data.pretty_inspect
+    data = IssnAdapter.parse_response(response, method)
+    raise [method, data].pretty_inspect
   end
   
   # ISSN methods that have std in the name, they dont required further parameters
-  def self.get_standard_info(method = 'ISSN_getStdFacilityFeatures')
+  def self.get_standard_info(method = 'getStdFacilityFeatures')
     response = IssnAdapter.call_issn method
     
-    case method when 'ISSN_getStdFacilityFeatures'
-      key = :StdFacilityFeatures
-    when 'ISSN_getStdUnitTypeFeatures'
-      key = :StdUnitTypeFeatures
-    when 'ISSN_getStdUnitTypeSizes'
-      key = :StdUnitTypeSizes
-    end
-    
-    data = IssnAdapter.get_data_from_soap_response(response, key)
-    raise [key, data].pretty_inspect
+    data = IssnAdapter.parse_response(response, method)
+    raise [method, data].pretty_inspect
   end
   
 end
