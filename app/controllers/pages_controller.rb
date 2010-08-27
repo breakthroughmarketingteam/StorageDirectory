@@ -11,6 +11,10 @@ class PagesController < ApplicationController
   end
 
   def show
+    if params[:title] == 'home' || params[:id].to_i == 1
+      @unit_sizes = %w( 5x10 5x15 7x10 10x10 10x15 10x30 )
+      render :layout => 'locatorfront'
+    end
   end
 
   def new
@@ -35,7 +39,7 @@ class PagesController < ApplicationController
   def update
     if @page.update_attributes(params[:page])
       flash[:notice] = @page.title + ' has been updated.'
-      redirect_to :action => 'show'
+      redirect_to "/#{@page.title.parameterize}"
     else
       get_associations
       render :action => 'edit'

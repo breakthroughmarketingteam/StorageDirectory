@@ -3,7 +3,7 @@ class AjaxController < ApplicationController
   skip_before_filter :authorize_user, :except => [:get_partial, :find_listings]
   skip_before_filter :init
   
-  before_filter :validate_params, :except => :find_listings
+  before_filter :validate_params, :except => [:find_listings, :get_client_stats]
   before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy]
   before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
   
@@ -61,6 +61,12 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
+  end
+  
+  def get_client_stats
+    @client = Client.find params[:client_id]
+    @data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    render :json => { :success => true, :data =>  @data }
   end
   
   # this is called by js to load an iframed map into the map partial in greyresults

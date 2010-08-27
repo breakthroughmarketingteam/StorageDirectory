@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  amount: 1
+  transaction_type: MyString
+  occurrence_type: MyString
+  occurrence_number: 1
+  user_id: 1
+
+two:
+  amount: 1
+  transaction_type: MyString
+  occurrence_type: MyString
+  occurrence_number: 1
+  user_id: 1

@@ -64,7 +64,7 @@ module SharedModelMethods #:nodoc:
     end
 
     def name_or_title
-      self.respond_to?('name') ? name : title
+      self.respond_to?('name') ? name : title rescue nil
     end
 
     def timestamp(prefered = 'updated_at')

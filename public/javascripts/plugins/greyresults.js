@@ -418,14 +418,14 @@ $(function(){
 	// narrow search form sliders
 	$('.slider').each(function(){
 		var $this = $(this),
-				value = $('.slider_val', $this.parent()).val();
+			value = $('.slider_val', $this.parent()).val();
 
 		$this.slider({
 			max: 50,
 			min:5,
 			step: 5,
 			animate: true,
-			value: value, // reverse the direction of the slider
+			value: value,
 			start: function(e, ui) {
 				var slider = $('.slider_val', $(e.target).parent());
 				if (slider.attr('disabled')) slider.attr('disabled', false);

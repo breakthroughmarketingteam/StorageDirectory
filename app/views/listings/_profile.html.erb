@@ -15,18 +15,20 @@
 		
       <div class="clear"></div>
     </div>
-    
+   
+  <%= render_hints_for :listing_detail %>
     <div id="sl-fac-detail">
       <div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
-        <img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
+        
+<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
 		
 		<p class="address_label"><strong>Location</strong></p>
         <p class="address">
-          <span rel="address" class="block value"><%= edit_listing_address(@listing) %></span>
+          <span rel="address" class="block value"><%= edit_listing_address @listing %></span>
           <% unless @listing.map.nil? %>
             <span rel="city" class="value"><%= @listing.map.city %></span> <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
           <% else %>
-            <%= edit_listing_city_state_zip(@listing) %>
+            <%= edit_listing_city_state_zip @listing %>
           <% end %>
         </p>
         
@@ -51,6 +53,7 @@
     </div>
     <div class="clear"></div>
     
+  <%= render_hints_for :info_tabs %>
     <div id="sl-tabs">
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
@@ -68,7 +71,8 @@
         
       </div>
     </div>
-    
+     
+  <%= render_hints_for :extras %>
     <div id="sl-extra">
       <h3>Lorem ipsum heading here</h3>
       <p>
