@@ -830,15 +830,20 @@ body{background:;}
 #footer_mid{padding-top:25px;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 
-#steps{width:900px;padding:20px 40px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#steps{width:949px;padding:20px 0 20px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #steps .step{float:left;width:33.3%;}
-#steps .step p{padding-right:20px;font-size:90%;min-height:173px;margin-right:25px;border-right:3px solid #cbcbcb;}
-#steps .last p{padding-right:0;margin-right:0;border-right:0 none;}
+#steps .in{min-height:173px;border-right:3px solid #cbcbcb;margin-right:17px;min-height:144px;position:relative;}
+#steps .step p{font-size:90%;padding-right:23px;position:absolute;top:0;}
+#steps step img{position:absolute;}
 .step h3{text-indent:-9999px;height:31px;margin-bottom:17px;}
-.step p{line-height:2;font-size:90%;font-style:italic;color:#404040;}
-#step1 h3{width:121px;background:url(/images/ui/storagelocator/locate-title.png) no-repeat;}
-#step2 h3{width:118px;background:url(/images/ui/storagelocator/select-title.png) no-repeat;}
-#step3 h3{width:151px;background:url(/images/ui/storagelocator/reserve-title.png) no-repeat;}
+.step p{line-height:1.7;font-size:90%;font-style:italic;color:#404040;}
+#step1 h3{background:url(/images/ui/storagelocator/locate-title.png) no-repeat #fff;}
+#step2 h3{background:url(/images/ui/storagelocator/select-title.png) no-repeat #fff;}
+#step3 h3{background:url(/images/ui/storagelocator/reserve-title.png) no-repeat #fff;}
+#step1 .in img{margin-top:-49px;}
+#step2 .in img{margin-top:-35px;}
+#step3 .in img{margin-right:-13px;}
+#step3 .in{margin-right:0;border-right:0 none;}
 
 #handle,#red_tab{margin:0 auto;}
 #handle{width:196px;height:51px;margin-top:20px;position:relative;z-index:1;cursor:pointer;background:url(/images/ui/storagelocator/handle.png) no-repeat;}
