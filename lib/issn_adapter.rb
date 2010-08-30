@@ -40,7 +40,7 @@ class IssnAdapter
     data = IssnAdapter.parse_response response, method
   end
   
-  def get_unit_info(facility_id = nil, type_id = nil)
+  def self.get_unit_info(facility_id = nil, type_id = nil)
     method = 'getFacilityUnits'
     response = IssnAdapter.call_issn method, "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sFacilityUnitTypeId=#{type_id || IssnAdapter.facility_unit_types_ids[0]}"
     data = IssnAdapter.parse_response(response, method)

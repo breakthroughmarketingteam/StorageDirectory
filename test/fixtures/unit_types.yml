@@ -1,0 +1,47 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  LastTimeUpdateTried: 2010-08-30 17:03:08
+  ManagementSystemsId: MyString
+  StorageSvrDescription: MyString
+  CustomDescription: MyText
+  sID: MyString
+  RentalRate: 1.5
+  ReservationFeeMax: 1.5
+  StdUnitTypeSizesDescription: MyString
+  ManagementSystemsDescription: MyString
+  ReservationOverrideFee: MyString
+  StopAvailableToRentWhenBelow: 1
+  ActualSQFT: 1
+  SpecialComments: MyText
+  LastTimeUpdated: 2010-08-30 17:03:08
+  ActualWidth: 1
+  ReservationFeeMin: 1.5
+  InsuranceRequired: false
+  StdUnitTypeSizesId: MyString
+  QuantityAtFacility: 1
+  QuantityAvailableToRent: MyString
+  ActualLength: 1
+
+two:
+  LastTimeUpdateTried: 2010-08-30 17:03:08
+  ManagementSystemsId: MyString
+  StorageSvrDescription: MyString
+  CustomDescription: MyText
+  sID: MyString
+  RentalRate: 1.5
+  ReservationFeeMax: 1.5
+  StdUnitTypeSizesDescription: MyString
+  ManagementSystemsDescription: MyString
+  ReservationOverrideFee: MyString
+  StopAvailableToRentWhenBelow: 1
+  ActualSQFT: 1
+  SpecialComments: MyText
+  LastTimeUpdated: 2010-08-30 17:03:08
+  ActualWidth: 1
+  ReservationFeeMin: 1.5
+  InsuranceRequired: false
+  StdUnitTypeSizesId: MyString
+  QuantityAtFacility: 1
+  QuantityAvailableToRent: MyString
+  ActualLength: 1

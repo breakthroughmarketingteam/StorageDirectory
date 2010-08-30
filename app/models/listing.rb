@@ -15,7 +15,7 @@ class Listing < ActiveRecord::Base
   
   # OpentTech ISSN data
   has_one  :facility_info
-  has_many :issn_ids, :as => :model
+  has_many :unit_types
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -131,6 +131,10 @@ class Listing < ActiveRecord::Base
   #
   require 'issn_adapter'
   
+  def facility_id
+    self.facility_info.O_FacilityId rescue nil
+  end
+  
   def self.find_facilities
     IssnAdapter.find_facilities
   end
@@ -157,10 +161,6 @@ class Listing < ActiveRecord::Base
     else
       self.facility_info.sync_with_issn
     end
-  end
-  
-  def facility_id
-    self.facility_info.O_FacilityId rescue nil
   end
   
 end

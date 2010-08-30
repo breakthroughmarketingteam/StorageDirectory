@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100830184416) do
+ActiveRecord::Schema.define(:version => 20100830210308) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -488,6 +488,35 @@ ActiveRecord::Schema.define(:version => 20100830184416) do
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name"
+
+  create_table "unit_types", :force => true do |t|
+    t.integer  "listing_id"
+    t.datetime "LastTimeUpdateTried"
+    t.string   "ManagementSystemsId"
+    t.string   "StorageSvrDescription"
+    t.text     "CustomDescription"
+    t.string   "sID"
+    t.float    "RentalRate"
+    t.float    "ReservationFeeMax"
+    t.string   "StdUnitTypeSizesDescription"
+    t.string   "ManagementSystemsDescription"
+    t.string   "ReservationOverrideFee"
+    t.integer  "StopAvailableToRentWhenBelow"
+    t.integer  "ActualSQFT"
+    t.text     "SpecialComments"
+    t.datetime "LastTimeUpdated"
+    t.integer  "ActualWidth"
+    t.float    "ReservationFeeMin"
+    t.boolean  "InsuranceRequired"
+    t.string   "StdUnitTypeSizesId"
+    t.integer  "QuantityAtFacility"
+    t.string   "QuantityAvailableToRent"
+    t.integer  "ActualLength"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "unit_types", ["listing_id"], :name => "index_unit_types_on_listing_id"
 
   create_table "us_cities", :force => true do |t|
     t.string   "state"

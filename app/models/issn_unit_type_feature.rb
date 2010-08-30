@@ -2,7 +2,7 @@ class IssnUnitTypeFeature < ActiveRecord::Base
   
   @@unwanted_features = ['normal', 'standard storage', 'lift', 'non storage', 'basement']
   def self.labels
-    self.all(:conditions => ['LOWER(ShortDescription) NOT IN (?)', @@unwanted_features]).map(&:ShortDescription)
+    self.all(:conditions => ['LOWER(ShortDescription) NOT IN (?)', @@unwanted_features]).map(&:ShortDescription).sort
   end
   
   #
