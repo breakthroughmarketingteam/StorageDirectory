@@ -64,7 +64,49 @@ $(document).ready(function(){
 				$slider_handle.text(value + 5);
 			}
 		} 
-	})
+	});
+	
+	// steps
+	$('p', '#steps').hide();
+	var $steps = $('.in', '#steps'),
+			fade_anim_speed = 3400,
+			fade_anim_int = setTimeout(stepsFadeAnim, 1000);
+			
+	$steps.hover(function(){
+		fade_anim_step = $steps.index(this);
+		
+		$('img', $steps).fadeIn(600);
+		$('p', $steps).fadeOut(600);
+		
+		$('img', this).fadeOut();
+		$('p', this).fadeIn();
+		clearTimeout(fade_anim_int);
+		
+	}, function(){
+		$('p', this).fadeOut();
+		$('img', this).fadeIn();
+		
+		clearTimeout(fade_anim_int);
+		fade_anim_int = setTimeout(stepsFadeAnim, 1000);
+	});
+	
+	function stepsFadeAnim() {
+		if (typeof(fade_anim_step) == 'undefined' || fade_anim_step >= $steps.length-1) fade_anim_step = -1;
+		fade_anim_step++;
+		
+		$('img', $steps).fadeIn(600);
+		$('p', $steps).fadeOut(600);
+		
+		$('img', $steps.eq(fade_anim_step)).fadeOut(1200);
+		$('p', $steps.eq(fade_anim_step)).fadeIn(1200, function(){
+			
+			setTimeout(function(){
+				clearTimeout(fade_anim_int);
+				fade_anim_int = setTimeout(stepsFadeAnim, fade_anim_speed);
+			}, fade_anim_speed);
+			
+		});
+	}
 	
 	// more info button
 	var more_info_tab = $('#red_tab'),
