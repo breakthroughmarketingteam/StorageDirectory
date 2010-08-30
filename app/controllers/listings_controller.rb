@@ -52,7 +52,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    #raise ['getFacilityPromos', @listing.get_facility_info('getFacilityPromos')].pretty_inspect
+    raise ['getFacilityUnitTypes', @listing.get_facility_info('getFacilityUnitTypes')].pretty_inspect
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
