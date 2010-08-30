@@ -44,10 +44,10 @@
 					<p><%= label_tag 'Features:' %></p>
 					
 					<div id="features">
-						<% 1.upto(20) do |i| %>
+						<% @facility_features.each do |feature| %>
 							<div class="selectable_wrap">
-								<div class="selectable"><%= check_box_tag 'storage_features', "feature_#{i}" %></div>
-								<%= label_tag "Feature #{i}" %>
+								<div class="selectable"><%= check_box_tag 'storage_features', feature %></div>
+								<%= label_tag feature %>
 							</div>
 						<% end %>
 					</div>

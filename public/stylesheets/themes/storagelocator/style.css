@@ -792,12 +792,12 @@ body{background:;}
 #front_search #search_field #ab a{padding-right:15px;color:#333;background:url(/images/ui/storagelocator/green-arrow-btn.png) no-repeat right center;}
 #front_search .grn_btn{margin-left:30px;}
 
-#advanced_opts{height:365px;margin:0 0 -130px 0;border:2px solid #ccc;background:#fff;position:relative;}
+#advanced_opts{margin:0 0 -130px 0;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
 #advanced_opts #ao_top{padding:11px 16px;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #advanced_opts .inner{padding:0;overflow:hidden;}
-#advanced_opts .left{width:18%;height:280px;padding:25px 35px;border-right:1px solid #e6e6e6;background:#f2f2f2;}
+#advanced_opts .left{width:18%;min-height:310px;padding:25px 35px;border-right:1px solid #e6e6e6;}
 #advanced_opts .left div{margin-bottom:20px;}
-#advanced_opts .right{width:74.44%;}
+#advanced_opts .right{width:74.44%;padding-bottom:13px;background:#fff;}
 #advanced_opts .right .top{height:61px;padding:0 20px;overflow:hidden;background:url(/images/ui/storagelocator/adv-top-bg.jpg) repeat-x;}
 #advanced_opts .right .bottom{padding:18px 25px;}
 #advanced_opts label{font-weight:bold;margin-right:5px;}

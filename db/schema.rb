@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100826194832) do
+ActiveRecord::Schema.define(:version => 20100830184416) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -121,6 +121,18 @@ ActiveRecord::Schema.define(:version => 20100826194832) do
     t.integer  "O_ReservationOverrideFee"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "listing_id"
+    t.string   "UsersFacilityExternalID"
+    t.string   "MS_Name"
+    t.string   "MS_Phone"
+    t.text     "MS_Description"
+    t.string   "MS_Fax"
+    t.string   "MS_Address1"
+    t.string   "MS_State"
+    t.string   "MS_Address2"
+    t.integer  "MS_Postal"
+    t.string   "MS_City"
+    t.string   "MS_WebSite"
   end
 
   create_table "fields", :force => true do |t|
@@ -206,6 +218,35 @@ ActiveRecord::Schema.define(:version => 20100826194832) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.string   "request_uri"
+  end
+
+  create_table "issn_ids", :force => true do |t|
+    t.string   "model_type"
+    t.integer  "model_id"
+    t.string   "name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issn_unit_type_features", :force => true do |t|
+    t.string   "MappingCodes"
+    t.string   "sID"
+    t.string   "Abbreviation"
+    t.text     "LongDescription"
+    t.string   "ShortDescription"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issn_unit_type_sizes", :force => true do |t|
+    t.string   "Description"
+    t.integer  "SQFT"
+    t.string   "sID"
+    t.integer  "Length"
+    t.integer  "Width"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", :force => true do |t|

@@ -85,9 +85,6 @@ $(document).ready(function(){
 	}, function(){
 		$('p', this).fadeOut();
 		$('img', this).fadeIn();
-		
-		clearTimeout(fade_anim_int);
-		fade_anim_int = setTimeout(stepsFadeAnim, 1000);
 	});
 	
 	function stepsFadeAnim() {
