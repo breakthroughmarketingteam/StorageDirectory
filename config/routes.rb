@@ -54,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :payments
   
   map.resource :site_setting
+  map.resources :password_resets, :only => [:new, :create, :edit, :update]
   
   # greyresults
   map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations]

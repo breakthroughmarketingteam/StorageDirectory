@@ -528,7 +528,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .table_view{width:100%;}
 .selectable{cursor:pointer;}
 /* the container styles */
-.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,
+.home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.create_action #type-one-cnt-in,
 .edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in,#reservations_controller #type-one-cnt-in,
 #us_states_controller #type-one-cnt-in{margin:15px 20px 0px 20px;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
@@ -689,13 +689,12 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #listings_controller .flash{margin:10px 0 0 20px;}
 #info-accordion h5{font-size:22px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_page{margin-bottom:10px;overflow:hidden;}
-#new_user_session{float:left;width:31%;margin-right:20px;}
-#new_user_session h2{font-size:120%;margin-bottom:10px;}
-#new_user_session .i{height:40px;position:relative;}
-#new_user_session input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px;width:100%;}
-#new_user_session #user_session_remember_me{width:auto;margin:0 5px;float:left;}
-#new_user_session #user_session_submit{width:auto;float:right;margin-right:-10px;}
+#login_page{margin-bottom:10px;overflow:hidden;float:left;width:33%;margin-right:20px;padding-right:15px;}
+#login_page h2{font-size:120%;margin-bottom:10px;}
+#login_page .i{height:40px;position:relative;}
+#login_page input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px;width:100%;}
+#login_page #user_session_remember_me{width:auto;margin:0 5px;float:left;}
+#login_page #user_session_submit{width:auto;float:right;margin-right:-10px;}
 .fieldWithErrors, .invalid{background-color:#FFCDCD;border:1px solid #FF9999 !important;color:#F00;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}

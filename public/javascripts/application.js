@@ -84,14 +84,12 @@ $(document).ready(function(){
 				var $this = $(this),
 					rel = $this.attr('rel'),
 					state = $this.attr('alt'),
-					img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ rel +'.png" alt="'+ state +'" />');
+					img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ rel +'.png" alt="" />');
 				
-				$this.attr('alt', ''); // stop the alt from breifly flashing on screen while the img loads.
 				
 				$state_name.text(state);
 				$map_img.before(img);
 				img.show();
-				$this.attr('alt', state);
 			}); 
 			
 			$areas.mouseleave(function(){
