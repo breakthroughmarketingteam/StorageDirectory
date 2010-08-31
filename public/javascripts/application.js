@@ -6,7 +6,8 @@ $(document).ready(function(){
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
-	$('#jqDock0 > div').click(function(){
+	$('div > a > img', '#jqDock0').click(function(){
+		console.log(this)
 		$(this).effect('bounce', { times: 3 }, 300);
 	});
 	
@@ -167,6 +168,10 @@ $(document).ready(function(){
 	});
 	
 	$('#advanced_opts').hide();
+	
+	// Cities pages
+	$('.storage_in_city', '#cities_list').css('width', '23%');
+	$('.storage_in_city span', '#cities_list').hide();
 	
 	// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
 	var GreyShow = function(options) {
