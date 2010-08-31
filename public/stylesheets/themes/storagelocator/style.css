@@ -189,9 +189,9 @@ li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;
 #clients_controller .rslt-contact #listing_title{width:93%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
-li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:90px;height:100px;color:#333;}
-li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:160px;height:102px;line-height:105px;margin:-1px 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
-li.rslt-specials{width:16%;height:100px;line-height:105px;margin-top:0px;}
+li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;width:70px;height:100px;color:#333;}
+li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:110px;height:100px;line-height:105px;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
+li.rslt-specials{width:20%;height:100px;line-height:105px;margin-top:0px;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 li.compare_li{margin:37px 0 0 13px;}
 ul.tabs{margin:0 0 5px 31px;float:left;}

@@ -1,4 +1,5 @@
 class IssnUnitTypeFeature < ActiveRecord::Base
+  # For retrieving the standard set of features for any facility
   
   @@unwanted_features = ['normal', 'standard storage', 'lift', 'non storage', 'basement']
   def self.labels

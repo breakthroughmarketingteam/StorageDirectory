@@ -67,6 +67,9 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
+    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+    @features = IssnUnitTypeFeature.labels
+    @sizes = IssnUnitTypeSize.labels
   end
   
   def update
