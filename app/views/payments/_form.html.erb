@@ -1,0 +1,53 @@
+<fieldset id="new_payment">
+	<legend>Transaction</legend>
+	
+	<div class="stack">
+		<%= f.label :transaction_type %>
+		<%= f.select :transaction_type, @transaction_types %>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :amount %>
+		<%= f.text_field :amount %>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :occurrence_number, '# of recurrences' %>
+		<%= f.text_field :occurrence_number, :value => 1 %>
+	</div>
+</fieldset>
+
+<fieldset>
+	<legend>Customer</legend>
+	
+	<div class="stack">
+		<%= label_tag 'client[company]', 'Company' %>
+		<%= text_field_tag 'client[company]' %>
+	</div>
+	
+	<div class="uncollapse stack">
+		<div class="left right_space">
+			<%= label_tag 'client[first_name]', 'First Name' %>
+			<%= text_field_tag 'client[first_name]' %>
+		</div>
+		<div class="left right_space">
+			<%= label_tag 'client[last_name]', 'Last Name' %>
+			<%= text_field_tag 'client[last_name]' %>
+		</div>
+	</div>
+	
+	<div class="stack">
+		<%= label_tag 'cc[type]', 'Card Type' %>
+		<%= select_tag 'cc[type]', options_for_select(@card_types) %>
+	</div>
+	
+	<div class="stack">
+		<%= label_tag 'cc[number]', 'Card Number' %>
+		<%= text_field_tag 'cc[number]' %>
+	</div>
+	
+	<div class="stack">
+		<%= label_tag 'cc[exp]', 'Expires' %>
+		<%= text_field_tag 'cc[exp]' %>
+	</div>
+</fieldset>

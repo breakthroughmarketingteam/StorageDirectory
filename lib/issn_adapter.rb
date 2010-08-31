@@ -49,8 +49,8 @@ class IssnAdapter
   end
   
   def self.data_key_for(method)
-  # get_facility_info
     case method when 'getFacilityInfo', 'getFacilityFeatures'
+    # get_facility_info
         :FacilityFeatures
       when 'getFacilityDataGroup'
         :FacilityDG

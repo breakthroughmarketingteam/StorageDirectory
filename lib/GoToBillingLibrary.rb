@@ -76,9 +76,9 @@ module GoToBillingLibrary
 			@gateway_server = "secure.gotobilling.com"
 			@gateway_page = "/os/system/gateway/transact.php"
 			@gateway_response = nil
-			@merchant_id = nil
-			@merchant_pin = nil
-			@ip_address = nil
+			@merchant_id = '234568' # test account
+			@merchant_pin = '234568'
+			@ip_address = '65.83.183.146'
 			@relay_url = nil
 			@relay_type = nil
 			@debug = "0"
@@ -165,6 +165,26 @@ module GoToBillingLibrary
 		def GetDebug
 			return @debug
 		end
+		
+		def merchant_info(info = nil)
+	    if info.nil? #
+	      {
+          :mechant_id  => GetMerchantId,
+          :mechant_pin => GetMerchantPin,
+          :ip_address  => GetIpAddress,
+          :relay_url   => GetRelayUrl,
+          :relay_type  => GetRelayType,
+          :debug       => GetDebug
+        }
+      else # set
+        SetMerchantId  info[:mechant_id]  unless info[:mechant_id].blank?
+        SetMerchantPin info[:mechant_pin] unless info[:mechant_pin].blank?
+        SetIpAddress   info[:ip_address]  unless info[:ip_address].blank?
+        SetRelayUrl    info[:relay_url]   unless info[:relay_url].blank?
+        SetRelayType   info[:relay_type]  unless info[:relay_type].blank?
+        SetDebug       info[:debug]       unless info[:debug].blank?
+      end
+    end
 		
 		# Get and Set CUSTOMER INFORMATION
 	
@@ -263,6 +283,38 @@ module GoToBillingLibrary
 		def GetEmail
 			return @email	
 		end
+		
+		def customer_info(info = nil)
+	    if info.nil? # get
+	      {
+          :customer_id => GetCustomerId,
+          :first_name  => GetFirstName,
+          :comapny     => GetCompany,
+          :last_name   => GetLastName,
+          :address     => GetAddress1,
+          :address2    => GetAddress2,
+          :city        => GetCity,
+          :state       => GetState,
+          :zip         => GetZipCode,
+          :country     => GetCountry,
+          :phone       => GetPhone,
+          :email       => GetEmail
+        }
+      else # set
+        SetCustomerId info[:user_id]    unless info[:user_id].blank?
+        SetFirstName  info[:first_name] unless info[:first_name].blank?
+        SetCompany    info[:company]    unless info[:company].blank?
+        SetLastName   info[:last_name]  unless info[:last_name].blank?
+        SetAddress1   info[:address]    unless info[:address].blank?
+        SetAddress2   info[:address2]   unless info[:address2].blank?
+        SetCity       info[:city]       unless info[:city].blank?
+        SetState      info[:state]      unless info[:state].blank?
+        SetZipCode    info[:zip]        unless info[:zip].blank?
+        SetCountry    info[:country]    unless info[:country].blank?
+        SetPhone      info[:phone]      unless info[:phone].blank?
+        SetEmail      info[:email]      unless info[:email].blank?
+      end
+    end
 	
 		# Get or Set TRANSACTION INFORMATION
 	
@@ -329,7 +381,30 @@ module GoToBillingLibrary
 		def GetOccurrenceNumber
 			return @occurrence_number	
 		end
-	
+		
+		def transaction_info(info = nil)
+	    if info.nil? # get
+	      {
+          :transaction_type  => GetTransactionType,
+          :invoice_id        => GetInvoiceId,
+          :amount            => GetAmount,
+          :process_date      => GetProcessDate,
+          :memo              => GetMemo,
+          :notes             => GetNotes,
+          :occurrence_type   => GetOccurrenceType,
+          :occurrence_number => GetOccurrenceNumber
+        }
+      else # set
+        SetTransactionType  info[:transaction_type]  unless info[:transaction_type].blank?
+        SetInvoiceId        info[:invoice_id]        unless info[:invoice_id].blank?
+        SetAmount           info[:amount]            unless info[:amount].blank?
+        SetProcessDate      info[:process_date]      unless info[:process_date].blank?
+        SetMemo             info[:memo]              unless info[:memo].blank?
+        SetNotes            info[:notes]             unless info[:notes].blank?
+        SetOccurrenceType   info[:occurrence_type]   unless info[:occurrence_type].blank?
+        SetOccurrenceNumber info[:occurrence_number] unless info[:occurrence_number].blank?
+      end
+    end
 	
 		# Get or Set CREDIT CARD INFORMATION
 		
@@ -380,7 +455,26 @@ module GoToBillingLibrary
 		def GetAuthorization
 			return @authorization	
 		end
-	
+	  
+	  def card_info(info = nil)
+	    if info.nil? #
+	      {
+          :cnumber       => GetCcNumber,
+          :expiration    => GetCcExpiration,
+          :name          => GetCcName,
+          :type          => GetCcType,
+          :verification  => GetCcVerification,
+          :authorization => GetAuthorization
+        }
+      else # set
+        SetCcNumber       info[:number]        unless info[:number].blank?
+        SetCcExpiration   info[:exp]           unless info[:exp].blank?
+        SetCcName         info[:name]          unless info[:name].blank?
+        SetCcType         info[:type]          unless info[:type].blank?
+        SetCcVerification info[:verification]  unless info[:verification].blank?
+        SetAuthorization  info[:authorization] unless info[:authorization].blank?
+      end
+    end
 	
 		# Get or Set ACH INFORMATION
 			
@@ -500,6 +594,15 @@ module GoToBillingLibrary
 			return @gateway_response
 		end
 		
+		require 'cobravsmongoose'
+		def response
+		  parsed = {}
+      CobraVsMongoose.xml_to_hash(@gateway_response)['ResponseData'].each do |k, v|
+        parsed.store k, v["$"]
+      end
+      parsed.symbolize_keys
+	  end
+		
 		def GetAuthCode
 			data = @gateway_response
 			my_val = data.scan(/<auth_code>(.*)<\/auth_code>/)
@@ -607,5 +710,8 @@ module GoToBillingLibrary
 			
 			return ""
 		end
+		
 	end
 end
+
+include GoToBillingLibrary
