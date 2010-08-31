@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	// front page
 	$('#jqDock0 > div').click(function(){
-		$(this).effect('bounce');
+		$(this).effect('bounce', { times: 3 }, 300);
 	});
 	
 	// advanced options
@@ -64,6 +64,47 @@ $(document).ready(function(){
 				$slider_handle.text(value + 5);
 			}
 		} 
+	});
+	
+	// map
+	$('#map_nav_btn').click(function(){
+		var partial = 'menus/map_nav',
+			title = 'Choose A State',
+			height = '486';
+			
+		get_pop_up_and_do(partial, title, height, function() {
+			preload_us_map_imgs();
+			
+			var $map_img = $('#map_nav_img'),
+				$areas = $('area', '#USMap'),
+				$state_name = $('#state_name', '#map_nav');
+			
+			$areas.mouseenter(function(){
+				var $this = $(this),
+					rel = $this.attr('rel'),
+					state = $this.attr('alt'),
+					img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ rel +'.png" alt="'+ state +'" />');
+				
+				$this.attr('alt', ''); // stop the alt from breifly flashing on screen while the img loads.
+				
+				$state_name.text(state);
+				$map_img.before(img);
+				img.show();
+				$this.attr('alt', state);
+			}); 
+			
+			$areas.mouseleave(function(){
+				$state_name.text('');
+				$('.map_overlay', '#map_nav').remove();
+			});
+			
+			$areas.click(function(){
+				$state_name.text('Going to '+ $(this).attr('alt') +'...');
+				window.location = this.href;
+			})
+		});
+		
+		return false;
 	});
 	
 	// steps
@@ -916,7 +957,7 @@ var workflow_settings = {
 			]
 		}
 	],
-	finish_action : function(wizard){ finish_workflow(wizard); }
+	finish_action : function(wizard){ finish_workflow(wizard) }
 };
 
 function close_pop_up_and_focus_on_fac_name(event){
@@ -1087,5 +1128,13 @@ function get_pop_up_and_do(sub_partial, pop_up_title, height, callback) {
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function preload_us_map_imgs() {
+	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	$.each(states, function(){
+		var img = new Image();
+		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }

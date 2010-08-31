@@ -24,6 +24,14 @@ class Notifier < ActionMailer::Base
     @body[:comments]    = comments
   end
   
+  def password_reset_instructions(user)
+    subject       "Password Reset Instructions"
+    from          "US Self Storage Locator"
+    recipients    user.email
+    sent_on       Time.now
+    body          :edit_password_reset_url => edit_password_reset_url(user.perishable_token)
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from

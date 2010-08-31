@@ -13,7 +13,7 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.cities_of(state)
-    all(:select => 'name', :conditions => ['LOWER(state) = ?', state.downcase], :order => 'name').map(&:name)
+    all(:select => 'name', :conditions => ['LOWER(state) = ?', state.downcase.gsub('-', ' ')], :order => 'name').map(&:name)
   end
   
 end

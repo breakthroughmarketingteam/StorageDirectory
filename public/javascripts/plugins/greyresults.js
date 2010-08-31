@@ -245,8 +245,7 @@ $(function(){
 	$('.more_results').live('click', function(){
 		var $this 		= $('.more_results'),
 			plus_sign 	= $this.find('span > span').hide(),
-			ajax_loader = $('.ajax_loader', $this).show();
-
+			ajax_loader = $('.ajax_loader', $this).show();		
 		// params to build the url that will query the same data the visitor searched for, advanced one page
 		var pagetitle = $('span[name=params_pagetitle]', $this.parent()).eq(0).text(),
 			query 	  = $('span[name=params_query]', $this.parent()).eq(0).text(),
@@ -273,7 +272,7 @@ $(function(){
 						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
 						map 		 = this.map, // related model attributes
 						specials	 = this.specials;
-
+					
 					// update tab urls
 					var tabs = [
 						$('.fac-map a', this_listing),
@@ -396,7 +395,11 @@ $(function(){
 				$('.listing:not(.active) .open_tab').text('+');
 				$('.open_tab', $listing).data('active', true).text('x');
 
-				if ($panel.is(':hidden')) $panel.slideDown();
+				if ($panel.is(':hidden')) {
+					$panel.slideDown(900);
+					$(window).scrollTo($listing, { speed: 1000 });
+				}
+				
 				$('.progress', '.listing').removeClass('active');
 
 				// load the google map into an iframe

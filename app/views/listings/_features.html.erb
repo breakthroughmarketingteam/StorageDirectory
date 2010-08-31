@@ -1,10 +1,7 @@
 <div id="sl-tabs-feat" class="tab_content">
-  <div id="sl-tabs-feat-in">
-    <% 1.upto(12) do |i| %>
-    <ul>
-      <li><span>Item <%= i %></span></li>
-      <li><span>Item 2</span></li>
-    </ul><% end %>
-    <div class="clear"></div>
-  </div>
+  <ul id="sl-tabs-feat-in">
+    <% @features.each do |feature| %>
+      <li><span class="selectable"><%= check_box_tag 'feature', feature, false, :class => 'hidden' %></span><%= feature %></li>
+    <% end %>
+  </ul>
 </div>

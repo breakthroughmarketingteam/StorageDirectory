@@ -69,7 +69,7 @@ class ListingsController < ApplicationController
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     @features = IssnUnitTypeFeature.labels
-    @sizes = IssnUnitTypeSize.labels
+    @unit_sizes = IssnUnitTypeSize.labels
   end
   
   def update
