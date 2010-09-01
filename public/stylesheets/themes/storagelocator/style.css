@@ -830,9 +830,9 @@ body{background:;}
 #footer_mid{padding-top:25px;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 
-#steps{width:949px;padding:20px 0 10px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#steps{height:198px;width:949px;padding:20px 0 10px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #steps .step{float:left;width:33.3%;}
-#steps .in{min-height:173px;border-right:3px solid #cbcbcb;margin-right:17px;min-height:144px;position:relative;}
+#steps .in{min-height:173px;border-right:3px solid #cbcbcb;margin-right:10px;min-height:131px;padding-left:7px;position:relative;}
 #steps .step p{font-size:90%;padding-right:23px;position:absolute;top:0;}
 #steps step img{position:absolute;}
 
