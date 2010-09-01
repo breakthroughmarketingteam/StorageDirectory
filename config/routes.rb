@@ -19,7 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean seo friendly
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show'
+  # all states except washington dc
+  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
   map.storage_state_or_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'

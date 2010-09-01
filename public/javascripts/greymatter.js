@@ -792,8 +792,8 @@ $.fn.accordion = function() {
 $.fn.tabular_content = function() {
 	return this.each(function(){
 		var $this = $(this), // the container
-				tabs = $('.tabular', $this), // ul
-				panels = $('.tab_content', $this); // tab content divs
+			tabs = $('.tabular', $this), // ul
+			panels = $('.tab_content', $this); // tab content divs
 		
 		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
@@ -878,4 +878,13 @@ function titleize(string) {
 var Ajax = function(){};
 Ajax.Request = function(url, params) {
 	$.post(url, params.parameters);
+}
+
+String.prototype.replaceAll = function(find, replace) {
+    var temp = this, index = temp.indexOf(find);
+    while (index != -1) {
+        temp = temp.replace(find, replace);
+        index = temp.indexOf(find);
+    }
+    return temp;
 }

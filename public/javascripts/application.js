@@ -1,7 +1,7 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
 $(document).ready(function(){	
-	$('#dock').jqDock({ size: 60, attenuation: 400 });
+	$('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
@@ -67,44 +67,128 @@ $(document).ready(function(){
 		} 
 	});
 	
-	// map
-	$('#map_nav_btn').click(function(){
-		var partial = 'menus/map_nav',
-			title = 'Choose A State',
-			height = '486';
-			
-		get_pop_up_and_do(partial, title, height, function() {
-			preload_us_map_imgs();
-			
-			var $map_img = $('#map_nav_img'),
-				$areas = $('area', '#USMap'),
-				$state_name = $('#state_name', '#map_nav');
-			
-			$areas.mouseenter(function(){
-				var $this = $(this),
-					rel = $this.attr('rel'),
-					state = $this.attr('alt'),
-					img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ rel +'.png" alt="" />');
-				
-				
-				$state_name.text(state);
-				$map_img.before(img);
-				img.show();
-			}); 
-			
-			$areas.mouseleave(function(){
-				$state_name.text('');
-				$('.map_overlay', '#map_nav').remove();
+	// map pop up
+	var map_nav_btn = $('#map_nav_btn');
+	if (map_nav_btn.length > 0) {
+		preload_us_map_imgs();
+		
+		map_nav_btn.click(function(){
+			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
+
+			get_pop_up_and_do(partial, title, height, function() {
+				new GreyWizard($('#map_nav'), {
+					slide_speed  : 1500,
+					btn_speed	 : 900,
+					fade_speed	 : 1000,
+					title		 : 'Choose a State',
+					slides_class : 'map_flow_step',
+					nav_id : 'map_flow_nav',
+					slides : [
+						{	
+							pop_up_title : 'Click on a State',
+							div_id  : 'map_step1',
+							action  : map_flow_step1,
+							nav_vis : [['back', 'hide']]
+						},
+						{ 
+							pop_up_title : 'Pick a City',
+							div_id  : 'map_step2',
+							action  : map_flow_step2,
+							nav_vis : [['back', 'fadeIn']]
+						}
+					]
+				}).begin_workflow_on(0);
 			});
-			
-			$areas.click(function(){
-				$state_name.text('Going to '+ $(this).attr('alt') +'...');
-				window.location = this.href;
-			})
+
+			return false;
 		});
 		
-		return false;
-	});
+		function map_flow_step1() {
+			var wizard = arguments[0],
+				$map_img = $('#map_nav_img', '#map_nav'),
+				$areas = $('area', '#USMap'),
+				$state_name = $('#state_name', '#map_nav');
+				
+			var add_map_overlay = function() {
+				var area = $(this), img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
+				$state_name.text(area.attr('alt'));
+				$map_img.before(img);
+			}; 
+			$areas.unbind('mouseenter', add_map_overlay).live('mouseenter', add_map_overlay);
+
+			var remove_map_overlay = function() {
+				$state_name.text('');
+				$('.map_overlay', '#map_nav').remove();
+			};
+			$areas.unbind('mouseleave', remove_map_overlay).live('mouseleave', remove_map_overlay);
+			
+			var get_cities = function() {
+				var area = $(this), state = area.attr('alt');
+				$state_name.text('Going to '+ state +'...');
+				
+				if (state == 'Washington DC') {
+					window.location = '/self-storage/washington-dc';
+					
+				} else {
+					if (wizard.slide_data[1].data && wizard.slide_data[1].data.state == state) {
+						wizard.slide_data[1].build_city_list = false;
+						wizard.next();
+
+					} else {
+						$.getJSON('/ajax/get_cities?state='+ state, function(response) {
+							if (response.success) {
+								wizard.slide_data[1].build_city_list = true;
+								wizard.slide_data[1].pop_up_title = 'Pick a City in '+ state
+								wizard.slide_data[1].data = { state: state, cities: response.data };
+								wizard.next();
+
+							} else $.ajax_error(response);
+						});
+					}
+				}
+				
+
+				return false;
+			};
+			$areas.unbind('click', get_cities).live('click', get_cities);
+		}
+		
+		function map_flow_step2() {
+			var wizard = arguments[0];
+			$('#city_name').remove();
+			
+			if (wizard.slide_data[1].build_city_list) {
+				var list = $('#cities_list', '#map_step2').html(''),
+					city_nav = $('#city_nav', '#map_step2').html(''),
+					city_link = $('<a href="/self-storage/"><span>Self Storage in </span></a>');
+				
+				for (var i = 0, len = wizard.slide_data[1].data.cities.length; i < len; i++) {
+					var letter = wizard.slide_data[1].data.cities[i][0],
+						cities = wizard.slide_data[1].data.cities[i][1],
+						new_list = $('<li id="cities_'+ letter +'" class="tab_content"></li>');
+						
+					city_nav.append('<li><a rel="cities_'+ letter +'" href="#'+ letter +'">'+ letter +'</a></li>');
+					
+					for (var j = 0, len2 = cities.length; j < len2; j++) {
+						var new_city = city_link.clone(), city = cities[j];
+						
+						new_city.show().attr('href', city_link.attr('href') + wizard.slide_data[1].data.state +'/'+ city.toLowerCase().replaceAll(' ', '-'));
+						new_city.find('span').hide().after(city);
+						new_list.append(new_city);
+					}
+					
+					list.append(new_list);
+				}
+				
+				$('#map_step2').tabular_content();
+				
+				var city_click = function() {
+					$('#map_step2', '#map_nav').append('<p id="city_name">Looking for '+ $(this).text() +', '+ wizard.slide_data[1].data.state +'...</p>');
+				}
+				$('li a', list).unbind('click', city_click).live('click', city_click);
+			}
+		}
+	}
 	
 	// steps
 	$('p', '#steps').hide();
@@ -805,41 +889,42 @@ var GreyWizard = function(container, settings) {
 	self.width	  	= self.workflow.width();
 	self.height   	= self.workflow.height();
 	self.slides   	= $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
-	self.spacer		= 100;
+	self.spacer		= 100; // to give the slides space between transitions
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
 		self.nav_bar  	= $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
-		
 		self.current  	   = step || 0;
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
 		
-		self.set_slides(true);
+		self.set_slides();
 		
 		// bind events
 		self.nav_bar.find('.next, .skip').click(self.next);
 		self.nav_bar.find('.back').click(self.prev);
 		
 		self.title_bar.change(function(){
-			$(this).text(self.settings.title + ' - Step '+ (self.current+1));
+			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
+			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
+			
 		}).trigger('change');
 		
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
 		self.set_nav();
 	}
 	
-	this.set_slides = function(set_display) {
+	this.set_slides = function() {
 		if (typeof set_display == 'undefined') set_display = false;
 		
 		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
 		self.slides.each(function(i){
 			// calculate the left position so that the initial slide is at 0
-			var left = -((self.width + self.spacer) * ((self.current) - i))
+			var left = -((self.width + self.spacer) * (self.current - i))
 			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
 		});
 		
-		if (set_display) { // build the slide tabbed nav
+		if (self.settings.set_slides) { // build the slide tabbed nav
 			var slide_display_html = '<div id="slide_nav">',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
 				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
@@ -915,7 +1000,7 @@ var GreyWizard = function(container, settings) {
 			self.slide_data[self.current].action.call(this, self);
 			self.title_bar.trigger('change');
 			
-		} else if (self.current == self.num_slides-1) self.settings.finish_action.call(this, self);
+		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') self.settings.finish_action.call(this, self);
 	}
 }
 
@@ -927,6 +1012,7 @@ var workflow_settings = {
 	title		 : 'Add Your Facility',
 	slides_class : 'workflow_step',
 	nav_id : 'workflow_nav',
+	set_slides : true,
 	slides : [
 		{ 
 			div_id  : 'signupstep_2',
