@@ -847,14 +847,15 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 
 #footer{overflow:hidden;clear:both;}
 #footer_top{height:140px;position:relative;background:url(/images/ui/storagelocator/sky-blue-bg.png) repeat-x;}
-#footer_top .divide{padding:7px 0;position:relative;top:97px;background:url(/images/ui/storagelocator/purple-bg.png) repeat;border-top:1px solid #3c3d98;box-shadow:1px 2px 2px #333;-moz-box-shadow:1px 2px 2px #333;-webkit-box-shadow:1px 2px 2px #333;}
+#footer_top .divide{padding:5px 0;position:relative;top:100px;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border-top:1px solid #3c3d98;box-shadow:1px 2px 2px #333;-moz-box-shadow:1px 2px 2px #333;-webkit-box-shadow:1px 2px 2px #333;}
 #footer_top .divide .wrapper{width:949px;color:#fff;text-shadow:1px 1px 2px #333;font-size:120%;}
 #footer_mid{padding-top:25px;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 
-#steps{width:949px;padding:20px 0 10px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+
+#steps{height:198px;width:949px;padding:20px 0 10px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #steps .step{float:left;width:33.3%;}
-#steps .in{min-height:173px;border-right:3px solid #cbcbcb;margin-right:17px;min-height:144px;position:relative;}
+#steps .in{min-height:173px;border-right:3px solid #cbcbcb;margin-right:10px;min-height:131px;padding-left:7px;position:relative;}
 #steps .step p{font-size:90%;padding-right:23px;position:absolute;top:0;}
 #steps step img{position:absolute;}
 
@@ -870,7 +871,8 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 
 #handle,#red_tab{margin:0 auto;}
 #handle{width:196px;height:51px;margin-top:20px;position:relative;z-index:1;cursor:pointer;background:url(/images/ui/storagelocator/handle.png) no-repeat;}
-#red_tab{display:block;width:134px;height:44px;margin:-20px auto 30px;color:#fff;font-size:100%;text-shadow:1px 1px 2px #333;line-height:2.2;position:relative;z-index:0;text-align:center;background:url(/images/ui/storagelocator/red-pull-tab.png) no-repeat;}
+#red_tab{display:block;width:142px;height:52px;margin:5px auto 20px;color:#fff;font-size:100%;text-shadow:1px 1px 2px #333;line-height:2.2;position:relative;z-index:0;text-align:center;background:url(/images/ui/storagelocator/pull-tab.png) no-repeat;}
+#red_tab:hover{background:url(/images/ui/storagelocator/pull-tab-hover.png) no-repeat;}
 
 #more_info{width:976px;margin:-6px auto 0;background:#fff;text-align:left;position:relative;z-index:1;-webkit-border-bottom-right-radius: 20px;-webkit-border-bottom-left-radius: 20px;-moz-border-radius-bottomright: 20px;-moz-border-radius-bottomleft: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;box-shadow:1px 2px 8px #333;-moz-box-shadow:1px 2px 8px #333;-webkit-box-shadow:1px 2px 8px #333;}
 #more_info h4{height:64px;padding:23px 80px 20px;font-size:200%;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/more-info-header.jpg) no-repeat;}
@@ -880,8 +882,14 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #more_info .inner p{margin-bottom:20px;}
 
 #footer_btm{min-height:338px;border-top:1px solid #3c3d98;border-bottom:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-#footer_btm .wrapper{overflow:hidden;margin-top:35px;width:955px;}
-#footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
+#footer_btm .wrapper{-moz-border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:35px;width:975px;}
+#footer_btm .ad{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
+#footer_btm .ad:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #6666cc;-moz-box-shadow:2px 2px 2px #6666cc;-webkit-box-shadow:2px 2px 2px #6666cc;}
+#footer_btm img {margin:10px;}
+#footer_btm .next_ad{background:url(/images/ui/storagelocator/next.png) no-repeat;cursor:pointer;height:35px;width:7px;float:right;margin:46px 4px 0 0;}
+#footer_btm .previous_ad{background:url(/images/ui/storagelocator/previous.png) no-repeat;cursor:pointer;height:35px;width:7px;float:left;margin:46px 0 0 4px;}
+#footer_btm .next_ad:hover{background:url(/images/ui/storagelocator/next-hover.png) no-repeat;margin:46px 4px 0 0;}
+#footer_btm .previous_ad:hover{background:url(/images/ui/storagelocator/previous-hover.png) no-repeat;float:left;margin:46px 0 0 4px;}
 
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
