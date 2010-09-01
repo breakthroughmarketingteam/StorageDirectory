@@ -131,6 +131,16 @@ class Listing < ActiveRecord::Base
   #
   require 'issn_adapter'
   
+  # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }
+  def get_move_in_cost(args)
+    IssnAdapter.get_move_in_cost self.facility_id, args
+  end
+  
+  # args: { :type_id => str:required, :unit_id => str:optional, :date => str:optional }
+  def get_reserve_cost(args)
+    IssnAdapter.get_reserve_cost self.facility_id, args
+  end
+  
   def facility_id
     self.facility_info.O_FacilityId rescue nil
   end

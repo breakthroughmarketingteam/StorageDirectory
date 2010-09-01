@@ -52,7 +52,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    raise @listing.get_facility_info('getFacilityPromos').pretty_inspect
+    raise @listing.get_reserve_cost(:type_id => @listing.unit_types.first.sID).pretty_inspect
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 

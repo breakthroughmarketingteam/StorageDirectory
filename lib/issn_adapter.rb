@@ -29,32 +29,50 @@ class IssnAdapter
   #
   # Data Retrieval
   #
-  def self.find_facilities(query = {})
-    response = call_issn 'findFacilities', "&sPostalCode=#{query[:zip] || '85021'}&sCity=#{query[:city]}&sState=#{query[:state]}&sStreetAddress=#{query[:address]}&sMilesDistance=#{query[:within] || '15'}&sSizeCodes=#{query[:size_code]}&sFacilityFeatureCodes=#{query[:facility_feature_code]}&sSizeTypeFeatureCodes=#{query[:size_type_feature_code]}&sOrderBy=#{query[:order]}"
-    parse_response response, 'FindFacility'
+  def self.find_facilities(args = {})
+    query = "&sPostalCode=#{args[:zip] || '85021'}&sCity=#{args[:city]}&sState=#{args[:state]}&sStreetAddress=#{args[:address]}&sMilesDistance=#{args[:within] || '15'}&sSizeCodes=#{args[:size_code]}&sFacilityFeatureCodes=#{args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{args[:size_type_feature_code]}&sOrderBy=#{args[:order]}"
+    method_call 'findFacilities', query
   end
   
   # ISSN methods that only require a facility id
   def self.get_facility_info(method = 'getFacilityInfo', facility_id = nil)
-    response = IssnAdapter.call_issn method, "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sIssnId="
-    data = IssnAdapter.parse_response response, method
-  end
-  
-  def self.get_unit_info(facility_id = nil, type_id = nil)
-    method = 'getFacilityUnits'
-    response = IssnAdapter.call_issn method, "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sFacilityUnitTypeId=#{type_id || IssnAdapter.facility_unit_types_ids[0]}"
-    data = IssnAdapter.parse_response(response, method)
+    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sIssnId="
+    method_call method, query
   end
   
   # ISSN methods that have std in the name, they dont required further parameters
   def self.get_standard_info(method = 'getStdFacilityFeatures')
-    response = IssnAdapter.call_issn method
-    data = IssnAdapter.parse_response response, method
+    method_call method
+  end
+  
+  # Abstraction
+  def self.get_unit_info(facility_id = nil, type_id = nil)
+    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypeId=#{type_id || @@facility_unit_types_ids[0]}"
+    method_call 'getFacilityUnits', query
+  end
+  
+  def self.get_facility_promos(facility_id)
+    get_facility_info 'getFacilityPromos', facility_id
+  end
+  
+  def self.get_move_in_cost(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
+    method_call 'getMoveinCost', query
+  end
+  
+  def self.get_reserve_cost(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
+    method_call 'getReserveCost', query
   end
   
   #
   # Connector and Parsers
   #
+  def self.method_call(method, query = '')
+    response = call_issn method, query
+    parse_response response, method
+  end
+  
   def self.call_issn(method, query = '')
     uri = URI.parse(@@host + @@url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -102,6 +120,7 @@ class IssnAdapter
     value.is_a?(Array) ? parse_soap_array(value) : parse_soap_hash(value)
   end
   
+  # DataSet key mappings
   def self.data_key_for(method)
     case method when 'getFacilityInfo', 'getFacilityFeatures'
     # get_facility_info
@@ -132,6 +151,11 @@ class IssnAdapter
         'Facility_UT_Features'
     # END get_Features
       
+      when 'getMoveinCost'
+        'MoveInCost'
+      when 'getReserveCost'
+        'ReserveCost'
+        
     else # already is a key
       method
     end
