@@ -606,8 +606,8 @@ img.right{margin:0 10px 10px 0;}
 #map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;}
 #map_nav #map_step2{overflow:hidden;}
 #map_step2 #city_nav{width:100%;height:30px;}
-#map_step2 #city_nav a{display:block;width:14px;padding:4px 8px;float:left;font-size:120%;}
-#map_step2 #city_nav a:hover,#map_step2 #city_nav a:active,#map_step2 #city_nav li.active a{background:#ccc;}
+#map_step2 #city_nav a{display:block;padding:3px 6px;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+#map_step2 #city_nav a:hover,#map_step2 #city_nav a:active,#map_step2 #city_nav li.active a{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #map_step2 #cities_list{height:320px;margin-top:14px;overflow:auto;}
 #map_step2 #cities_list li{display:none;position:static;}
 #map_step2 #cities_list li a{width:23.5%;}
