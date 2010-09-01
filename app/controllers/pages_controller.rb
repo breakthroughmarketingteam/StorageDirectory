@@ -12,7 +12,8 @@ class PagesController < ApplicationController
 
   def show
     if params[:title] == 'home' || params[:id].to_i == 1
-      @unit_sizes = %w( 5x10 5x15 7x10 10x10 10x15 10x30 )
+      @unit_sizes ||= IssnUnitTypeSize.labels
+      @facility_features = IssnUnitTypeFeature.labels
       render :layout => 'locatorfront'
     end
   end

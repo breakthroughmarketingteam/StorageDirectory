@@ -18,7 +18,8 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean seo friendly
-  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => :show, :requirements => { :id => /\d*/ }
+  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show'
   map.storage_state_or_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
@@ -53,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :payments
   
   map.resource :site_setting
+  map.resources :password_resets, :only => [:new, :create, :edit, :update]
   
   # greyresults
   map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations]

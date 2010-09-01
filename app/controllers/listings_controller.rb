@@ -52,6 +52,7 @@ class ListingsController < ApplicationController
   end
 
   def show
+    raise @listing.get_facility_info('getFacilityPromos').pretty_inspect
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
@@ -66,6 +67,9 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
+    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+    @features = IssnUnitTypeFeature.labels
+    @unit_sizes = IssnUnitTypeSize.labels
   end
   
   def update

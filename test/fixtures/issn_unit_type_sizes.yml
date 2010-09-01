@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  Description: MyString
+  SQFT: 1
+  sID: MyString
+  Length: 1
+  Width: 1
+
+two:
+  Description: MyString
+  SQFT: 1
+  sID: MyString
+  Length: 1
+  Width: 1

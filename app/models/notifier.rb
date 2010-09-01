@@ -1,4 +1,5 @@
 class Notifier < ActionMailer::Base
+  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost:3000' : 'storagelocator.heroku.com'
   
   def comment_notification(recipient, comment, host)
     setup_email recipient, comment.email, 'New website comment'
@@ -22,6 +23,11 @@ class Notifier < ActionMailer::Base
     @body[:user]        = reserver
     @body[:reservation] = reservation
     @body[:comments]    = comments
+  end
+  
+  def password_reset_instructions(user)
+    setup_email user.email, 'admin@usselfstoragelocator.com', 'Password Reset Instructions'
+    @body[:url] = edit_password_reset_url(user.perishable_token)
   end
   
   def setup_email(recipient, from, subject = '')

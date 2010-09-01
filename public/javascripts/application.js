@@ -6,8 +6,9 @@ $(document).ready(function(){
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
-	$('#jqDock0 > div').click(function(){
-		$(this).effect('bounce');
+	$('div > a > img', '#jqDock0').click(function(){
+		console.log(this)
+		$(this).effect('bounce', { times: 3 }, 300);
 	});
 	
 	// advanced options
@@ -66,6 +67,45 @@ $(document).ready(function(){
 		} 
 	});
 	
+	// map
+	$('#map_nav_btn').click(function(){
+		var partial = 'menus/map_nav',
+			title = 'Choose A State',
+			height = '486';
+			
+		get_pop_up_and_do(partial, title, height, function() {
+			preload_us_map_imgs();
+			
+			var $map_img = $('#map_nav_img'),
+				$areas = $('area', '#USMap'),
+				$state_name = $('#state_name', '#map_nav');
+			
+			$areas.mouseenter(function(){
+				var $this = $(this),
+					rel = $this.attr('rel'),
+					state = $this.attr('alt'),
+					img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ rel +'.png" alt="" />');
+				
+				
+				$state_name.text(state);
+				$map_img.before(img);
+				img.show();
+			}); 
+			
+			$areas.mouseleave(function(){
+				$state_name.text('');
+				$('.map_overlay', '#map_nav').remove();
+			});
+			
+			$areas.click(function(){
+				$state_name.text('Going to '+ $(this).attr('alt') +'...');
+				window.location = this.href;
+			})
+		});
+		
+		return false;
+	});
+	
 	// steps
 	$('p', '#steps').hide();
 	var $steps = $('.in', '#steps'),
@@ -85,9 +125,6 @@ $(document).ready(function(){
 	}, function(){
 		$('p', this).fadeOut();
 		$('img', this).fadeIn();
-		
-		clearTimeout(fade_anim_int);
-		fade_anim_int = setTimeout(stepsFadeAnim, 1000);
 	});
 	
 	function stepsFadeAnim() {
@@ -129,6 +166,10 @@ $(document).ready(function(){
 	});
 	
 	$('#advanced_opts').hide();
+	
+	// Cities pages
+	$('.storage_in_city', '#cities_list').css('width', '23%');
+	$('.storage_in_city span', '#cities_list').hide();
 	
 	// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
 	var GreyShow = function(options) {
@@ -919,7 +960,7 @@ var workflow_settings = {
 			]
 		}
 	],
-	finish_action : function(wizard){ finish_workflow(wizard); }
+	finish_action : function(wizard){ finish_workflow(wizard) }
 };
 
 function close_pop_up_and_focus_on_fac_name(event){
@@ -1090,5 +1131,13 @@ function get_pop_up_and_do(sub_partial, pop_up_title, height, callback) {
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function preload_us_map_imgs() {
+	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	$.each(states, function(){
+		var img = new Image();
+		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }

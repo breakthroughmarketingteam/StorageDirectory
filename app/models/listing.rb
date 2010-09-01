@@ -2,7 +2,6 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
-  has_one  :facility_info
   has_one  :map
   acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
@@ -14,13 +13,16 @@ class Listing < ActiveRecord::Base
   has_many :clicks
   has_many :impressions
   
+  # OpentTech ISSN data
+  has_one  :facility_info
+  has_many :unit_types
+  
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
   acts_as_taggable_on :tags
   
   # Instance Methods
-  
   def accepts_reservations?
     self.client && self.client.accepts_reservations?
   end
@@ -125,34 +127,40 @@ class Listing < ActiveRecord::Base
   end
   
   #
-  # ISSN wrapper code
+  # OpenTech ISSN wrapper code
   #
   require 'issn_adapter'
   
-  # ISSN methods that only require a facility id
-  def self.get_facility_info(method = 'getFacilityInfo')
-    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sIssnId="
-    response = IssnAdapter.call_issn method
-    
-    data = IssnAdapter.parse_response(response, method)
-    raise [method, data].pretty_inspect
+  def facility_id
+    self.facility_info.O_FacilityId rescue nil
   end
   
-  ## ISSN methods that require a facility id and a sFacilityUnitTypesId
-  def get_unit_info(method = 'getFacilityUnits')
-    IssnAdapter.query += "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sFacilityUnitTypeId=#{IssnAdapter.facility_unit_types_ids[0]}"
-    response = IssnAdapter.call_issn method
-    
-    data = IssnAdapter.parse_response(response, method)
-    raise [method, data].pretty_inspect
+  def self.find_facilities
+    IssnAdapter.find_facilities
   end
   
-  # ISSN methods that have std in the name, they dont required further parameters
+  def get_facility_info(method = 'getFacilityInfo')
+    IssnAdapter.get_facility_info method, self.facility_id
+  end
+  
+  # ISSN methods that require a facility id and a sFacilityUnitTypesId
+  def get_unit_info
+    IssnAdapter.get_unit_info self.facility_id
+  end
+  
+  # does not require extra params
   def self.get_standard_info(method = 'getStdFacilityFeatures')
-    response = IssnAdapter.call_issn method
-    
-    data = IssnAdapter.parse_response(response, method)
-    raise [method, data].pretty_inspect
+    IssnAdapter.get_standard_info method
+  end
+  
+  # Methods to sync data from the ISSN db
+  def sync_facility_info
+    if self.facility_info.nil?
+      @facility_info = self.create_facility_info
+      @facility_info.update_from_issn
+    else
+      self.facility_info.sync_with_issn
+    end
   end
   
 end
