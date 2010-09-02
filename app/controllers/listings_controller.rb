@@ -52,7 +52,6 @@ class ListingsController < ApplicationController
   end
 
   def show
-    raise @listing.get_reserve_cost(:type_id => @listing.unit_types.first.sID).pretty_inspect
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
@@ -70,6 +69,8 @@ class ListingsController < ApplicationController
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     @features = IssnUnitTypeFeature.labels
     @unit_sizes = IssnUnitTypeSize.labels
+    
+    #raise @listing.facility_info.attributes.pretty_inspect
   end
   
   def update

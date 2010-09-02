@@ -135,6 +135,8 @@ class ApplicationController < ActionController::Base
     @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
     @nav_pages         = Page.nav_pages
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
+    
+    @slogan = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
   end
   
   # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

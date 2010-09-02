@@ -21,7 +21,7 @@ class SizesController < ApplicationController
       if @size.update_attributes(params[:size])
         render :json => { :success => true }
       else
-        raise @size.errors.full_messages.pretty_inspect
+        render :json => { :success => false, :data => model_errors(@size) }
       end
   end
   

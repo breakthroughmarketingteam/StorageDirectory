@@ -84,9 +84,9 @@ $(function(){
 			// build the input fields with the original values preset
 			x = sizes_orig.split(/\W?x\W?/)[0],
 			y = sizes_orig.split(/\W?x\W?/)[1],
-			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[x]" value="'+ x +'" />',
-			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[y]" value="'+ y +'" />',
-			ti = '<input type="text" class="small_text_field i" name="size[unit_type]" value="'+ (type_orig == 'NONE' ? '' : type_orig) +'" />',
+			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
+			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
+			ti = '<input type="text" class="small_text_field i" name="size[description]" value="'+ type_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
 
@@ -124,10 +124,10 @@ $(function(){
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 			if (response.success) {
 				// update the row with the new values
-				var sizes_html = $('input[name="size[x]"]', container).val() +' x '+ $('input[name="size[y]"]', container).val();
+				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
 
-				var type_html = $('input[name="size[unit_type]"]', container).val();
+				var type_html = $('input[name="size[description]"]', container).val();
 				type_li.html(type_html);
 
 				var price_html = $('input[name="size[price]"]', container).val();

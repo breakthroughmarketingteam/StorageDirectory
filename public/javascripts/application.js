@@ -231,22 +231,21 @@ $(document).ready(function(){
 	
 	// more info button
 	var more_info_tab = $('#red_tab'),
+		orig_info_txt = more_info_tab.text(),
 		more_info_div = $('#'+ more_info_tab.attr('rel')).hide();
 		
 	more_info_tab.click(function(){
 		if (!more_info_tab.data('open')) {
 			more_info_div.slideDown(1000);
-			more_info_tab.data('open', true);
-			more_info_tab.text('Click to close');
+			more_info_tab.data('open', true).text('Click to close');
 		} else {
 			more_info_div.slideUp(1000);
-			more_info_tab.data('open', false);
-			more_info_tab.text('Click to open');
+			more_info_tab.data('open', false).text(orig_info_txt);
 		}
 	});
 	
 	$('#handle').click(function(){
-		if (more_info_tab) more_info_tab.trigger('click');
+		if (more_info_tab) more_info_tab.click();
 	});
 	
 	$('#advanced_opts').hide();
@@ -269,6 +268,15 @@ $(document).ready(function(){
 			self.startSlide();
 		}
 		
+		this.startSlide = function() {
+			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
+			
+			self.hidePrevSlide();
+			self.slide_objects = self.slides[self.current].objects;
+			self.current_object = 0;
+			self.runObject(self.slide_objects[0]);
+		}
+		
 		this.gotoSlide = function(n) {
 			self.current = n;
 			
@@ -277,15 +285,6 @@ $(document).ready(function(){
 				self.gotoSlide(0);
 				
 			} else self.startSlide();
-		}
-		
-		this.startSlide = function() {
-			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
-			
-			self.hidePrevSlide();
-			self.slide_objects = self.slides[self.current].objects;
-			self.current_object = 0;
-			self.runObject(self.slide_objects[0]);
 		}
 		
 		this.runObject = function(o) {
@@ -314,7 +313,7 @@ $(document).ready(function(){
 		}
 		
 		this.hidePrevSlide = function(callback) {
-			var prev= self.current == 0 ? self.num_slides-1 : self.current-1;
+			var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
 			
 			for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
 				var $object = $('#'+ self.slides[prev].objects[i].id);
@@ -436,8 +435,6 @@ $(document).ready(function(){
 			else move_me.css({ position: 'static'  });
 		});
 	}
-	
-	
 	
 	// New Permissions
 	if ($.on_page([['new', 'permissions, roles']])) {

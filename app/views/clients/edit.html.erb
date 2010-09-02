@@ -46,7 +46,7 @@
 			<h3><span>Facilities</span></h3>
 			<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
 			<%= ajax_loader %>
-			<a href="#" id="add_fac" title="Add a new facility">New</a>
+			<a href="#" id="add_fac" class="btn" title="Add a new facility">New</a>
         </div>
         
         <div id="client_listing_box">
@@ -75,7 +75,7 @@
           <h3><span>Owner / Management Info.</span></h3>
 
   	      <%= ajax_loader %>
-          <p><a id="client_edit_contact" class="instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] rescue false %>" href="#">Edit</a></p>
+          <a id="client_edit_contact" class="btn instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] rescue false %>" href="#">Edit</a></p>
         </div>
 
         <div class="ov-info-cnt">
