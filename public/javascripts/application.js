@@ -45,6 +45,7 @@ $(document).ready(function(){
 			$('.slider_val', $(this).parent()).val(ui.value);
 			$slider_handle.text(ui.value);
 		}
+		
 	});
 	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').text('5');
 	
@@ -193,9 +194,9 @@ $(document).ready(function(){
 	// steps
 	$('p', '#steps').hide();
 	var $steps = $('.in', '#steps'),
-			fade_anim_speed = 3400,
-			fade_anim_int = setTimeout(stepsFadeAnim, 1000);
-			
+	    fade_anim_speed = 3400
+	    //fade_anim_int = setTimeout(stepsFadeAnim, 1000);
+	
 	$steps.hover(function(){
 		fade_anim_step = $steps.index(this);
 		
@@ -204,7 +205,7 @@ $(document).ready(function(){
 		
 		$('img', this).fadeOut();
 		$('p', this).fadeIn();
-		clearTimeout(fade_anim_int);
+		//clearTimeout(fade_anim_int);
 		
 	}, function(){
 		$('p', this).fadeOut();
