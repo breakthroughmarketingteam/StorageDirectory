@@ -70,7 +70,7 @@ class ListingsController < ApplicationController
     @features = IssnUnitTypeFeature.labels
     @unit_sizes = IssnUnitTypeSize.labels
     
-    #raise @listing.facility_info.attributes.pretty_inspect
+    raise @listing.sizes.first.unit_type.feature.attributes.pretty_inspect
   end
   
   def update

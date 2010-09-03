@@ -2,7 +2,7 @@ class IssnUnitTypeSize < ActiveRecord::Base
   
   # gets an array => ['3x10', '5x10', ...]
   def self.labels
-    self.all.sort_by(&:SQFT).map(&:Description)
+    self.all.sort_by(&:SQFT).map(&:Description) || []
   end
   
   #
