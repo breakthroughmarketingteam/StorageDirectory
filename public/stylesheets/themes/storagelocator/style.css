@@ -678,7 +678,7 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
 #ov-units-head #add_fac{float:right;margin:6px 15px 0 0;}
-.btn{font-weight:bold;display:block;width:82px;height:30px;color:#fff;text-shadow:1px 1px 2px #333;line-height:2.2;text-align:center;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
+.btn{font-weight:bold;display:block;width:84px;height:32px;color:#fff;text-shadow:1px 1px 2px #333;line-height:2.3;text-align:center;background:url("/images/ui/storagelocator/sl-table-reserve.png") no-repeat;}
 .my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .client_tip{padding:7px 12px;font-weight:bold;border:2px solid #333;width:96%;}

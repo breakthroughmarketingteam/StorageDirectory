@@ -145,6 +145,10 @@ $(function(){
 
 		}, 'json');
 	}
+	
+	$('#new_unit', '#sl-tabs-sizes').click(function(){
+		
+	});
 
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').click(function(){

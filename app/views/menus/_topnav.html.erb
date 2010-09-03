@@ -13,7 +13,7 @@
 </ul>
 <ul class="right">
 	<li><%= link_to_unless current_user, 'Log In', login_path, :class => active_page(login_path) do |name|
-			path = (current_user.has_role?('advertiser') ? client_account_path : user_path)
+			path = (current_user.has_role?('advertiser') ? client_account_path : user_path(current_user))
 			link_to('My Account', path, :class => active_page(path)) + 
 			link_to('Log out', logout_path)
 		end %></li>
