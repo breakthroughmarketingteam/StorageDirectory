@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100901140246) do
+ActiveRecord::Schema.define(:version => 20100902220447) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.datetime "updated_at"
   end
 
-  add_index "billing_infos", ["card_expiration", "client_id", "name"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+  add_index "billing_infos", ["client_id", "name", "card_expiration"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
 
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.string   "restful_region"
   end
 
-  add_index "blocks", ["id", "restful_region", "show_in_all", "title"], :name => "index_blocks_on_id_and_title_and_show_in_all_and_restful_region"
+  add_index "blocks", ["id", "title", "show_in_all", "restful_region"], :name => "index_blocks_on_id_and_title_and_show_in_all_and_restful_region"
 
   create_table "blocks_models", :force => true do |t|
     t.integer  "model_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.string   "email"
   end
 
-  add_index "comments", ["commentable_id", "title", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
+  add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
 
   create_table "facility_infos", :force => true do |t|
@@ -133,6 +133,18 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.integer  "MS_Postal"
     t.string   "MS_City"
     t.string   "MS_WebSite"
+  end
+
+  create_table "features", :force => true do |t|
+    t.integer  "unit_type_id"
+    t.string   "ErrorMessage"
+    t.string   "sID"
+    t.string   "StdUnitTypesFeaturesShortDescription"
+    t.float    "Fee"
+    t.string   "KnowOfFee"
+    t.string   "StdUnitTypesFeaturesId"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fields", :force => true do |t|
@@ -210,7 +222,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.text     "content"
   end
 
-  add_index "images", ["id", "title", "user_id"], :name => "index_images_on_id_and_user_id_and_title"
+  add_index "images", ["id", "user_id", "title"], :name => "index_images_on_id_and_user_id_and_title"
 
   create_table "impressions", :force => true do |t|
     t.integer  "listing_id"
@@ -283,7 +295,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.integer  "reservations_count", :default => 0
   end
 
-  add_index "listings", ["id", "title", "user_id"], :name => "index_listings_on_id_and_user_id_and_title"
+  add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
 
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "client_id"
@@ -299,7 +311,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.string   "zip"
   end
 
-  add_index "mailing_addresses", ["city", "client_id", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
+  add_index "mailing_addresses", ["client_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
 
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"
@@ -314,17 +326,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.float    "lng"
   end
 
-  add_index "maps", ["city", "lat", "listing_id", "lng", "zip"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
-
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
+  add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -342,7 +344,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.boolean  "paginate"
   end
 
-  add_index "models_views", ["model_id", "model_type", "view_id"], :name => "index_models_views_on_model_id_and_view_id_and_model_type"
+  add_index "models_views", ["model_id", "view_id", "model_type"], :name => "index_models_views_on_model_id_and_view_id_and_model_type"
 
   create_table "pages", :force => true do |t|
     t.string   "title"
@@ -359,7 +361,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.boolean  "use_placeholders"
   end
 
-  add_index "pages", ["id", "parent_id", "show_in_nav", "title"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"
+  add_index "pages", ["id", "title", "parent_id", "show_in_nav"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"
 
   create_table "payments", :force => true do |t|
     t.integer  "amount"
@@ -410,7 +412,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.integer  "position",         :default => 0
   end
 
-  add_index "posts", ["id", "published", "user_id"], :name => "index_posts_on_id_and_user_id_and_published"
+  add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
   create_table "rates", :force => true do |t|
     t.integer  "rater_id"
@@ -445,12 +447,12 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
 
   create_table "sizes", :force => true do |t|
     t.string   "title"
-    t.integer  "x"
-    t.integer  "y"
+    t.integer  "width"
+    t.integer  "length"
     t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "unit_type"
+    t.string   "description"
     t.integer  "price"
     t.integer  "listing_id"
   end
@@ -531,6 +533,7 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.integer  "ActualLength"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "size_id"
   end
 
   add_index "unit_types", ["listing_id"], :name => "index_unit_types_on_listing_id"
@@ -542,8 +545,8 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.datetime "updated_at"
   end
 
-  add_index "us_cities", ["name", "state"], :name => "index_us_cities_on_state_and_name"
   add_index "us_cities", ["name"], :name => "index_us_cities_on_name"
+  add_index "us_cities", ["state", "name"], :name => "index_us_cities_on_state_and_name"
   add_index "us_cities", ["state"], :name => "index_us_cities_on_state"
 
   create_table "user_hint_placements", :force => true do |t|
@@ -590,10 +593,10 @@ ActiveRecord::Schema.define(:version => 20100901140246) do
     t.string   "status"
     t.string   "temp_password"
     t.string   "last_name"
-    t.string   "perishable_token",                :null => false
+    t.string   "perishable_token",                :default => "", :null => false
   end
 
-  add_index "users", ["company", "email", "id", "type"], :name => "index_users_on_id_and_email_and_type_and_company"
+  add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
   create_table "views", :force => true do |t|

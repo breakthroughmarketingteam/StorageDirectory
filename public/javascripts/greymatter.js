@@ -365,7 +365,7 @@ $.on_page = function(route_sets) { // routes looks like: [ ['edit, new', 'views,
 			];
 	
 	while (i--) { // iterate through all the action/controller sets
-		actions 		= route_sets[i][0].split(/,\W?/);
+		actions 	= route_sets[i][0].split(/,\W?/);
 		controllers = route_sets[i][1].split(/,\W?/);
 		
 		var j = actions.length;
@@ -398,9 +398,9 @@ $.switch_action_hash = function(this_el, action, elementClass, contextClass) {
 // return the opposite action
 $.switch_actions = function(action) {
 	var action_sets = [
-		['show',						'hide'],
-		['fadeIn',			 'fadeOut'],
-		['slideDown',		 'slideUp'],
+		['show',			'hide'],
+		['fadeIn',		 'fadeOut'],
+		['slideDown',	 'slideUp'],
 		['addClass', 'removeClass']
 	];
 	

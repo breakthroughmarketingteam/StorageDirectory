@@ -126,11 +126,6 @@ class Listing < ActiveRecord::Base
     params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
   end
   
-  #
-  # OpenTech ISSN wrapper code
-  #
-  require 'issn_adapter'
-  
   # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }
   def get_move_in_cost(args)
     IssnAdapter.get_move_in_cost self.facility_id, args
@@ -145,31 +140,72 @@ class Listing < ActiveRecord::Base
     self.facility_info.O_FacilityId rescue nil
   end
   
-  def self.find_facilities
-    IssnAdapter.find_facilities
+  def self.find_facilities(args)
+    IssnAdapter.find_facilities(args)
   end
   
-  def get_facility_info(method = 'getFacilityInfo')
-    IssnAdapter.get_facility_info method, self.facility_id
-  end
-  
-  # ISSN methods that require a facility id and a sFacilityUnitTypesId
-  def get_unit_info
-    IssnAdapter.get_unit_info self.facility_id
-  end
-  
-  # does not require extra params
+  # does not require extra params. methods: getStdFacilityFeatures, getStdUnitTypeFeatures, getStdUnitTypeSizes
   def self.get_standard_info(method = 'getStdFacilityFeatures')
     IssnAdapter.get_standard_info method
   end
   
+  # methods: getFacilityInfo, getFacilityFeatures, getFacilityDataGroup, getFacilityInsurance, getFacilityPromos, getFacilityUnitTypes, getFacilityUnits
+  def get_facility_info(method = 'getFacilityInfo')
+    IssnAdapter.get_facility_info method, self.facility_id
+  end
+  
+  def get_unit_info
+    IssnAdapter.get_unit_info self.facility_id
+  end
+  
+  #
   # Methods to sync data from the ISSN db
+  #
   def sync_facility_info
     if self.facility_info.nil?
       @facility_info = self.create_facility_info
       @facility_info.update_from_issn
     else
       self.facility_info.sync_with_issn
+    end
+  end
+  
+  def update_unit_types_from_issn
+    @unit_types = IssnAdapter.get_facility_info('getFacilityUnitTypes', self.facility_id)
+    
+    @unit_types.each do |u|
+      unit_type = self.unit_types.find_by_sID(u['sID']) || self.unit_types.create
+      
+      u.each do |name, value|
+        name = name.sub /^s/, '' unless name == 'sID'
+        unit_type.update_attribute name, value if unit_type.respond_to? name
+      end
+    end
+  end
+  
+  def sync_sizes_with_unit_types
+    self.unit_types.each do |unit_type|
+      size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.create
+      unit_type.update_attribute :size_id, size.id
+      unit_type.update_feature_from_issn
+      
+      size.update_attributes :width     => unit_type.ActualWidth,
+                             :length    => unit_type.ActualLength,
+                             :price     => unit_type.RentalRate * 100, # convert to cents (integer)
+                             :description => unit_type.feature.StdUnitTypesFeaturesShortDescription
+    end
+  end
+  
+  def update_specials_from_issn
+    @promos = IssnAdapter.get_facility_promos(self.facility_id)
+    
+    @promos.each do |s|
+      special = self.specials.find_by_Description(s['sDescription']) || self.specials.create
+      
+      s.each do |name, value|
+        name = name.sub /^s/, '' unless name == 'sID'
+        special.update_attribute name, value if special.respond_to? name
+      end
     end
   end
   

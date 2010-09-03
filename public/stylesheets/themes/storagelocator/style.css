@@ -293,7 +293,7 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #add-fac-form-extra ul li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
 #add-fac-form-extra ul li.active{background:url(/images/ui/storagelocator/fac-tabs-bg-active.png) no-repeat 1px top;position:relative;left:-1px;}
 #add-fac-form-extra ul li.active a{color:#fff;background:url(/images/ui/storagelocator/active-add-tab.png) no-repeat 8px 5px;display:block;text-shadow:1px 1px 2px #000;position:relative;left:-2px;}
-.tab_content{clear:both;position:relative;top:-20px;}
+.tab_content{clear:both;position:relative;}
 .tab_content h3{margin:30px 0px 20px 0px;background:#E1EBF5;line-height:35px;color:#555;font-size:140%;padding:3px 15px;}
 .tab_content h4, .tab_content p{color:#555;padding-right:15px;padding-left:15px;}
 .tab_content p{font-size:100%;margin:10px 0px 30px 0px;line-height:1.3;}
@@ -386,10 +386,11 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs ul#sl-tabs-nav li a{color:#fff;text-decoration:none;display:block;height:58px;line-height:43px;width:130x;position:relative;top:5px;}
 #sl-tabs ul#sl-tabs-nav li.active{background:url(/images/ui/storagelocator/sl-tabs-bg-active.png) no-repeat left top;position:relative;}
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
-#sl-tabs-sizes-in{margin-top:18px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;width:725px;position:relative;left:14px;top:3px;}
+#sl-tabs-sizes{padding:0 14px 14px;}
+#sl-tabs-sizes-in{margin-top:21px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;clear:right;}
 #sl-tabs-sizes-in ul{clear:both;width:719px;height:46px;line-height:46px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;left:2px;top:-5px;color:#666;}
 #sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
-#sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:12px;color:#666;top:0px;left:0px;width:725px;}
+#sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:12px;color:#666;width:100%;}
 #sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin-top:5px;font-weight:bold;cursor:pointer;font-size:90%;}
 .edit_action #sl-tabs-sizes-in ul.sl-table{cursor:default;}
 #sl-tabs-sizes-in ul.active,#sl-tabs-sizes-in .sl-table:hover,#sl-tabs-sizes-in .sl-table.active{background:url(/images/ui/storagelocator/sl-table-active.png) repeat-x top left;color:#333;}
@@ -462,8 +463,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units-head{border:1px solid #ccc;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
 #ov-units-head h3,#ov-item-head h3{position:relative;left:20px;float:left;font-size:1.4em;}
 #ov-units-head p,#ov-item-head p{float:right;}
-#ov-item-head p{background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat top left;width:82px;height:30px;line-height:30px;font-weight:bold;text-align:center;float:right;margin:6px;}
-#ov-item-head p a{display:block;width:82px;height:30px;text-decoration:none;color:#fff;text-shadow:1px 1px 2px #333;}
+#ov-item-head #client_edit_contact{float:right;margin:6px;}
 #ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
 .ov-info-cnt{float:left;position:relative;width:45%;}
@@ -605,7 +605,7 @@ img.right{margin:0 10px 10px 0;}
 #map_nav .map_flow_step{height:395px;position:relative;overflow:visible;}
 #map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;}
 #map_nav #map_step2{overflow:hidden;}
-#map_step2 #city_nav{width:100%;height:30px;}
+#map_step2 #city_nav{width:102%;height:30px;}
 #map_step2 #city_nav a{display:block;padding:3px 6px;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
 #map_step2 #city_nav a:hover,#map_step2 #city_nav a:active,#map_step2 #city_nav li.active a{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #map_step2 #cities_list{height:320px;margin-top:14px;overflow:auto;}
@@ -628,7 +628,7 @@ img.right{margin:0 10px 10px 0;}
 #add_new_tip{margin:13px 13px 0 14px;padding:7px 10px;border:1px solid #ccc;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* add size */
-#sl-tabs-sizes #new_unit{}
+#sl-tabs-sizes #new_unit{float:right;margin-bottom:10px;}
 /* state page */
 #state_picker h2{font-size:20px;margin-bottom:14px;}
 #state_picker h3{font-size:14px;margin-bottom:7px;}
@@ -677,7 +677,8 @@ sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #sl-fac-detail-in-edit input.tag_list{margin-bottom:0;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
-#ov-units-head #add_fac{float:right;margin:6px 15px 0 0;font-weight:bold;display:block;width:56px;height:30px;color:#fff;text-shadow:1px 1px 2px #333;line-height:2.2;padding-left:27px;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
+#ov-units-head #add_fac{float:right;margin:6px 15px 0 0;}
+.btn{font-weight:bold;display:block;width:82px;height:30px;color:#fff;text-shadow:1px 1px 2px #333;line-height:2.2;text-align:center;background:url(/images/ui/storagelocator/edit-btn-small.png) no-repeat left top;}
 .my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .client_tip{padding:7px 12px;font-weight:bold;border:2px solid #333;width:96%;}
@@ -792,8 +793,8 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #body{width:872px;margin:0 auto;text-align:left;}
 #topbar{min-width:965px;border-bottom:1px solid #c0bedf;overflow:hidden;background:#fff;}
 #topbar ul{list-style:none;overflow:hidden;float:left;}
-#topbar #storage_types{width:589px;}
-#topbar #moving_help{width:312px;border-left:1px solid #ccc;}
+#topbar #storage_types{width:595px;}
+#topbar #moving_help{width:320px;border-left:1px solid #ccc;}
 #topbar .right{float:right;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:underline;}
 #topbar ul li a:hover,#topbar ul li a:active{text-decoration:underline;}
@@ -851,7 +852,6 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #footer_top .divide .wrapper{width:920px;color:#fff;text-shadow:1px 1px 1px #333;font-size:120%;}
 #footer_mid{border-top:1px solid #333;padding:25px 0 40px 0;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
-
 
 #steps{height:198px;width:949px;padding:20px 0 10px 25px;margin:0 auto;background:#fff;overflow:hidden;text-align:left;position:relative;z-index:2;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #steps .step{float:left;width:33.3%;}

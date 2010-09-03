@@ -31,24 +31,29 @@ class IssnAdapter
   #
   def self.find_facilities(args = {})
     query = "&sPostalCode=#{args[:zip] || '85021'}&sCity=#{args[:city]}&sState=#{args[:state]}&sStreetAddress=#{args[:address]}&sMilesDistance=#{args[:within] || '15'}&sSizeCodes=#{args[:size_code]}&sFacilityFeatureCodes=#{args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{args[:size_type_feature_code]}&sOrderBy=#{args[:order]}"
-    method_call 'findFacilities', query
+    call_and_parse 'findFacilities', query
   end
   
   # ISSN methods that only require a facility id
   def self.get_facility_info(method = 'getFacilityInfo', facility_id = nil)
     query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sIssnId="
-    method_call method, query
+    call_and_parse method, query
   end
   
-  # ISSN methods that have std in the name, they dont required further parameters
+  # ISSN methods that have std in the name, they dont require further parameters
   def self.get_standard_info(method = 'getStdFacilityFeatures')
-    method_call method
+    call_and_parse method
   end
   
   # Abstraction
   def self.get_unit_info(facility_id = nil, type_id = nil)
     query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypeId=#{type_id || @@facility_unit_types_ids[0]}"
-    method_call 'getFacilityUnits', query
+    call_and_parse 'getFacilityUnits', query
+  end
+  
+  def self.get_unit_features(facility_id, type_id)
+    query = "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sFacilityUnitTypesId=#{type_id || IssnAdapter.facility_unit_types_ids[0]}"
+    call_and_parse 'getFacilityUnitTypesFeatures' ,query
   end
   
   def self.get_facility_promos(facility_id)
@@ -57,18 +62,18 @@ class IssnAdapter
   
   def self.get_move_in_cost(facility_id, args = {})
     query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
-    method_call 'getMoveinCost', query
+    call_and_parse 'getMoveinCost', query
   end
   
   def self.get_reserve_cost(facility_id, args = {})
     query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
-    method_call 'getReserveCost', query
+    call_and_parse 'getReserveCost', query
   end
   
   #
   # Connector and Parsers
   #
-  def self.method_call(method, query = '')
+  def self.call_and_parse(method, query = '')
     response = call_issn method, query
     parse_response response, method
   end
