@@ -67,10 +67,13 @@ class ListingsController < ApplicationController
     end
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    @features = IssnUnitTypeFeature.labels
+    @features = IssnFacilityFeature.labels
     @unit_sizes = IssnUnitTypeSize.labels
     
-    raise @listing.sizes.first.unit_type.feature.attributes.pretty_inspect
+    @facility_feature = FacilityFeature.new
+    
+    #raise IssnFacilityFeature.labels.pretty_inspect
+    #raise Listing.get_standard_info('getStdFacilityFeatures').pretty_inspect
   end
   
   def update

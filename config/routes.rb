@@ -53,12 +53,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :suggestions
   map.resources :reservations
   map.resources :payments
+  map.resources :facility_features
   
   map.resource :site_setting
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
   
   # greyresults
-  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations]
+  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations, :facility_features]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   

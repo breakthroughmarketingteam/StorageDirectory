@@ -5,11 +5,6 @@ class IssnUnitTypeSize < ActiveRecord::Base
     self.all.sort_by(&:SQFT).map(&:Description) || []
   end
   
-  #
-  # OpenTech ISSN wrapper code
-  #
-  require 'issn_adapter'
-  
   def self.update_all_from_issn
     IssnUnitTypeSize.transaction do
       IssnAdapter.get_standard_info('getStdUnitTypeSizes').each do |u|

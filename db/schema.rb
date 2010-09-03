@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100902220447) do
+ActiveRecord::Schema.define(:version => 20100903212106) do
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -96,6 +96,15 @@ ActiveRecord::Schema.define(:version => 20100902220447) do
 
   add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
+
+  create_table "facility_features", :force => true do |t|
+    t.integer  "standard_id"
+    t.integer  "listing_id"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "facility_infos", :force => true do |t|
     t.string   "O_FacilityName"
@@ -230,6 +239,15 @@ ActiveRecord::Schema.define(:version => 20100902220447) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.string   "request_uri"
+  end
+
+  create_table "issn_facility_features", :force => true do |t|
+    t.string   "MappingCodes"
+    t.string   "sID"
+    t.text     "LongDescription"
+    t.string   "ShortDescription"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "issn_ids", :force => true do |t|

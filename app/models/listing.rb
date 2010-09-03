@@ -16,6 +16,8 @@ class Listing < ActiveRecord::Base
   # OpentTech ISSN data
   has_one  :facility_info
   has_many :unit_types
+  has_many :features, :through => :unit_types, :select => 'DISTINCT(StdUnitTypesFeaturesShortDescription)'
+  has_many :facility_features
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   

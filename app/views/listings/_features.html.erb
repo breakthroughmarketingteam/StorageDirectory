@@ -3,5 +3,15 @@
     <% @features.each do |feature| %>
       <li><span class="selectable"><%= check_box_tag 'feature', feature, false, :class => 'hidden' %></span><%= feature %></li>
     <% end %>
+	
+	<% if action_name == 'edit' %>
+		<li class="add_feature">
+			<% form_for [@listing, @facility_feature] do |f| %>
+				<%= f.text_field :title, :class => 'hintable', :title => 'Custom feature' %>
+				<%= f.submit 'Add' %>
+			<% end %>
+		</li>
+	<% end %>
+	
   </ul>
 </div>

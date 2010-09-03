@@ -665,7 +665,7 @@ $(document).ready(function(){
 		
 	// END new listing workflow
 	
-	// Listing Pictures
+	// Listing Edit
 	// upload pics
 	$('#picture_facility_image', '#new_picture').change(function(){
 		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
@@ -690,6 +690,22 @@ $(document).ready(function(){
 				$('#picture_facility_image', '#new_picture').val('');
 			}
 		})
+	});
+	
+	// add custom feature
+	$('input[type=text]', '#new_facility_feature').focus(function(){
+		$(this).next('#facility_feature_submit').show('fast');
+	});
+	$('input[type=text]', '#new_facility_feature').blur(function(){
+		setTimeout(function(){ $(this).next('#facility_feature_submit').hide('fast'); }, 300);
+	});
+	
+	$('#new_facility_feature').submit(function(){
+		var form = $(this),
+			data = form.serialize();
+		
+		console.log(data)
+		return false;
 	});
 	
 	// change big-pic when thumb is hovered
