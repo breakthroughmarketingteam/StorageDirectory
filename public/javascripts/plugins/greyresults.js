@@ -377,7 +377,7 @@ $(function(){
 
 		// show progress and do ajax call unless we're clicking on the same tab again
 		if ($.clicked_on_different_tab($this, $listing, $panel)) {
-			$progress.addClass('active');
+			$progress.addClass('active').animate({ 'margin-top': 0 }, 'fast');
 			$panel.attr('rel', this.rel);
 
 			$.get(this.href, function(response) {
@@ -396,11 +396,10 @@ $(function(){
 				$('.open_tab', $listing).data('active', true).text('x');
 
 				if ($panel.is(':hidden')) {
-					$panel.slideDown(900);
-					$(window).scrollTo($listing, { speed: 1000 });
+					$panel.slideDown(900, function(){ $(window).scrollTo($listing, { speed: 1000 }); });
 				}
 				
-				$('.progress', '.listing').removeClass('active');
+				$('.progress', '.listing').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
 
 				// load the google map into an iframe
 				if ($this.attr('rel') == 'map') {
@@ -582,7 +581,7 @@ $.setGmap = function(data) {
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Your Are here', 'You are here');
+	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
 	
 	//add result markers
 	var markers = data.maps;

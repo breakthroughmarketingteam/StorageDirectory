@@ -43,11 +43,11 @@ $(document).ready(function(){
 		},
 		slide: function(e, ui) {
 			$('.slider_val', $(this).parent()).val(ui.value);
-			$slider_handle.text(ui.value);
+			$slider_handle.html('<span>'+ ui.value +'</span>');
 		}
 		
 	});
-	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').text('5');
+	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>5</span>');
 	
 	$('.arrow', '#advanced_opts').click(function(){
 		var $this = $(this),
@@ -57,13 +57,13 @@ $(document).ready(function(){
 		if (action == 'less') {
 			if (value > 5) {
 				advanced_slider.slider('value', value - 5);
-				$slider_handle.text(value - 5);
+				$slider_handle.html('<span>'+ value - 5 +'</span>');
 			}
 			
 		} else if (action == 'more') {
 			if (value < 50) {
 				advanced_slider.slider('value', value + 5);
-				$slider_handle.text(value + 5);
+				$slider_handle.html('<span>'+ value + 5 +'</span>');
 			}
 		} 
 	});
@@ -429,12 +429,12 @@ $(document).ready(function(){
 		if ($.cookie('main_map_open')) $.open_map(main_map);
 		else main_map.hide();
 		
-		// move the sidebar with the page
+		/*/ move the sidebar with the page
 		var move_me = $('#content_bottom .region_content_bottom');
 		$(window).scroll(function(e){
 			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
 			else move_me.css({ position: 'static'  });
-		});
+		});*/
 	}
 	
 	// New Permissions
@@ -572,10 +572,7 @@ $(document).ready(function(){
 
 				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
 					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
-					else { // SERVER VALIDATION DID NOT PASS
-						title_input.addClass('invalid').focus();
-					}
-					
+					else title_input.addClass('invalid').focus(); // SERVER VALIDATION DID NOT PASS
 					ajax_loader.hide();
 				}, 'json');
 			
@@ -681,15 +678,11 @@ $(document).ready(function(){
 					var thumb = $('<li><img src="'+ response.data.thumb +'" id="Picture_'+ response.data.id +'" alt="" /><a class="iconOnly16 delete_link right" href="/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id +'" title="Delete this picture">Delete</a></li>'),
 						image = $('<img class="big-pic" id="BigPicture_'+ response.data.id +'" src="'+ response.data.image +'" alt="" />');
 					
-					$('#sl-tabs-pict-gall').append(thumb);
-					thumb.hide().fadeIn(600)
-					
-					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) 
 						$('.gallery', '#sl-tabs-pict-in').append(image);
-						image.hide().fadeIn('slow');
-						thumb.find('img').addClass('active');
-					}
 					
+					$('#sl-tabs-pict-gall').append(thumb);
+					thumb.hide().fadeIn(600, function(){ $('img', this).trigger('mouseover') });
 					
 				} else $.ajax_error(response);
 				

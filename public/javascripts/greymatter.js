@@ -79,7 +79,6 @@ $(function(){
 	$('.selectable').live('click', function(){
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
-			console.log(checkbox)
 			
 		if (!$this.data('selected')) {
 			$this.data('selected', true).addClass('selected');
