@@ -485,29 +485,31 @@ $(document).ready(function(){
 	});
 	
 	// client edit page
-	$('.selective_hider').live('click', function(){
-		var dont_hide  = $(this).attr('rel'),
-			hide_these = $('.hideable');
+	if ($.on_page([['edit', 'clients']])) {
+		$('.selective_hider').live('click', function(){
+			var dont_hide  = $(this).attr('rel'),
+				hide_these = $('.hideable');
 			
-		if (dont_hide) {
-			hide_these.each(function(){
-				if (this.id != dont_hide) {
-					$(this).slideUp();
-					$(this).prev('.user_hint').slideUp();
+			if (dont_hide) {
+				hide_these.each(function(){
+					if (this.id != dont_hide) {
+						$(this).slideUp();
+						$(this).prev('.user_hint').slideUp();
 					
-				} else {
-					$(this).slideDown();
-					$(this).prev('.user_hint').slideDown();
-				}
-			});
+					} else {
+						$(this).slideDown();
+						$(this).prev('.user_hint').slideDown();
+					}
+				});
 
-		} else {
-			hide_these.slideDown();
-			$('.user_hint').slideDown();
-		}
+			} else {
+				hide_these.slideDown();
+				$('.user_hint').slideDown();
+			}
 
-		return false;
-	});
+			return false;
+		});
+	}
 	
 	$('.hint_close').click(function(){
 		var btn = $(this),
@@ -530,26 +532,30 @@ $(document).ready(function(){
 				ajax_loader    = $this.prev('.ajax_loader').show();
 		
 			// GET PARTIAL
-			$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
-				var partial 	  = $(partial).hide(),
-					title_input   = $('input[name="listing[title]"]', partial),
-					tip_text	  = $('.new_listing_tip', partial);
-			
-				// insert the new listing into either the #empty_listings box or #rslt-list-bg
-				if (empty_listings.length > 0) {
-					$('.client_tip', empty_listings).remove();
-					empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
+				if (response.success) {
+					var partial 	  = $(response.data).hide(),
+						title_input   = $('input[name="listing[title]"]', partial),
+						tip_text	  = $('.new_listing_tip', partial);
+
+					// insert the new listing into either the #empty_listings box or #rslt-list-bg
+					if (empty_listings.length > 0) {
+						$('.client_tip', empty_listings).remove();
+						empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+
+					} else $('#rslt-list-bg', listing_box).prepend(partial);
+
+					$('.listing', listing_box).removeClass('active');
+					partial.addClass('active').slideDown(300, function() { 
+						tip_text.fadeIn(600);
+						title_input.focus();
+					});
+
+					bind_listing_input_events();
+					$.bindPlugins();
+					
+				} else $.ajax_error(response);
 				
-				} else $('#rslt-list-bg', listing_box).prepend(partial);
-				
-				$('.listing', listing_box).removeClass('active');
-				partial.addClass('active').slideDown(300, function() { 
-					tip_text.fadeIn(600);
-					title_input.focus();
-				});
-				
-				bind_listing_input_events();
-				$.bindPlugins();
 				ajax_loader.hide();
 			});
 		

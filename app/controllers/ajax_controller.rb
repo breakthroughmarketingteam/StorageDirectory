@@ -106,10 +106,10 @@ class AjaxController < ApplicationController
   def get_partial
     model_class = params[:model].constantize
     @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
-    render :partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }
+    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }) }
     
   rescue => e
-    render :text => "<div class='flash error'>#{e.message}</div>"
+    render :json => { :success => false, :data => e.message }
   end
   
   def get_multipartial
