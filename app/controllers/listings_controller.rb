@@ -66,8 +66,6 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    
-    #raise IssnFacilityFeature.labels.pretty_inspect
   end
   
   def update
@@ -102,12 +100,15 @@ class ListingsController < ApplicationController
   private
   
   def get_listing_relations
-    @special = @listing.specials.first || @listing.specials.new
+    @showing = true
     @map = @listing.map
+    @pictures = @listing.pictures
+    @special = @listing.specials.first || @listing.specials.new
     @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
-    @facility_features = @listing.facility_features
+    @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'
+      @showing = false
       @facility_feature = FacilityFeature.new
       @specials = @listing.specials
       

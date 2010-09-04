@@ -137,7 +137,7 @@ class Listing < ActiveRecord::Base
   
   def has_feature?(*features)
     features.any? do |feature|
-      self.facility_features.map(&:issn_facility_feature).map(&:ShortDescription).include? feature
+      self.facility_features.map(&:label).include? feature
     end
   end
   

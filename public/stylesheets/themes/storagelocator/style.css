@@ -433,7 +433,8 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-tabs-feat-in li.add_feature{background:none;}
 #sl-tabs-feat-in li.add_feature input.hintable{width:66%;font-size:90%;float:left;margin-right:5px;padding:3px 5px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #sl-tabs-feat-in li.add_feature #facility_feature_submit{float:left;display:none;}
-#sl-tabs-feat-in li .facility_feature{display:block;width:25px;height:25px;float:left;margin-right:5px;cursor:pointer;}
+#sl-tabs-feat-in li .facility_feature{display:block;width:25px;height:25px;float:left;margin-right:5px;}
+.edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat center;}
 #sl-tabs-pict{overflow:hidden;}
 #sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;margin-bottom:19px;background-color:#ddd;}

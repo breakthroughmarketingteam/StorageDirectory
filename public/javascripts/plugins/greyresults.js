@@ -185,7 +185,7 @@ $(function(){
 		return false;
 	});
 	
-	$('.facility_feature', '#sl-tabs-feat').click(function(){
+	$('.facility_feature', '.edit_action #sl-tabs-feat').click(function(){
 		var $this = $(this),
 				feature = $this.find('input').val().replaceAll(' ', '-'),
 				ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
@@ -215,7 +215,7 @@ $(function(){
 		var form = $(this),
 			data = form.serialize();
 		
-		console.log(data)
+		$.log(data)
 		return false;
 	});
 	

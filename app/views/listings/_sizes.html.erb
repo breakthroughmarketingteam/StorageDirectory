@@ -34,9 +34,7 @@
 					<div class="reserve_form hidden">
 						<%= render :partial => 'views/partials/greyresults/reserve', :locals => { :listing => @listing } %>
 					</div>
-				<% end %>
-	
-				<% if action_name == 'edit' %>
+				<% elsif action_name == 'edit' %>
 					<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
 				<% end %>
 			</div>

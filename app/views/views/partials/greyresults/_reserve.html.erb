@@ -1,5 +1,5 @@
 <div class="sl-table-exp">
 	<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
 	
-	<%= render :partial => 'reservations/quickform', :locals => { :listing => @model } %>
+	<%= render :partial => 'reservations/quickform', :locals => { :listing => (@model || listing) } %>
 </div>
