@@ -14,7 +14,7 @@
 			<div class="sl-table-wrap">
 				<ul class="sl-table<%= ' open_reserve_form' if action_name == 'show' %>">
 					<li class="st-size"><%= size.display_dimensions %></li>
-					<li class="st-type"><%= size.description %></li>
+					<li class="st-type"><%= size.title %></li>
 					<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
 					<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><%= size.special.blank? ? 'NONE' : size.special %></li>
 					<li class="st-rese">

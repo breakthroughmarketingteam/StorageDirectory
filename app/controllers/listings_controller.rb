@@ -2,7 +2,7 @@ class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit]
-  before_filter :get_client, :only => [:edit]
+  before_filter :get_client, :only => :edit
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
@@ -66,14 +66,8 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    @features = IssnFacilityFeature.labels
-    @unit_sizes = IssnUnitTypeSize.labels
-    
-    @facility_feature = FacilityFeature.new
     
     #raise IssnFacilityFeature.labels.pretty_inspect
-    #raise Listing.get_standard_info('getStdFacilityFeatures').pretty_inspect
   end
   
   def update
@@ -111,6 +105,17 @@ class ListingsController < ApplicationController
     @special = @listing.specials.first || @listing.specials.new
     @map = @listing.map
     @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
+    @facility_features = @listing.facility_features
+    
+    if action_name == 'edit'
+      @facility_feature = FacilityFeature.new
+      @specials = @listing.specials
+      
+      # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+      @facility_features = IssnFacilityFeature.labels
+      @unit_features     = IssnUnitTypeFeature.labels
+      @unit_sizes        = IssnUnitTypeSize.labels
+    end
   end
   
   def get_client

@@ -2,71 +2,11 @@
 // Diego Salazar, Grey Robot, Inc. April, 2010
 //
 
-// multiple marker map on results page
 $(function(){
-	$compare_btns = $('.compare', '.listing');
+	/*
+	 * BACK END, listing owner page methods
+	 */
 	
-	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
-		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
-		$.setGmap(Gmaps_data);
-	}
-	
-	if ($('.listing.active').length > 1) $('#compare-btn').show();
-	else $('#compare-btn').hide();
-	
-	$compare_btns.live('click', function(){
-		var compare 		= $(this),
-			listing 		= compare.parents('.listing'),
-			id 				= listing.attr('id').split('_')[1];
-		
-		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
-		
-		if (!compare.data('on')) {
-			listing.addClass('active');
-			compare.data('on', true);
-			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
-			
-			if (typeof marker != 'undefined'){
-				marker.GmapState = 'selected';
-				highlightMarker(marker);
-			}
-		} else {
-			listing.removeClass('active');
-			compare.data('on', false);
-			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
-			
-			if (typeof marker != 'undefined'){
-				marker.GmapState = '';
-				unhighlightMarker(marker);
-			}
-		}
-		
-		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
-		else $('#compare-btn').slideUp();
-	});
-	
-	// bind event handlers and implement ajax functionality for search results.
-	// first implemented for storage locator
-	
-	// opens the reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').click(function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent());
-
-		if (rform.hasClass('active')) {
-			rform.slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-		} else {
-			$('.reserve_form').slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-			$('.sl-table', rform.parent()).addClass('active');
-			rform.slideDown().addClass('active');
-		}
-
-		$('input[type=text]:first', rform).focus();
-		return false;
-	});
-
 	$.convert_unit_size_row_values_to_inputs = function(container) {
 		// values and such
 		var sizes_li	= $('.st-size', container),
@@ -147,7 +87,7 @@ $(function(){
 	}
 	
 	$('#new_unit', '#sl-tabs-sizes').click(function(){
-		
+		alert('Coming Soon!')
 	});
 
 	// edit functionality for the sizes in the facility edit page
@@ -242,6 +182,106 @@ $(function(){
 			});
 		}
 
+		return false;
+	});
+	
+	$('.facility_feature', '#sl-tabs-feat').click(function(){
+		var $this = $(this),
+				feature = $this.find('input').val().replaceAll(' ', '-'),
+				ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
+				path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
+		
+		$this.after(ajax_loader.show()).siblings('.f').hide();
+		path += $this.hasClass('selected') ? '/false' : '/true';
+		
+		$.post(path, {}, function(response) {
+			if (response.success) $this.toggleClass('selected');
+			else $.ajax_error(response);
+			
+			$this.siblings('.f').show();
+			ajax_loader.hide();
+		}, 'json');
+	});
+	
+	// add custom feature
+	$('input[type=text]', '#new_facility_feature').focus(function(){
+		$(this).next('#facility_feature_submit').show('fast');
+	});
+	$('input[type=text]', '#new_facility_feature').blur(function(){
+		var $this = $(this);
+		setTimeout(function(){ $this.next('#facility_feature_submit').hide('fast') }, 300);
+	});
+	$('#new_facility_feature').submit(function(){
+		var form = $(this),
+			data = form.serialize();
+		
+		console.log(data)
+		return false;
+	});
+	
+	/*
+	 * FRONT END, results
+	*/
+	
+	$compare_btns = $('.compare', '.listing');
+	
+	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
+		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
+		$.setGmap(Gmaps_data);
+	}
+	
+	if ($('.listing.active').length > 1) $('#compare-btn').show();
+	else $('#compare-btn').hide();
+	
+	$compare_btns.live('click', function(){
+		var compare 		= $(this),
+			listing 		= compare.parents('.listing'),
+			id 				= listing.attr('id').split('_')[1];
+		
+		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
+		
+		if (!compare.data('on')) {
+			listing.addClass('active');
+			compare.data('on', true);
+			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = 'selected';
+				highlightMarker(marker);
+			}
+		} else {
+			listing.removeClass('active');
+			compare.data('on', false);
+			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = '';
+				unhighlightMarker(marker);
+			}
+		}
+		
+		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
+		else $('#compare-btn').slideUp();
+	});
+	
+	// bind event handlers and implement ajax functionality for search results.
+	
+	// opens the specific reserve form in the unit sizes tab in the single listing page
+	$('.open_reserve_form').click(function(){
+		var $this = $(this),
+			rform = $('.reserve_form', $this.parent());
+
+		if (rform.hasClass('active')) {
+			rform.slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+		} else {
+			$('.reserve_form').slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			$('.sl-table', rform.parent()).addClass('active');
+			rform.slideDown().addClass('active');
+		}
+
+		$('input[type=text]:first', rform).focus();
 		return false;
 	});
 
@@ -371,7 +411,7 @@ $(function(){
 		return false
 	});
 
-	// slide open the panel below a result containing a partial loaded via ajax, as per the rel in the clicked tab link
+	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
 	$('.tab_link', '.listing').live('click', function() {
 		$('.open_tab', this).data('active', false);
 		var $this		= $(this),
@@ -478,6 +518,9 @@ $(function(){
 	})
 });
 
+/*
+ * Google Map methods
+ */
 var MapIconMaker = {};
 MapIconMaker.createMarkerIcon = function(opts) {
   var width = opts.width || 32;

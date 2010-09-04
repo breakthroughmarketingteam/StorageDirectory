@@ -28,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
+  map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products

@@ -10,14 +10,6 @@ class IssnAdapter
     95D25467-04A2-DD11-A709-0015C5F270DB
   )
 
-  # for facility with id = 42e2550d-e233-dd11-a002-0015c5f270db
-  @@facility_unit_types_ids = %w(
-    74e90c41-bf5c-4102-90f2-1cc229f2284d
-    ce68c0eb-5c17-4c0a-bfb0-6b7a06b33ed4
-    baa1afe5-0d33-4dec-a20b-b765fdd6c260
-    23459fec-148d-4d74-97cb-ed3041725d1e
-  )
-
   @@username = 'USSL_TEST'
   @@password = 'U$$L722'
   @@host = "https://issn.opentechalliance.com"
@@ -47,13 +39,13 @@ class IssnAdapter
   
   # Abstraction
   def self.get_unit_info(facility_id = nil, type_id = nil)
-    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypeId=#{type_id || @@facility_unit_types_ids[0]}"
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypeId=#{type_id}"
     call_and_parse 'getFacilityUnits', query
   end
   
   def self.get_unit_features(facility_id, type_id)
-    query = "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sFacilityUnitTypesId=#{type_id || IssnAdapter.facility_unit_types_ids[0]}"
-    call_and_parse 'getFacilityUnitTypesFeatures' ,query
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{type_id}"
+    call_and_parse 'getFacilityUnitTypesFeatures', query
   end
   
   def self.get_facility_promos(facility_id)
@@ -61,13 +53,35 @@ class IssnAdapter
   end
   
   def self.get_move_in_cost(facility_id, args = {})
-    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
     call_and_parse 'getMoveinCost', query
   end
   
   def self.get_reserve_cost(facility_id, args = {})
-    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
     call_and_parse 'getReserveCost', query
+  end
+  
+  # Database updater
+  # :data => issn data, :assoc => model to create or update, :find_method => to update an existing assoc model, :find_attr => the atr to find by
+  def self.update_models_from_issn(args)
+    (args[:class] || args[:model]).transaction(:requires_new => true) do
+      args[:data].each do |m|
+        # assoc is the authoritative assoc model in the rails app that will be synced with the similar issn model
+        # e.g: Specials to FacilityPromos, Sizes to Unit Types... Note: these are assoc to Listing (the issn enabled model)
+        model = args[:model].send(args[:find_method], m[args[:find_attr]]) || args[:model].create
+      
+        m.each do |name, value|
+          name = name.sub /^s/, '' unless name == 'sID'
+          model.update_attribute name, value if model.respond_to? name
+        end
+      end
+    end
+    
+    true
+  rescue => e
+    puts e.message
+    false
   end
   
   #

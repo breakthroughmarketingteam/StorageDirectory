@@ -692,22 +692,6 @@ $(document).ready(function(){
 		})
 	});
 	
-	// add custom feature
-	$('input[type=text]', '#new_facility_feature').focus(function(){
-		$(this).next('#facility_feature_submit').show('fast');
-	});
-	$('input[type=text]', '#new_facility_feature').blur(function(){
-		setTimeout(function(){ $(this).next('#facility_feature_submit').hide('fast'); }, 300);
-	});
-	
-	$('#new_facility_feature').submit(function(){
-		var form = $(this),
-			data = form.serialize();
-		
-		console.log(data)
-		return false;
-	});
-	
 	// change big-pic when thumb is hovered
 	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
 		var big_pic = $('.big-pic', '#sl-tabs-pict-in');

@@ -8,7 +8,11 @@
       <h2><%= @listing.title.titleize %> <%= ' in '+ (@listing.city_and_state * ', ') unless @listing.map.lat.nil? %></h2>
       
 		<% if action_name == 'edit' %>
-			<p class="editing-btn">Facility edit mode</p>
+			<p class="editing-btn">
+			  Facility edit mode
+			  <%= hidden_field_tag 'client_id', @client.id %>
+			  <%= hidden_field_tag 'listing_id', @listing.id %>
+			</p>
 		<% else %>
 			<p class="back-btn"><%= link_to 'Back to Results', :back %></p>
 		<% end %>
@@ -58,18 +62,17 @@
     <div id="sl-tabs">
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
-			<%= content_tag :li, link_to('Map', '#', :rel => 'sl-tabs-map') %>
-          	<%= content_tag :li, link_to('Unit Sizes', '#', :rel => 'sl-tabs-sizes') %>
-          	<%= content_tag :li, link_to('Features', '#', :rel => 'sl-tabs-feat') %>
-          	<%= content_tag :li, link_to('Pictures', '#', :rel => 'sl-tabs-pict') %>
+			      <%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') %>
+          	<%= content_tag :li, link_to('Unit Sizes', '#unit_sizes', :rel => 'sl-tabs-sizes') %>
+          	<%= content_tag :li, link_to('Features', '#features', :rel => 'sl-tabs-feat') %>
+          	<%= content_tag :li, link_to('Pictures', '#pictures', :rel => 'sl-tabs-pict') %>
         </ul>
         
         <!-- tab content -->
-		<%= render :partial => 'big_map' %>
+		    <%= render :partial => 'big_map' %>
         <%= render :partial => 'sizes' %>
         <%= render :partial => 'features' %>
         <%= render :partial => 'pictures' %>
-        
       </div>
     </div>
      
