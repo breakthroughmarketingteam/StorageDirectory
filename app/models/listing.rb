@@ -114,7 +114,9 @@ class Listing < ActiveRecord::Base
   end
   
   def self.geocode_query(query)
-    if is_address_query?(query)
+    if query.blank?
+      Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
+    elsif is_address_query?(query)
       Geokit::Geocoders::MultiGeocoder.geocode query
     else
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil

@@ -15,7 +15,7 @@ class ListingsController < ApplicationController
     if session[:location].blank? || params[:q] && params[:state].blank?
       @location = Listing.geocode_query params[:q]
       session[:location] = @location.to_hash
-      redirect_to storage_state_city_path(@location.state, @location.city) and return
+      redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize) and return
     end
     
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
