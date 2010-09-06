@@ -26,7 +26,7 @@ $(function(){
 			y = sizes_orig.split(/\W?x\W?/)[1],
 			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
 			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
-			ti = '<input type="text" class="small_text_field i" name="size[description]" value="'+ type_orig +'" />',
+			ti = '<input type="text" class="small_text_field i" name="size[title]" value="'+ type_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
 
@@ -60,18 +60,18 @@ $(function(){
 			specials_li = $('.st-spec', container);
 
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
-
+		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 			if (response.success) {
 				// update the row with the new values
 				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
 
-				var type_html = $('input[name="size[description]"]', container).val();
+				var type_html = $('input[name="size[title]"]', container).val();
 				type_li.html(type_html);
 
 				var price_html = $('input[name="size[price]"]', container).val();
-				price_li.html(price_html);
+				price_li.html('$'+ parseFloat(price_html).toFixed(2));
 
 				var specials_html = $('input[name="size[special]"]', container).val();
 				specials_li.html(specials_html);
@@ -86,18 +86,33 @@ $(function(){
 		}, 'json');
 	}
 	
-	$('#new_unit', '#sl-tabs-sizes').click(function(){
-		alert('Coming Soon!')
+	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
+		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
+				hidden_form = $('form:hidden', unit_clone);
+				
+		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
+		unit_clone.fadeIn();
+		$('.edit-btn', unit_clone).eq(0).click();
+		
+		// change form attr to reroute the ajax call to the create action
+		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
+		hidden_form.find('input[name=_method]').val('post');
+		
+		$('input', unit_clone).eq(0).focus()
+		
+		return false;
 	});
 
 	// edit functionality for the sizes in the facility edit page
-	$('.edit-btn', '.authenticated .sl-table').click(function(){
+	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
 		var $this 		= $(this),
 			container 	= $this.parents('.sl-table'),
 			hidden_form	= $('form:hidden', container.parent()),
 			cancel_btn	= $('.cancel_link', container),
 			load_li		= $('.st-sele', container);
-
+			
+		hidden_form.find('input[name=_method]').val('put');
+		
 		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
 		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
 		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
@@ -111,7 +126,7 @@ $(function(){
 		} else if ($(this).text() == 'Save') {
 			load_li.addClass('active_load'); // loading anim
 			cancel_btn.hide();
-
+			
 			$.post_new_unit_size_values_and_revert(container, hidden_form);
 		}
 
