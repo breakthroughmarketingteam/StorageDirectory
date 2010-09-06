@@ -56,7 +56,6 @@ class ApplicationController < ActionController::Base
   
   # loads website title and theme, meta info, widgets and plugins
   before_filter :load_app_config
-  cattr_accessor :app_config
   
   before_filter :reverse_captcha_check, :only => :create
   before_filter :clean_home_url, :authorize_user, :init
@@ -66,17 +65,25 @@ class ApplicationController < ActionController::Base
   # storage locator
   rescue_from Geokit::Geocoders::GeocodeError, :with => :refresh_without_params
   
+  protected # -----------------------------------------------
+  
   # display full error message when logged in as an Admin
   def local_request?
     current_user && current_user.has_role?('Admin')
+  end
+  
+  def self.app_config
+    @@app_config
+  end
+  
+  def self.app_config=(config)
+    @@app_config = config
   end
   
   def load_app_config
     raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
     @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
   end
-  
-  protected # -----------------------------------------------
   
   # keep a clean home URL by redirecting to the main page
   def clean_home_url

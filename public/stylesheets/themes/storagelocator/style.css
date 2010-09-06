@@ -10,7 +10,7 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
-#head-ctr{height:231px;background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x 0 107% #fff;-moz-box-shadow:1px 4px 14px #333;-webkit-box-shadow:1px 4px 14px #333;box-shadow:1px 4px 14px #333;}
+#head-ctr{height:231px;background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x 0 107% #fff;}
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;}
 #page-ctr-in{/*background:url(/images/ui/storagelocator/container-inner-bg.png) no-repeat bottom center;*/
@@ -797,7 +797,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #body{width:872px;margin:0 auto;text-align:left;}
 #topbar{min-width:965px;border-bottom:1px solid #c0bedf;overflow:hidden;background:#fff;}
 #topbar ul{list-style:none;overflow:hidden;float:left;}
-#topbar #storage_types{width:595px;}
+#topbar #storage_types{width:600px;}
 #topbar #moving_help{width:320px;border-left:1px solid #ccc;}
 #topbar .right{float:right;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;}
@@ -845,6 +845,19 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #advanced_opts #slide_wrap .ui-slider-horizontal .ui-slider-handle span{width:60px;height:21px;position:absolute;left:-73%;cursor:pointer;background:url(/images/ui/storagelocator/slider-box.png) no-repeat;}
 #advanced_opts #slide_wrap .ui-widget-content{border-color:#ccc;}
 #advanced_opts #loc_btn{margin-top:12px;text-align:right;}
+
+/* results page */
+#feature_options{font-size:80%;}
+#feature_options li{overflow:hidden;margin-bottom:5px;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;}
+#feature_options li span{display:block;width:17px;height:17px;margin-right:5px;float:left;}
+#feature_options li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat 70% 62%;}
+#feature_options li span input{display:none;}
+
+#narrow_results_form{} 
+#narrow_results_form #advanced_opts{background:none;border:0 none;overflow:visible;}
+#narrow_results_form #advanced_opts #size_option{border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
+#narrow_results_form #advanced_opts #distance_slider #slide_wrap{}
+
 
 #dock{width:530px;height:60px;margin:160px auto 20px;visibility:hidden;}
 #dock a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}

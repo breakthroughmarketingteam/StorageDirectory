@@ -50,22 +50,11 @@ $(document).ready(function(){
 	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>5</span>');
 	
 	$('.arrow', '#advanced_opts').click(function(){
-		var $this = $(this),
-			action = $(this).attr('alt'),
-			value = advanced_slider.slider('value');
-			
-		if (action == 'less') {
-			if (value > 5) {
-				advanced_slider.slider('value', value - 5);
-				$slider_handle.html('<span>'+ value - 5 +'</span>');
-			}
-			
-		} else if (action == 'more') {
-			if (value < 50) {
-				advanced_slider.slider('value', value + 5);
-				$slider_handle.html('<span>'+ value + 5 +'</span>');
-			}
-		} 
+		var value = parseInt(advanced_slider.slider('value')),
+			new_val = $(this).attr('alt') == 'less' ? value - 5 : value + 5;
+		
+		advanced_slider.slider('value', new_val);
+		$slider_handle.html('<span>'+ new_val +'</span>');
 	});
 	
 	// map pop up
@@ -249,7 +238,7 @@ $(document).ready(function(){
 		if (more_info_tab) more_info_tab.click();
 	});
 	
-	$('#advanced_opts').hide();
+	$('#advanced_opts', '#pages_controller').hide();
 	
 	// Cities pages
 	$('.storage_in_city', '#cities_list').css('width', '23%');

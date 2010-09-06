@@ -439,37 +439,40 @@ $(function(){
 			$progress.addClass('active').animate({ 'margin-top': 0 }, 'fast');
 			$panel.attr('rel', this.rel);
 
-			$.get(this.href, function(response) {
-				$('.tab_link, .listing, .panel').removeClass('active');
-				$('li', '.tabs').removeClass('active');
-				$this.parent().addClass('active');
+			$.getJSON(this.href, function(response) {
+				if (response.success) {
+					$('.tab_link, .listing, .panel').removeClass('active');
+					$('li', '.tabs').removeClass('active');
+					$this.parent().addClass('active');
 
-				$this.addClass('active');
-				$listing.addClass('active');
-				$panel.addClass('active');
+					$this.addClass('active');
+					$listing.addClass('active');
+					$panel.addClass('active');
 
-				$('.panel:not(.active)').slideUp();
-				$panel.html(response);
+					$('.panel:not(.active)').slideUp();
+					$panel.html(response.data);
 
-				$('.listing:not(.active) .open_tab').text('+');
-				$('.open_tab', $listing).data('active', true).text('x');
+					$('.listing:not(.active) .open_tab').text('+');
+					$('.open_tab', $listing).data('active', true).text('x');
 
-				if ($panel.is(':hidden')) {
-					$panel.slideDown(900, function(){ $(window).scrollTo($listing, { speed: 1000 }); });
-				}
-				
-				$('.progress', '.listing').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
+					if ($panel.is(':hidden')) {
+						$panel.slideDown(900, function(){ if ($(window).height() < 650) $(window).scrollTo($listing, { speed: 1000 }); });
+					}
 
-				// load the google map into an iframe
-				if ($this.attr('rel') == 'map') {
-					var $map_wrap = $('.map_wrap', $panel);
-					$map_wrap.append('<iframe />');
-					$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
+					$('.progress', '.listing').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
 
-				} else if ($this.attr('rel') == 'reserve') {
-					$('.mini_calendar', $panel).datepicker();
-					$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
-				}
+					// load the google map into an iframe
+					if ($this.attr('rel') == 'map') {
+						var $map_wrap = $('.map_wrap', $panel);
+						$map_wrap.append('<iframe />');
+						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
+
+					} else if ($this.attr('rel') == 'reserve') {
+						$('.mini_calendar', $panel).datepicker();
+						$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
+					}
+					
+				} else $.ajax_error(response);
 			});
 		}
 

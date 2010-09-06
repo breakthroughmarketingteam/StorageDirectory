@@ -12,6 +12,12 @@ class ListingsController < ApplicationController
   end
   
   def locator
+    if session[:location].blank? || params[:q] && params[:state].blank?
+      @location = Listing.geocode_query params[:q]
+      session[:location] = @location.to_hash
+      redirect_to storage_state_city_path(@location.state, @location.city) and return
+    end
+    
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
     
@@ -21,6 +27,11 @@ class ListingsController < ApplicationController
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    
+    # TODO: only getting standard data now, should build a list out of the features in the result set
+    @facility_features = IssnFacilityFeature.labels
+    @unit_features = IssnUnitTypeFeature.labels
+    @unit_sizes = IssnUnitTypeSize.labels
     
     get_map @location
     
@@ -66,6 +77,7 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
+    
   end
   
   def update
@@ -104,7 +116,7 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
+    @sizes = @listing.sizes
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'

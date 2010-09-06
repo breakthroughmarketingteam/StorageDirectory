@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
+  map.client_listings '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
+  
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
@@ -21,46 +23,12 @@ ActionController::Routing::Routes.draw do |map|
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   # all states except washington dc
   map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
-  map.storage_state_or_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
+  map.storage_state_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
-  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
-  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
-  
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-  map.resources :user_hints
-  map.resources :pictures
-  map.resources :user_sessions
-  map.resources :permissions
-  map.resources :roles
-  map.resources :pages
-  map.resources :posts, :member => { :rate => :post }
-  map.resources :blocks
-  map.resources :comments
-  map.resources :tags
-  map.resources :views
-  map.resources :widgets
-  map.resources :galleries
-  map.resources :images
-  map.resources :virtual_models
-  map.resources :links
-  map.resources :link_groups
-  map.resources :helptexts
-  map.resources :forms
-  map.resources :suggestions
-  map.resources :reservations
-  map.resources :payments
-  map.resources :facility_features
-  
-  map.resource :site_setting
-  map.resources :password_resets, :only => [:new, :create, :edit, :update]
-  
-  # greyresults
-  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations, :facility_features]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   
@@ -75,6 +43,18 @@ ActionController::Routing::Routes.draw do |map|
   #     products.resources :comments
   #     products.resources :sales, :collection => { :recent => :get }
   #   end
+  map.resources :listings, :collection => { :locator => :get, :import => :post } do |listing|
+    listing.resources :sizes
+    listing.resources :specials
+    listing.resources :maps
+    listing.resources :pictures
+    listing.resources :reservations
+    listing.resources :facility_features
+  end
+  
+  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
+  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
+  
   map.resources :users do |user|
     user.resources :posts, :collection => { :published => :get }
     user.resources :images
@@ -113,6 +93,35 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :groups do |group|
     group.resources :links
   end
+  
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   map.resources :products
+  map.resources :user_hints
+  map.resources :pictures
+  map.resources :user_sessions
+  map.resources :permissions
+  map.resources :roles
+  map.resources :pages
+  map.resources :posts, :member => { :rate => :post }
+  map.resources :blocks
+  map.resources :comments
+  map.resources :tags
+  map.resources :views
+  map.resources :widgets
+  map.resources :galleries
+  map.resources :images
+  map.resources :virtual_models
+  map.resources :links
+  map.resources :link_groups
+  map.resources :helptexts
+  map.resources :forms
+  map.resources :suggestions
+  map.resources :reservations
+  map.resources :payments
+  map.resources :facility_features
+  map.resources :password_resets, :only => [:new, :create, :edit, :update]
+  
+  map.resource :site_setting
   
   # Sample resource route within a namespace:
   #   map.namespace :admin do |admin|

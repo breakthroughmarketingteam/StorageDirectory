@@ -80,14 +80,14 @@ class Listing < ActiveRecord::Base
   #
   def self.geo_search(params, session)
     query = extrapolate_query(params)
-    sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f]
+    sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f] rescue nil
     options = {
       :include => [:map, :specials, :sizes, :pictures],
       :within  => (params[:within] || 5)
     }
     
-    unless q.blank?
-      if is_address_query?(q)
+    unless query.blank?
+      if is_address_query?(query)
         @location = Geokit::Geocoders::MultiGeocoder.geocode query
         options.merge! :origin => @location
       else # query by name?
@@ -112,7 +112,16 @@ class Listing < ActiveRecord::Base
     @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
     { :data => @model_data, :location => @location }
   end
-
+  
+  def self.geocode_query(query)
+    if is_address_query?(query)
+      Geokit::Geocoders::MultiGeocoder.geocode query
+    else
+      guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
+      Geokit::Geocoders::MultiGeocoder.geocode guessed
+    end
+  end
+  
   def self.is_address_query?(query)
     return true if query.match /\d{5}/ # zip code
     
