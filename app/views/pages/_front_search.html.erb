@@ -1,7 +1,7 @@
 <% form_tag '/self-storage', :id => 'front_search' do %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
-		<%= text_field_tag :q, nil, :class => 'hintable', :title => 'Enter Zip Code, City, or Street Address' %>
+		<%= text_field_tag :q, nil, :class => 'hintable autocomplete', :title => 'Enter Zip Code, City, or Street Address', :rel => 'UsCity_names|2' %>
 		<%= submit_tag 'Locate', :class => 'grn_btn' %>
 		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
 	</div>
@@ -29,7 +29,7 @@
 					<div id="slide_wrap">
 						<%= label_tag 'Within' %>
 						<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less" />
-						<div class="advanced_slider"></div>
+						<div class="advanced_slider"><span></span></div>
 						<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
 						<%= label_tag 'miles.' %>
 						<%= hidden_field_tag :within, nil, :class => 'slider_val', :disabled => true %>

@@ -10,14 +10,6 @@ class IssnAdapter
     95D25467-04A2-DD11-A709-0015C5F270DB
   )
 
-  # for facility with id = 42e2550d-e233-dd11-a002-0015c5f270db
-  @@facility_unit_types_ids = %w(
-    74e90c41-bf5c-4102-90f2-1cc229f2284d
-    ce68c0eb-5c17-4c0a-bfb0-6b7a06b33ed4
-    baa1afe5-0d33-4dec-a20b-b765fdd6c260
-    23459fec-148d-4d74-97cb-ed3041725d1e
-  )
-
   @@username = 'USSL_TEST'
   @@password = 'U$$L722'
   @@host = "https://issn.opentechalliance.com"
@@ -29,32 +21,77 @@ class IssnAdapter
   #
   # Data Retrieval
   #
-  def self.find_facilities(query = {})
-    response = call_issn 'findFacilities', "&sPostalCode=#{query[:zip] || '85021'}&sCity=#{query[:city]}&sState=#{query[:state]}&sStreetAddress=#{query[:address]}&sMilesDistance=#{query[:within] || '15'}&sSizeCodes=#{query[:size_code]}&sFacilityFeatureCodes=#{query[:facility_feature_code]}&sSizeTypeFeatureCodes=#{query[:size_type_feature_code]}&sOrderBy=#{query[:order]}"
-    parse_response response, 'FindFacility'
+  def self.find_facilities(args = {})
+    query = "&sPostalCode=#{args[:zip] || '85021'}&sCity=#{args[:city]}&sState=#{args[:state]}&sStreetAddress=#{args[:address]}&sMilesDistance=#{args[:within] || '15'}&sSizeCodes=#{args[:size_code]}&sFacilityFeatureCodes=#{args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{args[:size_type_feature_code]}&sOrderBy=#{args[:order]}"
+    call_and_parse 'findFacilities', query
   end
   
   # ISSN methods that only require a facility id
   def self.get_facility_info(method = 'getFacilityInfo', facility_id = nil)
-    response = IssnAdapter.call_issn method, "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sIssnId="
-    data = IssnAdapter.parse_response response, method
+    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sIssnId="
+    call_and_parse method, query
   end
   
-  def self.get_unit_info(facility_id = nil, type_id = nil)
-    method = 'getFacilityUnits'
-    response = IssnAdapter.call_issn method, "&sFacilityId=#{facility_id || IssnAdapter.facility_ids[1]}&sFacilityUnitTypeId=#{type_id || IssnAdapter.facility_unit_types_ids[0]}"
-    data = IssnAdapter.parse_response(response, method)
-  end
-  
-  # ISSN methods that have std in the name, they dont required further parameters
+  # ISSN methods that have std in the name, they dont require further parameters
   def self.get_standard_info(method = 'getStdFacilityFeatures')
-    response = IssnAdapter.call_issn method
-    data = IssnAdapter.parse_response response, method
+    call_and_parse method
+  end
+  
+  # Abstraction
+  def self.get_unit_info(facility_id = nil, type_id = nil)
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypeId=#{type_id}"
+    call_and_parse 'getFacilityUnits', query
+  end
+  
+  def self.get_unit_features(facility_id, type_id)
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{type_id}"
+    call_and_parse 'getFacilityUnitTypesFeatures', query
+  end
+  
+  def self.get_facility_promos(facility_id)
+    get_facility_info 'getFacilityPromos', facility_id
+  end
+  
+  def self.get_move_in_cost(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
+    call_and_parse 'getMoveinCost', query
+  end
+  
+  def self.get_reserve_cost(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
+    call_and_parse 'getReserveCost', query
+  end
+  
+  # Database updater
+  # :data => issn data, :assoc => model to create or update, :find_method => to update an existing assoc model, :find_attr => the atr to find by
+  def self.update_models_from_issn(args)
+    (args[:class] || args[:model]).transaction(:requires_new => true) do
+      args[:data].each do |m|
+        # assoc is the authoritative assoc model in the rails app that will be synced with the similar issn model
+        # e.g: Specials to FacilityPromos, Sizes to Unit Types... Note: these are assoc to Listing (the issn enabled model)
+        model = args[:model].send(args[:find_method], m[args[:find_attr]]) || args[:model].create
+      
+        m.each do |name, value|
+          name = name.sub /^s/, '' unless name == 'sID'
+          model.update_attribute name, value if model.respond_to? name
+        end
+      end
+    end
+    
+    true
+  rescue => e
+    puts e.message
+    false
   end
   
   #
   # Connector and Parsers
   #
+  def self.call_and_parse(method, query = '')
+    response = call_issn method, query
+    parse_response response, method
+  end
+  
   def self.call_issn(method, query = '')
     uri = URI.parse(@@host + @@url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -102,6 +139,7 @@ class IssnAdapter
     value.is_a?(Array) ? parse_soap_array(value) : parse_soap_hash(value)
   end
   
+  # DataSet key mappings
   def self.data_key_for(method)
     case method when 'getFacilityInfo', 'getFacilityFeatures'
     # get_facility_info
@@ -132,6 +170,11 @@ class IssnAdapter
         'Facility_UT_Features'
     # END get_Features
       
+      when 'getMoveinCost'
+        'MoveInCost'
+      when 'getReserveCost'
+        'ReserveCost'
+        
     else # already is a key
       method
     end

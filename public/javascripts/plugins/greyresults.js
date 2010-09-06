@@ -2,71 +2,11 @@
 // Diego Salazar, Grey Robot, Inc. April, 2010
 //
 
-// multiple marker map on results page
 $(function(){
-	$compare_btns = $('.compare', '.listing');
+	/*
+	 * BACK END, listing owner page methods
+	 */
 	
-	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
-		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
-		$.setGmap(Gmaps_data);
-	}
-	
-	if ($('.listing.active').length > 1) $('#compare-btn').show();
-	else $('#compare-btn').hide();
-	
-	$compare_btns.live('click', function(){
-		var compare 		= $(this),
-			listing 		= compare.parents('.listing'),
-			id 				= listing.attr('id').split('_')[1];
-		
-		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
-		
-		if (!compare.data('on')) {
-			listing.addClass('active');
-			compare.data('on', true);
-			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
-			
-			if (typeof marker != 'undefined'){
-				marker.GmapState = 'selected';
-				highlightMarker(marker);
-			}
-		} else {
-			listing.removeClass('active');
-			compare.data('on', false);
-			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
-			
-			if (typeof marker != 'undefined'){
-				marker.GmapState = '';
-				unhighlightMarker(marker);
-			}
-		}
-		
-		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
-		else $('#compare-btn').slideUp();
-	});
-	
-	// bind event handlers and implement ajax functionality for search results.
-	// first implemented for storage locator
-	
-	// opens the reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').click(function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent());
-
-		if (rform.hasClass('active')) {
-			rform.slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-		} else {
-			$('.reserve_form').slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-			$('.sl-table', rform.parent()).addClass('active');
-			rform.slideDown().addClass('active');
-		}
-
-		$('input[type=text]:first', rform).focus();
-		return false;
-	});
-
 	$.convert_unit_size_row_values_to_inputs = function(container) {
 		// values and such
 		var sizes_li	= $('.st-size', container),
@@ -84,9 +24,9 @@ $(function(){
 			// build the input fields with the original values preset
 			x = sizes_orig.split(/\W?x\W?/)[0],
 			y = sizes_orig.split(/\W?x\W?/)[1],
-			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[x]" value="'+ x +'" />',
-			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[y]" value="'+ y +'" />',
-			ti = '<input type="text" class="small_text_field i" name="size[unit_type]" value="'+ (type_orig == 'NONE' ? '' : type_orig) +'" />',
+			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
+			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
+			ti = '<input type="text" class="small_text_field i" name="size[title]" value="'+ type_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
 
@@ -120,18 +60,18 @@ $(function(){
 			specials_li = $('.st-spec', container);
 
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
-
+		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 			if (response.success) {
 				// update the row with the new values
-				var sizes_html = $('input[name="size[x]"]', container).val() +' x '+ $('input[name="size[y]"]', container).val();
+				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
 
-				var type_html = $('input[name="size[unit_type]"]', container).val();
+				var type_html = $('input[name="size[title]"]', container).val();
 				type_li.html(type_html);
 
 				var price_html = $('input[name="size[price]"]', container).val();
-				price_li.html(price_html);
+				price_li.html('$'+ parseFloat(price_html).toFixed(2));
 
 				var specials_html = $('input[name="size[special]"]', container).val();
 				specials_li.html(specials_html);
@@ -145,15 +85,34 @@ $(function(){
 
 		}, 'json');
 	}
+	
+	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
+		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
+				hidden_form = $('form:hidden', unit_clone);
+				
+		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
+		unit_clone.fadeIn();
+		$('.edit-btn', unit_clone).eq(0).click();
+		
+		// change form attr to reroute the ajax call to the create action
+		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
+		hidden_form.find('input[name=_method]').val('post');
+		
+		$('input', unit_clone).eq(0).focus()
+		
+		return false;
+	});
 
 	// edit functionality for the sizes in the facility edit page
-	$('.edit-btn', '.authenticated .sl-table').click(function(){
+	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
 		var $this 		= $(this),
 			container 	= $this.parents('.sl-table'),
 			hidden_form	= $('form:hidden', container.parent()),
 			cancel_btn	= $('.cancel_link', container),
 			load_li		= $('.st-sele', container);
-
+			
+		hidden_form.find('input[name=_method]').val('put');
+		
 		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
 		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
 		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
@@ -167,7 +126,7 @@ $(function(){
 		} else if ($(this).text() == 'Save') {
 			load_li.addClass('active_load'); // loading anim
 			cancel_btn.hide();
-
+			
 			$.post_new_unit_size_values_and_revert(container, hidden_form);
 		}
 
@@ -240,13 +199,112 @@ $(function(){
 
 		return false;
 	});
+	
+	$('.facility_feature', '.edit_action #sl-tabs-feat').click(function(){
+		var $this = $(this),
+				feature = $this.find('input').val().replaceAll(' ', '-'),
+				ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
+				path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
+		
+		$this.after(ajax_loader.show()).siblings('.f').hide();
+		path += $this.hasClass('selected') ? '/false' : '/true';
+		
+		$.post(path, {}, function(response) {
+			if (response.success) $this.toggleClass('selected');
+			else $.ajax_error(response);
+			
+			$this.siblings('.f').show();
+			ajax_loader.hide();
+		}, 'json');
+	});
+	
+	// add custom feature
+	$('input[type=text]', '#new_facility_feature').focus(function(){
+		$(this).next('#facility_feature_submit').show('fast');
+	});
+	$('input[type=text]', '#new_facility_feature').blur(function(){
+		var $this = $(this);
+		setTimeout(function(){ $this.next('#facility_feature_submit').hide('fast') }, 300);
+	});
+	$('#new_facility_feature').submit(function(){
+		var form = $(this),
+			data = form.serialize();
+		
+		$.log(data)
+		return false;
+	});
+	
+	/*
+	 * FRONT END, results
+	*/
+	
+	$compare_btns = $('.compare', '.listing');
+	
+	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
+		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
+		$.setGmap(Gmaps_data);
+	}
+	
+	if ($('.listing.active').length > 1) $('#compare-btn').show();
+	else $('#compare-btn').hide();
+	
+	$compare_btns.live('click', function(){
+		var compare 		= $(this),
+			listing 		= compare.parents('.listing'),
+			id 				= listing.attr('id').split('_')[1];
+		
+		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
+		
+		if (!compare.data('on')) {
+			listing.addClass('active');
+			compare.data('on', true);
+			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = 'selected';
+				highlightMarker(marker);
+			}
+		} else {
+			listing.removeClass('active');
+			compare.data('on', false);
+			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			
+			if (typeof marker != 'undefined'){
+				marker.GmapState = '';
+				unhighlightMarker(marker);
+			}
+		}
+		
+		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
+		else $('#compare-btn').slideUp();
+	});
+	
+	// bind event handlers and implement ajax functionality for search results.
+	
+	// opens the specific reserve form in the unit sizes tab in the single listing page
+	$('.open_reserve_form').click(function(){
+		var $this = $(this),
+			rform = $('.reserve_form', $this.parent());
+
+		if (rform.hasClass('active')) {
+			rform.slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+		} else {
+			$('.reserve_form').slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			$('.sl-table', rform.parent()).addClass('active');
+			rform.slideDown().addClass('active');
+		}
+
+		$('input[type=text]:first', rform).focus();
+		return false;
+	});
 
 	/* AJAX pagination, load next page results in the same page */
 	$('.more_results').live('click', function(){
 		var $this 		= $('.more_results'),
 			plus_sign 	= $this.find('span > span').hide(),
-			ajax_loader = $('.ajax_loader', $this).show();
-
+			ajax_loader = $('.ajax_loader', $this).show();		
 		// params to build the url that will query the same data the visitor searched for, advanced one page
 		var pagetitle = $('span[name=params_pagetitle]', $this.parent()).eq(0).text(),
 			query 	  = $('span[name=params_query]', $this.parent()).eq(0).text(),
@@ -273,7 +331,7 @@ $(function(){
 						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
 						map 		 = this.map, // related model attributes
 						specials	 = this.specials;
-
+					
 					// update tab urls
 					var tabs = [
 						$('.fac-map a', this_listing),
@@ -368,7 +426,7 @@ $(function(){
 		return false
 	});
 
-	// slide open the panel below a result containing a partial loaded via ajax, as per the rel in the clicked tab link
+	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
 	$('.tab_link', '.listing').live('click', function() {
 		$('.open_tab', this).data('active', false);
 		var $this		= $(this),
@@ -378,7 +436,7 @@ $(function(){
 
 		// show progress and do ajax call unless we're clicking on the same tab again
 		if ($.clicked_on_different_tab($this, $listing, $panel)) {
-			$progress.addClass('active');
+			$progress.addClass('active').animate({ 'margin-top': 0 }, 'fast');
 			$panel.attr('rel', this.rel);
 
 			$.get(this.href, function(response) {
@@ -396,8 +454,11 @@ $(function(){
 				$('.listing:not(.active) .open_tab').text('+');
 				$('.open_tab', $listing).data('active', true).text('x');
 
-				if ($panel.is(':hidden')) $panel.slideDown();
-				$('.progress', '.listing').removeClass('active');
+				if ($panel.is(':hidden')) {
+					$panel.slideDown(900, function(){ $(window).scrollTo($listing, { speed: 1000 }); });
+				}
+				
+				$('.progress', '.listing').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
 
 				// load the google map into an iframe
 				if ($this.attr('rel') == 'map') {
@@ -472,6 +533,9 @@ $(function(){
 	})
 });
 
+/*
+ * Google Map methods
+ */
 var MapIconMaker = {};
 MapIconMaker.createMarkerIcon = function(opts) {
   var width = opts.width || 32;
@@ -579,7 +643,7 @@ $.setGmap = function(data) {
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Your Are here', 'You are here');
+	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
 	
 	//add result markers
 	var markers = data.maps;

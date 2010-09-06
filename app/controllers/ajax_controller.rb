@@ -1,9 +1,9 @@
 class AjaxController < ApplicationController
   
-  skip_before_filter :authorize_user, :except => [:get_partial, :find_listings]
+  skip_before_filter :authorize_user, :except => [:get_partial, :find_listings, :get_cities]
   skip_before_filter :init
   
-  before_filter :validate_params, :except => [:find_listings, :get_client_stats]
+  before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy]
   before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
   
@@ -106,10 +106,10 @@ class AjaxController < ApplicationController
   def get_partial
     model_class = params[:model].constantize
     @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
-    render :partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }
+    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }) }
     
   rescue => e
-    render :text => "<div class='flash error'>#{e.message}</div>"
+    render :json => { :success => false, :data => e.message }
   end
   
   def get_multipartial
@@ -117,6 +117,11 @@ class AjaxController < ApplicationController
     
   rescue => e
     render :text => "<div class='flash error'>#{e.message}</div>"
+  end
+  
+  def get_cities # state
+    render :json => { :success => true, :data => UsCity.tabbed_cities_of(params[:state]) }
+  
   end
   
   def get_autocomplete

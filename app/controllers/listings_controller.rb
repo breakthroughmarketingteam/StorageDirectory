@@ -2,7 +2,7 @@ class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit]
-  before_filter :get_client, :only => [:edit]
+  before_filter :get_client, :only => :edit
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
@@ -52,7 +52,6 @@ class ListingsController < ApplicationController
   end
 
   def show
-    raise @listing.get_facility_info('getFacilityPromos').pretty_inspect
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
@@ -67,9 +66,6 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    @features = IssnUnitTypeFeature.labels
-    @sizes = IssnUnitTypeSize.labels
   end
   
   def update
@@ -104,9 +100,23 @@ class ListingsController < ApplicationController
   private
   
   def get_listing_relations
-    @special = @listing.specials.first || @listing.specials.new
+    @showing = true
     @map = @listing.map
+    @pictures = @listing.pictures
+    @special = @listing.specials.first || @listing.specials.new
     @sizes = @listing.sizes.paginate(:per_page => 7, :page => params[:page])
+    @facility_features = @listing.facility_features.map(&:label)
+    
+    if action_name == 'edit'
+      @showing = false
+      @facility_feature = FacilityFeature.new
+      @specials = @listing.specials
+      
+      # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+      @facility_features = IssnFacilityFeature.labels
+      @unit_features     = IssnUnitTypeFeature.labels
+      @unit_sizes        = IssnUnitTypeSize.labels
+    end
   end
   
   def get_client

@@ -1,0 +1,17 @@
+<div id="map_nav">
+	<div id="map_step1" class="map_flow_step">
+		<p id="state_name"></p>
+		<img id="map_nav_img" src="/images/ui/storagelocator/us_map/us-map.png" alt="US Map" usemap="#USMap" />
+		<%= render :partial => 'maps/map_nav_coords' %>
+	</div>
+	
+	<div id="map_step2" class="map_flow_step">
+		<ul id="city_nav" class="tabular"></ul>
+		<ul id="cities_list">
+		</ul>
+	</div>
+	
+	<div id="map_flow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+	</div>
+</div>

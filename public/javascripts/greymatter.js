@@ -79,7 +79,6 @@ $(function(){
 	$('.selectable').live('click', function(){
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
-			console.log(checkbox)
 			
 		if (!$this.data('selected')) {
 			$this.data('selected', true).addClass('selected');
@@ -365,7 +364,7 @@ $.on_page = function(route_sets) { // routes looks like: [ ['edit, new', 'views,
 			];
 	
 	while (i--) { // iterate through all the action/controller sets
-		actions 		= route_sets[i][0].split(/,\W?/);
+		actions 	= route_sets[i][0].split(/,\W?/);
 		controllers = route_sets[i][1].split(/,\W?/);
 		
 		var j = actions.length;
@@ -398,9 +397,9 @@ $.switch_action_hash = function(this_el, action, elementClass, contextClass) {
 // return the opposite action
 $.switch_actions = function(action) {
 	var action_sets = [
-		['show',						'hide'],
-		['fadeIn',			 'fadeOut'],
-		['slideDown',		 'slideUp'],
+		['show',			'hide'],
+		['fadeIn',		 'fadeOut'],
+		['slideDown',	 'slideUp'],
 		['addClass', 'removeClass']
 	];
 	
@@ -792,8 +791,8 @@ $.fn.accordion = function() {
 $.fn.tabular_content = function() {
 	return this.each(function(){
 		var $this = $(this), // the container
-				tabs = $('.tabular', $this), // ul
-				panels = $('.tab_content', $this); // tab content divs
+			tabs = $('.tabular', $this), // ul
+			panels = $('.tab_content', $this); // tab content divs
 		
 		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
@@ -878,4 +877,13 @@ function titleize(string) {
 var Ajax = function(){};
 Ajax.Request = function(url, params) {
 	$.post(url, params.parameters);
+}
+
+String.prototype.replaceAll = function(find, replace) {
+    var temp = this, index = temp.indexOf(find);
+    while (index != -1) {
+        temp = temp.replace(find, replace);
+        index = temp.indexOf(find);
+    }
+    return temp;
 }

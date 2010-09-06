@@ -1,23 +1,16 @@
 class Size < ActiveRecord::Base
   
   belongs_to :listing
-  
+  has_one :unit_type
+
   attr_accessor :special
   
   def display_dimensions
-    "#{x} x #{y}"
+    "#{width} x #{length}"
   end
   
-  #
-  # ISSN wrapper code
-  #
-  require 'issn_adapter'
-  
-  def get_features(method = 'getFacilityUnitTypesFeatures')
-    response = IssnAdapter.call_issn method, "&sFacilityId=#{IssnAdapter.facility_ids[1]}&sFacilityUnitTypesId=#{IssnAdapter.facility_unit_types_ids[0]}"
-    
-    data = IssnAdapter.parse_response(response, method)
-    raise data.pretty_inspect
+  def dollar_price
+    self.price / 100
   end
   
 end

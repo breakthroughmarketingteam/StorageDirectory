@@ -1,13 +1,14 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
 $(document).ready(function(){	
-	$('#dock').jqDock({ size: 60, attenuation: 400 });
+	$('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
-	$('#jqDock0 > div').click(function(){
-		$(this).effect('bounce');
+	$('div > a > img', '#jqDock0').click(function(){
+		console.log(this)
+		$(this).effect('bounce', { times: 3 }, 300);
 	});
 	
 	// advanced options
@@ -42,10 +43,11 @@ $(document).ready(function(){
 		},
 		slide: function(e, ui) {
 			$('.slider_val', $(this).parent()).val(ui.value);
-			$slider_handle.text(ui.value);
+			$slider_handle.html('<span>'+ ui.value +'</span>');
 		}
+		
 	});
-	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').text('5');
+	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>5</span>');
 	
 	$('.arrow', '#advanced_opts').click(function(){
 		var $this = $(this),
@@ -55,23 +57,146 @@ $(document).ready(function(){
 		if (action == 'less') {
 			if (value > 5) {
 				advanced_slider.slider('value', value - 5);
-				$slider_handle.text(value - 5);
+				$slider_handle.html('<span>'+ value - 5 +'</span>');
 			}
 			
 		} else if (action == 'more') {
 			if (value < 50) {
 				advanced_slider.slider('value', value + 5);
-				$slider_handle.text(value + 5);
+				$slider_handle.html('<span>'+ value + 5 +'</span>');
 			}
 		} 
 	});
 	
+	// map pop up
+	var map_nav_btn = $('#map_nav_btn');
+	if (map_nav_btn.length > 0) {
+		preload_us_map_imgs();
+		
+		map_nav_btn.click(function(){
+			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
+
+			get_pop_up_and_do(partial, title, height, function() {
+				new GreyWizard($('#map_nav'), {
+					slide_speed  : 1500,
+					btn_speed	 : 900,
+					fade_speed	 : 1000,
+					title		 : 'Choose a State',
+					slides_class : 'map_flow_step',
+					nav_id : 'map_flow_nav',
+					slides : [
+						{	
+							pop_up_title : 'Click on a State',
+							div_id  : 'map_step1',
+							action  : map_flow_step1,
+							nav_vis : [['back', 'hide']]
+						},
+						{ 
+							pop_up_title : 'Pick a City',
+							div_id  : 'map_step2',
+							action  : map_flow_step2,
+							nav_vis : [['back', 'fadeIn']]
+						}
+					]
+				}).begin_workflow_on(0);
+			});
+
+			return false;
+		});
+		
+		function map_flow_step1() {
+			var wizard = arguments[0],
+				$map_img = $('#map_nav_img', '#map_nav'),
+				$areas = $('area', '#USMap'),
+				$state_name = $('#state_name', '#map_nav');
+				
+			var add_map_overlay = function() {
+				var area = $(this), img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
+				$state_name.text(area.attr('alt'));
+				$map_img.before(img);
+			}; 
+			$areas.unbind('mouseenter', add_map_overlay).live('mouseenter', add_map_overlay);
+
+			var remove_map_overlay = function() {
+				$state_name.text('');
+				$('.map_overlay', '#map_nav').remove();
+			};
+			$areas.unbind('mouseleave', remove_map_overlay).live('mouseleave', remove_map_overlay);
+			
+			var get_cities = function() {
+				var area = $(this), state = area.attr('alt');
+				$state_name.text('Going to '+ state +'...');
+				
+				if (state == 'Washington DC') {
+					window.location = '/self-storage/washington-dc';
+					
+				} else {
+					if (wizard.slide_data[1].data && wizard.slide_data[1].data.state == state) {
+						wizard.slide_data[1].build_city_list = false;
+						wizard.next();
+
+					} else {
+						$.getJSON('/ajax/get_cities?state='+ state, function(response) {
+							if (response.success) {
+								wizard.slide_data[1].build_city_list = true;
+								wizard.slide_data[1].pop_up_title = 'Pick a City in '+ state
+								wizard.slide_data[1].data = { state: state, cities: response.data };
+								wizard.next();
+
+							} else $.ajax_error(response);
+						});
+					}
+				}
+				
+
+				return false;
+			};
+			$areas.unbind('click', get_cities).live('click', get_cities);
+		}
+		
+		function map_flow_step2() {
+			var wizard = arguments[0];
+			$('#city_name').remove();
+			
+			if (wizard.slide_data[1].build_city_list) {
+				var list = $('#cities_list', '#map_step2').html(''),
+					city_nav = $('#city_nav', '#map_step2').html(''),
+					city_link = $('<a href="/self-storage/"><span>Self Storage in </span></a>');
+				
+				for (var i = 0, len = wizard.slide_data[1].data.cities.length; i < len; i++) {
+					var letter = wizard.slide_data[1].data.cities[i][0],
+						cities = wizard.slide_data[1].data.cities[i][1],
+						new_list = $('<li id="cities_'+ letter +'" class="tab_content"></li>');
+						
+					city_nav.append('<li><a rel="cities_'+ letter +'" href="#'+ letter +'">'+ letter +'</a></li>');
+					
+					for (var j = 0, len2 = cities.length; j < len2; j++) {
+						var new_city = city_link.clone(), city = cities[j];
+						
+						new_city.show().attr('href', city_link.attr('href') + wizard.slide_data[1].data.state +'/'+ city.toLowerCase().replaceAll(' ', '-'));
+						new_city.find('span').hide().after(city);
+						new_list.append(new_city);
+					}
+					
+					list.append(new_list);
+				}
+				
+				$('#map_step2').tabular_content();
+				
+				var city_click = function() {
+					$('#map_step2', '#map_nav').append('<p id="city_name">Looking for '+ $(this).text() +', '+ wizard.slide_data[1].data.state +'...</p>');
+				}
+				$('li a', list).unbind('click', city_click).live('click', city_click);
+			}
+		}
+	}
+	
 	// steps
 	$('p', '#steps').hide();
 	var $steps = $('.in', '#steps'),
-			fade_anim_speed = 3400,
-			fade_anim_int = setTimeout(stepsFadeAnim, 1000);
-			
+	    fade_anim_speed = 3400
+	    //fade_anim_int = setTimeout(stepsFadeAnim, 1000);
+	
 	$steps.hover(function(){
 		fade_anim_step = $steps.index(this);
 		
@@ -80,7 +205,7 @@ $(document).ready(function(){
 		
 		$('img', this).fadeOut();
 		$('p', this).fadeIn();
-		clearTimeout(fade_anim_int);
+		//clearTimeout(fade_anim_int);
 		
 	}, function(){
 		$('p', this).fadeOut();
@@ -107,25 +232,28 @@ $(document).ready(function(){
 	
 	// more info button
 	var more_info_tab = $('#red_tab'),
+		orig_info_txt = more_info_tab.text(),
 		more_info_div = $('#'+ more_info_tab.attr('rel')).hide();
 		
 	more_info_tab.click(function(){
 		if (!more_info_tab.data('open')) {
 			more_info_div.slideDown(1000);
-			more_info_tab.data('open', true);
-			more_info_tab.text('Click to close');
+			more_info_tab.data('open', true).text('Click to close');
 		} else {
 			more_info_div.slideUp(1000);
-			more_info_tab.data('open', false);
-			more_info_tab.text('Click to open');
+			more_info_tab.data('open', false).text(orig_info_txt);
 		}
 	});
 	
 	$('#handle').click(function(){
-		if (more_info_tab) more_info_tab.trigger('click');
+		if (more_info_tab) more_info_tab.click();
 	});
 	
 	$('#advanced_opts').hide();
+	
+	// Cities pages
+	$('.storage_in_city', '#cities_list').css('width', '23%');
+	$('.storage_in_city span', '#cities_list').hide();
 	
 	// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
 	var GreyShow = function(options) {
@@ -141,6 +269,15 @@ $(document).ready(function(){
 			self.startSlide();
 		}
 		
+		this.startSlide = function() {
+			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
+			
+			self.hidePrevSlide();
+			self.slide_objects = self.slides[self.current].objects;
+			self.current_object = 0;
+			self.runObject(self.slide_objects[0]);
+		}
+		
 		this.gotoSlide = function(n) {
 			self.current = n;
 			
@@ -149,15 +286,6 @@ $(document).ready(function(){
 				self.gotoSlide(0);
 				
 			} else self.startSlide();
-		}
-		
-		this.startSlide = function() {
-			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
-			
-			self.hidePrevSlide();
-			self.slide_objects = self.slides[self.current].objects;
-			self.current_object = 0;
-			self.runObject(self.slide_objects[0]);
 		}
 		
 		this.runObject = function(o) {
@@ -186,7 +314,7 @@ $(document).ready(function(){
 		}
 		
 		this.hidePrevSlide = function(callback) {
-			var prev= self.current == 0 ? self.num_slides-1 : self.current-1;
+			var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
 			
 			for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
 				var $object = $('#'+ self.slides[prev].objects[i].id);
@@ -301,15 +429,13 @@ $(document).ready(function(){
 		if ($.cookie('main_map_open')) $.open_map(main_map);
 		else main_map.hide();
 		
-		// move the sidebar with the page
+		/*/ move the sidebar with the page
 		var move_me = $('#content_bottom .region_content_bottom');
 		$(window).scroll(function(e){
 			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
 			else move_me.css({ position: 'static'  });
-		});
+		});*/
 	}
-	
-	
 	
 	// New Permissions
 	if ($.on_page([['new', 'permissions, roles']])) {
@@ -359,29 +485,31 @@ $(document).ready(function(){
 	});
 	
 	// client edit page
-	$('.selective_hider').live('click', function(){
-		var dont_hide  = $(this).attr('rel'),
-			hide_these = $('.hideable');
+	if ($.on_page([['edit', 'clients']])) {
+		$('.selective_hider').live('click', function(){
+			var dont_hide  = $(this).attr('rel'),
+				hide_these = $('.hideable');
 			
-		if (dont_hide) {
-			hide_these.each(function(){
-				if (this.id != dont_hide) {
-					$(this).slideUp();
-					$(this).prev('.user_hint').slideUp();
+			if (dont_hide) {
+				hide_these.each(function(){
+					if (this.id != dont_hide) {
+						$(this).slideUp();
+						$(this).prev('.user_hint').slideUp();
 					
-				} else {
-					$(this).slideDown();
-					$(this).prev('.user_hint').slideDown();
-				}
-			});
+					} else {
+						$(this).slideDown();
+						$(this).prev('.user_hint').slideDown();
+					}
+				});
 
-		} else {
-			hide_these.slideDown();
-			$('.user_hint').slideDown();
-		}
+			} else {
+				hide_these.slideDown();
+				$('.user_hint').slideDown();
+			}
 
-		return false;
-	});
+			return false;
+		});
+	}
 	
 	$('.hint_close').click(function(){
 		var btn = $(this),
@@ -404,26 +532,30 @@ $(document).ready(function(){
 				ajax_loader    = $this.prev('.ajax_loader').show();
 		
 			// GET PARTIAL
-			$.get('/ajax/get_partial?model=Listing&partial=/listings/listing', function(partial){
-				var partial 	  = $(partial).hide(),
-					title_input   = $('input[name="listing[title]"]', partial),
-					tip_text	  = $('.new_listing_tip', partial);
-			
-				// insert the new listing into either the #empty_listings box or #rslt-list-bg
-				if (empty_listings.length > 0) {
-					$('.client_tip', empty_listings).remove();
-					empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
+				if (response.success) {
+					var partial 	  = $(response.data).hide(),
+						title_input   = $('input[name="listing[title]"]', partial),
+						tip_text	  = $('.new_listing_tip', partial);
+
+					// insert the new listing into either the #empty_listings box or #rslt-list-bg
+					if (empty_listings.length > 0) {
+						$('.client_tip', empty_listings).remove();
+						empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
+
+					} else $('#rslt-list-bg', listing_box).prepend(partial);
+
+					$('.listing', listing_box).removeClass('active');
+					partial.addClass('active').slideDown(300, function() { 
+						tip_text.fadeIn(600);
+						title_input.focus();
+					});
+
+					bind_listing_input_events();
+					$.bindPlugins();
+					
+				} else $.ajax_error(response);
 				
-				} else $('#rslt-list-bg', listing_box).prepend(partial);
-				
-				$('.listing', listing_box).removeClass('active');
-				partial.addClass('active').slideDown(300, function() { 
-					tip_text.fadeIn(600);
-					title_input.focus();
-				});
-				
-				bind_listing_input_events();
-				$.bindPlugins();
 				ajax_loader.hide();
 			});
 		
@@ -446,10 +578,7 @@ $(document).ready(function(){
 
 				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
 					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
-					else { // SERVER VALIDATION DID NOT PASS
-						title_input.addClass('invalid').focus();
-					}
-					
+					else title_input.addClass('invalid').focus(); // SERVER VALIDATION DID NOT PASS
 					ajax_loader.hide();
 				}, 'json');
 			
@@ -542,7 +671,7 @@ $(document).ready(function(){
 		
 	// END new listing workflow
 	
-	// Listing Pictures
+	// Listing Edit
 	// upload pics
 	$('#picture_facility_image', '#new_picture').change(function(){
 		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
@@ -555,15 +684,11 @@ $(document).ready(function(){
 					var thumb = $('<li><img src="'+ response.data.thumb +'" id="Picture_'+ response.data.id +'" alt="" /><a class="iconOnly16 delete_link right" href="/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id +'" title="Delete this picture">Delete</a></li>'),
 						image = $('<img class="big-pic" id="BigPicture_'+ response.data.id +'" src="'+ response.data.image +'" alt="" />');
 					
-					$('#sl-tabs-pict-gall').append(thumb);
-					thumb.hide().fadeIn(600)
-					
-					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) 
 						$('.gallery', '#sl-tabs-pict-in').append(image);
-						image.hide().fadeIn('slow');
-						thumb.find('img').addClass('active');
-					}
 					
+					$('#sl-tabs-pict-gall').append(thumb);
+					thumb.hide().fadeIn(600, function(){ $('img', this).trigger('mouseover') });
 					
 				} else $.ajax_error(response);
 				
@@ -761,41 +886,42 @@ var GreyWizard = function(container, settings) {
 	self.width	  	= self.workflow.width();
 	self.height   	= self.workflow.height();
 	self.slides   	= $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
-	self.spacer		= 100;
+	self.spacer		= 100; // to give the slides space between transitions
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
 		self.nav_bar  	= $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
-		
 		self.current  	   = step || 0;
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
 		
-		self.set_slides(true);
+		self.set_slides();
 		
 		// bind events
 		self.nav_bar.find('.next, .skip').click(self.next);
 		self.nav_bar.find('.back').click(self.prev);
 		
 		self.title_bar.change(function(){
-			$(this).text(self.settings.title + ' - Step '+ (self.current+1));
+			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
+			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
+			
 		}).trigger('change');
 		
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
 		self.set_nav();
 	}
 	
-	this.set_slides = function(set_display) {
+	this.set_slides = function() {
 		if (typeof set_display == 'undefined') set_display = false;
 		
 		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
 		self.slides.each(function(i){
 			// calculate the left position so that the initial slide is at 0
-			var left = -((self.width + self.spacer) * ((self.current) - i))
+			var left = -((self.width + self.spacer) * (self.current - i))
 			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
 		});
 		
-		if (set_display) { // build the slide tabbed nav
+		if (self.settings.set_slides) { // build the slide tabbed nav
 			var slide_display_html = '<div id="slide_nav">',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
 				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
@@ -871,7 +997,7 @@ var GreyWizard = function(container, settings) {
 			self.slide_data[self.current].action.call(this, self);
 			self.title_bar.trigger('change');
 			
-		} else if (self.current == self.num_slides-1) self.settings.finish_action.call(this, self);
+		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') self.settings.finish_action.call(this, self);
 	}
 }
 
@@ -883,6 +1009,7 @@ var workflow_settings = {
 	title		 : 'Add Your Facility',
 	slides_class : 'workflow_step',
 	nav_id : 'workflow_nav',
+	set_slides : true,
 	slides : [
 		{ 
 			div_id  : 'signupstep_2',
@@ -916,7 +1043,7 @@ var workflow_settings = {
 			]
 		}
 	],
-	finish_action : function(wizard){ finish_workflow(wizard); }
+	finish_action : function(wizard){ finish_workflow(wizard) }
 };
 
 function close_pop_up_and_focus_on_fac_name(event){
@@ -1087,5 +1214,13 @@ function get_pop_up_and_do(sub_partial, pop_up_title, height, callback) {
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function preload_us_map_imgs() {
+	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	$.each(states, function(){
+		var img = new Image();
+		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }

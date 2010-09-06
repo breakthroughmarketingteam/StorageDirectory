@@ -384,7 +384,7 @@ module ApplicationHelper
   
   def active_page(resource_or_path) # sets the active class on links
     if resource_or_path.is_a? String # string path
-      current_controller?(resource_or_path)  ? 'active' : ''
+      current_controller?(resource_or_path) || current_page?(resource_or_path) ? 'active' : ''
     else # model instance, also check if the model title is the same as the path without the preceding / (forward slash)
       current_page?(url_for(resource_or_path)) || (resource_or_path.name_or_title.parameterize.downcase == request.path[1, 100].parameterize.to_s) ? 'active' : ''
     end

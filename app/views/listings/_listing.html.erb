@@ -19,7 +19,7 @@
 		<% end %>
       </li>
       <li class="rslt-reserve">
-        <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (listing.user_id.blank? ? edit_listing_path(listing.id) : edit_client_listing_path(listing.user_id, listing.id)) rescue '' %>
+        <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (listing.user_id.blank? ? edit_listing_path(listing.id) : edit_client_listing_path(listing.user_id, listing.id) rescue '') %>
       </li>
     </ul>
   </div>

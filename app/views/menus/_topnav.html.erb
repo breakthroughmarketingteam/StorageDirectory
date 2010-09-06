@@ -1,10 +1,10 @@
 <ul id="storage_types">
-	<li><a href="#" class="active">Self Storage</a></li>
-	<li><a href="#">Mobile Storage</a></li>
-	<li><a href="#">Car Storage</a></li>
-	<li><a href="#">RV Storage</a></li>
-	<li><a href="#">Boat Storage</a></li>
-	<li><a href="#">Cold Storage</a></li>
+	<li><%= link_to 'Self Storage', '/self-storage', :class => active_page('/self-storage') %></li>
+	<li><%= link_to 'Mobile Storage', '/mobile-storage', :class => active_page('/mobile-storage') %></li>
+	<li><%= link_to 'Car Storage', '/car-storage', :class => active_page('/car-storage') %></li>
+	<li><%= link_to 'RV Storage', '/rv-storage', :class => active_page('/rv-storage') %></li>
+	<li><%= link_to 'Boat Storage', '/boat-storage', :class => active_page('/boat-storage') %></li>
+	<li><%= link_to 'Cold Storage', '/cold-storage', :class => active_page('/cold-storage') %></li>
 </ul>
 <ul id="moving_help">
 	<li><a href="#">Truck Rentals</a></li>
@@ -12,5 +12,10 @@
 	<li><a href="#">Supplies</a></li>
 </ul>
 <ul class="right">
-	<li><%= link_to 'Log In', login_path, :class => 'right' %></li>
+	<li>
+		<%= link_to_unless current_user, 'Log In', login_path, :class => active_page(login_path) do |name|
+			path = (current_user.has_role?('advertiser') ? client_account_path : user_path(current_user))
+			link_to('My Account', path, :class => active_page(path)) + link_to('Log out', logout_path)
+		end %>
+	</li>
 </ul>

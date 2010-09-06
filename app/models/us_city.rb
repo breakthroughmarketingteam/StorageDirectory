@@ -13,7 +13,17 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.cities_of(state)
-    all(:select => 'name', :conditions => ['LOWER(state) = ?', state.downcase], :order => 'name').map(&:name)
+    all(:select => 'name', :conditions => ['LOWER(state) = ?', state.downcase.gsub('-', ' ')], :order => 'name').map(&:name)
+  end
+  
+  # converts the list of cities into a hash: { first_letter: [city_names...], etc... }
+  def self.tabbed_cities_of(state)
+    tabbed = {}
+    cities_of(state).each do |city|
+      tabbed[city[0,1]] ||= []
+      tabbed[city[0,1]] << city
+    end
+    tabbed.sort
   end
   
 end

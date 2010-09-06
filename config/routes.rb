@@ -18,7 +18,9 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean seo friendly
-  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => :show, :requirements => { :id => /\d*/ }
+  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  # all states except washington dc
+  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
   map.storage_state_or_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
@@ -26,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
+  map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
@@ -51,11 +54,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :suggestions
   map.resources :reservations
   map.resources :payments
+  map.resources :facility_features
   
   map.resource :site_setting
+  map.resources :password_resets, :only => [:new, :create, :edit, :update]
   
   # greyresults
-  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations]
+  map.resources :listings, :collection => { :locator => :get, :import => :post }, :has_many => [:sizes, :specials, :maps, :pictures, :reservations, :facility_features]
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
   

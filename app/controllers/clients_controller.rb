@@ -42,6 +42,8 @@ class ClientsController < ApplicationController
   end
     
   def edit
+    redirect_to client_account_path if current_user.has_role?('advertiser') && params[:id]
+   
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
     @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
     
