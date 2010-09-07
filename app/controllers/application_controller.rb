@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   $_crud = [:all, :create, :read, :update, :delete]
   
   # client account control panel
-  $_user_hint_places = [:owner_info, :facilities, :reports, :settings]
+  $_user_hint_places = [:owner_info, :facilities, :reports, :settings, :listing_detail, :info_tabs, :extras]
   
   # loads website title and theme, meta info, widgets and plugins
   before_filter :load_app_config
@@ -296,7 +296,7 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
-    eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => 14, :page => params[:page]"
+    eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => 14, :page => params[:page], :order => 'id desc'"
   end
   
   def get_model

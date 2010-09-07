@@ -16,6 +16,7 @@ class Listing < ActiveRecord::Base
   # OpentTech ISSN data
   has_one  :facility_info
   has_many :unit_types
+  has_many :promos
   has_many :facility_features
   has_many :features, :through => :facility_features
   
@@ -108,7 +109,8 @@ class Listing < ActiveRecord::Base
     end
     
     @model_data = Listing.all options
-    @model_data.sort_by_distance_from @location if !params[:order] || params[:order] == 'distance'
+    @model_data.sort_by_distance_from @location if params[:order] == 'distance'
+    @model_data = smart_order(@model_data) if is_city? query
     @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
     { :data => @model_data, :location => @location }
   end
@@ -116,7 +118,7 @@ class Listing < ActiveRecord::Base
   def self.geocode_query(query)
     if query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
-    elsif is_address_query?(query)
+    elsif is_address_query? query
       Geokit::Geocoders::MultiGeocoder.geocode query
     else
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
@@ -125,12 +127,23 @@ class Listing < ActiveRecord::Base
   end
   
   def self.is_address_query?(query)
-    return true if query.match /\d{5}/ # zip code
-    
-    # has a state name or abbrev or city name
+    query.gsub!('-', ' ')
+    return true if is_zip?(query)
+    return true if is_city?(query)
+    is_state?(query)
+  end
+  
+  def self.is_zip?(query)
+    query.match /\d{5}/ # zip code
+  end
+  
+  def self.is_city?(query)
+    UsCity.names.any? { |c| c =~ /#{query.split(/,\W?/) * '|'}/i }
+  end
+  
+  def self.is_state?(query)
     sregex = States::NAMES.map { |s| "(#{s[0]})|\s#{s[1]}$" } * '|'
-    us_cities = UsCity.all.map { |c| c.name }
-    query.match(/#{sregex}/i) || us_cities.any? { |c| c =~ /#{query}/i }
+    query.match(/#{sregex}/i)
   end
   
   def self.extrapolate_query(params)
@@ -138,10 +151,13 @@ class Listing < ActiveRecord::Base
     params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
   end
   
+  def self.smart_order(data)
+    data.sort_by { |d| d.impressions_count }
+  end
+  
   #
   # OpenTech ISSN wrapper code
   #
-  
   def issn_enabled?
     !self.facility_id.blank?
   end
@@ -196,7 +212,8 @@ class Listing < ActiveRecord::Base
       sync_facility_info
       update_unit_types_from_issn
       sync_sizes_with_unit_types
-      update_specials_from_issn
+      update_promos_from_issn
+      sync_specials_with_promos
     end
   end
   
@@ -209,25 +226,34 @@ class Listing < ActiveRecord::Base
   end
   
   def update_unit_types_from_issn
-    args = {
-      :class       => UnitType,
-      :data        => IssnAdapter.get_facility_info('getFacilityUnitTypes', self.facility_id), 
-      :model       => self.unit_types,
-      :find_method => 'find_by_sID',
-      :find_attr   => 'sID'
-    }
-    IssnAdapter.update_models_from_issn args
+    IssnAdapter.update_models_from_issn :class => UnitType,
+                                        :data => IssnAdapter.get_facility_info('getFacilityUnitTypes', self.facility_id), 
+                                        :model => self.unit_types,
+                                        :find_method => 'find_by_sID',
+                                        :find_attr  => 'sID'
   end
   
-  def update_specials_from_issn
-    args = {
-      :class       => Special,
-      :data        => IssnAdapter.get_facility_promos(self.facility_id), 
-      :model       => self.specials,
-      :find_method => 'find_by_Description',
-      :find_attr   => 'sDescription'
-    }
-    IssnAdapter.update_models_from_issn args
+  def update_promos_from_issn
+    IssnAdapter.update_models_from_issn :class => Promo,
+                                        :data => IssnAdapter.get_facility_promos(self.facility_id), 
+                                        :model => self.promos,
+                                        :find_method => 'find_by_Description',
+                                        :find_attr => 'sDescription'
+  end
+  
+  def sync_specials_with_promos
+    Special.transaction(:requires_new => true) do
+      self.promos.each do |promo|
+        special = self.specials.find_by_id(promo.special_id) || self.specials.create
+        promo.update_attribute :special_id, special.id
+        
+        args = {
+          :title => promo.Description,
+          :code => promo.Code
+        }
+        special.update_attributes args
+      end
+    end
   end
   
   def sync_sizes_with_unit_types

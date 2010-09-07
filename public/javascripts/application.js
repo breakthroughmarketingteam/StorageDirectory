@@ -768,6 +768,30 @@ $(document).ready(function(){
 		});
 	}
 	
+	// Client tips block
+	$('.client_tip:not(:first)', '#tips-box').hide();
+	var client_tip_boxes = $('.client_tip', '#tips-box');
+	
+	if (client_tip_boxes.length > 0) {
+		$('a', '#tips-box-bottom').click(function(){
+			if (client_tip_boxes.length > 1) {
+				var $this = $(this),
+					direction = $this.attr('id') == 'next_tip' ? 1 : -1,
+					current_tip = $('.client_tip:visible', '#tips-box'),
+					current_index = client_tip_boxes.index(current_tip),
+					new_index = current_index + direction;
+				
+				if (new_index == client_tip_boxes.length) new_index = 0;
+				else if (new_index < 0) new_index = client_tip_boxes.length - 1;
+
+				current_tip.hide();
+				$(client_tip_boxes[new_index]).show();
+			}
+			
+			return false;
+		});
+	}
+	
 });
 
 // jQuery Plugins

@@ -9,7 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100903212106) do
+ActiveRecord::Schema.define(:version => 20100907222429) do
+
+  create_table "account_settings", :force => true do |t|
+    t.integer  "client_id"
+    t.text     "settings_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "billing_infos", :force => true do |t|
     t.integer  "client_id"
@@ -432,6 +439,21 @@ ActiveRecord::Schema.define(:version => 20100903212106) do
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
+  create_table "promos", :force => true do |t|
+    t.integer  "special_id"
+    t.text     "Description"
+    t.string   "sID"
+    t.string   "UseAtCounter"
+    t.string   "Code"
+    t.string   "UseAtWeb"
+    t.string   "UseAtKiosk"
+    t.datetime "LastTimeUpdated"
+    t.string   "CouponCode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "listing_id"
+  end
+
   create_table "rates", :force => true do |t|
     t.integer  "rater_id"
     t.integer  "rateable_id"
@@ -480,20 +502,13 @@ ActiveRecord::Schema.define(:version => 20100903212106) do
   create_table "specials", :force => true do |t|
     t.integer  "listing_id"
     t.string   "title"
-    t.string   "Description"
+    t.string   "description"
     t.string   "content"
-    t.string   "Code"
+    t.string   "code"
     t.boolean  "enabled"
-    t.integer  "position",        :default => 0
+    t.integer  "position",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "UseAtWeb"
-    t.string   "UseAtCounter"
-    t.string   "sID"
-    t.datetime "LastTimeUpdated"
-    t.string   "UseAtKiosk"
-    t.string   "CouponCode"
-    t.string   "ErrorMessage"
   end
 
   add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"

@@ -108,10 +108,23 @@
           <h3><span>Settings</span></h3>
         </div>
         <div id="ov-settings-cnt">
-          <p>Content will go here...</p>
-          <p>Content will go here...</p>
-          <p>Content will go here...</p>
-          <p>Content will go here...</p>
+          
+			<table id="client_settings" cellspacing="0" cellpadding="0">
+				<tr>
+					<th title="Setup where and when to send reports"><p>Email reports: </p></th>
+					<td id="email_reports_settings">
+						<p>Recipient: <%= text_field_tag 'reports_recipient', nil, :class => 'text' %></p>
+					</td>
+				</tr>
+				<tr>
+					<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
+					<td id="user_hint_toggles">
+						<p><%= radio_button_tag 'user_hints', 'show' %> Show</p>
+						<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
+					</td>
+				</tr>
+			</table>
+			
         </div>
       </div>
       

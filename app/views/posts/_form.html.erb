@@ -23,7 +23,7 @@
 	<div>
 		<%= f.label :tag_list %>
 		<div class="shadow_wrap">
-			<%= f.text_field :tag_list, :value => params[:tag_list] %>
+			<%= f.text_field :tag_list, :value => params[:tag_list], :class => 'autocomplete', :rel => 'Tag_names|1' %>
 		</div>
 	</div>
 	

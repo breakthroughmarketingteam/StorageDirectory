@@ -14,9 +14,11 @@ class ClientsController < ApplicationController
   end
   
   def create
-    @client            = Client.new params[:client]
+    @client = Client.new params[:client]
+    @mailing_address = @client.mailing_addresses.build params[:mailing_address]
+    
+    @client.build_account_setting :settings_hash => '{ :user_hints => "show" }'
     @client.user_hints = UserHint.all
-    @mailing_address   = @client.mailing_addresses.build params[:mailing_address]
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
@@ -46,6 +48,9 @@ class ClientsController < ApplicationController
    
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
     @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
+    
+
+    raise @client.account_setting.parsed_settings.pretty_inspect
     
     redirect_to new_client_path if @client.nil?
   end

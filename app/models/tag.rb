@@ -13,11 +13,8 @@ class Tag < ActiveRecord::Base
   named_scope :named_like, lambda { |name| { :conditions => ["name LIKE ?", "%#{name}%"] } }
   named_scope :named_like_any, lambda { |list| { :conditions => list.map { |tag| sanitize_sql(["name LIKE ?", tag.to_s]) }.join(" OR ") } }
   
-  def initialize(attributes = {}, params = {}, user = nil)
-    super attributes
-    
-  rescue
-   super attributes
+  def self.names
+    all.map &:name
   end
   
   # LIKE is used for cross-database case-insensitivity

@@ -23,17 +23,14 @@ class ListingsController < ApplicationController
     
     result = Listing.geo_search params, session
     @listings = result[:data]
-    # updates the impressions only for listings on current page
-    @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-    
-    # TODO: only getting standard data now, should build a list out of the features in the result set
-    @facility_features = IssnFacilityFeature.labels
-    @unit_features = IssnUnitTypeFeature.labels
-    @unit_sizes = IssnUnitTypeSize.labels
-    
+
+    get_stantard_info
     get_map @location
+    
+    # updates the impressions only for listings on current page
+    @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
     respond_to do |format|
       format.html
@@ -63,9 +60,6 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @facility_features = IssnFacilityFeature.labels
-    @unit_features = IssnUnitTypeFeature.labels
-    @unit_sizes = IssnUnitTypeSize.labels
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 
@@ -122,16 +116,20 @@ class ListingsController < ApplicationController
     @sizes = @listing.sizes
     @facility_features = @listing.facility_features.map(&:label)
     
+    get_stantard_info
+    
     if action_name == 'edit'
       @showing = false
       @facility_feature = FacilityFeature.new
       @specials = @listing.specials
-      
-      # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-      @facility_features = IssnFacilityFeature.labels
-      @unit_features     = IssnUnitTypeFeature.labels
-      @unit_sizes        = IssnUnitTypeSize.labels
     end
+  end
+  
+  def get_stantard_info
+    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+    @facility_features = IssnFacilityFeature.labels
+    @unit_features     = IssnUnitTypeFeature.labels
+    @unit_sizes        = IssnUnitTypeSize.labels
   end
   
   def get_client

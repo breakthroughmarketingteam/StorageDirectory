@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
-  before_filter :get_post, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
   def index
-    @posts = Post.all_for_index_view
   end
 
   def show
@@ -63,10 +63,4 @@ class PostsController < ApplicationController
     render :json => { :success => @post.rate(params[:stars], current_user, params[:dimension]) }
   end
   
-  private
-  
-  def get_post
-    @post = Post.find(params[:id])
-  end
-
 end
