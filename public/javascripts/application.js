@@ -53,6 +53,8 @@ $(document).ready(function(){
 		var value = parseInt(advanced_slider.slider('value')),
 			new_val = $(this).attr('alt') == 'less' ? value - 5 : value + 5;
 		
+		if (new_val >= 50) new_val = 50;
+		
 		advanced_slider.slider('value', new_val);
 		$slider_handle.html('<span>'+ new_val +'</span>');
 	});

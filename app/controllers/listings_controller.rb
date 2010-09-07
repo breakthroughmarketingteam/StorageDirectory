@@ -63,6 +63,9 @@ class ListingsController < ApplicationController
   end
 
   def show
+    @facility_features = IssnFacilityFeature.labels
+    @unit_features = IssnUnitTypeFeature.labels
+    @unit_sizes = IssnUnitTypeSize.labels
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
   end
 

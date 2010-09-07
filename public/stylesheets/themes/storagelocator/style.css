@@ -14,7 +14,7 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;}
 #page-ctr-in{/*background:url(/images/ui/storagelocator/container-inner-bg.png) no-repeat bottom center;*/
-background:url(/images/ui/storagelocator/handle.png) no-repeat 50% 95%;padding-bottom:84px;}
+padding-bottom:84px;}
 #page-cnt{margin:0px auto;width:980px;background-color:#fff;position:relative;z-index:1;top:-55px;border:1px #ccc solid;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;box-shadow:0px 0px 8px #999;-webkit-box-shadow:0px 0px 8px #999;-moz-box-shadow:0px 0px 8px #999;}
 #page-cnt-top-bg{/*background:url(/images/ui/storagelocator/world-shadow.png) no-repeat top left;background-position:42px 0px;*/text-align:left;/*float:left;*/width:975px;}
 #page-cnt-in{margin:12px 5px;}
@@ -97,11 +97,11 @@ ul.city-list li a{width:110px;display:block;}
 p#click-more{width:226px;position:absolute;height:35px;line-height:25px;background:url(/images/ui/storagelocator/click-for-more.png) no-repeat bottom center;text-align:center;margin-left:38%;font-size:14px;font-weight:bold;}
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
-#type-two-l-col,#type-one-l-col,#content_bottom{width:197px;float:left;margin-top:10px;position:relative;left:2px;}
+#type-two-l-col,#type-one-l-col,#content_bottom{width:197px;float:left;}
 #type-two-l-col{margin-top:7px;}
-#listings_controller #content_bottom.region{margin-top:10px;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.compare_action #content,#clients_controller.new_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
+#listings_controller.locator_action #content{border:1px solid #ccc;left:6px;padding-left:15px;top:-2px;width:761px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;}
 #type-one-r-col{left:0;}
 /* Customizations - D.S */
 #oldlogo{float:left;position:relative;}
@@ -109,8 +109,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
 #add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:20px;color:#555;text-align:center;height:200px;}
-#narrow-box{margin-left:19px;margin-top:5px;width:161px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;}
-#narrow-box h2{font-size:100%;color:#fff;height:41px;padding:6px 0 0 50px;text-shadow:1px 1px 2px #333;border:1px solid #ccc;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
+#narrow-box{}
+#narrow-box h2{font-size:100%;color:#fff;height:41px;padding:6px 0 0 50px;text-shadow:1px 1px 2px #333;margin:15px 11px 0 18px;border:1px solid #ccc;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
 #add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
 #narrow-box p,#add-fac-box p{margin:15px 10px;text-align:left;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
@@ -350,7 +350,7 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 /* And finally... here are all the brand new pages CSS starting from here */
 #type-three-r-col-in{width:755px;float:right;margin:15px 15px 0 0;}
 #sl-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #ccc;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
-#results_header{margin-top:13px;width:98%;}
+#results_header{margin-top:13px;width:96.2%;}
 #results_header #top_map_btn{display:block;float:right;margin:11px 13px 0 0;color:#fff;text-shadow:1px 1px 2px #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
@@ -833,9 +833,9 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #advanced_opts #size_picker img{position:absolute;bottom:0;left:-10px;}
 #advanced_opts #features .selectable_wrap{font-size:80%;width:33.3%;height:22px;float:left;margin-bottom:7px;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;line-height:2;}
 #advanced_opts #features .selectable_wrap label{font-weight:normal;}
-#advanced_opts #features .selectable_wrap input{display:none;}
+#advanced_opts .selectable_wrap input{display:none;}
 #advanced_opts #features .selectable{width:22px;height:22px;float:left;margin-right:10px;}
-#advanced_opts #features .selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat;}
+#advanced_opts .selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat;}
 #advanced_opts #slide_wrap,#advanced_opts #loc_btn{float:left;}
 #advanced_opts #slide_wrap{width:70%;line-height:3.8;}
 #advanced_opts #slide_wrap label,#advanced_opts #slide_wrap .advanced_slider{display:block;float:left;}
@@ -855,9 +855,22 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 
 #narrow_results_form{} 
 #narrow_results_form #advanced_opts{background:none;border:0 none;overflow:visible;}
-#narrow_results_form #advanced_opts #size_option{border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
-#narrow_results_form #advanced_opts #distance_slider #slide_wrap{}
-
+#narrow_results_form #advanced_opts label{font-size:80%;}
+#narrow_results_form #advanced_opts #type_select{margin:15px 11px 15px 20px;}
+#narrow_results_form #advanced_opts #type_select select{width:75%;}
+#narrow_results_form #advanced_opts #size_option{width:83%;padding:5px 20px 20px 20px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
+#narrow_results_form #advanced_opts #size_option #size_picker{margin-bottom:17px;}
+#narrow_results_form #advanced_opts #distance_slider{overflow:hidden;padding:12px 0 12px 20px;width:91%;}
+#narrow_results_form #advanced_opts #distance_slider #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}
+#narrow_results_form #advanced_opts #distance_slider #slide_wrap .arrow{margin:6px;}
+#narrow_results_form #advanced_opts #distance_slider label.right{width:auto;padding:0;}
+#narrow_results_form #advanced_opts #distance_slider #slide_wrap .advanced_slider{width:36%;margin:10px 26px;}
+#narrow_results_form #advanced_opts #unit_features{padding:0 10px 12px 12px;width:92%;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
+#narrow_results_form #advanced_opts #unit_features label{font-size:100%;}
+#narrow_results_form #advanced_opts #unit_features .selectable_wrap{overflow:hidden;padding:3px 0;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;}
+#narrow_results_form #advanced_opts #unit_features .selectable{float:left;width:21px;height:18px;margin-right:5px;}
+#narrow_results_form #advanced_opts #unit_features .selectable_wrap label{font-size:80%;font-weight:normal;}
+#narrow_results_form #advanced_opts #unit_features .selectable_wrap input
 
 #dock{width:530px;height:60px;margin:160px auto 20px;visibility:hidden;}
 #dock a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}
