@@ -240,7 +240,7 @@ $(document).ready(function(){
 		if (more_info_tab) more_info_tab.click();
 	});
 	
-	$('#advanced_opts', '#pages_controller').hide();
+	$('#advanced_opts', '#pages_controller.home').hide();
 	
 	// Cities pages
 	$('.storage_in_city', '#cities_list').css('width', '23%');

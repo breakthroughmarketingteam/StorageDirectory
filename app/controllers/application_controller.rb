@@ -144,6 +144,11 @@ class ApplicationController < ActionController::Base
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
     
     @slogan = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
+    
+    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
+    @facility_features = IssnFacilityFeature.labels
+    @unit_features     = IssnUnitTypeFeature.labels
+    @unit_sizes        = IssnUnitTypeSize.labels
   end
   
   # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

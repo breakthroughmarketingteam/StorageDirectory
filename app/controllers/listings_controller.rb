@@ -25,8 +25,7 @@ class ListingsController < ApplicationController
     @listings = result[:data]
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-
-    get_stantard_info
+    
     get_map @location
     
     # updates the impressions only for listings on current page
@@ -116,20 +115,11 @@ class ListingsController < ApplicationController
     @sizes = @listing.sizes
     @facility_features = @listing.facility_features.map(&:label)
     
-    get_stantard_info
-    
     if action_name == 'edit'
       @showing = false
       @facility_feature = FacilityFeature.new
       @specials = @listing.specials
     end
-  end
-  
-  def get_stantard_info
-    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    @facility_features = IssnFacilityFeature.labels
-    @unit_features     = IssnUnitTypeFeature.labels
-    @unit_sizes        = IssnUnitTypeSize.labels
   end
   
   def get_client

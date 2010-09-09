@@ -50,7 +50,7 @@ class ClientsController < ApplicationController
     @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
     
 
-    raise @client.account_setting.parsed_settings.pretty_inspect
+    #raise @client.account_setting.parsed_settings.pretty_inspect
     
     redirect_to new_client_path if @client.nil?
   end
