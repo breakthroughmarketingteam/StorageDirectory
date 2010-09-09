@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :permissions
   end
   
-  map.resources :clients do |clients|
+  map.resources :clients, :member => { :test_issn => :post } do |clients|
     clients.resources :listings
     clients.resources :payments
   end

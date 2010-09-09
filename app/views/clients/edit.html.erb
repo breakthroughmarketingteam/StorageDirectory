@@ -101,13 +101,31 @@
         </div>
   	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
       </div>
-     
+    
+	<%= render_hints_for :services %>
+      <div id="ov-services" class="hideable">
+        <div id="ov-item-head">
+          <h3><span>Services</span></h3>
+        </div>
+        <div id="ov-services-cnt">
+			
+			<div>
+				<%= link_to image_tag('/files/content/issn_networklogo.jpg', :class => 'right'), 'http://www.opentechalliance.com/products/insomniac-network.php' %>
+				<h4>Online Reservations</h4>
+				<p>
+					The last step to bringing the ease of real-time reservations to the masses is linking your systems with ours. Using the latest technology developed by OpenTech Alliance, the INSOMNIAC Self Storage Network (ISSN) is your top choice for your bottom line.
+					<%= link_to 'Enable Online Reservations', '#', :id => 'enable_issn', :target => '_blank' %>
+				</p>
+			</div>
+        </div>
+      </div>
+ 
 	<%= render_hints_for :settings %>
       <div id="ov-settings" class="hideable">
         <div id="ov-item-head">
           <h3><span>Settings</span></h3>
         </div>
-        <div id="ov-settings-cnt">
+        <div id="ov-settings-cnt" class="framed">
           
 			<table id="client_settings" cellspacing="0" cellpadding="0">
 				<tr>

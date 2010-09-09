@@ -118,6 +118,7 @@ class ListingsController < ApplicationController
     if action_name == 'edit'
       @showing = false
       @facility_feature = FacilityFeature.new
+      @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
     end
   end

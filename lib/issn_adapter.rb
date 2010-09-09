@@ -184,4 +184,8 @@ class IssnAdapter
     ["@diffgr:id", '@xmlns', "@msdata:rowOrder", 'sReplyCode']
   end
   
+  def self.rand_facility_id
+    @@facility_ids[rand(@@facility_ids.size-1)]
+  end
+  
 end

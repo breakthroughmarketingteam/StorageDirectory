@@ -66,12 +66,9 @@ $(document).ready(function(){
 		
 		map_nav_btn.click(function(){
 			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
-
-			get_pop_up_and_do(partial, title, height, function() {
+			
+			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial }, function() {
 				new GreyWizard($('#map_nav'), {
-					slide_speed  : 1500,
-					btn_speed	 : 900,
-					fade_speed	 : 1000,
 					title		 : 'Choose a State',
 					slides_class : 'map_flow_step',
 					nav_id : 'map_flow_nav',
@@ -455,7 +452,7 @@ $(document).ready(function(){
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				if (response.success) {
-					get_pop_up_and_do(sub_partial, pop_up_title, pop_up_height, function(pop_up){ // preping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // preping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (response.data[0]) {
@@ -475,7 +472,7 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	// client edit page
+	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
 		$('.selective_hider').live('click', function(){
 			var dont_hide  = $(this).attr('rel'),
@@ -500,6 +497,107 @@ $(document).ready(function(){
 
 			return false;
 		});
+		
+		$('#enable_issn', '#ov-services').click(function(){
+			var partial = 'clients/issn_steps', title = 'Enable Online Reservations', height = '486';
+			
+			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial, 'model': 'Client', 'id': $('#client_id').text() }, function() {
+				new GreyWizard($('#issn_steps'), {
+					title  : title,
+					slides : [
+						{	
+							pop_up_title : title,
+							div_id  : 'issnstep_1',
+							action  : issnstep1,
+							nav_vis : [['back', 'hide'], ['next', 'fadeOut']]
+						},
+						{ 
+							pop_up_title : 'Grant Access',
+							div_id  : 'issnstep_2',
+							action  : issnstep2,
+							nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Send').data('done', false).fadeIn(); }]],
+							validate : issnstep2_validate
+						},
+						{	
+							pop_up_title : 'Request In Process',
+							div_id  : 'issnstep_3',
+							action  : issnstep3,
+							nav_vis : [['back', 'hide'], ['next', function(btn, wizard){ btn.text('Done').data('done', true) }]]
+						}
+					],
+					finish_action : issn_steps_finish
+				}).begin_workflow_on(0);
+			});
+			
+			return false;
+		});
+		
+		function issnstep1(wizard) {
+			$('#issn_status_option a', '#issnstep_1').unbind('click').click(function(){
+				wizard.slide_data[1].opt_id = $(this).attr('rel');
+				wizard.slide_data[2].issn_status = $(this).attr('id');
+				wizard.next();
+				return false;
+			});
+		}
+		
+		function issnstep2(wizard) {
+			var active_opt = $('#'+ wizard.slide_data[1].opt_id, '#issnstep_2'),
+				ajax_loader = $('.ajax_loader', active_opt);
+
+			$('.opt', '#issnstep_2').hide();
+			active_opt.show();
+			
+			if (typeof wizard.slide_data[1].client_info == 'undefined') {
+				ajax_loader.show();
+				
+				$.getJSON('/ajax/get_partial?partial=clients/client_info_text&model=Client&id='+ $('#client_id').text(), function(response){
+					if (response.success) {
+						wizard.slide_data[1].client_info = response.data;
+						$('.client_info_preview', active_opt).append(response.data);
+						
+					} else $.ajax_error(response);
+					
+					ajax_loader.hide();
+				});
+				
+			} else $('.client_info_preview', active_opt).html(wizard.slide_data[1].client_info);
+		}
+		
+		function issnstep2_validate(wizard) {
+			$('.error', '.issn_enable_opts').remove();
+			var error = '', pms =$ ('select#pm_software', '#issnstep_2');
+				
+			if (!$('input#agree', '#issnstep_2').is(':checked')) error += '<p>You must agree to grant access in order to continue.</p>'
+			if (!pms.val() || pms.val() == '') error += '<p>Please select your Property Management System.</p>'
+			if (error != '') $('.issn_enable_opts', '#'+ wizard.slide_data[1].opt_id).prepend('<div class="flash error">'+ error +'</div>');
+			
+			return error == '';
+		}
+		
+		function issnstep3(wizard) {
+			$('.hide', '#issnstep_3').hide();
+			$('#'+ wizard.slide_data[2].issn_status, '#issnstep_3').show();
+		}
+		
+		function issn_steps_finish(wizard) {
+			if ($('#enable_test', '#issnstep_3').is(':checked')) {
+				var inner = $('.inner', '#issnstep_3'),
+					form = $('#enable_test_form', inner).hide(),
+					ajax_loader = $('.ajax_loader', '#issnstep_3').show();
+				
+				$.post(form.attr('action'), form.serialize(), function(response){
+					if (response.success) {
+						inner.html('<h2 class="framed">'+ response.data +'</h2>');
+						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload() });
+						
+					} else $.ajax_error(response);
+					
+					ajax_loader.hide();
+				}, 'json');
+			} else $('#pop_up').dialog('close');
+		}
+		
 	}
 	
 	$('.hint_close').click(function(){
@@ -895,17 +993,22 @@ var GreyWizard = function(container, settings) {
 	self.form_data 	= {};
 	self.settings 	= settings;
 	self.slide_data = settings.slides;
+	self.slides_class = settings.slides_class || 'workflow_step',
+	self.nav_id		= settings.nav_id || 'workflow_nav',
 	self.num_slides = self.slide_data.length;
 	self.workflow 	= $(container);
 	self.title_bar 	= $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
 	self.width	  	= self.workflow.width();
 	self.height   	= self.workflow.height();
-	self.slides   	= $('.'+ settings.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
-	self.spacer		= 100; // to give the slides space between transitions
+	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
+	self.spacer		= settings.spacer || 100; // to give the slides space between transitions
+	self.slide_speed = settings.slide_speed || 1500,
+	self.btn_speed  = settings.btn_speed || 900,
+	self.fade_speed = settings.fade_speed || 1000,
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
-		self.nav_bar  	= $('#'+ settings.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
+		self.nav_bar  	= $('#'+ self.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
 		self.current  	   = step || 0;
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
@@ -965,7 +1068,7 @@ var GreyWizard = function(container, settings) {
 			
 				if (action) {
 					if (typeof action == 'function') action.call(this, btn, self); 
-					else if (typeof action == 'string') btn[action]((action == 'hide' || action == 'show' ? null : self.settings.btn_speed));
+					else if (typeof action == 'string') btn[action]((action == 'hide' || action == 'show' ? null : self.btn_speed));
 				}
 			});
 		}
@@ -973,7 +1076,7 @@ var GreyWizard = function(container, settings) {
 		setTimeout(function() {
 			$('.slide_display', self.workflow.parent()).removeClass('active');
 			$('#tab_step_'+ self.current, self.workflow.parent()).addClass('active');
-		}, self.settings.fade_speed);
+		}, self.fade_speed);
 	}
 	
 	this.may_move = function(step) {
@@ -1005,24 +1108,21 @@ var GreyWizard = function(container, settings) {
 			
 			self.slides.each(function(i){
 				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
-				$(this).stop().animate({ left: left + 'px' }, self.settings.slide_speed);
+				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
 			});
 			
 			self.set_nav();
 			self.slide_data[self.current].action.call(this, self);
 			self.title_bar.trigger('change');
 			
-		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') self.settings.finish_action.call(this, self);
+		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') 
+			self.settings.finish_action.call(this, self);
 	}
 }
 
 // NEW CLIENT Workflow (sign up through the add-your-facility page)
 var workflow_settings = {
-	slide_speed  : 1500,
-	btn_speed	 : 900,
-	fade_speed	 : 1000,
 	title		 : 'Add Your Facility',
-	slides_class : 'workflow_step',
 	nav_id : 'workflow_nav',
 	set_slides : true,
 	slides : [
@@ -1216,16 +1316,20 @@ function get_checked_listings_addresses(wizard, address_part) {
 }
 
 // pulls the pop_up template and runs the callback
-function get_pop_up_and_do(sub_partial, pop_up_title, height, callback) {
-	$.get('/ajax/get_multipartial?partial=/shared/pop_up&sub_partial='+ sub_partial, function(response){
+// params requires sub_partial. e.g params.sub_partial 
+function get_pop_up_and_do(options, params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up';
+	
+	$.get('/ajax/get_multipartial', params, function(response){
 		var pop_up = $(response).dialog({
-			title: pop_up_title,
-			width: 785,
-			minHeight: 420,
-			height: height,
+			title: 	   options.title,
+			width: 	   options.width || 785,
+			minHeight: options.minHeight || 420,
+			height:    options.height,
 			resizable: false,
-			modal: true,
-			close: function(){ $('.ajax_loader').hide(); $(this).dialog('destroy').remove();  }
+			modal: 	   true,
+			close: 	   function(){ $('.ajax_loader').hide(); $(this).dialog('destroy').remove();  }
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);

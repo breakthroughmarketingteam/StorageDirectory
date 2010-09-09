@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     "#{words[rand(max)]}_#{words[rand(max)]}" 
   end
   
+  def self.add_hint_to_all(hint)
+    find_each { |u| u.user_hints << hint; u.save }
+  end
+  
   # Instance Methods
   
   def initialize(params = {})

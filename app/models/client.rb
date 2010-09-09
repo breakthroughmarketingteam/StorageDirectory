@@ -60,4 +60,21 @@ class Client < User
     { :data => plot_data, :min => counts.min, :max => counts.max }
   end
   
+  def issn_test(enable)
+    if self.listings.first
+      @facility_info = self.listings.first.facility_info || self.listings.first.create_facility_info
+      
+      if enable
+        @facility_info.update_attribute :O_FacilityId, IssnAdapter.rand_facility_id
+        @facility_info.listing.update_all_issn_data
+      else
+        @facility_info.update_attribute :O_FacilityId, nil
+      end
+      
+      return true
+    end
+    
+    return false
+  end
+  
 end

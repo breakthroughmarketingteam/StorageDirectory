@@ -52,7 +52,10 @@ class ApplicationController < ActionController::Base
   $_crud = [:all, :create, :read, :update, :delete]
   
   # client account control panel
-  $_user_hint_places = [:owner_info, :facilities, :reports, :settings, :listing_detail, :info_tabs, :extras]
+  $_user_hint_places = [:owner_info, :facilities, :reports, :services, :settings, :listing_detail, :info_tabs, :extras]
+  
+  # for the enable issn connectivity workflow
+  $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   
   # loads website title and theme, meta info, widgets and plugins
   before_filter :load_app_config

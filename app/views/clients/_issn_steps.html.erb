@@ -1,0 +1,84 @@
+<div id="issn_steps">
+	<div id="issnstep_1" class="workflow_step">
+		<%= link_to image_tag('/files/content/issn_networklogo.jpg', :class => 'right'), 'http://www.opentechalliance.com/products/insomniac-network.php' %>
+		<h4>Online Reservations through the INSOMNIAC Self Storage Network (ISSN)</h4>
+		<blockquote>
+			The INSOMNIAC Self Storage Network (ISSN) is the only real-time reservations platform in the self storage industry. ISSN provides a secure, real-time connection between self storage facilities (Network Members) and marketing companies (Marketing Partners) for the purpose of processing real-time reservations. 
+			<cite title="OpenTech Alliance"><a href="http://www.opentechalliance.com/products/insomniac-network.php" target="_blank">Opentech Alliance</a>.</cite>
+		</blockquote>
+		
+		<h4>Features of the INSOMNIAC Self Storage Network:</h4>
+		<ul>
+		    <li>Allows self storage operators to accept online reservations through multiple sales channels</li>
+		    <li>Frees facility managers from wasting time updating their available unit information in multiple systems</li>
+		    <li>Eliminates the need to play phone tag with customers who requested a quote</li>
+		</ul>
+		
+		<p>
+			Choose the option below that applies to you to enable this feature on your account.
+		</p>
+		
+		<div id="issn_status_option" class="uncollapse">
+			<div class="left">
+				<a href="#" id="issn_enabled" rel="opt_1">Already an ISSN Member</a>
+			</div>
+			
+			<div class="right">
+				<a href="#" id="join_issn" rel="opt_2">Join the ISSN</a>
+			</div>
+		</div>
+		
+	</div> <!-- END step 1 -->
+
+	<div id="issnstep_2" class="workflow_step">
+		<div id="opt_1" class="opt">
+			<h4>Authorization</h4>
+			
+			<p class="stack">
+				We need your permission to pull your facility information through the ISSN. If you agree, click Continue and we'll send the following information to OpenTech's ISSN to complete the process:
+			</p>
+			
+			<%= render :partial => 'clients/client_info_preview' %>
+		</div>
+		
+		<div id="opt_2" class="opt">
+			<h4>Join The INSOMNIAC Self Storage Network</h4>
+			
+			<p class="stack">
+				In order to set your facility up on the ISSN, we will send the following information about your facility to OpenTech's ISSN. They will contact you soon to setup special software on your system to allow it to connect to the ISSN.
+			</p>
+			
+			<%= render :partial => 'clients/client_info_preview' %>
+		</div>
+	</div> <!-- END step 2 -->
+	
+	<div id="issnstep_3" class="workflow_step">
+		<h4>What Happens Next...</h4>
+		
+		<div class="inner">
+			<p id="issn_enabled" class="hide">
+				We'll send you an activation email once OpenTech has finished connecting your account. Click on the link within the email to finish up.
+			</p>
+		
+			<p id="join_issn" class="hide">
+				An OpenTech technician will contact you to finish the setup. Then, we'll send you an activation email once OpenTech has finished connecting your account. Click on the link within the email to finish up.
+			</p>
+		
+			<form id="enable_test_form" action="/clients/<%= model.id %>/test_issn" method="post">
+				<p>
+					<%= check_box_tag 'enable_test', true, false %>
+					<%= label_tag 'enable_test', 'Enable Test Facility' %>
+					<%= submit_tag 'Done', :class => 'hide' %>
+				</p>
+			</form>
+		</div>
+		
+		<%= ajax_loader 'ajax-loader-lrg.gif' %>
+	</div> <!-- END step 3 -->
+	
+	<div id="workflow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+	  	<a class="button next" id="next" href="#next">Next</a>
+	</div>
+	
+</div>
