@@ -97,15 +97,15 @@ class ClientsController < ApplicationController
   end
   
   def test_issn
-    if @client.issn_test (params[:enable_test] == 'true' ? true : false)
+    if @client.issn_test params[:facility_id], (params[:enable_test] == 'true' ? true : false)
       response = 'Data Sync Complete'
     else
       response = 'ISSN Test Disabled'
     end
     
     render :json => { :success => true, :data => response }
-  rescue => e
-    render :json => { :success => false, :data => e.message }
+  #rescue => e
+  #  render :json => { :success => false, :data => e.message }
   end
 
 end

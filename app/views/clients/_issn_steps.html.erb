@@ -68,6 +68,10 @@
 				<p>
 					<%= check_box_tag 'enable_test', true, false %>
 					<%= label_tag 'enable_test', 'Enable Test Facility' %>
+				</p>
+				<p>
+					<%= label_tag 'facility_id', 'Test Facility Id' %>
+					<%= text_field_tag 'facility_id', IssnAdapter.rand_facility_id %>
 					<%= submit_tag 'Done', :class => 'hide' %>
 				</p>
 			</form>

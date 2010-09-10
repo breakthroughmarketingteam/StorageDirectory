@@ -589,7 +589,7 @@ $(document).ready(function(){
 				$.post(form.attr('action'), form.serialize(), function(response){
 					if (response.success) {
 						inner.html('<h2 class="framed">'+ response.data +'</h2>');
-						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload() });
+						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload(); return false; });
 						
 					} else $.ajax_error(response);
 					

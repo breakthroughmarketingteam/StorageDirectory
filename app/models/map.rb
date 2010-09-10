@@ -5,7 +5,6 @@ class Map < ActiveRecord::Base
   
   validates_presence_of :address, :city, :state, :zip
   validates_numericality_of :zip
-  validates_length_of :state, :is => 2
   
   access_shared_methods
   attr_reader :full_address
@@ -15,5 +14,6 @@ class Map < ActiveRecord::Base
   def full_address
     "#{address.gsub('#', '')} #{city}, #{state}"
   end
+  
   
 end

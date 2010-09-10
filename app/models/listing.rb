@@ -2,22 +2,22 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
-  has_one  :map
+  has_one  :map, :dependent => :destroy
   acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
   
-  has_many :specials
-  has_many :pictures
-  has_many :sizes
-  has_many :reservations
-  has_many :clicks
-  has_many :impressions
+  has_many :specials, :dependent => :destroy
+  has_many :pictures, :dependent => :destroy
+  has_many :sizes, :dependent => :destroy
+  has_many :reservations, :dependent => :destroy
+  has_many :clicks, :dependent => :destroy
+  has_many :impressions, :dependent => :destroy
   
   # OpentTech ISSN data
-  has_one  :facility_info
-  has_many :unit_types
-  has_many :promos
-  has_many :facility_features
+  has_one  :facility_info, :dependent => :destroy
+  has_many :unit_types, :dependent => :destroy
+  has_many :promos, :dependent => :destroy
+  has_many :facility_features, :dependent => :destroy
   has_many :features, :through => :facility_features
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
@@ -31,7 +31,7 @@ class Listing < ActiveRecord::Base
   end
   
   def display_special
-    self.special && self.special.content ? self.special.content : 'No Specials'
+    self.special && self.special.title ? self.special.title : 'No Specials'
   end
   
   def special
@@ -182,7 +182,7 @@ class Listing < ActiveRecord::Base
     IssnAdapter.get_reserve_cost self.facility_id, args
   end
   
-  def self.find_facilities(args)
+  def self.find_facilities(args = {})
     IssnAdapter.find_facilities(args)
   end
   
@@ -209,23 +209,20 @@ class Listing < ActiveRecord::Base
   
   def update_all_issn_data
     transaction do
-      sync_facility_info
-      update_unit_types_from_issn
+      update_facility_info
+      update_unit_types
+      update_promos
+      sync_facility_info_with_listing
       sync_sizes_with_unit_types
-      update_promos_from_issn
       sync_specials_with_promos
     end
   end
   
-  def sync_facility_info
-    if self.facility_info.nil?
-      self.create_facility_info
-    else
-      self.facility_info.sync_with_issn
-    end
+  def update_facility_info
+    self.facility_info.nil? ? self.create_facility_info : self.facility_info.update_from_issn
   end
   
-  def update_unit_types_from_issn
+  def update_unit_types
     IssnAdapter.update_models_from_issn :class => UnitType,
                                         :data => IssnAdapter.get_facility_info('getFacilityUnitTypes', self.facility_id), 
                                         :model => self.unit_types,
@@ -233,12 +230,50 @@ class Listing < ActiveRecord::Base
                                         :find_attr  => 'sID'
   end
   
-  def update_promos_from_issn
+  def update_promos
     IssnAdapter.update_models_from_issn :class => Promo,
                                         :data => IssnAdapter.get_facility_promos(self.facility_id), 
                                         :model => self.promos,
                                         :find_method => 'find_by_Description',
                                         :find_attr => 'sDescription'
+  end
+  
+  def sync_facility_info_with_listing
+    @fi = self.facility_info
+    
+    transaction do
+      self.update_attributes :title =>  @fi.MS_Name, :description =>  @fi.O_FacilityName
+      
+      Map.transaction(:requires_new => true) do
+        self.map.update_attributes :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
+                                   :city => @fi.O_City,
+                                   :state => @fi.O_StateOrProvince,
+                                   :zip => @fi.O_PostalCode,
+                                   :lat => @fi.O_IssnLatitude,
+                                   :lng => @fi.O_IssnLongitude
+      end
+    end
+  end
+  
+  def sync_sizes_with_unit_types
+    Size.transaction(:requires_new => true) do
+      self.unit_types.each do |unit_type|
+        size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.create
+        unit_type.update_attribute :size_id, size.id
+        unit_type.update_feature
+        
+        type = unit_type.feature.StdUnitTypesFeaturesShortDescription
+      
+        args = {
+          :width       => unit_type.ActualWidth,
+          :length      => unit_type.ActualLength,
+          :price       => unit_type.RentalRate * 100, # convert to cents (integer)
+          :title       => type,
+          :description => (unit_type.feature.standard_info['sLongDescription'] rescue type)
+        }
+        size.update_attributes args
+      end
+    end
   end
   
   def sync_specials_with_promos
@@ -256,25 +291,17 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def sync_sizes_with_unit_types
-    Size.transaction(:requires_new => true) do
-      self.unit_types.each do |unit_type|
-        size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.create
-        unit_type.update_attribute :size_id, size.id
-        unit_type.update_feature_from_issn
-        
-        type = unit_type.feature.StdUnitTypesFeaturesShortDescription
-      
-        args = {
-          :width       => unit_type.ActualWidth,
-          :length      => unit_type.ActualLength,
-          :price       => unit_type.RentalRate * 100, # convert to cents (integer)
-          :title       => type,
-          :description => (unit_type.feature.standard_info['sLongDescription'] rescue type)
-        }
-        size.update_attributes args
-      end
-    end
+  def purge_issn_data
+    self.unit_types = []
+    self.promos = []
+    self.facility_features = []
+    self.save
+  end
+  
+  def purge_own_data
+    self.sizes = []
+    self.specials = []
+    self.save
   end
   
 end

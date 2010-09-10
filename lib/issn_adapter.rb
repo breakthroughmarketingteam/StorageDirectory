@@ -10,7 +10,7 @@ class IssnAdapter
     95D25467-04A2-DD11-A709-0015C5F270DB
   )
 
-  @@username = 'USSL_TEST'
+  @@username = 'USSL'
   @@password = 'U$$L722'
   @@host = "https://issn.opentechalliance.com"
   @@url = '/issn_ws1/issn_ws1.asmx'
@@ -26,9 +26,13 @@ class IssnAdapter
     call_and_parse 'findFacilities', query
   end
   
+  def self.get_authorized_facilities(args = {})
+    call_and_parse 'admin_getUsersFacilities', "&sForUser=#{args[:user] || @@username}"
+  end
+  
   # ISSN methods that only require a facility id
   def self.get_facility_info(method = 'getFacilityInfo', facility_id = nil)
-    query = "&sFacilityId=#{facility_id || @@facility_ids[1]}&sIssnId="
+    query = "&sFacilityId=#{facility_id}&sIssnId="
     call_and_parse method, query
   end
   
@@ -97,7 +101,7 @@ class IssnAdapter
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     
-    full_url = uri.path + '/ISSN_' + method + @@auth + query
+    full_url = uri.path + '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
     puts '*******************************************'
     puts "SENDING ISSN REQUEST: #{full_url}"
     puts '*******************************************'
@@ -141,8 +145,10 @@ class IssnAdapter
   
   # DataSet key mappings
   def self.data_key_for(method)
-    case method when 'getFacilityInfo', 'getFacilityFeatures'
+    case method when 'findFacilities'
+        'FindFacility'
     # get_facility_info
+      when 'getFacilityInfo', 'getFacilityFeatures'
         'FacilityFeatures'
       when 'getFacilityDataGroup'
         'FacilityDG'
@@ -174,7 +180,10 @@ class IssnAdapter
         'MoveInCost'
       when 'getReserveCost'
         'ReserveCost'
-        
+      
+    # admin methods
+      when 'admin_getUsersFacilities'
+        'UsersFacilities'
     else # already is a key
       method
     end

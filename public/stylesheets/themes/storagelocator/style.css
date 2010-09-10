@@ -503,6 +503,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #issnstep_1 blockquote{margin-bottom:15px;font-size:80%;}
 #issnstep_1 ul{list-style:inside;margin-bottom:15px;font-size:80%;}
 #issn_steps .workflow_step{height:400px;padding:15px 20px;}
+#issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{padding:15px 20px;margin-top:15px;}
 #issn_status_option .left,#issn_status_option .right{width:49%;}
 #issn_status_option .left a,#issn_status_option .right a{display:block;padding:15px;border:1px solid #ccc;cursor:pointer;}
