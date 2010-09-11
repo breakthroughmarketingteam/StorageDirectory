@@ -15,6 +15,7 @@ class UserHintsController < ApplicationController
   def create
     @user_hint = UserHint.new params[:user_hint]
     if @user_hint.save
+      User.add_hint_to_all @user_hint
       flash[:notice] = @user_hint.title + ' has been created.'
       redirect_back_or_default :action => 'index'
     else

@@ -35,6 +35,7 @@ class Client < User
     Listing.find :all, :conditions => ['title LIKE ?', self.company]
   end
   
+  # generate an array of plot points
   def get_stats_for_graph(stats_models, start_date, end_date)
     # get date arrays => [year, month, day]
     sd, ed = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
@@ -58,6 +59,27 @@ class Client < User
     end
     
     { :data => plot_data, :min => counts.min, :max => counts.max }
+  end
+  
+  def issn_test(facility_id, enable)
+    @listing = self.listings.first
+    
+    if @listing
+      @listing.purge_issn_data
+      @listing.purge_own_data
+      @facility_info = @listing.facility_info || @listing.create_facility_info
+      
+      if enable
+        @facility_info.update_attribute :O_FacilityId, facility_id
+        @facility_info.listing.update_all_issn_data
+      else
+        @facility_info.update_attribute :O_FacilityId, nil
+      end
+      
+      return true
+    end
+    
+    return false
   end
   
 end

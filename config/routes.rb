@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
-  map.client_listings '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
+  map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
   
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'
@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :permissions
   end
   
-  map.resources :clients do |clients|
+  map.resources :clients, :member => { :test_issn => :post } do |clients|
     clients.resources :listings
     clients.resources :payments
   end

@@ -4,7 +4,7 @@ class AjaxController < ApplicationController
   skip_before_filter :init
   
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
-  before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy]
+  before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy, :get_multipartial]
   before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
   
   def get_all
@@ -113,15 +113,16 @@ class AjaxController < ApplicationController
   end
   
   def get_multipartial
-    render :partial => params[:partial], :locals => { :sub_partial => params[:sub_partial] }
+    render :partial => params[:partial], :locals => { :sub_partial => params[:sub_partial], :locals => { :model => @model } }
     
   rescue => e
-    render :text => "<div class='flash error'>#{e.message}</div>"
+    render_error e
   end
   
   def get_cities # state
     render :json => { :success => true, :data => UsCity.tabbed_cities_of(params[:state]) }
-  
+  rescue => e
+    render_error e
   end
   
   def get_autocomplete
@@ -130,7 +131,7 @@ class AjaxController < ApplicationController
     render :json => { :success => true, :data => data }
     
   rescue => e
-    render :json => { :success => false, :data => "<div class='flash error'>#{e.message}</div>" }
+    render_error e
   end
   
   def update
@@ -194,6 +195,8 @@ class AjaxController < ApplicationController
   def _get_model(model_str = nil, id = nil)
     @model_str = model_str unless model_str.blank?
     @model = _get_model_class(model_str).find(id || params[:id]) if _get_model_class.exists?(id || params[:id])
+  rescue
+    nil
   end
   
   def _get_model_class(model_str = nil)

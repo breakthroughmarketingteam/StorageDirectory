@@ -5,9 +5,6 @@ class AccountSetting < ActiveRecord::Base
   
   def after_find
     @parsed_settings = eval "#{self.settings_hash}"
-    @parsed_settings.each do |k, v|
-      define_method
-    end
   end
   
 end

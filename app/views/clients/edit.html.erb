@@ -101,13 +101,29 @@
         </div>
   	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
       </div>
-     
+    
+	<%= render_hints_for :services %>
+      <div id="ov-services" class="hideable">
+        <div id="ov-item-head">
+          <h3><span>Services</span></h3>
+        </div>
+        <div id="ov-services-cnt">
+			
+			<div>
+				<h4>Online Reservations</h4>
+				<p>
+					<%= link_to image_tag('/files/content/issn_networklogo.jpg'), '#', :id => 'enable_issn', :title => 'Enable Online Reservations' %>
+				</p>
+			</div>
+        </div>
+      </div>
+ 
 	<%= render_hints_for :settings %>
       <div id="ov-settings" class="hideable">
         <div id="ov-item-head">
           <h3><span>Settings</span></h3>
         </div>
-        <div id="ov-settings-cnt">
+        <div id="ov-settings-cnt" class="framed">
           
 			<table id="client_settings" cellspacing="0" cellpadding="0">
 				<tr>

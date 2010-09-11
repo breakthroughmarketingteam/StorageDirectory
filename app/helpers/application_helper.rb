@@ -405,7 +405,7 @@ module ApplicationHelper
   
   def option_tags(array, selected = nil, prompt = nil)
     option_tags = prompt.nil? ? [] : [content_tag(:option, prompt, :value => '')]
-    array.each do |a|
+    (array || []).each do |a|
       val = (a.is_a?(Array) ? a[0] : a)
       name = (a.is_a?(Array) ? a[1] : a)
       

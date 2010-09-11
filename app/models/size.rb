@@ -10,7 +10,7 @@ class Size < ActiveRecord::Base
   end
   
   def dollar_price
-    self.price / 100
+    self.price / 100 rescue 0
   end
   
 end

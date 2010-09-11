@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :update, :destroy]
+  before_filter :get_model, :only => [:show, :update, :destroy, :test_issn]
   
   def index
   end
@@ -49,9 +49,6 @@ class ClientsController < ApplicationController
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
     @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
     
-
-    raise @client.account_setting.parsed_settings.pretty_inspect
-    
     redirect_to new_client_path if @client.nil?
   end
   
@@ -97,6 +94,18 @@ class ClientsController < ApplicationController
       redirect_to root_path
       
     end
+  end
+  
+  def test_issn
+    if @client.issn_test params[:facility_id], (params[:enable_test] == 'true' ? true : false)
+      response = 'Data Sync Complete'
+    else
+      response = 'ISSN Test Disabled'
+    end
+    
+    render :json => { :success => true, :data => response }
+  #rescue => e
+  #  render :json => { :success => false, :data => e.message }
   end
 
 end
