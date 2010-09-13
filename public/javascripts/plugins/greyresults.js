@@ -282,7 +282,7 @@ $(function(){
 	// bind event handlers and implement ajax functionality for search results.
 	
 	// opens the specific reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').click(function(){
+	$('.open_reserve_form').live('click', function(){
 		var $this = $(this),
 			rform = $('.reserve_form', $this.parent());
 
@@ -330,7 +330,9 @@ $(function(){
 					var info 		 = this.info, // listing attributes
 						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
 						map 		 = this.map, // related model attributes
-						specials	 = this.specials;
+						sizes	 	 = this.sizes,
+						specials	 = this.specials,
+						pictures	 = this.pictures;
 					
 					// update tab urls
 					var tabs = [
@@ -341,7 +343,7 @@ $(function(){
 					];
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i]) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
+						if (tabs[i].length > 0) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
@@ -352,7 +354,7 @@ $(function(){
 					$('.rslt-phone', this_listing)			.text(map.phone);
 					$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
 					$('.rslt-specials h5', this_listing)	.text(specials.title);
-					$('.rslt-specials p', this_listing)		.text(specials.cotent);
+					$('.rslt-specials p', this_listing)		.text(specials.content);
 					
 					$(this_listing).removeClass('active').find('.active').removeClass('active');
 					$('.panel', this_listing).hide();

@@ -80,19 +80,18 @@ class ClientsController < ApplicationController
   def activate
     @client = Client.find_by_activation_code params[:code]
     
-    if @client.status == 'unverified'
+    case @client.status when 'unverified'
       @client.update_attribute :status, 'active'
       flash[:notice] = "Congratulations! Your account is now active. Go ahead and log in."
       redirect_to login_path
       
-    elsif @client.status == 'active'
+    when 'active'
       flash[:notice] = "Your account is already active. Go ahead and log in."
       redirect_to login_path
       
-    elsif @client.status == 'suspended'
+    when 'suspended'
       flash[:error] = 'Your account is suspended'
       redirect_to root_path
-      
     end
   end
   
@@ -104,8 +103,8 @@ class ClientsController < ApplicationController
     end
     
     render :json => { :success => true, :data => response }
-  #rescue => e
-  #  render :json => { :success => false, :data => e.message }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
   end
 
 end

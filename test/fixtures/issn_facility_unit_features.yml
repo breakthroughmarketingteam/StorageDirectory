@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  sID: MyString
+  StdUnitTypesFeaturesShortDescription: MyText
+  KnowOfFee: MyString
+  Fee: 1
+  StdUnitTypesFeaturesId: MyString
+  ErrorMessage: MyText
+
+two:
+  sID: MyString
+  StdUnitTypesFeaturesShortDescription: MyText
+  KnowOfFee: MyString
+  Fee: 1
+  StdUnitTypesFeaturesId: MyString
+  ErrorMessage: MyText

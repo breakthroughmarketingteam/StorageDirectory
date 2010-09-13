@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-  before_filter :do_redirects, :only => :show
   before_filter :get_page, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
@@ -68,12 +67,6 @@ class PagesController < ApplicationController
     if @page.nil?
       flash[:warning] = "Page Not Found"
       @page = Page.find_by_title('Home')
-    end
-  end
-  
-  def do_redirects
-    if params[:title] != 'self-storage' && params[:title] =~ /(-storage)$/i
-      redirect_to "/self-storage?type=#{params[:title]}"
     end
   end
 

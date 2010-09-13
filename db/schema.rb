@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907222429) do
+ActiveRecord::Schema.define(:version => 20100913193214) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -151,6 +151,16 @@ ActiveRecord::Schema.define(:version => 20100907222429) do
     t.string   "MS_WebSite"
   end
 
+  create_table "facility_units", :force => true do |t|
+    t.integer  "unit_type_id"
+    t.string   "UnitID"
+    t.string   "UnitName"
+    t.string   "Available"
+    t.string   "PromosAvailable"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "features", :force => true do |t|
     t.integer  "unit_type_id"
     t.string   "ErrorMessage"
@@ -253,6 +263,19 @@ ActiveRecord::Schema.define(:version => 20100907222429) do
     t.string   "sID"
     t.text     "LongDescription"
     t.string   "ShortDescription"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issn_facility_unit_features", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "unit_type_id"
+    t.string   "sID"
+    t.text     "StdUnitTypesFeaturesShortDescription"
+    t.string   "KnowOfFee"
+    t.integer  "Fee"
+    t.string   "StdUnitTypesFeaturesId"
+    t.text     "ErrorMessage"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -371,6 +394,17 @@ ActiveRecord::Schema.define(:version => 20100907222429) do
 
   add_index "models_views", ["model_id", "view_id", "model_type"], :name => "index_models_views_on_model_id_and_view_id_and_model_type"
 
+  create_table "move_in_costs", :force => true do |t|
+    t.integer  "unit_type_id"
+    t.string   "Description"
+    t.float    "Amount"
+    t.string   "Name"
+    t.float    "Tax"
+    t.text     "ErrorMessage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.integer  "parent_id"
@@ -477,6 +511,26 @@ ActiveRecord::Schema.define(:version => 20100907222429) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.string   "request_uri"
+  end
+
+  create_table "reserve_costs", :force => true do |t|
+    t.integer  "unit_type_id"
+    t.integer  "LastDayYMD"
+    t.float    "FeeAmount"
+    t.string   "Available"
+    t.string   "ManagementSystem_TID"
+    t.integer  "ManagementSystem_UID"
+    t.float    "Tax"
+    t.float    "ReservationFeeMax"
+    t.integer  "DetailCount"
+    t.string   "FeeIncludesTax"
+    t.float    "ReservationFeeMin"
+    t.string   "ManagementSystem_TypeDesc"
+    t.string   "LastDayMDY"
+    t.string   "ManagementSystem_UnitName"
+    t.string   "FeeDescription"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", :force => true do |t|

@@ -498,7 +498,7 @@ $(document).ready(function(){
 			return false;
 		});
 		
-		$('#enable_issn', '#ov-services').click(function(){
+		$('#reservations', '#ov-services').click(function(){
 			var partial = 'clients/issn_steps', title = 'Enable Online Reservations', height = '486';
 			
 			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial, 'model': 'Client', 'id': $('#client_id').text() }, function() {
@@ -566,10 +566,11 @@ $(document).ready(function(){
 		
 		function issnstep2_validate(wizard) {
 			$('.error', '.issn_enable_opts').remove();
-			var error = '', pms =$ ('select#pm_software', '#issnstep_2');
-				
+			var error = '', pms = $('select#pm_software', '#'+ wizard.slide_data[1].opt_id);
+				console.log($('select#pm_software', '#issnstep_2'))
 			if (!$('input#agree', '#issnstep_2').is(':checked')) error += '<p>You must agree to grant access in order to continue.</p>'
-			if (!pms.val() || pms.val() == '') error += '<p>Please select your Property Management System.</p>'
+			if (pms.val() == '') error += '<p>Please select your Property Management System.</p>'
+			
 			if (error != '') $('.issn_enable_opts', '#'+ wizard.slide_data[1].opt_id).prepend('<div class="flash error">'+ error +'</div>');
 			
 			return error == '';
@@ -598,20 +599,21 @@ $(document).ready(function(){
 			} else $('#pop_up').dialog('close');
 		}
 		
-	}
-	
-	$('.hint_close').click(function(){
-		var btn = $(this),
-			hint = btn.parents('.user_hint'),
-			placement_id = btn.attr('id').replace('UserHintPlacement_', ''),
-			ajax_loader = $('.ajax_loader', hint).show();
+		$('.hint_close').click(function(){
+			var btn = $(this),
+				hint = btn.parents('.user_hint'),
+				placement_id = btn.attr('id').replace('UserHintPlacement_', ''),
+				ajax_loader = $('.ajax_loader', hint).show();
+
+			$.updateModel('/user_hints/hide/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+				ajax_loader.hide();
+				hint.slideUp(300, function(){ $(this).remove() });
+			});	
+		});
 		
-		$.updateModel('/user_hints/hide/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
-			ajax_loader.hide();
-			hint.slideUp(300, function(){ $(this).remove() });
-		});	
-	});
+	} // END page clients edit
 	
+	// Listing Edit
 	// NEW LISTING WORKFLOW
 		// 1). Click NEW button, get a partial from the server and prepend to the listing box
 		$('#add_fac', '#ov-units').click(function(){
@@ -760,7 +762,29 @@ $(document).ready(function(){
 		
 	// END new listing workflow
 	
-	// Listing Edit
+	$('#sync_listing').click(function(){
+		var $this = $(this).text('Syncing'),
+			ajax_loader = $this.siblings('.ajax_loader').show();
+		
+		$.post($this.attr('href'), {}, function(response){
+			if (response.success) {
+				$this.text('Reloading');
+				
+				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(response){
+					if (response.success) $('#sl-tabs-sizes-in').replaceWith($(response.data).find('#sl-tabs-sizes-in'));
+					else $.ajax_error(response);
+					
+					ajax_loader.hide();
+					$this.text('Sync');
+				});
+				
+			} else $.ajax_error(response);
+			
+		}, 'json');
+		
+		return false;
+	});
+	
 	// upload pics
 	$('#picture_facility_image', '#new_picture').change(function(){
 		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
