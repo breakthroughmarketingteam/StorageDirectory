@@ -170,7 +170,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar-head li#list-name a{width:315px;}
 #type-one-top-bar-head li#list-miles{border:1px solid #ccc;margin-left:10px;width:100px;}
 #type-one-top-bar-head li#list-miles a{width:100px;}
-#type-one-top-bar{-moz-border-radius-bottomleft:22px;-moz-border-radius-bottomright:22px;border-color:-moz-use-text-color #CCCCCC #CCCCCC;border-right:1px solid #CCCCCC;border-style:none solid solid;border-width:0 1px 1px;position:relative;width:772px;margin-bottom:2px;}
+#type-one-top-bar{-moz-border-radius-bottomleft:22px;-moz-border-radius-bottomright:22px;border-color:-moz-use-text-color #CCCCCC #CCCCCC;border-right:1px solid #CCCCCC;border-style:none solid solid;border-width:0 1px 1px;min-height:940px;position:relative;width:772px;margin-bottom:2px;}
 #listings_controller #type-one-top-bar{width:97.7%;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg{clear:both;background:url(/images/ui/storagelocator/results-list-innerbg.png) repeat-y top left;border-radius:0 0 12px 12px;-moz-border-radius:0 0 12px 12px;-webkit-border-radius:0 0 12px 12px;border-bottom:1px solid #ccc;border-top:1px solid #ccc;padding-top:5px;}
@@ -730,7 +730,8 @@ img.right{margin:0 10px 10px 0;}
 #listings_controller.edit_action .user_hint{width:99.3%;margin:15px 0;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
-#info-accordion h5{font-size:22px;line-height:25px;}
+#info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:25px;}
+#info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
 #login_page{margin-bottom:10px;overflow:hidden;float:left;width:33%;margin-right:20px;padding-right:15px;}
 #login_page h2{font-size:120%;margin-bottom:10px;}
