@@ -921,7 +921,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #more_info .inner h5{font-size:120%;margin-bottom:10px;}
 #more_info .inner p{margin-bottom:20px;}
 
-#footer_btm{color:#ccccff;font-size:90%;min-height:310px;border-top:1px solid #3c3d98;border-bottom:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;padding-bottom:15px;}
+#footer_btm{color:#ccccff;font-size:90%;min-height:350px;border-top:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:12px;width:975px;}
 #footer_btm .ad{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 #footer_btm .ad:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #6666cc;-moz-box-shadow:2px 2px 2px #6666cc;-webkit-box-shadow:2px 2px 2px #6666cc;}
@@ -942,9 +942,12 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #social-media a{display:block;float:left;margin:4px;}
 #social-media #icons{float:right;margin:5px 15px 2px 0;}
 
-#footer_btm .wrapper2{margin:20px auto 0;width:975px;}
-#footer-menu{float:right;margin-right:20px;}
-#copyright{float:left;margin-left:20px;margin-top:3px;}
+#footer_btm #wrapper1{background:url(/images/ui/storagelocator/footer-bg.png) repeat-x bottom;min-height:350px;}
+#footer_btm #wrapper2{color:#4C4BCC;margin:50px auto 0;width:975px;}
+#footer_btm #wrapper2 #footer-menu{float:right;font-size:110%;margin-right:20px;margin-top:-1px;}
+#footer_btm #wrapper2 #copyright{float:left;margin-left:20px;margin-top:3px;}
+#footer_btm #wrapper2 a {color:#4C4BCC;}
+#footer_btm #wrapper2 a:hover {color:#339933;}
 
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
