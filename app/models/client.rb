@@ -6,7 +6,7 @@ class Client < User
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   
   def accepts_reservations?
-    false
+    self.listings.any?(&:issn_enabled?)
   end
   
   def active_mailing_address

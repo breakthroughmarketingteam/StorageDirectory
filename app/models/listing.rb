@@ -16,6 +16,7 @@ class Listing < ActiveRecord::Base
   # OpentTech ISSN data
   has_one  :facility_info, :dependent => :destroy
   has_many :unit_types, :dependent => :destroy
+  has_many :units, :class_name => 'FacilityUnit', :through => :unit_types
   has_many :issn_facility_unit_features, :dependent => :destroy
   has_many :promos, :dependent => :destroy
   has_many :facility_features, :dependent => :destroy
@@ -110,8 +111,8 @@ class Listing < ActiveRecord::Base
     end
     
     @model_data = Listing.all options
-    @model_data.sort_by_distance_from @location if params[:order] == 'distance'
-    @model_data = smart_order(@model_data) if is_city? query
+    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?
+    #@model_data = smart_order(@model_data) if is_city? query
     @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
     { :data => @model_data, :location => @location }
   end
@@ -153,7 +154,7 @@ class Listing < ActiveRecord::Base
   end
   
   def self.smart_order(data)
-    data.sort_by { |d| d.impressions_count }
+    data.sort_by { |d| d.impressions_count || 0 }
   end
   
   #
@@ -167,6 +168,10 @@ class Listing < ActiveRecord::Base
     features.any? do |feature|
       self.facility_features.map(&:label).include? feature
     end
+  end
+  
+  def units_available?
+    self.units.any? { |u| u.Available.downcase == 'y' }
   end
   
   def facility_id
@@ -184,7 +189,7 @@ class Listing < ActiveRecord::Base
   end
   
   def self.find_facilities(args = {})
-    IssnAdapter.find_facilities(args)
+    IssnAdapter.find_facilities args
   end
   
   # does not require extra params. methods: getStdFacilityFeatures, getStdUnitTypeFeatures, getStdUnitTypeSizes
@@ -192,17 +197,19 @@ class Listing < ActiveRecord::Base
     IssnAdapter.get_standard_info method
   end
   
-  # methods: getFacilityInfo, getFacilityFeatures, getFacilityDataGroup, getFacilityInsurance, getFacilityPromos, getFacilityUnitTypes, getFacilityUnits
+  # issn methods: getFacilityInfo, getFacilityFeatures, getFacilityDataGroup, getFacilityInsurance, getFacilityPromos, getFacilityUnitTypes
   def get_facility_info(method = 'getFacilityInfo')
     IssnAdapter.get_facility_info method, self.facility_id
   end
   
+  # issn method: getFacilityUnits
   def get_unit_info
     IssnAdapter.get_unit_info self.facility_id
   end
   
+  # issn method: getFacilityUnitTypesFeatures
   def get_unit_features(unit_type_id = nil)
-    IssnAdapter.get_unit_features(self.facility_id, unit_type_id)
+    IssnAdapter.get_unit_features self.facility_id, unit_type_id
   end
   
   #
@@ -213,24 +220,42 @@ class Listing < ActiveRecord::Base
   end
   
   def update_unit_types_and_sizes
+    puts "\nUpdating Unit Types...\n"
     update_unit_types
+    puts "\nUpdating Unit Features...\n"
     update_unit_features
+    puts "\nSyncing Units With Unit Types...\n"
     sync_sizes_with_unit_types
+    puts "\nSyncing Costs With Unit Types...\n"
+    sync_costs_with_unit_types
   end
   
   def update_promos_and_specials
+    puts "\nUpdating Promos...\n"
     update_promos
+    puts "\nSyncing Specials With Promos ...\n"
     sync_specials_with_promos
   end
   
   def update_all_issn_data
     transaction do
+      puts "\nUpdating Facility Info...\n"
       update_facility_info
+      puts "\nUpdating Unit Types...\n"
       update_unit_types
+      puts "\nUpdating Promos...\n"
       update_promos
+      puts "\nSyncing Facility Info With Listing...\n"
       sync_facility_info_with_listing
+      puts "\nSyncing Sizes With Unit Types...\n"
       sync_sizes_with_unit_types
+      puts "\nSyncing Units With Unit Types...\n"
+      sync_units_with_unit_types
+      puts "\nSyncing Costs With Unit Types...\n"
+      sync_costs_with_unit_types
+      puts "\nSyncing Specials With Promos...\n"
       sync_specials_with_promos
+      puts "\nDONE updating.\n"
     end
   end
   
@@ -256,7 +281,6 @@ class Listing < ActiveRecord::Base
   
   def sync_facility_info_with_listing
     @fi = self.facility_info
-    
     transaction do
       self.update_attributes :title =>  @fi.MS_Name, :description =>  @fi.O_FacilityName
       
@@ -271,21 +295,32 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def sync_costs_with_unit_types
+    self.unit_types.map do |u|
+      u.update_move_in_costs
+      u.update_reserve_costs
+    end
+  end
+  
+  def sync_units_with_unit_types
+    self.unit_types.map &:update_units
+  end
+  
   def sync_sizes_with_unit_types
     Size.transaction(:requires_new => true) do
       self.unit_types.each do |unit_type|
         size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.create
         unit_type.update_attribute :size_id, size.id
-        unit_type.update_feature
+        unit_type.update_features
         
-        type = unit_type.feature.StdUnitTypesFeaturesShortDescription
+        type = unit_type.features.first.StdUnitTypesFeaturesShortDescription
       
         args = {
           :width       => unit_type.ActualWidth,
           :length      => unit_type.ActualLength,
           :price       => unit_type.RentalRate * 100, # convert to cents (integer)
           :title       => type,
-          :description => (unit_type.feature.standard_info['sLongDescription'] rescue type)
+          :description => (unit_type.features.first.standard_info['sLongDescription'] rescue type)
         }
         size.update_attributes args
       end

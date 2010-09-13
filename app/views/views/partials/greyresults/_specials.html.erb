@@ -1,3 +1,9 @@
-<%= greyresult_panel_template listing do
-  debug listing.specials
-end %>
+<h5 class="white dark_text_shadow">Specials</h5>
+
+<div class="inner border_box">
+	<ul id="specials_list">
+		<% listing.specials.each do |special| %>
+			<li><%= special.title %></li>
+		<% end %>
+	</ul>
+</div>

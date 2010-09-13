@@ -16,7 +16,7 @@
 	
     <% @listing.sizes.each do |size| %>
 		<div class="sl-table-wrap">
-			<ul class="sl-table<%= ' open_reserve_form' if action_name == 'show' %>">
+			<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 				<li class="st-size"><%= size.display_dimensions %></li>
 				<li class="st-type"><%= size.title %></li>
 				<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
@@ -26,7 +26,7 @@
 						<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
 						<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
 					<% else %>
-						<a href="#" class="rsr-btn">Reserve</a>
+						<a href="#" class="rsr-btn"><%= @listing.issn_enabled? ? 'Reserve' : 'Hold' %></a>
 					<% end %>
 				</li>
 				<li class="st-sele">

@@ -50,7 +50,7 @@ module ListingsHelper
     if range_start < data.total_entries - per_page+1
       html << link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results')
       html << "<span class='hidden' name='params_pagetitle'>#{@page.title.parameterize}</span>"
-      html << "<span class='hidden' name='params_query'>#{params[:q]}</span>"
+      html << "<span class='hidden' name='params_query'>#{params[:q] || params[:city]}</span>"
       html << "<span class='hidden' name='params_page'>#{((params[:page] ? params[:page].to_i : 1) + 1)}</span>"
       html << "<span class='hidden' name='params_within'>#{params[:within]}</span>"
     end

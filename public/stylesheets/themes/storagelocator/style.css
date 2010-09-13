@@ -180,7 +180,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;left:15px;width:3em;color:#666;}
-.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin:-16px 71px 0 0}
+.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin:-16px 57px 0 0}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-specials,.rslt-contact,.listing img{float:left;list-style:none;display:inline;margin-left:20px;}
 .listing img{margin-top:10px;float:left;margin-left:20px;}
@@ -196,7 +196,7 @@ li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-rep
 li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat top center;width:110px;height:100px;line-height:105px;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
 li.rslt-specials{width:20%;height:100px;line-height:105px;margin-top:0px;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
-li.compare_li{margin:37px 0 0 13px;}
+li.compare_li{margin:37px 0 0 7px;}
 ul.tabs{margin:0 0 5px 31px;float:left;}
 ul.tabs li{height:16px;line-height:16px;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;border:1px solid #ccc;border-top:0 none;border-radius-bottomright:8px;-moz-border-radius-bottomright:8px;-webkit-border-bottom-right-radius:8px;border-radius-bottomleft:8px;-moz-border-radius-bottomleft:8px;-webkit-border-bottom-left-radius:8px;}
 ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
@@ -340,6 +340,7 @@ li.rslt-offer{float:left;list-style:none;display:inline;margin-left:20px;}
 /* Two new additions */
 li.rslt-offer{background:url(/images/ui/storagelocator/results-divider-white-bg.png) no-repeat top left;width:120px;}
 li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
+#specials_list li{float:none;}
 /* Change made to the existing city box */
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:50px;}
 #city-box-in{width:165px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -390,7 +391,9 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs ul#sl-tabs-nav li.active{background:url(/images/ui/storagelocator/sl-tabs-bg-active.png) no-repeat left top;position:relative;}
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
 #sl-tabs-sizes{padding:0 14px 14px;}
+.panel #sl-tabs-sizes{padding:0;}
 #sl-tabs-sizes-in{margin-top:21px;padding-bottom:4px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;clear:right;}
+.panel #sl-tabs-sizes-in{margin-top:0;}
 #sl-tabs-sizes-in ul{clear:both;height:46px;line-height:46px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 #sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
 #sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:80%;color:#666;width:100%;}
@@ -401,23 +404,24 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul li.st-type{width:180px;font-weight:normal;}
 #sl-tabs-sizes-in ul li.st-pric{width:125px;}
 #sl-tabs-sizes-in ul li.st-spec{width:180px;font-weight:normal;max-height:45px;overflow:hidden;}
+.panel #sl-tabs-sizes-in ul li.st-spec{width:157px;}
 #sl-tabs-sizes-in ul li.st-rese{width:100px;text-align:center;}
 #sl-tabs-sizes-in ul li.st-rese a{position:relative;top:7px;right:-8px;display:block;font-size:100%;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
 #sl-tabs-sizes-in ul.active li.st-rese a,#sl-tabs-sizes-in ul:hover li.st-rese a,#sl-tabs-sizes-in ul:active li.st-rese a{background:url(/images/ui/storagelocator/sl-table-reserve-active.png) no-repeat center;}
 #sl-tabs-sizes-in ul li.st-sele{width:25px;height:46px;}
 #sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-load.gif) no-repeat center;}
 #sl-tabs-sizes-in ul:hover li.active_load{background:url(/images/ui/storagelocator/sl-load-active.gif) no-repeat center;}
-#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-6px;margin-left:19px;}
+#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-3px;margin-left:19px;}
 .sl-table-exp{background:url(/images/ui/storagelocator/sl-table-exp-bg.png) repeat-x bottom left;background-color:#fefeff;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border:1px solid #ccc;overflow:hidden;}
 div.sl-table-exp div input{width:60%;}
-.sl-table-exp p{margin:10px 10px;}
+.sl-table-exp p{margin:10px 10px;overflow:hidden;}
 .sl-table-exp p.blue-text{color:#33c;line-height:39px;font-weight:bold;}
 .sl-table-exp p.blue-text strong{text-decoration:underline;}
 .sl-table-exp p.verisign{float:left;width:83px;height:46px;background:url(/images/ui/storagelocator/verisign.png) no-repeat top left;}
 .sl-table-exp p.blue-text a{width:109px;height:39px;display:block;float:right;background:url(/images/ui/storagelocator/sl-questions-blue-btn.png) no-repeat center;text-align:center;line-height:39px;color:#fff;text-decoration:none;margin-right:101px;}
 .sl-table-exp input{border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;padding:0 8px;height:24px;width:170px;line-height:24px;margin:5px;}
 .sl-table-exp input#submit-btn{width:138px;height:45px;background:url(/images/ui/storagelocator/submit-button.png) no-repeat center;border:none;color:#fff;font-size:120%;font-weight:bold;text-shadow:1px 1px 2px #000;margin:0 8px 15px 0;cursor:pointer;}
-.sl-table-exp textarea{border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;width:176px;font-family:Arial,Helvetica,sans-serif;padding:5px;margin-left:5px;font-size:80%;height:97px;}
+.sl-table-exp textarea{border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;width:178px;font-family:Arial,Helvetica,sans-serif;padding:5px;margin-left:5px;font-size:80%;height:97px;}
 .sl-table-exp p.move-in{background:url(/images/ui/storagelocator/calendar.png) no-repeat top 190px;text-align:left;position:relative;left:10px;}
 .sl-table-exp p.zip input{width:90px;}
 .sl-table-exp p.move-in input{width:80px;}
@@ -885,7 +889,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #narrow_results_form #advanced_opts label{font-size:80%;}
 #narrow_results_form #advanced_opts #type_select{margin:15px 11px 15px 20px;}
 #narrow_results_form #advanced_opts #type_select select{width:75%;}
-#narrow_results_form #advanced_opts #size_option{width:83%;padding:5px 20px 20px 20px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
+#narrow_results_form #advanced_opts #size_option{width:82.5%;padding:5px 20px 20px 20px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
 #narrow_results_form #advanced_opts #size_option #size_picker{margin-bottom:17px;}
 #narrow_results_form #advanced_opts #distance_slider{overflow:hidden;padding:12px 0 12px 20px;width:91%;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}

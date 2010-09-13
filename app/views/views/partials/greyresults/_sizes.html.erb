@@ -1,3 +1,1 @@
-<%= greyresult_panel_template listing do
-  debug listing.sizes
-end %>
+<%= render :partial => 'listings/sizes', :locals => { :listing => listing } unless listing.sizes.empty? %>

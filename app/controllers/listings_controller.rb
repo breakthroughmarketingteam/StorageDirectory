@@ -12,12 +12,6 @@ class ListingsController < ApplicationController
   end
   
   def locator
-    if session[:location].blank? || params[:q] && params[:state].blank?
-      @location = Listing.geocode_query params[:q]
-      session[:location] = @location.to_hash
-      redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize) and return
-    end
-    
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
     
@@ -31,14 +25,18 @@ class ListingsController < ApplicationController
     # updates the impressions only for listings on current page
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
+    if session[:location].blank? || params[:q] && params[:state].blank?
+      session[:location] = @location.to_hash
+      #redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize) and return
+    end
+    
     respond_to do |format|
       format.html
       format.js do # implementing these ajax responses for the search results 'More Link'
         # include listing's related data
         @listings.map! do |m|
-          mm = { :info => m.attributes, :map => m.map.attributes }
-          mm[:map].merge!(:distance => m.distance)
-          mm.merge!(:specials => m.specials)
+          mm = { :info => m.attributes, :map => m.map.attributes, :specials => m.specials, :sizes => m.sizes, :pictures => m.pictures }
+          mm[:map].merge!(:distance => m.distance_from(@location))
           mm
         end
         
@@ -72,6 +70,7 @@ class ListingsController < ApplicationController
       @listing.map.update_attributes params[:map]
       redirect_to(:action => 'edit') and return
     end
+    
     
   end
   

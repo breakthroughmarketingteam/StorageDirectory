@@ -42,6 +42,7 @@
 		</p>
 		<p class="right">
 			<%= f.hidden_field :listing_id, :value => listing.id %>
+			<%= f.hidden_field :unit_type_id, :value => (unit_type.id rescue '') %>
 			<%= ajax_loader %>
 	        <input id="submit-btn" type="submit" value="Submit" name="commit" />
 		</p>
