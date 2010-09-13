@@ -73,7 +73,6 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    
   end
   
   def update

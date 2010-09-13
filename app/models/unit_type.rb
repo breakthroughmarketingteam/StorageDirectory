@@ -8,7 +8,7 @@ class UnitType < ActiveRecord::Base
     Feature.transaction(:requires_new => true) do
       @feature = self.feature || self.create_feature
     
-      get_features.each do |name, value|
+      get_feature.each do |name, value|
         next if name.is_a?(Hash)
         name = name.sub /^s/, '' unless name == 'sID'
         @feature.update_attribute name, value if @feature.respond_to? name
@@ -16,8 +16,8 @@ class UnitType < ActiveRecord::Base
     end
   end
   
-  def get_features
-    @unit_features ||= IssnAdapter.get_unit_features(self.listing.facility_id, self.sID)
+  def get_feature
+    IssnAdapter.get_unit_features(self.listing.facility_id, self.sID)
   end
   
 end

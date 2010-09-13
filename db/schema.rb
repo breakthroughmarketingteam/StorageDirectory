@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907222429) do
+ActiveRecord::Schema.define(:version => 20100913161045) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -253,6 +253,19 @@ ActiveRecord::Schema.define(:version => 20100907222429) do
     t.string   "sID"
     t.text     "LongDescription"
     t.string   "ShortDescription"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issn_facility_unit_features", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "unit_type_id"
+    t.string   "sID"
+    t.text     "StdUnitTypesFeaturesShortDescription"
+    t.string   "KnowOfFee"
+    t.integer  "Fee"
+    t.string   "StdUnitTypesFeaturesId"
+    t.text     "ErrorMessage"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

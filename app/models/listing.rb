@@ -16,6 +16,7 @@ class Listing < ActiveRecord::Base
   # OpentTech ISSN data
   has_one  :facility_info, :dependent => :destroy
   has_many :unit_types, :dependent => :destroy
+  has_many :issn_facility_unit_features, :dependent => :destroy
   has_many :promos, :dependent => :destroy
   has_many :facility_features, :dependent => :destroy
   has_many :features, :through => :facility_features
@@ -200,11 +201,26 @@ class Listing < ActiveRecord::Base
     IssnAdapter.get_unit_info self.facility_id
   end
   
+  def get_unit_features(unit_type_id = nil)
+    IssnAdapter.get_unit_features(self.facility_id, unit_type_id)
+  end
+  
   #
   # Methods to sync data from the ISSN db
   #
   def self.update_standard_info
     [IssnUnitTypeSize, IssnUnitTypeFeature, IssnFacilityFeature].map &:update_from_issn
+  end
+  
+  def update_unit_types_and_sizes
+    update_unit_types
+    update_unit_features
+    sync_sizes_with_unit_types
+  end
+  
+  def update_promos_and_specials
+    update_promos
+    sync_specials_with_promos
   end
   
   def update_all_issn_data

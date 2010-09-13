@@ -28,15 +28,7 @@
           <h3><span>Reports</span></h3>
         </div>
         <div id="ov-reports-cnt">
-		
 			<div id="stats_graph"></div>
-		<!--
-          <ul>
-            <li><%= link_to '<span>Clicks</span>', '#clicks', :id => 'clicks' %></li>
-            <li><%= link_to '<span>Calls</span>', '#calls', :id => 'calls' %></li>
-            <li><%= link_to '<span>Reservations</span>', '#reservations', :id => 'reservations' %></li>
-          </ul>-->
-
         </div>
       </div>
 		
@@ -111,9 +103,11 @@
 			
 			<div>
 				<h4>Online Reservations</h4>
-				<p>
-					<%= link_to image_tag('/files/content/issn_networklogo.jpg'), '#', :id => 'enable_issn', :title => 'Enable Online Reservations' %>
-				</p>
+				<ul>
+					<li><%= link_to '<span>Clicks</span>', '#clicks', :id => 'clicks' %></li>
+					<li><%= link_to '<span>Calls</span>', '#calls', :id => 'calls' %></li>
+					<li><%= link_to '<span>Reservations</span>', '#reservations', :id => 'reservations' %></li>
+				</ul>
 			</div>
         </div>
       </div>

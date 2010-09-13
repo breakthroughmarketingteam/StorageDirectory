@@ -4,8 +4,8 @@ class AjaxController < ApplicationController
   skip_before_filter :init
   
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
-  before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy, :get_multipartial]
-  before_filter :_get_model_class, :only => [:get_listing, :get_attributes]
+  before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy, :get_multipartial, :model_method]
+  before_filter :_get_model_class, :only => [:get_listing, :get_attributes, :model_method]
   
   def get_all
     if (has_name = _get_model_class.first.respond_to?('name')) || _get_model_class.first.respond_to?('title')
@@ -101,6 +101,16 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
+  end
+  
+  def model_method
+    authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
+      data = (@model || @model_class).send(params[:model_method])
+      render :json => { :success => data, :data => data }
+    end
+
+  rescue => e
+    render_error e  
   end
   
   def get_partial

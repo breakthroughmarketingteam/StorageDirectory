@@ -47,7 +47,7 @@ class IssnAdapter
     call_and_parse 'getFacilityUnits', query
   end
   
-  def self.get_unit_features(facility_id, type_id)
+  def self.get_unit_features(facility_id, type_id = nil)
     query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{type_id}"
     call_and_parse 'getFacilityUnitTypesFeatures', query
   end
