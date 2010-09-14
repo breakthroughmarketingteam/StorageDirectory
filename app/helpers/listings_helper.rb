@@ -4,6 +4,10 @@ module ListingsHelper
     action_name == 'edit' || (current_user && current_user.has_role?('advertiser'))
   end
   
+  def is_owner_editing?
+    is_facility_owner? && action_name == 'edit'
+  end
+  
   def greyresult_panel_template(listing, &content)
     html  = "\n<h5 class=\"white dark_text_shadow\">#{listing.title}</h5>\n<div class=\"inner border_box\">"
       html << yield

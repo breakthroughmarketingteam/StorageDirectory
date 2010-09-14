@@ -342,7 +342,7 @@ class ApplicationController < ActionController::Base
   end
   
   def model_errors(*models)
-    error = models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?)
+    models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?).flatten
   end
   
   #--------------------- Authlogic ---------------------
@@ -437,6 +437,10 @@ class ApplicationController < ActionController::Base
   
   def get_default_role
     @default_role ||= Role.find_by_title('User') || Role.find_by_title('Subscriber') || Role.last
+  end
+  
+  def tenant_role
+    Role.find_by_title 'tenant'
   end
   
   def in_edit_mode?

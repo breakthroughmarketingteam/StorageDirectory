@@ -11,6 +11,10 @@ class UnitType < ActiveRecord::Base
     self.units.any? { |u| u.Available.downcase == 'y' }
   end
   
+  def update_costs
+    self.update_move_in_costs and self.update_reserve_costs
+  end
+  
   def update_move_in_costs
     IssnAdapter.update_models_from_issn :class => MoveInCost,
                                         :data => [self.get_move_in_costs].flatten, 

@@ -219,47 +219,19 @@ class Listing < ActiveRecord::Base
     [IssnUnitTypeSize, IssnUnitTypeFeature, IssnFacilityFeature].map &:update_from_issn
   end
   
-  def update_unit_types_and_sizes
-    puts "\nUpdating Unit Types...\n"
-    update_unit_types
-    puts "\nUpdating Unit Features...\n"
-    update_unit_features
-    puts "\nSyncing Units With Unit Types...\n"
-    sync_sizes_with_unit_types
-    puts "\nSyncing Costs With Unit Types...\n"
-    sync_costs_with_unit_types
-  end
-  
-  def update_promos_and_specials
-    puts "\nUpdating Promos...\n"
-    update_promos
-    puts "\nSyncing Specials With Promos ...\n"
-    sync_specials_with_promos
-  end
-  
   def update_all_issn_data
     transaction do
-      puts "\nUpdating Facility Info...\n"
       update_facility_info
-      puts "\nUpdating Unit Types...\n"
-      update_unit_types
-      puts "\nUpdating Promos...\n"
-      update_promos
-      puts "\nSyncing Facility Info With Listing...\n"
       sync_facility_info_with_listing
-      puts "\nSyncing Sizes With Unit Types...\n"
-      sync_sizes_with_unit_types
-      puts "\nSyncing Units With Unit Types...\n"
-      sync_units_with_unit_types
-      puts "\nSyncing Costs With Unit Types...\n"
-      sync_costs_with_unit_types
-      puts "\nSyncing Specials With Promos...\n"
-      sync_specials_with_promos
-      puts "\nDONE updating.\n"
+      update_unit_types_and_sizes
+      update_promos_and_specials
     end
+    
+    puts "\nALL DATA UPDATED.\n"
   end
   
   def update_facility_info
+    puts "\nUpdating Facility Info...\n"
     self.facility_info.nil? ? self.create_facility_info : self.facility_info.update_from_issn
   end
   
@@ -279,7 +251,29 @@ class Listing < ActiveRecord::Base
                                         :find_attr => 'sDescription'
   end
   
+  def update_unit_types_and_sizes
+    puts "\nUpdating Unit Types...\n"
+    update_unit_types
+    #puts "\nUpdating Unit Features...\n"
+    #update_unit_features
+    puts "Done.\nSyncing Units With Unit Types...\n"
+    sync_units_with_unit_types
+    puts "Done.\nSyncing Sizes With Unit Types...\n"
+    sync_sizes_with_unit_types
+    puts "Done.\nSyncing Costs With Unit Types...\n"
+    sync_costs_with_unit_types
+    puts "Done.\n"
+  end
+  
+  def update_promos_and_specials
+    puts "\nUpdating Promos...\n"
+    update_promos
+    puts "\nSyncing Specials With Promos ...\n"
+    sync_specials_with_promos
+  end
+  
   def sync_facility_info_with_listing
+    puts "\nSyncing Facility Info With Listing...\n"
     @fi = self.facility_info
     transaction do
       self.update_attributes :title =>  @fi.MS_Name, :description =>  @fi.O_FacilityName
@@ -296,14 +290,15 @@ class Listing < ActiveRecord::Base
   end
   
   def sync_costs_with_unit_types
-    self.unit_types.map do |u|
-      u.update_move_in_costs
-      u.update_reserve_costs
+    UnitType.transaction(:requires_new => true) do
+      self.unit_types.map &:update_costs
     end
   end
   
   def sync_units_with_unit_types
-    self.unit_types.map &:update_units
+    UnitType.transaction(:requires_new => true) do
+      self.unit_types.map &:update_units
+    end
   end
   
   def sync_sizes_with_unit_types
@@ -332,16 +327,12 @@ class Listing < ActiveRecord::Base
       self.promos.each do |promo|
         special = self.specials.find_by_id(promo.special_id) || self.specials.create
         promo.update_attribute :special_id, special.id
-        
-        args = {
-          :title => promo.Description,
-          :code => promo.Code
-        }
-        special.update_attributes args
+        special.update_attributes :title => promo.Description, :code => promo.Code
       end
     end
   end
   
+  # for testing
   def purge_issn_data
     self.unit_types = []
     self.promos = []

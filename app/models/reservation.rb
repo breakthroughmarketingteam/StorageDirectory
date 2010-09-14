@@ -2,6 +2,7 @@ class Reservation < ActiveRecord::Base
   
   belongs_to :listing, :counter_cache => true
   belongs_to :user
+  belongs_to :unit_type
   
   has_many :comments
   accepts_nested_attributes_for :comments
@@ -23,6 +24,15 @@ class Reservation < ActiveRecord::Base
   
   def duration
     self.end_date - self.start_date
+  end
+  
+  def active?
+    now = Time.now
+    self.start_date <= now && self.end_date > now
+  end
+  
+  def expired?
+    self.end_date < Time.now
   end
   
 end
