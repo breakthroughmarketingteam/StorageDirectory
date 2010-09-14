@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   before_filter :authorize_user
   
   def index
+    @controllers.reject! { |c| c =~ /(admin)/i }
   end
 
   def show

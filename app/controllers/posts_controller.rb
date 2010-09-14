@@ -22,29 +22,59 @@ class PostsController < ApplicationController
       @post.tag_list << 'tip'
     end
     
-    if @post.save
-      flash[:notice] = @post.title + ' has been created.'
+    respond_to do |format|
+      format.html do
+        if @post.save
+          flash[:notice] = @post.title + ' has been created.'
       
-      case params[:for]
-      when nil
-        redirect_to posts_path
-      when 'tip'
-        redirect_to :back
+          case params[:for]
+          when nil
+            redirect_to posts_path
+          when 'tip'
+            redirect_to :back
+          end
+        else
+          render :action => 'edit'
+        end    
       end
-    else
-      render :action => 'edit'
-    end    
+      
+      format.js do 
+        if @post.save
+          flash.now[:notice] = @post.title + ' has been created.'
+          get_models_paginated
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@post)
+          render :action => 'edit', :layout => false
+        end
+      end
+    end
   end
 
   def edit
   end
 
   def update
-    if @post.update_attributes(params[:post])
-      flash[:notice] = @post.title + ' has been updated.'
-      redirect_to :action => 'show'
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @post.update_attributes(params[:post])
+          flash[:notice] = @post.title + ' has been updated.'
+          redirect_to :action => 'show'
+        else
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @post.update_attributes(params[:post])
+          flash.now[:notice] = @post.title + ' has been updated.'
+          get_models_paginated
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@post)
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
 

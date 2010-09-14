@@ -126,6 +126,55 @@ $(function(){
 	});
 	// END admin menu
 	
+	// Admin index page menu
+	if ($.on_page([['index', 'admin']])) {
+		var admin_links = $('a', '#controller_list'), 
+			ajax_wrap = $('#ajax_wrap');
+		
+		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
+		
+		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
+		$('a:not(.ajax_action):not(.add_link)', '#admin_panel').live('click', function() {
+			var $this = $(this);
+			
+			if ($this.hasClass('admin_link')) {
+				admin_links.removeClass('active');
+				$this.addClass('active');
+			}
+			
+			ajax_wrap.children().fadeTo('fast', 0.2);
+			ajax_wrap.addClass('loading').load(this.href + ' #ajax_wrap_inner', function(response, status) {
+				if (status == 'success') $(this).removeClass('loading').children().hide().fadeIn('fast');
+				else window.location = $this.attr('href');
+			});
+			
+			return false;
+		});
+		
+		// ajaxify form submissions
+		// TODO: respond_to blocks for all the controllers
+		$('form', '#ajax_wrap').live('submit', function() {
+			var form = $(this);
+			ajax_wrap.children().fadeTo('fast', 0.2);
+			ajax_wrap.addClass('loading');
+			
+			form.ajaxSubmit({
+				target: '#ajax_wrap',
+				success: function(response, status) {
+					if (status == 'success') setTimeout(function() {
+						$('.flash', '#ajax_wrap_inner').slideUp('slow', function(){ $(this).remove() }); 
+					}, 7000);
+					
+					ajax_wrap.removeClass('loading').children().hide().fadeIn('fast');
+				}
+			});
+			
+			return false;
+		});
+		
+		if ($.cookie('active_admin_link')) $('#'+ $.cookie('active_admin_link')).click();
+	}
+	
 	// helpers
 	$('.unique_checkbox').click(function() {
 		var $this = $(this);

@@ -471,10 +471,10 @@ module ApplicationHelper
   def conditional_account_path(options = {})
     return '' if current_user.nil?
     
-    case current_user.role.title when 'advertiser'
+    case current_user.role.title.downcase when 'advertiser'
       '<span class="account_link">'+ link_to('My Account', client_account_path(options)) +'</span>'
     when 'admin'
-      '<span class="account_link">'+ link_to('Administer', '#') +'</span>'
+      '<span class="account_link">'+ link_to('Admin', admin_index_path) +'</span>'
     end
   end
   
