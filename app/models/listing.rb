@@ -78,6 +78,10 @@ class Listing < ActiveRecord::Base
     eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
   end
   
+  def unit_sizes_options_array
+    self.sizes.empty? ? IssnUnitTypeSize.labels : self.sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.display_dimensions] }.uniq
+  end
+  
   #
   # Search methods
   #
@@ -117,6 +121,12 @@ class Listing < ActiveRecord::Base
     { :data => @model_data, :location => @location }
   end
   
+  def self.extrapolate_query(params)
+    return params[:q] if params[:q]
+    return params[:zip] if params[:zip]
+    params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
+  end
+  
   def self.geocode_query(query)
     if query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
@@ -146,11 +156,6 @@ class Listing < ActiveRecord::Base
   def self.is_state?(query)
     sregex = States::NAMES.map { |s| "(#{s[0]})|\s#{s[1]}$" } * '|'
     query.match(/#{sregex}/i)
-  end
-  
-  def self.extrapolate_query(params)
-    return params[:q] if params[:q]
-    params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
   end
   
   def self.smart_order(data)

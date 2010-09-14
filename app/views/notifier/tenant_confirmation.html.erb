@@ -1,3 +1,13 @@
-New Reservation Alert
-<%= @user.inspect %>
-<%= @reservation.inspect %>
+New Reservation Confirmation
+
+You can check your reservation status in your new account at: <%= user_url(@user) %>
+<% @user.attributes.each do |k, v| %>
+	<%= k %>: <%= v %>;
+	
+<% end %>
+
+You made this reservation:
+<% @reservation.attributes.each do |k, v| %>
+	<%= k %>: <%= v %>;
+	
+<% end %>

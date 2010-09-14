@@ -18,6 +18,14 @@
 		<p class="zip">
 	        <%= label_tag 'reserver[mailing_addresses_attributes][][zip]', 'Zip Code', :class => 'block left w80' %> <%= text_field_tag 'reserver[mailing_addresses_attributes][][zip]', nil, :class => 'required numeric max_5', :maxlength => 5 %>
 		</p>
+		<p>
+			<% if defined?(unit_type) && unit_type %>
+				<%= f.hidden_field :unit_type_id, :value => unit_type.id %>
+			<% else %>
+				<%= label_tag '[unit_type_id]', 'Unit Size', :class => 'block left w80' %>
+				<%= f.select :unit_type_id, listing.unit_sizes_options_array %>
+			<% end %>
+		</p>
 	</div>
 	<div class="sl-table-exp-form-r">
 		<p>
@@ -42,7 +50,6 @@
 		</p>
 		<p class="right">
 			<%= f.hidden_field :listing_id, :value => listing.id %>
-			<%= f.hidden_field :unit_type_id, :value => (unit_type.id rescue '') %>
 			<%= ajax_loader %>
 	        <input id="submit-btn" type="submit" value="Submit" name="commit" />
 		</p>

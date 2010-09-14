@@ -25,7 +25,7 @@
 				<%= results_main_button(result) %>
 			</li>
 			
-			<% if @listings.total_entries > 2 && action_name == 'locator' %>
+			<% if @listings.total_entries > 1 && action_name == 'locator' %>
 				<li class="compare_li">
 					<div class="compare selectable" title="Select to compare">
 						<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
@@ -43,19 +43,19 @@
 			<%= link_to '+', '#', :class => 'open_tab' %>
 		</li>
 		<li class="fac-map">
-			<%= link_to 'Map', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
+			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
 		
-		<li class="fac-sizes">
-			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link#{' hide' if result.sizes.empty?}" %>
+		<li class="fac-sizes<%= ' hide' if result.sizes.empty?%>">
+			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
 		</li>
 		
-		<li class="fac-specials">
-			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link#{' hide' if result.specials.empty?}" %>
+		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
+			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
 		</li>
 		
-		<li class="fac-pictures">
-			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link#{' hide' if result.pictures.empty?}" %>
+		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
+			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
 		</li>
 	</ul>
 	<div class="highlight-green progress">&nbsp;</div>

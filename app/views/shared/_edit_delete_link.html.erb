@@ -1,4 +1,4 @@
-<% if current_user %>
+<% if current_user && !model.is_a?(String) %>
   
   <% if current_user.has_permission?(model.class.to_controller_str, 'destroy', params) %>
 	  <%= link_to 'Delete', ajax_action_path(:destroy, :model => model_name(model), :id => model.id), :class => 'ajax_action before_confirm iconOnly16 delete_link right note', :rel => 'list_view', :title => "Delete this #{model_name(model)}" %>

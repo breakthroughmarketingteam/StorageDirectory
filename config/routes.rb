@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean seo friendly
+  map.storage_state_zip '/self-storage/:state/:zip', :controller => 'listings', :action => 'locator', :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i, :zip => /\d{5}/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   # all states except washington dc
   map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
@@ -121,6 +122,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :facility_features
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
   
+  map.resources :admin
   map.resource :site_setting
   
   # Sample resource route within a namespace:

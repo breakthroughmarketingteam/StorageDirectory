@@ -7,8 +7,7 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    data = Listing.get_facility_info 'getFacilityUnitTypes'
-    render :text => data
+    
   end
   
   def locator
@@ -35,7 +34,8 @@ class ListingsController < ApplicationController
       format.js do # implementing these ajax responses for the search results 'More Link'
         # include listing's related data
         @listings.map! do |m|
-          mm = { :info => m.attributes, :map => m.map.attributes, :specials => m.specials, :sizes => m.sizes, :pictures => m.pictures }
+          res = m.accepts_reservations?
+          mm = { :info => m.attributes, :map => m.map.attributes, :specials => m.specials, :sizes => m.sizes, :pictures => m.pictures, :accepts_reservations => res, :reserve_link_href => m.get_partial_link(res ? :reserve : :request_info) }
           mm[:map].merge!(:distance => m.distance_from(@location))
           mm
         end

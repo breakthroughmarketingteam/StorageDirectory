@@ -1,0 +1,10 @@
+<% declare_content_for %>
+<%= display_message flash %>
+
+<h2><%= contextual_index_view_title((local_assigns.has_key?(:title) ? title : nil)) %></h2>
+
+<ul id="controller_list">
+	<% @controllers.each do |c| %>
+		<li><%= link_to c.titleize, "/#{c.underscore}" %></li>
+	<% end %>
+</ul>

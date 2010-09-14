@@ -344,19 +344,21 @@ $(function(){
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
 						if (tabs[i].length > 0) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
-						console.log(tabs[i].attr('rel'), this[tabs[i].attr('rel')])
-						if (this[tabs[i].attr('rel')].length > 0) tabs[i].show();
+						if (this[tabs[i].attr('rel')].length > 0) tabs[i].parent().show();
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
 					$('.rslt-title a', this_listing)		.text(info.title);
-					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/show/' + info.id);
+					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/'+ info.title.toLowerCase().replaceAll(' ', '-') +'/' + info.id);
 					$('.rslt-address', this_listing)		.text(map.address);
 					$('.rslt-citystate', this_listing)		.text(map.city + ', ' + map.state + ' ' + map.zip);
 					$('.rslt-phone', this_listing)			.text(map.phone);
 					$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
 					$('.rslt-specials h5', this_listing)	.text(specials.title);
 					$('.rslt-specials p', this_listing)		.text(specials.content);
+					
+					var reserve_link = $('.rslt-reserve a', this_listing);
+					if (this.accepts_reservations) reserve_link.text('Reserve').attr('href', this.reserve_link_href)
 					
 					$(this_listing).removeClass('active').find('.active').removeClass('active');
 					$('.panel', this_listing).hide();

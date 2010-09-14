@@ -245,7 +245,7 @@ module ApplicationHelper
   
   def render_model_helptext(controller_name)
     return if current_user.nil?
-    render(:partial => 'helptexts/helptext', :locals => { :class_helptext => model_class(controller_name).helptext })
+    render(:partial => 'helptexts/helptext', :locals => { :class_helptext => model_class(controller_name).helptext }) rescue ''
   end
   
   def images_for_js(widget, region)
@@ -328,9 +328,16 @@ module ApplicationHelper
   def model_path(model, options = {})
     if model.is_a? Link
       dynamic_link_path(model, options)
+    elsif model.is_a?(String) && is_admin?
+      "/admin/#{@model}"
     else
       eval "#{model_name(model)}_path(model, options)"
     end
+  end
+  
+  # for the client account pages to take account who is viewing the page, an admin or the client
+  def admin_conditional_path(user, options = {})
+    is_admin? ? edit_client_path(user, options) : client_account_path(user, options)
   end
   
   # return a either a links absolute path or get the target resource path
@@ -362,7 +369,7 @@ module ApplicationHelper
   
   # the title or name of an instance of a resource
   def model_name_or_title(model)
-    model.respond_to?('title') ? model.title : model.name
+    model.respond_to?('title') ? model.title : model.name rescue model
   end
   
   def model_class_and_id(model)
