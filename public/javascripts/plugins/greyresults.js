@@ -344,6 +344,8 @@ $(function(){
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
 						if (tabs[i].length > 0) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
+						console.log(tabs[i].attr('rel'), this[tabs[i].attr('rel')])
+						if (this[tabs[i].attr('rel')].length > 0) tabs[i].show();
 					}
 
 					// update the content in the copy of the listing html and add it to the dom

@@ -46,16 +46,16 @@
 			<%= link_to 'Map', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
 		
-		<li class="fac-sizes<%= ' hide' if result.sizes.empty? %>">
-			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => 'tab_link' %>
+		<li class="fac-sizes">
+			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link#{' hide' if result.sizes.empty?}" %>
 		</li>
 		
-		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
-			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => 'tab_link' %>
+		<li class="fac-specials">
+			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link#{' hide' if result.specials.empty?}" %>
 		</li>
 		
-		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
-			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => 'tab_link' %>
+		<li class="fac-pictures">
+			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link#{' hide' if result.pictures.empty?}" %>
 		</li>
 	</ul>
 	<div class="highlight-green progress">&nbsp;</div>
