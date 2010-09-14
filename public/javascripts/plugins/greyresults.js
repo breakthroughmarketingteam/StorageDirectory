@@ -516,7 +516,7 @@ $(function(){
 				if (response.success) {
 					var inner_panel = form.parent();
 					inner_panel.children().fadeOut(300);
-					inner_panel.animate({ height: '150px' }, 600, function(){
+					inner_panel.animate({ height: '180px' }, 600, function(){
 						
 						inner_panel.html(
 							'<div id="quote_done">\
