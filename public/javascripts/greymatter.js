@@ -134,7 +134,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action):not(.add_link)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action):not(.partial_addable .add_link)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {
@@ -144,8 +144,11 @@ $(function(){
 			
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading').load(this.href + ' #ajax_wrap_inner', function(response, status) {
-				if (status == 'success') $(this).removeClass('loading').children().hide().fadeIn('fast');
-				else window.location = $this.attr('href');
+				if (status == 'success') {
+					$(this).removeClass('loading').children().hide().fadeIn('fast');
+					$.bindPlugins();
+					
+				} else window.location = $this.attr('href');
 			});
 			
 			return false;
@@ -155,16 +158,17 @@ $(function(){
 		// TODO: respond_to blocks for all the controllers
 		$('form', '#ajax_wrap').live('submit', function() {
 			var form = $(this);
+			
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading');
-			
+
 			form.ajaxSubmit({
 				target: '#ajax_wrap',
 				success: function(response, status) {
 					if (status == 'success') setTimeout(function() {
 						$('.flash', '#ajax_wrap_inner').slideUp('slow', function(){ $(this).remove() }); 
 					}, 7000);
-					
+
 					ajax_wrap.removeClass('loading').children().hide().fadeIn('fast');
 				}
 			});

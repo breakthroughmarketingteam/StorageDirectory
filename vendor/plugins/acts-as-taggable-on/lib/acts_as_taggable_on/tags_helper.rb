@@ -10,4 +10,5 @@ module TagsHelper
       yield tag, classes[index]
     end
   end
+  
 end

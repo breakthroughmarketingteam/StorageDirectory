@@ -151,7 +151,7 @@ class ApplicationController < ActionController::Base
     @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
     @nav_pages         = Page.nav_pages
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    
+    @per_page          = 18
     @slogan = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
@@ -310,7 +310,11 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
-    eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => 14, :page => params[:page], :order => 'id desc'"
+    case params[:filter_by] when 'tag'
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+    else
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+    end
   end
   
   def get_model

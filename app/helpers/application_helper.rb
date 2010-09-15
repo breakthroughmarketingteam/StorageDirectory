@@ -352,6 +352,14 @@ module ApplicationHelper
     end
   end
   
+  def tag_filter_path(tag)
+    "/#{controller_name}?filter_by=tag&tag=#{tag}"
+  end
+  
+  def extract_tags(data_class)
+    data_class.all.map(&:tag_list).flatten.uniq.sort
+  end
+  
   # link title for resource crud action
   def model_crud_title(crud, name)
     "#{crud} #{name.singular}".titleize

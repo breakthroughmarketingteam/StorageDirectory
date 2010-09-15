@@ -535,14 +535,18 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #admin-box ul li a:hover,#admin-box ul li a.active{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
 /************************************************** END additions.css *********************************************************/
 /* Customizations - D.S */
-#ajax_wrap{float:left;padding-left:20px;width:86%;min-height:684px;}
+#ajax_wrap{float:left;padding-left:20px;margin-top:-16px;width:86%;min-height:684px;}
+#ajax_wrap_inner > h2{margin-bottom:7px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
-#controller_list,#ajax_wrap{margin-top:-14px;}
 #controller_list{float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
 #controller_list li a{display:block;padding:5px 7px 5px 12px;font-weight:bold;border-radius:10px 0 0 10px;-moz-border-radius:10px 0 0 10px;-webkit-border-radius:10px 0 0 10px;}
 #controller_list li a:link,#controller_list li a:visited{color:#777;}
 #controller_list li a:hover,#controller_list li a:active,#controller_list li a.active{color:#333;background:#fff;}
+#model_filter_by_tag{margin-top:-15px;}
+#model_filter_by_tag li a{padding:1px 5px;}
+#model_filter_by_tag li a:link,#model_filter_by_tag li a:visited{color:#666;}
+#model_filter_by_tag li a:hover,#model_filter_by_tag li a:active,#model_filter_by_tag li a.active{color:#fff;background:#999;}
 #info-accordion ul li{list-style:disc outside;margin-left:15px;}
 .region_content_bottom{margin-top:0;}
 .ui-slider-horizontal{height:6px;}

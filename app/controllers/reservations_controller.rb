@@ -2,7 +2,7 @@ class ReservationsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
-  before_filter :scrub_comments
+  before_filter :scrub_comments, :only => :create
 
   def index
   end
@@ -49,7 +49,7 @@ class ReservationsController < ApplicationController
   private
   
   def scrub_comments
-    params[:reservation].delete(:comments_attributes) if params[:reservation][:comments_attributes].any? { |c| c[:comment].blank? }
+    params[:reservation].delete(:comments_attributes) if params[:reservation][:comments_attributes].any? { |c| c[:comment].blank? } rescue false
   end
   
   def send_notices
