@@ -172,7 +172,7 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'blog_roll'
     elsif controller_name == 'posts' || controller_name == 'user_hints'
       session[:view_type] = 'list'
-    elsif controller_name =~ /(images)|(galleries)/
+    elsif controller_name =~ /(images)|(galleries)|(pictures)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
@@ -447,10 +447,6 @@ class ApplicationController < ActionController::Base
   
   def get_default_role
     @default_role ||= Role.find_by_title('User') || Role.find_by_title('Subscriber') || Role.last
-  end
-  
-  def tenant_role
-    Role.find_by_title 'tenant'
   end
   
   def in_edit_mode?

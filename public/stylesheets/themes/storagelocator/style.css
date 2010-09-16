@@ -491,7 +491,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
 #ov-units .listing .inner .rslt-reserve{width:108px;position:absolute;right:20px;}
 #ov-services ul li{list-style:none;display:inline;}
-#ov-services ul li a{width:31.1%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
+#ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
 #ov-services ul li a:hover,#ov-reports ul li a:active{color:#393;}
 #ov-services ul li span{position:relative;top:145px;}
@@ -538,7 +538,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ajax_wrap{float:left;padding-left:20px;margin-top:-16px;width:86%;min-height:684px;}
 #ajax_wrap_inner > h2{margin-bottom:7px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
-#controller_list{float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
+#controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
 #controller_list li a{display:block;padding:5px 7px 5px 12px;font-weight:bold;border-radius:10px 0 0 10px;-moz-border-radius:10px 0 0 10px;-webkit-border-radius:10px 0 0 10px;}
 #controller_list li a:link,#controller_list li a:visited{color:#777;}
@@ -845,7 +845,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #topbar #storage_types{width:600px;}
 #topbar #moving_help{width:320px;border-left:1px solid #ccc;}
 #topbar .right{float:right;}
-#topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:underline;}
+#topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:none;}
 #topbar ul li a:hover,#topbar ul li a:active{}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
 #topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#359946;}

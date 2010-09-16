@@ -66,6 +66,87 @@ class IssnAdapter
     call_and_parse 'getReserveCost', query
   end
   
+  def self.process_new_tenant(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id}
+             &sFacilityUnitTypesId=#{args[:type_id]}
+             &sFacilityUnitId=#{args[:unit_id]}
+             &sPromoId=#{args[:promo_id]}
+             &sInsuranceId=#{args[:insurance_id]}
+             &sReserveUntilDateYMD=#{args[:reserve_until_date]}
+             &sPayMonths=#{args[:pay_months]}
+             &sTenantCompanyName=#{args[:tenant][:company_name]}
+             &sTenantFirstName=#{args[:tenant][:first_name]}
+             &sTenantLastName=#{args[:tenant][:last_name]}
+             &sTenantAddress1=#{args[:tenant][:address]}
+             &sTenantAddress2=#{args[:tenant][:address2]}
+             &sTenantCity=#{args[:tenant][:city]}
+             &sTenantState=#{args[:tenant][:state]}
+             &sTenantPostalCode=#{args[:tenant][:zip]}
+             &sTenantCountry=#{args[:tenant][:country]}
+             &sTenantHomePhone=#{args[:tenant][:home_phone]}
+             &sTenantWorkPhone=#{args[:tenant][:work_phone]}
+             &sTenantMobilePhone=#{args[:tenant][:mobile_phone]}
+             &sTenantEmail=#{args[:tenant][:email]}
+             &sTenantEmployer=#{args[:tenant][:employer]}
+             &sTenantDriverLicense=#{args[:tenant][:driver_license]}
+             &sTenantDriverLicenseState=#{args[:tenant][:driver_license_state]}
+             &sTenantVehicleType=#{args[:tenant][:vehicle_type]}
+             &sTenantVehiclePlate=#{args[:tenant][:vehicle_plate]}
+             &sTenantBillingAddress1=#{args[:tenant][:billing][:address]}
+             &sTenantBillingAddress2=#{args[:tenant][:billing][:address2]}
+             &sTenantBillingCity=#{args[:tenant][:billing][:city]}
+             &sTenantBillingState=#{args[:tenant][:billing][:state]}
+             &sTenantBillingPostalCode=#{args[:tenant][:billing][:zip]}
+             &sTenantBillingCountry=#{args[:tenant][:billing][:country]}
+             &sTenantAltFirstName=#{args[:tenant][:alt][:first_name]}
+             &sTenantAltLastName=#{args[:tenant][:alt][:last_name]}
+             &sTenantAltPhone=#{args[:tenant][:alt][:phone]}
+             &sTenantMilitaryFlag=#{args[:tenant][:military][:flag]}
+             &sTenantMilitaryBase=#{args[:tenant][:military][:base]}
+             &sTenantMilitaryContact=#{args[:tenant][:military][:contact]}
+             &sTenantMilitaryPhone=#{args[:tenant][:military][:phone]}
+             &sTenantSocialSecurityNumber=#{args[:tenant][:social_security_number]}
+             &sPayType=#{args[:pay_type]}
+             &sCreditCardType=#{args[:credit_card][:type]}
+             &sCreditCardNameOnCard=#{args[:credit_card][:name_on_card]}
+             &sCreditCardNumber=#{args[:credit_card][:number]}
+             &sCreditCardExpMonth=#{args[:credit_card][:expires][:month]}
+             &sCreditCardExpYear=#{args[:credit_card][:expires][:year]}
+             &sCreditCardPostalCode=#{args[:credit_card][:zip]}
+             &sCreditCardCCV=#{args[:credit_card][:ccv]}
+             &sSaveCreditCardInfo=#{args[:save_credit_card_info]}
+             &sBankRoutingNumber=#{args[:bank][:routing_number]}
+             &sBankAccountNumber=#{args[:bank][:account_number]}
+             &sBankName=#{args[:bank][:name]}
+             &sBankAccountName=#{args[:bank][:account_name]}
+             &sCheckNumber=#{args[:check_number]}
+             &sAmountToApply=#{args[:amount_to_apply]}"
+    call_and_parse 'processNewTenant', query
+  end
+  
+  def process_tenant_payment(facility_id, args = {})
+    query = "&sFacilityId=#{facility_id}
+             &sUnitName=#{args[:unit_name]}
+             &sTenantId=#{args[:tenant_id]}
+             &sTenantPIN=#{args[:tenant_pin]}
+             &sPayType=#{args[:pay_type]}
+             &sCreditCardType=#{args[:credit_card][:type]}
+             &sCreditCardNameOnCard=#{args[:credit_card][:name_on_card]}
+             &sCreditCardNumber=#{args[:credit_card][:number]}
+             &sCreditCardExpMonth=#{args[:credit_card][:expires][:month]}
+             &sCreditCardExpYear=#{args[:credit_card][:expires][:year]}
+             &sCreditCardPostalCode=#{args[:credit_card][:zip]}
+             &sCreditCardCCV=#{args[:credit_card][:ccv]}
+             &sBankRoutingNumber=#{args[:bank][:routing_number]}
+             &sBankAccountNumber=#{args[:bank][:account_number]}
+             &sBankName=#{args[:bank][:name]}
+             &sBankAccountName=#{args[:bank][:account_name]}
+             &sCheckNumber=#{args[:check_number]}
+             &sAmountToApply=#{args[:amount_to_apply]}
+             &sMonthsToPay=#{args[:months_to_pay]}"
+    call_and_parse 'processTenantPayment'
+  end
+  
   # Database updater
   # :data => issn data, :assoc => model to create or update, :find_method => to update an existing assoc model, :find_attr => the atr to find by
   def self.update_models_from_issn(args)
@@ -102,7 +183,7 @@ class IssnAdapter
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     
-    full_url = uri.path + '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
+    full_url = uri.path + path_str(method, query)
     puts '*******************************************'
     puts "SENDING ISSN REQUEST: #{full_url}"
     puts '*******************************************'
@@ -110,6 +191,10 @@ class IssnAdapter
     puts response.body
     
     return response
+  end
+  
+  def self.path_str(method, query)
+    '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
   end
 
   # parse the complex soap schema into a simple ruby hash
@@ -161,7 +246,6 @@ class IssnAdapter
         'Facility_UnitTypes'
       when 'getFacilityUnits'
         'FacilityUnits'
-    # END get_facility_info
     
     # get_standard_info
       when 'getStdFacilityFeatures'
@@ -170,18 +254,21 @@ class IssnAdapter
         'StdUnitTypeFeatures'
       when 'getStdUnitTypeSizes'
         'StdUnitTypeSizes'
-    # END get_standard_info
     
     # get_features, in sizes model
       when 'getFacilityUnitTypesFeatures'
         'Facility_UT_Features'
-    # END get_Features
       
       when 'getMoveinCost'
         'MoveInCost'
       when 'getReserveCost'
         'ReserveCost'
-      
+    
+      when 'processNewTenant'
+        'NewTenant'
+      when 'processTenantPayment'
+        'TenantPayment'
+        
     # admin methods
       when 'admin_getUsersFacilities'
         'UsersFacilities'

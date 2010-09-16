@@ -217,6 +217,14 @@ class Listing < ActiveRecord::Base
     IssnAdapter.get_unit_features self.facility_id, unit_type_id
   end
   
+  def process_new_tenant(args)
+    IssnAdapter.process_new_tenant(self.facility_id, args)
+  end
+  
+  def process_tenant_payment(args)
+    IssnAdapter.process_tenant_payment(self.facility_id, args)
+  end
+  
   #
   # Methods to sync data from the ISSN db
   #

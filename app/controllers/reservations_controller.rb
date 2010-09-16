@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :scrub_comments, :only => :create
 
   def index
@@ -11,13 +11,15 @@ class ReservationsController < ApplicationController
   end
 
   def new
+    @reservation = Reservation.new
   end
   
   def create
     @user = User.find_by_email(params[:reserver][:email]) || User.new(params[:reserver])
-    @user.role_id = tenant_role.id if @user.new_record?
+    @user.role_id = Role.tenant_role_id if @user.new_record?
     @reservation = @user.reservations.build params[:reservation]
     
+    raise [params, @user.new_record?, @user, @reservation].pretty_inspect
     if @user.save
       send_notices
       

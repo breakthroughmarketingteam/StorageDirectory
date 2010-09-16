@@ -11,6 +11,10 @@ class Role < ActiveRecord::Base
     Role.find_by_title(title).try :id
   end
   
+  def self.tenant_role_id
+    Role.find_by_title('tenant').id
+  end
+  
   def select_list_options
     self.map { |r| "#{r.id}-#{r.title}"}
   end

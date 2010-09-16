@@ -26,24 +26,54 @@ class RolesController < ApplicationController
       error << model_errors(@role) unless @role.save
     end
     
-    if error.blank?
-      flash[:notice] = "#{params[:roles].nil? ? 'Role has' : 'Roles have'} been created."
-      redirect_back_or_default roles_path
-    else
-      flash[:error] = 'Oops, something went wrong.'
-      @role.nil? ? render(:action => 'edit') : redirect_back_or_default(roles_path)
-    end    
+    respond_to do |format|
+      format.html do
+        if error.blank?
+          flash[:notice] = "#{params[:roles].nil? ? 'Role has' : 'Roles have'} been created."
+          redirect_back_or_default roles_path
+        else
+          flash[:error] = 'Oops, something went wrong.'
+          @role.nil? ? render(:action => 'edit') : redirect_back_or_default(roles_path)
+        end
+      end
+      
+      format.js do
+        if error.blank?
+          flash.now[:notice] = "#{params[:roles].nil? ? 'Role has' : 'Roles have'} been created."
+          get_models
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = 'Oops, something went wrong.'
+          render :action => 'edit', :layout => false
+        end
+      end
+    end
   end
 
   def edit
   end
 
   def update
-    if @role.update_attributes(params[:role])
-      flash[:notice] = @role.title + ' has been updated.'
-      redirect_back_or_default :action => 'show'
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @role.update_attributes(params[:role])
+          flash[:notice] = @role.title + ' has been updated.'
+          redirect_back_or_default :action => 'show'
+        else
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @role.update_attributes(params[:role])
+          flash.now[:notice] = @role.title + ' has been updated.'
+          get_models
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@role.title)
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
 

@@ -7,7 +7,6 @@ $(document).ready(function(){
 	
 	// front page
 	$('div > a > img', '#jqDock0').click(function(){
-		console.log(this)
 		$(this).effect('bounce', { times: 3 }, 300);
 	});
 	
@@ -567,7 +566,7 @@ $(document).ready(function(){
 		function issnstep2_validate(wizard) {
 			$('.error', '.issn_enable_opts').remove();
 			var error = '', pms = $('select#pm_software', '#'+ wizard.slide_data[1].opt_id);
-				console.log($('select#pm_software', '#issnstep_2'))
+			
 			if (!$('input#agree', '#issnstep_2').is(':checked')) error += '<p>You must agree to grant access in order to continue.</p>'
 			if (pms.val() == '') error += '<p>Please select your Property Management System.</p>'
 			

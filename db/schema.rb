@@ -681,7 +681,7 @@ ActiveRecord::Schema.define(:version => 20100914040033) do
     t.string   "status"
     t.string   "temp_password"
     t.string   "last_name"
-    t.string   "perishable_token",                :default => "", :null => false
+    t.string   "perishable_token",                :null => false
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

@@ -1,8 +1,7 @@
 class AdminController < ApplicationController
-  before_filter :authorize_user
   
   def index
-    @controllers.reject! { |c| c =~ /(admin)/i }
+    @controllers.reject! { |c| c =~ /(admin)|(sizes)|(facility_features)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)/i }
   end
 
   def show
