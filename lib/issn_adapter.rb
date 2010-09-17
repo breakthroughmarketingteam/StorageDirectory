@@ -229,6 +229,15 @@ class IssnAdapter
     value.is_a?(Array) ? parse_soap_array(value) : parse_soap_hash(value)
   end
   
+  def self.parse_date_to_YMD(date)
+    "#{date.year}#{pad_int_str(date.month)}#{pad_int_str(date.day)}"
+  end
+  
+  # add a 0 to an integer < 10
+  def self.pad_int_str(int)
+    int.to_s.size == 1 ? '0'+ int.to_s : int
+  end
+  
   # DataSet key mappings
   def self.data_key_for(method)
     case method when 'findFacilities'

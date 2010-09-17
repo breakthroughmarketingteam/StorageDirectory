@@ -28,9 +28,6 @@ class Listing < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   # Instance Methods
-  def accepts_reservations?
-    self.client && self.client.accepts_reservations?
-  end
   
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
@@ -80,6 +77,10 @@ class Listing < ActiveRecord::Base
   
   def unit_sizes_options_array
     self.sizes.empty? ? IssnUnitTypeSize.labels : self.sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.display_dimensions] }.uniq
+  end
+  
+  def available_sizes
+    self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
   end
   
   #
@@ -165,6 +166,10 @@ class Listing < ActiveRecord::Base
   #
   # OpenTech ISSN wrapper code
   #
+  def accepts_reservations?
+    self.issn_enabled?
+  end
+  
   def issn_enabled?
     !self.facility_id.blank?
   end

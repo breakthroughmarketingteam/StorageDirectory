@@ -17,10 +17,10 @@ class ReservationsController < ApplicationController
   def create
     @user = User.find_by_email(params[:reserver][:email]) || User.new(params[:reserver])
     @user.role_id = Role.tenant_role_id if @user.new_record?
-    @reservation = @user.reservations.build params[:reservation]
+    @reservation = @user.reservations.build params[:reservation].merge!(:referrer => request.referrer, :status => 'pending')
     
-    raise [params, @user.new_record?, @user, @reservation].pretty_inspect
-    if @user.save
+    raise [params, @user.new_record?, @user.save, @user.mailing_addresses,@user.mailing_addresses.save, @reservation, @reservation.valid?, @reservation.errors].pretty_inspect
+    if @reservation.valid? && @user.save
       send_notices
       
       respond_to do |format|

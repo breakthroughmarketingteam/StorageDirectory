@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100914040033) do
+ActiveRecord::Schema.define(:version => 20100917181027) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -505,12 +505,11 @@ ActiveRecord::Schema.define(:version => 20100914040033) do
     t.integer  "listing_id"
     t.integer  "user_id"
     t.string   "status"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "move_in_date"
+    t.datetime "move_out_date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "referrer"
-    t.string   "request_uri"
     t.integer  "unit_type_id"
   end
 

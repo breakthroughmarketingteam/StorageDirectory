@@ -397,7 +397,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul{clear:both;height:46px;line-height:46px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 #sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
 #sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:80%;color:#666;width:100%;}
-#sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:2px 5px;font-weight:bold;cursor:pointer;font-size:90%;}
+#sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:2px 5px 0;font-weight:bold;cursor:pointer;font-size:90%;}
 .edit_action #sl-tabs-sizes-in ul.sl-table{cursor:default;}
 #sl-tabs-sizes-in ul.active,#sl-tabs-sizes-in .sl-table:hover,#sl-tabs-sizes-in .sl-table.active{background:url(/images/ui/storagelocator/sl-table-active.png) repeat-x top left;color:#333;}
 #sl-tabs-sizes-in ul li.st-size{margin-left:20px;width:76px;}
@@ -411,13 +411,14 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul li.st-sele{width:25px;height:46px;}
 #sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-load.gif) no-repeat center;}
 #sl-tabs-sizes-in ul:hover li.active_load{background:url(/images/ui/storagelocator/sl-load-active.gif) no-repeat center;}
-#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-3px;margin-left:19px;}
+#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-3px;margin:0 auto 10px;}
+.panel #sl-tabs-sizes-in .sl-table-exp{width:670px;top:0;}
 .sl-table-exp{background:url(/images/ui/storagelocator/sl-table-exp-bg.png) repeat-x bottom left;background-color:#fefeff;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border:1px solid #ccc;overflow:hidden;}
 div.sl-table-exp div input{width:60%;}
 .sl-table-exp p{margin:10px 10px;overflow:hidden;}
 .sl-table-exp p.blue-text{color:#33c;line-height:39px;font-weight:bold;}
 .sl-table-exp p.blue-text strong{text-decoration:underline;}
-.sl-table-exp p.verisign{float:left;width:83px;height:46px;background:url(/images/ui/storagelocator/verisign.png) no-repeat top left;}
+.sl-table-exp p.verisign{float:left;width:83px;height:46px;margin-left:-25%;background:url(/images/ui/storagelocator/verisign.png) no-repeat top left;}
 .sl-table-exp p.blue-text a{width:109px;height:39px;display:block;float:right;background:url(/images/ui/storagelocator/sl-questions-blue-btn.png) no-repeat center;text-align:center;line-height:39px;color:#fff;text-decoration:none;margin-right:101px;}
 .sl-table-exp input{border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;padding:0 8px;height:24px;width:170px;line-height:24px;margin:5px;}
 .sl-table-exp input#submit-btn{width:138px;height:45px;background:url(/images/ui/storagelocator/submit-button.png) no-repeat center;border:none;color:#fff;font-size:120%;font-weight:bold;text-shadow:1px 1px 2px #000;margin:0 8px 15px 0;cursor:pointer;}
@@ -428,6 +429,8 @@ div.sl-table-exp div input{width:60%;}
 .sl-table-exp p.move-in a{display:block;width:40px;height:30px;float:right;}
 div.sl-table-exp-form-l{border:none;width:49%;float:left;margin:0 0 20px 20px;}
 div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;right:30px;margin:0 -25px 20px 0;}
+.panel div.sl-table-exp-form-l{width:52%;margin:0 0 20px 4px;}
+.panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
 #sl-tabs-map-in{height:360px;width:700px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:2px solid #ccc;margin:21px 0 0 25px;}
 #sl-tabs-map ul{float:right;margin-right:40px;}
 #sl-tabs-map ul li.sl-map-dir{background:url(/images/ui/storagelocator/sl-map-directions-tab.png) no-repeat left top;float:left;width:141px;height:22px;text-transform:uppercase;list-style:none;margin:0px 5px 10px 5px;}
@@ -590,7 +593,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel #map_partial{overflow:visible;height:183px;}
 .panel .sl-table-exp p label{font-size:90%;}
-.panel .sl-table-exp p.blue-text{margin-left:20px;font-size:80%;}
+.panel .sl-table-exp p.blue-text{margin-left:12px;font-size:80%;}
 .panel .sl-table-exp p.blue-text .blue-search-button{margin-right:143px;}
 .panel .sl-table-exp textarea{width:202px;font-size:90%;}
 .panel .sl-table-exp input#submit-btn{margin-right:23px;}
@@ -746,6 +749,7 @@ img.right{margin:0 10px 10px 0;}
 #listings_controller.edit_action .user_hint{width:99.3%;margin:15px 0;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
+#sl-tabs .flash{margin-right:20px;width:auto;}
 #info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:25px;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}

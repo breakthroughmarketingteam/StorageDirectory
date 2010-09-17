@@ -235,7 +235,7 @@ $(function(){
 	});
 	
 	/*
-	 * FRONT END, results
+	 * FRONT END, results page
 	*/
 	
 	$compare_btns = $('.compare', '.listing');
@@ -294,6 +294,7 @@ $(function(){
 			$('.sl-table').removeClass('active');
 			$('.sl-table', rform.parent()).addClass('active');
 			rform.slideDown().addClass('active');
+			$.activate_datepicker(rform);
 		}
 
 		$('input[type=text]:first', rform).focus();
@@ -410,6 +411,11 @@ $(function(){
 		return (clicked_tab != active_panel && active_listing == clicked_listing) || 
 			   (clicked_tab == active_panel && active_listing != clicked_listing);
 	}
+	
+	$.activate_datepicker = function(context) {
+		$('.mini_calendar', context).datepicker();
+		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
+	}
 
 	// panel openers
 	$('.open_tab', '.tabs').live('click', function(){
@@ -474,8 +480,7 @@ $(function(){
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
 
 					} else if ($this.attr('rel') == 'reserve') {
-						$('.mini_calendar', $panel).datepicker();
-						$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
+						$.activate_datepicker($panel);
 					}
 					
 				} else $.ajax_error(response);
@@ -483,7 +488,7 @@ $(function(){
 		}
 
 		return false;
-	})
+	});
 
 	// narrow search form sliders
 	$('.slider').each(function(){
@@ -510,9 +515,10 @@ $(function(){
 		var form = $(this).runValidation(),
 			data = form.serialize(),
 			ajax_loader = $('.ajax_loader', form).show();
-			
+		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
+			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
 			$.post(form.attr('action'), data, function(response){
 				if (response.success) {
@@ -532,11 +538,12 @@ $(function(){
 						);
 					});
 				
-				} else $.ajax_error(response);
+				} else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>')
 				
+				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
-		}
+		} else ajax_loader.hide();
 		
 		return false;
 	})

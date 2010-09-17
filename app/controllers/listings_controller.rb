@@ -33,11 +33,19 @@ class ListingsController < ApplicationController
       format.html
       format.js do # implementing these ajax responses for the search results 'More Link'
         # include listing's related data
-        @listings.map! do |m|
-          res = m.accepts_reservations?
-          mm = { :info => m.attributes, :map => m.map.attributes, :specials => m.specials, :sizes => m.sizes, :pictures => m.pictures, :accepts_reservations => res, :reserve_link_href => m.get_partial_link(res ? :reserve : :request_info) }
-          mm[:map].merge!(:distance => m.distance_from(@location))
-          mm
+        @listings.map! do |listing|
+          res = listing.accepts_reservations?
+          mapped = { 
+            :info     => m.attributes, 
+            :map      => m.map.attributes, 
+            :specials => m.specials, 
+            :sizes    => m.available_sizes, 
+            :pictures => m.pictures, 
+            :accepts_reservations => res, 
+            :reserve_link_href    => m.get_partial_link(res ? :reserve : :request_info) 
+          }
+          mapped[:map].merge! :distance => m.distance_from(@location)
+          mapped
         end
         
         render :json => { :success => !@listings.blank?, :data => @listings, :maps_data => @maps_data }
@@ -110,7 +118,7 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @sizes = @listing.sizes
+    @sizes = @listing.available_sizes
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'

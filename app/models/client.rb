@@ -4,11 +4,7 @@ class Client < User
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :account_setting, :dependent => :destroy
-  
-  def accepts_reservations?
-    self.listings.any?(&:issn_enabled?)
-  end
-  
+
   def active_mailing_address
     self.mailing_addresses.first
   end

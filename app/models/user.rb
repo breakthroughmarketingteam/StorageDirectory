@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
   
+  def mailing_address
+    self.mailing_addresses.first
+  end
+  
   def make_activation_code
     Digest::SHA1.hexdigest(self.to_s)
   end
