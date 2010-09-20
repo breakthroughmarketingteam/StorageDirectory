@@ -235,7 +235,7 @@ $(function(){
 	});
 	
 	/*
-	 * FRONT END, results
+	 * FRONT END, results page
 	*/
 	
 	$compare_btns = $('.compare', '.listing');
@@ -282,7 +282,7 @@ $(function(){
 	// bind event handlers and implement ajax functionality for search results.
 	
 	// opens the specific reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').click(function(){
+	$('.open_reserve_form').live('click', function(){
 		var $this = $(this),
 			rform = $('.reserve_form', $this.parent());
 
@@ -294,6 +294,7 @@ $(function(){
 			$('.sl-table').removeClass('active');
 			$('.sl-table', rform.parent()).addClass('active');
 			rform.slideDown().addClass('active');
+			$.activate_datepicker(rform);
 		}
 
 		$('input[type=text]:first', rform).focus();
@@ -330,7 +331,9 @@ $(function(){
 					var info 		 = this.info, // listing attributes
 						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
 						map 		 = this.map, // related model attributes
-						specials	 = this.specials;
+						sizes	 	 = this.sizes,
+						specials	 = this.specials,
+						pictures	 = this.pictures;
 					
 					// update tab urls
 					var tabs = [
@@ -341,18 +344,22 @@ $(function(){
 					];
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i]) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
+						if (tabs[i].length > 0) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
+						if (this[tabs[i].attr('rel')].length > 0) tabs[i].parent().show();
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
 					$('.rslt-title a', this_listing)		.text(info.title);
-					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/show/' + info.id);
+					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/'+ info.title.toLowerCase().replaceAll(' ', '-') +'/' + info.id);
 					$('.rslt-address', this_listing)		.text(map.address);
 					$('.rslt-citystate', this_listing)		.text(map.city + ', ' + map.state + ' ' + map.zip);
 					$('.rslt-phone', this_listing)			.text(map.phone);
 					$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
 					$('.rslt-specials h5', this_listing)	.text(specials.title);
-					$('.rslt-specials p', this_listing)		.text(specials.cotent);
+					$('.rslt-specials p', this_listing)		.text(specials.content);
+					
+					var reserve_link = $('.rslt-reserve a', this_listing);
+					if (this.accepts_reservations) reserve_link.text('Reserve').attr('href', this.reserve_link_href)
 					
 					$(this_listing).removeClass('active').find('.active').removeClass('active');
 					$('.panel', this_listing).hide();
@@ -403,6 +410,11 @@ $(function(){
 		// true when clicking on a different tab in the same result, or the same tab in a different result
 		return (clicked_tab != active_panel && active_listing == clicked_listing) || 
 			   (clicked_tab == active_panel && active_listing != clicked_listing);
+	}
+	
+	$.activate_datepicker = function(context) {
+		$('.mini_calendar', context).datepicker();
+		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
 	}
 
 	// panel openers
@@ -468,8 +480,7 @@ $(function(){
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
 
 					} else if ($this.attr('rel') == 'reserve') {
-						$('.mini_calendar', $panel).datepicker();
-						$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
+						$.activate_datepicker($panel);
 					}
 					
 				} else $.ajax_error(response);
@@ -477,7 +488,7 @@ $(function(){
 		}
 
 		return false;
-	})
+	});
 
 	// narrow search form sliders
 	$('.slider').each(function(){
@@ -504,15 +515,16 @@ $(function(){
 		var form = $(this).runValidation(),
 			data = form.serialize(),
 			ajax_loader = $('.ajax_loader', form).show();
-			
+		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
+			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
 			$.post(form.attr('action'), data, function(response){
 				if (response.success) {
 					var inner_panel = form.parent();
 					inner_panel.children().fadeOut(300);
-					inner_panel.animate({ height: '150px' }, 600, function(){
+					inner_panel.animate({ height: '180px' }, 600, function(){
 						
 						inner_panel.html(
 							'<div id="quote_done">\
@@ -526,11 +538,12 @@ $(function(){
 						);
 					});
 				
-				} else $.ajax_error(response);
+				} else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>')
 				
+				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
-		}
+		} else ajax_loader.hide();
 		
 		return false;
 	})

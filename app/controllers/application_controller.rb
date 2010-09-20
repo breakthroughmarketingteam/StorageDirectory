@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
                 :reject_views_enabled_on_this,  # for the blocks_fields
                 :reject_forms_enabled_on_this,  # for the blocks_fields
                 :use_scripts,
-                :get_coords
+                :get_coords,
+                :is_admin?
   
   include UtilityMethods
   
@@ -61,12 +62,15 @@ class ApplicationController < ActionController::Base
   before_filter :load_app_config
   
   before_filter :reverse_captcha_check, :only => :create
-  before_filter :clean_home_url, :authorize_user, :init
+  #before_filter :authorize_user
+  before_filter :clean_home_url, :init
   
   layout lambda { app_config[:theme] }
   
   # storage locator
   rescue_from Geokit::Geocoders::GeocodeError, :with => :refresh_without_params
+  
+  
   
   protected # -----------------------------------------------
   
@@ -96,15 +100,18 @@ class ApplicationController < ActionController::Base
   def init
     set_session_vars
     get_content_vars
-    get_list_of_controllers_for_menu if current_user
+    get_list_of_controllers_for_menu if is_admin?
   end
   
   # the 'frontend' of the website is a page's show action
   def authorize_user
     # simple authorization: kick out anonymous users from backend actions
-=begin
     if !current_user
-      redirect_back_or_default(home_page) and return if action_name =~ /index|edit|update|destroy/
+      if action_name =~ /index|edit|update|destroy/
+        flash[:error] = "Please log in first."
+        store_location
+        redirect_to login_path and return
+      end
       
     # skip checking permission if user is an admin
     elsif !current_user.has_role?('Admin')
@@ -113,7 +120,6 @@ class ApplicationController < ActionController::Base
         redirect_back_or_default(home_page) and return
       end
     end
-=end
   end
   
   # hidden field hack_me must pass through empty, cheap reverse captcha trick
@@ -145,7 +151,7 @@ class ApplicationController < ActionController::Base
     @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
     @nav_pages         = Page.nav_pages
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    
+    @per_page          = 18
     @slogan = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
@@ -166,7 +172,7 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'blog_roll'
     elsif controller_name == 'posts' || controller_name == 'user_hints'
       session[:view_type] = 'list'
-    elsif controller_name =~ /(images)|(galleries)/
+    elsif controller_name =~ /(images)|(galleries)|(pictures)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
@@ -304,7 +310,11 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
-    eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => 14, :page => params[:page], :order => 'id desc'"
+    case params[:filter_by] when 'tag'
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+    else
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+    end
   end
   
   def get_model
@@ -342,7 +352,7 @@ class ApplicationController < ActionController::Base
   end
   
   def model_errors(*models)
-    error = models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?)
+    models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?).flatten
   end
   
   #--------------------- Authlogic ---------------------
@@ -440,7 +450,7 @@ class ApplicationController < ActionController::Base
   end
   
   def in_edit_mode?
-    in_mode?('edit')
+    in_mode? 'edit'
   end
   
   # returns a boolean if the the current action matches any of the action passed in as a string or an array

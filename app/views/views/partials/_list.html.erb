@@ -19,7 +19,7 @@
 				<span class="owner"> by&nbsp;<%= model.user.name.split(/\W/)[0] %></span>
 			<% end %>
 			
-			<% if model.timestamp %>
+			<% if model.respond_to?('timestamp') && model.timestamp %>
 				<span class="timestamp"> on&nbsp;<%= model.timestamp %></span>
 			<% end %>
 			

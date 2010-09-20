@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   # Class Methods
   
   def self.all_for_index_view
-    all :select => 'name, email, last_login_at, id'
+    all
   end
   
   def self.rand_password
@@ -55,6 +55,10 @@ class User < ActiveRecord::Base
   
   def name
     "#{self.first_name} #{self.last_name}"
+  end
+  
+  def mailing_address
+    self.mailing_addresses.first
   end
   
   def make_activation_code

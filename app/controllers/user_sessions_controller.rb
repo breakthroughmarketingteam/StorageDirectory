@@ -14,10 +14,10 @@ class UserSessionsController < ApplicationController
     if @user_session.save
       case current_user.role.title
       when 'advertiser'
-        redirect_to client_account_path
+        redirect_back_or_default client_account_path
       when 'admin'
         flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Welcome!"
-        redirect_to clients_path
+        redirect_back_or_default admin_path
       else
         redirect_back_or_default user_path(current_user)
       end

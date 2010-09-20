@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-  before_filter :do_redirects, :only => :show
   before_filter :get_page, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
@@ -27,25 +26,57 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(params[:page])
     
-    if @page.save
-      flash[:notice] = @page.title + ' has been created.'
-      redirect_to root_path
-    else
-      get_associations
-      render :action => 'edit'
-    end    
+    respond_to do |format|
+      format.html do
+        if @page.save
+          flash[:notice] = @page.title + ' has been created.'
+          redirect_to root_path
+        else
+          get_associations
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @page.save
+          flash.now[:notice] = @page.title + ' has been created.'
+          @pages = Page.all_for_index_view
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@page)
+          get_associations
+          render :action => 'edit', :layout => false
+        end
+      end
+    end
   end
 
   def edit
   end
 
   def update
-    if @page.update_attributes(params[:page])
-      flash[:notice] = @page.title + ' has been updated.'
-      redirect_to "/#{@page.title.parameterize}"
-    else
-      get_associations
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @page.update_attributes(params[:page])
+          flash[:notice] = @page.title + ' has been updated.'
+          redirect_to "/#{@page.title.parameterize}"
+        else
+          get_associations
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @page.update_attributes(params[:page])
+          flash.now[:notice] = @page.title + ' has been updated.'
+          @pages = Page.all_for_index_view
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@page)
+          get_associations
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
 
@@ -68,12 +99,6 @@ class PagesController < ApplicationController
     if @page.nil?
       flash[:warning] = "Page Not Found"
       @page = Page.find_by_title('Home')
-    end
-  end
-  
-  def do_redirects
-    if params[:title] != 'self-storage' && params[:title] =~ /(-storage)$/i
-      redirect_to "/self-storage?type=#{params[:title]}"
     end
   end
 

@@ -2,7 +2,6 @@
 <% content_for :scripts, "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}' type='text/javascript'></script><script type='text/javascript'>Gmaps_data = #{@maps_data.to_json};</script>" %>
 <%= display_message flash %>
 
-
 <div id="type-one-r-col-in">
   <div id="results_header">
     <h2>We found <%= @listings.total_entries %> self storage facilities <%= "in #{@location.city}, #{@location.state}" unless @location.blank? %></h2>

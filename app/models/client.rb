@@ -1,14 +1,10 @@
 class Client < User
   
-  has_one :account_setting
   has_many :listings, :foreign_key => 'user_id'
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
-  
-  def accepts_reservations?
-    false
-  end
-  
+  has_one :account_setting, :dependent => :destroy
+
   def active_mailing_address
     self.mailing_addresses.first
   end

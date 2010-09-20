@@ -1,6 +1,10 @@
 class FacilityFeaturesController < ApplicationController
   
-  before_filter :get_parent_models
+  before_filter :get_parent_models, :only => :update
+  
+  def index
+    get_models_paginated
+  end
   
   def update
     @issn_facility_feature = IssnFacilityFeature.find_by_ShortDescription(params[:title].gsub('-', ' '))

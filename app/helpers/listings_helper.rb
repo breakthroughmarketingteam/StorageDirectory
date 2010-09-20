@@ -4,6 +4,10 @@ module ListingsHelper
     action_name == 'edit' || (current_user && current_user.has_role?('advertiser'))
   end
   
+  def is_owner_editing?
+    is_facility_owner? && action_name == 'edit'
+  end
+  
   def greyresult_panel_template(listing, &content)
     html  = "\n<h5 class=\"white dark_text_shadow\">#{listing.title}</h5>\n<div class=\"inner border_box\">"
       html << yield
@@ -50,7 +54,7 @@ module ListingsHelper
     if range_start < data.total_entries - per_page+1
       html << link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results')
       html << "<span class='hidden' name='params_pagetitle'>#{@page.title.parameterize}</span>"
-      html << "<span class='hidden' name='params_query'>#{params[:q]}</span>"
+      html << "<span class='hidden' name='params_query'>#{params[:q] || params[:city]}</span>"
       html << "<span class='hidden' name='params_page'>#{((params[:page] ? params[:page].to_i : 1) + 1)}</span>"
       html << "<span class='hidden' name='params_within'>#{params[:within]}</span>"
     end

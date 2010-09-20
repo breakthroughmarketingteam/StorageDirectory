@@ -51,7 +51,7 @@
 	        <p class="sl-special value" rel="special"><%= @listing.display_special %></p>
         
 			<% unless action_name == 'edit' %>
-				<p class="sl-dist">We are just <span id="rslt-number"><span>2</span></span> miles from you!</p>
+				<p class="sl-dist">We are just <span id="rslt-number"><span><%= number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) %></span></span> miles from you!</p>
 			<% end %>
 
 	        <%= render :partial => 'info_edit', :locals => { :model => [@listing, @special], :info => 'special' } if action_name == 'edit' %>
