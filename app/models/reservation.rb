@@ -10,15 +10,11 @@ class Reservation < ActiveRecord::Base
   acts_as_commentable
   access_shared_methods
   
-  validates_presence_of :listing_id, :user_id, :status
+  validates_presence_of :listing_id
   validates_date :move_in_date, :after => Date.new(Time.now.year, Time.now.month, Time.now.day), :after_message => 'must be after %s'
-  validates_date :move_out_date, :after => Proc.new { 1.month.from_now.to_date }, :after_message => 'should be at least a month from now, on %s'
+  validates_date :move_out_date, :after => Proc.new { 2.weeks.from_now.to_date }, :after_message => 'should be at least two weeks from now, on %s' 
   
   after_create :process_new_tenant
-  
-  def before_validation
-    errors.add_to_base "Sorry, a #{self.unit_type.size.display_dimensions} #{self.unit_type.size.title} is not available." unless self.unit_type.units_available?
-  end
   
   def process_new_tenant
     if self.listing.accepts_reservations?
@@ -45,11 +41,13 @@ class Reservation < ActiveRecord::Base
             :state    => '',
             :zip      => '',
             :country  => usa
-          }
+          },
+          :alt => {},
+          :military => {},
         },
         :pay_type => 'Credit Card',
         :credit_card => {
-          :type         => '',
+          :type         => 'Visa',
           :name_on_card => '',
           :number       => '',
           :zip          => '',
@@ -58,10 +56,12 @@ class Reservation < ActiveRecord::Base
             :month => '',
             :year  => ''
           }
-        }, 
-        :amount_to_apply => self.unit_type
+        },
+        :bank => {},
+        :check_number => '',
+        :amount_to_apply => '10'
       }
-      self.listing.process_new_tenant self.listing.facility_id, args
+      self.listing.process_new_tenant args
     end
   end
   

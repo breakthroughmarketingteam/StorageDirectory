@@ -32,23 +32,7 @@ class ListingsController < ApplicationController
     respond_to do |format|
       format.html
       format.js do # implementing these ajax responses for the search results 'More Link'
-        # include listing's related data
-        @listings.map! do |listing|
-          res = listing.accepts_reservations?
-          mapped = { 
-            :info     => m.attributes, 
-            :map      => m.map.attributes, 
-            :specials => m.specials, 
-            :sizes    => m.available_sizes, 
-            :pictures => m.pictures, 
-            :accepts_reservations => res, 
-            :reserve_link_href    => m.get_partial_link(res ? :reserve : :request_info) 
-          }
-          mapped[:map].merge! :distance => m.distance_from(@location)
-          mapped
-        end
-        
-        render :json => { :success => !@listings.blank?, :data => @listings, :maps_data => @maps_data }
+        render :json => { :success => !@listings.blank?, :data => prep_hash_for_js(@listings), :maps_data => @maps_data }
       end
     end
   end
@@ -118,7 +102,6 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @sizes = @listing.available_sizes
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'
@@ -145,6 +128,24 @@ class ListingsController < ApplicationController
                                              :html => (@listing.nil? ? 'You Are here' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>"),
                                              :marker_hover_text => @listing.try(:title),
                                              :marker_icon_path => '/images/ui/map_marker.png')
+    end
+  end
+  
+  def prep_hash_for_js(listings)
+    # include listing's related data
+    listings.map do |listing|
+      res = listing.accepts_reservations?
+      mapped = { 
+        :info     => listing.attributes, 
+        :map      => listing.map.attributes, 
+        :specials => listing.specials, 
+        :sizes    => listing.available_sizes, 
+        :pictures => listing.pictures, 
+        :accepts_reservations => res, 
+        :reserve_link_href    => listing.get_partial_link(res ? :reserve : :request_info) 
+      }
+      mapped[:map].merge! :distance => listing.distance_from(@location)
+      mapped
     end
   end
   

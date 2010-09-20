@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
   has_many :reservations
-  has_many :mailing_addresses, :dependent => :destroy, :foreign_key => 'client_id'
-  accepts_nested_attributes_for :mailing_addresses
+  has_many :mailing_addresses
+  accepts_nested_attributes_for :mailing_addresses, :reservations
   
   validates_presence_of :name, :email, :role_id
   validates_uniqueness_of :email, :scope => :type
@@ -50,7 +50,6 @@ class User < ActiveRecord::Base
     self.password_confirmation = self.temp_password
     self.activation_code       = self.make_activation_code
     self.status                = 'unverified'
-    self.role_id               = self.class.name == 'Client' ? Role.get_role_id('advertiser') : Role.get_role_id('reserver')
   end
   
   def name
@@ -59,6 +58,12 @@ class User < ActiveRecord::Base
   
   def mailing_address
     self.mailing_addresses.first
+  end
+  
+  def has_address?(address_attribtues)
+    self.mailing_addresses.any? do |address|
+      address[:zip] == address_attribtues[:zip].to_i && address[:address].downcase == address_attribtues[:address].downcase
+    end
   end
   
   def make_activation_code

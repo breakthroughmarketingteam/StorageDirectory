@@ -15,12 +15,12 @@ class ReservationsController < ApplicationController
   end
   
   def create
-    @user = User.find_by_email(params[:reserver][:email]) || User.new(params[:reserver])
-    @user.role_id = Role.tenant_role_id if @user.new_record?
-    @reservation = @user.reservations.build params[:reservation].merge!(:referrer => request.referrer, :status => 'pending')
+    @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
+    @reserver.reservations.build params[:reservation].merge(:status => 'pending')
+    @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
+    @m.save if @m
     
-    raise [params, @user.new_record?, @user.save, @user.mailing_addresses,@user.mailing_addresses.save, @reservation, @reservation.valid?, @reservation.errors].pretty_inspect
-    if @reservation.valid? && @user.save
+    if @reserver.save
       send_notices
       
       respond_to do |format|
@@ -33,7 +33,7 @@ class ReservationsController < ApplicationController
       respond_to do |format|
         format.html
         format.js do
-          render :json => { :success => false, :data => model_errors(@reservation, @user) }
+          render :json => { :success => false, :data => model_errors(@reserver, @m) }
         end
       end
     end
@@ -51,7 +51,7 @@ class ReservationsController < ApplicationController
   private
   
   def scrub_comments
-    params[:reservation].delete(:comments_attributes) if params[:reservation][:comments_attributes].any? { |c| c[:comment].blank? } rescue false
+    params[:reserver][:reservations_attributes].delete(:comments_attributes) if params[:reserver][:reservations_attributes][:comments_attributes].any? { |c| c[:comment].blank? } rescue false
   end
   
   def send_notices

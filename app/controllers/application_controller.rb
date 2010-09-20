@@ -63,14 +63,13 @@ class ApplicationController < ActionController::Base
   
   before_filter :reverse_captcha_check, :only => :create
   #before_filter :authorize_user
-  before_filter :clean_home_url, :init
+  before_filter :clean_home_url
+  before_filter :init, :except => [:create, :update, :delete]
   
   layout lambda { app_config[:theme] }
   
   # storage locator
   rescue_from Geokit::Geocoders::GeocodeError, :with => :refresh_without_params
-  
-  
   
   protected # -----------------------------------------------
   
@@ -303,7 +302,7 @@ class ApplicationController < ActionController::Base
   
   #--------------------- Model Retrieval ---------------------
   
-  # before filters
+  # before filters, index
   def get_models
     eval "@#{controller_name} = #{controller_name.singular.camelcase}.all"
   end
@@ -317,6 +316,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # before filters, show
   def get_model
     eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find(params[:id])" rescue nil
   end
@@ -438,7 +438,7 @@ class ApplicationController < ActionController::Base
   end
   
   def geolocation
-    @geolocation ||= session[:geo_location] || cookie[:geo_session]
+    @geolocation = session[:geo_location] || cookie[:geo_session]
   end
   
   def use_scripts(type, *scripts)

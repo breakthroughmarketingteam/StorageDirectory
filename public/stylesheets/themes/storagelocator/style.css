@@ -411,7 +411,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul li.st-sele{width:25px;height:46px;}
 #sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-load.gif) no-repeat center;}
 #sl-tabs-sizes-in ul:hover li.active_load{background:url(/images/ui/storagelocator/sl-load-active.gif) no-repeat center;}
-#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;top:-3px;margin:0 auto 10px;}
+#sl-tabs-sizes-in .sl-table-exp{width:685px;position:relative;margin:0 auto 10px;}
 .panel #sl-tabs-sizes-in .sl-table-exp{width:670px;top:0;}
 .sl-table-exp{background:url(/images/ui/storagelocator/sl-table-exp-bg.png) repeat-x bottom left;background-color:#fefeff;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border:1px solid #ccc;overflow:hidden;}
 div.sl-table-exp div input{width:60%;}

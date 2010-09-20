@@ -80,7 +80,7 @@ class Listing < ActiveRecord::Base
   end
   
   def available_sizes
-    self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
+    @available_sizes ||= self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
   end
   
   #

@@ -1,7 +1,6 @@
 class MailingAddress < ActiveRecord::Base
   
-  belongs_to :client
-  belongs_to :user, :foreign_key => 'client_id'
+  belongs_to :user
   access_shared_methods
   
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917181027) do
+ActiveRecord::Schema.define(:version => 20100920185911) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -346,7 +346,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
 
   create_table "mailing_addresses", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "user_id"
     t.string   "name"
     t.string   "company"
     t.string   "address"
@@ -359,7 +359,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
     t.string   "zip"
   end
 
-  add_index "mailing_addresses", ["client_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
+  add_index "mailing_addresses", ["user_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
 
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"

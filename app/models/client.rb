@@ -4,7 +4,12 @@ class Client < User
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :account_setting, :dependent => :destroy
-
+  
+  def initialize(params = {})
+    super params
+    self.role_id = Role.get_role_id('advertiser')
+  end
+  
   def active_mailing_address
     self.mailing_addresses.first
   end
