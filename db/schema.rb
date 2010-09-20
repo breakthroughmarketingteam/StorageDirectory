@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100920185911) do
+ActiveRecord::Schema.define(:version => 20100920215606) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -503,7 +503,7 @@ ActiveRecord::Schema.define(:version => 20100920185911) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "listing_id"
-    t.integer  "user_id"
+    t.integer  "reserver_id"
     t.string   "status"
     t.datetime "move_in_date"
     t.datetime "move_out_date"

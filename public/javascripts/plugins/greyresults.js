@@ -511,8 +511,31 @@ $(function(){
 		});
 	});
 	
-	$('form.new_reservation').live('submit', function(){
-		var form = $(this).runValidation(),
+	// Reservation process, submit reserver details, then billing info
+	$('form.new_reservation', '.reserve_form').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+			});
+		});
+		
+		return false;
+	});
+	
+	$('form.edit_reservation', '.reserve_form').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+			});
+		});
+		
+		return false;
+	});
+	
+	function submit_reservation_and_do(form, callback) {
+		var form = $(form).runValidation(),
 			data = form.serialize(),
 			ajax_loader = $('.ajax_loader', form).show();
 		
@@ -520,33 +543,15 @@ $(function(){
 			form.data('saving', true);
 			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
-			$.post(form.attr('action'), data, function(response){
-				if (response.success) {
-					var inner_panel = form.parent();
-					inner_panel.children().fadeOut(300);
-					inner_panel.animate({ height: '180px' }, 600, function(){
-						
-						inner_panel.html(
-							'<div id="quote_done">\
-								<h3>Got it! We\'ll send you the info ASAP</h3>\
-								<p>\
-									It is a long established fact that a reader will be distracted by the readable \
-									content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal \
-									distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\
-								</p>\
-							</div>'
-						);
-					});
-				
-				} else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>')
+			$.post(form.attr('action'), data, function(response) {
+				if (response.success) callback.call(this, form, response);
+				else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		} else ajax_loader.hide();
-		
-		return false;
-	})
+	}
 });
 
 /*

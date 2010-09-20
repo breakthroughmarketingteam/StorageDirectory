@@ -709,7 +709,7 @@ img.right{margin:0 10px 10px 0;}
 /* client edit form */
 #sl-tabs-sizes{position:relative;}
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
-#sl-tabs-sizes .ajax_loader{float:right;top:10px;position:relative;}
+#sl-tabs-sizes .ajax_loader{top:-4px;margin-right:5pxposition:relative;}
 #clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;position:relative;left:6px;}
 #clients_controller #ov-units .rslt-contact p .small_text_field{width:86.5%;}
 #clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}

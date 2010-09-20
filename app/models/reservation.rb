@@ -1,7 +1,7 @@
 class Reservation < ActiveRecord::Base
   
   belongs_to :listing, :counter_cache => true
-  belongs_to :user
+  belongs_to :reserver
   belongs_to :unit_type
   
   has_many :comments
@@ -13,8 +13,6 @@ class Reservation < ActiveRecord::Base
   validates_presence_of :listing_id
   validates_date :move_in_date, :after => Date.new(Time.now.year, Time.now.month, Time.now.day), :after_message => 'must be after %s'
   validates_date :move_out_date, :after => Proc.new { 2.weeks.from_now.to_date }, :after_message => 'should be at least two weeks from now, on %s' 
-  
-  after_create :process_new_tenant
   
   def process_new_tenant
     if self.listing.accepts_reservations?
@@ -45,7 +43,7 @@ class Reservation < ActiveRecord::Base
           :alt => {},
           :military => {},
         },
-        :pay_type => 'Credit Card',
+        :pay_type => 'CC',
         :credit_card => {
           :type         => 'Visa',
           :name_on_card => '',
@@ -59,7 +57,7 @@ class Reservation < ActiveRecord::Base
         },
         :bank => {},
         :check_number => '',
-        :amount_to_apply => '10'
+        :amount_to_apply => '20'
       }
       self.listing.process_new_tenant args
     end
@@ -67,6 +65,14 @@ class Reservation < ActiveRecord::Base
   
   def name
     self.user.name
+  end
+  
+  def unit_description
+    "#{self.unit_type.size.display_dimensions} #{self.unit_type.size.description}"
+  end
+  
+  def fee
+    self.unit_type.reserve_cost.total_cost
   end
   
   def month_range

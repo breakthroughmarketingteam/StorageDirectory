@@ -1,0 +1,48 @@
+<% form_for @reservation do |f| %>
+	<h4>Confirm Reservation</h4>
+
+	<div class="sl-table-exp-form-l">
+		<p>Unit Type: <%= @reservation.unit_description %></p>
+		<p>Reserve Fee: <%= number_to_currency @reservation.fee %></p>
+		
+		<div class="framed">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur, elit id ultrices bibendum, orci ipsum sodales nibh, vel mollis lacus urna sit amet turpis. Phasellus tristique arcu sed velit imperdiet elementum. Nunc tempor ipsum congue dui volutpat nec tincidunt quam pulvinar.
+			</p>
+		</div>
+	</div>
+
+	<div class="sl-table-exp-form-r">
+		<p>Billing Info</p>
+		<p>
+	        <%= label_tag 'billing_info[name]', 'Name', :class => 'block left w80' %> <%= text_field_tag 'billing_info[name]', @reserver.name, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[phone]', 'Phone', :class => 'block left w80' %> <%= text_field_tag 'billing_info[phone]', @reserver.mailing_address.phone, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[address]', 'Address', :class => 'block left w80' %> <%= text_field_tag 'billing_info[address]', @reserver.mailing_address.address, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[zip]', 'Zip Code', :class => 'block left w80' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[card_type]', 'Card Type', :class => 'block left w80' %> <%= select_tag 'billing_info[card_type]', option_tags(['Visa', 'Amex', 'MasterCard', 'Discover']), :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[card_number]', 'Card Number', :class => 'block left w80' %> <%= text_field_tag 'billing_info[card_number]', nil, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[card_expiration]', 'Expires', :class => 'block left w80' %> <%= text_field_tag 'billing_info[card_expiration]', nil, :class => 'required' %>
+		</p>
+		
+		<div class="clear"></div>
+		<p class="verisign">
+	        <span class="hidden">Verisign Secure</span>
+		</p>
+		<p class="right">
+			<%= ajax_loader %>
+	        <input id="submit-btn" type="submit" value="Submit" name="commit" />
+		</p>
+	</div>
+<% end %>

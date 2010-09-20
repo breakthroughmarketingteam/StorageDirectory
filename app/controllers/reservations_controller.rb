@@ -16,17 +16,15 @@ class ReservationsController < ApplicationController
   
   def create
     @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
-    @reserver.reservations.build params[:reservation].merge(:status => 'pending')
+    @reservation = @reserver.reservations.build params[:reservation].merge(:status => 'pending')
     @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
     @m.save if @m
     
     if @reserver.save
-      send_notices
-      
       respond_to do |format|
         format.html
         format.js do
-          render :json => { :success => true }
+          render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step2') }
         end
       end
     else
@@ -43,6 +41,9 @@ class ReservationsController < ApplicationController
   end
   
   def update
+    @reserver = @reservation.reserver
+    @b = @reserver.billing_infos.build params[:billing_info]
+    raise @b.pretty_inspect
   end
   
   def destroy
@@ -55,8 +56,8 @@ class ReservationsController < ApplicationController
   end
   
   def send_notices
-    Notifier.deliver_tenant_confirmation @user, @reservation
-    Notifier.deliver_admin_reservation_alert @user, @reservation, @reservation.comments
+    Notifier.deliver_tenant_confirmation @reserver, @reservation
+    Notifier.deliver_admin_reservation_alert @reserver, @reservation, @reservation.comments
   end
   
 end
