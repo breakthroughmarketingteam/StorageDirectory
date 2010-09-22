@@ -11,10 +11,10 @@ class Reservation < ActiveRecord::Base
   access_shared_methods
   
   validates_presence_of :listing_id
-  validates_date :move_in_date, :after => Date.new(Time.now.year, Time.now.month, Time.now.day), :after_message => 'must be after %s'
+  validates_date :move_in_date, :after => Proc.new { -1.day.from_now.to_date }, :after_message => 'must be after %s'
   validates_date :move_out_date, :after => Proc.new { 2.weeks.from_now.to_date }, :after_message => 'should be at least two weeks from now, on %s' 
   
-  def process_new_tenant
+  def process_new_tenant(billing_info)
     if self.listing.accepts_reservations?
       usa = 'United States of America'
       args = {
@@ -22,22 +22,22 @@ class Reservation < ActiveRecord::Base
         :reserve_until_date => IssnAdapter.parse_date_to_YMD(self.reserve_until_date),
         :pay_months         => 0,
         :tenant => {
-          :first_name => self.user.first_name,
-          :last_name  => self.user.last_name,
-          :address    => self.user.mailing_address.address,
+          :first_name => self.reserver.first_name,
+          :last_name  => self.reserver.last_name,
+          :address    => self.reserver.mailing_address.address,
           :address2   => '',
-          :city       => self.user.mailing_address.city,
-          :state      => self.user.mailing_address.state,
-          :zip        => self.user.mailing_address.zip,
+          :city       => self.reserver.mailing_address.city,
+          :state      => self.reserver.mailing_address.state,
+          :zip        => self.reserver.mailing_address.zip,
           :country    => usa,
-          :home_phone => self.user.mailing_address.phone,
-          :email      => self.user.email,
+          :home_phone => self.reserver.mailing_address.phone,
+          :email      => self.reserver.email,
           :billing => {
-            :address  => '',
+            :address  => self.reserver.billing_info.address,
             :address2 => '',
-            :city     => '',
-            :state    => '',
-            :zip      => '',
+            :city     => self.reserver.billing_info.city,
+            :state    => self.reserver.billing_info.state,
+            :zip      => self.reserver.billing_info.zip,
             :country  => usa
           },
           :alt => {},
@@ -45,26 +45,34 @@ class Reservation < ActiveRecord::Base
         },
         :pay_type => 'CC',
         :credit_card => {
-          :type         => 'Visa',
-          :name_on_card => '',
-          :number       => '',
-          :zip          => '',
-          :ccv          => '',
+          :type         => billing_info.card_type,
+          :name_on_card => billing_info.name,
+          :number       => billing_info.card_number,
+          :zip          => billing_info.zip,
+          :ccv          => billing_info.ccv,
           :expires => {
-            :month => '',
-            :year  => ''
+            :month => billing_info.expires_month,
+            :year  => billing_info.expires_year
           }
         },
         :bank => {},
         :check_number => '',
         :amount_to_apply => '20'
       }
-      self.listing.process_new_tenant args
+      
+      response = self.listing.process_new_tenant args
+      
+      if response['sErrorMessage'].blank?
+        self.update_attribute :reserve_code, response['sReservationCode']
+        self.update_attribute :response, response
+      end
+      
+      response
     end
   end
   
   def name
-    self.user.name
+    self.reserver.name
   end
   
   def unit_description
@@ -84,25 +92,25 @@ class Reservation < ActiveRecord::Base
     self.move_in_date + 2.weeks
   end
   
-  def nice_start_date
-    "#{self.start_date.day} #{self.start_date.month}"
+  def nice_move_in_date
+    self.move_in_date.strftime "%A, %B %e"
   end
   
-  def nice_end_date
-    "#{self.end_date.day} #{self.end_date.month}"
-  end
-  
-  def duration
-    self.end_date - self.start_date
+  def nice_move_out_date
+    self.move_out_date.strftime "%A, %B %e"
   end
   
   def active?
     now = Time.now
-    self.start_date <= now && self.end_date > now
+    self.move_in_date <= now && self.move_out_date > now
   end
   
   def expired?
-    self.end_date < Time.now
+    self.move_out_date < Time.now
+  end
+  
+  def comment
+    self.comments.first
   end
   
 end

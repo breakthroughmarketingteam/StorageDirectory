@@ -763,6 +763,10 @@ img.right{margin:0 10px 10px 0;}
 #login_page input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px;width:100%;}
 #login_page #user_session_remember_me{width:auto;margin:0 5px;float:left;}
 #login_page #user_session_submit{width:auto;float:right;margin-right:-10px;}
+#pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px 29px 5px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
+#pop_up_box #login_page{width:auto;margin:0;text-align:left;}
+#new_user_session .ajax_loader{position:absolute;right:63px;top:10px;}
+#pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
 .fieldWithErrors, .invalid{background-color:#FFCDCD;border:1px solid #FF9999 !important;color:#F00;}
 /* extras */
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
@@ -787,6 +791,7 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 #stats_graph{width:700px;height:300px;margin:0 0 0 8px;}
+#Reservation{font-size:100%;}
 /*signup workflow*/
 #top_fac_page{margin:25px 28px 15px 37px;}
 div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-17px;font-size:80%;}
@@ -854,7 +859,6 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #topbar #moving_help{width:320px;border-left:1px solid #ccc;}
 #topbar .right{float:right;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:none;}
-#topbar ul li a:hover,#topbar ul li a:active{}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
 #topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#359946;}
 
@@ -996,4 +1000,4 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-.ui-menu .ui-menu-item a{padding:6px 12px;}
+.ui-menu .ui-menu-item a{padding:6px 12px;

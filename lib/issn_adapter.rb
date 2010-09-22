@@ -108,8 +108,8 @@ class IssnAdapter
             "&sCreditCardType=#{escape_query args[:credit_card][:type]}"+
             "&sCreditCardNameOnCard=#{escape_query args[:credit_card][:name_on_card]}"+
             "&sCreditCardNumber=#{escape_query args[:credit_card][:number]}"+
-            "&sCreditCardExpMonth=#{escape_query args[:credit_card][:expires][:month]}"+
-            "&sCreditCardExpYear=#{escape_query args[:credit_card][:expires][:year]}"+
+            "&sCreditCardExpMonth=#{escape_query pad_int_str(args[:credit_card][:expires][:month])}"+
+            "&sCreditCardExpYear=#{escape_query pad_int_str(args[:credit_card][:expires][:year])}"+
             "&sCreditCardPostalCode=#{escape_query args[:credit_card][:zip]}"+
             "&sCreditCardCCV=#{escape_query args[:credit_card][:ccv]}"+
             "&sSaveCreditCardInfo=#{escape_query args[:save_credit_card_info]}"+
@@ -232,7 +232,7 @@ class IssnAdapter
   
   # add a 0 to an integer < 10
   def self.pad_int_str(int)
-    int.to_s.size == 1 ? '0'+ int.to_s : int
+    int.to_s.size == 1 ? '0'+ int.to_s : int.to_s
   end
   
   def self.escape_query(q)

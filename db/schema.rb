@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100920215606) do
+ActiveRecord::Schema.define(:version => 20100921191930) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -25,12 +25,17 @@ ActiveRecord::Schema.define(:version => 20100920215606) do
     t.string   "phone"
     t.string   "card_type"
     t.string   "card_number"
-    t.integer  "card_expiration"
+    t.integer  "expires_month"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zip"
+    t.integer  "ccv"
+    t.integer  "expires_year"
   end
 
-  add_index "billing_infos", ["client_id", "name", "card_expiration"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+  add_index "billing_infos", ["client_id", "name", "expires_month"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
 
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"
@@ -511,6 +516,8 @@ ActiveRecord::Schema.define(:version => 20100920215606) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.integer  "unit_type_id"
+    t.string   "reserve_code"
+    t.text     "response"
   end
 
   create_table "reserve_costs", :force => true do |t|

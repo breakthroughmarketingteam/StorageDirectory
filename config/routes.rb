@@ -69,6 +69,10 @@ ActionController::Routing::Routes.draw do |map|
     clients.resources :payments
   end
   
+  map.resources :reservers do |reserver|
+    reserver.resources :reservations
+  end
+  
   map.resources :pages do |page|
     page.resources :views
     page.resources :blocks

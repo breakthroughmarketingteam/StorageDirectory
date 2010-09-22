@@ -1,0 +1,37 @@
+<% form_for @reservation do |f| %>
+	<h4 class="left_space">Your Storage Unit Has Been Reserved</h4>
+	
+	<div class="sl-table-exp-form-l">
+		<p>Move In Date: <%= @reservation.move_in_date.asctime %></p>
+		<p>Reservation Code: <%= @reservation.reserve_code %></p>
+		<p>Unit Name: <%= @response['sUnitName'] %>, Unit ID: <%= @response['sUnitId'] %>
+		
+		<p>Storage Facility: </p>
+		<div class="framed">
+			<p><%= @reservation.listing.title %></p>
+			<div class="listing_address">
+				<p>
+					<%= @reservation.listing.address %><br />
+					<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
+				</p>
+			</div>
+		</div>
+		
+		<div class="framed right_space">
+			<p>
+				Print this page and bring it with you to <%= @reservation.listing.title %> along with your credit card.
+			</p>
+		</div>
+	</div>
+
+	<div class="sl-table-exp-form-r">
+		<div class="clear"></div>
+		<p class="verisign">
+	        <span class="hidden">Verisign Secure</span>
+		</p>
+		<p class="right">
+			<%= ajax_loader %>
+	        <input id="reserve_done" type="submit" value="Done" name="commit" />
+		</p>
+	</div>
+<% end %>

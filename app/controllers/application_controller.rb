@@ -352,7 +352,7 @@ class ApplicationController < ActionController::Base
   end
   
   def model_errors(*models)
-    models.map { |model| model.errors.full_messages.map(&:to_s) }.reject(&:blank?).flatten
+    models.map { |model| model.errors.full_messages.map(&:to_s) unless model.nil? }.reject(&:blank?).flatten
   end
   
   #--------------------- Authlogic ---------------------

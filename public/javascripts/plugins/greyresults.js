@@ -534,6 +534,10 @@ $(function(){
 		return false;
 	});
 	
+	$('#reserve_done', '.reserve_form').live('click', function(){
+		$(this).parents('.reserve_form').slideUp();
+	});
+	
 	function submit_reservation_and_do(form, callback) {
 		var form = $(form).runValidation(),
 			data = form.serialize(),
@@ -545,7 +549,7 @@ $(function(){
 			
 			$.post(form.attr('action'), data, function(response) {
 				if (response.success) callback.call(this, form, response);
-				else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>');
+				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);

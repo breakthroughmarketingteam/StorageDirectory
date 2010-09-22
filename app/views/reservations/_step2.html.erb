@@ -1,11 +1,11 @@
 <% form_for @reservation do |f| %>
-	<h4>Confirm Reservation</h4>
+	<h4 class="left_space">Confirm Reservation</h4>
 
 	<div class="sl-table-exp-form-l">
 		<p>Unit Type: <%= @reservation.unit_description %></p>
 		<p>Reserve Fee: <%= number_to_currency @reservation.fee %></p>
 		
-		<div class="framed">
+		<div class="framed right_space">
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur, elit id ultrices bibendum, orci ipsum sodales nibh, vel mollis lacus urna sit amet turpis. Phasellus tristique arcu sed velit imperdiet elementum. Nunc tempor ipsum congue dui volutpat nec tincidunt quam pulvinar.
 			</p>
@@ -24,6 +24,10 @@
 	        <%= label_tag 'billing_info[address]', 'Address', :class => 'block left w80' %> <%= text_field_tag 'billing_info[address]', @reserver.mailing_address.address, :class => 'required' %>
 		</p>
 		<p>
+	        <%= label_tag 'billing_info[city]', 'City', :class => 'block left w80' %> <%= text_field_tag 'billing_info[city]', @reserver.mailing_address.city, :class => 'required' %>
+			<%= label_tag 'billing_info[state]', 'State', :class => 'block left w80' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required' %>
+		</p>
+		<p>
 	        <%= label_tag 'billing_info[zip]', 'Zip Code', :class => 'block left w80' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required' %>
 		</p>
 		<p>
@@ -31,9 +35,11 @@
 		</p>
 		<p>
 	        <%= label_tag 'billing_info[card_number]', 'Card Number', :class => 'block left w80' %> <%= text_field_tag 'billing_info[card_number]', nil, :class => 'required' %>
+			<%= label_tag 'billing_info[ccv]', 'CCV', :class => 'block left w80' %> <%= text_field_tag 'billing_info[ccv]', nil, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'billing_info[card_expiration]', 'Expires', :class => 'block left w80' %> <%= text_field_tag 'billing_info[card_expiration]', nil, :class => 'required' %>
+	        <%= label_tag 'billing_info[expires_month]', 'Expires', :class => 'block left w80' %> <%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field' %>
+			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field left' %>
 		</p>
 		
 		<div class="clear"></div>

@@ -31,7 +31,7 @@ class ReservationsController < ApplicationController
       respond_to do |format|
         format.html
         format.js do
-          render :json => { :success => false, :data => model_errors(@reserver, @m) }
+          render :json => { :success => false, :data => model_errors(@reserver, @reservation, @m) }
         end
       end
     end
@@ -42,8 +42,18 @@ class ReservationsController < ApplicationController
   
   def update
     @reserver = @reservation.reserver
-    @b = @reserver.billing_infos.build params[:billing_info]
-    raise @b.pretty_inspect
+    @billing = @reserver.billing_info || @reserver.billing_infos.create
+    @billing.update_attributes params[:billing_info]
+    
+    @response = @reservation.process_new_tenant @billing
+    
+    if @response['sErrorMessage'].blank? && @reserver.save
+      render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step3') }
+    else
+      render :json => { :success => false, :data => (@response['sErrorMessage'].blank? ? model_errors(@reserver) : @response['sErrorMessage']) }
+    end
+  #rescue => e
+  #  render :json => { :success => false, :data => e.message }
   end
   
   def destroy

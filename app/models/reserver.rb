@@ -9,4 +9,8 @@ class Reserver < User
     self.role_id = Role.get_role_id('tenant')
   end
   
+  def billing_info
+    self.billing_infos.first
+  end
+  
 end
