@@ -5,6 +5,6 @@
 	<p><span class="block left w110">Reserve Code:</span> <%= reservation.reserve_code %></p>
 
 	<% unless reservation.comment.blank? %>
-		<p><span class="block left w110">Comment:</span> <%= reservation.comment %></p>
+		<p class="uncollapse"><span class="block left w110">Comment:</span> <%= reservation.comment.comment %></p>
 	<% end %>
 </div>

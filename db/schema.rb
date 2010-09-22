@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100921191930) do
+ActiveRecord::Schema.define(:version => 20100922223456) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -442,7 +442,7 @@ ActiveRecord::Schema.define(:version => 20100921191930) do
   create_table "permissions", :force => true do |t|
     t.string   "resource"
     t.string   "action"
-    t.string   "scope"
+    t.boolean  "scoped"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"

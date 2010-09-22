@@ -6,13 +6,16 @@ class UsersController < ApplicationController
   before_filter :require_user, :except => [:new, :create]
   
   def index
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @user = User.new
+    render :layout => false if request.xhr?
   end
   
   def create
@@ -33,6 +36,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
   
   def update

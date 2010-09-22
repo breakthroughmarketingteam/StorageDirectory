@@ -62,9 +62,11 @@ class ApplicationController < ActionController::Base
   before_filter :load_app_config
   
   before_filter :reverse_captcha_check, :only => :create
-  #before_filter :authorize_user
+  before_filter :authorize_user
   before_filter :clean_home_url
   before_filter :init, :except => [:create, :update, :delete]
+  before_filter :get_content_vars
+  before_filter :set_default_view_type
   
   layout lambda { app_config[:theme] }
   
@@ -98,7 +100,6 @@ class ApplicationController < ActionController::Base
   
   def init
     set_session_vars
-    get_content_vars
     get_list_of_controllers_for_menu if is_admin?
   end
   
@@ -113,7 +114,7 @@ class ApplicationController < ActionController::Base
       end
       
     # skip checking permission if user is an admin
-    elsif !current_user.has_role?('Admin')
+    else
       unless current_user.has_permission?(controller_name, action_name, params)
         flash[:warning] = 'Access Denied'
         redirect_back_or_default(home_page) and return
@@ -134,24 +135,25 @@ class ApplicationController < ActionController::Base
     elsif (current_user.nil? && in_mode?('show')) || (current_user && in_mode?('index', 'edit', 'show'))
       store_location
     end
-    set_default_view_type
   end
   
   # instance variables for the helpers and templates
   def get_content_vars
-    @controller_name   = controller_name
-    @action_name       = action_name
-    @default_view_type = session[:view_type]
-    @theme_css         = theme_css(session[:theme]  || @@app_config[:theme])
-    @plugin_css        = plugin_css 'jquery.ui.css'
-    @meta_keywords     = @@app_config[:keywords]    || @@app_config[:title]
-    @meta_description  = @@app_config[:description] || @meta_keywords
-    @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
-    @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
-    @nav_pages         = Page.nav_pages
+    unless request.xhr?
+      @controller_name   = controller_name
+      @action_name       = action_name
+      @theme_css         = theme_css(session[:theme]  || @@app_config[:theme])
+      @plugin_css        = plugin_css 'jquery.ui.css'
+      @meta_keywords     = @@app_config[:keywords]    || @@app_config[:title]
+      @meta_description  = @@app_config[:description] || @meta_keywords
+      @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
+      @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
+      @nav_pages         = Page.nav_pages
+      @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
+    end
+    
     @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    @per_page          = 18
-    @slogan = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
+    @per_page          = 15
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     @facility_features = IssnFacilityFeature.labels
@@ -180,6 +182,8 @@ class ApplicationController < ActionController::Base
     else
       session[:view_type] = 'list'
     end
+    
+    @default_view_type = session[:view_type]
   end
   
   #--------------------- Fetch Arrays, for select lists, etc. ---------------------
@@ -227,7 +231,7 @@ class ApplicationController < ActionController::Base
   # TODO move this to a config file or something
   def view_types_dir() 'views/partials/' end
   def get_view_types
-    get_list_of_file_names("/app/views/#{view_types_dir}", '.html.erb').map { |v| v.sub(/^_/, '').to_sym }
+    get_list_of_file_names("/app/views/#{view_types_dir}", '.html.erb').map { |v| v.sub(/^_/, '').to_sym }.select { |f| f.to_s =~ /(blog_roll)|(box)|(gallery)|^(list)|(table)/i }
   end
   
   def _controllers(for_select = true)

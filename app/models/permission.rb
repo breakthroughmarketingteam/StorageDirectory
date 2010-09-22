@@ -27,15 +27,14 @@ class Permission < ActiveRecord::Base
   # Instance Methods
   
   def title
-    "#{self.role.title} #{self.action} #{self.resource}" unless self.new_record?
+    "#{self.role.title} may #{self.action} #{self.resource}" unless self.new_record?
   end
   
   # map REST action to CRUD action
   def allows?(action)
     return true if self.action == 'all'
     
-    case action.to_sym
-    when :new, :create
+    case action.to_sym when :new, :create
       self.action == 'create'
     when :index, :show
       self.action == 'read'

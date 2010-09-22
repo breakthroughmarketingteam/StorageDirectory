@@ -150,7 +150,7 @@ $(function(){
 			}
 			
 			ajax_wrap.children().fadeTo('fast', 0.2);
-			ajax_wrap.addClass('loading').load(this.href + ' #ajax_wrap_inner', function(response, status) {
+			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
 				if (status == 'success') $.bindPlugins();
 				else $('#ajax_wrap_inner').html(response);
 				

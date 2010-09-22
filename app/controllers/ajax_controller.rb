@@ -114,10 +114,15 @@ class AjaxController < ApplicationController
   end
   
   def get_partial
-    model_class = params[:model].constantize
-    @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
-    raise @model.pretty_inspect
-    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }) }
+    begin
+      model_class = params[:model].constantize 
+      @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
+      locals = { params[:model].downcase.to_sym => @model }
+    rescue
+      nil
+    end
+    
+    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => locals) }
     
   rescue => e
     render :json => { :success => false, :data => e.message }

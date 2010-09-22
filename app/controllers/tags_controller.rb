@@ -3,14 +3,17 @@ class TagsController < ApplicationController
   
   def index
     @tags = Tag.all
+    render :layout => false if request.xhr?
   end
   
   def show
     @models = params[:model].singularize.titleize.constantize.tagged_with params[:tag]
+    render :layout => false if request.xhr?
   end
   
   def new
     @tag = Tag.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -26,6 +29,7 @@ class TagsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

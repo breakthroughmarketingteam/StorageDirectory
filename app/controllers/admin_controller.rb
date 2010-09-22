@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   
   def index
-    @controllers.reject! { |c| c =~ /(admin)|(sizes)|(facility_features)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)/i }
+    @controllers.reject! { |c| c =~ /(admin)|(sizes)|(maps)|(specials)|(facility_features)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)|(widgets)/i }
   end
 
   def show

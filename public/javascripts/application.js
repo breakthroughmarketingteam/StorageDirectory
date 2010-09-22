@@ -6,6 +6,8 @@ $(document).ready(function(){
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
+	
+	// ajaxify the login form and forgot password link
 	$('#login_link').click(function(){
 		$(this).addClass('active');
 		var pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
@@ -19,6 +21,7 @@ $(document).ready(function(){
 			} else alert(response);
 		});
 		
+		// close login box when user clicks outside of it
 		$(document).click(function(e) {
 			if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
 				pop_up.fadeOut(300, function() { 
@@ -31,6 +34,7 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	// log the user in and change the topbar to the logged in links
 	$('#new_user_session').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
@@ -59,7 +63,7 @@ $(document).ready(function(){
 	
 	$('#forgot_pass_link').live('click', function() {
 		$('#pop_up_box').load(this.href, function(response, status) {
-			$('input[type=text]', pop_up).eq(0).focus();
+			$('input[type=text]', this).eq(0).focus();
 			$.bindPlugins();
 		});
 		return false;
@@ -80,11 +84,7 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	$('div > a > img', '#jqDock0').click(function(){
-		$(this).effect('bounce', { times: 3 }, 300);
-	});
-	
-	// advanced options
+	// advanced search options
 	var $size_picker = $('#size_picker'),
 		$size_img = $('img', $size_picker);
 		
@@ -140,7 +140,7 @@ $(document).ready(function(){
 		map_nav_btn.click(function(){
 			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
 			
-			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial }, function() {
+			get_pop_up_and_do({ 'title': title, 'height': height, 'modal': true }, { 'sub_partial': partial }, function() {
 				new GreyWizard($('#map_nav'), {
 					title		 : 'Choose a State',
 					slides_class : 'map_flow_step',

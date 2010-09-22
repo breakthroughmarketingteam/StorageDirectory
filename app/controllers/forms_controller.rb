@@ -4,13 +4,16 @@ class FormsController < ApplicationController
   
   def index
     @forms = Form.all
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @form = Form.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -25,6 +28,7 @@ class FormsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

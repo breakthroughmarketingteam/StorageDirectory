@@ -3,7 +3,9 @@ class PostsController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
+  
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
@@ -11,6 +13,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -52,6 +55,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

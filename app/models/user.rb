@@ -90,7 +90,13 @@ class User < ActiveRecord::Base
     end
     
     self.permissions.each do |p|
-      return true if p.allows?(action) && p.resource == controller
+      alowed = p.allows?(action) && p.resource == controller
+      
+      if allowed && p.scoped? && ['index', 'show', 'update', 'destroy'].include?(action)
+        
+      else
+        return true if alowed
+      end
     end
     
     false # default if no permission defined for controller and action

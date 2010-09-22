@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   def index
-    
+    render :layout => false if request.xhr?
   end
   
   def locator
@@ -50,9 +50,11 @@ class ListingsController < ApplicationController
 
   def show
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
+    render :layout => false if request.xhr?
   end
 
   def new
+    render :layout => false if request.xhr?
   end
 
   def edit
@@ -63,7 +65,7 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
-    
+    render :layout => false if request.xhr?
   end
   
   def update
