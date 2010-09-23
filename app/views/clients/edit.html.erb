@@ -18,7 +18,10 @@
       <div id="ov-top">
         <ul id="ov-top-list">
           <li>Account #: <span id="client_id"><%= @client.id %></span></li>
-          <li>Number of listings: <span id="listings_size"><%= @client.listings.size %></span></li>
+          <li>
+			Number of listings: <span id="listings_size"><%= @client.listings.size %></span>
+			<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
+		  </li>
         </ul>
       </div>
      

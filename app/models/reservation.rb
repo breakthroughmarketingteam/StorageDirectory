@@ -72,7 +72,7 @@ class Reservation < ActiveRecord::Base
   end
   
   def name
-    self.reserver.name
+    self.reserver.name rescue 'name missing'
   end
   
   def unit_description
@@ -83,7 +83,7 @@ class Reservation < ActiveRecord::Base
     self.unit_type.reserve_cost.total_cost
   end
   
-  def month_range
+  def duration
     @distance_in_minutes ||= (((self.move_out_date.to_time - self.move_in_date.to_time).abs) / 60).round
     @month_range ||= (@distance_in_minutes.to_f / 43200.0).round
   end
@@ -111,6 +111,10 @@ class Reservation < ActiveRecord::Base
   
   def comment
     self.comments.first
+  end
+  
+  def partial_link
+    "/ajax/get_partial?partial=reservations/detail&model=Reservation&id=#{self.id}"
   end
   
 end

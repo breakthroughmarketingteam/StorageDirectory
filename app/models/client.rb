@@ -32,8 +32,21 @@ class Client < User
     mailing_address.update_attributes(info[:mailing_address]) && billing_info.update_attributes(info[:billing_info])
   end
   
+  # a simple listing search for the add your facility page
   def potential_listings
     Listing.find :all, :conditions => ['title LIKE ?', self.company]
+  end
+  
+  def issn_enabled?
+    self.listings.any? &:issn_enabled?
+  end
+  
+  def issn_enabled_listings
+    self.listings.select &:issn_enabled?
+  end
+  
+  def reservations
+    self.listings.map(&:reservations).flatten
   end
   
   # generate an array of plot points

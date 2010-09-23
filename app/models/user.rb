@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   # only allow a user to view and update their own profile
   # or perform allowed action on resources defined in their permissions
   def has_permission?(controller, action, params = {})
-    return true if self.has_role?('Admin')
+    return true if self.has_role?('Admin') || controller == 'user_sessions'
     
     if controller =~ /(users)|(images)/ && action !~ /new|create|destroy/
       if (controller == 'users' && params[:id].to_i == self.id) || (controller == 'images' && params[:user_id].to_i == self.id)
@@ -89,17 +89,7 @@ class User < ActiveRecord::Base
       end
     end
     
-    self.permissions.each do |p|
-      alowed = p.allows?(action) && p.resource == controller
-      
-      if allowed && p.scoped? && ['index', 'show', 'update', 'destroy'].include?(action)
-        
-      else
-        return true if alowed
-      end
-    end
-    
-    false # default if no permission defined for controller and action
+    self.permissions.any? { |p| p.allows?(action) && p.resource == controller }
   end
   
   def deliver_password_reset_instructions!

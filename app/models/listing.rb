@@ -163,6 +163,20 @@ class Listing < ActiveRecord::Base
     data.sort_by { |d| d.impressions_count || 0 }
   end
   
+  def self.find_listings_by_company_city_and_state(company, city, state)
+    self.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l " +
+                     "LEFT JOIN maps m ON m.listing_id = l.id " +
+                     "LEFT JOIN users u ON u.id = l.user_id " +
+                     "WHERE ((LOWER(m.state) LIKE '%#{state}%' " +
+                           "AND LOWER(m.city) LIKE '%#{city}%' " +
+                           "AND LOWER(l.title) LIKE '%#{company}%') " +
+                       "OR (LOWER(m.state) LIKE '%#{state}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%')) " +
+                       "OR (LOWER(m.city) LIKE '%#{city}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL " +
+                         "ORDER BY l.title LIMIT 100"
+  end
+  
   #
   # OpenTech ISSN wrapper code
   #

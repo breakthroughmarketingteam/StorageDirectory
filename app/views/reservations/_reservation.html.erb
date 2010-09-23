@@ -1,8 +1,8 @@
 <div class="reservation">
 	<p><span class="block left w110">From:</span> <%= reservation.nice_move_in_date %></p>
 	<p><span class="block left w110">To:</span> <%= reservation.nice_move_out_date %></p>
-	<p><span class="block left w110">Duration:</span> <%= distance_of_time_in_words reservation.move_in_date, reservation.move_out_date %></p>
-	<p><span class="block left w110">Reserve Code:</span> <%= reservation.reserve_code %></p>
+	<p><span class="block left w110">Duration:</span> <%= duration_of reservation %></p>
+	<p class="uncollapse"><span class="block left w110">Reserve Code:</span> <%= reservation.reserve_code %></p>
 
 	<% unless reservation.comment.blank? %>
 		<p class="uncollapse"><span class="block left w110">Comment:</span> <%= reservation.comment.comment %></p>

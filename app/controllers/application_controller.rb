@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_app_config
   
   before_filter :reverse_captcha_check, :only => :create
-  before_filter :authorize_user
+  #before_filter :authorize_user
   before_filter :clean_home_url
   before_filter :init, :except => [:create, :update, :delete]
   before_filter :get_content_vars
