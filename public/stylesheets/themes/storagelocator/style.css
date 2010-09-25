@@ -702,7 +702,10 @@ img.right{margin:0 10px 10px 0;}
 #cancel_btn{position:absolute;bottom:10px;right:20px;color:#999;}
 #client_settings{width:100%;}
 #client_settings th{width:25%;cursor:help;}
-#client_settings input.text{width:40%;padding:3px 5px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#client_settings input.text{width:98%;padding:3px 5px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#email_reports_settings{position:relative;}
+#email_reports_settings .attribute_save{position:absolute;bottom:0;right:10px;color:#333;}
+#email_reports_settings .attribute_save:hover{text-decoration:underline;}
 /* reserve form */
 .sl-table-exp p label{line-height:2.4;font-size:80%;}
 .new_reservation select{margin-left:5px;}
@@ -757,11 +760,15 @@ img.right{margin:0 10px 10px 0;}
 #client_reservations{margin:-15px 0 0 -15px;width:104%;font-size:80%;}
 #client_reservations th{text-align:left;padding:10px 15px;}
 #client_reservations th a{font-size:100%;}
-#pop_up .pagination{margin:0;position:absolute;bottom:16px;right:12px;}
+#client_reservations td.region img{width:auto;position:absolute;right:19px;}
+#pop_up .pagination{margin:0;position:absolute;bottom:9px;right:12px;}
 #pop_up .pagination a{background:#fff;}
 #pop_up .pagination a:hover,#pop_up .pagination a:active{background:#666;}
 #pop_up .pagination a,#pop_up .pagination span{font-size:90%;padding:2px 4px;}
-td .reservation_wrap{padding:10px;width:280px;height:110px;position:absolute;right:10px;z-index:999;border:1px solid #ccc;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;box-shadow:1px 2px 8px #777;-moz-box-shadow:1px 2px 8px #777;-webkit-box-shadow:1px 2px 8px #777;}
+td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-index:999;border:1px solid #ccc;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;box-shadow:1px 2px 8px #777;-moz-box-shadow:1px 2px 8px #777;-webkit-box-shadow:1px 2px 8px #777;}
+.reservation_wrap .close_btn{display:block;padding:3px 5px;color:#333;border:1px solid #ccc;position:absolute;top:5px;right:5px;background:#ebebeb;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+.reservation_wrap .close_btn:hover{background:#333;color:#fff;}
+#client_settings .note{display:block;font-size:80%;margin-top:5px;}
 /* fixes */
 #listings_controller .flash{margin:10px 0 0 20px;}
 #info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}

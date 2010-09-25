@@ -573,7 +573,9 @@ $(document).ready(function(){
 		
 		$('#reservations', '#ov-services').click(function(){
 			if ($('#issn_enabled').val()) {
-				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() });
+				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() }, function(pop_up) {
+					pop_up.css('background-image', 'none');
+				});
 				
 			} else {
 				var partial = 'clients/issn_steps', 
@@ -685,30 +687,73 @@ $(document).ready(function(){
 		});
 		
 		$('.rsvr_detail_link', '#client_reservations').live('click', function(){
-			var $this = $(this);
+			var $this = $(this),
+				detail_box = $('.reservation_wrap', $this.parent()),
+				ajax_loader = $('.ajax_loader', $this.parent()).show();
 			
-			$.getJSON(this.href, {}, function(response) {
-				if (response.success) {
-					var box = $(response.data);
-					$('.reservation_wrap', 'td.region').remove();
-					box.appendTo($this.parent());
-					
-				} else $.ajax_error(response);
-			});
+			if (detail_box.length == 1) {
+				$('.reservation_wrap', 'td.region').hide();
+				detail_box.show();
+				ajax_loader.hide();
+				
+			} else {
+				$.getJSON(this.href, {}, function(response) {
+					if (response.success) {
+						var box = $(response.data).append('<a class="close_btn" href="#">X</a>');
+
+						$('.reservation_wrap', 'td.region').hide();
+						box.appendTo($this.parent());
+
+					} else $.ajax_error(response);
+
+					ajax_loader.hide();
+				});
+			}
+			
 			
 			return false;
 		});
 		
-		$('.hint_close').click(function(){
+		$('.close_btn', '.reservation_wrap').live('click', function() {
+			$(this).parent().hide();
+			return false;
+		});
+		
+		$('.hint_toggle').click(function(){
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
-				placement_id = btn.attr('id').replace('UserHintPlacement_', ''),
+				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
 				ajax_loader = $('.ajax_loader', hint).show();
 
-			$.updateModel('/user_hints/hide/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+			$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+				hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
 				ajax_loader.hide();
-				hint.slideUp(300, function(){ $(this).remove() });
 			});	
+		});
+		
+		$('input', '#user_hint_toggles').click(function(){
+			$('.hint_toggle[rel='+ this.value +']').click();
+		});
+		
+		var inline_save_orig_values = {};
+		$('.inline_save').each(function(){
+			inline_save_orig_values[this.id] = this.value.replace(this.title, '');
+		});
+		
+		$('.inline_save').live('focus', function() {
+			var input = $(this);
+			$('<a class="attribute_save" href="/ajax/update?'+ input.attr('params') +'">Save</a>').appendTo('#email_reports_settings');
+		});
+		
+		$('.attribute_save').live('click', function() {
+			var save_btn = $(this),
+				input = $('.inline_save', save_btn.parent());
+			
+			if (input.val() != '' && input.val() != inline_save_orig_values[input.attr('id')]) {
+				save_btn.attr('href', save_btn.attr('href') + input.value)
+			}
+			$.log(this, inline_save_orig_values)
+			return false;
 		});
 		
 	} // END page clients edit

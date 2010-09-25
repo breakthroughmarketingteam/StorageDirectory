@@ -28,7 +28,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
-  map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'

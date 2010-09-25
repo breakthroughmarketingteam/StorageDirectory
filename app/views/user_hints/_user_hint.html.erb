@@ -1,9 +1,10 @@
-<div id="UserHint_<%= user_hint.id %>" class="user_hint">
+<div id="UserHint_<%= user_hint.id %>" class="user_hint<%= ' hide' if @hint.placement(current_user).hide? %>">
 	<div class="hint_title_bar uncollapse">
 		<p class="left hint_title"><%= user_hint.title %></p>
-		<p class="right">
+		<p id="UserHintPlacement_<%= user_hint.placement(current_user).id %>" class="right">
 			<%= ajax_loader %>
-			<button class="hint_close" id="UserHintPlacement_<%= user_hint.placement(current_user).id %>" title="Close this hint" rel="hide">X</button>
+			<button class="hint_toggle" title="Close this hint" rel="hide">X</button>
+			<button class="hint_toggle hidden" title="Open this hint" rel="open">O</button>
 		</p>
 	</div>
 	

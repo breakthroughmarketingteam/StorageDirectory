@@ -93,11 +93,11 @@ class Reservation < ActiveRecord::Base
   end
   
   def nice_move_in_date
-    self.move_in_date.strftime "%A, %B %e"
+    self.move_in_date.strftime "%B, %d %Y"
   end
   
   def nice_move_out_date
-    self.move_out_date.strftime "%A, %B %e"
+    self.move_out_date.strftime "%B, %d %Y"
   end
   
   def active?

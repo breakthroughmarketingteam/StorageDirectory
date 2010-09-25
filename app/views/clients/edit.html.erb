@@ -124,13 +124,16 @@
 				<tr>
 					<th title="Setup where and when to send reports"><p>Email reports: </p></th>
 					<td id="email_reports_settings">
-						<p>Recipient: <%= text_field_tag 'reports_recipient', nil, :class => 'text' %></p>
+						<p>
+							<%= text_field_tag 'reports_recipient', @client.report_recipients, :id => 'reports_recipient_input', :params => "model=Client&id=#{@client.id}&attribute=reports_recipient&value=", :class => 'hintable text inline_save', :title => 'Recipient(s)' %>
+							<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
+						</p>
 					</td>
 				</tr>
 				<tr>
 					<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
 					<td id="user_hint_toggles">
-						<p><%= radio_button_tag 'user_hints', 'show' %> Show</p>
+						<p><%= radio_button_tag 'user_hints', 'open' %> Show</p>
 						<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
 					</td>
 				</tr>

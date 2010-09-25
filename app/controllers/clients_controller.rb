@@ -20,8 +20,8 @@ class ClientsController < ApplicationController
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address]
     
-    @client.build_account_setting :settings_hash => '{ :user_hints => "show" }'
     @client.user_hints = UserHint.all
+    @client.report_recipients = @client.email
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
