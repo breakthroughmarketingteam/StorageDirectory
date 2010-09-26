@@ -114,8 +114,8 @@ $(function(){
 		hidden_form.find('input[name=_method]').val('put');
 		
 		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
+		sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
+		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
 
 		if ($(this).text() == 'Edit') {
 			$.convert_unit_size_row_values_to_inputs(container);

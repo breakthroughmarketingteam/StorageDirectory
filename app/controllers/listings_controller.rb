@@ -26,12 +26,15 @@ class ListingsController < ApplicationController
     
     if session[:location].blank? || params[:q] && params[:state].blank?
       session[:location] = @location.to_hash
-      #redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize) and return
+      #params_back = {}
+      #params_back.merge! :zip => @location.zip if params[:q] && Listing.is_zip?(params[:q])
+      #params_back.merge! :within => params[:within] if params[:within]
+      #redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize, params_back) and return
     end
     
     respond_to do |format|
       format.html
-      format.js do # implementing these ajax responses for the search results 'More Link'
+      format.js do # implementing this ajax response for the search results 'More Link'
         render :json => { :success => !@listings.blank?, :data => prep_hash_for_js(@listings), :maps_data => @maps_data }
       end
     end

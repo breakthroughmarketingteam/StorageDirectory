@@ -13,6 +13,8 @@ module ApplicationHelper
   end
   
   def declare_content_for # renders blocks in regions based on current page
+    return if request.xhr?
+    
     if controller_name == 'listings' && action_name == 'show'
       title = @listing.title.titleize
     else

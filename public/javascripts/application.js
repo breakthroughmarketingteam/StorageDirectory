@@ -1,32 +1,41 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
-$(document).ready(function(){	
-	$('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
+$(document).ready(function() {
+	if ($('body').hasClass('home')) $('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
+	else $('#dock').jqDock({ size: 50, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
 	
 	// ajaxify the login form and forgot password link
-	$('#login_link').click(function(){
-		$(this).addClass('active');
-		var pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
+	$('#login_link').click(function() {
+		var $this = $(this);
+		if ($this.hasClass('active')) return false;
 		
-		pop_up.appendTo('body').load('/login', function(response, status) {
-			if (status == 'success') {
-				pop_up.fadeIn();
-				$('input[type=text]', pop_up).eq(0).focus();
-				$.bindPlugins();
-				
-			} else alert(response);
-		});
+		$this.addClass('active');
+		var pop_up = $('#pop_up_box');
+		
+		if (pop_up.length == 1) pop_up.fadeIn();
+		else {
+			pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
+
+			pop_up.appendTo('body').load('/login', function(response, status) {
+				if (status == 'success') {
+					pop_up.fadeIn();
+					$('input[type=text]', pop_up).eq(0).focus();
+					$.bindPlugins();
+
+				} else alert(response);
+			});
+		}
 		
 		// close login box when user clicks outside of it
 		$(document).click(function(e) {
 			if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
 				pop_up.fadeOut(300, function() { 
 					$('#login_link').removeClass('active');
-					$(this).remove();
+					pop_up.hide();
 				});
 			}
 		});
@@ -104,11 +113,14 @@ $(document).ready(function(){
 		}
 	});
 	
-	var advanced_slider = $('.advanced_slider', '#advanced_opts').slider({
+	var advanced_slider = $('.advanced_slider', '#advanced_opts'),
+		advanced_slider_value = $('.slider_val', advanced_slider.parent()).val();
+
+	advanced_slider.slider({
 		max: 50,
-		min:5,
+		min: 5,
 		step: 5,
-		value: 5,
+		value: advanced_slider_value,
 		animate: true,
 		start: function(e, ui) {
 			var slider = $('.slider_val', $(e.target).parent());
@@ -120,7 +132,7 @@ $(document).ready(function(){
 		}
 		
 	});
-	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>5</span>');
+	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>'+ advanced_slider_value +'</span>');
 	
 	$('.arrow', '#advanced_opts').click(function(){
 		var value = parseInt(advanced_slider.slider('value')),
@@ -1515,7 +1527,7 @@ function get_partial_and_do(params, callback) {
 }
 
 function preload_us_map_imgs() {
-	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
 		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';

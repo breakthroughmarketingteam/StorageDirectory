@@ -22,10 +22,9 @@ ActionController::Routing::Routes.draw do |map|
   # clean seo friendly
   map.storage_state_zip '/self-storage/:state/:zip', :controller => 'listings', :action => 'locator', :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i, :zip => /\d{5}/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  # all states except washington dc
-  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
-  map.storage_state_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
-  
+  map.storage_state_city '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i }
+  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
+
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'

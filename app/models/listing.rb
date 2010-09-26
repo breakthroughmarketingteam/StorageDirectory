@@ -91,7 +91,7 @@ class Listing < ActiveRecord::Base
     sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f] rescue nil
     options = {
       :include => [:map, :specials, :sizes, :pictures],
-      :within  => (params[:within] || 5)
+      :within  => (params[:within].blank? ? 5 : params[:within])
     }
     
     unless query.blank?
@@ -118,7 +118,7 @@ class Listing < ActiveRecord::Base
     @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?
     #@model_data = smart_order(@model_data) if is_city? query
-    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
+    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 10)
     { :data => @model_data, :location => @location }
   end
   
