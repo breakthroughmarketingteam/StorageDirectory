@@ -94,43 +94,6 @@ $(function(){
 		}
 	});
 	
-	// admin menu hover behaviors
-	var GR_content_menu_hover_interval,
-		GR_resource_list = $('#resource_list');
-	
-	$('#content_menu_link').mouseover(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#content_menu_link').click(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#resource_list, #content_menu_link').mouseout(function(){
-		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
-	});
-	
-	$('#resource_list, #content_menu_link').mouseover(function(){
-		clearInterval(GR_content_menu_hover_interval);
-	});
-	
-	$('li', '#resource_list').hover(function(){
-		var li = $(this).css('position', 'relative');
-		var link = $('a', li);
-		
-		if (link.hasClass('access_denied')) return;
-		
-		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
-				new_option.appendTo(link)
-									.hide().show()
-									.click(function(){ window.location = this.href; return false; });
-	}, function(){
-		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
-	});
-	// END admin menu
-	
 	// Admin index page menu
 	if ($.on_page([['index', 'admin']])) {
 		var admin_links = $('a', '#controller_list'), 

@@ -105,7 +105,9 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #type-two-l-col{margin-top:7px;}
 #posts_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
-#pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.compare_action #content,#clients_controller.new_action #content{width:776px;float:right;position:relative;left:4px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
+#pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,
+#listings_controller.compare_action #content,#clients_controller.new_action #content
+{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
 #listings_controller.locator_action #content{border:1px solid #ccc;left:6px;padding-left:15px;width:761px;background:#fff;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;}
 #type-one-r-col{left:0;}
@@ -129,14 +131,14 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat top left;float:right;width:138px;height:45px;line-height:45px;left:5px;top:-10px;margin-bottom:0px;}
 input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:130px;padding:2px 14px;font-weight:bold;height:20px;line-height:20px;color:#333;margin-bottom:10px;-moz-box-shadow:1px 1px 2px #999 inset;box-shadow:1px 1px 2px #999 inset;-webkit-box-shadow:1px 1px 2px #999 inset;}
 .slider{margin-bottom:15px;}
-#type-one-r-col-in,#sidebar{position:relative;top:3px;width:774px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left;background-color:#42A238;}
+#type-one-r-col-in,#sidebar{position:relative;width:774px;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
 .rslt-head-txt > p{float:left;font-weight:bold;margin:4px 0;}
 .rslt-head-txt .pagination{margin:5px 0;}
 .rslt-head-txt > p span{color:#333;}
 #type-one-r-col-in h2{font-weight:normal;}
-.green-head{border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;width:742px;height:190px;margin:15px 0 30px 0;float:left;position:relative;left:15px;background-color:#fff;}
+.green-head{border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;width:742px;height:190px;margin:15px 0;float:left;position:relative;left:15px;background-color:#fff;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
 #tips-head{background:#000;position:relative;overflow:hidden;width:740px;}
 #tips-head #tips-hdr{position:absolute;z-index:750;}
@@ -341,7 +343,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 /* New left column styles included here to introduce that dotted line. SOme of these may be able to be ignored or removeed. Get in touch with me if you need a hand... */
 #type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;left:2px;background:url(/images/ui/storagelocator/page-bg.png) no-repeat left 350px;border-radius-bottomleft:20px;-moz-border-radius-bottomleft:20px;-webkit-border-bottom-left-radius:20px;}
 /* Change made in these two divs on the existing stylesheet in order to include that dotted line. These can possibly be ignored or changed back - get in touch if you need me to explain anything... */
-#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:300px;margin-top:-20px;}
+#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:300px;margin-top:-10px;}
 /* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;color:#555;text-align:left;margin:15px 0 20px 20px;}
@@ -559,7 +561,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #admin-box ul li a:hover,#admin-box ul li a.active{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
 /************************************************** END additions.css *********************************************************/
 /* Customizations - D.S */
-#ajax_wrap{float:left;padding-left:20px;margin-top:-16px;width:86%;min-height:684px;}
+#ajax_wrap{float:left;padding-left:20px;margin-top:-23px;width:86%;min-height:684px;}
 #ajax_wrap_inner > h2{margin-bottom:7px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
