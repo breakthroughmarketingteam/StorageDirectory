@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
     @mailing_address = @client.mailing_addresses.build params[:mailing_address]
     
     @client.user_hints = UserHint.all
-    @client.report_recipients = @client.email
+    #@client.report_recipients = @client.email
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
