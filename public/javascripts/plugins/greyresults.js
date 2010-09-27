@@ -6,7 +6,6 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	
 	$.convert_unit_size_row_values_to_inputs = function(container) {
 		// values and such
 		var sizes_li	= $('.st-size', container),

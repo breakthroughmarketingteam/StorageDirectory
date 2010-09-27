@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
-  map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
+  map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show', :requirements => { :id => /\d*/ }
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
@@ -42,6 +42,9 @@ ActionController::Routing::Routes.draw do |map|
   #     products.resources :comments
   #     products.resources :sales, :collection => { :recent => :get }
   #   end
+  
+  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
+  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   map.resources :listings, :collection => { :locator => :get, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
@@ -50,9 +53,6 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :reservations
     listing.resources :facility_features
   end
-  
-  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
-  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   
   map.resources :users do |user|
     user.resources :posts, :collection => { :published => :get }

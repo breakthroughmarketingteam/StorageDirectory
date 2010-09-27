@@ -1,4 +1,4 @@
-// This is all the js I wrote for the admin side of GreyCMS
+// for the admin side of GreyCMS
 $(function(){
 	$('body').addClass('js');
 	$('.hide_if_js').hide();
@@ -31,16 +31,14 @@ $(function(){
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
 	$('.sortable', '.admin').sortable({
 		opacity: 0.3,
-		update: function(e, ui) { $.updateModels(e, ui); }
+		update: function(e, ui) { $.updateModels(e, ui) }
 	});
 	
 	$('.block_sortable', '.admin').sortable({
 		opacity: 0.3,
 		placeholder: 'ui-state-highlight',
 		helper: 'clone',
-		update: function(e, ui) {
-			$.updateModels(e, ui);
-		}
+		update: function(e, ui) { $.updateModels(e, ui) }
 	});
 	
 	if ($('.mini_calendar').length > 0) {
@@ -743,11 +741,11 @@ $.fn.animOpacity = function() {
 	});
 }
 
-// attack a click event to divs that wrap a link to follow the href
+// attach a click event to divs that wrap a link to follow the href
 $.fn.linkDiv = function() {
 	return this.each(function(){
-		var $this = $(this), href = $this.find('a').attr('href');
-		$this.click(function(){ window.location = href; });
+		var $this = $(this), href = ;
+		$this.click(function(){ if (href) window.location = href; });
 	});
 }
 

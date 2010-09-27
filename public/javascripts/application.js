@@ -1007,7 +1007,7 @@ $(document).ready(function() {
 	
 	var stats_graph = $('#stats_graph');
 	if (stats_graph.length > 0) {
-		stats_graph.css('background', 'url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 45%');
+		stats_graph.addClass('loading');
 		
 		var stats_models = 'clicks, impressions, reservations',
 			d = new Date(), // getMonth returns 0-11
@@ -1034,7 +1034,7 @@ $(document).ready(function() {
 					legend: { show: true, location: 'nw' },
 					series: [ 
 				        { label: '&nbsp;Clicks', lineWidth: 2, markerOptions: { style: 'diamond' } }, 
-				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'}}, 
+				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'} }, 
 				        { label: '&nbsp;Reservations', lineWidth: 2, markerOptions: { style: 'circle'} }
 				    ],
 					highlighter: { sizeAdjust: 7.5 },
@@ -1043,7 +1043,7 @@ $(document).ready(function() {
 				
 			} else $.ajax_error(response);
 			
-			stats_graph.css('background', 'none');
+			stats_graph.removeClass('loading');
 		});
 	}
 	
@@ -1088,7 +1088,7 @@ $.fn.instantForm = function() {
 		// serves as the edit mode button and submit button
 		submit_btn.click(function(){
 			if ($(this).text() == 'Edit') {
-				$(this).data('saving', false)
+				$(this).data('saving', false);
 				cancel_btn.fadeIn();
 				
 				// turn elements with a class of value into an input. use it's rel attr and text for the field name, the rel attr is the relation name, e.g. mailing_address, billing_info. the text is the attr name
@@ -1122,11 +1122,11 @@ $.fn.instantForm = function() {
 						});
 						
 						submit_btn.text('Edit');
-					} else alert(response.data);
+					} else $.ajax_error(response.data);
 					
 					ajax_loader.hide();
 					cancel_btn.fadeOut();
-					$(this).data('saving', false)
+					$(this).data('saving', false);
 					
 				}, 'json');
 			}
@@ -1146,6 +1146,8 @@ $.fn.instantForm = function() {
 
 // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 $.fn.formatPhoneNum = function() {
+	if ($.browser.msie) return;
+	
 	return this.each(function(){
 		$(this).keyup(function(e){
 			var input = $(this),
@@ -1412,14 +1414,14 @@ function workflow_step4() { // form data review
 	
 	info.each(function() {
 		switch (this.name) {
-			case 'first_name' : wizard.form_data.client['first_name'] = capitalize(this.value); break;
-			case 'last_name' : wizard.form_data.client['last_name'] = capitalize(this.value); break;
-			case 'listing_address' : wizard.form_data.mailing_address['address'] = this.value; break;
-			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
-			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;
-			case 'listing_zip' : wizard.form_data.mailing_address['zip'] = this.value; break;
-			case 'listing_phone' : wizard.form_data.mailing_address['phone'] = this.value || ''; break;
-			case 'wants_newsletter' : wizard.form_data.client[this.name] = this.checked; break;
+			case 'first_name' 		: wizard.form_data.client['first_name'] 	  = capitalize(this.value); break;
+			case 'last_name' 		: wizard.form_data.client['last_name'] 		  = capitalize(this.value); break;
+			case 'listing_address' 	: wizard.form_data.mailing_address['address'] = this.value; 	   		break;               
+			case 'listing_city' 	: wizard.form_data.mailing_address['city'] 	  = this.value; 	   		break;               
+			case 'listing_state' 	: wizard.form_data.mailing_address['state']   = this.value; 	   		break;               
+			case 'listing_zip' 		: wizard.form_data.mailing_address['zip'] 	  = this.value; 	   		break;               
+			case 'listing_phone' 	: wizard.form_data.mailing_address['phone']   = this.value || ''; 		break;
+			case 'wants_newsletter' : wizard.form_data.client[this.name] 	  	  = this.checked; 			break;
 		}
 	});
 	
@@ -1502,7 +1504,7 @@ function get_pop_up_and_do(options, params, callback) {
 	var params = params || {}
 	params.partial = params.partial || '/shared/pop_up';
 	
-	$.get('/ajax/get_multipartial', params, function(response){
+	$.get('/ajax/get_multipartial', params, function(response) {
 		var pop_up = $(response).dialog({
 			title: 	   options.title,
 			width: 	   options.width || 785,
@@ -1510,7 +1512,10 @@ function get_pop_up_and_do(options, params, callback) {
 			height:    options.height,
 			resizable: false,
 			modal: 	   options.modal,
-			close: 	   function(){ $('.ajax_loader').hide(); $(this).dialog('destroy').remove();  }
+			close: 	   function() {
+				$('.ajax_loader').hide();
+				$(this).dialog('destroy').remove();
+			}
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);

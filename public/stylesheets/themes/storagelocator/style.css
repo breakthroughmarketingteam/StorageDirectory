@@ -834,6 +834,7 @@ ul.ui-autocomplete .ui-menu-item{width:100%;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 #stats_graph{width:700px;height:300px;margin:0 0 0 8px;}
+#stats_graph.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 45%;}
 #Reservation .stack{font-size:120%;}
 /*signup workflow*/
 #top_fac_page{margin:25px 28px 15px 37px;}
