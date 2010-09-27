@@ -744,7 +744,7 @@ $.fn.animOpacity = function() {
 // attach a click event to divs that wrap a link to follow the href
 $.fn.linkDiv = function() {
 	return this.each(function(){
-		var $this = $(this), href = ;
+		var $this = $(this), href = $this.find('a').attr('href');
 		$this.click(function(){ if (href) window.location = href; });
 	});
 }
