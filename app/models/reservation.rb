@@ -12,7 +12,6 @@ class Reservation < ActiveRecord::Base
   
   validates_presence_of :listing_id
   validates_date :move_in_date, :after => Proc.new { -1.day.from_now.to_date }, :after_message => 'must be after %s'
-  validates_date :move_out_date, :after => Proc.new { 2.weeks.from_now.to_date }, :after_message => 'should be at least two weeks from now, on %s' 
   
   def process_new_tenant(billing_info)
     if self.listing.accepts_reservations?
@@ -76,7 +75,7 @@ class Reservation < ActiveRecord::Base
   end
   
   def unit_description
-    "#{self.unit_type.size.display_dimensions} #{self.unit_type.size.description}"
+    self.unit_type ? "#{self.unit_type.size.display_dimensions} #{self.unit_type.size.description}" : self.unit_type_size
   end
   
   def fee

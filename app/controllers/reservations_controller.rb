@@ -21,7 +21,7 @@ class ReservationsController < ApplicationController
     @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
     @reservation = @reserver.reservations.build params[:reservation].merge(:status => 'pending')
     @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
-    @m.save if @m
+    @m.save(false) if @m
     
     if @reserver.save
       respond_to do |format|

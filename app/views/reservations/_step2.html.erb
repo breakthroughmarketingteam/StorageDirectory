@@ -1,8 +1,9 @@
 <% form_for @reservation do |f| %>
-	<h4 class="left_space">Confirm Reservation</h4>
+	<h4 class="left_space">Lock In This Rate</h4>
 
 	<div class="sl-table-exp-form-l">
 		<p>Unit Type: <%= @reservation.unit_description %></p>
+		<p>Monthly Rate: <%= @reservation.unit_type.size.price %></p>
 		<p>Reserve Fee: <%= number_to_currency @reservation.fee %></p>
 		
 		<div class="framed right_space">

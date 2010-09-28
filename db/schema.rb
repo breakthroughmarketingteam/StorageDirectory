@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100925021221) do
+ActiveRecord::Schema.define(:version => 20100928161356) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -518,6 +518,8 @@ ActiveRecord::Schema.define(:version => 20100925021221) do
     t.integer  "unit_type_id"
     t.string   "reserve_code"
     t.text     "response"
+    t.string   "duration"
+    t.string   "unit_type_size"
   end
 
   create_table "reserve_costs", :force => true do |t|

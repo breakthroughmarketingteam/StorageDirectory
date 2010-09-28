@@ -20,7 +20,6 @@ class Listing < ActiveRecord::Base
   has_many :issn_facility_unit_features, :dependent => :destroy
   has_many :promos, :dependent => :destroy
   has_many :facility_features, :dependent => :destroy
-  has_many :features, :through => :facility_features
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -76,7 +75,7 @@ class Listing < ActiveRecord::Base
   end
   
   def unit_sizes_options_array
-    self.sizes.empty? ? IssnUnitTypeSize.labels : self.sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.display_dimensions] }.uniq
+    self.available_sizes.empty? ? IssnUnitTypeSize.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
   end
   
   def available_sizes
