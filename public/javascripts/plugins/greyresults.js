@@ -512,7 +512,6 @@ $(function(){
 	
 	// Reservation process, submit reserver details, then billing info
 	$('form.new_reservation').live('submit', function() {
-		console.log(this)
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){

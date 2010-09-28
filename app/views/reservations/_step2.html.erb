@@ -3,7 +3,7 @@
 
 	<div class="sl-table-exp-form-l">
 		<p>Unit Type: <%= @reservation.unit_description %></p>
-		<p>Monthly Rate: <%= @reservation.unit_type.size.price %></p>
+		<p>Monthly Rate: <%= number_to_currency @reservation.unit_type.size.dollar_price %></p>
 		<p>Reserve Fee: <%= number_to_currency @reservation.fee %></p>
 		
 		<div class="framed right_space">
@@ -39,8 +39,8 @@
 			<%= label_tag 'billing_info[ccv]', 'CCV', :class => 'block left w80' %> <%= text_field_tag 'billing_info[ccv]', nil, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'billing_info[expires_month]', 'Expires', :class => 'block left w80' %> <%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field' %>
-			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field left' %>
+	        <%= label_tag 'billing_info[expires_month]', 'Expires', :class => 'block left w80' %> <%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field hintable', :title => 'Month' %>
+			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field left hintable', :title => 'Year' %>
 		</p>
 		
 		<div class="clear"></div>
