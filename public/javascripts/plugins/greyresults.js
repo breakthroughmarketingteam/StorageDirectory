@@ -413,7 +413,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
+		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -516,6 +516,7 @@ $(function(){
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
 				inner_panel.html(response.data).children().hide().fadeIn();
+				$('.hintable', inner_panel).hinty()
 			});
 		});
 		
@@ -555,6 +556,11 @@ $(function(){
 			}, 'json');
 		} else ajax_loader.hide();
 	}
+	
+	$('.tos').live('click', function(){
+		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
+		return false;
+	});
 });
 
 /*
