@@ -4,13 +4,16 @@ class ClientsController < ApplicationController
   before_filter :get_model, :only => [:show, :update, :destroy, :test_issn]
   
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @client = Client.new
+    render :layout => false if request.xhr?
   end
   
   def create

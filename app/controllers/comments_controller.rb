@@ -3,13 +3,16 @@ class CommentsController < ApplicationController
   
   def index
     @comments = Comment.all
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @comment = Comment.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -37,6 +40,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

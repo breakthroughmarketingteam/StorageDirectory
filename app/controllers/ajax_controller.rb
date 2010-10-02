@@ -33,21 +33,8 @@ class AjaxController < ApplicationController
   
   # find listings in a city or state which don't have an owner
   def find_listings
-    city = params[:city].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
-    state = params[:state].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
-    company =params[:company].downcase.gsub(/\\|'/) { |c| "\\#{c}" }
-    
-    @listings = Listing.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l 
-                                     LEFT JOIN maps m ON m.listing_id = l.id 
-                                     LEFT JOIN users u ON u.id = l.user_id 
-                                     WHERE ((LOWER(m.state) LIKE '%#{state}%' 
-                                            AND LOWER(m.city) LIKE '%#{city}%' 
-                                            AND LOWER(l.title) LIKE '%#{company}%') 
-                                        OR (LOWER(m.state) LIKE '%#{state}%' 
-                                          AND LOWER(l.title) LIKE LOWER('%#{company}%'))
-                                        OR (LOWER(m.city) LIKE '%#{city}%' 
-                                          AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL
-                                          ORDER BY l.title LIMIT 100"
+    company, city, state = *[params[:company], params[:city], params[:state]].map { |p| p.downcase.gsub(/\\|'/) { |c| "\\#{c}" } }
+    @listings = Listing.find_listings_by_company_city_and_state company, city, state
     
     render :json => { :success => true, :data => @listings }
   end
@@ -114,9 +101,15 @@ class AjaxController < ApplicationController
   end
   
   def get_partial
-    model_class = params[:model].constantize
-    @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
-    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => { params[:model].downcase.to_sym => @model }) }
+    begin
+      model_class = params[:model].constantize 
+      @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
+      locals = { params[:model].downcase.to_sym => @model }
+    rescue
+      nil
+    end
+    
+    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => locals) }
     
   rescue => e
     render :json => { :success => false, :data => e.message }

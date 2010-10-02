@@ -46,7 +46,7 @@
 			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
 		
-		<li class="fac-sizes<%= ' hide' if result.sizes.empty?%>">
+		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
 			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
 		</li>
 		

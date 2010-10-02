@@ -3,6 +3,10 @@ class PasswordResetsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   
   def new
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
   end
 
   def create
@@ -10,11 +14,32 @@ class PasswordResetsController < ApplicationController
     
     if @user
       @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset your password have been emailed to you. Please check your email."
-      redirect_to login_path
+      msg = "Instructions to reset your password have been emailed to you. <br />Please check your email."
+      
+      respond_to do |format|
+        format.html do
+          flash[:notice] = msg
+          redirect_to login_path
+        end
+        
+        format.js do
+          render :text => "<div class='flash notice'><p>#{msg}</p></div>"
+        end
+      end
     else
-      flash[:notice] = 'Sorry, no user was found with that email address.'
-      render :action => :new
+      msg = 'Sorry, no user was found with that email address.'
+      
+      respond_to do |format|
+        format.html do
+          flash[:notice] = msg
+          render :action => :new
+        end
+        
+        format.js do
+          flash.now[:notice] = msg
+          render :action => :new, :layout => false
+        end
+      end
     end
   end
 

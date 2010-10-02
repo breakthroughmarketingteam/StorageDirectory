@@ -25,5 +25,10 @@
 		<%= label_tag 'permissions[][resource]', '&nbsp;' %>
 		<%= select_tag 'permissions[][resource]', model.option_tags_for(_controllers(false), nil, nil, :resource, ''), :class => 'required', :title => 'Choose a resource to define the permission on', :disabled => disabled %>
 	</div>
+	
+	<div class="left check_box_wrap left_space">
+		<%= check_box_tag 'permissions[][scoped]', 1, model.scoped? %>
+		<%= label_tag 'permissions[][scoped]', 'Only own data', :title => 'Only permit access to records owned by the current user' %>
+	</div>
 
 </div>

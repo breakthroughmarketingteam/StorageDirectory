@@ -28,9 +28,6 @@ class Listing < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   # Instance Methods
-  def accepts_reservations?
-    self.client && self.client.accepts_reservations?
-  end
   
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
@@ -80,6 +77,10 @@ class Listing < ActiveRecord::Base
   
   def unit_sizes_options_array
     self.sizes.empty? ? IssnUnitTypeSize.labels : self.sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.display_dimensions] }.uniq
+  end
+  
+  def available_sizes
+    @available_sizes ||= self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
   end
   
   #
@@ -162,9 +163,27 @@ class Listing < ActiveRecord::Base
     data.sort_by { |d| d.impressions_count || 0 }
   end
   
+  def self.find_listings_by_company_city_and_state(company, city, state)
+    self.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l " +
+                     "LEFT JOIN maps m ON m.listing_id = l.id " +
+                     "LEFT JOIN users u ON u.id = l.user_id " +
+                     "WHERE ((LOWER(m.state) LIKE '%#{state}%' " +
+                           "AND LOWER(m.city) LIKE '%#{city}%' " +
+                           "AND LOWER(l.title) LIKE '%#{company}%') " +
+                       "OR (LOWER(m.state) LIKE '%#{state}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%')) " +
+                       "OR (LOWER(m.city) LIKE '%#{city}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL " +
+                         "ORDER BY l.title LIMIT 100"
+  end
+  
   #
   # OpenTech ISSN wrapper code
   #
+  def accepts_reservations?
+    self.issn_enabled?
+  end
+  
   def issn_enabled?
     !self.facility_id.blank?
   end
@@ -215,6 +234,14 @@ class Listing < ActiveRecord::Base
   # issn method: getFacilityUnitTypesFeatures
   def get_unit_features(unit_type_id = nil)
     IssnAdapter.get_unit_features self.facility_id, unit_type_id
+  end
+  
+  def process_new_tenant(args)
+    IssnAdapter.process_new_tenant(self.facility_id, args)
+  end
+  
+  def process_tenant_payment(args)
+    IssnAdapter.process_tenant_payment(self.facility_id, args)
   end
   
   #

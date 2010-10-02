@@ -337,7 +337,7 @@ module ApplicationHelper
   
   # for the client account pages to take account who is viewing the page, an admin or the client
   def admin_conditional_path(user, options = {})
-    is_admin? ? edit_client_path(user, options) : client_account_path(user, options)
+    is_admin? ? edit_client_path(user, options) : client_account_path(user, options) rescue ''
   end
   
   # return a either a links absolute path or get the target resource path

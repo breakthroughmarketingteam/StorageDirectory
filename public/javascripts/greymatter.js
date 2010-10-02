@@ -45,7 +45,7 @@ $(function(){
 	
 	if ($('.mini_calendar').length > 0) {
 		$('.mini_calendar').datepicker();
-		$('.datepicker_wrap').click(function(){ $('.mini_calendar', this).focus(); });
+		$('.datepicker_wrap').live('click', function(){ $('.mini_calendar', this).focus(); });
 	}
 	
 	$('ul li a', '#ov-reports-cnt').click(function(){
@@ -53,22 +53,29 @@ $(function(){
 		return false;
 	});
 	
-	$('.autocomplete').live('focus', function(){
-		var $this   = $(this),
-			info	= $this.attr('rel').split('|')[0],
-			minLen	= $this.attr('rel').split('|')[1],
-			model   = info.split('_')[0],
-			method  = info.split('_')[1];
-		
-		$.getJSON('/ajax/get_autocomplete', { model: model, method: method }, function(response){
-			if (response.success && response.data.length > 0) { 
-				$this.autocomplete({
-					source: response.data,
-					minLength: minLen
+	var $autocompleters = $('.autocomplete'),
+		$autcompleted = {};
+	if ($autocompleters.length > 0) {
+		$autocompleters.each(function(){
+			var $this   = $(this), rel = $this.attr('rel'),
+				info	= rel.split('|')[0],
+				minLen	= rel.split('|')[1],
+				model   = info.split('_')[0],
+				method  = info.split('_')[1];
+			
+			if (!$autcompleted[rel]) {
+				$.getJSON('/ajax/get_autocomplete', { 'model': model, 'method': method }, function(response){
+					if (response.success && response.data.length > 0) { 
+						$autcompleted[rel] = response.data;
+						$this.autocomplete({
+							source: response.data,
+							minLength: minLen
+						});
+					} else $.ajax_error(response);
 				});
-			} else $.ajax_error(response);
-		})
-	});
+			}
+		});
+	}
 	
 	$('a', '#admin-box').click(function(){
 		var $this = $(this),
@@ -134,7 +141,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action):not(.partial_addable .add_link)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action):not(.toggle_action):not(.partial_addable .add_link)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {
@@ -143,12 +150,11 @@ $(function(){
 			}
 			
 			ajax_wrap.children().fadeTo('fast', 0.2);
-			ajax_wrap.addClass('loading').load(this.href + ' #ajax_wrap_inner', function(response, status) {
-				if (status == 'success') {
-					$(this).removeClass('loading').children().hide().fadeIn('fast');
-					$.bindPlugins();
-					
-				} else window.location = $this.attr('href');
+			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
+				if (status == 'success') $.bindPlugins();
+				else $('#ajax_wrap_inner').html(response);
+				
+				$(this).removeClass('loading').children().hide().fadeIn('fast');
 			});
 			
 			return false;
@@ -180,13 +186,13 @@ $(function(){
 	}
 	
 	// helpers
-	$('.unique_checkbox').click(function() {
+	$('.unique_checkbox').live('click', function() {
 		var $this = $(this);
 		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
 		$this.attr('checked', !$this.is(':checked'))
 	});
 	
-	$('.unique_checkbox').click(function() {
+	$('.unique_checkbox').live('click', function() {
 		var $this = $(this);
 		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
 		$this.attr('checked', !$this.is(':checked'))
@@ -207,7 +213,7 @@ $(function(){
 	
 	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
 	// e.g. #show_examples_helptext => $('.examples', '.helptext').show();
-	$('.toggle_action').click(function() {
+	$('.toggle_action').live('click', function() {
 		$.toggleAction(this.href, false);
 		return false;
 	});

@@ -7,13 +7,16 @@ class PaymentsController < ApplicationController
   require 'GoToBillingLibrary'
   
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @payment = Payment.new
+    render :layout => false if request.xhr?
   end
   
   def create
@@ -27,6 +30,7 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
   
   private

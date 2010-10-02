@@ -13,4 +13,7 @@ class Picture < ActiveRecord::Base
   
   access_shared_methods
   
+  def image() self.facility_image end
+  def image=(i) self.facility_image = i end
+  
 end

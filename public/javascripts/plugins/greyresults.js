@@ -235,7 +235,7 @@ $(function(){
 	});
 	
 	/*
-	 * FRONT END, results
+	 * FRONT END, results page
 	*/
 	
 	$compare_btns = $('.compare', '.listing');
@@ -294,6 +294,7 @@ $(function(){
 			$('.sl-table').removeClass('active');
 			$('.sl-table', rform.parent()).addClass('active');
 			rform.slideDown().addClass('active');
+			$.activate_datepicker(rform);
 		}
 
 		$('input[type=text]:first', rform).focus();
@@ -410,6 +411,11 @@ $(function(){
 		return (clicked_tab != active_panel && active_listing == clicked_listing) || 
 			   (clicked_tab == active_panel && active_listing != clicked_listing);
 	}
+	
+	$.activate_datepicker = function(context) {
+		$('.mini_calendar', context).datepicker();
+		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
+	}
 
 	// panel openers
 	$('.open_tab', '.tabs').live('click', function(){
@@ -474,8 +480,7 @@ $(function(){
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
 
 					} else if ($this.attr('rel') == 'reserve') {
-						$('.mini_calendar', $panel).datepicker();
-						$('.datepicker_wrap', $panel).click(function(){ $('.mini_calendar', this).focus(); });
+						$.activate_datepicker($panel);
 					}
 					
 				} else $.ajax_error(response);
@@ -483,7 +488,7 @@ $(function(){
 		}
 
 		return false;
-	})
+	});
 
 	// narrow search form sliders
 	$('.slider').each(function(){
@@ -506,40 +511,51 @@ $(function(){
 		});
 	});
 	
-	$('form.new_reservation').live('submit', function(){
-		var form = $(this).runValidation(),
-			data = form.serialize(),
-			ajax_loader = $('.ajax_loader', form).show();
-			
-		if (form.data('valid') && !form.data('saving')) {
-			form.data('saving', true);
-			
-			$.post(form.attr('action'), data, function(response){
-				if (response.success) {
-					var inner_panel = form.parent();
-					inner_panel.children().fadeOut(300);
-					inner_panel.animate({ height: '180px' }, 600, function(){
-						
-						inner_panel.html(
-							'<div id="quote_done">\
-								<h3>Got it! We\'ll send you the info ASAP</h3>\
-								<p>\
-									It is a long established fact that a reader will be distracted by the readable \
-									content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal \
-									distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\
-								</p>\
-							</div>'
-						);
-					});
-				
-				} else $.ajax_error(response);
-				
-				form.data('saving', false);
-			}, 'json');
-		}
+	// Reservation process, submit reserver details, then billing info
+	$('form.new_reservation', '.reserve_form').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+			});
+		});
 		
 		return false;
-	})
+	});
+	
+	$('form.edit_reservation', '.reserve_form').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+			});
+		});
+		
+		return false;
+	});
+	
+	$('#reserve_done', '.reserve_form').live('click', function(){
+		$(this).parents('.reserve_form').slideUp();
+	});
+	
+	function submit_reservation_and_do(form, callback) {
+		var form = $(form).runValidation(),
+			data = form.serialize(),
+			ajax_loader = $('.ajax_loader', form).show();
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
+			
+			$.post(form.attr('action'), data, function(response) {
+				if (response.success) callback.call(this, form, response);
+				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
+				
+				ajax_loader.hide();
+				form.data('saving', false);
+			}, 'json');
+		} else ajax_loader.hide();
+	}
 });
 
 /*

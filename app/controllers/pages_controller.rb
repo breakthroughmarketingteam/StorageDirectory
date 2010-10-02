@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   
   def index
     @pages = Page.all_for_index_view
+    render :layout => false if request.xhr?
   end
 
   def show
@@ -21,6 +22,7 @@ class PagesController < ApplicationController
 
   def new
     @page = Page.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -52,6 +54,7 @@ class PagesController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

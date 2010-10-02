@@ -7,16 +7,16 @@
 	        <%= label_tag 'reserver[last_name]', 'Last Name', :class => 'block left w80' %> <%= text_field_tag 'reserver[last_name]', nil, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'reserver[mailing_addresses_attributes][][address]', 'Address', :class => 'block left w80' %> <%= text_field_tag 'reserver[mailing_addresses_attributes][][address]', nil, :class => 'required' %>
+	        <%= label_tag 'mailing_address[address]', 'Address', :class => 'block left w80' %> <%= text_field_tag 'mailing_address[address]', nil, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'reserver[mailing_addresses_attributes][][city]', 'City', :class => 'block left w80' %> <%= text_field_tag 'reserver[mailing_addresses_attributes][][city]', nil, :class => 'required' %>
+	        <%= label_tag 'mailing_address[city]', 'City', :class => 'block left w80' %> <%= text_field_tag 'mailing_address[city]', nil, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'reserver[mailing_addresses_attributes][][state]', 'State', :class => 'block left w80' %> <%= select_tag 'reserver[mailing_addresses_attributes][][state]', option_tags(States.all, nil, ''), :class => 'required' %>
+	        <%= label_tag 'mailing_address[state]', 'State', :class => 'block left w80' %> <%= select_tag 'mailing_address[state]', option_tags(States.all, nil, ''), :class => 'required' %>
 		</p>
 		<p class="zip">
-	        <%= label_tag 'reserver[mailing_addresses_attributes][][zip]', 'Zip Code', :class => 'block left w80' %> <%= text_field_tag 'reserver[mailing_addresses_attributes][][zip]', nil, :class => 'required numeric max_5', :maxlength => 5 %>
+	        <%= label_tag 'mailing_address[zip]', 'Zip Code', :class => 'block left w80' %> <%= text_field_tag 'mailing_address[zip]', nil, :class => 'required numeric max_5', :maxlength => 5 %>
 		</p>
 		<p>
 			<% if defined?(unit_type) && unit_type %>
@@ -29,16 +29,16 @@
 	</div>
 	<div class="sl-table-exp-form-r">
 		<p>
-	        <%= label_tag 'reserver[mailing_addresses_attributes][][phone]', 'Phone', :class => 'block left w80' %> <%= text_field_tag 'reserver[mailing_addresses_attributes][][phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
+	        <%= label_tag 'mailing_address[phone]', 'Phone', :class => 'block left w80' %> <%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
 		</p>
 		<p>
 	        <%= label_tag 'reserver[email]', 'Email', :class => 'block left w80' %> <%= text_field_tag 'reserver[email]', nil, :class => 'email' %>
 		</p>
 		<p class="datepicker_wrap">
-	        <span class="hidden">Move In Date</span> <%= label_tag 'reservation[start_date]', 'Move-In Date', :class => 'block left w80' %> <%= text_field_tag 'reservation[start_date]', nil, :id => "move_in_#{listing.id}", :class => 'mini_calendar numeric_date' %>
+	        <span class="hidden">Move In Date</span> <%= label_tag 'reservation[move_in_date]', 'Move-In Date', :class => 'block left w80' %> <%= text_field_tag 'reservation[move_in_date]', nil, :id => "move_in_#{listing.id}", :class => 'mini_calendar numeric_date' %>
 		</p>
 		<p class="datepicker_wrap">
-	        <span class="hidden">Move Out Date</span> <%= label_tag 'reservation[end_date]', 'Move-Out Date', :class => 'block left w80' %> <%= text_field_tag 'reservation[end_date]', nil, :id => "move_out_#{listing.id}", :class => 'mini_calendar numeric_date' %>
+	        <span class="hidden">Move Out Date</span> <%= label_tag 'reservation[move_out_date]', 'Move-Out Date', :class => 'block left w80' %> <%= text_field_tag 'reservation[move_out_date]', nil, :id => "move_out_#{listing.id}", :class => 'mini_calendar numeric_date' %>
 		</p>
 		<p>
 	        <%= label_tag 'reservation[comments_attributes][][comment]', 'Comments', :class => 'block left w80' %> <%= text_area_tag 'reservation[comments_attributes][][comment]' %>
@@ -51,7 +51,7 @@
 		<p class="right">
 			<%= f.hidden_field :listing_id, :value => listing.id %>
 			<%= ajax_loader %>
-	        <input id="submit-btn" type="submit" value="Submit" name="commit" />
+	        <input id="submit-btn" type="submit" value="Confirm" name="commit" />
 		</p>
 	</div>
 <% end %>

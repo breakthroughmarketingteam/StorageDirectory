@@ -4,13 +4,16 @@ class GalleriesController < ApplicationController
   
   def index
     @galleries = Gallery.all_for_index_view
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @gallery = Gallery.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -26,6 +29,7 @@ class GalleriesController < ApplicationController
 
   def edit
     @image = Image.new
+    render :layout => false if request.xhr?
   end
 
   def update

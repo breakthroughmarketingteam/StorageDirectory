@@ -2,7 +2,7 @@
 <%= display_message flash %>
 
 <div id="login_page">
-	<% form_tag '/password_resets', :method => 'post' do  %>
+	<% form_tag '/password_resets', :method => 'post', :id => 'password_resets_form' do  %>
 		<fieldset>
 			<h2>Enter your email</h2>
 		

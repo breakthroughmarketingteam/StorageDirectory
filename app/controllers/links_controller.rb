@@ -4,6 +4,7 @@ class LinksController < ApplicationController
   
   def index
     @links = Link.all_for_index_view
+    render :layout => false if request.xhr?
   end
   
   def show

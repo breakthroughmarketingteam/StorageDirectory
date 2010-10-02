@@ -40,6 +40,10 @@ module ListingsHelper
     end
   end
   
+  def listing_distance_from
+    number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue ''
+  end
+  
   def more_results_link(data)
     per_page = data.per_page
     page = params[:page] ? params[:page].to_i : 1

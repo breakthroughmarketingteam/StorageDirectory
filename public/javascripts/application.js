@@ -6,12 +6,85 @@ $(document).ready(function(){
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
-	$('div > a > img', '#jqDock0').click(function(){
-		console.log(this)
-		$(this).effect('bounce', { times: 3 }, 300);
+	
+	// ajaxify the login form and forgot password link
+	$('#login_link').click(function(){
+		$(this).addClass('active');
+		var pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
+		
+		pop_up.appendTo('body').load('/login', function(response, status) {
+			if (status == 'success') {
+				pop_up.fadeIn();
+				$('input[type=text]', pop_up).eq(0).focus();
+				$.bindPlugins();
+				
+			} else alert(response);
+		});
+		
+		// close login box when user clicks outside of it
+		$(document).click(function(e) {
+			if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
+				pop_up.fadeOut(300, function() { 
+					$('#login_link').removeClass('active');
+					$(this).remove();
+				});
+			}
+		});
+		
+		return false;
 	});
 	
-	// advanced options
+	// log the user in and change the topbar to the logged in links
+	$('#new_user_session').live('submit', function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $('.ajax_loader', form);
+		
+		if (form.data('valid')) {
+			ajax_loader.show();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				if (response.success) {
+					if (response.role == 'advertiser') {
+						window.location = response.account_path;
+					} else {
+						$('#topbar').html(response.data);
+						$('#pop_up_box').fadeOut(300, function(){ $(this).remove(); });
+					}
+				} else {
+					$('#pop_up_box').html(response.data);
+				}
+
+				ajax_loader.hide();
+			}, 'json');
+		}
+		
+		return false;
+	});
+	
+	$('#forgot_pass_link').live('click', function() {
+		$('#pop_up_box').load(this.href, function(response, status) {
+			$('input[type=text]', this).eq(0).focus();
+			$.bindPlugins();
+		});
+		return false;
+	});
+	
+	$('#password_resets_form').live('submit', function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $('.ajax_loader', form);
+		
+		if (form.data('valid')) {
+			ajax_loader.show();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				form.html(response);
+			});
+		}
+		
+		return false;
+	});
+	
+	// advanced search options
 	var $size_picker = $('#size_picker'),
 		$size_img = $('img', $size_picker);
 		
@@ -67,7 +140,7 @@ $(document).ready(function(){
 		map_nav_btn.click(function(){
 			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
 			
-			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial }, function() {
+			get_pop_up_and_do({ 'title': title, 'height': height, 'modal': true }, { 'sub_partial': partial }, function() {
 				new GreyWizard($('#map_nav'), {
 					title		 : 'Choose a State',
 					slides_class : 'map_flow_step',
@@ -499,35 +572,42 @@ $(document).ready(function(){
 		});
 		
 		$('#reservations', '#ov-services').click(function(){
-			var partial = 'clients/issn_steps', title = 'Enable Online Reservations', height = '486';
-			
-			get_pop_up_and_do({ 'title': title, 'height': height }, { 'sub_partial': partial, 'model': 'Client', 'id': $('#client_id').text() }, function() {
-				new GreyWizard($('#issn_steps'), {
-					title  : title,
-					slides : [
-						{	
-							pop_up_title : title,
-							div_id  : 'issnstep_1',
-							action  : issnstep1,
-							nav_vis : [['back', 'hide'], ['next', 'fadeOut']]
-						},
-						{ 
-							pop_up_title : 'Grant Access',
-							div_id  : 'issnstep_2',
-							action  : issnstep2,
-							nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Send').data('done', false).fadeIn(); }]],
-							validate : issnstep2_validate
-						},
-						{	
-							pop_up_title : 'Request In Process',
-							div_id  : 'issnstep_3',
-							action  : issnstep3,
-							nav_vis : [['back', 'hide'], ['next', function(btn, wizard){ btn.text('Done').data('done', true) }]]
-						}
-					],
-					finish_action : issn_steps_finish
-				}).begin_workflow_on(0);
-			});
+			if ($('#issn_enabled').val()) {
+				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() });
+				
+			} else {
+				var partial = 'clients/issn_steps', 
+					title = 'Enable Online Reservations', 
+					height = '486';
+
+				get_pop_up_and_do({ title: title, height: height, modal: true }, { sub_partial: partial, model: 'Client', id: $('#client_id').text() }, function(pop_up) {
+					new GreyWizard($('#issn_steps', pop_up), {
+						title  : title,
+						slides : [
+							{	
+								pop_up_title : title,
+								div_id  : 'issnstep_1',
+								action  : issnstep1,
+								nav_vis : [['back', 'hide'], ['next', 'fadeOut']]
+							},
+							{ 
+								pop_up_title : 'Grant Access',
+								div_id  : 'issnstep_2',
+								action  : issnstep2,
+								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Send').data('done', false).fadeIn(); }]],
+								validate : issnstep2_validate
+							},
+							{	
+								pop_up_title : 'Request In Process',
+								div_id  : 'issnstep_3',
+								action  : issnstep3,
+								nav_vis : [['back', 'hide'], ['next', function(btn, wizard){ btn.text('Done').data('done', true) }]]
+							}
+						],
+						finish_action : issn_steps_finish
+					}).begin_workflow_on(0);
+				});
+			}
 			
 			return false;
 		});
@@ -567,7 +647,7 @@ $(document).ready(function(){
 		function issnstep2_validate(wizard) {
 			$('.error', '.issn_enable_opts').remove();
 			var error = '', pms = $('select#pm_software', '#'+ wizard.slide_data[1].opt_id);
-				console.log($('select#pm_software', '#issnstep_2'))
+			
 			if (!$('input#agree', '#issnstep_2').is(':checked')) error += '<p>You must agree to grant access in order to continue.</p>'
 			if (pms.val() == '') error += '<p>Please select your Property Management System.</p>'
 			
@@ -587,7 +667,7 @@ $(document).ready(function(){
 					form = $('#enable_test_form', inner).hide(),
 					ajax_loader = $('.ajax_loader', '#issnstep_3').show();
 				
-				$.post(form.attr('action'), form.serialize(), function(response){
+				$.post(form.attr('action'), form.serialize(), function(response) {
 					if (response.success) {
 						inner.html('<h2 class="framed">'+ response.data +'</h2>');
 						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload(); return false; });
@@ -598,6 +678,26 @@ $(document).ready(function(){
 				}, 'json');
 			} else $('#pop_up').dialog('close');
 		}
+		
+		$('.pagination a, .table_sorter', '#pop_up').live('click', function() {
+			$('#pop_up').load(this.href + ' #pop_up > div');
+			return false;
+		});
+		
+		$('.rsvr_detail_link', '#client_reservations').live('click', function(){
+			var $this = $(this);
+			
+			$.getJSON(this.href, {}, function(response) {
+				if (response.success) {
+					var box = $(response.data);
+					$('.reservation_wrap', 'td.region').remove();
+					box.appendTo($this.parent());
+					
+				} else $.ajax_error(response);
+			});
+			
+			return false;
+		});
 		
 		$('.hint_close').click(function(){
 			var btn = $(this),
@@ -1352,11 +1452,20 @@ function get_pop_up_and_do(options, params, callback) {
 			minHeight: options.minHeight || 420,
 			height:    options.height,
 			resizable: false,
-			modal: 	   true,
+			modal: 	   options.modal,
 			close: 	   function(){ $('.ajax_loader').hide(); $(this).dialog('destroy').remove();  }
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function get_partial_and_do(params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up_box';
+	
+	$.get('/ajax/get_partial', params, function(response) {
+		callback.call(this, $(response));
 	});
 }
 

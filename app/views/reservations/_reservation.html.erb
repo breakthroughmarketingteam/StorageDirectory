@@ -1,4 +1,10 @@
 <div class="reservation">
-	<p>Duration: <%= reservation.duration %></p>
-	<p>From: <%= reservation.nice_start_date %> To: <%= reservation.nice_end_date %></p>
+	<p><span class="block left w110">From:</span> <%= reservation.nice_move_in_date %></p>
+	<p><span class="block left w110">To:</span> <%= reservation.nice_move_out_date %></p>
+	<p><span class="block left w110">Duration:</span> <%= duration_of reservation %></p>
+	<p class="uncollapse"><span class="block left w110">Reserve Code:</span> <%= reservation.reserve_code %></p>
+
+	<% unless reservation.comment.blank? %>
+		<p class="uncollapse"><span class="block left w110">Comment:</span> <%= reservation.comment.comment %></p>
+	<% end %>
 </div>
