@@ -1,6 +1,7 @@
 <div id="listing_<%= result.id %>" class="listing">
 	<div class="inner">
-		<div class="uncollapse">
+		<div class="in">
+			<img id="num_icon" src="/images/ui/storagelocator/blog-lock.png" alt="">
 			<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
 			<div class="rslt-contact">
 				<h3 class="rslt-title">
@@ -18,26 +19,18 @@
 			
 				<li class="rslt-features">
 				  	<% unless result.user_id.blank? %>
-					<ul>
-						<li>24 Hour Access</li>
-						<li>Climate Controlled</li>	
-						<li>Business Center</li>
-						<li>Boxes and Packing Supplies</li>
-					</ul>
+						<ul>
+							<li>24 Hour Access</li>
+							<li>Climate Controlled</li>	
+							<li>Business Center</li>
+							<li>Boxes and Packing Supplies</li>
+						</ul>
 					<% end %>
 				</li>
 			
 				<li class="rslt-reserve">
 					<%= results_main_button(result) %>
 				</li>
-			
-				<% if @listings.total_entries > 1 && action_name == 'locator' %>
-					<li class="compare_li">
-						<div class="compare selectable" title="Select to compare">
-							<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
-						</div>
-					</li>
-				<% end %>
 			</ul>
 		</div>
 		

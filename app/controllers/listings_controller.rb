@@ -17,7 +17,7 @@ class ListingsController < ApplicationController
     result = Listing.geo_search params, session
     @listings = result[:data]
     @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     

@@ -623,10 +623,11 @@ try {
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
 		
-} catch (e){}
+} catch (e){ console.log(e) }
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
+	console.log('i', id, highlightIconImage)
 	marker.setImage(highlightIconImage);
 }
 
@@ -669,7 +670,7 @@ $.setGmap = function(data) {
 	Gmap.addControl(new GLargeMapControl());
 	Gmap.addControl(new GScaleControl());
 	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 12));
+	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 10));
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
@@ -691,14 +692,14 @@ $.setGmap = function(data) {
 	}
 	
 	//bind mouseover result row to highlight map marker
-	jQuery('.listing, .compare_listing').hover(function(){
+	jQuery('.listing').live('mouseenter', function(){
 		var id = $(this).attr('id').split('_')[1];
 		highlightMarker(id);
-		
-	}, function(){
+	});
+	jQuery('.listing').live('mouseleave', function(){
 		var id = $(this).attr('id').split('_')[1];
+		console.log(id)
 		unhighlightMarker(id);
-		
 	});
 	
 } // END setGmap()

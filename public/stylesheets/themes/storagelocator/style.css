@@ -136,7 +136,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
-.rslt-head-txt > p{float:left;font-weight:bold;margin:4px 0;}
+.rslt-head-txt > p{float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:5px 0;}
 .rslt-head-txt > p span{color:#333;}
 #type-one-r-col-in h2{font-weight:normal;}
@@ -186,9 +186,9 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head ul{overflow:hidden;}
 #search-head li{background:url(/images/ui/storagelocator/options-list.png) no-repeat #fff;float:left;}
 #search-head li a{color:#333;margin-left:2px;display:block;float:left;padding:4px 0 5px 5px;text-decoration:none;}
-#search-head li#list-name{margin-left:40px;width:315px;background-position:98.5% 49%;}
+#search-head li#list-name{margin-left:24px;width:300px;background-position:98.5% 49%;}
 #search-head li#list-name a{width:315px;}
-#search-head li#list-miles{margin-left:10px;width:100px;background-position:95% 49%;}
+#search-head li#list-miles{margin-left:10px;width:66px;background-position:91% 49%;}
 #search-head li#list-miles a{width:100px;}
 
 #type-one-top-bar{-moz-border-radius-bottomleft:22px;-moz-border-radius-bottomright:22px;border-color:-moz-use-text-color #CCCCCC #CCCCCC;border-right:1px solid #CCCCCC;border-style:none solid solid;border-width:0 1px 1px;position:relative;width:772px;margin-bottom:2px;}
@@ -196,16 +196,19 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg{}
 .listing > .inner{border-top:1px solid #ccc;min-height:100px;}
-#rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:#fff1bb;}
+#rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:#FFF099;}
+.listing .inner .in{overflow:hidden;position:relative;}
 .listing ul li{float:left;}
 .listing .rslt-features ul{font-size:80%;line-height:1.2;padding:10px 12px;}
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;color:#666;}
-.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin:-16px 62px 0 0}
+.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin:-16px 23px 0 0}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-features,.rslt-contact,.listing img{float:left;list-style:none;display:inline;margin-left:20px;}
-.listing img{margin-top:10px;float:left;margin-left:20px;}
+.rslt-contact,li.rslt-miles{margin-left:10px;}
+.listing img{margin-top:11px;float:left;margin-left:35px;}
+.listing #num_icon{margin:0;position:absolute;top:35%;left:0;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;margin-top:-1px;}
 .rslt-contact{width:188px;color:#555;margin-top:10px;}
@@ -218,10 +221,10 @@ li.rslt-miles{padding:0 10px;}
 li.rslt-miles,li.rslt-features{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;height:100px;color:#333;}
 li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;width:110px;height:100px;line-height:6.5;margin:0 0 0 1px;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;}
 li.rslt-reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
-li.rslt-features{width:23%;height:100px;line-height:105px;margin:0;}
+li.rslt-features{width:29%;height:100px;line-height:105px;margin:0;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 li.compare_li{margin:37px 0 0 7px;}
-ul.tabs{margin:0 0 5px 31px;float:left;}
+ul.tabs{margin:0 0 5px 30px;float:left;}
 ul.tabs li{height:16px;line-height:1.5;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;}
 ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
 ul.tabs li.open_tab_li{padding:0;}
@@ -401,7 +404,13 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #sl-fac-detail-in-edit p strong{font-weight:bold;color:#33c;margin-right:10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
 #sl-fac-detail-in-edit p.tags .value{}
-#sl-fac-dist{width:364px;float:left;text-align:center;position:relative;left:24px;}
+#sl-fac-dist{width:45%;float:left;text-align:center;position:relative;}
+#sl-fac-coup{width:45%;float:right;position:relative;border:2px dashed #ccc;}
+#sl-fac-coup-in{min-height:130px;padding:10px 12px;}
+#sl-fac-coup-in .sl-special{font-size:200%;}
+#sl-fac-coup-in .special_desc{}
+#sl-fac-coup-in .special_label{float:left;width:15%;}
+#sl-fac-coup-in .ps{position:absolute;bottom:5px;right:5px;}
 #sl-fac-dist-in-edit{text-align:center;border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;position:relative;}
 #sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:152px;padding:10px;}
 #sl-fac-dist-in-edit p,#sl-fac-dist-in p{margin:20px;font-size:16px;font-weight:bold;color:#666;}
@@ -484,15 +493,16 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat center;}
 #sl-tabs-pict{overflow:hidden;}
-#sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;margin-bottom:19px;background-color:#ddd;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall{width:230px;float:left;overflow:auto;max-height:339px;}
+#sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;margin-bottom:3px;overflow:hidden;background-color:#ddd;}
+#sl-tabs-pict-in ul#sl-tabs-pict-gall{width:33%;margin-left:10px;float:left;overflow:auto;max-height:339px;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;width:80px;position:relative;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall li img:hover,#sl-tabs-pict-in ul#sl-tabs-pict-gall .active{display:inline;-moz-box-shadow:1px 2px 10px #666;-webkit-box-shadow:1px 2px 10px #666;box-shadow:1px 2px 10px #666;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall .delete_link{position:absolute;right:0;bottom:-16px;}
 #sl-tabs-pict-in img.big-pic{float:right;border-left:2px solid #ccc;width:480px;}
 .panel #sl-tabs-pict-in{left:0;width:99.5%;}
 .panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li{margin:18px 22px 16px 7px;}
-.panel #sl-tabs-pict-in img.big-pic{width:450px;margin:0;}
+.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li img{margin:0;}
+.panel #sl-tabs-pict-in img.big-pic{width:65%;margin:0;}
 #sl-questions{float:left;width:300px;background:url(/images/ui/storagelocator/sl-questions-head.png) no-repeat center top;position:relative;top:-10px;}
 #sl-questions ul li{list-style:none;width:270px;position:relative;left:25px;margin:10px 0px;height:24px;line-height:28px;clear:both;}
 #sl-questions ul li a.blue-search-button{float:right;width:109px;height:39px;display:block;text-align:center;line-height:39px;color:#fff;font-weight:bold;font-size:14px;text-decoration:none;background:url(/images/ui/storagelocator/sl-questions-blue-btn.png) no-repeat center;margin:10px 0px;}
@@ -629,7 +639,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .listing .compare{padding:12px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 .listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{border-top:1px solid #CCC;position:relative;}
-.unit_detail_in{padding:10px 12px;background:#fff1bb;border-bottom:1px solid #CCC;font-size:80%;overflow:hidden;}
+.unit_detail_in{padding:10px 12px;background:#FFF099;border-bottom:1px solid #CCC;font-size:80%;overflow:hidden;}
 .unit_detail span{color:#4c51a3;}
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
@@ -766,7 +776,7 @@ img.right{margin:0 10px 10px 0;}
 .attr_editable .ajax_loader{right:50px;}
 .attr_editable .cancel_btn{top:141px;}
 #sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
-#listing_detail{overflow:hidden;}
+#listing_detail{overflow:hidden;margin-bottom:10px;}
 .attr_editable:hover .attr_edit{display:inline;}
 #sl-fac-detail-in-edit input.small_text_field{width:44%;}
 #sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
@@ -974,7 +984,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #narrow_results_form #advanced_opts #type_select select{width:75%;}
 #narrow_results_form #advanced_opts #size_option{width:82.5%;padding:5px 20px 20px 20px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#f2f2f2;}
 #narrow_results_form #advanced_opts #size_option #size_picker{margin-bottom:17px;}
-#narrow_results_form #advanced_opts #distance_slider{overflow:hidden;padding:12px 0 12px 20px;width:91%;}
+#narrow_results_form #advanced_opts #distance_slider{overflow:hidden;padding:12px 10px 12px 20px;width:88%;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap .arrow{margin:6px 0;}
 #narrow_results_form #advanced_opts #distance_slider label.right{width:auto;padding:0;}
