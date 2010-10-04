@@ -1,7 +1,7 @@
 class Reservation < ActiveRecord::Base
   
   belongs_to :listing, :counter_cache => true
-  belongs_to :user
+  belongs_to :reserver
   belongs_to :unit_type
   
   has_many :comments
@@ -10,17 +10,10 @@ class Reservation < ActiveRecord::Base
   acts_as_commentable
   access_shared_methods
   
-  validates_presence_of :listing_id, :user_id, :status
-  validates_date :move_in_date, :after => Date.new(Time.now.year, Time.now.month, Time.now.day), :after_message => 'must be after %s'
-  validates_date :move_out_date, :after => Proc.new { 1.month.from_now.to_date }, :after_message => 'should be at least a month from now, on %s'
+  validates_presence_of :listing_id
+  validates_date :move_in_date, :after => Proc.new { -1.day.from_now.to_date }, :after_message => 'must be after %s'
   
-  after_create :process_new_tenant
-  
-  def before_validation
-    errors.add_to_base "Sorry, a #{self.unit_type.size.display_dimensions} #{self.unit_type.size.title} is not available." unless self.unit_type.units_available?
-  end
-  
-  def process_new_tenant
+  def process_new_tenant(billing_info)
     if self.listing.accepts_reservations?
       usa = 'United States of America'
       args = {
@@ -28,48 +21,68 @@ class Reservation < ActiveRecord::Base
         :reserve_until_date => IssnAdapter.parse_date_to_YMD(self.reserve_until_date),
         :pay_months         => 0,
         :tenant => {
-          :first_name => self.user.first_name,
-          :last_name  => self.user.last_name,
-          :address    => self.user.mailing_address.address,
+          :first_name => self.reserver.first_name,
+          :last_name  => self.reserver.last_name,
+          :address    => self.reserver.mailing_address.address,
           :address2   => '',
-          :city       => self.user.mailing_address.city,
-          :state      => self.user.mailing_address.state,
-          :zip        => self.user.mailing_address.zip,
+          :city       => self.reserver.mailing_address.city,
+          :state      => self.reserver.mailing_address.state,
+          :zip        => self.reserver.mailing_address.zip,
           :country    => usa,
-          :home_phone => self.user.mailing_address.phone,
-          :email      => self.user.email,
+          :home_phone => self.reserver.mailing_address.phone,
+          :email      => self.reserver.email,
           :billing => {
-            :address  => '',
+            :address  => self.reserver.billing_info.address,
             :address2 => '',
-            :city     => '',
-            :state    => '',
-            :zip      => '',
+            :city     => self.reserver.billing_info.city,
+            :state    => self.reserver.billing_info.state,
+            :zip      => self.reserver.billing_info.zip,
             :country  => usa
+          },
+          :alt => {},
+          :military => {},
+        },
+        :pay_type => 'CC',
+        :credit_card => {
+          :type         => billing_info.card_type,
+          :name_on_card => billing_info.name,
+          :number       => billing_info.card_number,
+          :zip          => billing_info.zip,
+          :ccv          => billing_info.ccv,
+          :expires => {
+            :month => billing_info.expires_month,
+            :year  => billing_info.expires_year
           }
         },
-        :pay_type => 'Credit Card',
-        :credit_card => {
-          :type         => '',
-          :name_on_card => '',
-          :number       => '',
-          :zip          => '',
-          :ccv          => '',
-          :expires => {
-            :month => '',
-            :year  => ''
-          }
-        }, 
-        :amount_to_apply => self.unit_type
+        :bank => {},
+        :check_number => '',
+        :amount_to_apply => '20'
       }
-      self.listing.process_new_tenant self.listing.facility_id, args
+      
+      response = self.listing.process_new_tenant args
+      
+      if response['sErrorMessage'].blank?
+        self.update_attribute :reserve_code, response['sReservationCode']
+        self.update_attribute :response, response
+      end
+      
+      response
     end
   end
   
   def name
-    self.user.name
+    self.reserver.name rescue 'name missing'
   end
   
-  def month_range
+  def unit_description
+    self.unit_type ? "#{self.unit_type.size.display_dimensions} #{self.unit_type.size.description}" : self.unit_type_size
+  end
+  
+  def fee
+    self.unit_type.reserve_cost.total_cost
+  end
+  
+  def duration
     @distance_in_minutes ||= (((self.move_out_date.to_time - self.move_in_date.to_time).abs) / 60).round
     @month_range ||= (@distance_in_minutes.to_f / 43200.0).round
   end
@@ -78,25 +91,29 @@ class Reservation < ActiveRecord::Base
     self.move_in_date + 2.weeks
   end
   
-  def nice_start_date
-    "#{self.start_date.day} #{self.start_date.month}"
+  def nice_move_in_date
+    self.move_in_date.strftime "%B, %d %Y"
   end
   
-  def nice_end_date
-    "#{self.end_date.day} #{self.end_date.month}"
-  end
-  
-  def duration
-    self.end_date - self.start_date
+  def nice_move_out_date
+    self.move_out_date.strftime "%B, %d %Y"
   end
   
   def active?
     now = Time.now
-    self.start_date <= now && self.end_date > now
+    self.move_in_date <= now && self.move_out_date > now
   end
   
   def expired?
-    self.end_date < Time.now
+    self.move_out_date < Time.now
+  end
+  
+  def comment
+    self.comments.first
+  end
+  
+  def partial_link
+    "/ajax/get_partial?partial=reservations/detail&model=Reservation&id=#{self.id}"
   end
   
 end

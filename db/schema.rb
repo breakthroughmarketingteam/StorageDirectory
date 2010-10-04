@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917181027) do
+ActiveRecord::Schema.define(:version => 20100928161356) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -25,12 +25,17 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
     t.string   "phone"
     t.string   "card_type"
     t.string   "card_number"
-    t.integer  "card_expiration"
+    t.integer  "expires_month"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zip"
+    t.integer  "ccv"
+    t.integer  "expires_year"
   end
 
-  add_index "billing_infos", ["client_id", "name", "card_expiration"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+  add_index "billing_infos", ["client_id", "name", "expires_month"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
 
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"
@@ -346,7 +351,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
 
   create_table "mailing_addresses", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "user_id"
     t.string   "name"
     t.string   "company"
     t.string   "address"
@@ -359,7 +364,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
     t.string   "zip"
   end
 
-  add_index "mailing_addresses", ["client_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
+  add_index "mailing_addresses", ["user_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
 
   create_table "maps", :force => true do |t|
     t.integer  "listing_id"
@@ -437,7 +442,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
   create_table "permissions", :force => true do |t|
     t.string   "resource"
     t.string   "action"
-    t.string   "scope"
+    t.boolean  "scoped"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -503,7 +508,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "listing_id"
-    t.integer  "user_id"
+    t.integer  "reserver_id"
     t.string   "status"
     t.datetime "move_in_date"
     t.datetime "move_out_date"
@@ -511,6 +516,10 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.integer  "unit_type_id"
+    t.string   "reserve_code"
+    t.text     "response"
+    t.string   "duration"
+    t.string   "unit_type_size"
   end
 
   create_table "reserve_costs", :force => true do |t|
@@ -681,6 +690,7 @@ ActiveRecord::Schema.define(:version => 20100917181027) do
     t.string   "temp_password"
     t.string   "last_name"
     t.string   "perishable_token",                :null => false
+    t.text     "report_recipients"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

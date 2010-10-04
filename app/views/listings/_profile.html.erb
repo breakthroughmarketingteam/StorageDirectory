@@ -22,38 +22,25 @@
    
   <%= render_hints_for :listing_detail %>
 	<div id="listing_detail">
-	    <div id="sl-fac-detail">
-	      <div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
-        
-	   <img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
-		
-			<p class="address_label"><strong>Location</strong></p>
-	        <p class="address">
-	          <span rel="address" class="block value"><%= edit_listing_address @listing %></span>
-	          <% unless @listing.map.nil? %>
-	            <span rel="city" class="value"><%= @listing.map.city %></span> <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
-	          <% else %>
-	            <%= edit_listing_city_state_zip @listing %>
-	          <% end %>
-	        </p>
-        
-	        <p class="clear tags">
-	          <strong>Types:</strong> <span rel="tag_list" class="value"><%= @listing.tag_list || '&nbsp;' %></span>
-	        </p>
-		
-			    <%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>
-	      </div>
-	    </div>
-    
 	    <div id="sl-fac-dist">
 	      <div id="sl-fac-dist-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
-	        <p class="sl-phone">Call: 1800 1800 180</p>
-	        <p class="sl-special value" rel="special"><%= @listing.display_special %></p>
-        
 			<% unless action_name == 'edit' %>
-				<p class="sl-dist">We are just <span id="rslt-number"><span><%= number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) %></span></span> miles from you!</p>
+				<p class="sl-dist">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
 			<% end %>
+			
+	        <p class="sl-phone">Call: 1800 1800 180</p>
 
+	        <%= render :partial => 'info_edit', :locals => { :model => [@listing, @special], :info => 'special' } if action_name == 'edit' %>
+	      </div>
+	    </div>
+		
+		<div id="sl-fac-coup">
+	      <div id="sl-fac-coup-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
+			<p class="special_label">Exclusive Offer</p>
+	        <p class="sl-special value" rel="special">1st Month Free<%#= @listing.display_special %></p>
+			<p class="special_desc">Reserve today and get the first month off your monthly rate.</p>
+			
+			<a href="#" class="ps">Print</a>
 	        <%= render :partial => 'info_edit', :locals => { :model => [@listing, @special], :info => 'special' } if action_name == 'edit' %>
 	      </div>
 	    </div>
@@ -64,13 +51,13 @@
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
 			<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') %>
-          	<%= content_tag :li, link_to('Unit Sizes', '#unit_sizes', :rel => 'sl-tabs-sizes') unless @sizes.empty? && @showing %>
+          	<%= content_tag :li, link_to('Unit Sizes', '#unit_sizes', :rel => 'sl-tabs-sizes') unless @listing.available_sizes.empty? && @showing %>
           	<%= content_tag :li, link_to('Features', '#features', :rel => 'sl-tabs-feat') unless @facility_features.empty? && @showing %>
           	<%= content_tag :li, link_to('Pictures', '#pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
         </ul>
         <!-- tab content -->
 		<%= render :partial => 'big_map' %>
-        <%= render :partial => 'sizes' unless @sizes.empty? && @showing %>
+        <%= render :partial => 'sizes' unless @listing.available_sizes.empty? && @showing %>
         <%= render :partial => 'features' unless @facility_features.empty? && @showing %>
         <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
       </div>

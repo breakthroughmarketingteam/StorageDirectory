@@ -1,7 +1,5 @@
 class IssnAdapter
-  require "uri"
-  require "net/https"
-  require 'cobravsmongoose'
+  %w(uri net/https cobravsmongoose cgi).map { |lib| require lib }
   
   # test data
   @@facility_ids = %w(
@@ -22,12 +20,12 @@ class IssnAdapter
   # Data Retrieval
   #
   def self.find_facilities(args = {})
-    query = "&sPostalCode=#{args[:zip] || '85021'}&sCity=#{args[:city]}&sState=#{args[:state]}&sStreetAddress=#{args[:address]}&sMilesDistance=#{args[:within] || '15'}&sSizeCodes=#{args[:size_code]}&sFacilityFeatureCodes=#{args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{args[:size_type_feature_code]}&sOrderBy=#{args[:order]}"
+    query = "&sPostalCode=#{escape_query args[:zip] || '85021'}&sCity=#{escape_query args[:city]}&sState=#{escape_query args[:state]}&sStreetAddress=#{escape_query args[:address]}&sMilesDistance=#{escape_query args[:within] || '15'}&sSizeCodes=#{escape_query args[:size_code]}&sFacilityFeatureCodes=#{escape_query args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{escape_query args[:size_type_feature_code]}&sOrderBy=#{escape_query args[:order]}"
     call_and_parse 'findFacilities', query
   end
   
   def self.get_authorized_facilities(args = {})
-    call_and_parse 'admin_getUsersFacilities', "&sForUser=#{args[:user] || @@username}"
+    call_and_parse 'admin_getUsersFacilities', "&sForUser=#{escape_query args[:user] || @@username}"
   end
   
   # ISSN methods that only require a facility id
@@ -57,93 +55,93 @@ class IssnAdapter
   end
   
   def self.get_move_in_cost(facility_id, args = {})
-    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sFacilityUnitId=#{args[:unit_id]}&sPromoCode=#{args[:promo_code]}&sInsuranceId=#{args[:insurance_id]}"
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{escape_query args[:type_id]}&sFacilityUnitId=#{escape_query args[:unit_id]}&sPromoCode=#{escape_query args[:promo_code]}&sInsuranceId=#{escape_query args[:insurance_id]}"
     call_and_parse 'getMoveinCost', query
   end
   
   def self.get_reserve_cost(facility_id, args = {})
-    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{args[:type_id]}&sUnitId=#{args[:unit_id]}&sForDateYMD=#{args[:date]}"
+    query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{escape_query args[:type_id]}&sUnitId=#{escape_query args[:unit_id]}&sForDateYMD=#{escape_query args[:date]}"
     call_and_parse 'getReserveCost', query
   end
   
   def self.process_new_tenant(facility_id, args = {})
-    query = "&sFacilityId=#{facility_id}
-             &sFacilityUnitTypesId=#{args[:type_id]}
-             &sFacilityUnitId=#{args[:unit_id]}
-             &sPromoId=#{args[:promo_id]}
-             &sInsuranceId=#{args[:insurance_id]}
-             &sReserveUntilDateYMD=#{args[:reserve_until_date]}
-             &sPayMonths=#{args[:pay_months]}
-             &sTenantCompanyName=#{args[:tenant][:company_name]}
-             &sTenantFirstName=#{args[:tenant][:first_name]}
-             &sTenantLastName=#{args[:tenant][:last_name]}
-             &sTenantAddress1=#{args[:tenant][:address]}
-             &sTenantAddress2=#{args[:tenant][:address2]}
-             &sTenantCity=#{args[:tenant][:city]}
-             &sTenantState=#{args[:tenant][:state]}
-             &sTenantPostalCode=#{args[:tenant][:zip]}
-             &sTenantCountry=#{args[:tenant][:country]}
-             &sTenantHomePhone=#{args[:tenant][:home_phone]}
-             &sTenantWorkPhone=#{args[:tenant][:work_phone]}
-             &sTenantMobilePhone=#{args[:tenant][:mobile_phone]}
-             &sTenantEmail=#{args[:tenant][:email]}
-             &sTenantEmployer=#{args[:tenant][:employer]}
-             &sTenantDriverLicense=#{args[:tenant][:driver_license]}
-             &sTenantDriverLicenseState=#{args[:tenant][:driver_license_state]}
-             &sTenantVehicleType=#{args[:tenant][:vehicle_type]}
-             &sTenantVehiclePlate=#{args[:tenant][:vehicle_plate]}
-             &sTenantBillingAddress1=#{args[:tenant][:billing][:address]}
-             &sTenantBillingAddress2=#{args[:tenant][:billing][:address2]}
-             &sTenantBillingCity=#{args[:tenant][:billing][:city]}
-             &sTenantBillingState=#{args[:tenant][:billing][:state]}
-             &sTenantBillingPostalCode=#{args[:tenant][:billing][:zip]}
-             &sTenantBillingCountry=#{args[:tenant][:billing][:country]}
-             &sTenantAltFirstName=#{args[:tenant][:alt][:first_name]}
-             &sTenantAltLastName=#{args[:tenant][:alt][:last_name]}
-             &sTenantAltPhone=#{args[:tenant][:alt][:phone]}
-             &sTenantMilitaryFlag=#{args[:tenant][:military][:flag]}
-             &sTenantMilitaryBase=#{args[:tenant][:military][:base]}
-             &sTenantMilitaryContact=#{args[:tenant][:military][:contact]}
-             &sTenantMilitaryPhone=#{args[:tenant][:military][:phone]}
-             &sTenantSocialSecurityNumber=#{args[:tenant][:social_security_number]}
-             &sPayType=#{args[:pay_type]}
-             &sCreditCardType=#{args[:credit_card][:type]}
-             &sCreditCardNameOnCard=#{args[:credit_card][:name_on_card]}
-             &sCreditCardNumber=#{args[:credit_card][:number]}
-             &sCreditCardExpMonth=#{args[:credit_card][:expires][:month]}
-             &sCreditCardExpYear=#{args[:credit_card][:expires][:year]}
-             &sCreditCardPostalCode=#{args[:credit_card][:zip]}
-             &sCreditCardCCV=#{args[:credit_card][:ccv]}
-             &sSaveCreditCardInfo=#{args[:save_credit_card_info]}
-             &sBankRoutingNumber=#{args[:bank][:routing_number]}
-             &sBankAccountNumber=#{args[:bank][:account_number]}
-             &sBankName=#{args[:bank][:name]}
-             &sBankAccountName=#{args[:bank][:account_name]}
-             &sCheckNumber=#{args[:check_number]}
-             &sAmountToApply=#{args[:amount_to_apply]}"
+    query = "&sFacilityId=#{facility_id}"+
+            "&sFacilityUnitTypesId=#{escape_query args[:type_id]}"+
+            "&sFacilityUnitId=#{escape_query args[:unit_id]}"+
+            "&sPromoId=#{escape_query args[:promo_id]}"+
+            "&sInsuranceId=#{escape_query args[:insurance_id]}"+
+            "&sReserveUntilDateYMD=#{escape_query args[:reserve_until_date]}"+
+            "&sPayMonths=#{escape_query args[:pay_months]}"+
+            "&sTenantCompanyName=#{escape_query args[:tenant][:company_name]}"+
+            "&sTenantFirstName=#{escape_query args[:tenant][:first_name]}"+
+            "&sTenantLastName=#{escape_query args[:tenant][:last_name]}"+
+            "&sTenantAddress1=#{escape_query args[:tenant][:address]}"+
+            "&sTenantAddress2=#{escape_query args[:tenant][:address2]}"+
+            "&sTenantCity=#{escape_query args[:tenant][:city]}"+
+            "&sTenantState=#{escape_query args[:tenant][:state]}"+
+            "&sTenantPostalCode=#{escape_query args[:tenant][:zip]}"+
+            "&sTenantCountry=#{escape_query args[:tenant][:country]}"+
+            "&sTenantHomePhone=#{escape_query args[:tenant][:home_phone]}"+
+            "&sTenantWorkPhone=#{escape_query args[:tenant][:work_phone]}"+
+            "&sTenantMobilePhone=#{escape_query args[:tenant][:mobile_phone]}"+
+            "&sTenantEmail=#{escape_query args[:tenant][:email]}"+
+            "&sTenantEmployer=#{escape_query args[:tenant][:employer]}"+
+            "&sTenantDriverLicense=#{escape_query args[:tenant][:driver_license]}"+
+            "&sTenantDriverLicenseState=#{escape_query args[:tenant][:driver_license_state]}"+
+            "&sTenantVehicleType=#{escape_query args[:tenant][:vehicle_type]}"+
+            "&sTenantVehiclePlate=#{escape_query args[:tenant][:vehicle_plate]}"+
+            "&sTenantBillingAddress1=#{escape_query args[:tenant][:billing][:address]}"+
+            "&sTenantBillingAddress2=#{escape_query args[:tenant][:billing][:address2]}"+
+            "&sTenantBillingCity=#{escape_query args[:tenant][:billing][:city]}"+
+            "&sTenantBillingState=#{escape_query args[:tenant][:billing][:state]}"+
+            "&sTenantBillingPostalCode=#{escape_query args[:tenant][:billing][:zip]}"+
+            "&sTenantBillingCountry=#{escape_query args[:tenant][:billing][:country]}"+
+            "&sTenantAltFirstName=#{escape_query args[:tenant][:alt][:first_name]}"+
+            "&sTenantAltLastName=#{escape_query args[:tenant][:alt][:last_name]}"+
+            "&sTenantAltPhone=#{escape_query args[:tenant][:alt][:phone]}"+
+            "&sTenantMilitaryFlag=#{escape_query args[:tenant][:military][:flag]}"+
+            "&sTenantMilitaryBase=#{escape_query args[:tenant][:military][:base]}"+
+            "&sTenantMilitaryContact=#{escape_query args[:tenant][:military][:contact]}"+
+            "&sTenantMilitaryPhone=#{escape_query args[:tenant][:military][:phone]}"+
+            "&sTenantSocialSecurityNumber=#{escape_query args[:tenant][:social_security_number]}"+
+            "&sPayType=#{escape_query args[:pay_type]}"+
+            "&sCreditCardType=#{escape_query args[:credit_card][:type]}"+
+            "&sCreditCardNameOnCard=#{escape_query args[:credit_card][:name_on_card]}"+
+            "&sCreditCardNumber=#{escape_query args[:credit_card][:number]}"+
+            "&sCreditCardExpMonth=#{escape_query pad_int_str(args[:credit_card][:expires][:month])}"+
+            "&sCreditCardExpYear=#{escape_query pad_int_str(args[:credit_card][:expires][:year])}"+
+            "&sCreditCardPostalCode=#{escape_query args[:credit_card][:zip]}"+
+            "&sCreditCardCCV=#{escape_query args[:credit_card][:ccv]}"+
+            "&sSaveCreditCardInfo=#{escape_query args[:save_credit_card_info]}"+
+            "&sBankRoutingNumber=#{escape_query args[:bank][:routing_number]}"+
+            "&sBankAccountNumber=#{escape_query args[:bank][:account_number]}"+
+            "&sBankName=#{escape_query args[:bank][:name]}"+
+            "&sBankAccountName=#{escape_query args[:bank][:account_name]}"+
+            "&sCheckNumber=#{escape_query args[:check_number]}"+
+            "&sAmountToApply=#{escape_query args[:amount_to_apply]}"
     call_and_parse 'processNewTenant', query
   end
   
   def process_tenant_payment(facility_id, args = {})
     query = "&sFacilityId=#{facility_id}
-             &sUnitName=#{args[:unit_name]}
-             &sTenantId=#{args[:tenant_id]}
-             &sTenantPIN=#{args[:tenant_pin]}
-             &sPayType=#{args[:pay_type]}
-             &sCreditCardType=#{args[:credit_card][:type]}
-             &sCreditCardNameOnCard=#{args[:credit_card][:name_on_card]}
-             &sCreditCardNumber=#{args[:credit_card][:number]}
-             &sCreditCardExpMonth=#{args[:credit_card][:expires][:month]}
-             &sCreditCardExpYear=#{args[:credit_card][:expires][:year]}
-             &sCreditCardPostalCode=#{args[:credit_card][:zip]}
-             &sCreditCardCCV=#{args[:credit_card][:ccv]}
-             &sBankRoutingNumber=#{args[:bank][:routing_number]}
-             &sBankAccountNumber=#{args[:bank][:account_number]}
-             &sBankName=#{args[:bank][:name]}
-             &sBankAccountName=#{args[:bank][:account_name]}
-             &sCheckNumber=#{args[:check_number]}
-             &sAmountToApply=#{args[:amount_to_apply]}
-             &sMonthsToPay=#{args[:months_to_pay]}"
+             &sUnitName=#{escape_query args[:unit_name]}
+             &sTenantId=#{escape_query args[:tenant_id]}
+             &sTenantPIN=#{escape_query args[:tenant_pin]}
+             &sPayType=#{escape_query args[:pay_type]}
+             &sCreditCardType=#{escape_query args[:credit_card][:type]}
+             &sCreditCardNameOnCard=#{escape_query args[:credit_card][:name_on_card]}
+             &sCreditCardNumber=#{escape_query args[:credit_card][:number]}
+             &sCreditCardExpMonth=#{escape_query args[:credit_card][:expires][:month]}
+             &sCreditCardExpYear=#{escape_query args[:credit_card][:expires][:year]}
+             &sCreditCardPostalCode=#{escape_query args[:credit_card][:zip]}
+             &sCreditCardCCV=#{escape_query args[:credit_card][:ccv]}
+             &sBankRoutingNumber=#{escape_query args[:bank][:routing_number]}
+             &sBankAccountNumber=#{escape_query args[:bank][:account_number]}
+             &sBankName=#{escape_query args[:bank][:name]}
+             &sBankAccountName=#{escape_query args[:bank][:account_name]}
+             &sCheckNumber=#{escape_query args[:check_number]}
+             &sAmountToApply=#{escape_query args[:amount_to_apply]}
+             &sMonthsToPay=#{escape_query args[:months_to_pay]}"
     call_and_parse 'processTenantPayment'
   end
   
@@ -199,12 +197,11 @@ class IssnAdapter
 
   # parse the complex soap schema into a simple ruby hash
   def self.parse_response(response, method)
-    data = soap_data_set response.body, method
-    parse_hash_or_array data
+    parse_hash_or_array soap_data_set(response.body, method)
   end
 
   def self.soap_data_set(body, method)
-    CobraVsMongoose.xml_to_hash(body)['DataSet']["diffgr:diffgram"]['NewDataSet'][data_key_for(method)]
+    CobraVsMongoose.xml_to_hash(body)['DataSet']['diffgr:diffgram']['NewDataSet'][data_key_for(method)]
   end
 
   def self.parse_soap_array(data)
@@ -235,7 +232,11 @@ class IssnAdapter
   
   # add a 0 to an integer < 10
   def self.pad_int_str(int)
-    int.to_s.size == 1 ? '0'+ int.to_s : int
+    int.to_s.size == 1 ? '0'+ int.to_s : int.to_s
+  end
+  
+  def self.escape_query(q)
+    CGI.escape q if q.is_a?(String)
   end
   
   # DataSet key mappings
@@ -274,9 +275,9 @@ class IssnAdapter
         'ReserveCost'
     
       when 'processNewTenant'
-        'NewTenant'
+        'processNewTenant'
       when 'processTenantPayment'
-        'TenantPayment'
+        'processTenantPayment'
         
     # admin methods
       when 'admin_getUsersFacilities'
@@ -287,7 +288,7 @@ class IssnAdapter
   end
   
   def self.useless_keys
-    ["@diffgr:id", '@xmlns', "@msdata:rowOrder", 'sReplyCode']
+    ['@diffgr:id', '@xmlns', '@msdata:rowOrder', 'sReplyCode']
   end
   
   def self.rand_facility_id

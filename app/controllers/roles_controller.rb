@@ -3,13 +3,16 @@ class RolesController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @role = Role.new
+    render :layout => false if request.xhr?
   end
   
   # TODO: too much code in this controller, fix it!
@@ -51,6 +54,7 @@ class RolesController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

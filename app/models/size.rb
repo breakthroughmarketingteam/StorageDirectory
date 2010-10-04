@@ -13,4 +13,8 @@ class Size < ActiveRecord::Base
     self.price / 100 rescue 0
   end
   
+  def dims
+    "#{width}x#{length}"
+  end
+  
 end

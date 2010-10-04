@@ -4,21 +4,24 @@ class ClientsController < ApplicationController
   before_filter :get_model, :only => [:show, :update, :destroy, :test_issn]
   
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @client = Client.new
+    render :layout => false if request.xhr?
   end
   
   def create
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address]
     
-    @client.build_account_setting :settings_hash => '{ :user_hints => "show" }'
     @client.user_hints = UserHint.all
+    #@client.report_recipients = @client.email
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]

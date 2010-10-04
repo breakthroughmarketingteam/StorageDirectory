@@ -12,11 +12,10 @@ class User < ActiveRecord::Base
   has_one  :profile_image, :class_name => 'Image', :order => 'id'
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
-  has_many :reservations
-  has_many :mailing_addresses, :dependent => :destroy, :foreign_key => 'client_id'
+  has_many :mailing_addresses
   accepts_nested_attributes_for :mailing_addresses
   
-  validates_presence_of :name, :email, :role_id
+  validates_presence_of :first_name, :email, :role_id
   validates_uniqueness_of :email, :scope => :type
   
   acts_as_authentic
@@ -50,7 +49,6 @@ class User < ActiveRecord::Base
     self.password_confirmation = self.temp_password
     self.activation_code       = self.make_activation_code
     self.status                = 'unverified'
-    self.role_id               = self.class.name == 'Client' ? Role.get_role_id('advertiser') : Role.get_role_id('reserver')
   end
   
   def name
@@ -59,6 +57,12 @@ class User < ActiveRecord::Base
   
   def mailing_address
     self.mailing_addresses.first
+  end
+  
+  def has_address?(address_attribtues)
+    self.mailing_addresses.any? do |address|
+      address[:zip] == address_attribtues[:zip].to_i && address[:address].downcase == address_attribtues[:address].downcase
+    end
   end
   
   def make_activation_code
@@ -77,7 +81,7 @@ class User < ActiveRecord::Base
   # only allow a user to view and update their own profile
   # or perform allowed action on resources defined in their permissions
   def has_permission?(controller, action, params = {})
-    return true if self.has_role?('Admin')
+    return true if self.has_role?('Admin') || controller == 'user_sessions'
     
     if controller =~ /(users)|(images)/ && action !~ /new|create|destroy/
       if (controller == 'users' && params[:id].to_i == self.id) || (controller == 'images' && params[:user_id].to_i == self.id)
@@ -85,11 +89,7 @@ class User < ActiveRecord::Base
       end
     end
     
-    self.permissions.each do |p|
-      return true if p.allows?(action) && p.resource == controller
-    end
-    
-    false # default if no permission defined for controller and action
+    self.permissions.any? { |p| p.allows?(action) && p.resource == controller }
   end
   
   def deliver_password_reset_instructions!

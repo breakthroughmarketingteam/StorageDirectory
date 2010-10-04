@@ -3,13 +3,16 @@ class UserHintsController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   
   def index
+    render :layout => false if request.xhr?
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
     @user_hint = UserHint.new
+    render :layout => false if request.xhr?
   end
   
   def create
@@ -24,6 +27,7 @@ class UserHintsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update
@@ -46,10 +50,20 @@ class UserHintsController < ApplicationController
   end
   
   def hide
+    toggle true
+  end
+  
+  def open
+    toggle false
+  end
+  
+  private
+  
+  def toggle(state)
     return unless current_user
-    @placement = current_user.user_hint_placements.find(params[:placement_id])
+    @placement = current_user.user_hint_placements.find(params[:id])
     
-    if @placement.update_attribute :hide, true
+    if @placement.update_attribute :hide, state
       render :json => { :success => true }
     else
       render :json => { :success => false, :data => model_errors(@placement) }

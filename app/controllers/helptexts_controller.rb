@@ -3,13 +3,16 @@ class HelptextsController < ApplicationController
   
   def index
     @helptexts = Helptext.all
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @helptext = Helptext.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -24,6 +27,7 @@ class HelptextsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

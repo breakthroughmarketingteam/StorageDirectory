@@ -6,7 +6,6 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	
 	$.convert_unit_size_row_values_to_inputs = function(container) {
 		// values and such
 		var sizes_li	= $('.st-size', container),
@@ -114,8 +113,8 @@ $(function(){
 		hidden_form.find('input[name=_method]').val('put');
 		
 		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
+		sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
+		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
 
 		if ($(this).text() == 'Edit') {
 			$.convert_unit_size_row_values_to_inputs(container);
@@ -414,7 +413,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
+		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -511,8 +510,36 @@ $(function(){
 		});
 	});
 	
-	$('form.new_reservation').live('submit', function(){
-		var form = $(this).runValidation(),
+	// Reservation process, submit reserver details, then billing info
+	$('form.new_reservation').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+				$('.hintable', inner_panel).hinty()
+			});
+		});
+		
+		return false;
+	});
+	
+	$('form.edit_reservation').live('submit', function() {
+		submit_reservation_and_do(this, function(form, response) {
+			var inner_panel = form.parent();
+			inner_panel.children().fadeOut(300, function(){
+				inner_panel.html(response.data).children().hide().fadeIn();
+			});
+		});
+		
+		return false;
+	});
+	
+	$('#reserve_done', '.reserve_form').live('click', function(){
+		$(this).parents('.reserve_form').slideUp();
+	});
+	
+	function submit_reservation_and_do(form, callback) {
+		var form = $(form).runValidation(),
 			data = form.serialize(),
 			ajax_loader = $('.ajax_loader', form).show();
 		
@@ -520,33 +547,20 @@ $(function(){
 			form.data('saving', true);
 			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
-			$.post(form.attr('action'), data, function(response){
-				if (response.success) {
-					var inner_panel = form.parent();
-					inner_panel.children().fadeOut(300);
-					inner_panel.animate({ height: '180px' }, 600, function(){
-						
-						inner_panel.html(
-							'<div id="quote_done">\
-								<h3>Got it! We\'ll send you the info ASAP</h3>\
-								<p>\
-									It is a long established fact that a reader will be distracted by the readable \
-									content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal \
-									distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\
-								</p>\
-							</div>'
-						);
-					});
-				
-				} else form.prepend('<div class="flash flash-error">'+ response.data.join('<br />') +'</div>')
+			$.post(form.attr('action'), data, function(response) {
+				if (response.success) callback.call(this, form, response);
+				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		} else ajax_loader.hide();
-		
+	}
+	
+	$('.tos').live('click', function(){
+		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
 		return false;
-	})
+	});
 });
 
 /*
@@ -609,10 +623,11 @@ try {
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
 		
-} catch (e){}
+} catch (e){ console.log(e) }
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
+	console.log('i', id, highlightIconImage)
 	marker.setImage(highlightIconImage);
 }
 
@@ -655,7 +670,7 @@ $.setGmap = function(data) {
 	Gmap.addControl(new GLargeMapControl());
 	Gmap.addControl(new GScaleControl());
 	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 12));
+	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 10));
 	Gmap.enableDoubleClickZoom();
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
@@ -677,14 +692,14 @@ $.setGmap = function(data) {
 	}
 	
 	//bind mouseover result row to highlight map marker
-	jQuery('.listing, .compare_listing').hover(function(){
+	jQuery('.listing').live('mouseenter', function(){
 		var id = $(this).attr('id').split('_')[1];
 		highlightMarker(id);
-		
-	}, function(){
+	});
+	jQuery('.listing').live('mouseleave', function(){
 		var id = $(this).attr('id').split('_')[1];
+		console.log(id)
 		unhighlightMarker(id);
-		
 	});
 	
 } // END setGmap()

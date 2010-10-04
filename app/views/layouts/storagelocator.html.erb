@@ -7,19 +7,17 @@
 		<%= stylesheet_link_tag @theme_css %>
 		
 		<meta charset="utf-8" />
+		<%= site_meta_tags %>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		<title><%= yield :title %></title>
 
-		<%= site_meta_tags %>
 		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
 		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
 		<%= javascript_include_tag 'jquery.all' %>
-		<%= yield :scripts %>
 		<%= javascript_include_tag @plugins %>
+		<%= yield :scripts %>
 	  	<%= javascript_include_tag 'greymatter', 'application' %>
-		<%#= javascript_include_tag 'queryLoader' if @page %>
 	  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
-    
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,117 +28,85 @@
 		<![endif]-->
 	</head>
 	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
-		
 		<div id="topbar">
 			<%= render :partial => 'menus/topnav' %>
 		</div>
-		
-		<!-- First set up a page container to take the header and main content -->
-    <div id="page-ctr">
-
-    		<!-- Now insert the header. This will sit in front of the repeating background --> 
-        <div id="head-ctr">
-    				 <!-- To align everything in the header correctly, it needs an inner container as well -->
-    				 <div id="head-ctr-in">
-        				 <div id="oldlogo">
-                   			<a href="/">
-								<img id="logotop" src="/images/ui/storagelocator/page-headlogo-top.png" alt="" />
-								<img id="logoimg" src="/images/ui/storagelocator/us-self-storage-locator-logo.gif" alt="US Self Storage Locator" />
-								<img id="logoshadow" src="/images/ui/storagelocator/logo-shadow.png" alt="" />
-							</a>
-        				 </div>
-        					
-        					<div id="title">
-        						<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
-								<h2><%= @slogan %></h2>
-        					</div>
-        					
-							<!--
-        					<div id="top-nav">
-        					  	<span class="left"><%= link_to 'English', '#' %>&nbsp;|&nbsp;<%= link_to 'Español', '#' %></span>
-								<%= conditional_account_path %>
-      							<ul>
-									<li class="hidden"><a href="#top">Skip Navigation</a></li>
-									<li class="top-nav-login">
-										<%= link_to_if current_user.nil?, 'Login', login_path do
-											link_to 'Logout', logout_path
-										end %>
-									</li>
-									<li class="top-nav-help"><a href="">Help</a></li>
-      							</ul>
-        					</div>
-        					
-        					<div id="main-nav">
-      							<ul class="sortable">
-      								<%= render :partial => 'menus/nav', :collection => @nav_pages %>
-      							</ul> 
-        					</div>
-							-->
-    				 </div>
-        </div>
-    		<!-- End the header container -->
-
-    		<!-- Now have the page container to hold a bottom background within the main repeating background. -->
-        <div id="page-ctr-in">
-
-    				 <!-- This area contains all the page content - The main editable area -  This will be relatively positioned to overlap the header -->
-        		 <div id="page-cnt">
-
-    							<div id="page-cnt-top-bg">
-    							<div id="type-one-cnt-in">
-    							<!-- Start the editable area -->
-    							<a name="top"></a>
-                    
-                    <div id="content">
-                      <div id="sidebar">
-                        <%= yield :sidebar %>
-                      </div>
-                      
-                      <%= yield %>
-                      
-                      <div id="column_5" class="region">
-            						<%= yield :column_5 %>
-            					</div>
-                    </div>
-         					  <!-- /the stuff -->
-
-         						<div id="content_bottom" class="region">
-         							<%= yield :content_bottom %>
-         						</div>
-                    <div class="clear"></div>
-                    
-    							<!-- End the editable area -->
-    							</div>
-        
-    						</div>
-        
-    						<div class="clear"></div>
-
-
-        		 </div>
-
-    				 <!-- End main content area -->
-
-    				 <!-- This empty div is used to create a space before the footer 
-        		 <div id="cnt-space"></div>                                       -->
-        </div>
-    		<!-- Now end the page-container-inner -->
-
-    </div>
-    <!-- Now end the page-container-outer -->
-    
-    <div id="footer">
-		<div id="footer_top">
-			<div class="divide">
-				<p class="wrapper">Need to find Self Storage? It's Easy!</p>
+		<div id="page-ctr">
+			<div id="head-ctr">
+				<div id="head-ctr-in">
+					<div id="oldlogo">
+						<a href="/">
+							<img id="logotop" src="/images/ui/storagelocator/page-headlogo-top.png" alt="" name="logotop">
+							<img id="logoimg" src="/images/ui/storagelocator/us-self-storage-locator-logo.gif" alt="US Self Storage Locator" name="logoimg">
+							<img id="logoshadow" src="/images/ui/storagelocator/logo-shadow.png" alt="" name="logoshadow">
+						</a>
+					</div>
+					<div id="title">
+						<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
+						<h2><%= @slogan %></h2>
+					</div>
+					<div id="dock">
+						<a id="map_nav_btn" href="#us-map" name="map_nav_btn">
+							<img src="/images/ui/storagelocator/us-map-icon.png" alt="US Map" title="US Map">
+							US Map
+						</a> 
+						<!--<a href="#us-cities">
+							<img src="/images/ui/storagelocator/us-cities-icon.png" alt="US Cities" title="US Cities">
+							US Cities
+						</a>-->
+						<a href="/storage-info">
+							<img src="/images/ui/storagelocator/storage-info-icon.png" alt="Storage Info" title="Storage Info">
+							Storage Info
+						</a>
+						<a href="/storage-tips">
+							<img src="/images/ui/storagelocator/storage-tips-icon.png" alt="Storage Tips" title="Storage Tips">
+							Storage Tips
+						</a>
+						<a href="/spanish">
+							<img src="/images/ui/storagelocator/spanish-icon.png" alt="Spanish" title="Spanish">
+							Spanish
+						</a>
+						<a href="/add-your-facility">
+							<img src="/images/ui/storagelocator/add-facility-icon.png" alt="Add Your Facility" title="Add Your Facility">
+							Add Your Facility
+						</a>
+					</div>
+				</div>
+			</div><!-- END header container -->
+			<div id="page-ctr-in">
+				<div id="page-cnt">
+					<div id="page-cnt-top-bg">
+						<div id="type-one-cnt-in">
+							<!-- Start the editable area -->
+							<a name="top" id="top"></a>
+							<div id="content">
+								<div id="sidebar">
+									<%= yield :sidebar %>
+								</div><%= yield %>
+								<div id="column_5" class="region">
+									<%= yield :column_5 %>
+								</div>
+							</div><!-- /the stuff -->
+							<div id="content_bottom" class="region">
+								<%= yield :content_bottom %>
+							</div>
+							<div class="clear"></div><!-- End the editable area -->
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div><!-- END main content area -->
+			</div><!-- END page-container-inner -->
+		</div><!-- END page-container-outer -->
+		<div id="footer">
+			<div id="footer_top">
+				<div class="divide">
+					<p class="wrapper">
+						Need to find Self Storage? It's Easy!
+					</p>
+				</div>
 			</div>
+			<%= yield :footer %>
+			<%#= render :partial => 'pages/footer' %>
 		</div>
-		
-		<%= yield :footer unless params[:title] == 'home' %>
-		<%= render :partial => 'pages/footer' %>
-	</div>
-	
-	<!--<script>try{QueryLoader.selectorPreload = "body";QueryLoader.init();}catch(e){}</script>-->
-	
 	</body>
 </html>

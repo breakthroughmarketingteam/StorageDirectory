@@ -7,13 +7,17 @@ class ImagesController < ApplicationController
     else
       @images = User.find(params[:user_id]).images
     end
+    
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @image = Image.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -30,6 +34,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

@@ -3,13 +3,16 @@ class GroupsController < ApplicationController
   
   def index
     @groups = Group.all_for_index_view
+    render :layout => false if request.xhr?
   end
   
   def show
+    render :layout => false if request.xhr?
   end
   
   def new
     @group = Group.new
+    render :layout => false if request.xhr?
   end
 
   def create
@@ -25,6 +28,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    render :layout => false if request.xhr?
   end
 
   def update

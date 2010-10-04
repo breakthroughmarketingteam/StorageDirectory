@@ -1,8 +1,11 @@
 <% declare_content_for %>
-<%= display_message flash %>
 
-<h2 class="stack">Reservation by <%= @reservation.name %></h2>
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
 
-<div id="Reservation">
-	<%= render :partial => 'detail', :locals => { :reservation => @reservation } %>
+	<h2 class="stack">Reservation by <%= @reservation.name %></h2>
+
+	<div id="Reservation">
+		<%= render :partial => 'detail', :locals => { :reservation => @reservation } %>
+	</div>
 </div>

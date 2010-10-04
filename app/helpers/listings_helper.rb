@@ -34,10 +34,14 @@ module ListingsHelper
   
   def results_main_button(listing)
     if listing.accepts_reservations?
-      link_to 'Reserve', listing.get_partial_link(:reserve), :class => 'tab_link', :rel => 'reserve'
+      link_to 'Reserve', listing.get_partial_link(:sizes), :class => 'tab_link', :rel => 'reserve'
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
     end
+  end
+  
+  def listing_distance_from
+    number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue ''
   end
   
   def more_results_link(data)
