@@ -426,7 +426,7 @@ $(function(){
 		if (!$this.data('active')) {
 			$('.tab_link[rel=map]', $this.parent().parent()).click();
 			$this.data('active', true);
-			$this.text('x');
+			$this.text('-');
 		} else {
 			$panel.slideUp();
 			$('.tab_link, .listing, .panel, .tabs li').removeClass('active');
@@ -464,7 +464,7 @@ $(function(){
 					$panel.html(response.data);
 
 					$('.listing:not(.active) .open_tab').text('+');
-					$('.open_tab', $listing).data('active', true).text('x');
+					$('.open_tab', $listing).data('active', true).text('-');
 
 					if ($panel.is(':hidden')) {
 						$panel.slideDown(900, function(){ if ($(window).height() < 650) $(window).scrollTo($listing, { speed: 1000 }); });
@@ -623,11 +623,10 @@ try {
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
 		
-} catch (e){ console.log(e) }
+} catch (e){ }
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	console.log('i', id, highlightIconImage)
 	marker.setImage(highlightIconImage);
 }
 
@@ -698,7 +697,6 @@ $.setGmap = function(data) {
 	});
 	jQuery('.listing').live('mouseleave', function(){
 		var id = $(this).attr('id').split('_')[1];
-		console.log(id)
 		unhighlightMarker(id);
 	});
 	
