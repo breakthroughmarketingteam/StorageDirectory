@@ -363,7 +363,7 @@ $.option_tags_from_array = function(options, selected) {
 }
 
 $.log = function(msg) {
-	if (typeof console != 'undefined') console.log(msg); else alert(msg);
+	typeof(console != 'undefined') ? console.log(msg) : alert(msg);
 }
 
 $.ajax_error = function(response) {

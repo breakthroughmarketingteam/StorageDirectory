@@ -919,16 +919,20 @@ $(document).ready(function() {
 		
 	// END new listing workflow
 	
-	$('#sync_listing').click(function(){
+	$('#sync_listing').click(function() {
 		var $this = $(this).text('Syncing'),
-			ajax_loader = $this.siblings('.ajax_loader').show();
+			ajax_loader = $this.siblings('.ajax_loader').show(),
+			sizes_in = $('#sl-tabs-sizes-in').addClass('faded');
 		
-		$.post($this.attr('href'), {}, function(response){
+		$('.edit-btn', sizes_in).hide();
+		
+		$.post($this.attr('href'), {}, function(response) {
 			if (response.success) {
 				$this.text('Reloading');
 				
 				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(response){
-					if (response.success) $('#sl-tabs-sizes-in').replaceWith($(response.data).find('#sl-tabs-sizes-in'));
+					$.log(response)
+					if (response.success) sizes_in.replaceWith($(response.data).find('#sl-tabs-sizes-in'));
 					else $.ajax_error(response);
 					
 					ajax_loader.hide();

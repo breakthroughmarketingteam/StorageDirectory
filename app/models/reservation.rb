@@ -13,8 +13,6 @@ class Reservation < ActiveRecord::Base
   validates_presence_of :listing_id
   validates_date :move_in_date, :after => Proc.new { -1.day.from_now.to_date }, :after_message => 'must be after %s'
   
-  def 
-  
   def process_new_tenant(billing_info)
     if self.listing.accepts_reservations?
       usa = 'United States of America'
