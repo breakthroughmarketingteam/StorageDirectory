@@ -195,15 +195,15 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #listings_controller #type-one-top-bar{width:97.7%;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg{}
-.listing > .inner{border-top:1px solid #ccc;min-height:100px;}
+.listing > .inner{border-top:1px solid #ccc;}
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:#FFF099;}
-.listing .inner .in{overflow:hidden;position:relative;}
+.listing .inner .in{overflow:hidden;position:relative;padding:10px 0;}
 .listing ul li{float:left;}
 .listing .rslt-features ul{font-size:80%;line-height:1.2;padding:10px 12px;}
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:1.2em;display:block;position:relative;top:30px;color:#666;}
-.progress{float:right;background-image:url(/images/ui/storagelocator/highlight-greenlight.png);background-repeat:no-repeat;background-position:0% 0%;width:79px;height:16px;margin:-16px 23px 0 0}
+.progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 23px 0 0}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-features,.rslt-contact,.listing img{float:left;list-style:none;display:inline;margin-left:20px;}
 .rslt-contact,li.rslt-miles{margin-left:10px;}
@@ -224,12 +224,17 @@ li.rslt-reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover
 li.rslt-features{width:29%;height:100px;line-height:105px;margin:0;}
 li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 li.compare_li{margin:37px 0 0 7px;}
+<<<<<<< HEAD
 ul.tabs{margin:0 0 5px -4px;float:left;}
 ul.tabs li{height:16px;line-height:1.5;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;}
+=======
+ul.tabs{margin:0 0 5px 0;float:left;}
+ul.tabs li{height:16px;line-height:1.5;float:left;margin-right:5px;background:#ccc;padding:0 7px 1px 7px;}
+>>>>>>> 38ed0d3c1db6afef689e990d3ba632264bd206d8
 ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
-ul.tabs li.open_tab_li{padding:0;}
+ul.tabs li.open_tab_li{padding:0 0 1px 0;}
 ul.tabs li.open_tab_li a{padding:0 5px;font-size:100%;font-weight:bold;line-height:0.8;}
-ul.tabs li a{float:left;display:block;height:16px;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:1px 5px 1px 25px;}
+ul.tabs li a{float:left;display:block;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:1px 5px 1px 25px;}
 li.fac-map a{background:url(/images/ui/storagelocator/map-icon.png) no-repeat 0% 56%;}
 li.fac-specials a{background:url(/images/ui/storagelocator/specials-icon.png) no-repeat 0 41%;}
 li.fac-sizes a{background:url(/images/ui/storagelocator/sizes-icon.png) no-repeat 0 33%;}
@@ -644,7 +649,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
 .unit_detail .month_rate{}
-.panel{width:94%;overflow:hidden;cursor:default;margin:0 auto;background:#fff;position:relative;z-index:600;padding:10px 12px;border-bottom:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
+.panel{width:auto;overflow:hidden;cursor:default;background:#fff;position:relative;z-index:600;padding:10px 12px;border:1px solid #ccc;border-top:0 none;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel #map_partial{overflow:visible;height:183px;}
 .panel .sl-table-exp p.blue-text{margin-left:12px;font-size:80%;}
