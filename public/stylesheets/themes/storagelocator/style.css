@@ -373,7 +373,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 /* New list item type added (this can be combined with an existing group of selectors) */
 li.rslt-offer{float:left;list-style:none;display:inline;margin-left:20px;}
 /* Two new additions */
-li.rslt-offer{background:url(/images/ui/storagelocator/results-divider-white-bg.png) no-repeat top left;width:120px;}
+li.rslt-offer{border-left:1px solid #ccc;width:120px;}
 li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #specials_list li{float:none;}
 /* Change made to the existing city box */
@@ -412,13 +412,13 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #sl-fac-detail-in-edit p.tags .value{}
 #sl-fac-dist{width:45%;float:left;text-align:center;position:relative;}
 #sl-fac-coup{width:45%;float:right;position:relative;border:2px dashed #ccc;}
-#sl-fac-coup-in{min-height:130px;padding:10px 12px;}
-#sl-fac-coup-in .sl-special{font-size:200%;}
+#sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:130px;padding:10px 12px;color:#666;}
+#sl-fac-coup-in .sl-special,#sl-fac-coup-in-edit .sl-special{font-size:200%;color:#333;margin-bottom:5px;text-align:center;font-variant:small-caps;}
 #sl-fac-coup-in .special_desc{}
-#sl-fac-coup-in .special_label{float:left;width:15%;}
-#sl-fac-coup-in .ps{position:absolute;bottom:5px;right:5px;}
+#sl-fac-coup-in .special_label,#sl-fac-coup-in-edit .special_label{width:15%;margin:0 15px 10px 0;text-transform:uppercase;}
+#sl-fac-coup-in .ps,#sl-fac-coup-in-edit .ps{position:absolute;bottom:5px;right:5px;background-image:url(/images/ui/storagelocator/print_icon.gif);}
 #sl-fac-dist-in-edit{text-align:center;border:1px solid #ccc;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;position:relative;}
-#sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:152px;padding:10px;}
+#sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:132px;padding:10px;}
 #sl-fac-dist-in-edit p,#sl-fac-dist-in p{margin:20px;font-size:16px;font-weight:bold;color:#666;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone{font-size:24px;font-weight:bold;color:#000;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist{color:#33c;}
@@ -499,7 +499,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat center;}
 #sl-tabs-pict{overflow:hidden;}
-#sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;margin-bottom:3px;overflow:hidden;background-color:#ddd;}
+#sl-tabs-pict-in{width:721px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;position:relative;left:15px;float:left;margin-bottom:17px;overflow:hidden;background-color:#ddd;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall{width:33%;margin-left:10px;float:left;overflow:auto;max-height:339px;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;width:80px;position:relative;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall li img:hover,#sl-tabs-pict-in ul#sl-tabs-pict-gall .active{display:inline;-moz-box-shadow:1px 2px 10px #666;-webkit-box-shadow:1px 2px 10px #666;box-shadow:1px 2px 10px #666;}
@@ -538,8 +538,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;color:#33c;font-size:1.2em;margin:10px 0px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
-#ov-units #rslt-list-bg{background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;position:relative;left:0px;border-right:1px solid #ccc;border-left:1px solid #ccc;overflow:hidden;}
+#ov-units #rslt-list-bg{position:relative;left:0px;border:1px solid #ccc;border-top:0 none;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
+#ov-units #rslt-list-bg .listing .inner > img{margin-left:15px;}
 #ov-units .listing{overflow:auto;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}
@@ -745,8 +746,6 @@ img.right{margin:0 10px 10px 0;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units #rslt-list-bg {width:99.4%;top:-10px;}
-#ov-units .listing{padding:0 2px 10px 0;height:102px;}
-#ov-units .listing > .inner{width:100%;}
 #ov-units .listing .rslt-reserve{width:145px;}
 #ov-reports-cnt{padding:10px 9px;overflow:hidden;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
@@ -803,7 +802,7 @@ img.right{margin:0 10px 10px 0;}
 #ov-units .listing .rslt-contact p #listing_map_attributes_city{width:39%;}
 .listing #listing_map_attributes_state{margin-right:4px;}
 .listing #listing_map_attributes_zip{width:35px;}
-.listing .listing_advice{padding:40px 0 0 16px;width:110%;}
+.listing .listing_advice{padding:10px 0 0 16px;width:110%;}
 #client_listing_box{padding-top:10px;}
 .user_hint{width:99%;border:2px solid #fed747;background:#fff1bb;-moz-border-radius:18px;-webkit-border-radius:18px;border-radius:18px;}
 .user_hint .hint_title_bar{padding:4px 10px 3px 10px;border-bottom:2px solid #fed747;background:#fed747;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
@@ -1074,4 +1073,5 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-.ui-menu .ui-menu-item a{padding:6px 12px;
+.ui-menu .ui-menu-item a{padding:6px 12px;}
+.faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}

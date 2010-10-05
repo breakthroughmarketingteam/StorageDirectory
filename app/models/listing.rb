@@ -8,10 +8,11 @@ class Listing < ActiveRecord::Base
   
   has_many :specials, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
-  has_many :sizes, :dependent => :destroy
   has_many :reservations, :dependent => :destroy
   has_many :clicks, :dependent => :destroy
   has_many :impressions, :dependent => :destroy
+  has_many :listing_sizes, :dependent => :destroy
+  has_many :sizes, :through => :listing_sizes
   
   # OpentTech ISSN data
   has_one  :facility_info, :dependent => :destroy
@@ -294,6 +295,7 @@ class Listing < ActiveRecord::Base
     puts "Done.\nSyncing Costs With Unit Types...\n"
     sync_costs_with_unit_types
     puts "Done.\n"
+    true
   end
   
   def update_promos_and_specials
@@ -339,14 +341,14 @@ class Listing < ActiveRecord::Base
         unit_type.update_attribute :size_id, size.id
         unit_type.update_features
         
-        type = unit_type.features.first.StdUnitTypesFeaturesShortDescription
+        type = unit_type.features.first.short_description
       
         args = {
           :width       => unit_type.ActualWidth,
           :length      => unit_type.ActualLength,
           :price       => unit_type.RentalRate * 100, # convert to cents (integer)
           :title       => type,
-          :description => (unit_type.features.first.standard_info['sLongDescription'] rescue type)
+          :description => (unit_type.features.first.long_description || type)
         }
         size.update_attributes args
       end

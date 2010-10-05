@@ -1,6 +1,7 @@
 class Size < ActiveRecord::Base
   
-  belongs_to :listing
+  has_many :listing_sizes, :dependent => :destroy
+  has_many :listings, :through => :listing_sizes
   has_one :unit_type
 
   attr_accessor :special
