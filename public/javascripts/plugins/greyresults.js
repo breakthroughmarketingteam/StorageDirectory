@@ -603,7 +603,6 @@ $(function(){
 	}
 
 	try {
-		var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png');
 		var iconOptions = {};
 		iconOptions.width = 32;
 		iconOptions.height = 32;
@@ -612,8 +611,12 @@ $(function(){
 		iconOptions.strokeColor = "#000000";
 		var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
 
+		// http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000
+		
+		var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png'); // the 'you are here' icon
+		
 		//save the regular icon image url
-		var normalIconImage = normalIcon.image,
+		var normalIconImage = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000';//normalIcon.image,
 			highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 			selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
 
@@ -678,6 +681,7 @@ $(function(){
 		Gmap.enableDoubleClickZoom();
 		Gmap.disableContinuousZoom();
 		Gmap.disableScrollWheelZoom();
+		
 		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
 
 		//add result markers
@@ -689,7 +693,7 @@ $(function(){
 
 			var title = markers[i].title;
 			var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
-			var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
+			var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body, i+1);
 			marker.listing_id = markers[i].id;
 
 			GmapMarkers[i] = marker;
