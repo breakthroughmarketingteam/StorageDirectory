@@ -10,7 +10,7 @@ class IssnAdapter
 
   @@username = 'USSL'
   @@password = 'U$$L722'
-  @@host = "https://issn.opentechalliance.com"
+  @@host = 'https://issn.opentechalliance.com'
   @@url = '/issn_ws1/issn_ws1.asmx'
   @@auth = "?sUserLogin=#{@@username}&sUserPassword=#{@@password}"
   
@@ -52,6 +52,10 @@ class IssnAdapter
   
   def self.get_facility_promos(facility_id)
     get_facility_info 'getFacilityPromos', facility_id
+  end
+  
+  def self.get_facility_insurance(facility_id)
+    get_facility_info 'getFacilityInsurance', facility_id
   end
   
   def self.get_move_in_cost(facility_id, args = {})

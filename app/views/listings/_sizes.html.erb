@@ -11,15 +11,17 @@
       <li class="st-size">Size</li>
       <li class="st-type">Type</li>
       <li class="st-pric">Monthly</li>
+	  <% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail">Available</li><% end %>
       <li class="st-spec"><!--Special--></li>
     </ul>
 	
-    <% @listing.available_sizes.each do |size| %>
+    <% (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes).each do |size| %>
 		<div class="sl-table-wrap">
 			<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 				<li class="st-size"><%= size.display_dimensions %></li>
 				<li class="st-type"><%= size.title %></li>
 				<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
+				<% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li><% end %>
 				<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><!--<%= size.special.blank? ? 'NONE' : size.special %>--></li>
 				<li class="st-rese">
 					<% if is_facility_owner? %>

@@ -190,7 +190,7 @@ div.box_view > div{float:left;width:30.5%;margin:0 10px 20px 10px;padding:7px 0 
 .block_models_view .buttons a.delete_link:hover,
 .block_models_view .buttons a.delete_link:visited{border:0 none}
 #body .table_view{width:100%;}
-.table_view{margin:10px 0;}
+.table_view{margin:10px 0 15px;}
 .table_view thead th{text-align:center;padding:5px 0 7px 0;}
 .table_view td{padding:10px 15px;vertical-align:middle;max-width:130px;}
 .table_view td:first-child{max-width:150px;}

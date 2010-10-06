@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
                 :_widgets, # for the site_settings form
                 :_user_hint_places, # client account control panel
                 :in_edit_mode?,
+                :in_mode?,
                 :user_allowed?,
                 :reject_blocks_enabled_on_this, # for the blocks_fields
                 :reject_views_enabled_on_this,  # for the blocks_fields
@@ -54,6 +55,9 @@ class ApplicationController < ActionController::Base
   
   # client account control panel
   $_user_hint_places = [:owner_info, :facilities, :reports, :services, :settings, :listing_detail, :info_tabs, :extras]
+  
+  # for the geo_search methods in Listing
+  $_listing_search_distance = 50
   
   # for the enable issn connectivity workflow
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']

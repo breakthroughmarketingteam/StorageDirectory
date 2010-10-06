@@ -144,10 +144,11 @@ $(function(){
 			$this.text('Save').data('saving', false);
 
 			if (rel == 'address') { // has spans for each address field, e.g. address, state, zip
-				$('.address, .tags', container).children('span').each(function(){
+				$('.listing_title, .address', container).children('span').each(function(){
 					var el	  = $(this).hide(),
 						attr  = el.attr('rel'),
-						input = $('<input type="text" name="map['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
+						parent_model = el.parent().attr('rel'),
+						input = $('<input type="text" name="'+ parent_model+ '['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
 
 					el.after(input); // put input after span
 
@@ -158,7 +159,6 @@ $(function(){
 					input = $('<input type="text" name="listing['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
 
 				el.after(input); // put input after span
-
 			}
 
 			cancel_btn.click(function(){
@@ -238,11 +238,6 @@ $(function(){
 	*/
 	
 	$compare_btns = $('.compare', '.listing');
-	
-	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
-		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
-		$.setGmap(Gmaps_data);
-	}
 	
 	if ($('.listing.active').length > 1) $('#compare-btn').show();
 	else $('#compare-btn').hide();
@@ -561,143 +556,160 @@ $(function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
 		return false;
 	});
-});
-
-/*
- * Google Map methods
- */
-var MapIconMaker = {};
-MapIconMaker.createMarkerIcon = function(opts) {
-  var width = opts.width || 32;
-  var height = opts.height || 32;
-  var primaryColor = opts.primaryColor || "#ff0000";
-  var strokeColor = opts.strokeColor || "#000000";
-  var cornerColor = opts.cornerColor || "#ffffff";
-   
-  var baseUrl = "http://chart.apis.google.com/chart?cht=mm";
-  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png";
-  var icon = new GIcon(G_DEFAULT_ICON);
-  icon.image = iconUrl;
-  icon.iconSize = new GSize(width, height);
-  icon.shadowSize = new GSize(Math.floor(width*1.6), height);
-  icon.iconAnchor = new GPoint(width/2, height);
-  icon.infoWindowAnchor = new GPoint(width/2, Math.floor(height/12));
-  icon.printImage = iconUrl + "&chof=gif";
-  icon.mozPrintImage = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
-  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
-  icon.transparent = iconUrl + "&chf=a,s,ffffff11&ext=.png";
-
-  icon.imageMap = [
-      width/2, height,
-      (7/16)*width, (5/8)*height,
-      (5/16)*width, (7/16)*height,
-      (7/32)*width, (5/16)*height,
-      (5/16)*width, (1/8)*height,
-      (1/2)*width, 0,
-      (11/16)*width, (1/8)*height,
-      (25/32)*width, (5/16)*height,
-      (11/16)*width, (7/16)*height,
-      (9/16)*width, (5/8)*height
-  ];
-  for (var i = 0; i < icon.imageMap.length; i++) {
-    icon.imageMap[i] = parseInt(icon.imageMap[i]);
-  }
-
-  return icon;
-}
-
-try {
-	var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png');
-	var iconOptions = {};
-	iconOptions.width = 32;
-	iconOptions.height = 32;
-	iconOptions.primaryColor = "#0000ff";
-	iconOptions.cornerColor = "#FFFFFF";
-	iconOptions.strokeColor = "#000000";
-	var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
-
-	//save the regular icon image url
-	var normalIconImage = normalIcon.image,
-		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
-		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
-		
-} catch (e){ }
-
-function highlightMarker(id){
-	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	marker.setImage(highlightIconImage);
-}
-
-function unhighlightMarker(id){
-	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	if (marker.GmapState == 'selected') marker.setImage(selectedIconImage);
-	else marker.setImage(normalIconImage);
-}
-
-function getMarkerById(id) {
-	var marker;
 	
-	$.each(GmapMarkers, function(){
-		if (this.listing_id == id) {
-			marker = this;
-			return;
+	/*
+	 * Google Map methods
+	 */
+	var MapIconMaker = {};
+	MapIconMaker.createMarkerIcon = function(opts) {
+	  var width = opts.width || 32;
+	  var height = opts.height || 32;
+	  var primaryColor = opts.primaryColor || "#ff0000";
+	  var strokeColor = opts.strokeColor || "#000000";
+	  var cornerColor = opts.cornerColor || "#ffffff";
+
+	  var baseUrl = "http://chart.apis.google.com/chart?cht=mm";
+	  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
+	      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png";
+	  var icon = new GIcon(G_DEFAULT_ICON);
+	  icon.image = iconUrl;
+	  icon.iconSize = new GSize(width, height);
+	  icon.shadowSize = new GSize(Math.floor(width*1.6), height);
+	  icon.iconAnchor = new GPoint(width/2, height);
+	  icon.infoWindowAnchor = new GPoint(width/2, Math.floor(height/12));
+	  icon.printImage = iconUrl + "&chof=gif";
+	  icon.mozPrintImage = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
+	  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
+	      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
+	  icon.transparent = iconUrl + "&chf=a,s,ffffff11&ext=.png";
+
+	  icon.imageMap = [
+	      width/2, height,
+	      (7/16)*width, (5/8)*height,
+	      (5/16)*width, (7/16)*height,
+	      (7/32)*width, (5/16)*height,
+	      (5/16)*width, (1/8)*height,
+	      (1/2)*width, 0,
+	      (11/16)*width, (1/8)*height,
+	      (25/32)*width, (5/16)*height,
+	      (11/16)*width, (7/16)*height,
+	      (9/16)*width, (5/8)*height
+	  ];
+	  for (var i = 0; i < icon.imageMap.length; i++) {
+	    icon.imageMap[i] = parseInt(icon.imageMap[i]);
+	  }
+
+	  return icon;
+	}
+
+	try {
+		var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png');
+		var iconOptions = {};
+		iconOptions.width = 32;
+		iconOptions.height = 32;
+		iconOptions.primaryColor = "#0000ff";
+		iconOptions.cornerColor = "#FFFFFF";
+		iconOptions.strokeColor = "#000000";
+		var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
+
+		//save the regular icon image url
+		var normalIconImage = normalIcon.image,
+			highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
+			selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
+
+	} catch (e){ }
+
+	function highlightMarker(id){
+		var marker = typeof id == 'object' ? id : getMarkerById(id);
+		marker.setImage(highlightIconImage);
+	}
+
+	function unhighlightMarker(id){
+		var marker = typeof id == 'object' ? id : getMarkerById(id);
+		if (marker.GmapState == 'selected') marker.setImage(selectedIconImage);
+		else marker.setImage(normalIconImage);
+	}
+
+	function getMarkerById(id) {
+		var marker;
+
+		$.each(GmapMarkers, function(){
+			if (this.listing_id == id) {
+				marker = this;
+				return;
+			}
+		});
+
+		return marker;
+	}
+
+	function addMarker(icon, lat, lng, title, body){
+		var point = new GLatLng(lat, lng);
+		var marker = new GMarker(point, { 'title': title, 'icon': icon, width: '25px' });
+
+		GEvent.addListener(marker, 'click', function(){
+			marker.openInfoWindowHtml(body);
+			$('.listing').removeClass('active');
+			$('#listing_'+ marker.listing_id).addClass('active');
+		});
+		
+		GEvent.addListener(marker, 'mouseover', function(){
+			$('.listing').removeClass('active');
+			highlightMarker(marker)
+			$('#listing_'+ marker.listing_id).addClass('active');
+		});
+		
+		GEvent.addListener(marker, 'mouseout', function(){
+			$('.listing').removeClass('active');
+			unhighlightMarker(marker)
+		});
+
+		Gmap.addOverlay(marker);
+		return marker;
+	}
+
+	GmapMarkers = [];
+	$.setGmap = function(data) {
+		Gmap = new GMap2(document.getElementById('main_map'));
+		Gmap.addControl(new GLargeMapControl());
+		Gmap.addControl(new GScaleControl());
+		Gmap.addControl(new GMapTypeControl());
+		Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 10));
+		Gmap.enableDoubleClickZoom();
+		Gmap.disableContinuousZoom();
+		Gmap.disableScrollWheelZoom();
+		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
+
+		//add result markers
+		var markers = data.maps;
+
+		for (var i = 0, len = markers.length; i < len; i++){
+			if (markers[i].thumb) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
+			else photo = '';
+
+			var title = markers[i].title;
+			var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
+			var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
+			marker.listing_id = markers[i].id;
+
+			GmapMarkers[i] = marker;
 		}
-	});
-	
-	return marker;
-}
 
-function addMarker(icon, lat, lng, title, body){
-	var point = new GLatLng(lat, lng);
-	var marker = new GMarker(point, { 'title': title, 'icon': icon, width: '25px' });
-	
-	GEvent.addListener(marker, 'click', function(){
-		marker.openInfoWindowHtml(body);
-		$('.listing').removeClass('active');
-		$('#listing_'+ marker.listing_id).addClass('active');
-	});
-	
-	Gmap.addOverlay(marker);
-	return marker;
-}
+		//bind mouseover result row to highlight map marker
+		jQuery('.listing').live('mouseenter', function(){
+			var id = $(this).attr('id').split('_')[1];
+			highlightMarker(id);
+		});
+		jQuery('.listing').live('mouseleave', function(){
+			var id = $(this).attr('id').split('_')[1];
+			unhighlightMarker(id);
+		});
 
-GmapMarkers = [];
-$.setGmap = function(data) {
-	Gmap = new GMap2(document.getElementById('main_map'));
-	Gmap.addControl(new GLargeMapControl());
-	Gmap.addControl(new GScaleControl());
-	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 10));
-	Gmap.enableDoubleClickZoom();
-	Gmap.disableContinuousZoom();
-	Gmap.disableScrollWheelZoom();
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
+	} // END setGmap()
 	
-	//add result markers
-	var markers = data.maps;
-	
-	for (var i = 0, len = markers.length; i < len; i++){
-		if (markers[i].thumb) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
-		else photo = '';
-		
-		var title = markers[i].title;
-		var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
-		var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body);
-		marker.listing_id = markers[i].id;
-		
-		GmapMarkers[i] = marker;
+	if (typeof GBrowserIsCompatible == 'function' && GBrowserIsCompatible() && typeof(Gmaps_data) != 'undefined' && $('#main_map').length > 0) {
+		// Gmaps_data comes from a script rendered in views/listings/locator.html.erb
+		$.setGmap(Gmaps_data);
 	}
 	
-	//bind mouseover result row to highlight map marker
-	jQuery('.listing').live('mouseenter', function(){
-		var id = $(this).attr('id').split('_')[1];
-		highlightMarker(id);
-	});
-	jQuery('.listing').live('mouseleave', function(){
-		var id = $(this).attr('id').split('_')[1];
-		unhighlightMarker(id);
-	});
-	
-} // END setGmap()
+});

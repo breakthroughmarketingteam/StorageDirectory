@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928161356) do
+ActiveRecord::Schema.define(:version => 20101005221443) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -88,6 +88,17 @@ ActiveRecord::Schema.define(:version => 20100928161356) do
 
   add_index "blocks_models", ["block_id", "model_id", "model_type"], :name => "index_blocks_models_on_block_id_and_model_id_and_model_type"
 
+  create_table "business_hours", :force => true do |t|
+    t.string   "day"
+    t.string   "opening_time"
+    t.string   "closing_time"
+    t.boolean  "closed"
+    t.integer  "listing_id"
+    t.string   "hours_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clicks", :force => true do |t|
     t.integer  "listing_id"
     t.datetime "created_at"
@@ -154,6 +165,17 @@ ActiveRecord::Schema.define(:version => 20100928161356) do
     t.integer  "MS_Postal"
     t.string   "MS_City"
     t.string   "MS_WebSite"
+  end
+
+  create_table "facility_insurances", :force => true do |t|
+    t.integer  "listing_id"
+    t.string   "sID"
+    t.string   "Provider"
+    t.string   "TheftCoverage"
+    t.integer  "MonthlyPremium"
+    t.integer  "CoverageAmount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "facility_units", :force => true do |t|
@@ -346,6 +368,8 @@ ActiveRecord::Schema.define(:version => 20100928161356) do
     t.integer  "clicks_count",       :default => 0
     t.integer  "impressions_count",  :default => 0
     t.integer  "reservations_count", :default => 0
+    t.boolean  "office_24_hours"
+    t.boolean  "access_24_hours"
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"

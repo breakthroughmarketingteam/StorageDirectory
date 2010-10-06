@@ -1,7 +1,6 @@
 class Size < ActiveRecord::Base
   
-  has_many :listing_sizes, :dependent => :destroy
-  has_many :listings, :through => :listing_sizes
+  belongs_to :listing
   has_one :unit_type
 
   attr_accessor :special
@@ -16,6 +15,10 @@ class Size < ActiveRecord::Base
   
   def dims
     "#{width}x#{length}"
+  end
+  
+  def sqft
+    width * length
   end
   
 end

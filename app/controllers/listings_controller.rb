@@ -22,6 +22,7 @@ class ListingsController < ApplicationController
     get_map @location
     
     # updates the impressions only for listings on current page
+    @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || 10)
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
     if session[:location].blank? || params[:q] && params[:state].blank?
@@ -114,6 +115,7 @@ class ListingsController < ApplicationController
       @facility_feature = FacilityFeature.new
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
+      @hours = @listing.business_hours
     end
   end
   
