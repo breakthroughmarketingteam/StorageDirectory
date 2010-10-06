@@ -1,15 +1,21 @@
 <div id="listing_<%= result.id %>" class="listing">
 	<div class="inner">
 		<div class="in">
-			<img id="num_icon" src="/images/ui/storagelocator/blog-lock.png" alt="">
-			<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+			<div class="rslt-title">
+				<h3><%= link_to result.title, facility_path(result.title.parameterize, result.id) %></h3>
+			</div>
+			<div id="num_icon">1</div>
+			<div id="facility-logo">
+				<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+			</div>
 			<div class="rslt-contact">
-				<h3 class="rslt-title">
-					<%= link_to result.title, facility_path(result.title.parameterize, result.id) %>
-				</h3>
+
 				<p>
 					<span class="rslt-address"><%= result.map.address %></span><br>
 					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
+				</p>
+				<p>
+					<span class="rslt-phone">1-800-567-4321</span>
 				</p>
 			</div>
 			<ul>
