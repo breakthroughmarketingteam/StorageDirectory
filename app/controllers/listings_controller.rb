@@ -148,6 +148,7 @@ class ListingsController < ApplicationController
         :specials => listing.specials, 
         :sizes    => listing.available_sizes, 
         :pictures => listing.pictures, 
+        :reviews  => listing.reviews, 
         :accepts_reservations => res, 
         :reserve_link_href    => listing.get_partial_link(res ? :reserve : :request_info) 
       }

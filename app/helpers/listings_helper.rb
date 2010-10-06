@@ -32,6 +32,10 @@ module ListingsHelper
     data.respond_to?(:total_entries) ? data.total_entries : 0
   end
   
+  def result_index(listing)
+    (params[:page] || 1) * (@listings.index(listing) + 1)
+  end
+  
   def results_main_button(listing)
     if listing.accepts_reservations?
       link_to 'Reserve', listing.get_partial_link(:sizes), :class => 'tab_link', :rel => 'reserve'

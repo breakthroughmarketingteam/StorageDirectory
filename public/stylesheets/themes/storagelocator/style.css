@@ -201,7 +201,6 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #rslt-list-bg > div.active > .inner .rslt-title h3,#rslt-list-bg > div > .inner:hover .rslt-title h3{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > div > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
 #rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > div > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
-.tab_hover{background-color:#3333cb;}
 .listing .inner .in{overflow:hidden;position:relative;padding:0 0 10px 0;}
 .listing ul li{float:left;}
 .listing .rslt-features ul{font-size:80%;line-height:1.2;padding:10px 12px;}
@@ -213,9 +212,9 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-features,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:10px;}
-#facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat center bottom;float:left;height:88px;margin:11px 0 0 35px;width:108px;}
+.facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat center bottom;float:left;height:88px;margin:11px 0 0 35px;width:108px;}
 .listing img{margin-left:3px;}
-.listing #num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
+.listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;margin-top:-1px;}
 .rslt-contact{width:178px;color:#555;margin-top:10px;padding-right:10px;}
@@ -236,7 +235,8 @@ li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px
 li.compare_li{margin:37px 0 0 7px;}
 ul.tabs{margin:0 0 5px -4px;float:left;}
 ul.tabs li{height:16px;line-height:1.5;float:left;margin-left:5px;background:#ccc;padding:0 7px 1px 7px;}
-ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
+.listing:hover .tabs li{background-color:#8989dd;}
+.listing:hover ul.tabs li:hover,ul.tabs li:active,ul.tabs li.active{background:#3333CB;}
 ul.tabs li.open_tab_li{padding:0 0 1px 0;}
 ul.tabs li.open_tab_li a{padding:0 5px;font-size:100%;font-weight:bold;line-height:0.8;}
 ul.tabs li a{float:left;display:block;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:1px 5px 1px 25px;}
@@ -295,9 +295,9 @@ div.green-head div.inner h2{font-weight:bold;margin-bottom:7px;font-size:220%;le
 #media-box p span.quote{font-style:normal;color:#3333CB;line-height:2.5em;font-size:80%;float:right;margin-bottom:30px;}
 #type-two-top-bar{position:relative;left:2px;}
 #tips-wrap{padding-top:10px;}
-.blog-lock{background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #CCCCCC;margin:15px 20px 20px 15px;clear:both;padding:0 20px 15px 40px;border-radius-bottomright:18px;-moz-border-radius-bottomright:18px;-webkit-border-bottom-right-radius:18px;border-radius-bottomleft:18px;-moz-border-radius-bottomleft:18px;-webkit-border-bottom-left-radius:18px;}
+.blog-lock,.review{background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #ccc;margin:15px 20px 20px 15px;clear:both;padding:0 20px 15px 40px;}
 .blog-lock h3,.blog-lock p{font-weight:normal;color:#555;margin:0 0 18px 0;}
-.blog-lock p{font-size:12px;line-height:18px;}
+.blog-lock .stack{font-size:80%;line-height:1.3;}
 .blog-lock h3{margin-bottom:10px;padding-top:3px;}
 .blog-lock h3 a{color:#000;text-decoration:none;font-size:130%;}
 .blog-lock ul{overflow:hidden;}
@@ -311,6 +311,8 @@ li.share a.twitter{background:url(/images/ui/storagelocator/twitter.png) no-repe
 li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.png) no-repeat top left;}
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
+.listing .review ul{padding-bottom:2px;overflow:hidden;font-size:80%;}
+.listing .review h6{font-size:120%;margin-bottom:10px;}
 /* Start the add facility page styles here */
 form#new_client{width:39%;float:left;position:relative;left:30px;margin-bottom:20px;text-align:left;padding:0 10px;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
@@ -400,7 +402,7 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;display:none;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
 #sl-header h2,#results_header h2{float:left;line-height:2.5;text-shadow:1px 1px 0px #333;margin-left:20px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
-.city-name-heading{color:#4C4BCC;font-weight:bold;text-shadow:1px 1px #FFFFFF;}
+.city-name-heading{color:#4C4BCC;font-weight:bold;text-shadow:1px 1px #dadada;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
 #sl-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.3;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
 #sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 2px #000;position:relative;left:15px;display:block;width:160px;height:33px;}
@@ -692,7 +694,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp input#submit-btn{margin-right:23px;}
 .listing:hover .inner{border-color:#aaa;}
 .listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:107%;}
-.panel h5{padding:12px 17px;margin-bottom:0;font-size:140%;background:#c30;}
+.panel h5{padding:12px 17px;margin-bottom:0;font-size:140%;background:#ccc;}
 .panel h5 a{color:#fff;text-decoration:none;}
 .panel .inner h6{font-size:120%;}
 .panel .inner h6,.panel .inner p{margin-bottom:14px;font-size:14px;}

@@ -299,7 +299,9 @@ $(function(){
 	$('.more_results').live('click', function(){
 		var $this 		= $('.more_results'),
 			plus_sign 	= $this.find('span > span').hide(),
-			ajax_loader = $('.ajax_loader', $this).show();		
+			ajax_loader = $('.ajax_loader', $this).show(),
+			last_index  = parseInt($('.num_icon', '.listing:last').text());
+			
 		// params to build the url that will query the same data the visitor searched for, advanced one page
 		var pagetitle = $('span[name=params_pagetitle]', $this.parent()).eq(0).text(),
 			query 	  = $('span[name=params_query]', $this.parent()).eq(0).text(),
@@ -327,7 +329,8 @@ $(function(){
 						map 		 = this.map, // related model attributes
 						sizes	 	 = this.sizes,
 						specials	 = this.specials,
-						pictures	 = this.pictures;
+						pictures	 = this.pictures,
+						this_index 	 = last_index + i + 1;
 					
 					// update tab urls
 					var tabs = [
@@ -338,12 +341,16 @@ $(function(){
 					];
 
 					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i].length > 0) tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id=' + info.id));
-						if (this[tabs[i].attr('rel')].length > 0) tabs[i].parent().show();
+						if (tabs[i].length > 0) 
+							tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id='+ info.id));
+							
+						if (this[tabs[i].attr('rel')].length > 0) 
+							tabs[i].parent().show();
 					}
 
 					// update the content in the copy of the listing html and add it to the dom
 					$('.rslt-title a', this_listing)		.text(info.title);
+					$('.num_icon', this_listing)			.text(this_index);
 					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/'+ info.title.toLowerCase().replaceAll(' ', '-') +'/' + info.id);
 					$('.rslt-address', this_listing)		.text(map.address);
 					$('.rslt-citystate', this_listing)		.text(map.city + ', ' + map.state + ' ' + map.zip);
@@ -378,10 +385,6 @@ $(function(){
 
 				if (remaining <= 0) $this.hide();
 				if (remaining < per_page) $this.find('span').html('<span class="plus">+</span> Show ' + remaining + ' more');
-				
-				// combine new map data with existing
-				$.each(response.maps_data.maps, function(){ Gmaps_data.maps.push(this) });
-				$.setGmap(Gmaps_data);
 				
 			} else alert('Ooops, try again');
 		});
@@ -562,44 +565,46 @@ $(function(){
 	 */
 	var MapIconMaker = {};
 	MapIconMaker.createMarkerIcon = function(opts) {
-	  var width = opts.width || 32;
-	  var height = opts.height || 32;
-	  var primaryColor = opts.primaryColor || "#ff0000";
-	  var strokeColor = opts.strokeColor || "#000000";
-	  var cornerColor = opts.cornerColor || "#ffffff";
+		var width = opts.width || 32;
+		var height = opts.height || 32;
+		var primaryColor = opts.primaryColor || "#ff0000";
+		var strokeColor = opts.strokeColor || "#000000";
+		var cornerColor = opts.cornerColor || "#ffffff";
 
-	  var baseUrl = "http://chart.apis.google.com/chart?cht=mm";
-	  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-	      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png";
-	  var icon = new GIcon(G_DEFAULT_ICON);
-	  icon.image = iconUrl;
-	  icon.iconSize = new GSize(width, height);
-	  icon.shadowSize = new GSize(Math.floor(width*1.6), height);
-	  icon.iconAnchor = new GPoint(width/2, height);
-	  icon.infoWindowAnchor = new GPoint(width/2, Math.floor(height/12));
-	  icon.printImage = iconUrl + "&chof=gif";
-	  icon.mozPrintImage = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
-	  var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-	      "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
-	  icon.transparent = iconUrl + "&chf=a,s,ffffff11&ext=.png";
+		var baseUrl = "http://chart.apis.google.com/chart?cht=mm";
+		var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
+			"&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png";
+		
+		var icon = new GIcon(G_DEFAULT_ICON);
+		icon.image = iconUrl;
+		icon.iconSize = new GSize(width, height);
+		icon.shadowSize = new GSize(Math.floor(width*1.6), height);
+		icon.iconAnchor = new GPoint(width/2, height);
+		icon.infoWindowAnchor = new GPoint(width/2, Math.floor(height/12));
+		icon.printImage = iconUrl + "&chof=gif";
+		icon.mozPrintImage = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
+		
+		var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
+			"&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
+			icon.transparent = iconUrl + "&chf=a,s,ffffff11&ext=.png";
 
-	  icon.imageMap = [
-	      width/2, height,
-	      (7/16)*width, (5/8)*height,
-	      (5/16)*width, (7/16)*height,
-	      (7/32)*width, (5/16)*height,
-	      (5/16)*width, (1/8)*height,
-	      (1/2)*width, 0,
-	      (11/16)*width, (1/8)*height,
-	      (25/32)*width, (5/16)*height,
-	      (11/16)*width, (7/16)*height,
-	      (9/16)*width, (5/8)*height
-	  ];
-	  for (var i = 0; i < icon.imageMap.length; i++) {
-	    icon.imageMap[i] = parseInt(icon.imageMap[i]);
-	  }
+		icon.imageMap = [
+			width/2, height,
+			(7/16)*width, (5/8)*height,
+			(5/16)*width, (7/16)*height,
+			(7/32)*width, (5/16)*height,
+			(5/16)*width, (1/8)*height,
+			(1/2)*width, 0,
+			(11/16)*width, (1/8)*height,
+			(25/32)*width, (5/16)*height,
+			(11/16)*width, (7/16)*height,
+			(9/16)*width, (5/8)*height
+		];
+		for (var i = 0; i < icon.imageMap.length; i++) {
+			icon.imageMap[i] = parseInt(icon.imageMap[i]);
+		}
 
-	  return icon;
+		return icon;
 	}
 
 	try {
@@ -616,7 +621,7 @@ $(function(){
 		var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png'); // the 'you are here' icon
 		
 		//save the regular icon image url
-		var normalIconImage = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000';//normalIcon.image,
+		var normalIconImage = normalIcon.image,
 			highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 			selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
 
@@ -624,13 +629,13 @@ $(function(){
 
 	function highlightMarker(id){
 		var marker = typeof id == 'object' ? id : getMarkerById(id);
-		marker.setImage(highlightIconImage);
+		marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
 	}
 
 	function unhighlightMarker(id){
 		var marker = typeof id == 'object' ? id : getMarkerById(id);
-		if (marker.GmapState == 'selected') marker.setImage(selectedIconImage);
-		else marker.setImage(normalIconImage);
+		if (marker.GmapState == 'selected') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
+		else marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|339933|FFFFFF');
 	}
 
 	function getMarkerById(id) {
@@ -658,17 +663,21 @@ $(function(){
 		
 		GEvent.addListener(marker, 'mouseover', function(){
 			$('.listing').removeClass('active');
-			highlightMarker(marker)
+			highlightMarker(marker);
 			$('#listing_'+ marker.listing_id).addClass('active');
 		});
 		
 		GEvent.addListener(marker, 'mouseout', function(){
-			$('.listing').removeClass('active');
-			unhighlightMarker(marker)
+			$('#listing_'+ marker.listing_id).removeClass('active');
+			unhighlightMarker(marker);
 		});
 
 		Gmap.addOverlay(marker);
 		return marker;
+	}
+	
+	function make_indexed_icon(index) {
+		return new GIcon(G_DEFAULT_ICON, 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ index +'|339933|FFFFFF');
 	}
 
 	GmapMarkers = [];
@@ -687,13 +696,16 @@ $(function(){
 		//add result markers
 		var markers = data.maps;
 
-		for (var i = 0, len = markers.length; i < len; i++){
-			if (markers[i].thumb) photo = "<img style=\"margin-right:4px\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\"/>";
-			else photo = '';
-
+		for (var i = 0, len = markers.length; i < len; i++) {
+			var photo = markers[i].thumb ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '';
 			var title = markers[i].title;
-			var body = '<p>'+ photo + '<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span><span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span></p>';
-			var marker = addMarker(normalIcon, markers[i].lat, markers[i].lng, title, body, i+1);
+			var body = '<p>'+ photo + 
+							'<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span>'+ 
+							'<span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
+						'</p>';
+			
+			var marker = addMarker(make_indexed_icon(i+1), markers[i].lat, markers[i].lng, title, body);
+			marker.mIndex = i+1;
 			marker.listing_id = markers[i].id;
 
 			GmapMarkers[i] = marker;
