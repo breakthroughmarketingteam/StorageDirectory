@@ -112,8 +112,6 @@ class ApplicationController < ActionController::Base
         store_location
         redirect_to login_path and return
       end
-      
-    # skip checking permission if user is an admin
     else
       unless current_user.has_permission?(controller_name, action_name, params)
         flash[:warning] = 'Access Denied'

@@ -20,19 +20,19 @@ class UnitType < ActiveRecord::Base
   end
   
   def update_move_in_costs
-    IssnAdapter.update_models_from_issn :class => MoveInCost,
-                                        :data => [self.get_move_in_costs].flatten, 
-                                        :model => self.move_in_costs,
+    IssnAdapter.update_models_from_issn :class       => MoveInCost,
+                                        :data        => [self.get_move_in_costs].flatten, 
+                                        :model       => self.move_in_costs,
                                         :find_method => 'find_by_Description',
-                                        :find_attr => 'sDescription'
+                                        :find_attr   => 'sDescription'
   end
   
   def update_reserve_costs
-    IssnAdapter.update_models_from_issn :class => ReserveCost,
-                                        :data => [self.get_reserve_costs].flatten, 
-                                        :model => self.reserve_costs,
+    IssnAdapter.update_models_from_issn :class       => ReserveCost,
+                                        :data        => [self.get_reserve_costs].flatten, 
+                                        :model       => self.reserve_costs,
                                         :find_method => 'find_by_FeeDescription',
-                                        :find_attr => 'sFeeDescription'
+                                        :find_attr   => 'sFeeDescription'
   end
   
   # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }

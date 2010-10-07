@@ -101,6 +101,8 @@ class AjaxController < ApplicationController
   end
   
   def get_partial
+    locals = {}
+    
     begin
       model_class = params[:model].constantize 
       @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
@@ -161,8 +163,8 @@ class AjaxController < ApplicationController
     
     response = "#{errors * ', '}"
     render :json => { :success => errors.empty?, :data => response }
-  #rescue => e
-  #  render :json => { :success => false, :data => "Error: #{e.message}" }
+  rescue => e
+    render :json => { :success => false, :data => "Error: #{e.message}" }
   end
   
   def destroy

@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :mailing_addresses
   accepts_nested_attributes_for :mailing_addresses
   
-  validates_presence_of :name, :email, :role_id
+  validates_presence_of :first_name, :email, :role_id
   validates_uniqueness_of :email, :scope => :type
   
   acts_as_authentic

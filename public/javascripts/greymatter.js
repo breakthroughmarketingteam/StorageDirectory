@@ -1,4 +1,4 @@
-// This is all the js I wrote for the admin side of GreyCMS
+// for the admin side of GreyCMS
 $(function(){
 	$('body').addClass('js');
 	$('.hide_if_js').hide();
@@ -31,16 +31,14 @@ $(function(){
 	// sortable nav bar, first implemented to update the position attr of a page (only when logged in)
 	$('.sortable', '.admin').sortable({
 		opacity: 0.3,
-		update: function(e, ui) { $.updateModels(e, ui); }
+		update: function(e, ui) { $.updateModels(e, ui) }
 	});
 	
 	$('.block_sortable', '.admin').sortable({
 		opacity: 0.3,
 		placeholder: 'ui-state-highlight',
 		helper: 'clone',
-		update: function(e, ui) {
-			$.updateModels(e, ui);
-		}
+		update: function(e, ui) { $.updateModels(e, ui) }
 	});
 	
 	if ($('.mini_calendar').length > 0) {
@@ -95,43 +93,6 @@ $(function(){
 			checkbox.trigger('change').attr('checked', false);
 		}
 	});
-	
-	// admin menu hover behaviors
-	var GR_content_menu_hover_interval,
-		GR_resource_list = $('#resource_list');
-	
-	$('#content_menu_link').mouseover(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#content_menu_link').click(function() {
-		GR_resource_list.slideDown();
-		return false;
-	});
-	
-	$('#resource_list, #content_menu_link').mouseout(function(){
-		GR_content_menu_hover_interval = setTimeout('GR_resource_list.slideUp()', 1000);
-	});
-	
-	$('#resource_list, #content_menu_link').mouseover(function(){
-		clearInterval(GR_content_menu_hover_interval);
-	});
-	
-	$('li', '#resource_list').hover(function(){
-		var li = $(this).css('position', 'relative');
-		var link = $('a', li);
-		
-		if (link.hasClass('access_denied')) return;
-		
-		var new_option = $('<a class="admin_new_link admin_hover_option" href="'+ link.attr('href') +'/new">New</a>');
-				new_option.appendTo(link)
-									.hide().show()
-									.click(function(){ window.location = this.href; return false; });
-	}, function(){
-		$('.admin_new_link', '#resource_list').fadeOut(300, function(){ $(this).remove(); });
-	});
-	// END admin menu
 	
 	// Admin index page menu
 	if ($.on_page([['index', 'admin']])) {
@@ -743,11 +704,11 @@ $.fn.animOpacity = function() {
 	});
 }
 
-// attack a click event to divs that wrap a link to follow the href
+// attach a click event to divs that wrap a link to follow the href
 $.fn.linkDiv = function() {
 	return this.each(function(){
 		var $this = $(this), href = $this.find('a').attr('href');
-		$this.click(function(){ window.location = href; });
+		$this.click(function(){ if (href) window.location = href; });
 	});
 }
 

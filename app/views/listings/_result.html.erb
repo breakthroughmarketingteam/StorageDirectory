@@ -1,42 +1,52 @@
 <div id="listing_<%= result.id %>" class="listing">
 	<div class="inner">
-		<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
-		<div class="rslt-contact">
-			<h3 class="rslt-title">
-				<%= link_to result.title, facility_path(result.title.parameterize, result.id) %>
-			</h3>
-			<p>
-				<span class="rslt-address"><%= result.map.address %></span><br>
-				<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
-			</p>
-		</div>
-		<ul>
-			<li class="rslt-miles">
-				<span class="shifted-text"><span class="block bold font110"><%= listing_distance(result) %></span>Miles</span>
-			</li>
-			
-			<li class="rslt-specials">
-			  <% unless result.specials.empty? %>
-				<p title="<%= result.specials.first.content %>"><%= result.specials.first.title %></p>
-			  <% end %>
-			</li>
-			
-			<li class="rslt-reserve">
-				<%= results_main_button(result) %>
-			</li>
-			
-			<% if @listings.total_entries > 1 && action_name == 'locator' %>
-				<li class="compare_li">
-					<div class="compare selectable" title="Select to compare">
-						<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
-					</div>
+		<div class="uncollapse">
+			<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+			<div class="rslt-contact">
+				<h3 class="rslt-title">
+					<%= link_to result.title, facility_path(result.title.parameterize, result.id) %>
+				</h3>
+				<p>
+					<span class="rslt-address"><%= result.map.address %></span><br>
+					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
+				</p>
+			</div>
+			<ul>
+				<li class="rslt-miles">
+					<span class="shifted-text"><span class="block bold font110"><%= listing_distance(result) %></span>Miles</span>
 				</li>
-			<% end %>
-		</ul>
+			
+				<li class="rslt-features">
+				  	<% unless result.user_id.blank? %>
+					<ul>
+						<li>24 Hour Access</li>
+						<li>Climate Controlled</li>	
+						<li>Business Center</li>
+						<li>Boxes and Packing Supplies</li>
+					</ul>
+					<% end %>
+				</li>
+			
+				<li class="rslt-reserve">
+					<%= results_main_button(result) %>
+				</li>
+			
+				<% if @listings.total_entries > 1 && action_name == 'locator' %>
+					<li class="compare_li">
+						<div class="compare selectable" title="Select to compare">
+							<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
+						</div>
+					</li>
+				<% end %>
+			</ul>
+		</div>
+		
+		<div class="unit_detail">
+			<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
+		</div>
 	</div>
 	
 	<div class="panel hidden"></div>
-	<div class="clear"></div>
 	
 	<ul class="tabs">
 		<li class="open_tab_li">

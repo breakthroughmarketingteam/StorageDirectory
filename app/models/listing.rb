@@ -20,7 +20,6 @@ class Listing < ActiveRecord::Base
   has_many :issn_facility_unit_features, :dependent => :destroy
   has_many :promos, :dependent => :destroy
   has_many :facility_features, :dependent => :destroy
-  has_many :features, :through => :facility_features
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
@@ -76,7 +75,7 @@ class Listing < ActiveRecord::Base
   end
   
   def unit_sizes_options_array
-    self.sizes.empty? ? IssnUnitTypeSize.labels : self.sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.display_dimensions] }.uniq
+    self.available_sizes.empty? ? IssnUnitTypeSize.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
   end
   
   def available_sizes
@@ -91,7 +90,7 @@ class Listing < ActiveRecord::Base
     sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f] rescue nil
     options = {
       :include => [:map, :specials, :sizes, :pictures],
-      :within  => (params[:within] || 5)
+      :within  => (params[:within].blank? ? 5 : params[:within])
     }
     
     unless query.blank?
@@ -118,7 +117,7 @@ class Listing < ActiveRecord::Base
     @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?
     #@model_data = smart_order(@model_data) if is_city? query
-    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 5)
+    @model_data = @model_data.paginate :page => params[:page], :per_page => (params[:per_page] || 10)
     { :data => @model_data, :location => @location }
   end
   

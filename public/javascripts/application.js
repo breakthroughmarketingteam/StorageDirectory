@@ -1,32 +1,41 @@
 /***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
-$(document).ready(function(){	
-	$('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
+$(document).ready(function() {
+	if ($('body').hasClass('home')) $('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
+	else $('#dock').jqDock({ size: 50, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
 	
 	// ajaxify the login form and forgot password link
-	$('#login_link').click(function(){
-		$(this).addClass('active');
-		var pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
+	$('#login_link').click(function() {
+		var $this = $(this);
+		if ($this.hasClass('active')) return false;
 		
-		pop_up.appendTo('body').load('/login', function(response, status) {
-			if (status == 'success') {
-				pop_up.fadeIn();
-				$('input[type=text]', pop_up).eq(0).focus();
-				$.bindPlugins();
-				
-			} else alert(response);
-		});
+		$this.addClass('active');
+		var pop_up = $('#pop_up_box');
+		
+		if (pop_up.length == 1) pop_up.fadeIn();
+		else {
+			pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
+
+			pop_up.appendTo('body').load('/login', function(response, status) {
+				if (status == 'success') {
+					pop_up.fadeIn();
+					$('input[type=text]', pop_up).eq(0).focus();
+					$.bindPlugins();
+
+				} else alert(response);
+			});
+		}
 		
 		// close login box when user clicks outside of it
 		$(document).click(function(e) {
 			if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
 				pop_up.fadeOut(300, function() { 
 					$('#login_link').removeClass('active');
-					$(this).remove();
+					pop_up.hide();
 				});
 			}
 		});
@@ -104,11 +113,14 @@ $(document).ready(function(){
 		}
 	});
 	
-	var advanced_slider = $('.advanced_slider', '#advanced_opts').slider({
+	var advanced_slider = $('.advanced_slider', '#advanced_opts'),
+		advanced_slider_value = $('.slider_val', advanced_slider.parent()).val();
+
+	advanced_slider.slider({
 		max: 50,
-		min:5,
+		min: 5,
 		step: 5,
-		value: 5,
+		value: advanced_slider_value,
 		animate: true,
 		start: function(e, ui) {
 			var slider = $('.slider_val', $(e.target).parent());
@@ -120,7 +132,7 @@ $(document).ready(function(){
 		}
 		
 	});
-	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>5</span>');
+	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>'+ advanced_slider_value +'</span>');
 	
 	$('.arrow', '#advanced_opts').click(function(){
 		var value = parseInt(advanced_slider.slider('value')),
@@ -573,7 +585,9 @@ $(document).ready(function(){
 		
 		$('#reservations', '#ov-services').click(function(){
 			if ($('#issn_enabled').val()) {
-				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() });
+				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() }, function(pop_up) {
+					pop_up.css('background-image', 'none');
+				});
 				
 			} else {
 				var partial = 'clients/issn_steps', 
@@ -685,30 +699,73 @@ $(document).ready(function(){
 		});
 		
 		$('.rsvr_detail_link', '#client_reservations').live('click', function(){
-			var $this = $(this);
+			var $this = $(this),
+				detail_box = $('.reservation_wrap', $this.parent()),
+				ajax_loader = $('.ajax_loader', $this.parent()).show();
 			
-			$.getJSON(this.href, {}, function(response) {
-				if (response.success) {
-					var box = $(response.data);
-					$('.reservation_wrap', 'td.region').remove();
-					box.appendTo($this.parent());
-					
-				} else $.ajax_error(response);
-			});
+			if (detail_box.length == 1) {
+				$('.reservation_wrap', 'td.region').hide();
+				detail_box.show();
+				ajax_loader.hide();
+				
+			} else {
+				$.getJSON(this.href, {}, function(response) {
+					if (response.success) {
+						var box = $(response.data).append('<a class="close_btn" href="#">X</a>');
+
+						$('.reservation_wrap', 'td.region').hide();
+						box.appendTo($this.parent());
+
+					} else $.ajax_error(response);
+
+					ajax_loader.hide();
+				});
+			}
+			
 			
 			return false;
 		});
 		
-		$('.hint_close').click(function(){
+		$('.close_btn', '.reservation_wrap').live('click', function() {
+			$(this).parent().hide();
+			return false;
+		});
+		
+		$('.hint_toggle').click(function(){
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
-				placement_id = btn.attr('id').replace('UserHintPlacement_', ''),
+				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
 				ajax_loader = $('.ajax_loader', hint).show();
 
-			$.updateModel('/user_hints/hide/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+			$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+				hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
 				ajax_loader.hide();
-				hint.slideUp(300, function(){ $(this).remove() });
 			});	
+		});
+		
+		$('input', '#user_hint_toggles').click(function(){
+			$('.hint_toggle[rel='+ this.value +']').click();
+		});
+		
+		var inline_save_orig_values = {};
+		$('.inline_save').each(function(){
+			inline_save_orig_values[this.id] = this.value.replace(this.title, '');
+		});
+		
+		$('.inline_save').live('focus', function() {
+			var input = $(this);
+			$('<a class="attribute_save" href="/ajax/update?'+ input.attr('params') +'">Save</a>').appendTo('#email_reports_settings');
+		});
+		
+		$('.attribute_save').live('click', function() {
+			var save_btn = $(this),
+				input = $('.inline_save', save_btn.parent());
+			
+			if (input.val() != '' && input.val() != inline_save_orig_values[input.attr('id')]) {
+				save_btn.attr('href', save_btn.attr('href') + input.value)
+			}
+			$.log(this, inline_save_orig_values)
+			return false;
 		});
 		
 	} // END page clients edit
@@ -950,7 +1007,7 @@ $(document).ready(function(){
 	
 	var stats_graph = $('#stats_graph');
 	if (stats_graph.length > 0) {
-		stats_graph.css('background', 'url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 45%');
+		stats_graph.addClass('loading');
 		
 		var stats_models = 'clicks, impressions, reservations',
 			d = new Date(), // getMonth returns 0-11
@@ -977,7 +1034,7 @@ $(document).ready(function(){
 					legend: { show: true, location: 'nw' },
 					series: [ 
 				        { label: '&nbsp;Clicks', lineWidth: 2, markerOptions: { style: 'diamond' } }, 
-				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'}}, 
+				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'} }, 
 				        { label: '&nbsp;Reservations', lineWidth: 2, markerOptions: { style: 'circle'} }
 				    ],
 					highlighter: { sizeAdjust: 7.5 },
@@ -986,7 +1043,7 @@ $(document).ready(function(){
 				
 			} else $.ajax_error(response);
 			
-			stats_graph.css('background', 'none');
+			stats_graph.removeClass('loading');
 		});
 	}
 	
@@ -1031,7 +1088,7 @@ $.fn.instantForm = function() {
 		// serves as the edit mode button and submit button
 		submit_btn.click(function(){
 			if ($(this).text() == 'Edit') {
-				$(this).data('saving', false)
+				$(this).data('saving', false);
 				cancel_btn.fadeIn();
 				
 				// turn elements with a class of value into an input. use it's rel attr and text for the field name, the rel attr is the relation name, e.g. mailing_address, billing_info. the text is the attr name
@@ -1065,11 +1122,11 @@ $.fn.instantForm = function() {
 						});
 						
 						submit_btn.text('Edit');
-					} else alert(response.data);
+					} else $.ajax_error(response.data);
 					
 					ajax_loader.hide();
 					cancel_btn.fadeOut();
-					$(this).data('saving', false)
+					$(this).data('saving', false);
 					
 				}, 'json');
 			}
@@ -1089,6 +1146,8 @@ $.fn.instantForm = function() {
 
 // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 $.fn.formatPhoneNum = function() {
+	if ($.browser.msie) return;
+	
 	return this.each(function(){
 		$(this).keyup(function(e){
 			var input = $(this),
@@ -1355,14 +1414,14 @@ function workflow_step4() { // form data review
 	
 	info.each(function() {
 		switch (this.name) {
-			case 'first_name' : wizard.form_data.client['first_name'] = capitalize(this.value); break;
-			case 'last_name' : wizard.form_data.client['last_name'] = capitalize(this.value); break;
-			case 'listing_address' : wizard.form_data.mailing_address['address'] = this.value; break;
-			case 'listing_city' : wizard.form_data.mailing_address['city'] = this.value; break;
-			case 'listing_state' : wizard.form_data.mailing_address['state'] = this.value; break;
-			case 'listing_zip' : wizard.form_data.mailing_address['zip'] = this.value; break;
-			case 'listing_phone' : wizard.form_data.mailing_address['phone'] = this.value || ''; break;
-			case 'wants_newsletter' : wizard.form_data.client[this.name] = this.checked; break;
+			case 'first_name' 		: wizard.form_data.client['first_name'] 	  = capitalize(this.value); break;
+			case 'last_name' 		: wizard.form_data.client['last_name'] 		  = capitalize(this.value); break;
+			case 'listing_address' 	: wizard.form_data.mailing_address['address'] = this.value; 	   		break;               
+			case 'listing_city' 	: wizard.form_data.mailing_address['city'] 	  = this.value; 	   		break;               
+			case 'listing_state' 	: wizard.form_data.mailing_address['state']   = this.value; 	   		break;               
+			case 'listing_zip' 		: wizard.form_data.mailing_address['zip'] 	  = this.value; 	   		break;               
+			case 'listing_phone' 	: wizard.form_data.mailing_address['phone']   = this.value || ''; 		break;
+			case 'wants_newsletter' : wizard.form_data.client[this.name] 	  	  = this.checked; 			break;
 		}
 	});
 	
@@ -1445,7 +1504,7 @@ function get_pop_up_and_do(options, params, callback) {
 	var params = params || {}
 	params.partial = params.partial || '/shared/pop_up';
 	
-	$.get('/ajax/get_multipartial', params, function(response){
+	$.get('/ajax/get_multipartial', params, function(response) {
 		var pop_up = $(response).dialog({
 			title: 	   options.title,
 			width: 	   options.width || 785,
@@ -1453,7 +1512,10 @@ function get_pop_up_and_do(options, params, callback) {
 			height:    options.height,
 			resizable: false,
 			modal: 	   options.modal,
-			close: 	   function(){ $('.ajax_loader').hide(); $(this).dialog('destroy').remove();  }
+			close: 	   function() {
+				$('.ajax_loader').hide();
+				$(this).dialog('destroy').remove();
+			}
 		});
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
@@ -1470,7 +1532,7 @@ function get_partial_and_do(params, callback) {
 }
 
 function preload_us_map_imgs() {
-	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "dc", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
 		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';

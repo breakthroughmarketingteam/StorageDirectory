@@ -10,8 +10,8 @@
     <ul class="sl-table-head">
       <li class="st-size">Size</li>
       <li class="st-type">Type</li>
-      <li class="st-pric">Price</li>
-      <li class="st-spec">Special</li>
+      <li class="st-pric">Monthly</li>
+      <li class="st-spec"><!--Special--></li>
     </ul>
 	
     <% @listing.available_sizes.each do |size| %>
@@ -20,13 +20,13 @@
 				<li class="st-size"><%= size.display_dimensions %></li>
 				<li class="st-type"><%= size.title %></li>
 				<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
-				<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><%= size.special.blank? ? 'NONE' : size.special %></li>
+				<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><!--<%= size.special.blank? ? 'NONE' : size.special %>--></li>
 				<li class="st-rese">
 					<% if is_facility_owner? %>
 						<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
 						<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
 					<% else %>
-						<a href="#" class="rsr-btn"><%= @listing.issn_enabled? ? 'Reserve' : 'Hold' %></a>
+						<a href="#" class="rsr-btn">Select</a>
 					<% end %>
 				</li>
 				<li class="st-sele">

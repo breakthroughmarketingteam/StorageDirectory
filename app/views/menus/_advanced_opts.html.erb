@@ -11,7 +11,7 @@
 		
 		<div>
 			<%= label_tag 'Unit Size:' %>
-			<%= select_tag 'storage_size', option_tags(@unit_sizes) %>
+			<%= select_tag 'storage_size', option_tags(@unit_sizes, nil, '') %>
 		</div>
 	</div>
 	
@@ -23,7 +23,7 @@
 				<div class="advanced_slider"><span></span></div>
 				<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
 				<%= label_tag 'miles.' %>
-				<%= hidden_field_tag :within, nil, :class => 'slider_val', :disabled => true %>
+				<%= hidden_field_tag :within, nil, :class => 'slider_val' %>
 			</div>
 			
 			<div id="loc_btn">
@@ -37,7 +37,7 @@
 			<div id="features">
 				<% @unit_features.each do |feature| %>
 					<div class="selectable_wrap">
-						<div class="selectable"><%= check_box_tag 'storage_features', feature %></div>
+						<div class="selectable"><%= check_box_tag 'storage_features[]', feature %></div>
 						<%= label_tag feature %>
 					</div>
 				<% end %>

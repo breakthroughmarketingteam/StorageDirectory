@@ -18,10 +18,11 @@ class ReservationsController < ApplicationController
   end
   
   def create
+    split_name_param!
     @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
     @reservation = @reserver.reservations.build params[:reservation].merge(:status => 'pending')
     @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
-    @m.save if @m
+    @m.save(false) if @m
     
     if @reserver.save
       respond_to do |format|
@@ -72,6 +73,12 @@ class ReservationsController < ApplicationController
   def send_notices
     Notifier.deliver_tenant_confirmation @reserver, @reservation
     Notifier.deliver_admin_reservation_alert @reserver, @reservation, @reservation.comments
+  end
+  
+  def split_name_param! # we use a simple 'Your Name' field rather than 2 separate fields
+    name = params[:reserver].delete :name
+    params[:reserver][:first_name] = name.split(' ')[0]
+    params[:reserver][:last_name] = name.split(' ')[1]
   end
   
 end

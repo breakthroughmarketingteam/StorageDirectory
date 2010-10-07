@@ -16,7 +16,7 @@
 		<%= link_to_unless current_user, 'Log In', login_path, :id => 'login_link', :class => active_page(login_path) do |name|
 			path = (current_user.has_role?('advertiser') ? client_account_path : user_path(current_user))
 			html = link_to('My Account', path, :id => 'account_link', :class => active_page(path))
-			html += link_to('Admin', admin_index_path, :class => active_page(admin_index_path)) if is_admin?
+			html += link_to('Admin', admin_index_path, :id => 'admin_index_link', :class => active_page(admin_index_path)) if is_admin?
 			html += link_to('Log out', logout_path)
 			html
 		end %>

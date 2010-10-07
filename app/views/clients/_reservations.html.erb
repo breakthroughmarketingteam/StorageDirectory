@@ -5,20 +5,23 @@
 			<thead>
 				<tr>
 					<th>By</th>
-					<th>Move in date</th>
+					<th>In date</th>
+					<th>Out date</th>
 					<th>Duration</th>
-					<th>Status</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<% @reservations.each do |reservation| %>
 					<tr class="<%= cycle('odd', 'even') %>">
-						<td><%= reservation.name %></td>
-						<td><%= reservation.move_in_date.asctime %></td>
+						<td><%= link_to reservation.name, reserver_path(reservation.reserver), :class => 'reserver_detail_link' %></td>
+						<td><%= reservation.nice_move_in_date %></td>
+						<td><%= reservation.nice_move_out_date %></td>
 						<td><%= duration_of reservation %></td>
-						<td><%= reservation.status %></td>
-						<td class="region"><%= link_to 'Details', reservation.partial_link, :class => 'rsvr_detail_link' %></td>
+						<td class="region">
+							<%= link_to 'Details', reservation.partial_link, :class => 'rsvr_detail_link' %>
+							<%= ajax_loader %>
+						</td>
 					</tr>	
 				<% end %>
 			</tbody>

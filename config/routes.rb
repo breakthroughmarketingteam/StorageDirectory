@@ -22,16 +22,14 @@ ActionController::Routing::Routes.draw do |map|
   # clean seo friendly
   map.storage_state_zip '/self-storage/:state/:zip', :controller => 'listings', :action => 'locator', :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i, :zip => /\d{5}/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  # all states except washington dc
-  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ }
-  map.storage_state_city '/self-storage/:state/:city', :controller => 'listings', :action => 'locator', :state => nil, :city => nil
-  
+  map.storage_state_city '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i }
+  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
+
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
-  map.hide_hint '/user_hints/hide/:placement_id', :controller => 'user_hints', :action => 'hide'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
-  map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'
+  map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show', :requirements => { :id => /\d*/ }
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
@@ -44,6 +42,9 @@ ActionController::Routing::Routes.draw do |map|
   #     products.resources :comments
   #     products.resources :sales, :collection => { :recent => :get }
   #   end
+  
+  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
+  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   map.resources :listings, :collection => { :locator => :get, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
@@ -52,9 +53,6 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :reservations
     listing.resources :facility_features
   end
-  
-  map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
-  map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   
   map.resources :users do |user|
     user.resources :posts, :collection => { :published => :get }

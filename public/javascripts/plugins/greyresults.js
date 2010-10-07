@@ -1,12 +1,12 @@
 // Greyresults 
 // Diego Salazar, Grey Robot, Inc. April, 2010
-//
+// functionality specific to the listings results of USSelfStorageLocator.com
+// for both back end (client control panel) and front end (search results)
 
 $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	
 	$.convert_unit_size_row_values_to_inputs = function(container) {
 		// values and such
 		var sizes_li	= $('.st-size', container),
@@ -36,7 +36,7 @@ $(function(){
 			price_li.html('<span class="left">$ </span>'+ pi);
 			specials_li.html(si);
 
-		$('.cancel_link', container).click(function(){
+		$('.cancel_link', container).live('click', function(){
 			// revert to original content
 			sizes_li.html(sizes_orig).css(sizes_li_revertment);
 			type_li.html(type_orig);
@@ -114,8 +114,8 @@ $(function(){
 		hidden_form.find('input[name=_method]').val('put');
 		
 		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '67px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '55px' };
+		sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
+		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
 
 		if ($(this).text() == 'Edit') {
 			$.convert_unit_size_row_values_to_inputs(container);
@@ -414,7 +414,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.mini_calendar', this).focus(); });
+		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -512,18 +512,19 @@ $(function(){
 	});
 	
 	// Reservation process, submit reserver details, then billing info
-	$('form.new_reservation', '.reserve_form').live('submit', function() {
+	$('form.new_reservation').live('submit', function() {
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
 				inner_panel.html(response.data).children().hide().fadeIn();
+				$('.hintable', inner_panel).hinty()
 			});
 		});
 		
 		return false;
 	});
 	
-	$('form.edit_reservation', '.reserve_form').live('submit', function() {
+	$('form.edit_reservation').live('submit', function() {
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
@@ -556,6 +557,11 @@ $(function(){
 			}, 'json');
 		} else ajax_loader.hide();
 	}
+	
+	$('.tos').live('click', function(){
+		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
+		return false;
+	});
 });
 
 /*
