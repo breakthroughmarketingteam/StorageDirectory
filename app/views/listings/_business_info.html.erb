@@ -1,5 +1,7 @@
 <div id="narrow-box">
-  	<h2>Storage Facility</h2>
+  	<div id="sb-title">
+		<h2>Storage Facility</h2>
+	</div>
 
 	<div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
 
@@ -19,6 +21,7 @@
 			</div>
 		</li>
 		<li id="display_hours">
+			<% unless @listing.access_24_hours.nil? && @listing.access_hours.empty? %>
 			<div class="access_hours">
 				<% if @listing.access_24_hours %>
 					<p class="info_heading"><strong>Access 24/7</strong></p>
@@ -29,7 +32,8 @@
 					</ul>
 				<% end %>
 			</div>
-
+			<% end %>
+			<% unless @listing.office_24_hours.nil? && @listing.office_hours.empty? %>
 			<div class="office_hours">
 				<% if @listing.office_24_hours %>
 					<p class="info_heading"><strong>Office Open 24/7</strong></p>
@@ -40,6 +44,7 @@
 					</ul>
 				<% end %>
 			</div>
+			<% end %>
 		</li>
 	</ul>
 	

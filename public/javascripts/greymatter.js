@@ -836,6 +836,32 @@ $.fn.clickOnLoad = function() {
 	});
 }
 
+// as the user types in numbers, the input is formated as XXX-XXX-XXXX
+$.fn.formatPhoneNum = function() {
+	if ($.browser.msie) return;
+	
+	return this.each(function(){
+		$(this).keyup(function(e){
+			var input = $(this),
+				allowed_keys = [9, 8, 46]; // 9 = tab, 8 = backspace, 46 = delete
+			
+			if (e.which == 189 || e.which == 109) { // dash or substract
+				input.val(input.val().substring(0, input.val().length - 1));
+			}
+			
+			if (allowed_keys.indexOf(e.which) < 0 && isNaN(input.val().replace('-', '').replace('-', ''))) {
+				input.val(input.val().substring(0, input.val().length - 1));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 3 && input.val().length < 7 && input.val().indexOf('-') < 0) {
+				input.val(input.val().substring(0, 3) + '-' + input.val().substring(3));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 7 && input.val().indexOf('-') < 7) {
+				input.val(input.val().substring(0, 7) + '-' + input.val().substring(8));
+			}
+		});
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {
