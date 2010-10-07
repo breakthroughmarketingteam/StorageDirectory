@@ -10,7 +10,8 @@
     <ul class="sl-table-head">
       <li class="st-size">Size</li>
       <li class="st-type">Type</li>
-      <li class="st-pric">Monthly</li>
+      <li class="st-desc">Description</li>
+	  <li class="st-pric">Monthly</li>
 	  <% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail">Available</li><% end %>
       <li class="st-spec"><!--Special--></li>
     </ul>
@@ -20,6 +21,7 @@
 			<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 				<li class="st-size"><%= size.display_dimensions %></li>
 				<li class="st-type"><%= size.title %></li>
+				<li class="st-desc" title="<%= size.description %>"><%= size.description %></li>
 				<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
 				<% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li><% end %>
 				<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><!--<%= size.special.blank? ? 'NONE' : size.special %>--></li>

@@ -45,7 +45,7 @@ module ListingsHelper
   end
   
   def listing_distance_from
-    number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue ''
+    number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue nil
   end
   
   def more_results_link(data)

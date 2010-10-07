@@ -25,8 +25,10 @@
 	    <div id="<%= in_edit_mode? ? 'sl-fac-detail' : 'sl-fac-dist' %>">
 	      <div id="<%= in_edit_mode? ? 'sl-fac-detail-in-edit' : 'sl-fac-dist-in' %>"<%= ' class="attr_editable"' if in_edit_mode? %>>
 			<% unless in_edit_mode? %>
-				<p class="sl-dist">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
-				<p class="sl-phone">Call: 1800 1800 180</p>
+				<% if listing_distance_from %>
+					<p class="sl-dist">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
+				<% end %>
+				<p class="sl-phone">Call: 1 (800) 180-0180</p>
 			<% else %>
 				<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" />
 				
@@ -75,22 +77,28 @@
 	      </div>
 	    </div>
     </div>
+
+	<% if in_mode? 'show' %>
+		<div id="outer_map">
+			<%= render :partial => 'big_map' %>
+		</div>
+	<% end %>
     
   <%= render_hints_for :info_tabs %>
     <div id="sl-tabs">
       <div id="sl-tabs-in" class="tabular_content">
         <ul id="sl-tabs-nav" class="tabular">
 			<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
-			<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') %>
+			<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
           	<%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :rel => 'sl-tabs-sizes') unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
-          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless @facility_features.empty? && in_edit_mode? && @showing %>
+          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
           	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})"}", '#pictures', :id => 'tab_Pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
         </ul>
         <!-- tab content -->
 		<%= render :partial => 'hours' if in_edit_mode? %>
-		<%= render :partial => 'big_map' %>
+		<%= render :partial => 'big_map' if in_edit_mode? %>
         <%= render :partial => 'sizes' unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
-        <%= render :partial => 'features' unless @facility_features.empty? && in_edit_mode? && @showing %>
+        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
         <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
       </div>
     </div>
