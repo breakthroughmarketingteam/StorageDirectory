@@ -158,9 +158,11 @@ class ApplicationController < ActionController::Base
     @per_page          = 15
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    @facility_features = IssnFacilityFeature.labels
-    @unit_features     = IssnUnitTypeFeature.labels
-    @unit_sizes        = IssnUnitTypeSize.labels
+    unless controller_name == 'user_sessions' && request.xhr?
+      @facility_features = IssnFacilityFeature.labels
+      @unit_features     = IssnUnitTypeFeature.labels
+      @unit_sizes        = IssnUnitTypeSize.labels
+    end
   end
   
   # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

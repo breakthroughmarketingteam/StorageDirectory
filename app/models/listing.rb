@@ -11,6 +11,7 @@ class Listing < ActiveRecord::Base
   has_many :reservations   , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
+  has_many :reviews        , :class_name => 'Comment', :as => :commentable
   
   has_many :business_hours , :dependent => :destroy
   has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
@@ -97,7 +98,7 @@ class Listing < ActiveRecord::Base
     query = extrapolate_query(params)
     sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f] rescue nil
     options = {
-      :include => [:map, :specials, :sizes, :pictures],
+      :include => [:map, :specials, :sizes, :pictures, :reviews],
       :within  => (params[:within].blank? ? $_listing_search_distance : params[:within])
     }
     
