@@ -1,6 +1,7 @@
 // Greyresults 
 // Diego Salazar, Grey Robot, Inc. April, 2010
-//
+// functionality specific to the listings results of USSelfStorageLocator.com
+// for both back end (client control panel) and front end (search results)
 
 $(function(){
 	/*
@@ -35,7 +36,7 @@ $(function(){
 			price_li.html('<span class="left">$ </span>'+ pi);
 			specials_li.html(si);
 
-		$('.cancel_link', container).click(function(){
+		$('.cancel_link', container).live('click', function(){
 			// revert to original content
 			sizes_li.html(sizes_orig).css(sizes_li_revertment);
 			type_li.html(type_orig);
@@ -209,8 +210,11 @@ $(function(){
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, {}, function(response) {
-			if (response.success) $this.toggleClass('selected');
-			else $.ajax_error(response);
+			if (response.success) {
+				$this.toggleClass('selected');
+				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
+				
+			} else $.ajax_error(response);
 			
 			$this.siblings('.f').show();
 			ajax_loader.hide();
