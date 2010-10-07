@@ -101,8 +101,8 @@ ul.city-list li a{width:110px;display:block;}
 p#click-more{width:226px;position:absolute;height:35px;line-height:25px;background:url(/images/ui/storagelocator/click-for-more.png) no-repeat bottom center;text-align:center;margin-left:38%;font-size:14px;font-weight:bold;}
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
-#type-two-l-col,#type-one-l-col,#content_bottom{width:190px;float:left;margin:13px 0 0 10px;}
-#type-two-l-col{margin-top:7px;}
+#type-two-l-col,#type-one-l-col,#content_bottom{width:190px;float:left;}
+#type-one-l-col,#content_bottom{margin:13px 0 0 10px;}
 #posts_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,
@@ -360,9 +360,9 @@ p.foot-text{margin:40px;font-weight:bold;}
 ** ADDITIONS.CSS - added after the 2nd phase of the elance project to optimize html/css code
 /******************************************************************************************************************************/
 /* New left column styles included here to introduce that dotted line. SOme of these may be able to be ignored or removeed. Get in touch with me if you need a hand... */
-#type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;left:2px;background:url(/images/ui/storagelocator/page-bg.png) no-repeat left 350px;border-radius-bottomleft:20px;-moz-border-radius-bottomleft:20px;-webkit-border-bottom-left-radius:20px;}
+#type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;}
 /* Change made in these two divs on the existing stylesheet in order to include that dotted line. These can possibly be ignored or changed back - get in touch if you need me to explain anything... */
-#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;color:#555;height:300px;}
+#add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;color:#555;margin-bottom:20px;}
 /* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;color:#555;text-align:left;margin:0 0 20px 10px;}
