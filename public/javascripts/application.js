@@ -44,7 +44,7 @@ $(document).ready(function() {
 	});
 	
 	// log the user in and change the topbar to the logged in links
-	$('#new_user_session').live('submit', function() {
+	$('#new_user_session', '#pop_up_box').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		
