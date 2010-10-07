@@ -61,7 +61,7 @@
         <ul id="sl-tabs-nav" class="tabular">
 			<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
 			<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') %>
-          	<%= content_tag :li, link_to("Unit Sizes#{" (#{@@listing.available_sizes.size})" unless @listing.available_sizes.empty?}", '#unit_sizes', :rel => 'sl-tabs-sizes') unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
+          	<%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})" unless @listing.available_sizes.empty?}", '#unit_sizes', :rel => 'sl-tabs-sizes') unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
           	<%= content_tag :li, link_to("Features#{" (#{@facility_features.size})" unless @facility_features.empty?}", '#features', :rel => 'sl-tabs-feat') unless @facility_features.empty? && @showing %>
           	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})" unless @pictures.empty?}", '#pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
         </ul>

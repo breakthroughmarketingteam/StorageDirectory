@@ -101,7 +101,7 @@ ul.city-list li a{width:110px;display:block;}
 p#click-more{width:226px;position:absolute;height:35px;line-height:25px;background:url(/images/ui/storagelocator/click-for-more.png) no-repeat bottom center;text-align:center;margin-left:38%;font-size:14px;font-weight:bold;}
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
-#type-two-l-col,#type-one-l-col,#content_bottom{width:190px;margin-left:10px;float:left;}
+#type-two-l-col,#type-one-l-col,#content_bottom{width:190px;float:left;}
 #type-two-l-col{margin-top:7px;}
 #posts_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
@@ -313,6 +313,7 @@ li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.
 li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia3.png) no-repeat top left;}
 .listing .review ul{padding-bottom:2px;overflow:hidden;font-size:80%;}
 .listing .review h6{font-size:120%;margin-bottom:10px;}
+.listing .review .stack{font-size:80%;}
 /* Start the add facility page styles here */
 form#new_client{width:39%;float:left;position:relative;left:30px;margin-bottom:20px;text-align:left;padding:0 10px;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
@@ -469,7 +470,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in .sl-table-exp{width:90%;position:relative;margin:0 auto 10px;}
 .panel #sl-tabs-sizes-in .sl-table-exp{top:0;}
 .sl-table-exp{padding:10px 20px;font-size:100%;background:url(/images/ui/storagelocator/sl-table-exp-bg.png) repeat-x bottom left;background-color:#fefeff;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border:1px solid #ccc;overflow:hidden;}
-div.sl-table-exp div input{width:60%;}
+div.sl-table-exp div input{width:75%;}
 div.sl-table-exp div #agree{width:auto;height:auto;margin-right:5px;}
 .sl-table-exp p label{margin:0 0 3px;}
 div.sl-table-exp div .tiny_text_field{width:17%;margin-right:10px;}
