@@ -14,10 +14,4 @@ class SpecialsController < ApplicationController
     render :json => { :success => @listing.save, :data => model_errors(@listing, @special) }
   end
   
-  private
-  
-  def get_listing
-    @listing = Listing.find(params[:listing_id])
-  end
-  
 end

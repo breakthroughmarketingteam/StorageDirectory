@@ -11,6 +11,7 @@ class Listing < ActiveRecord::Base
   has_many :reservations   , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
+  has_many :web_specials   , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
   
   has_many :business_hours , :dependent => :destroy

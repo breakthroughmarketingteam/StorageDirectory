@@ -101,18 +101,8 @@ class AjaxController < ApplicationController
   end
   
   def get_partial
-    locals = {}
-    
-    begin
-      model_class = params[:model].constantize 
-      @model = params[:id].blank? ? model_class.new : model_class.find(params[:id])
-      locals = { params[:model].downcase.to_sym => @model }
-    rescue
-      nil
-    end
-    
-    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => locals) }
-    
+    _get_model_and_locals
+    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => @locals) }
   rescue => e
     render :json => { :success => false, :data => e.message }
   end
@@ -206,6 +196,15 @@ class AjaxController < ApplicationController
   
   def _get_model_class(model_str = nil)
     @model_class ||= (model_str || @model_str || params[:model]).camelcase.constantize
+  end
+  
+  def _get_model_and_locals
+    @locals = {}
+    @model_class = params[:model].constantize 
+    @model = params[:id].blank? ? @model_class.new : @model_class.find(params[:id])
+    @locals = { params[:model].downcase.to_sym => @model }
+  rescue
+    nil
   end
   
   def render_error(e)

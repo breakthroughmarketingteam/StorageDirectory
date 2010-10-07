@@ -334,6 +334,14 @@ class ApplicationController < ActionController::Base
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }
   end
   
+  def get_listing
+    case current_user.role.title.downcase.to_sym when :admin
+      @listing = Listing.find params[:listing_id]
+    when :advertiser
+      @listing = current_user.listings.find params[:listing_id]
+    end
+  end
+  
   # get models names that have blocks, for the add_blocks_for helper
   def blocks_models
     @blocks_model = BlocksModel.all.map{ |bm| bm.model_type.downcase }.uniq

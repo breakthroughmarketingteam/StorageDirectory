@@ -23,20 +23,20 @@ class Reservation < ActiveRecord::Base
         :tenant => {
           :first_name => self.reserver.first_name,
           :last_name  => self.reserver.last_name,
-          :address    => self.reserver.mailing_address.address,
+          :address    => billing_info.address,
           :address2   => '',
-          :city       => self.reserver.mailing_address.city,
-          :state      => self.reserver.mailing_address.state,
-          :zip        => self.reserver.mailing_address.zip,
+          :city       => billing_info.city,
+          :state      => billing_info.state,
+          :zip        => billing_info.zip.to_s,
           :country    => usa,
-          :home_phone => self.reserver.mailing_address.phone,
+          :home_phone => '',
           :email      => self.reserver.email,
           :billing => {
-            :address  => self.reserver.billing_info.address,
+            :address  => billing_info.address,
             :address2 => '',
-            :city     => self.reserver.billing_info.city,
-            :state    => self.reserver.billing_info.state,
-            :zip      => self.reserver.billing_info.zip,
+            :city     => billing_info.city,
+            :state    => billing_info.state,
+            :zip      => billing_info.zip.to_s,
             :country  => usa
           },
           :alt => {},
@@ -47,8 +47,8 @@ class Reservation < ActiveRecord::Base
           :type         => billing_info.card_type,
           :name_on_card => billing_info.name,
           :number       => billing_info.card_number,
-          :zip          => billing_info.zip,
-          :ccv          => billing_info.ccv,
+          :zip          => billing_info.zip.to_s,
+          :ccv          => billing_info.ccv.to_s,
           :expires => {
             :month => billing_info.expires_month,
             :year  => billing_info.expires_year
@@ -56,9 +56,9 @@ class Reservation < ActiveRecord::Base
         },
         :bank => {},
         :check_number => '',
-        :amount_to_apply => '20'
+        :amount_to_apply => self.fee.to_s + '0'
       }
-      
+      puts args.pretty_inspect
       response = self.listing.process_new_tenant args
       
       if response['sErrorMessage'].blank?

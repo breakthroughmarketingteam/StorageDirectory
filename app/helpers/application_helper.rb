@@ -444,7 +444,7 @@ module ApplicationHelper
     end
   end
   
-  def selective_abbrev(words, max = 29)
+  def selective_abbrev(words, max = 30)
     @abbrevs = { 
       'international' => 'intl.',
       'management' => 'mgmt.',
@@ -488,6 +488,10 @@ module ApplicationHelper
   
   def paginated?(data = {})
     data.respond_to? :total_pages || defined? @paginated && @paginated
+  end
+  
+  def print_link(div_to_print)
+    link_to 'Print', '#', :class => 'ps', :rel => div_to_print
   end
   
   def conditional_account_path(options = {})

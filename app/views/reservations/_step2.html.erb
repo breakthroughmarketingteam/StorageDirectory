@@ -20,7 +20,7 @@
 	        <%= label_tag 'billing_info[name]', 'Name', :class => 'block' %> <%= text_field_tag 'billing_info[name]', @reserver.name, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'billing_info[phone]', 'Phone', :class => 'block' %> <%= text_field_tag 'billing_info[phone]', @reserver.mailing_address.phone, :class => 'required' %>
+	        <%= label_tag 'billing_info[phone]', 'Phone', :class => 'block' %> <%= text_field_tag 'billing_info[phone]', @reserver.mailing_address.phone, :class => 'required', :maxlength => 13 %>
 		</p>
 		<p>
 	        <%= label_tag 'billing_info[address]', 'Address', :class => 'block' %> <%= text_field_tag 'billing_info[address]', @reserver.mailing_address.address, :class => 'required' %>
@@ -30,10 +30,10 @@
 		</p>
 		<div class="uncollapse">
 			<p class="state_field">
-				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :rel => 'State_abbrevs|1' %>
+				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
 			</p>
 			<p class="zip_field">
-		        <%= label_tag 'billing_info[zip]', 'Zip Code', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required' %>
+		        <%= label_tag 'billing_info[zip]', 'Zip Code', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required', :maxlength => 5 %>
 			</p>
 		</div>
 	</div>
@@ -46,12 +46,12 @@
 	        <%= label_tag 'billing_info[card_number]', 'Card Number', :class => 'block' %> <%= text_field_tag 'billing_info[card_number]', nil, :class => 'required' %>
 		</p>
 		<p>
-			<%= label_tag 'billing_info[ccv]', 'CCV', :class => 'block' %> <%= text_field_tag 'billing_info[ccv]', nil, :class => 'required' %>
+			<%= label_tag 'billing_info[ccv]', 'CCV', :class => 'block' %> <%= text_field_tag 'billing_info[ccv]', nil, :class => 'required', :maxlength => 4 %>
 		</p>
 		<p>
 	        <%= label_tag 'billing_info[expires_month]', 'Expires', :class => 'block' %>
-			<%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field hintable', :title => 'Month' %>
-			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field left hintable', :title => 'Year' %>
+			<%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
+			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field  hintable', :title => 'YYYY', :maxlength => 4 %>
 		</p>
 		<p>
 			<%= check_box_tag 'agree', 1, false, :class => 'required' %> <%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>

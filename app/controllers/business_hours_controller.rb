@@ -17,10 +17,4 @@ class BusinessHoursController < ApplicationController
     raise params.pretty_inspect
   end
   
-  private
-  
-  def get_listing
-    @listing = Listing.find params[:listing_id]
-  end
-  
 end

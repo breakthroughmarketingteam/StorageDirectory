@@ -52,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :pictures
     listing.resources :reservations
     listing.resources :reviews
+    listing.resources :web_specials
     listing.resources :facility_features
     listing.resources :business_hours
   end

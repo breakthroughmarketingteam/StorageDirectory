@@ -1,4 +1,4 @@
-<% if current_user && not_on_home_page %>
+<% if is_admin? && not_on_home_page %>
 <div class="left">
 	<div class="buttons grey_buttons">
 		<% case action_name when 'index', 'show', 'update', 'create' %>
