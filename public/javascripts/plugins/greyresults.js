@@ -210,8 +210,11 @@ $(function(){
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, {}, function(response) {
-			if (response.success) $this.toggleClass('selected');
-			else $.ajax_error(response);
+			if (response.success) {
+				$this.toggleClass('selected');
+				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
+				
+			} else $.ajax_error(response);
 			
 			$this.siblings('.f').show();
 			ajax_loader.hide();

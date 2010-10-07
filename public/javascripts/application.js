@@ -1048,19 +1048,30 @@ $(document).ready(function() {
 		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
 			dataType: 'json',
 			beforeSubmit: function(arr, $form, options){
-				$('.ajax_loader', $form).show();
+				//$('.ajax_loader', $form).show();
+				var thumb = $('<li><img src="/images/ui/ajax-loader-lrg.gif" id="thumb_loader" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');
+				
+				if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+					var image = $('<img class="big-pic" id="/images/ui/ajax-loader-lrg.gif" src="" alt="" />');
+					$('.gallery', '#sl-tabs-pict-in').append(image);
+				}
+				
+				$('#sl-tabs-pict-gall').append(thumb);
+				thumb.hide().fadeIn(600, function(){
+					//$('img', this).trigger('mouseover');
+				});
+				
+				setTimeout(function(){ $('#picture_facility_image', $form).val('') }, 100);
 			},
 			success: function(response){
 				if (response.success) {
-					var thumb = $('<li><img src="'+ response.data.thumb +'" id="Picture_'+ response.data.id +'" alt="" /><a class="iconOnly16 delete_link right" href="/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id +'" title="Delete this picture">Delete</a></li>'),
-						image = $('<img class="big-pic" id="BigPicture_'+ response.data.id +'" src="'+ response.data.image +'" alt="" />');
+					var thumb = $('#thumb_loader', '#sl-tabs-pict-in');
+					thumb.attr({ src: response.data.thumb, id: 'Picture_'+ response.data.id });
+					$('#Picture_'+ response.data.id).next('a').attr('href', '/listings/'+ response.data.listing_id +'/pictures/'+ response.data.id);
+					$('#big-pic', '#sl-tabs-pict-in').attr({ id: 'BigPicture_'+ response.data.id, src: response.data.image });
+					$(thumb).trigger('mouseover');
 					
-					if ($('.big-pic', '#sl-tabs-pict-in').length == 0) 
-						$('.gallery', '#sl-tabs-pict-in').append(image);
-					
-					$('#sl-tabs-pict-gall').append(thumb);
-					thumb.hide().fadeIn(600, function(){ $('img', this).trigger('mouseover') });
-					
+					update_info_tab_count('Pictures', 1);
 				} else $.ajax_error(response);
 				
 				$('.ajax_loader', '#new_picture').hide();
@@ -1071,6 +1082,7 @@ $(document).ready(function() {
 	
 	// change big-pic when thumb is hovered
 	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
+		if (this.id == 'thumb_loader') return false;
 		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
 		if (big_pic.length == 0) return false;
 		
@@ -1096,7 +1108,8 @@ $(document).ready(function() {
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
 					if ($('img', '#sl-tabs-pict-gall').length == 1) $('.big-pic', '#sl-tabs-pict-in').eq(0).fadeOut(900, function(){ $(this).remove() });
-
+					
+					update_info_tab_count('Pictures', -1);
 				} else $.ajax_error(response);
 				
 				$(this).data('deleting', false);
@@ -1630,6 +1643,14 @@ function get_partial_and_do(params, callback) {
 	$.get('/ajax/get_partial', params, function(response) {
 		callback.call(this, $(response));
 	});
+}
+
+// updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
+function update_info_tab_count(label, i) {
+	var	tab = $('#tab_'+ label, '#sl-tabs'),
+			count = parseInt(tab.text().split('(')[1].replace(')', '')) + i;
+	
+	tab.text(label + ' ('+ count +')');
 }
 
 function preload_us_map_imgs() {
