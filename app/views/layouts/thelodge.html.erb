@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<%= stylesheet_link_tag 'common', @theme_css %>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<%= site_meta_tags %>
+		<title><%= yield :title %></title>
+		<%= javascript_include_tag 'jquery.all' %>
+	</head>
+	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action<%= current_user ? ' authenticated' : '' %>">
+    
+	  <%= render :partial => 'menus/menu' %>
+    
+		<div id="outer_wrapper">
+			<div id="inner_wrapper">
+			  <div id="header">
+				  <%= yield :header %>
+				</div>
+				
+				<div id="content_wrapper">
+					
+					<div id="nav" class="region">
+						<ul class="sortable">
+							<%= render :partial => 'menus/nav', :collection => @nav_pages %>
+						</ul>
+					</div> <!-- /#nav_wrap -->
+					
+					<div id="content_outer">
+					  <div id="content">
+  					  <div class="content_inner">
+  						  <%= yield %>
+  						  
+  						  <div id="content_bottom" class="region">
+    							<%= yield :content_bottom %>
+    						</div>
+  					  </div>
+					  
+  						<div id="btm_content_bg"></div>
+  					</div> <!-- /#content -->
+					</div> <!-- /#content_outer -->
+					
+					<br class="clear" />
+					
+				</div> <!-- /#content_wrapper -->
+				
+				<div id="footer" class="region">
+  				<%= yield :footer %>
+    		</div>
+				
+			</div> <!-- /#inner_wrapper -->
+		</div> <!-- /#outer_wrapper -->
+    
+    <%= javascript_include_tag 'ckeditor/ckeditor.js', @plugins %>
+  	<%= @widgets_js.map { |js| javascript_include_tag js } %>
+  	<%= javascript_include_tag 'application' %>
+    
+	</body>
+</html>

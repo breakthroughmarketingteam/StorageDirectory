@@ -1,0 +1,94 @@
+<h1 class="hidden">Self Storage Facility: <%= @listing.title.titleize %></h1>
+<a name="top" id="top"></a>
+
+<div id="type-one-r-col">
+  <div id="type-three-r-col-in">
+    
+    <div id="sl-header">
+      <h2><%= selective_abbrev(@listing.title).titleize %> <%= ' in '+ (@listing.city_and_state * ', ') unless @listing.map.lat.nil? %></h2>
+      
+		<% if in_edit_mode? %>
+			<p class="editing-btn">
+			  Facility edit mode
+			  <%= hidden_field_tag 'client_id', @client.id %>
+			  <%= hidden_field_tag 'listing_id', @listing.id %>
+			</p>
+		<% else %>
+			<p class="back-btn"><%= link_to 'Back to Results', :back %></p>
+		<% end %>
+		
+      <div class="clear"></div>
+    </div>
+   
+  <%= render_hints_for :listing_detail %>
+	<div id="listing_detail">
+	    <div id="<%= in_edit_mode? ? 'sl-fac-detail' : 'sl-fac-dist' %>">
+	      <div id="<%= in_edit_mode? ? 'sl-fac-detail-in-edit' : 'sl-fac-dist-in' %>"<%= ' class="attr_editable"' if in_edit_mode? %>>
+			<% unless in_edit_mode? %>
+				<p class="sl-dist">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
+				<p class="sl-phone">Call: 1800 1800 180</p>
+			<% else %>
+				<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" />
+				
+				<p class="listing_title" rel="listing"><span class="value block" rel="title"><%= @listing.title %></span></p>
+				<p class="address" rel="map">
+					<span class="value block" rel="address"><%= @listing.address %></span>
+					<span class="value" rel="city"><%= @listing.city %></span> 
+					<span class="value" rel="state"><%= @listing.state %></span> 
+					<span class="value" rel="zip"><%= @listing.zip %></span>
+				</p>
+				
+				<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } %>
+			<% end %>
+	      </div>
+	    </div>
+		
+		<div id="sl-fac-coup">
+	      <div id="sl-fac-coup-in<%= '-edit' if in_edit_mode? %>"<%= ' class="attr_editable"' if in_edit_mode? %>>
+			<p class="special_label">Exclusive Offer</p>
+	        <p class="sl-special value" rel="special">1st Month Free<%#= @listing.display_special %></p>
+			<p class="special_desc value" rel="">Reserve today and get the first month off your monthly rate.</p>
+			
+			<% if in_mode? 'show' %><a href="#" class="ps icon16">Print</a><% end %>
+	        <%= render :partial => 'info_edit', :locals => { :model => [@listing, @special], :info => 'special' } if in_edit_mode? %>
+	      </div>
+	    </div>
+    </div>
+    
+  <%= render_hints_for :info_tabs %>
+    <div id="sl-tabs">
+      <div id="sl-tabs-in" class="tabular_content">
+        <ul id="sl-tabs-nav" class="tabular">
+			<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
+			<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') %>
+          	<%= content_tag :li, link_to("Unit Sizes#{" (#{@@listing.available_sizes.size})"}", '#unit_sizes', :rel => 'sl-tabs-sizes') unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
+          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless @facility_features.empty? && @showing %>
+          	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})"}", '#pictures', :id => 'tab_Pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
+        </ul>
+        <!-- tab content -->
+		<%= render :partial => 'hours' if in_edit_mode? %>
+		<%= render :partial => 'big_map' %>
+        <%= render :partial => 'sizes' unless in_edit_mode? ? @listing.sizes.empty? : @listing.available_sizes.empty? %>
+        <%= render :partial => 'features' unless @facility_features.empty? && @showing %>
+        <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
+      </div>
+    </div>
+     
+  <%= render_hints_for :extras %>
+	<div id="listing_extras">
+	    <div id="sl-extra">
+	      <h3>Lorem ipsum heading here</h3>
+	      <p>
+	        Lorem ipsum text can go here, Lorem ipsum text can go here, Lorem ipsum text can go here...
+	      </p>
+	    </div>
+    
+	    <div id="sl-logos">
+	      <img src="/images/ui/storagelocator/test-logos.png" alt="recognitions">
+	    </div>
+	</div>
+    <div id="sl-footer"></div>
+    
+  </div>
+  
+</div>

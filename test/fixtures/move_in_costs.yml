@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unit_type_id: 1
+  Description: MyString
+  Amount: 1.5
+  Name: MyString
+  Tax: 1.5
+  ErrorMessage: MyText
+
+two:
+  unit_type_id: 1
+  Description: MyString
+  Amount: 1.5
+  Name: MyString
+  Tax: 1.5
+  ErrorMessage: MyText

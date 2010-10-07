@@ -1,0 +1,11 @@
+<% declare_content_for %>
+<% #content_for :scripts, @Gmap.to_html %>
+<%= display_message flash %>
+
+<h2>Cities of <%= params[:state].titleize %></h2>
+
+<ul id="cities_list">
+	<% @cities.each do |city| %>
+		<li><%= link_to "<span>Self Storage in </span>#{city}", storage_state_city_path(params[:state], city.parameterize), :class => 'storage_in_city' %></li>
+	<% end %>
+</ul>

@@ -1,0 +1,18 @@
+<% declare_content_for %>
+<% content_for :scripts, "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}' type='text/javascript'></script><script type='text/javascript'>Gmaps_data = #{@maps_data.to_json};</script>" %>
+<%= display_message flash %>
+
+<div id="type-one-r-col-in">
+  <div id="results_header">
+    <h2>We found <%= @listings.total_entries %> facilities <%= "within #{params[:within]} miles " unless params[:within].blank? %> <%= "in <span class='city-name-heading'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank? %></h2>
+	<%= link_to '<span>Show Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#show_open-map', :id => 'top_map_btn', :rel => "#{@location.lat},#{@location.lng}" %>
+  </div>
+</div>
+
+<div id="main_map">
+</div>
+
+<div class="rslt-head-txt">
+	<p>Your <span>nearest</span> self storage is being displayed first</p>
+	<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
+</div>

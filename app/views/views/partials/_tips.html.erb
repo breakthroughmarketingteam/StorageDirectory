@@ -1,0 +1,50 @@
+<div id="type-one-top-bar">
+  
+	 <div id="type-two-top-bar-head">
+	   <form action="post">
+		   <ul>
+			 	<li id="sort">Sort by: <a href="">Rating</a> / <a href="">Views</a></li>
+				<li id="search"><input type="text" class="hintable" title="Search by keyword " /> <a href="">GO</a></li>
+				<li><a href="/tips/new" class="search-options openDiv" rel="add_new_tip">Add your tips</a></li>
+			 </ul>
+		 </form>
+	 </div>
+	 
+    <div id="add_new_tip" class="hidden">
+      <% form_tag create_tip_path do %>
+        <fieldset>
+          <legend>Share Your Self Storage Tips</legend>
+          
+          <p>
+            <%= label_tag 'Title', nil, :class => 'hide_if_js' %>
+            <%= text_field_tag 'post[title]', nil, :id => 'tip_title', :class => 'hintable', :title => 'Title' %>
+          </p>
+          
+          <p>
+            <%= label_tag 'Content', nil, :class => 'hide_if_js' %>
+            <%= text_area_tag 'post[content]', nil, :id => 'tip_content', :class => 'hintable', :title => 'Content' %>
+          </p>
+          
+          <p>
+            <%= label_tag 'Tags', nil, :class => 'hide_if_js' %>
+            <%= text_field_tag 'post[tag_list]', nil, :class => 'hintable', :title => 'Tags' %>
+          </p>
+          
+          <div class="submit">
+            <%= submit_tag 'Submit' %>
+          </div>
+          
+        </fieldset>
+      <% end %>
+    </div>
+	 
+	<div id="tips-wrap">
+		<% data.each do |tip| %>
+			<%= render :partial => 'comments/tip', :locals => { :tip => tip } %>
+		<% end %>
+	</div>
+
+  <%= render :partial => 'views/paginate', :locals => { :data => data } %>
+		
+  <div class="clear"></div>	 
+</div>

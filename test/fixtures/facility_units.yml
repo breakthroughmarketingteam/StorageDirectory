@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unit_type_id: 1
+  UnitID: MyString
+  UnitName: MyString
+  Available: MyString
+  PromosAvailable: MyString
+
+two:
+  unit_type_id: 1
+  UnitID: MyString
+  UnitName: MyString
+  Available: MyString
+  PromosAvailable: MyString

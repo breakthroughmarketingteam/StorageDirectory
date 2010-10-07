@@ -1,0 +1,14 @@
+<% declare_content_for %>
+
+<div id="ajax_inner_wrap">
+	<% display_message flash %>
+
+	<h2 class="stack"><%= user_account_title %></h2>
+
+	<%= render :partial => 'user', :locals => { :user => @user } %>
+
+	<div class="uncollapse">
+	  <div class="right"><%= link_to "#{@user.name.possessive} Images", user_images_path(@user) %></div>
+	  <div class="buttons"><%= button_to 'Edit', edit_user_path, { :method => 'get' } %></div>
+	</div>
+</div>

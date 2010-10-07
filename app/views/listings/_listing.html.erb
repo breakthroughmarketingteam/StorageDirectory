@@ -1,0 +1,26 @@
+<div class="listing">
+  <div class="inner">
+    <img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77" />
+    <div class="rslt-contact">
+      <%= edit_listing_title(listing) %>
+      <p>
+        <%= edit_listing_address(listing) %>
+        <%= edit_listing_city_state_zip(listing) %>
+      </p>
+    </div>
+    <ul class="listing_options">
+      <li class="<%= listing.new_record? ? 'new_listing_tips' : 'rslt-offer' %>">
+        <% if listing.new_record? %>
+          <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
+        <% elsif listing.special.nil? %>
+			<p class="listing_advice"><strong>Click Edit to add features and pictures.</strong></p>
+		<% else %>
+			<%= listing.display_special %>
+		<% end %>
+      </li>
+      <li class="rslt-reserve">
+        <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (listing.new_record? ? '' : (current_user.has_role?('admin') ? edit_listing_path(listing) : client_listing_path(listing))) %>
+      </li>
+    </ul>
+  </div>
+</div>

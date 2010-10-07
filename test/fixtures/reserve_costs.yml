@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unit_type_id: 1
+  LastDayYMD: 1
+  FeeAmount: 1.5
+  Available: MyString
+  ManagementSystem_TID: MyString
+  ManagementSystem_UID: 1
+  Tax: 1.5
+  ReservationFeeMax: 1.5
+  DetailCount: 1
+  FeeIncludesTax: MyString
+  ReservationFeeMin: 1.5
+  ManagementSystem_TypeDesc: MyString
+  LastDayMDY: MyString
+  ManagementSystem_UnitName: MyString
+  FeeDescription: MyString
+
+two:
+  unit_type_id: 1
+  LastDayYMD: 1
+  FeeAmount: 1.5
+  Available: MyString
+  ManagementSystem_TID: MyString
+  ManagementSystem_UID: 1
+  Tax: 1.5
+  ReservationFeeMax: 1.5
+  DetailCount: 1
+  FeeIncludesTax: MyString
+  ReservationFeeMin: 1.5
+  ManagementSystem_TypeDesc: MyString
+  LastDayMDY: MyString
+  ManagementSystem_UnitName: MyString
+  FeeDescription: MyString

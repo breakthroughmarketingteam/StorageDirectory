@@ -1,0 +1,49 @@
+<% @listing = @listing || listing %>
+<div id="sl-tabs-sizes" class="tab_content">
+	<% if is_facility_owner? && in_edit_mode? %>
+		<%= link_to 'Add Unit', '#', :id => 'new_unit', :class => 'btn' %>
+		<%= link_to 'Sync', "/ajax/model_method?model=Listing&id=#{@listing.id}&model_method=update_unit_types_and_sizes", :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
+		<%= ajax_loader %>
+	<% end %>
+	
+  <div id="sl-tabs-sizes-in">
+    <ul class="sl-table-head">
+      <li class="st-size">Size</li>
+      <li class="st-type">Type</li>
+      <li class="st-pric">Monthly</li>
+	  <% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail">Available</li><% end %>
+      <li class="st-spec"><!--Special--></li>
+    </ul>
+	
+    <% (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes).each do |size| %>
+		<div class="sl-table-wrap">
+			<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
+				<li class="st-size"><%= size.display_dimensions %></li>
+				<li class="st-type"><%= size.title %></li>
+				<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
+				<% if in_edit_mode? && @listing.issn_enabled? %><li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li><% end %>
+				<li class="st-spec" title="<%= size.special.blank? ? 'None available' : size.special %>"><!--<%= size.special.blank? ? 'NONE' : size.special %>--></li>
+				<li class="st-rese">
+					<% if is_facility_owner? %>
+						<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
+						<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
+					<% else %>
+						<a href="#" class="rsr-btn">Select</a>
+					<% end %>
+				</li>
+				<li class="st-sele">
+					<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel' %>
+				</li>
+			</ul>
+
+			<% if is_facility_owner? %>
+				<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+			<% else %>
+				<div class="reserve_form hidden">
+					<%= render :partial => 'views/partials/greyresults/reserve', :locals => { :listing => @listing, :unit_type => size.unit_type } %>
+				</div>
+			<% end %>
+		</div>
+    <% end %>
+  </div>
+</div>

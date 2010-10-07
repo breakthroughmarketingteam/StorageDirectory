@@ -1,0 +1,6 @@
+<ul id="model_filter_by_tag" class="horizontal stack">
+  <li>Tagged with: <%= link_to 'All', "/#{controller_name}", :class => "#{'active' unless params[:tag]}" %>
+  <% tags.each do |tag| %>
+    <li><%= link_to tag, tag_filter_path(tag), :class => "#{'active' if params[:tag] == tag}" %></li>
+  <% end %>
+</ul>
