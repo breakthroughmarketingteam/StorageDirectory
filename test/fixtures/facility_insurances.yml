@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  listing_id: 1
+  sID: MyString
+  Provider: MyString
+  TheftCoverage: MyString
+  MonthlyPremium: 1
+  CoverageAmount: 1
+
+two:
+  listing_id: 1
+  sID: MyString
+  Provider: MyString
+  TheftCoverage: MyString
+  MonthlyPremium: 1
+  CoverageAmount: 1

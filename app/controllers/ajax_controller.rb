@@ -93,7 +93,7 @@ class AjaxController < ApplicationController
   def model_method
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
       data = (@model || @model_class).send(params[:model_method])
-      render :json => { :success => data, :data => data }
+      render :json => { :success => true }
     end
 
   rescue => e

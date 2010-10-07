@@ -17,11 +17,12 @@ class ListingsController < ApplicationController
     result = Listing.geo_search params, session
     @listings = result[:data]
     @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
     # updates the impressions only for listings on current page
+    @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || 10)
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
     if session[:location].blank? || params[:q] && params[:state].blank?
@@ -114,6 +115,7 @@ class ListingsController < ApplicationController
       @facility_feature = FacilityFeature.new
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
+      @hours = @listing.business_hours
     end
   end
   
@@ -146,6 +148,7 @@ class ListingsController < ApplicationController
         :specials => listing.specials, 
         :sizes    => listing.available_sizes, 
         :pictures => listing.pictures, 
+        :reviews  => listing.reviews, 
         :accepts_reservations => res, 
         :reserve_link_href    => listing.get_partial_link(res ? :reserve : :request_info) 
       }

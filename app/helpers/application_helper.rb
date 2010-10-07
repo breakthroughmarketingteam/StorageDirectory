@@ -444,6 +444,18 @@ module ApplicationHelper
     end
   end
   
+  def selective_abbrev(words, max = 29)
+    @abbrevs = { 
+      'international' => 'intl.',
+      'management' => 'mgmt.',
+      'enterprise' => 'ent.'
+    }
+    
+    if words.size > max then @abbrevs.merge! 'storage' => 'stge.' end
+      
+    words.split(' ').map { |a| @abbrevs[a.downcase] || a }.join ' '
+  end
+  
   # get the name or title of the instance of the associated model
   def name_of_associated_model(attribute, id)
     attr_cap = attribute.sub(/_id$/, '').capitalize

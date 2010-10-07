@@ -9,6 +9,7 @@ class MapsController < ApplicationController
     
     tag_list = params[:map].delete(:tag_list)
     @listing.tag_list = tag_list
+    @listing.title = params[:listing][:title]
     
     map_saved = @map.update_attributes params[:map]
     render :json => { :success => (map_saved && @listing.save), :data => model_errors(@listing, @map) }

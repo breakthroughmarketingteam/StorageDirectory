@@ -584,7 +584,7 @@ $(document).ready(function() {
 		});
 		
 		$('#reservations', '#ov-services').click(function(){
-			if ($('#issn_enabled').val()) {
+			if ($('#issn_enabled').val() != 'false') {
 				get_pop_up_and_do({ title: 'Reservations', height: '510', modal: true }, { sub_partial: 'clients/reservations', model: 'Client', id: $('#client_id').text() }, function(pop_up) {
 					pop_up.css('background-image', 'none');
 				});
@@ -919,16 +919,117 @@ $(document).ready(function() {
 		
 	// END new listing workflow
 	
-	$('#sync_listing').click(function(){
-		var $this = $(this).text('Syncing'),
-			ajax_loader = $this.siblings('.ajax_loader').show();
+	// business hours edit form, listing page
+	$('.all_day_check').change(function(){
+		var day_check = $(this), context = day_check.parent().parent().parent();
+		day_check.data('was_checked', day_check.is(':checked'));
 		
-		$.post($this.attr('href'), {}, function(response){
+		if (day_check.is(':checked')) {
+			$('select, input[type=hidden]', context).attr('disabled', true);
+			
+			$('.day_closed', context).each(function(){
+				var check = $(this);
+				check.data('was_checked', check.is(':checked'));
+			});
+			
+			$('.day_closed', context).attr('checked', false);
+		} else {
+			$('.day_closed', context).each(function(){
+				var check = $(this);
+				
+				if (check.data('was_checked') && !check.is(':checked')) {
+					check.attr('checked', true);
+					$('select, input[type=hidden]', check.parent()).attr('disabled', false);
+				}
+			});
+		}
+	});
+	
+	$('.hour_range', '#business_hours_form').each(function(){
+		var fields = $('select, input[type=hidden]', this),
+			checkbox = $(':checkbox', $(this).parent());
+		
+		if (!checkbox.is(':checked')) fields.attr('disabled', true);
+		else fields.attr('disabled', false);
+	});
+	
+	$('.day_closed', '#business_hours_form').live('change', function(){
+		var check = $(this),
+			all_day_check = $('.all_day_check', check.parents('.hours_display'));
+		
+		check.data('was_checked', check.is(':checked'));
+		
+		if (check.is(':checked')) $('select, input[type=hidden]', $(this).parent().find('.hour_range')).attr('disabled', false);
+		else $('select, input[type=hidden]', $(this).parent().find('.hour_range')).attr('disabled', true);
+		
+		// TODO: move the all_day_check out of this func, so it doesn't get overwritten after multiple clicks from one check
+		if ($('.day_closed:checked', check.parents('.hours_display')).length == 1) {
+			all_day_check.data('was_checked', all_day_check.is(':checked'));
+			all_day_check.attr('checked', false);
+		} else if ($('.day_closed:checked', check.parents('.hours_display')).length == 0) {
+			all_day_check.attr('checked', all_day_check.data('was_checked'));
+		}
+	});
+	
+	$('.copy_all_hours', '#business_hours_form').click(function(){
+		var monday_range = $(this).parent(),
+			checked = $(':checkbox', monday_range.parent()).is(':checked'),
+			monday_hours = $('select', monday_range),
+			other_hours = $('.hour_range select', monday_range.parent().parent()).not(monday_hours);
+			
+		other_hours.each(function(){
+			var this_hour = $(this),
+				this_day = this_hour.parent().parent();
+			
+			if (this_hour.attr('rel') == 'opening') this_hour.val(monday_hours.eq(0).val());
+			else if (this_hour.attr('rel') == 'closing') this_hour.val(monday_hours.eq(1).val());
+			
+			$(':checkbox', this_day).attr('checked', checked);
+			$('select, input[type=hidden]', this_day).attr('disabled', !checked);
+		});
+		
+		return false;
+	});
+	
+	$('#save_hours', '#business_hours_form').click(function(){
+		var $this = $(this),
+			form = $this.parents('form').runValidation(),
+			ajax_loader = $('.ajax_loader', form);
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			ajax_loader.show();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				if (response.success) {
+					$this.after('<span id="msg">Saved!</span>');
+					setTimeout(function(){ $('#msg', form).fadeOut(1000, function(){ $(this).remove() }); }, 3000);
+					
+				} else $.ajax_error(response);
+				
+				form.data('saving', false);
+				ajax_loader.hide();
+			});
+		}
+		
+		return false;
+	});
+	
+	// unit sizes form
+	$('#sync_listing').click(function() {
+		var $this = $(this).text('Syncing'),
+			ajax_loader = $this.siblings('.ajax_loader').show(),
+			sizes_in = $('#sl-tabs-sizes-in').addClass('faded');
+		
+		$('.edit-btn', sizes_in).hide();
+		
+		$.post($this.attr('href'), {}, function(response) {
 			if (response.success) {
 				$this.text('Reloading');
 				
 				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(response){
-					if (response.success) $('#sl-tabs-sizes-in').replaceWith($(response.data).find('#sl-tabs-sizes-in'));
+					$.log(response)
+					if (response.success) sizes_in.replaceWith($(response.data).find('#sl-tabs-sizes-in'));
 					else $.ajax_error(response);
 					
 					ajax_loader.hide();

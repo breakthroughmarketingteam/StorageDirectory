@@ -17,4 +17,8 @@ class Size < ActiveRecord::Base
     "#{width}x#{length}"
   end
   
+  def sqft
+    width * length
+  end
+  
 end

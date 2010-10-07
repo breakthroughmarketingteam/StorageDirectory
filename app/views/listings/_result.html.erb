@@ -1,43 +1,44 @@
 <div id="listing_<%= result.id %>" class="listing">
 	<div class="inner">
-		<div class="uncollapse">
-			<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+		<div class="in">
+			<div class="rslt-title">
+				<h3><%= link_to result.title, facility_path(result.title.parameterize, result.id) %></h3>
+			</div>
+
+			<div class="num_icon"><%= result_index(result) %></div>
+			
+			<div class="facility-logo">
+				<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+			</div>
 			<div class="rslt-contact">
-				<h3 class="rslt-title">
-					<%= link_to result.title, facility_path(result.title.parameterize, result.id) %>
-				</h3>
+
 				<p>
 					<span class="rslt-address"><%= result.map.address %></span><br>
 					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
 				</p>
+				<p>
+					<span class="rslt-phone">1-800-567-4321</span>
+				</p>
 			</div>
 			<ul>
 				<li class="rslt-miles">
-					<span class="shifted-text"><span class="block bold font110"><%= listing_distance(result) %></span>Miles</span>
+					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
 				<li class="rslt-features">
 				  	<% unless result.user_id.blank? %>
-					<ul>
-						<li>24 Hour Access</li>
-						<li>Climate Controlled</li>	
-						<li>Business Center</li>
-						<li>Boxes and Packing Supplies</li>
-					</ul>
+						<ul>
+							<li>24 Hour Access</li>
+							<li>Climate Controlled</li>	
+							<li>Business Center</li>
+							<li>Boxes and Packing Supplies</li>
+						</ul>
 					<% end %>
 				</li>
 			
 				<li class="rslt-reserve">
 					<%= results_main_button(result) %>
 				</li>
-			
-				<% if @listings.total_entries > 1 && action_name == 'locator' %>
-					<li class="compare_li">
-						<div class="compare selectable" title="Select to compare">
-							<%= check_box_tag 'compare', result.id, nil, :class => 'hidden' %>
-						</div>
-					</li>
-				<% end %>
 			</ul>
 		</div>
 		
@@ -57,15 +58,19 @@
 		</li>
 		
 		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
-			<%= link_to 'Sizes', result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
+			<%= link_to "Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
 		</li>
 		
 		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
-			<%= link_to 'Specials', result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
+			<%= link_to "Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
 		</li>
 		
 		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
-			<%= link_to 'Pictures', result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
+			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
+		</li>
+		
+		<li class="fac-reviews<%= ' hide' if result.reviews.empty? %>">
+			<%= link_to "Reviews#{" (#{result.reviews.size})"}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
 		</li>
 	</ul>
 	<div class="highlight-green progress">&nbsp;</div>

@@ -51,7 +51,9 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :maps
     listing.resources :pictures
     listing.resources :reservations
+    listing.resources :reviews
     listing.resources :facility_features
+    listing.resources :business_hours
   end
   
   map.resources :users do |user|
