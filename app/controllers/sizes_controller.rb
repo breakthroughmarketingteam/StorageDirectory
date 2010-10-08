@@ -38,9 +38,8 @@ class SizesController < ApplicationController
   
   private
   
-  # TODO: scope the listings by user => current_user.listings.find, must set up client accounts that have listings to test with
   def get_listing
-    @listing = Listing.find(params[:listing_id])
+    @listing = current_user.listings.find(params[:listing_id])
   end
   
   def convert_price_to_cents

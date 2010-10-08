@@ -1,26 +1,28 @@
 <% form_for @reservation do |f| %>
-	<h4 class="left_space">Your Storage Unit Has Been Reserved</h4>
+	<div id="print_box">
+		<h4 class="left_space">Your Storage Unit Has Been Reserved</h4>
 	
-	<div class="sl-table-exp-form-l">
-		<p>Move In Date: <%= @reservation.move_in_date.asctime %></p>
-		<p>Reservation Code: <%= @reservation.reserve_code %></p>
-		<p>Unit Name: <%= @response['sUnitName'] %>, Unit ID: <%= @response['sUnitId'] %>
+		<div class="sl-table-exp-form-l">
+			<p>Move In Date: <%= @reservation.move_in_date.asctime %></p>
+			<p>Reservation Code: <%= @reservation.reserve_code %></p>
+			<p>Unit Number: <%= @response['sUnitName'] || @response['sUnitId'] %> %>
 		
-		<p>Storage Facility: </p>
-		<div class="framed">
-			<p><%= @reservation.listing.title %></p>
-			<div class="listing_address">
+			<p>Storage Facility: </p>
+			<div class="framed">
+				<p><%= @reservation.listing.title %></p>
+				<div class="listing_address">
+					<p>
+						<%= @reservation.listing.address %><br />
+						<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
+					</p>
+				</div>
+			</div>
+		
+			<div class="framed right_space">
 				<p>
-					<%= @reservation.listing.address %><br />
-					<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
+					<%= print_link('#reserve_print') %> this page and bring it with you to <%= @reservation.listing.title %> along with your credit card.
 				</p>
 			</div>
-		</div>
-		
-		<div class="framed right_space">
-			<p>
-				Print this page and bring it with you to <%= @reservation.listing.title %> along with your credit card.
-			</p>
 		</div>
 	</div>
 

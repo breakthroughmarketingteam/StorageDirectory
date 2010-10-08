@@ -273,7 +273,7 @@ class ApplicationController < ActionController::Base
   end
   
   def _user_hint_places(for_select = true)
-    fetch_array_for $_user_hint_places, for_select
+    fetch_array_for $_user_hint_places.map(&:to_s), for_select
   end
   
   def _models_having_assoc(for_select = false)
@@ -332,6 +332,14 @@ class ApplicationController < ActionController::Base
   # for the shared blocks_model_form
   def get_blocks
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }
+  end
+  
+  def get_listing
+    case current_user.role.title.downcase.to_sym when :admin
+      @listing = Listing.find params[:listing_id]
+    when :advertiser
+      @listing = current_user.listings.find params[:listing_id]
+    end
   end
   
   # get models names that have blocks, for the add_blocks_for helper

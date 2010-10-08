@@ -280,18 +280,16 @@ $(function(){
 				scoping_dropdown = $('.scoping_dropdown', scoping_fields);
 				scoping_dropdown.html('<option>Loading ' + $this.val() + '...</option>');
 				
-				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() },
-					function(response) {
-						if (response.success) {
-							var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
-							var option_tags = $.option_tags_from_model($this.val(), response.data, args);
-							scoping_dropdown.html(option_tags);
-							
-						} else {
-							scoping_dropdown.html('<option>Error Loading Records</option>')
-						}
+				$.getJSON('/ajax/get_all', { model: $this.val(), authenticity_token: $.get_auth_token() }, function(response) {
+					if (response.success) {
+						var args = { attribute: 'name', select_prompt: (scoping_dropdown.hasClass('no_prompt') ? '' : 'Active Context') }
+						var option_tags = $.option_tags_from_model($this.val(), response.data, args);
+						scoping_dropdown.html(option_tags);
+						
+					} else {
+						scoping_dropdown.html('<option>Error Loading Records</option>')
 					}
-				);
+				});
 			} else scoping_fields.hide(300);
 		}); // END .scope_dropdown.change()
 		
@@ -360,6 +358,12 @@ $.option_tags_from_array = function(options, selected) {
 	});
 	
 	return options_tags;
+}
+
+$.handle_json_response = function(response, success, error) {
+	if (response.success) success.call(this, response.data);
+	else if (error && error.call) error.call(response.data)
+	else $.ajax_error(response);
 }
 
 $.log = function(msg) {
@@ -491,23 +495,19 @@ $.updateModels = function(e, ui) {
 	});
 	
 	$.post('/ajax/update_many', data, function(response){
-		if (response.success) {
+		$.handle_json_response(response, function(data){
 			$this.effect('bounce', {}, 200);
-		} else {
-			$.ajax_error(response);
-		}
+		});
 	}, 'json');
 }
 
 // update attributes on a single model
 $.updateModel = function(path, params, callback) {
 	$.post(path, params, function(response){
-		if (response.success) {
-			if (typeof callback == 'function') callback.call(this, response.data);
-			else alert(response.data);
-			
-		} else $.ajax_error(response);
-		
+		$.handle_json_response(response, function(data){
+			if (typeof callback == 'function') callback.call(this, data);
+			else alert(data);
+		});
 	}, 'json');
 }
 
@@ -516,13 +516,10 @@ $.getModelAttributes = function(resource, callback) {
 	var attributes = [];
 	
 	$.getJSON('/ajax/get_attributes?model='+ singularize(resource), function(response){
-		if (response.success) {
-			if (callback && typeof callback == 'function') callback.call(this, response.data);
-			else return response.data;
-			
-		} else {
-			$.ajax_error(response);
-		}
+		$.handle_json_response(response, function(data){
+			if (callback && typeof callback == 'function') callback.call(this, data);
+			else return data;
+		});
 	});
 }
 
@@ -833,6 +830,32 @@ $.fn.tabular_content = function() {
 $.fn.clickOnLoad = function() {
 	return this.each(function(){
 		$(this).click();
+	});
+}
+
+// as the user types in numbers, the input is formated as XXX-XXX-XXXX
+$.fn.formatPhoneNum = function() {
+	if ($.browser.msie) return;
+	
+	return this.each(function(){
+		$(this).keyup(function(e){
+			var input = $(this),
+				allowed_keys = [9, 8, 46]; // 9 = tab, 8 = backspace, 46 = delete
+			
+			if (e.which == 189 || e.which == 109) { // dash or substract
+				input.val(input.val().substring(0, input.val().length - 1));
+			}
+			
+			if (allowed_keys.indexOf(e.which) < 0 && isNaN(input.val().replace('-', '').replace('-', ''))) {
+				input.val(input.val().substring(0, input.val().length - 1));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 3 && input.val().length < 7 && input.val().indexOf('-') < 0) {
+				input.val(input.val().substring(0, 3) + '-' + input.val().substring(3));
+				
+			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 7 && input.val().indexOf('-') < 7) {
+				input.val(input.val().substring(0, 7) + '-' + input.val().substring(8));
+			}
+		});
 	});
 }
 

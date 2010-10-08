@@ -62,7 +62,7 @@ $(function(){
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
 		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-			if (response.success) {
+			$.handle_json_response(response, function(data){
 				// update the row with the new values
 				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
@@ -78,9 +78,8 @@ $(function(){
 
 				$('.edit-btn', container).text('Edit');
 				$('.cancel_link', container).hide();
-
-			} else alert('Error: '+ response.data);
-
+			});
+			
 			$('.st-sele', container).removeClass('active_load');
 
 		}, 'json');
@@ -143,25 +142,16 @@ $(function(){
 		if ($this.text() == 'Edit') {
 			cancel_btn.show();
 			$this.text('Save').data('saving', false);
-
-			if (rel == 'address') { // has spans for each address field, e.g. address, state, zip
-				$('.listing_title, .address', container).children('span').each(function(){
-					var el	  = $(this).hide(),
-						attr  = el.attr('rel'),
-						parent_model = el.parent().attr('rel'),
-						input = $('<input type="text" name="'+ parent_model+ '['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
-
-					el.after(input); // put input after span
-
+			
+			$('.attr_wrap', container).children('.field_group').each(function(){
+				var model = $(this).attr('rel');
+				
+				$('.value', this).each(function(){
+					var field = $(this).hide(), attr = field.attr('rel');
+					field.after('<input type="text" name="'+ model+ '['+ attr +']" class="small_text_field i '+ attr +'" value="'+ field.text() +'" title="'+ capitalize(attr.replaceAll('_', ' ')) +'" />');
 				});
-			} else if (rel == 'special') {
-				var el	  = $('.sl-special', container).hide(),
-					attr  = el.attr('rel'),
-					input = $('<input type="text" name="listing['+ attr +']" class="small_text_field i '+ attr +'" value="'+ el.text() +'" title="'+ attr +'" />');
-
-				el.after(input); // put input after span
-			}
-
+			});
+			
 			cancel_btn.click(function(){
 				$this.text('Edit').data('saving', false).attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
 				cancel_btn.hide();
@@ -178,7 +168,7 @@ $(function(){
 			$.clone_and_attach_inputs('input.i', container, hidden_form);
 
 			$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-				if (response.success) {
+				$.handle_json_response(response, function(data){
 					$('input.i', container).each(function(){
 						var input = $(this),
 							val	  = input.val();
@@ -189,8 +179,7 @@ $(function(){
 
 					$this.text('Edit').attr('style', ''); // this allows the edit link to hide when mouse is not hovered over the container, see the css styles for #sl-fac-detail-in-edit
 					cancel_btn.hide();
-
-				} else alert('Error: '+ response.data);
+				});
 
 				$this.data('saving', false);
 				$('.ajax_loader', container).hide();
@@ -210,11 +199,10 @@ $(function(){
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, {}, function(response) {
-			if (response.success) {
+			$.handle_json_response(response, function(data){
 				$this.toggleClass('selected');
 				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
-				
-			} else $.ajax_error(response);
+			});
 			
 			$this.siblings('.f').show();
 			ajax_loader.hide();
@@ -453,7 +441,7 @@ $(function(){
 			$panel.attr('rel', this.rel);
 
 			$.getJSON(this.href, function(response) {
-				if (response.success) {
+				$.handle_json_response(response, function(data){
 					$('.tab_link, .listing, .panel').removeClass('active');
 					$('li', '.tabs').removeClass('active');
 					$this.parent().addClass('active');
@@ -463,7 +451,7 @@ $(function(){
 					$panel.addClass('active');
 
 					$('.panel:not(.active)').slideUp();
-					$panel.html(response.data);
+					$panel.html(data);
 
 					$('.listing:not(.active) .open_tab').text('+');
 					$('.open_tab', $listing).data('active', true).text('-');
@@ -483,8 +471,7 @@ $(function(){
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
 					}
-					
-				} else $.ajax_error(response);
+				});
 			});
 		}
 

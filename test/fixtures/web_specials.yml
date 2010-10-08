@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  label: MyString
+  title: MyString
+  description: MyText
+  value: 1
+  function: MyString
+  listing_id: 1
+
+two:
+  label: MyString
+  title: MyString
+  description: MyText
+  value: 1
+  function: MyString
+  listing_id: 1

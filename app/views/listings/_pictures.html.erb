@@ -10,8 +10,8 @@
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>
-		<% big_pic = @listing.pictures.sort_by(&:position).first %>
-	    <%= image_tag big_pic.facility_image.url(:medium), :id => "BigPicture_#{big_pic.id}", :class => 'big-pic' unless @listing.pictures.empty? %>
+
+	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :class => 'big-pic' unless @listing.pictures.empty? %>
 	</div>
 
 	<% form_for Picture.new, :html => { :multipart => true } do |f| %>
@@ -19,7 +19,6 @@
 			<%= f.label :facility_image, 'Upload' %>
 			<%= f.file_field :facility_image, :size => 10 %>
 			<%= f.hidden_field :listing_id, :value => @listing.id %>
-			<%= ajax_loader 'ajax-loader-facebook.gif' %>
 			<%= hidden_field_tag 'format', 'js' %>
 		</div>
 	<% end if action_name == 'edit' %>
