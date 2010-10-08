@@ -444,7 +444,7 @@ module ApplicationHelper
     end
   end
   
-  def selective_abbrev(words, max = 30)
+  def selective_abbrev(words, max = 40)
     @abbrevs = { 
       'international' => 'intl.',
       'management' => 'mgmt.',

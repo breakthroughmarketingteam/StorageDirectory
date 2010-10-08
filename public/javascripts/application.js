@@ -1038,45 +1038,39 @@ $(document).ready(function() {
 	});
 	
 	// upload pics
-	$('#picture_facility_image', '#new_picture').change(function(){
+	$('#picture_facility_image', '#new_picture').live('change', function(){
+		var thumb = $('<li><img src="/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
+		
+		if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+			var image = $('<img class="big-pic" src="" alt="" />');
+			$('.gallery', '#sl-tabs-pict-in').append(image);
+		}
+		
 		if ($(this).val() != '') $('#new_picture').ajaxSubmit({
 			dataType: 'json',
 			beforeSubmit: function(arr, $form, options) {
-				//$('.ajax_loader', $form).show();
-				var thumb = $('<li><img src="/images/ui/ajax-loader-lrg.gif" id="thumb_loader" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');
-				
-				if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
-					var image = $('<img class="big-pic" id="/images/ui/ajax-loader-lrg.gif" src="" alt="" />');
-					$('.gallery', '#sl-tabs-pict-in').append(image);
-				}
-				
 				$('#sl-tabs-pict-gall').append(thumb);
-				thumb.hide().fadeIn(600, function(){
-					//$('img', this).trigger('mouseover');
-				});
-				
+				thumb.hide().fadeIn(600);
 				setTimeout(function(){ $('#picture_facility_image', $form).val('') }, 100);
 			},
 			success: function(response){
 				$.handle_json_response(response, function(data){
-					var thumb = $('#thumb_loader', '#sl-tabs-pict-in');
-					thumb.attr({ src: data.thumb, id: 'Picture_'+ data.id });
-					$('#Picture_'+ data.id).next('a').attr('href', '/listings/'+ data.listing_id +'/pictures/'+ data.id);
-					$('#big-pic', '#sl-tabs-pict-in').attr({ id: 'BigPicture_'+ data.id, src: data.image });
-					$(thumb).trigger('mouseover');
+					var thumb_img = $('img', thumb);
+					thumb_img.attr({ src: data.thumb, id: 'Picture_'+ data.id }).removeClass('loading');
+					thumb_img.next('a').attr('href', '/listings/'+ data.listing_id +'/pictures/'+ data.id);
 					
+					if (image) image.attr('src', data.image);
+					
+					thumb_img.trigger('mouseover');
 					update_info_tab_count('Pictures', 1);
 				});
-				
-				$('.ajax_loader', '#new_picture').hide();
-				$('#picture_facility_image', '#new_picture').val('');
 			}
-		})
+		});
 	});
 	
 	// change big-pic when thumb is hovered
 	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
-		if (this.id == 'thumb_loader') return false;
+		if ($(this).hasClass('loading')) return false;
 		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
 		if (big_pic.length == 0) return false;
 		
