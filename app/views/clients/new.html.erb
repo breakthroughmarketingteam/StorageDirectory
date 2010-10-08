@@ -19,27 +19,11 @@
 		<div id="type-three-top-bar-head">&nbsp;</div>
 		
 		<div id="top_fac_page" class="uncollapse">
-			<div id="add-fac-form-txt">
-				<h2>Market your self storage facility online, and stay on top!'</h2>
-				<p>
-					When you list your self storage facility with <strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> you’re not just creating a business profile, you’re joining a network of successful self storage facilities across the country. <strong>Our services go beyond a directory listing and include the latest enhancements in web marketing, SEO, and social networking</strong>.
-				</p>
-				<p>
-					<strong>In today’s market you’re missing out on business if your self storage facility is not accessible on the Internet</strong>.  Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.
-				</p>
-				<p class="call-button">
-					<span>CALL<br>
-					1-800-888-5555<br>
-					FOR MORE INFO</span>
-				</p>
-			</div>
-		
 			<% form_for @client do |f| %>
-				<p>Start by checking if we already have you listed...</p>
-			
+				<p class="sub_head">Advertising your self storage business has never been so quick and easy.</p>
 				<p>
 					<%= f.label :company, 'Facility Name', :class => 'hidden' %>
-					<%= f.text_field :company, :class => 'required hintable', :title => 'Facility Name' %>
+					<%= f.text_field :company, :class => 'required hintable', :title => 'Your Facility\'s Name' %>
 				</p>
 				<p>
 					<%= f.label :email, 'Contact Email', :class => 'hidden' %>
@@ -50,12 +34,29 @@
 					<%= text_field_tag 'listing[city]', 'miami', :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
 					<%= text_field_tag 'listing[state]', 'fl', :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 				</p>
+
 				<div>
 					<%= ajax_loader %>
 					<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
 					<input type="submit" name="commit" class="hidden">
 				</div>
 			<% end %>
+			
+			<div id="add-fac-form-txt">
+				<h2>Market your self storage facility online, and stay on top!'</h2>
+				<p>
+					When you list your self storage facility with <strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> you’re not just creating a business profile, you’re joining a network of successful self storage facilities across the country. Our services <strong>go beyond</strong> a directory listing and include the latest enhancements in web marketing, SEO, and social networking.
+				</p>
+				<p>
+					In today’s market you’re missing out on business if your self storage facility is not <strong>accessible</strong> on the Internet.  Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.
+				</p>
+			</div>
+			
+			<p class="call-button">
+				<span>CALL<br>
+				1-800-888-5555<br>
+				FOR MORE INFO</span>
+			</p>
 		</div>
 		
 		<div id="add-fac-form-extra">

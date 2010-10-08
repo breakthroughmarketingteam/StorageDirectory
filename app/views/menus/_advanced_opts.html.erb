@@ -11,7 +11,7 @@
 		
 		<div>
 			<%= label_tag 'Unit Size:' %>
-			<%= select_tag 'storage_size', option_tags(@unit_sizes, nil, '') %>
+			<%= select_tag_for_unit_size_icons 'storage_size' %>
 		</div>
 	</div>
 	

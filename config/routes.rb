@@ -116,6 +116,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :widgets
   map.resources :galleries
   map.resources :images
+  map.resources :size_icons
   map.resources :virtual_models
   map.resources :links
   map.resources :link_groups

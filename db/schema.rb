@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101007211031) do
+ActiveRecord::Schema.define(:version => 20101008194507) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -568,6 +568,19 @@ ActiveRecord::Schema.define(:version => 20101007211031) do
 
   create_table "roles", :force => true do |t|
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "size_icons", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "width"
+    t.integer  "length"
+    t.string   "icon_size"
+    t.string   "icon_file_name"
+    t.integer  "icon_file_size"
+    t.string   "icon_content_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

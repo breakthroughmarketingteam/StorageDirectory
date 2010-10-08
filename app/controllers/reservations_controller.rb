@@ -52,7 +52,7 @@ class ReservationsController < ApplicationController
     
     @response = @reservation.process_new_tenant @billing
     
-    if true#@response['sErrorMessage'].blank? && @reserver.save
+    if @response['sErrorMessage'].blank? && @reserver.save
       @reservation.update_attribute :status, 'paid'
       render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step3') }
     else

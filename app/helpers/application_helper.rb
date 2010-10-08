@@ -428,7 +428,7 @@ module ApplicationHelper
       
       options = { :value => val }
       options.store(:selected, 'selected') if should_be_selected(val, selected)
-      option_tags << content_tag(:option, name.to_s.titleize, options)
+      option_tags << content_tag(:option, name.to_s.titleize)
     end
     option_tags
   end

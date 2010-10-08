@@ -746,7 +746,7 @@ $(document).ready(function() {
 		});
 		
 		$('input', '#user_hint_toggles').click(function(){
-			$('.hint_toggle[rel='+ this.value +']').click();
+			$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
 		});
 		
 		var inline_save_orig_values = {};
@@ -1135,14 +1135,15 @@ $(document).ready(function() {
 						},
 						yaxis: { min: 0, max: parseInt(data['max']) + 1 },
 					},
-					legend: { show: true, location: 'nw' },
+					legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
 					series: [ 
-				        { label: '&nbsp;Clicks', lineWidth: 2, markerOptions: { style: 'diamond' } }, 
-				        { label: '&nbsp;Impressions', lineWidth: 2, markerOptions: { size: 7, style:'x'} }, 
-				        { label: '&nbsp;Reservations', lineWidth: 2, markerOptions: { style: 'circle'} }
+				        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
+				        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
+				        { label: '&nbsp;Reservations', lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
 				    ],
 					highlighter: { sizeAdjust: 7.5 },
-					cursor: { show: true, zoom: true }
+					cursor: { show: true, zoom: true },
+					grid: { background: '#ffffff' }
 				});
 			});
 			

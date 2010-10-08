@@ -61,7 +61,7 @@ class Reservation < ActiveRecord::Base
       puts args.pretty_inspect
       response = self.listing.process_new_tenant args
       
-      if response['sErrorMessage'].blank?
+      if response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i
         self.update_attribute :reserve_code, response['sReservationCode']
         self.update_attribute :response, response
       end

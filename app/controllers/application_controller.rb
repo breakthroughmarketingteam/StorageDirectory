@@ -162,6 +162,7 @@ class ApplicationController < ActionController::Base
       @facility_features = IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_sizes        = IssnUnitTypeSize.labels
+      @unit_size_icons   = SizeIcon.all
     end
   end
   
@@ -312,7 +313,7 @@ class ApplicationController < ActionController::Base
   
   # before filters, index
   def get_models
-    eval "@#{controller_name} = #{controller_name.singular.camelcase}.all"
+    eval "@#{controller_name} = #{controller_name.singular.camelcase}.all" || []
   end
   
   def get_models_paginated
