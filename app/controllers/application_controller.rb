@@ -273,7 +273,7 @@ class ApplicationController < ActionController::Base
   end
   
   def _user_hint_places(for_select = true)
-    fetch_array_for $_user_hint_places, for_select
+    fetch_array_for $_user_hint_places.map(&:to_s), for_select
   end
   
   def _models_having_assoc(for_select = false)

@@ -731,7 +731,7 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		$('.hint_toggle').click(function(){
+		$('.hint_toggle').live('click', function(){
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
 				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
@@ -740,7 +740,9 @@ $(document).ready(function() {
 			$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
 				hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
 				ajax_loader.hide();
-			});	
+			});
+			
+			return false;
 		});
 		
 		$('input', '#user_hint_toggles').click(function(){

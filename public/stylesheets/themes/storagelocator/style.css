@@ -863,10 +863,12 @@ img.right{margin:0 10px 10px 0;}
 .listing #listing_map_attributes_zip{width:35px;}
 .listing .listing_advice{padding:10px 0 0 16px;width:110%;}
 #client_listing_box{padding-top:10px;}
-.user_hint{width:99%;border:2px solid #fed747;background:#fff1bb;-moz-border-radius:18px;-webkit-border-radius:18px;border-radius:18px;}
-.user_hint .hint_title_bar{padding:4px 10px 3px 10px;border-bottom:2px solid #fed747;background:#fed747;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
-.user_hint .hint_title{font-size:100%;}
-.user_hint .hint_content{padding:10px;font-size:80%;}
+.user_hint{width:99%;border:2px solid #fed747;background:#fff1bb;-moz-border-radius:18px;-webkit-border-radius:18px;border-radius:18px;box-shadow:1px 4px 6px #999;-moz-box-shadow:1px 4px 6px #999;-webkit-box-shadow:1px 4px 6px #999;}
+.user_hint .hint_title_bar{padding:4px 10px 3px 10px;border-bottom:2px solid #FAC325;background:#fed747;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
+.user_hint .hint_title{color:#FFF;font-size:100%;font-weight:bold;line-height:1.4;text-shadow:1px 1px 0 #333;}
+.user_hint .hint_content{padding:10px;font-size:80%;line-height:1.2;}
+.hint_toggle{background:url(/images/ui/storagelocator/hint_close.png) no-repeat center;display:block;height:24px;text-indent:-99999px;width:24px;margin-right:-5px;}
+.hint_title_bar .hidden{display:none !important;}
 #listings_controller.edit_action .user_hint{width:99.3%;margin:15px 0;}
 #client_reservations{margin:-15px 0 0 -15px;width:104%;font-size:80%;}
 #client_reservations th{text-align:left;padding:10px 15px;}
@@ -880,8 +882,9 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .reservation_wrap .close_btn{display:block;padding:3px 5px;color:#333;border:1px solid #ccc;position:absolute;top:5px;right:5px;background:#ebebeb;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
 .reservation_wrap .close_btn:hover{background:#333;color:#fff;}
 #client_settings .note{display:block;font-size:80%;margin-top:5px;}
+#client_listing_box .rslt-contact h3{font-size:80%;margin:2px 0 5px;}
 /* fixes */
-#listings_controller .flash{background:none;border:none;color:#ff0000;}
+#listings_controller .flash{background:none;border:none;color:#f00;}
 #info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
@@ -1140,5 +1143,5 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 .ui-menu .ui-menu-item a{padding:6px 12px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
-
+.hint_content p{font-size:100%;margin-bottom:5px;}
 .flash .warning{}
