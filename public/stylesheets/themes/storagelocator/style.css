@@ -12,7 +12,7 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
-#head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x 0 0 #fff;}
+#head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x #fff;}
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;height:290px;position:relative;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;}
 #page-ctr-in{/*background:url(/images/ui/storagelocator/container-inner-bg.png) no-repeat bottom center;*/
@@ -902,7 +902,6 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_page #user_session_submit{width:auto;float:right;margin-right:-10px;}
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px 29px 5px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
-#login_page{display:none;}
 #new_user_session .ajax_loader{position:absolute;right:63px;top:10px;}
 #pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
 #forgot_pass_link{color:#666;}
@@ -1030,7 +1029,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #advanced_opts .right .bottom{padding:18px 25px;}
 #advanced_opts label{font-weight:bold;margin-right:5px;}
 #advanced_opts p label{font-size:130%;margin-bottom:15px;display:block;}
-#advanced_opts #size_picker{width:184px;height:160px;position:relative;}
+#advanced_opts #size_picker{width:184px;height:220px;position:relative;}
 #advanced_opts #size_picker img{position:absolute;bottom:0;left:-10px;}
 #advanced_opts #features .selectable_wrap{font-size:80%;width:33.3%;height:22px;float:left;margin-bottom:7px;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;line-height:2;}
 #advanced_opts #features .selectable_wrap label{font-weight:normal;}

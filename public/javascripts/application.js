@@ -14,7 +14,6 @@ $(document).ready(function() {
 		if ($this.hasClass('active')) return false;
 		
 		$this.addClass('active');
-		$('#login_page').wrap('<div id="pop_up_box" />');
 		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
 		
 		pop_up.fadeIn();

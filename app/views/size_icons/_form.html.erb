@@ -39,7 +39,7 @@
 		<div class="left right_space">
 			<%= f.label :icon_size %>
 			<div class="shadow_wrap">
-				<%= f.select :icon, @icon_sizes, :class => 'required' %>
+				<%= f.select :icon_size, @icon_sizes, { :include_blank => true }, :class => 'required' %>
 			</div>
 		</div>
 		

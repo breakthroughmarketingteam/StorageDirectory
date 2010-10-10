@@ -98,6 +98,6 @@ class SizeIconsController < ApplicationController
   private
   
   def _get_icon_sizes
-    @icon_sizes = %w(thumb medium large)
+    @icon_sizes = SizeIcon.icons_sizes
   end
 end
