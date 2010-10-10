@@ -14,21 +14,12 @@ $(document).ready(function() {
 		if ($this.hasClass('active')) return false;
 		
 		$this.addClass('active');
-		var pop_up = $('#pop_up_box');
+		$('#login_page').wrap('<div id="pop_up_box" />');
+		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
 		
-		if (pop_up.length == 1) pop_up.fadeIn();
-		else {
-			pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
-
-			pop_up.appendTo('body').load('/login', function(response, status) {
-				if (status == 'success') {
-					pop_up.fadeIn();
-					$('input[type=text]', pop_up).eq(0).focus();
-					$.bindPlugins();
-
-				} else alert(response);
-			});
-		}
+		pop_up.fadeIn();
+		$('input[type=text]', pop_up).eq(0).focus();
+		$.bindPlugins();
 		
 		// close login box when user clicks outside of it
 		$(document).click(function(e) {
@@ -97,13 +88,16 @@ $(document).ready(function() {
 	// advanced search options
 	var $size_picker = $('#size_picker'),
 		$size_img = $('img', $size_picker);
-		
-	$('option', '#storage_size').mouseover(function(){
+	
+	$('#storage_size').live('change', size_icon_change);
+	$('option', '#storage_size').live('mouseover', size_icon_change);
+	
+	function size_icon_change() {
 		var $this = $(this),
-			size  = this.value,
-			new_img = $('<img src="/images/ui/storagelocator/unit_sizes/'+ size +'-sm.png" alt="'+ size +'" />');
+			selected = this.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', this).attr('rel'),
+			new_img = $('<img src="'+ selected +'" alt="" />');
 		
-		if ($size_img.attr('src').split('.')[0].replace('/images/ui/storagelocator/unit_sizes/', '').replace('-sm', '') != size) {
+		if ($size_img.attr('src') != selected) {
 			$size_img.fadeOut(100, function(){
 				$size_picker.html(new_img)
 				new_img.hide().fadeIn(120);
@@ -112,7 +106,7 @@ $(document).ready(function() {
 				if (new_img.width() > 183) new_img.width(183);
 			});
 		}
-	});
+	}
 	
 	var advanced_slider = $('.advanced_slider', '#advanced_opts'),
 		advanced_slider_value = $('.slider_val', advanced_slider.parent()).val();

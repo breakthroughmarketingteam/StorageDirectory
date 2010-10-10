@@ -178,7 +178,7 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'blog_roll'
     elsif controller_name == 'posts' || controller_name == 'user_hints'
       session[:view_type] = 'list'
-    elsif controller_name =~ /(images)|(galleries)|(pictures)/
+    elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'

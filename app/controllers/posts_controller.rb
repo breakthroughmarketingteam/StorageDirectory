@@ -9,6 +9,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    render :layout => false if request.xhr?
   end
 
   def new
