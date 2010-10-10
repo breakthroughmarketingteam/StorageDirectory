@@ -12,7 +12,7 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
-#head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x 0 107% #fff;}
+#head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip.png) repeat-x 0 0 #fff;}
 #head-ctr-in{margin:0px auto;text-align:left;width:980px;height:290px;position:relative;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;}
 #page-ctr-in{/*background:url(/images/ui/storagelocator/container-inner-bg.png) no-repeat bottom center;*/
@@ -111,7 +111,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #clients_controller.add_your_facility #content{top:0;}
 #pages_controller.storage_tips #content{top:2px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
-#listings_controller.locator_action #content{left:3px;top:0;padding-left:15px;width:760px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;}
+#listings_controller.locator_action #content{border-left:1px dashed #ccc;left:3px;top:0;padding-left:10px;width:760px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;}
 #type-one-r-col{left:0;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
@@ -123,7 +123,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
 #narrow-box{}
-#sb-title{background:url("/images/ui/storagelocator/block-title-bg.png") no-repeat;height:48px;margin:0 0 0 4px;padding-top:1px;}
+#sb-title{background:url("/images/ui/storagelocator/block-title-bg.png") no-repeat;height:49px;margin:0 0 0 4px;padding-top:1px;}
 #narrow-box h2{background:url("/images/ui/storagelocator/loupe-icon.png") no-repeat;color:#fff;height:42px;text-shadow:1px 1px 0 #333;margin:4px 0 0 7px;padding:2px 0 0 54px;}
 #add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
 #narrow-box p,#add-fac-box p{text-align:left;}
@@ -209,7 +209,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li span.shifted-text span{display:block;font-weight:bold;font-size:110%;}
 .progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 23px 0 0}
 .progress.active{background-position:0 100%;}
-li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-features,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
+li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:10px;}
 .facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat center bottom;float:left;height:88px;margin:11px 0 0 35px;width:108px;}
 .listing img{margin-left:3px;}
@@ -399,11 +399,11 @@ li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #sl-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #ccc;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
 #results_header{margin-top:13px;width:96.2%;}
-#results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:1px 1px 2px #333;}
+#results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:.5px .5px 0 #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
 #main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;display:none;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
-#sl-header h2,#results_header h2{float:left;line-height:2.5;text-shadow:1px 1px 0px #333;margin-left:20px;font-size:120%;}
+#sl-header h2,#results_header h2{float:left;line-height:2.5;text-shadow:.5px .5px 0px #333;margin-left:20px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 .city-name-heading{color:#4C4BCC;font-weight:bold;text-shadow:1px 1px #dadada;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
@@ -1030,7 +1030,7 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #advanced_opts .right .bottom{padding:18px 25px;}
 #advanced_opts label{font-weight:bold;margin-right:5px;}
 #advanced_opts p label{font-size:130%;margin-bottom:15px;display:block;}
-#advanced_opts #size_picker{width:184px;height:193px;position:relative;}
+#advanced_opts #size_picker{width:184px;height:160px;position:relative;}
 #advanced_opts #size_picker img{position:absolute;bottom:0;left:-10px;}
 #advanced_opts #features .selectable_wrap{font-size:80%;width:33.3%;height:22px;float:left;margin-bottom:7px;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;line-height:2;}
 #advanced_opts #features .selectable_wrap label{font-weight:normal;}
@@ -1060,14 +1060,14 @@ div.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none
 #narrow_results_form #advanced_opts label{font-size:80%;}
 #narrow_results_form #advanced_opts #type_select{margin:15px 0 15px 9px;}
 #narrow_results_form #advanced_opts #type_select select{width:75%;}
-#narrow_results_form #advanced_opts #size_option{background:#fff;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin-left:5px;padding:5px 0 15px;width:98%;}
-#narrow_results_form #advanced_opts #size_option #size_picker{margin-bottom:17px;}
-#narrow_results_form #advanced_opts #distance_slider{overflow:hidden;padding:12px 10px 12px 20px;width:88%;border-bottom:1px solid #ccc;}
+#narrow_results_form #advanced_opts #size_option{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin-left:5px;padding:5px 0 15px;width:184px;}
+#narrow_results_form #advanced_opts #size_option #size_picker{margin:40px 0 10px 6px;}
+#narrow_results_form #advanced_opts #distance_slider{border-bottom:1px solid #ccc;margin-left:5px;overflow:hidden;padding:12px 0 12px 0;width:184px;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap .arrow{margin:6px 0;}
 #narrow_results_form #advanced_opts #distance_slider label.right{width:auto;padding:0;}
 #narrow_results_form #advanced_opts #distance_slider #slide_wrap .advanced_slider{width:45%;margin:10px 26px;}
-#narrow_results_form #advanced_opts #unit_features{padding:0 10px 12px 12px;width:92%;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+#narrow_results_form #advanced_opts #unit_features{border-bottom:1px solid #ccc;margin-left:5px;padding:15px 0;width:184px;}
 #narrow_results_form #advanced_opts #unit_features label{font-size:100%;}
 #narrow_results_form #advanced_opts #unit_features .selectable_wrap{overflow:hidden;padding:3px 0;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;}
 #narrow_results_form #advanced_opts #unit_features .selectable{float:left;width:21px;height:18px;margin-right:5px;}
