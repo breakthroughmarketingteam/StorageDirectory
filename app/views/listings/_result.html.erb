@@ -8,7 +8,7 @@
 			<div class="num_icon"><%= result_index(result) %></div>
 			
 			<div class="facility-logo">
-				<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+				<img class="logo" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
 			</div>
 			<div class="rslt-contact">
 
@@ -25,10 +25,28 @@
 					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
-				<li class="rslt-features">
-				 
+				<li class="rslt-size">
+					<img src="/images/ui/storagelocator/unit_sizes/10x10.png" alt="10ft. x 10ft. Unit size " />
+					<span class="size">10x10</span>	
 				</li>
-			
+				
+				<li class="rslt-price">
+				  	<ul>
+						<li>	
+							Upper:<span id="upper" class="price">$49.50</span>
+							<input type="checkbox" value="Upper" name="" id="unit_prices">
+						</li>
+						<li>	
+							Drive-up:<span id="drive-up" class="price">$59.50</span>
+							<input type="checkbox" value="Drive-up" name="" id="unit_prices">
+						</li>
+						<li>	
+							Interior:<span id="interior" class="price">$89.50</span>
+							<input type="checkbox" value="Interior" name="" id="unit_prices">
+						</li>
+					</ul>		
+				</li>			
+				
 				<li class="rslt-reserve">
 					<%= results_main_button(result) %>
 				</li>
