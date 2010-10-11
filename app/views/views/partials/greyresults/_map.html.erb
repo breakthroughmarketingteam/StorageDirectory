@@ -1,15 +1,18 @@
-<h5 class="white dark_text_shadow"><%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %></h5>
 
-<div id="map_partial" class="inner border_box">
-  <div class="left small_framed">
-    
+
+<div id="map_partial" class="inner_box">
+	
+  	<div class="left small_framed">
+
+	<h5 class=""><%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %></h5>    
+
     <h6>Boca's Newest and Finest Climate Controller Self Storage</h6>
     
     <p>
       Lorem ipsum dolor sit amet, consectetur adipi sicing elit, sed do eiusmod tempor. sit amet, consectetur adipi sicing elit, sed do eiusmod tempor. 
     </p>
     
-    <div class="large_round bg_grey">
+    <div class="medium_round bg_grey">
       <p class="framed"><%= link_to 'More Info', facility_path(listing.title.parameterize, listing.id) %></p>
     </div>
     
@@ -20,12 +23,13 @@
     <div class="google_map">
       <div id="map_<%= listing.map.id %>" class="map_wrap"></div>
       
-      <ul class="map_controls horizontal">
-        <li class="bottom_round bg_grey">
-          <%= link_to 'Get Directions', google_directions_link(listing.map.full_address), :class => 'white', :target => '_blank' %>
+      <ul class="map_controls get_dir  horizontal">
+       
+		<li>
+			<input type="text" value="Enter your starting address for directions and..." title="Get Directions" rel="" name="" id="" class="directions" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+          	<%= link_to 'Go!', google_directions_link(listing.map.full_address), :class => 'white', :target => '_blank' %>
         </li>
-        <li class="bottom_round bg_grey"><a class="white" href="#">Print a Map</a></li>
-        <li class="bottom_round bg_grey"><a class="white" href="#">+</a></li>
+       
       </ul>
     </div>
     

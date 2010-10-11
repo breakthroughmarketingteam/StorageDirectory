@@ -86,7 +86,7 @@ span.active{cursor:default;}
 .less_spacing{letter-spacing:.9px;}
 .upcase{text-transform:uppercase;}
 .submit_btn{cursor:pointer;}
-.map_wrap{width:295px;height:202px;position:relative;}
+.map_wrap{width:360px;height:260px;position:relative;}
 .map_wrap iframe{height:203px;overflow:hidden;}
 .map_wrap > div{height:202px;}
 /* common colors */
