@@ -317,7 +317,7 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 /* Start the add facility page styles here */
 form#new_client{border-bottom:1px dashed #CCC;float:left;margin-bottom:30px;padding:0 5px 20px;text-align:left;width:39%;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
-#new_client .sub_head{color:#555;line-height:1.2;}
+#new_client .sub_head{color:#555;line-height:1.2;height:65px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
 #new_client input,#signupstep_3 input{padding:5px 10px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;font-size:100%;}
 #new_client input{width:92%;}
