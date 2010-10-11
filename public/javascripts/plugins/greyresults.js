@@ -229,6 +229,10 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('.rslt-price', '.listing').each(function(){
+		$(':radio', this).eq(0).attr('checked', true);
+	});
+	
 	$compare_btns = $('.compare', '.listing');
 	
 	if ($('.listing.active').length > 1) $('#compare-btn').show();

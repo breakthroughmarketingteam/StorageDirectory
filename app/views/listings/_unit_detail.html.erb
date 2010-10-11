@@ -1,12 +1,11 @@
-<% @unit_size = get_closest_unit_type(listing) %>
-<% if @unit_size %>
+<% if unit_size = listing.get_closest_unit_size(params[:storage_size]) %>
 	<div class="unit_detail_in">
 		<div class="left">
 			Specials: <span>First Month Free! Lowest Price Garaunteed. Exclusive Web Special</span>
 		</div>
 
 		<div class="right">
-			Unit Size: <span class="size_display" rel="<%= @unit_size.id %>"><%= @unit_size.display_dimensions %></span> <span class="month_rate"><%= number_to_currency @unit_size.dollar_price %> per month</span>
+			Unit Size: <span class="size_display" rel="<%= unit_size.id %>"><%= unit_size.display_dimensions %></span> <span class="month_rate"><%= number_to_currency unit_size.dollar_price %> per month</span>
 		</div>
 	</div>
 <% end %>

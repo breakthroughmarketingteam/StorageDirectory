@@ -13,6 +13,7 @@ class ListingsController < ApplicationController
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
+    @unit_size_thumbs = SizeIcon.thumb_icons
     
     result = Listing.geo_search params, session
     @listings = result[:data]
