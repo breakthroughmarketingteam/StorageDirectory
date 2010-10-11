@@ -13,6 +13,14 @@ class WebSpecialsController < ApplicationController
   end
 
   def update
+    @listing.web_specials = []
+    @web_special = @listing.web_specials.build params[:web_special]
+    
+    if @web_special.save && @listing.save
+      render :json => { :success => true }
+    else
+      render :json => { :success => false, :data => model_errors(@web_special) }
+    end
   end
 
 end

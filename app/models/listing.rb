@@ -12,8 +12,8 @@ class Listing < ActiveRecord::Base
   has_many :info_requests  , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
-  has_many :web_specials   , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
+  has_many :web_specials   , :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
   has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
@@ -41,6 +41,10 @@ class Listing < ActiveRecord::Base
   
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
+  end
+  
+  def web_special
+    self.web_specials.first
   end
   
   def special

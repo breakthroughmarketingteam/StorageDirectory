@@ -433,7 +433,21 @@ $(document).ready(function() {
 	
 	// listings show page
 	$('.ps').live('click', function() {
-		$(this.rel).jqprint({ operaSupport: $.browser.opera });
+		var div_to_print = this.rel,
+			print_opts = { operaSupport: $.browser.opera };
+		
+		if (this.href == '#') $(div_to_print).jqprint(print_opts);
+		else {
+			$.getJSON(this.href, function(response){
+				$.handle_json_response(response, function(data){
+					var wrap = $(data).appendTo('body'),
+						coup = $(div_to_print).clone().appendTo('#print_content');
+					
+					wrap.jqprint(print_opts, function(){ wrap.remove(); });
+				});
+			});
+		}
+		
 		return false;
 	});
 	

@@ -121,7 +121,7 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @web_special = @listing.web_specials.first || @listing.web_specials.new
+    @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.build_web_special)
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'
