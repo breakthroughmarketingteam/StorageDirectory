@@ -15,6 +15,9 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     
+    # TODO: extract pieces from search query: zip, city, title, address
+    #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
+    
     result = Listing.geo_search params, session
     @listings = result[:data]
     @location = result[:location]

@@ -716,11 +716,14 @@ $.fn.fillWithParam = function() {
 	
 	return this.each(function(){
 		var $this = $(this),
-				attr  = $this.attr('rel'),
-				value = false;
+			attr  = $this.attr('rel'),
+			value = false;
 		
 		$.each(params.split('&'), function(){
-			if (this.split('=')[0] == attr) { value = this.split('=')[1]; return; }
+			if (this.split('=')[0] == attr) {
+				value = this.split('=')[1];
+				return;
+			}
 		});
 		
 		if (value) 

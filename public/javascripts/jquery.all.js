@@ -2106,8 +2106,7 @@ jQuery.cookie = function(name, value, options) {
         setTimeout(function() { 
 			(opt.operaSupport && $.browser.opera ? tab : $iframe[0].contentWindow).print(); 
 			if (tab) tab.close();
-			
-			callback.call(this, $element);
+			if (typeof callback == 'function') callback.call(this, $element);
 		}, 1000);
     }
     

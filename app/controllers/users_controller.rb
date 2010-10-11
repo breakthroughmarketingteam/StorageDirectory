@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   end
   
   def create
-    raise params.pretty_inspect
     @form = Form.find(params[:fid]) unless params[:fid].blank?
     @user = User.new(params[:user])
     

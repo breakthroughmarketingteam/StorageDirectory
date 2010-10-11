@@ -21,19 +21,21 @@
 		<div id="top_fac_page" class="uncollapse">
 			<% form_for @client do |f| %>
 				<p class="sub_head"><%= image_tag '/images/ui/storagelocator/uonbillboard.jpg', :class => 'left' %>Advertising your self storage business has never been so quick and easy.</p>
-				<p>
+				<div>
 					<%= f.label :company, 'Facility Name', :class => 'hidden' %>
 					<%= f.text_field :company, :class => 'required hintable', :title => 'Your Facility\'s Name' %>
-				</p>
-				<p>
+				</div>
+
+				<div>
 					<%= f.label :email, 'Contact Email', :class => 'hidden' %>
 					<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
-				</p>
-				<p>
+				</div>
+
+				<div>
 					<label class="hidden">Location</label> 
 					<%= text_field_tag 'listing[city]', 'miami', :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
 					<%= text_field_tag 'listing[state]', 'fl', :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
-				</p>
+				</div>
 
 				<div>
 					<%= ajax_loader %>
