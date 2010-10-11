@@ -229,6 +229,10 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('.rslt-price', '.listing').each(function(){
+		$(':radio', this).eq(0).attr('checked', true);
+	});
+	
 	$compare_btns = $('.compare', '.listing');
 	
 	if ($('.listing.active').length > 1) $('#compare-btn').show();
@@ -425,6 +429,16 @@ $(function(){
 		}
 
 		return false
+	});
+	
+	// when the reserve btn is clicked check to see if there is a chosen unit type
+	$('.reserve_btn', '.listing').live('click', function(){
+		var $this = $(this),
+			new_href = $this.attr('href').replace('/sizes', '/reserve'),
+			unit_size = $(':radio:checked', $this.parent().parent());
+		console.log(new_href)
+		if (unit_size.length)
+			$this.attr('href', new_href +'&sub_model=Size&sub_id='+ unit_size.val());
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link

@@ -20,62 +20,24 @@
       <div class="clear"></div>
     </div>
    
+	<% if in_mode? 'show' %>
+		<div id="ls_top">
+			<% if listing_distance_from %>
+				<p class="sl-dist left">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
+			<% end %>
+			<p class="sl-phone right">Call: 1 (800) 180-0180</p>
+		</div>
+	<% end %>
+
   <%= render_hints_for :listing_detail %>
 	<div id="listing_detail">
-	    <div id="<%= in_edit_mode? ? 'sl-fac-detail' : 'sl-fac-dist' %>">
-	      <div id="<%= in_edit_mode? ? 'sl-fac-detail-in-edit' : 'sl-fac-dist-in' %>"<%= ' class="attr_editable"' if in_edit_mode? %>>
-			<% unless in_edit_mode? %>
-				<% if listing_distance_from %>
-					<p class="sl-dist">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
-				<% end %>
-				<p class="sl-phone">Call: 1 (800) 180-0180</p>
-			<% else %>
-				<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" />
-				
-				<div class="attr_wrap">
-					<p class="field_group listing_title" rel="listing">
-						<span class="value block" rel="title"><%= @listing.title %></span>
-					</p>
-					<p class="field_group address" rel="map">
-						<span class="value block" rel="address"><%= @listing.address %></span>
-						<span class="value" rel="city"><%= @listing.city %></span> 
-						<span class="value" rel="state"><%= @listing.state %></span> 
-						<span class="value" rel="zip"><%= @listing.zip %></span>
-					</p>
-				</div>
-				
-				<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } %>
-			<% end %>
-	      </div>
-	    </div>
+		<%= render :partial => 'web_specials/web_special' %>
 		
-		<div id="sl-fac-coup">
-	      <div id="sl-fac-coup-in<%= '-edit' if in_edit_mode? %>"<%= ' class="attr_editable"' if in_edit_mode? %>>
-			<div class="attr_wrap">
-				<div class="field_group" rel="web_special">
-					<span class="special_label value" rel="label">
-						<%= @web_special.label.blank? ? 'Exclusive Offer' : @web_special.label %>
-					</span>
-			        <span class="sl-special value" rel="title">
-						<%= @web_special.title.blank? ? 'Write Your First Special!' : @web_special.title %>
-					</span>
-					<span class="special_desc value" rel="description">
-						<%= @web_special.description.blank? ? 'Give it a friendly description if you want...' : @web_special.description %>
-					</span>
-					
-					<p class="coup_code">
-						<span class="left">Coupon Code:&nbsp;</span>
-						<span class="coupon_code value" rel="coupon_code" title="Coupon"><%= @web_special.coupon_code.blank? ? 'ABC123' : @web_special.coupon_code %></span>
-					</p>
-				</div>
-			</div>
-			
-			<p class="coup_sponsor">USSelfStorageLocator.com</p>
-			
-			<%= print_link('#sl-fac-coup') if in_mode? 'show' %>
-	        <%= render :partial => 'info_edit', :locals => { :model => [@listing, @web_special], :info => 'special' } if in_edit_mode? %>
-	      </div>
-	    </div>
+		<% if in_edit_mode? %>
+			<%= render :partial => 'edit_detail' %>
+		<% else %>
+			<%= render :partial => 'pictures/thumb_gallery', :locals => { :images => @listing.pictures.map(&:facility_image) } %>
+		<% end %>
     </div>
 
 	<% if in_mode? 'show' %>

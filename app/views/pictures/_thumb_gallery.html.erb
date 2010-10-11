@@ -1,0 +1,5 @@
+<div id="thumb_gallery">
+	<% images.each do |image| %>
+		<%= link_to image_tag(image.url(:thumb)), image.url(:large), :class => 'popimg' %> 
+	<% end %>
+</div>

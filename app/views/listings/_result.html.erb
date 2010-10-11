@@ -25,27 +25,36 @@
 					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
-				<li class="rslt-size">
-					<img src="/images/ui/storagelocator/unit_sizes/10x10.png" alt="10ft. x 10ft. Unit size " />
-					<span class="size">10x10</span>	
-				</li>
-				
-				<li class="rslt-price">
-				  	<ul>
-						<li>	
-							Upper:<span id="upper" class="price">$49.50</span>
-							<input type="checkbox" value="Upper" name="" id="unit_prices">
-						</li>
-						<li>	
-							Drive-up:<span id="drive-up" class="price">$59.50</span>
-							<input type="checkbox" value="Drive-up" name="" id="unit_prices">
-						</li>
-						<li>	
-							Interior:<span id="interior" class="price">$89.50</span>
-							<input type="checkbox" value="Interior" name="" id="unit_prices">
-						</li>
-					</ul>		
-				</li>			
+				<% if (unit_size = result.get_closest_unit_size(params[:storage_size])) %>
+					<li class="rslt-size">
+						<%= image_tag unit_size.icon(:thumb).icon.url %>
+						<span class="size"><%= unit_size.display_dimensions %></span>
+					</li>
+					<li class="rslt-price">
+					  	<ul>
+							<% unless (@upper_type_size = result.get_upper_type_size(unit_size)).nil? %>
+								<li>
+									Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @upper_type_size.id %>
+								</li>
+							<% end %>
+							
+							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
+								<li>	
+									Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @drive_up_type_size.id %>
+								</li>
+							<% end %>
+
+							<% unless (@interior_type_size = result.get_interior_type_size(unit_size)).nil? %>
+								<li>	
+									Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @interior_type_size.id %>
+								</li>
+							<% end %>
+						</ul>		
+					</li>			
+				<% end %>
 				
 				<li class="rslt-reserve">
 					<%= results_main_button(result) %>

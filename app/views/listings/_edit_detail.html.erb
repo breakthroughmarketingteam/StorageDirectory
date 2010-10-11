@@ -1,0 +1,19 @@
+<div id="sl-fac-detail">
+  <div id="sl-fac-detail-in-edit" class="attr_editable">
+	<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" />
+	
+	<div class="attr_wrap">
+		<p class="field_group listing_title" rel="listing">
+			<span class="value block" rel="title"><%= @listing.title %></span>
+		</p>
+		<p class="field_group address" rel="map">
+			<span class="value block" rel="address"><%= @listing.address %></span>
+			<span class="value" rel="city"><%= @listing.city %></span> 
+			<span class="value" rel="state"><%= @listing.state %></span> 
+			<span class="value" rel="zip"><%= @listing.zip %></span>
+		</p>
+	</div>
+	
+	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } %>
+  </div>
+</div>

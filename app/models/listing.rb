@@ -12,8 +12,8 @@ class Listing < ActiveRecord::Base
   has_many :info_requests  , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
-  has_many :web_specials   , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
+  has_many :web_specials   , :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
   has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
@@ -37,10 +37,19 @@ class Listing < ActiveRecord::Base
   access_shared_methods
   acts_as_taggable_on :tags
   
+  # the most common unit sizes, to display on a premium listing's result partial
+  @@upper_types = %w(upper)
+  @@drive_up_types = ['drive up', 'outside']
+  @@interior_types = %w(interior indoor standard)
+  
   # Instance Methods
   
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
+  end
+  
+  def web_special
+    self.web_specials.first
   end
   
   def special
@@ -53,6 +62,22 @@ class Listing < ActiveRecord::Base
   
   def city_and_state
     self.map.nil? ? [] : [self.map.city, self.map.state]
+  end
+  
+  def get_closest_unit_size(size)
+    @unit_size ||= self.available_sizes.detect { |s| s.dims == size } || self.available_sizes.first
+  end
+  
+  def get_upper_type_size(size)
+    @upper_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@upper_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
+  end
+  
+  def get_drive_up_type_size(size)
+    @drive_up_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@drive_up_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
+  end
+  
+  def get_interior_type_size(size)
+    @interior_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@interior_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
   end
   
   def address; self.map.address end
