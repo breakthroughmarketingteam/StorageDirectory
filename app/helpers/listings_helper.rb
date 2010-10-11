@@ -38,7 +38,7 @@ module ListingsHelper
   
   def results_main_button(listing)
     if listing.accepts_reservations?
-      link_to 'Reserve', listing.get_partial_link(:sizes), :class => 'tab_link', :rel => 'reserve'
+      link_to 'Reserve', listing.get_partial_link((listing.available_sizes.empty? ? :reserve : :sizes)), :class => 'tab_link', :rel => 'reserve'
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
     end

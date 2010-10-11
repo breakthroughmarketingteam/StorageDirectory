@@ -18,6 +18,14 @@ class SizeIcon < ActiveRecord::Base
     find_all_by_icon_size 'medium'
   end
   
+  def self.thumb_icons
+    find_all_by_icon_size 'thumb'
+  end
+  
+  def self.labels
+    @labels ||= self.all.map(&:dimensions).uniq
+  end
+  
   def self.icons_sizes
     %w(thumb medium large)
   end

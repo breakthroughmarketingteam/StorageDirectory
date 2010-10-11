@@ -9,6 +9,7 @@ class Listing < ActiveRecord::Base
   has_many :specials       , :dependent => :destroy
   has_many :pictures       , :dependent => :destroy
   has_many :reservations   , :dependent => :destroy
+  has_many :info_requests  , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
   has_many :web_specials   , :dependent => :destroy
@@ -85,7 +86,7 @@ class Listing < ActiveRecord::Base
   end
   
   def unit_sizes_options_array
-    self.available_sizes.empty? ? IssnUnitTypeSize.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
+    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
   end
   
   def available_sizes

@@ -89,6 +89,7 @@ class ListingsController < ApplicationController
     end
   end
   
+  # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
     @listing = current_user.listings.build :title => params[:title]
     
@@ -98,6 +99,18 @@ class ListingsController < ApplicationController
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
+    end
+  end
+  
+  # receives from the info_request form on free listings in the results page
+  def info_requests
+    @listing = Listing.find params[:info_request][:listing_id]
+    @info_request = @listing.info_requests.build params[:info_request].merge(:status => 'pending').merge(params[:reserver]).merge(params[:mailing_address])
+    
+    if @listing.save
+      render :json => { :success => true, :data => render_to_string(:partial => 'info_requests/done') }
+    else
+      render :json => { :success => false, :data => model_errors(@info_request) }
     end
   end
   
