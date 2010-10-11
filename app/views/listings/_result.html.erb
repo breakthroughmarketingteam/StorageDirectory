@@ -35,21 +35,21 @@
 							<% unless (@upper_type_size = result.get_upper_type_size(unit_size)).nil? %>
 								<li>
 									Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
-									<input type="radio" value="upper" name="unit_size" />
+									<%= radio_button_tag 'unit_size', @upper_type_size.id %>
 								</li>
 							<% end %>
 							
 							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
 								<li>	
 									Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
-									<input type="radio" value="drive_up" name="unit_size" />
+									<%= radio_button_tag 'unit_size', @drive_up_type_size.id %>
 								</li>
 							<% end %>
 
 							<% unless (@interior_type_size = result.get_interior_type_size(unit_size)).nil? %>
 								<li>	
 									Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
-									<input type="radio" value="interior" name="unit_size" />
+									<%= radio_button_tag 'unit_size', @interior_type_size.id %>
 								</li>
 							<% end %>
 						</ul>		
