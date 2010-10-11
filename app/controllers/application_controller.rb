@@ -162,7 +162,7 @@ class ApplicationController < ActionController::Base
       @facility_features = IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_sizes        = IssnUnitTypeSize.labels
-      @unit_size_icons   = SizeIcon.thumb_icons
+      @unit_size_icons   = SizeIcon.medium_icons
     end
   end
   
