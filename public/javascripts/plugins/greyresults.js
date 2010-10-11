@@ -271,7 +271,7 @@ $(function(){
 	$('.open_reserve_form').live('click', function(){
 		var $this = $(this),
 			rform = $('.reserve_form', $this.parent());
-
+			
 		if (rform.hasClass('active')) {
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -500,12 +500,12 @@ $(function(){
 	});
 	
 	// Reservation process, submit reserver details, then billing info
-	$('form.new_reservation').live('submit', function() {
+	$('form.new_listing_request').live('submit', function() {
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
 				inner_panel.html(response.data).children().hide().fadeIn();
-				$('.hintable', inner_panel).hinty()
+				$('.hintable', inner_panel).hinty();
 			});
 		});
 		
@@ -524,7 +524,7 @@ $(function(){
 	});
 	
 	$('#reserve_done', '.reserve_form').live('click', function(){
-		$(this).parents('.reserve_form').slideUp();
+		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
 	});
 	
 	function submit_reservation_and_do(form, callback) {

@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
-  map.resources :listings, :collection => { :locator => :get, :import => :post } do |listing|
+  map.resources :listings, :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
     listing.resources :maps
@@ -124,6 +124,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :forms
   map.resources :suggestions
   map.resources :reservations
+  map.resources :info_requests
   map.resources :payments
   map.resources :facility_features
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
