@@ -1,33 +1,34 @@
-<h5 class="white dark_text_shadow"><%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %></h5>
-
-<div id="map_partial" class="inner border_box">
-  <div class="left small_framed">
-    
-    <h6>Boca's Newest and Finest Climate Controller Self Storage</h6>
-    
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipi sicing elit, sed do eiusmod tempor. sit amet, consectetur adipi sicing elit, sed do eiusmod tempor. 
-    </p>
-    
-    <div class="large_round bg_grey">
-      <p class="framed"><%= link_to 'More Info', facility_path(listing.title.parameterize, listing.id) %></p>
-    </div>
-    
-  </div>
-  
-  <div class="right">
-    
-    <div class="google_map">
-      <div id="map_<%= listing.map.id %>" class="map_wrap"></div>
-      
-      <ul class="map_controls horizontal">
-        <li class="bottom_round bg_grey">
-          <%= text_field_tag 'gmap_dirs', nil, :class => 'hintable', :title => 'Get Directions' %>
-        </li>
-        <li class="bottom_round bg_grey"><%= link_to 'Go', '#', :id => 'get_dirs', :rel => listing.map.full_address, :title => "Directions to #{listing.title}" %></li>
-      </ul>
-    </div>
-    
-  </div>
-  
+<div id="map_partial" class="inner_box">
+	<div class="left small_framed">
+		<h5 class="">
+			<%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %>
+		</h5>
+		<h6>
+			Boca's Newest and Finest Climate Controller Self Storage
+		</h6>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipi sicing elit, sed do eiusmod tempor. sit amet, consectetur adipi sicing elit, sed do eiusmod tempor.
+		</p>
+		<div class="medium_round bg_grey">
+			<p class="framed">
+				<%= link_to 'More Info', facility_path(listing.title.parameterize, listing.id) %>
+			</p>
+		</div>
+	</div>
+	<div class="right">
+		<div class="google_map">
+			<div id="map_<%= listing.map.id %>" class="map_wrap"></div>
+			<ul class="get_dir">
+				<li>
+					<% form_tag '/ajax/directions' do %>
+						<div>
+							<input type="text" value="" title="Get Directions" name="from_address" id="from_address" class="directions hintable" /> 
+							<%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %>
+							<%= submit_tag 'Go', :class => 'hide' %>
+						</div>
+					<% end %>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

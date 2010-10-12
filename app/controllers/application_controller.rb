@@ -154,8 +154,8 @@ class ApplicationController < ActionController::Base
       @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
     end
     
-    @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    @per_page          = 15
+    @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
+    @per_page = 15                                                                
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?

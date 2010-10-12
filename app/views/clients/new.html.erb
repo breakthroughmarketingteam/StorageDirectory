@@ -23,7 +23,7 @@
 				<p class="sub_head"><%= image_tag '/images/ui/storagelocator/uonbillboard.jpg', :class => 'left' %>Advertising your self storage business has never been so quick and easy.</p>
 				<div>
 					<%= f.label :company, 'Facility Name', :class => 'hidden' %>
-					<%= f.text_field :company, :class => 'required hintable', :title => 'Your Facility\'s Name' %>
+					<%= f.text_field :company, :class => 'required hintable param_filled focus_me', :rel => 'client[company]', :title => 'Your Facility\'s Name' %>
 				</div>
 
 				<div>
@@ -33,8 +33,8 @@
 
 				<div>
 					<label class="hidden">Location</label> 
-					<%= text_field_tag 'listing[city]', 'miami', :class => 'required autocomplete hintable', :title => 'City', :rel => 'UsCity_names|3' %>
-					<%= text_field_tag 'listing[state]', 'fl', :class => 'required autocomplete hintable', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+					<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[city]', :title => 'City', :rel => 'UsCity_names|3' %>
+					<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[state]', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 				</div>
 
 				<div>
