@@ -719,7 +719,13 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel .inner_box{padding:13px 16px;}
 .panel #map_partial{overflow:visible;height:310px;}
-.panel #map_partial .left{width:315px;}
+.panel #map_partial .left{width:330px;}
+.panel .inner_box .office-hours{float:left;font-size:12px;margin:10px 10px 10px 0;}
+.panel .inner_box .access-hours{float:left;font-size:12px;margin:10px 10px 10px 0;width:160px;}
+.panel .inner_box h3{margin-bottom:8px;text-decoration:underline;}
+.panel .inner_box table.hours th{font-weight:bold;}
+.panel .inner_box table.hours td{padding:0.2em;}
+.panel .inner_box #bottom_box{float:left;width:100%;}
 .panel .inner_box .get_dir{-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;background-color:#CCCCCC;color:#FFFFFF;margin:0;padding:5px 0 3px;}
 .panel .inner_box input.directions{width:290px;}
 .panel .sl-table-exp p.blue-text{text-align:right;}
@@ -729,7 +735,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp input#submit-btn{margin-right:23px;}
 .listing:hover .inner{border-color:#aaa;}
 .listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:107%;}
-.panel h5{font-size:140%;margin:0;padding:0 0 25px 0;}
+.panel h5{font-size:140%;line-height:25px;margin:0;height:130px;}
 .panel h5 a{text-decoration:none;}
 .panel .inner_box h6{font-size:120%;}
 .panel .inner_box h6,.panel .inner_box p{margin-bottom:14px;font-size:14px;}
