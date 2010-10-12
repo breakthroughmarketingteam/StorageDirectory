@@ -82,13 +82,11 @@
     <div class="google_map">
       <div id="map_<%= listing.map.id %>" class="map_wrap"></div>
       
-      <ul class="map_controls get_dir  horizontal">
-       
-		<li>
-			<input type="text" value="Enter your starting address for directions and..." title="Get Directions" rel="" name="" id="" class="directions" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-          	<%= link_to 'Go!', google_directions_link(listing.map.full_address), :class => 'white', :target => '_blank' %>
+      <ul class="map_controls horizontal">
+        <li class="bottom_round bg_grey">
+          <%= text_field_tag 'gmap_dirs', nil, :class => 'hintable', :title => 'Get Directions' %>
         </li>
-       
+        <li class="bottom_round bg_grey"><%= link_to 'Go', '#', :id => 'get_dirs', :rel => listing.map.full_address, :title => "Directions to #{listing.title}" %></li>
       </ul>
     </div>
     

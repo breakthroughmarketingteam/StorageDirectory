@@ -481,6 +481,7 @@ $(function(){
 						var $map_wrap = $('.map_wrap', $panel);
 						$map_wrap.append('<iframe />');
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
+						$('.hintable', $map_wrap).hinty();
 
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
@@ -562,6 +563,18 @@ $(function(){
 	
 	$('.tos').live('click', function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
+		return false;
+	});
+	
+	$('#get_dirs', '#map_partial').live('click', function(){
+		var $this = $(this),
+			from_address = $('#gmap_dirs', $this.parent().parent()).val();
+		
+		if (from_address != '') {
+			var src = build_gmap_src({ from: from_address, to: $this.attr('rel'), title: $this.attr('title') });
+			$('<script src="'+ src +'" type="text/javascript"></script>').appendTo($this.parents('.panel'));
+		}
+		
 		return false;
 	});
 	
@@ -734,3 +747,20 @@ $(function(){
 	}
 	
 });
+
+// build a query string for the google directions gadget: http://maps.google.com/help/maps/gadgets/directions/
+function build_gmap_src(options) {
+	var script_src = 'http://www.gmodules.com/ig/ifr?url=http://hosting.gmodules.com/ig/gadgets/file/114281111391296844949/driving-directions.xml'+
+					 '&amp;up_fromLocation='+ escape(options.from) +
+					 '&amp;up_myLocations='+ escape(options.to) +
+					 '&amp;up_defaultDirectionsType='+ 
+					 '&amp;synd=open'+
+					 '&amp;w='+ (options.w || 320) +
+					 '&amp;h='+ (options.h || 55) +
+					 '&amp;title='+ escape(options.title) || 'Directions+by+Google+Maps'+
+					 '&amp;brand=light'+
+					 '&amp;lang='+ (options.lang || 'en') +
+					 '&amp;country=US'+
+					 '&amp;output=js';
+	return script_src;
+}

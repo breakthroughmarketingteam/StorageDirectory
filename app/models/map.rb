@@ -11,9 +11,12 @@ class Map < ActiveRecord::Base
   
   # Instance Methods
   
+  def after_update
+    auto_geocode_address
+  end
+  
   def full_address
     "#{address.gsub('#', '')} #{city}, #{state}"
   end
-  
   
 end

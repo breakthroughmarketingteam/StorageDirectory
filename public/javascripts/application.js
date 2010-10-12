@@ -86,14 +86,19 @@ $(document).ready(function() {
 	
 	// advanced search options
 	var $size_picker = $('#size_picker'),
-		$size_img = $('img', $size_picker);
+		$size_img = $('img', $size_picker),
+		$size_select = $('#storage_size');
 	
-	$('#storage_size').live('change', size_icon_change);
-	$('option', '#storage_size').live('mouseover', size_icon_change);
+	if ($size_select.length) {
+		size_icon_change($size_select); // update on page load
+		$size_select.live('change', size_icon_change);
+		$('option', $size_select).live('mouseover', size_icon_change);
+	}
 	
-	function size_icon_change() {
-		var $this = $(this),
-			selected = this.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', this).attr('rel'),
+	function size_icon_change(input) {
+		var self = input[0] || this,
+			$this = $(self),
+			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
 			new_img = $('<img src="'+ selected +'" alt="" />');
 		
 		if ($size_img.attr('src') != selected) {
@@ -959,6 +964,8 @@ $(document).ready(function() {
 		if (!checkbox.is(':checked')) fields.attr('disabled', true);
 		else fields.attr('disabled', false);
 	});
+	
+	
 	
 	$('.day_closed', '#business_hours_form').live('change', function(){
 		var check = $(this),

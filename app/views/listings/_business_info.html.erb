@@ -58,6 +58,9 @@
 			</div>
 			<% end %>
 		</li>
+		<li>
+			<%= link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{@listing.title}&listing[city]=" %>
+		</li>
 	</ul>
 	
 	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>

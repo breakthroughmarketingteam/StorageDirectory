@@ -69,15 +69,21 @@ class Listing < ActiveRecord::Base
   end
   
   def get_upper_type_size(size)
-    @upper_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@upper_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
+    @upper_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
+      @@upper_types.any? { |type| s.title =~ /(#{type})/i }
+    end
   end
   
   def get_drive_up_type_size(size)
-    @drive_up_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@drive_up_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
+    @drive_up_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
+      @@drive_up_types.any? { |type| s.title =~ /(#{type})/i }
+    end
   end
   
   def get_interior_type_size(size)
-    @interior_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect { |s| @@interior_types.any? { |t| s.title =~ /.?(#{t}).?/i } }
+    @interior_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
+      @@interior_types.any? { |type| s.title =~ /(#{type})/i }
+    end
   end
   
   def address; self.map.address end
@@ -162,6 +168,7 @@ class Listing < ActiveRecord::Base
     params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
   end
   
+  # TODO: the default location should be geocoded from the request.ip_address and stored in the session. Using a test IP right now.
   def self.geocode_query(query)
     if query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
@@ -173,6 +180,11 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def self.extract_pieces_from_query(query)
+    extracted = {}
+    
+  end
+  
   def self.is_address_query?(query)
     query.gsub!('-', ' ')
     return true if is_zip?(query)
@@ -180,23 +192,28 @@ class Listing < ActiveRecord::Base
     is_state?(query)
   end
   
+  @@zip_regex = /\d{5}/
+  @@city_regex = Proc.new { |query| /#{query.split(/(,\W?)|(\W*)/) * '|'}/i }
+  @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
+  
   def self.is_zip?(query)
-    query.match /\d{5}/ # zip code
+    query.match @@zip_regex # zip code
   end
   
   def self.is_city?(query)
-    UsCity.names.any? { |c| c =~ /#{query.split(/,\W?/) * '|'}/i }
+    UsCity.names.any? { |c| c =~ @@city_regex.call(query) }
   end
   
   def self.is_state?(query)
-    sregex = States::NAMES.map { |s| "(#{s[0]})|\s#{s[1]}$" } * '|'
-    query.match(/#{sregex}/i)
+    query.match(/#{@@states_regex}/i)
   end
   
+  # TODO: work on this to make sure it sorts correctly
   def self.smart_order(data)
-    data.sort_by { |d| d.impressions_count || 0 }
+    data.sort_by { |d| (d.impressions_count || 0) }
   end
   
+  # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.
   def self.find_listings_by_company_city_and_state(company, city, state)
     self.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l " +
                      "LEFT JOIN maps m ON m.listing_id = l.id " +

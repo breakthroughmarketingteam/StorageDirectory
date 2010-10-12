@@ -15,6 +15,9 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     
+    # TODO: extract pieces from search query: zip, city, title, address
+    #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
+    
     result = Listing.geo_search params, session
     @listings = result[:data]
     @location = result[:location]
@@ -122,7 +125,7 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.build_web_special)
+    @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'
