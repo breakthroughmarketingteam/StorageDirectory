@@ -87,7 +87,10 @@ $(function(){
 	
 	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
 		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
-				hidden_form = $('form:hidden', unit_clone);
+		
+		
+			
+		var hidden_form = $('form:hidden', unit_clone);
 				
 		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
 		unit_clone.fadeIn();
@@ -191,9 +194,9 @@ $(function(){
 	
 	$('.facility_feature', '.edit_action #sl-tabs-feat').click(function(){
 		var $this = $(this),
-				feature = $this.find('input').val().replaceAll(' ', '-'),
-				ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
-				path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
+			feature = encodeURIComponent($this.find('input').val().replaceAll(' ', '-')),
+			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
+			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
 		
 		$this.after(ajax_loader.show()).siblings('.f').hide();
 		path += $this.hasClass('selected') ? '/false' : '/true';
@@ -481,7 +484,7 @@ $(function(){
 						var $map_wrap = $('.map_wrap', $panel);
 						$map_wrap.append('<iframe />');
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
-						$('.hintable', $map_wrap).hinty();
+						$('.hintable', $panel).hinty();
 
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
@@ -572,7 +575,8 @@ $(function(){
 		
 		if (from_address != '') {
 			var src = build_gmap_src({ from: from_address, to: $this.attr('rel'), title: $this.attr('title') });
-			$('<script src="'+ src +'" type="text/javascript"></script>').appendTo($this.parents('.panel'));
+			$map_wrap.append('<iframe />');
+			$('iframe', $map_wrap).src('/ajax/get_dir_frame?script_src='+ src);
 		}
 		
 		return false;

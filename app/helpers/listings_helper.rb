@@ -125,4 +125,8 @@ module ListingsHelper
     '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
   end
   
+  def claim_listing_link(listing)
+    link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}" if listing.client.nil?
+  end
+  
 end

@@ -85,11 +85,11 @@ class ClientsController < ApplicationController
     
     case @client.status when 'unverified'
       @client.update_attribute :status, 'active'
-      flash[:notice] = "Congratulations! Your account is now active. Go ahead and log in."
+      flash[:notice] = 'Congratulations! Your account is now active. Go ahead and log in.'
       redirect_to login_path
       
     when 'active'
-      flash[:notice] = "Your account is already active. Go ahead and log in."
+      flash[:notice] = 'Your account is already active. Go ahead and log in.'
       redirect_to login_path
       
     when 'suspended'

@@ -743,7 +743,8 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		$('.hint_toggle').live('click', function(){
+		$('.hint_toggle').live('click', function() {
+			console.log(this)
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
 				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
