@@ -9,10 +9,10 @@
 			<li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li>
 		<% end %>
 		<li class="st-rese">
-			<% if (in_edit_mode? || pretend_action == 'edit') && !@listing.issn_enabled? %>
+			<% if (in_edit_mode? || (defined?(pretend_action) && pretend_action == 'edit')) && !@listing.issn_enabled? %>
 				<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn', :rel => 'cancel' %>
 				<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
-			<% elsif pretend_action == 'new' %>
+			<% elsif defined?(pretend_action) && pretend_action == 'new' %>
 				<%= link_to 'Edit', listing_sizes_path(@listing), :class => 'edit-btn', :rel => 'close' %>
 			<% elsif in_mode? 'locator' %>
 				<a href="#" class="rsr-btn">Select</a>
