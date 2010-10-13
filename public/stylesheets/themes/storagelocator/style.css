@@ -717,7 +717,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
 .unit_detail .month_rate{}
-.panel{width:auto;overflow:hidden;cursor:default;background:#fff;position:relative;z-index:600;border-bottom:1px solid #ccc;border-top:0 none;}
+.panel{width:auto;overflow:hidden;cursor:default;background:#fff;position:relative;z-index:600;border-top:0 none;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel .inner_box{padding:13px 16px;}
 .panel #map_partial{background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;height:330px;margin-top:-90px;overflow:visible;}
@@ -742,7 +742,9 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel #head{padding-bottom:15px;}
 .panel #head.blue{background-color:#3333cc;position:relative;}
 .panel .facility-intro{height:70px;margin:0 10px;}
-.panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 22px;width:320px;}
+.panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 22px;}
+.panel h5.dir{width:320px;}
+.panel h5.reviews-tab{font-size:18px;}
 .panel h5 a{text-decoration:none;}
 .panel .inner_box h6{font-size:120%;}
 .panel .inner_box h6,.panel .inner_box p{margin-bottom:14px;font-size:14px;}
