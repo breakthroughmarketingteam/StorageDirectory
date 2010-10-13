@@ -2,6 +2,9 @@ class Size < ActiveRecord::Base
   
   belongs_to :listing
   has_one :unit_type
+  
+  validates_presence_of :title
+  validates_numericality_of :width, :length, :price
 
   attr_accessor :special
   
@@ -18,7 +21,7 @@ class Size < ActiveRecord::Base
   end
   
   def sqft
-    width * length
+    width * length unless width.blank?
   end
   
   def icon(size)
