@@ -470,8 +470,8 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in{margin-top:21px;padding-bottom:4px;clear:right;}
 .panel #sl-tabs-sizes-in{margin-top:0;}
 #sl-tabs-sizes-in ul{clear:both;height:37px;line-height:2.5;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
-#sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
-#sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:80%;color:#666;width:100%;}
+#sl-tabs-sizes-in ul li{display:block;float:left;}
+#sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:22px;font-size:80%;color:#666;width:100%;}
 #sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:3px 0 0;cursor:pointer;font-size:90%;}
 .edit_action #sl-tabs-sizes-in ul.sl-table{cursor:default;}
 #sl-tabs-sizes-in .rental_duration ul{border:0 none;font-size:120%;}
