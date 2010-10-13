@@ -11,8 +11,8 @@ class Map < ActiveRecord::Base
   
   # Instance Methods
   
-  def after_update
-    auto_geocode_address
+  def before_save
+    auto_geocode_address if self.zip || self.city
   end
   
   def full_address

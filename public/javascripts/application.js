@@ -1626,14 +1626,6 @@ function get_partial_and_do(params, callback) {
 	});
 }
 
-// updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
-function update_info_tab_count(label, i) {
-	var	tab = $('#tab_'+ label, '#sl-tabs'),
-			count = parseInt(tab.text().split('(')[1].replace(')', '')) + i;
-	
-	tab.text(label + ' ('+ count +')');
-}
-
 function preload_us_map_imgs() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){

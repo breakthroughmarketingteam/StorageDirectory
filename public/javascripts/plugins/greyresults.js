@@ -7,44 +7,86 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	$.convert_unit_size_row_values_to_inputs = function(container) {
+	// we needed to adjust the style of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
+	var sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
+		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
+	
+	$.convert_unit_size_row_values_to_inputs = function(container, cancel_btn, delete_btn) {
 		// values and such
+		container.addClass('active');
+		
 		var sizes_li	= $('.st-size', container),
 			type_li 	= $('.st-type', container),
+			desc_li 	= $('.st-desc', container),
 			price_li 	= $('.st-pric', container),
 			specials_li = $('.st-spec', container),
 			load_li		= $('.st-sele', container),
-
 			// to revert the content on cancel
 			sizes_orig		= sizes_li.text(),
 			type_orig		= type_li.text(),
+			desc_orig		= desc_li.text(),
 			price_orig		= price_li.html(),
 			specials_orig  	= specials_li.html(),
-
 			// build the input fields with the original values preset
 			x = sizes_orig.split(/\W?x\W?/)[0],
 			y = sizes_orig.split(/\W?x\W?/)[1],
 			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
 			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
 			ti = '<input type="text" class="small_text_field i" name="size[title]" value="'+ type_orig +'" />',
+			di = '<input type="text" class="small_text_field i" name="size[description]" value="'+ desc_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
 
-			// replace the content in the unit size row
-			sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
-			type_li.html(ti);
-			price_li.html('<span class="left">$ </span>'+ pi);
-			specials_li.html(si);
+		// replace the content in the unit size row
+		sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
+		type_li.html(ti);
+		desc_li.html(di);
+		price_li.html('<span class="left">$ </span>'+ pi);
+		specials_li.html(si);
+		
+		cancel_btn.show().click(function(){
+			switch (cancel_btn.attr('rel')) {
+				case 'close':
+					container.fadeOut(300, function() { $(this).remove(); update_info_tab_count('Unit_Sizes', -1); });
+				break;
+				case 'cancel':
+					// revert to original content
+					sizes_li.html(sizes_orig).css(sizes_li_revertment);
+					type_li.html(type_orig);
+					price_li.html(price_orig);
+					specials_li.html(specials_orig);
 
-		$('.cancel_link', container).live('click', function(){
-			// revert to original content
-			sizes_li.html(sizes_orig).css(sizes_li_revertment);
-			type_li.html(type_orig);
-			price_li.html(price_orig);
-			specials_li.html(specials_orig);
+					$('.edit-btn', container).text('Edit');
+					cancel_btn.hide();
+					delete_btn.hide();
+				break;
+			}
+			
+			container.removeClass('active');
+			return false;
+		});
+		
+		delete_btn.show().click(function(){
+			if (!delete_btn.data('deleting')) {
+				delete_btn.data('deleting', true);
+				
+				var listing_id = $('input[name=listing_id]').val(),
+					size_id = $('input[name=size_id]', container).val();
 
-			$('.edit-btn', container).text('Edit');
-			$(this).hide();
+				if (confirm('Are you sure you want to delete this unit size?')) {
+					$.post('/listings/'+ listing_id +'/sizes/'+ size_id, { _method: 'delete' }, function(response) {
+						$.with_json(response, function(data) {
+							container.fadeOut(300, function() {
+								$(this).remove();
+								update_info_tab_count('Unit_Sizes', -1);
+							});
+						});
+						
+						delete_btn.data('deleting', false);
+					}, 'json');
+				}
+			}
+			
 			return false;
 		});
 	}
@@ -53,13 +95,15 @@ $(function(){
 		$(inputs, context).each(function(){ form.append($(this).clone()); });
 	}
 
-	$.post_new_unit_size_values_and_revert = function(container, hidden_form) {
+	$.post_new_unit_size_values_and_revert = function(container, hidden_form, cancel_btn, delete_btn) {
 		var sizes_li	= $('.st-size', container),
 			type_li 	= $('.st-type', container),
 			price_li 	= $('.st-pric', container),
 			specials_li = $('.st-spec', container);
 
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
+		cancel_btn.hide();
+		delete_btn.hide();
 		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 			$.with_json(response, function(data){
@@ -77,70 +121,84 @@ $(function(){
 				specials_li.html(specials_html);
 
 				$('.edit-btn', container).text('Edit');
-				$('.cancel_link', container).hide();
+				cancel_btn.attr('rel', 'cancel');
+				
+				container.replaceWith($(data));
+				
+			}, function(data) { // error
+				cancel_btn.show();
+				delete_btn.show();
+				
+				$.ajax_error(data); 
 			});
 			
 			$('.st-sele', container).removeClass('active_load');
-
+			container.removeClass('active');
+			
 		}, 'json');
 	}
 	
 	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
-		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
+		var unit_clone = $('.sl-table-wrap:not(.active)', '#sl-tabs-sizes-in').eq(0).clone().hide(),
+			ajax_loader = $('.ajax_loader', $(this).parent()).show();
 		
 		if (!unit_clone.length) {
-			$.getJSON('/ajax/get_partial?partial=sizes/size&model=Size&sub_model=Listing&sub_id='+ $('input[name=listing_id]').val(), function(response) {
+			$.getJSON('/ajax/get_partial?partial=sizes/size&pretend_action=new&model=Size&sub_model=Listing&sub_id='+ $('input[name=listing_id]').val(), function(response) {
 				$.with_json(response, function(data) {
 					unit_clone = $(data).appendTo('#sl-tabs-sizes-in');
-					prep_unit_size_edit(unit_clone);
+					prep_unit_size_edit(unit_clone, ajax_loader);
 				});
 			});
 			
 		} else {
 			$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
-			prep_unit_size_edit(unit_clone);
+			prep_unit_size_edit(unit_clone, ajax_loader);
 		}
 		
 		return false;
 	});
 	
-	function prep_unit_size_edit(unit_size) {
-		var hidden_form = $('form:hidden', unit_size);
+	function prep_unit_size_edit(unit_size, ajax_loader) {
+		var hidden_form = $('form:hidden', unit_size),
+			cancel_btn = $('.cancel_link', unit_size);
+		
+		hidden_form.find('input[name=_method]').val('post').end();
 		unit_size.fadeIn();
-		$('.edit-btn', unit_size).eq(0).click();
+		
+		$.convert_unit_size_row_values_to_inputs(unit_size, cancel_btn, $('.delete_link', unit_size));
+		
+		$('.edit-btn', unit_size).text('Save');
+		cancel_btn.attr('rel', 'close');
+		$('.delete_link', unit_size).remove();
+		$('input[name=size_id]', unit_size).val('').attr('id', '');
 		
 		// change form attr to reroute the ajax call to the create action
 		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
 		hidden_form.find('input[name=_method]').val('post');
 		
 		$('input', unit_size).eq(0).focus();
+		ajax_loader.hide();
+		
+		update_info_tab_count('Unit_Sizes', 1);
 	}
 
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
 		var $this 		= $(this),
-			container 	= $this.parents('.sl-table'),
-			hidden_form	= $('form:hidden', container.parent()),
-			cancel_btn	= $('.cancel_link', container),
+			container 	= $this.parents('.sl-table-wrap'),
+			hidden_form	= $('form:hidden', container),
+			cancel_btn	= $('.cancel_link', container).attr('rel', $this.attr('rel')), // the cancel btn's rel dictates whether it should remove the size (new size) or revert it (existing size)
+			delete_btn  = $('.delete_link', container),
 			load_li		= $('.st-sele', container);
-			
-		hidden_form.find('input[name=_method]').val('put');
-		
-		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
 
-		if ($(this).text() == 'Edit') {
-			$.convert_unit_size_row_values_to_inputs(container);
-
-			cancel_btn.show();
+		if ($this.text() == 'Edit') {
+			hidden_form.find('input[name=_method]').val('put');
+			$.convert_unit_size_row_values_to_inputs(container, cancel_btn, delete_btn);
 			$this.text('Save');
 
-		} else if ($(this).text() == 'Save') {
+		} else if ($this.text() == 'Save') {
 			load_li.addClass('active_load'); // loading anim
-			cancel_btn.hide();
-			
-			$.post_new_unit_size_values_and_revert(container, hidden_form);
+			$.post_new_unit_size_values_and_revert(container, hidden_form, cancel_btn, delete_btn);
 		}
 
 		return false;
@@ -768,6 +826,14 @@ $(function(){
 	}
 	
 });
+
+// updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
+function update_info_tab_count(label, i) {
+	var	tab = $('#tab_'+ label, '#sl-tabs'),
+		count = parseInt(tab.text().split('(')[1].replace(')', '')) + i;
+	
+	tab.text(label.replace('_', ' ') + ' ('+ count +')');
+}
 
 // build a query string for the google directions gadget: http://maps.google.com/help/maps/gadgets/directions/
 function build_gmap_src(options) {

@@ -1,4 +1,4 @@
-<% @listing = listing %>
+<% @listing ||= listing %>
 <div class="sl-table-wrap">
 	<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 		<li class="st-size"><%= size.display_dimensions %></li>
@@ -9,20 +9,23 @@
 			<li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li>
 		<% end %>
 		<li class="st-rese">
-			<% if in_edit_mode? && !@listing.issn_enabled? %>
-				<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
+			<% if (in_edit_mode? || pretend_action == 'edit') && !@listing.issn_enabled? %>
+				<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn', :rel => 'cancel' %>
 				<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
-			<% elsif in_mode? 'show' %>
+			<% elsif pretend_action == 'new' %>
+				<%= link_to 'Edit', listing_sizes_path(@listing), :class => 'edit-btn', :rel => 'close' %>
+			<% elsif in_mode? 'locator' %>
 				<a href="#" class="rsr-btn">Select</a>
 			<% end %>
 		</li>
 		<li class="st-sele">
-			<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel' %>
+			<%= link_to 'Delete', '#', :class => 'hidden delete_link iconOnly16 right', :title => 'Delete' unless size.new_record? %>
+			<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel', :rel => (size.new_record? ? 'close' : 'cancel') %>
 		</li>
 	</ul>
 
 	<% if is_facility_owner? && !@listing.issn_enabled? %>
-		<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+		<% form_for [@listing, size], :html => { :class => 'hidden_form' }, :method => :put do |f| %><% end %>
 	<% elsif in_mode?('locator', 'get_partial', 'show') %>
 		<div class="reserve_form hidden">
 			<%= render :partial => 'views/partials/greyresults/reserve', :locals => { :listing => @listing, :unit_type => size.unit_type } %>

@@ -362,7 +362,7 @@ $.option_tags_from_array = function(options, selected) {
 
 $.with_json = function(response, success, error) {
 	if (response.success) success.call(this, response.data);
-	else if (error && error.call) error.call(response.data)
+	else if (error && error.call) error.call(this, response.data)
 	else $.ajax_error(response);
 }
 
@@ -371,7 +371,7 @@ $.log = function(msg) {
 }
 
 $.ajax_error = function(response) {
-	if (typeof console == 'undefined') alert(response.data);
+	if (typeof console == 'undefined') alert((typeof(response.data) == 'undefined' ? response : response.data));
 	else console.log(response);
 	//$('#body').prepend('<div class="flash error hide">'+ response.data +'</div>').slideDown();
 }
