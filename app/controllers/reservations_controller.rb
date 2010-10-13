@@ -52,8 +52,8 @@ class ReservationsController < ApplicationController
     
     @response = @reservation.process_new_tenant @billing
     
-    if @response['sErrorMessage'].blank? && @reserver.save
-      @reservation.update_attribute :status, 'paid'
+    if IssnAdapter.no_fatal_error?(@response['sErrorMessage']) && @reserver.save
+      @reservation.update_attribute :status, 'paid' if @response['sErrorMessage'].blank?
       render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step3') }
     else
       render :json => { :success => false, :data => (@response['sErrorMessage'].blank? ? model_errors(@reserver) : @response['sErrorMessage']) }

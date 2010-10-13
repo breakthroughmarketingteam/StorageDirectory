@@ -250,7 +250,11 @@ class Listing < ActiveRecord::Base
   end
   
   def facility_id
-    self.facility_info.O_FacilityId rescue nil
+    self.facility_info.O_FacilityId if self.facility_info
+  end
+  
+  def max_reserve_ahead_days
+    self.facility_info.O_MaximumReserveAheadDays if self.facility_info
   end
   
   # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }

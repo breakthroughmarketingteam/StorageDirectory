@@ -465,8 +465,8 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
 #sl-tabs-sizes{padding:0 14px 14px;}
 .panel #sl-tabs-sizes{padding:0;}
-#sl-tabs-sizes-in{margin-top:21px;padding-bottom:4px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;clear:right;}
-.panel #sl-tabs-sizes-in{margin-top:0;}
+#sl-tabs-sizes-in{margin-top:21px;padding-bottom:6px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;clear:right;}
+.panel #sl-tabs-sizes-in{margin-top:0;border:0 none;}
 #sl-tabs-sizes-in ul{clear:both;height:37px;line-height:2.5;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 #sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
 #sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:80%;color:#666;width:100%;}
@@ -483,7 +483,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in ul li.st-spec{width:17%;font-weight:normal;max-height:45px;overflow:hidden;}
 .panel #sl-tabs-sizes-in ul li.st-spec{width:157px;}
 #sl-tabs-sizes-in .sl-table .st-type{line-height:3;}
-#sl-tabs-sizes-in .sl-table .st-desc{line-height:3.3;overflow:hidden;}
+#sl-tabs-sizes-in .sl-table .st-desc{line-height:3.3;overflow:hidden;height:35px;}
 #sl-tabs-sizes-in ul li.st-rese{width:13%;text-align:center;float:right;margin-right:3px;}
 #sl-tabs-sizes-in ul li.st-rese a{position:relative;top:2.2px;right:-8px;display:block;font-size:100%;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
 #sl-tabs-sizes-in ul.active li.st-rese a,#sl-tabs-sizes-in ul:hover li.st-rese a,#sl-tabs-sizes-in ul:active li.st-rese a{background:url(/images/ui/storagelocator/sl-table-reserve-active.png) no-repeat center;}
@@ -542,7 +542,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-fac-detail-in #display_hours p{margin-bottom:7px;}
 #display_hours .day{display:block;float:left;width:40px;}
 #display_hours .time{}
-#print_box{text-align:left;overflow:hidden;}
+#print_box{text-align:left;overflow:hidden;padding-top:10px;}
 #sl-tabs-map{overflow:hidden;}
 #sl-tabs-map-in{height:360px;width:700px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:2px solid #ccc;margin:21px 0 0 25px;}
 #outer_map{overflow:hidden;margin-bottom:-10px;}
@@ -638,6 +638,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
+form.edit_reservation{padding-top:10px;}
 /* Ending the overview page styles here */
 #greenspace-box{color:#555;text-align:center;margin-bottom:20px;}
 #greenspace-box-in{width:165px;background:url(/images/ui/storagelocator/recycle-logo.png) no-repeat bottom right;position:relative;left:10px;top:17px;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -1122,6 +1123,7 @@ form .error p{margin:0 0 7px 0;}
 #step2 .in img{margin-top:-35px;}
 #step3 .in img{margin-right:-13px;}
 #step3 .in{margin-right:0;border-right:0 none;}
+#step2 #cost_display{border:1px dashed #ccc;margin:10px 0 15px;width:45%;background:#fff;}
 
 #handle,#red_tab{margin:0 auto;}
 #handle{width:196px;height:51px;margin-top:42px;position:relative;z-index:1;cursor:pointer;background:url(/images/ui/storagelocator/handle.png) no-repeat;}
@@ -1170,4 +1172,5 @@ form .error p{margin:0 0 7px 0;}
 .ui-menu .ui-menu-item a{padding:6px 12px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:100%;margin-bottom:5px;}
+.darkgreen{color:#393;}
 .dp{position:absolute;left:-99999px;}
