@@ -209,7 +209,7 @@ $(document).ready(function() {
 
 					} else {
 						$.getJSON('/ajax/get_cities?state='+ state, function(response) {
-							$.handle_json_response(response, function(data){
+							$.with_json(response, function(data){
 								wizard.slide_data[1].build_city_list = true;
 								wizard.slide_data[1].pop_up_title = 'Pick a City in '+ state
 								wizard.slide_data[1].data = { state: state, cities: data };
@@ -444,7 +444,7 @@ $(document).ready(function() {
 		if (this.href == '#') $(div_to_print).jqprint(print_opts);
 		else {
 			$.getJSON(this.href, function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var wrap = $(data).appendTo('body'),
 						coup = $(div_to_print).clone().appendTo('#print_content');
 					
@@ -553,7 +553,7 @@ $(document).ready(function() {
 				};
 			
 			$.post('/ajax/find_listings', form_data, function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // preping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
@@ -661,7 +661,7 @@ $(document).ready(function() {
 				ajax_loader.show();
 				
 				$.getJSON('/ajax/get_partial?partial=clients/client_info_text&model=Client&id='+ $('#client_id').text(), function(response){
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						wizard.slide_data[1].client_info = data;
 						$('.client_info_preview', active_opt).append(data);
 					});
@@ -696,7 +696,7 @@ $(document).ready(function() {
 					ajax_loader = $('.ajax_loader', '#issnstep_3').show();
 				
 				$.post(form.attr('action'), form.serialize(), function(response) {
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						inner.html('<h2 class="framed">'+ data +'</h2>');
 						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload(); return false; });
 					});
@@ -723,7 +723,7 @@ $(document).ready(function() {
 				
 			} else {
 				$.getJSON(this.href, {}, function(response) {
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						var box = $(data).append('<a class="close_btn" href="#">X</a>');
 
 						$('.reservation_wrap', 'td.region').hide();
@@ -795,7 +795,7 @@ $(document).ready(function() {
 		
 			// GET PARTIAL
 			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var partial 	  = $(data).hide(),
 						title_input   = $('input[name="listing[title]"]', partial),
 						tip_text	  = $('.new_listing_tip', partial);
@@ -902,7 +902,7 @@ $(document).ready(function() {
 
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
-						$.handle_json_response(response, function(data){
+						$.with_json(response, function(data){
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 
 							listing_html = $(data);
@@ -1015,7 +1015,7 @@ $(document).ready(function() {
 			ajax_loader.show();
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$this.after('<span id="msg">Saved!</span>');
 					setTimeout(function(){ $('#msg', form).fadeOut(1000, function(){ $(this).remove() }); }, 3000);
 				});
@@ -1037,7 +1037,7 @@ $(document).ready(function() {
 		$('.edit-btn', sizes_in).hide();
 		
 		$.post($this.attr('href'), {}, function(response) {
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				$this.text('Reloading');
 				
 				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(resp){
@@ -1070,7 +1070,7 @@ $(document).ready(function() {
 				setTimeout(function(){ $('#picture_facility_image', $form).val('') }, 100);
 			},
 			success: function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var thumb_img = $('img', thumb);
 					thumb_img.attr({ src: data.thumb, id: 'Picture_'+ data.id }).removeClass('loading');
 					thumb_img.next('a').attr('href', '/listings/'+ data.listing_id +'/pictures/'+ data.id);
@@ -1107,7 +1107,7 @@ $(document).ready(function() {
 				id = img.attr('id').replace('Picture_', '');
 
 			$.post($(this).attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
@@ -1133,7 +1133,7 @@ $(document).ready(function() {
 			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate());
 		
 		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				var plot_data = [],
 					stats_arr = stats_models.split(/,\W?/);
 				
@@ -1231,7 +1231,7 @@ $.fn.instantForm = function() {
 				$('input', $this).each(function(){ hidden_form.append($(this).clone()); });
 				
 				$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						$('.value', $this).each(function(){
 							var this_val   = $(this),
 								this_input = $('input', this_val.parent()).hide();
@@ -1462,7 +1462,11 @@ function workflow_step2() {
 			listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
 		});
 
-		setTimeout(function(){ listings_box.fadeIn(wizard.settings.fade_speed) }, 350);
+		setTimeout(function(){
+			listings_box.fadeIn(wizard.settings.fade_speed);
+			listing_id = $.get_param_value('listing_id');
+			if (listing_id) $('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+		}, 350);
 	}
 }
 
@@ -1563,7 +1567,7 @@ function finish_workflow() {
 		next_button.prev('.ajax_loader').show();
 
 		$.post('/clients', wizard.form_data, function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				wizard.workflow.parents('#pop_up').dialog('close');
 				$('#top_fac_page').html(data);
 			});

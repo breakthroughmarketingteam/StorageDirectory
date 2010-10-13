@@ -589,7 +589,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 /* Starting the overview page styles here */
 #ov-page-cnt{position:relative;left:3px;}
 #ov-top ul#ov-top-list li{display:block;width:200px;float:left;text-align:center;margin-bottom:10px;font-weight:bold;}
-#ov-top ul#ov-top-list li span{color:#33c;font-size:1.1em;}
+#ov-top ul#ov-top-list li span{color:#33c;}
 #ov-top ul#ov-top-list{width:725px;background:#000;}
 #ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;margin-top:20px;margin-bottom:10px;clear:both;width:99.4%;}
 #ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;position:relative;}
@@ -880,7 +880,7 @@ img.right{margin:0 0 10px 10px;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
 #ov-units-head #add_fac{float:right;margin:6px 15px 0 0;}
-.btn{font-weight:bold;display:block;width:84px;height:32px;color:#fff;text-shadow:1px 1px 2px #333;line-height:2.3;text-align:center;background:url("/images/ui/storagelocator/sl-table-reserve.png") no-repeat;}
+.btn{font-weight:bold;display:block;width:84px;height:32px;color:#fff;text-shadow:1px 1px 2px #333;line-height:1.8;text-align:center;background:url("/images/ui/storagelocator/sl-table-reserve.png") no-repeat;}
 .my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
@@ -964,7 +964,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #Reservation .stack{font-size:120%;}
 /*signup workflow*/
 #top_fac_page{margin:25px 28px 15px 37px;}
-.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;position:absolute;right:0;top:-17px;font-size:80%;}
+.error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
