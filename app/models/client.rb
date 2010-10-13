@@ -7,7 +7,7 @@ class Client < User
   
   def initialize(params = {})
     super params
-    self.role_id = Role.get_role_id('advertiser')
+    self.role_id = Role.get_role_id 'advertiser'
   end
   
   def active_mailing_address

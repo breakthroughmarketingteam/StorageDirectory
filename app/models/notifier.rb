@@ -19,13 +19,13 @@ class Notifier < ActionMailer::Base
   end
   
   def tenant_confirmation(reserver, reservation)
-    setup_email reserver.email, 'notifications@usselfstoragelocator.com', 'Storage Reservation'
+    setup_email reserver.email, 'notifier@usselfstoragelocator.com', 'Self Storage Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
   end
   
   def admin_reservation_alert(reserver, reservation, comments)
-    setup_email 'reservations@usselfstoragelocator.com', 'notifications@usselfstorageolocator.com', 'New Reservation'
+    setup_email 'reservations@usselfstoragelocator.com', 'notifier@usselfstorageolocator.com', 'New Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
     @body[:comments]    = comments
