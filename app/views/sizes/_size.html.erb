@@ -1,4 +1,4 @@
-<% @listing = listing %>
+<% @listing ||= listing %>
 <div class="sl-table-wrap">
 	<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 		<li class="st-size"><%= size.display_dimensions %></li>

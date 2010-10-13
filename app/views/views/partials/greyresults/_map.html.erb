@@ -1,4 +1,4 @@
-<div id="head" class="blue"><h5 class="dir">North Miami's Finest Climate Controlled Self Storage</h5></div>
+<div id="head" class="blue dir-head"><h5>North Miami's Finest Climate Controlled Self Storage</h5></div>
 
 <div id="map_partial" class="inner inner_box">
 	<div class="left">
@@ -146,7 +146,7 @@
 		<li>
 			<% form_tag '/ajax/directions' do %>
 			<div>
-				<input type="text" value="" title="Get Directions" name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
+				<input type="text" value="" title="For directions enter your starting address and... " name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
 			</div><% end %>
 		</li>
 	</ul>
