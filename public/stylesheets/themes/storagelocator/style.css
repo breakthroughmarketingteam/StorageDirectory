@@ -465,12 +465,12 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
 #sl-tabs-sizes{padding:0 14px 14px;}
 .panel #sl-tabs-sizes{padding:0;}
-#sl-tabs-sizes-in{margin-top:21px;padding-bottom:4px;background:url(/images/ui/storagelocator/sl-table-bg.png) repeat top left;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;clear:right;}
+#sl-tabs-sizes-in{margin-top:21px;padding-bottom:4px;clear:right;}
 .panel #sl-tabs-sizes-in{margin-top:0;}
-#sl-tabs-sizes-in ul{clear:both;height:37px;line-height:2.5;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
+#sl-tabs-sizes-in ul{clear:both;height:37px;line-height:2.5;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 #sl-tabs-sizes-in ul li{display:block;float:left;min-height:28px;}
 #sl-tabs-sizes-in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:28px;font-size:80%;color:#666;width:100%;}
-#sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:2px 5px 0;cursor:pointer;font-size:90%;}
+#sl-tabs-sizes-in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:3px 0 0;cursor:pointer;font-size:90%;}
 .edit_action #sl-tabs-sizes-in ul.sl-table{cursor:default;}
 #sl-tabs-sizes-in .rental_duration ul{border:0 none;font-size:120%;}
 #sl-tabs-sizes-in ul.active,#sl-tabs-sizes-in .sl-table:hover,#sl-tabs-sizes-in .sl-table.active{background:url(/images/ui/storagelocator/sl-table-active.png) repeat-x top left;color:#333;}
@@ -485,7 +485,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in .sl-table .st-type{line-height:3;}
 #sl-tabs-sizes-in .sl-table .st-desc{line-height:3.3;overflow:hidden;}
 #sl-tabs-sizes-in ul li.st-rese{width:13%;text-align:center;float:right;margin-right:3px;}
-#sl-tabs-sizes-in ul li.st-rese a{position:relative;top:2.2px;right:-8px;display:block;font-size:100%;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
+#sl-tabs-sizes-in ul li.st-rese a{position:relative;top:2.2px;right:-8px;display:block;font-size:100%;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 0px #666;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
 #sl-tabs-sizes-in ul.active li.st-rese a,#sl-tabs-sizes-in ul:hover li.st-rese a,#sl-tabs-sizes-in ul:active li.st-rese a{background:url(/images/ui/storagelocator/sl-table-reserve-active.png) no-repeat center;}
 #sl-tabs-sizes-in ul li.st-sele{width:25px;float:right;}
 #sl-tabs-sizes-in ul li.active_load{background:url(/images/ui/storagelocator/sl-load.gif) no-repeat center;}
@@ -717,19 +717,18 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
 .unit_detail .month_rate{}
-.panel{width:auto;overflow:hidden;cursor:default;background:#fff;position:relative;z-index:600;border:1px solid #ccc;border-top:0 none;}
+.panel{width:auto;overflow:hidden;cursor:default;background:#fff;position:relative;z-index:600;border-bottom:1px solid #ccc;border-top:0 none;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:#fff;}
 .panel .inner_box{padding:13px 16px;}
-.panel #map_partial{overflow:visible;height:310px;}
-.panel #map_partial .left{width:330px;}
-.panel .inner_box .office-hours{float:left;font-size:12px;margin:10px 10px 10px 0;}
+.panel #map_partial{background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;height:330px;margin-top:-90px;overflow:visible;}
+.panel .inner_box .office-hours{float:left;font-size:12px;margin:10px;}
 .panel .inner_box .access-hours{float:left;font-size:12px;margin:10px 10px 10px 0;width:160px;}
 .panel .inner_box h3{margin-bottom:8px;text-decoration:underline;}
 .panel .inner_box table.hours th{font-weight:bold;}
 .panel .inner_box table.hours td{padding:0.2em;}
 .panel .inner_box #bottom_box{float:left;width:100%;}
-.panel #map_partial .map_wrap{border:1px solid #ccc;border-bottom:0;}
-.panel .inner_box .get_dir{float:right;width:360px;-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;background-color:#CCCCCC;color:#FFFFFF;margin:0;padding:5px 0 3px;}
+.panel #map_partial .map_wrap{}
+.panel .inner_box .get_dir{float:left;width:360px;-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;background-color:#CCCCCC;color:#FFFFFF;margin:0;padding:5px 0 3px;}
 .panel .inner_box .get_dir li{padding:0 0 3px 10px;;color:#fff;background-color:#ccc;border-radius-bottomright:4px;-moz-border-radius-bottomright:4px;-webkit-border-bottom-right-radius:4px;border-radius-bottomleft:4px;-moz-border-radius-bottomleft:4px;-webkit-border-bottom-left-radius:4px;}
 .panel .inner_box .get_dir li a{background:none repeat scroll 0 0 #bbb;color:#fff;float:right;height:18px;margin:0 0 0 5px;padding:4px 0 0 11px;text-decoration:none;width:32px;}
 .panel .inner_box input.directions{width:290px;}
@@ -740,7 +739,10 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp input#submit-btn{margin-right:23px;}
 .listing:hover .inner{border-color:#aaa;}
 .listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:107%;}
-.panel h5{font-size:140%;line-height:25px;margin:0;height:130px;}
+.panel #head{padding-bottom:15px;}
+.panel #head.blue{background-color:#3333cc;position:relative;}
+.panel .facility-intro{height:70px;margin:0 10px;}
+.panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 22px;width:320px;}
 .panel h5 a{text-decoration:none;}
 .panel .inner_box h6{font-size:120%;}
 .panel .inner_box h6,.panel .inner_box p{margin-bottom:14px;font-size:14px;}
@@ -748,9 +750,9 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .inner_box p.framed{height:30px;}
 .panel .inner_box p.framed a{color:#fff;}
 .panel .inner{height:70%;padding:13px 16px;position:relative;z-index:550;background:#fff;cursor:default;}
-.panel .inner .left{width:48%;}
-.panel .inner .right{width:45%;margin-top:-40px;}
-.map_wrap{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;margin-top:5px;width:358px;}
+.panel .inner_box .left{margin-top:100px;width:330px;}
+.panel .inner_box .right{background:url("/images/ui/storagelocator/gmap-bg.png") no-repeat bottom;margin-right:-7px;height:300px;padding:10px;position:relative;width:361px;}
+.map_wrap{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;width:360px;}
 .map_wrap iframe{height:260px;width:360px;}
 #storage-info-content{padding:0 40px;}
 #storage-info-content > h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
