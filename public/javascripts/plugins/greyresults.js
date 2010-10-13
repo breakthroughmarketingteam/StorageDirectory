@@ -566,6 +566,11 @@ $(function(){
 					}
 				});
 			});
+			
+		} else {
+			$panel.slideUp();
+			$('.tab_link, .listing, .panel').removeClass('active');
+			$('li', '.tabs').removeClass('active');
 		}
 
 		return false;
