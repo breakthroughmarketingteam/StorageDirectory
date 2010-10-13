@@ -138,17 +138,16 @@
 			</table>
 		</div>
 	</div>
-	<div class="right">
-		<div class="google_map">
-			<div id="map_<%= listing.map.id %>" class="map_wrap"></div>
-			<ul class="get_dir">
-				<li>
-					<% form_tag '/ajax/directions' do %>
-					<div>
-						<input type="text" value="" title="Get Directions" name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
-					</div><% end %>
-				</li>
-			</ul>
-		</div>
-	</div>
+
+</div>
+<div class="google_map">
+	<div id="map_<%= listing.map.id %>" class="map_wrap"></div>
+	<ul class="get_dir">
+		<li>
+			<% form_tag '/ajax/directions' do %>
+			<div>
+				<input type="text" value="" title="Get Directions" name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
+			</div><% end %>
+		</li>
+	</ul>
 </div>
