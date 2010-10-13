@@ -16,8 +16,8 @@ class Listing < ActiveRecord::Base
   has_many :web_specials   , :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
-  has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
-  has_many :office_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "office"'
+  has_many :access_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
+  has_many :office_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'office'"
   
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
@@ -250,7 +250,11 @@ class Listing < ActiveRecord::Base
   end
   
   def facility_id
-    self.facility_info.O_FacilityId rescue nil
+    self.facility_info.O_FacilityId if self.facility_info
+  end
+  
+  def max_reserve_ahead_days
+    self.facility_info.O_MaximumReserveAheadDays if self.facility_info
   end
   
   # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }

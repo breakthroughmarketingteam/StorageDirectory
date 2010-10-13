@@ -291,6 +291,11 @@ class IssnAdapter
     end
   end
   
+  def self.no_fatal_error?(error_message)
+    return true if error_message.blank?
+    error_message.match /(Account Created)/i
+  end
+  
   def self.useless_keys
     ['@diffgr:id', '@xmlns', '@msdata:rowOrder', 'sReplyCode']
   end

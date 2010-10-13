@@ -52,8 +52,11 @@ class ReservationsController < ApplicationController
     
     @response = @reservation.process_new_tenant @billing
     
-    if @response['sErrorMessage'].blank? && @reserver.save
-      @reservation.update_attribute :status, 'paid'
+    if IssnAdapter.no_fatal_error?(@response['sErrorMessage']) && @reserver.save
+      @reservation.update_attribute :status, 'paid' if @response['sErrorMessage'].blank?
+      session.destroy if @reserver.status == 'unverified'
+      send_notices
+      
       render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step3') }
     else
       render :json => { :success => false, :data => (@response['sErrorMessage'].blank? ? model_errors(@reserver) : @response['sErrorMessage']) }
@@ -76,7 +79,7 @@ class ReservationsController < ApplicationController
     Notifier.deliver_admin_reservation_alert @reserver, @reservation, @reservation.comments
   end
   
-  def split_name_param! # we use a simple 'Your Name' field rather than 2 separate fields
+  def split_name_param! # in the front end we use a simple 'Your Name' field rather than 2 separate fields, we need to split them for the model
     name = params[:reserver].delete :name
     params[:reserver][:first_name] = name.split(' ')[0]
     params[:reserver][:last_name] = name.split(' ')[1]

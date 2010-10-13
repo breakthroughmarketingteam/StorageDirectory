@@ -13,6 +13,14 @@ class Reservation < ActiveRecord::Base
   validates_presence_of :listing_id
   validates_date :move_in_date, :after => Proc.new { -1.day.from_now.to_date }, :after_message => 'must be after %s'
   
+  def validate
+    unless self.listing.max_reserve_ahead_days.blank?
+      if self.move_in_date >= self.listing.max_reserve_ahead_days.days.from_now
+        errors.add_to_base "This facility only allows you to make a reservation #{self.listing.max_reserve_ahead_days} days in advance"
+      end
+    end
+  end
+  
   def process_new_tenant(billing_info)
     if self.listing.accepts_reservations?
       usa = 'United States of America'
@@ -74,17 +82,16 @@ class Reservation < ActiveRecord::Base
     self.reserver.name rescue 'name missing'
   end
   
+  def unit_size
+    self.unit_type ? self.unit_type.size.display_dimensions : self.unit_type_size
+  end
+  
   def unit_description
-    self.unit_type ? "#{self.unit_type.size.display_dimensions} #{self.unit_type.size.description}" : self.unit_type_size
+    self.unit_type.size.description rescue self.unit_type.StorageSvrDescription
   end
   
   def fee
     self.unit_type.reserve_cost.total_cost
-  end
-  
-  def duration
-    @distance_in_minutes ||= (((self.move_out_date.to_time - self.move_in_date.to_time).abs) / 60).round
-    @month_range ||= (@distance_in_minutes.to_f / 43200.0).round
   end
   
   def reserve_until_date

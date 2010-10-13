@@ -10,23 +10,31 @@
 	</p>
 </div>
 <div class="sl-table-exp-form-r">
-	<p>
-		<% if defined?(unit_type) && unit_type %>
-			<%= hidden_field_tag "#{request_type}[unit_type_id]", unit_type.id %>
+	<% begin %>
+		<% if unit_type || size.unit_type %>
+			<%= hidden_field_tag "#{request_type}[unit_type_id]", (unit_type || size.unit_type).id %>
 		<% else %>
+			<p>
 			<% if listing.available_sizes.empty? %>
 				<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
 				<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
 			<% else %>
 				<%= label_tag "#{request_type}[unit_type_id]", 'Unit Size', :class => 'block' %>
-				<%= select_tag "#{request_type}[unit_type_id]", option_tags(listing.unit_sizes_options_array, unit_type.id, 'Select one'), :class => 'required' %>
+				<%= select_tag "#{request_type}[unit_type_id]", option_tags(listing.unit_sizes_options_array, (unit_type || size.unit_type).id, 'Select one'), :class => 'required' %>
 			<% end %>
+			</p>
 		<% end %>
-	</p>
+	<% rescue => e %>
+		<p>
+		<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
+		<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
+		</p>
+	<% end %>
+
 	<p class="datepicker_wrap">
         <span class="hidden">Move In Date</span> 
 		<%= label_tag "#{request_type}[move_in_date]", 'Move-In Date', :class => 'block ' %> 
-		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}", :class => 'mini_calendar numeric_date' %>
+		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}_#{(unit_type || size.unit_type).id rescue ''}", :class => 'mini_calendar numeric_date' %>
 	</p>
 	<div class="rental_duration">
         <p>How many months do you plan to rent?</p>

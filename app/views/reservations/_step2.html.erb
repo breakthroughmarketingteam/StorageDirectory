@@ -1,15 +1,23 @@
 <% form_for @reservation do |f| %>
-	<h4 class="left_space">Lock In This Rate</h4>
+	<h4>Lock In This Rate</h4>
 
-	<div class="sl-table-exp-form-l">
-		<p>Unit Type: <%= @reservation.unit_description %></p>
-		<p>Monthly Rate: <%= number_to_currency @reservation.unit_type.size.dollar_price %></p>
-		<p>Reserve Fee: <%= number_to_currency @reservation.fee %></p>
+	<div id="cost_display" class="sl-table-exp-form-l">
+		<p><span class="block left w100 bold">Unit Size: </span> <%= @reservation.unit_size %></p>
+		
+		<% if @reservation.unit_type %>
+			<p><span class="block left w100 bold">Unit Type: </span> <%= @reservation.unit_description %></p>
+		<% end %>
+
+		<p><span class="block left w100 bold">Monthly Rate: </span><%= number_to_currency @reservation.unit_type.size.dollar_price %></p>
+		<p>
+			<strong class="darkgreen">You Only Pay:</strong><br />
+			<span class="block left w100 bold">Reserve Fee:</span> <%= number_to_currency @reservation.fee %>
+		</p>
 	</div>
 
 	<div class="sl-table-exp-form-r">
 		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur, elit id ultrices bibendum, orci ipsum sodales nibh, vel mollis lacus urna sit amet turpis.
+		The reservation fee is a one time deposit you make to lock in this unit. It is charged to your credit card when you finish your reservation and goes toward your move-in costs.
 		</p>
 	</div>
 	

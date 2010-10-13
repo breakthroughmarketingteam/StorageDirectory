@@ -434,14 +434,15 @@ $(function(){
 		return false
 	});
 	
-	// when the reserve btn is clicked check to see if there is a chosen unit type
+	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
 	$('.reserve_btn', '.listing').live('click', function(){
-		var $this = $(this),
-			new_href = $this.attr('href').replace('/sizes', '/reserve'),
+		var $this = $(this), new_href = $this.attr('href').replace('/sizes', '/reserve'),
 			unit_size = $(':radio:checked', $this.parent().parent());
-		console.log(new_href)
-		if (unit_size.length)
+		
+		if (unit_size.length) {
 			$this.attr('href', new_href +'&sub_model=Size&sub_id='+ unit_size.val());
+			$this.attr('rel', 'reserve');
+		}
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -488,6 +489,7 @@ $(function(){
 
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
+						$('.numeric_phone', $panel).formatPhoneNum();
 					}
 				});
 			});
@@ -541,7 +543,7 @@ $(function(){
 		return false;
 	});
 	
-	$('#reserve_done', '.reserve_form').live('click', function(){
+	$('#reserve_done').live('click', function(){
 		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
 	});
 	
