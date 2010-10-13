@@ -360,7 +360,7 @@ $.option_tags_from_array = function(options, selected) {
 	return options_tags;
 }
 
-$.handle_json_response = function(response, success, error) {
+$.with_json = function(response, success, error) {
 	if (response.success) success.call(this, response.data);
 	else if (error && error.call) error.call(response.data)
 	else $.ajax_error(response);
@@ -495,7 +495,7 @@ $.updateModels = function(e, ui) {
 	});
 	
 	$.post('/ajax/update_many', data, function(response){
-		$.handle_json_response(response, function(data){
+		$.with_json(response, function(data){
 			$this.effect('bounce', {}, 200);
 		});
 	}, 'json');
@@ -504,7 +504,7 @@ $.updateModels = function(e, ui) {
 // update attributes on a single model
 $.updateModel = function(path, params, callback) {
 	$.post(path, params, function(response){
-		$.handle_json_response(response, function(data){
+		$.with_json(response, function(data){
 			if (typeof callback == 'function') callback.call(this, data);
 			else alert(data);
 		});
@@ -516,7 +516,7 @@ $.getModelAttributes = function(resource, callback) {
 	var attributes = [];
 	
 	$.getJSON('/ajax/get_attributes?model='+ singularize(resource), function(response){
-		$.handle_json_response(response, function(data){
+		$.with_json(response, function(data){
 			if (callback && typeof callback == 'function') callback.call(this, data);
 			else return data;
 		});
@@ -562,6 +562,25 @@ $.open_map = function(map) {
 	$('span', map_btn).text('Hide Map');
 	Gmap.checkResize();
 	Gmap.setCenter(new GLatLng(lat, lng), 12);
+}
+
+$.get_param_value = function(key) {
+	var query = window.location.href.split('?')[1];
+	
+	if (query) {
+		var params = query.split('&'), value;
+			
+		$.each(params, function(){
+			var key_val = this.split('=');
+			
+			if (key_val[0] == key) {
+				value = key_val[1];
+				return;
+			}
+		});
+		
+		return value;
+	}
 }
 
 /******************************************* JQUERY PLUGINS *******************************************/
@@ -739,11 +758,11 @@ $.fn.appendParamAndGo = function() {
 		
 		$this.click(function(){
 			var key   = $this.attr('rel').split('-')[0]
-					val   = $this.attr('rel').split('-')[1],
-					href	= window.location.href,
-					new_href = '',
-					has_param = href.indexOf('?') >= 0,
-					param = (has_param ? '&' : '?') + key +'='+ val;
+  				val   = $this.attr('rel').split('-')[1],
+  				href	= window.location.href,
+  				new_href = '',
+  				has_param = href.indexOf('?') >= 0,
+  				param = (has_param ? '&' : '?') + key +'='+ val;
 			if(!val) return false;
 			
 			// replace any preexisting param values if the key is present

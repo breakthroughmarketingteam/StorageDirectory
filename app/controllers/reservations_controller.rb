@@ -54,7 +54,6 @@ class ReservationsController < ApplicationController
     
     if IssnAdapter.no_fatal_error?(@response['sErrorMessage']) && @reserver.save
       @reservation.update_attribute :status, 'paid' if @response['sErrorMessage'].blank?
-      session.destroy if @reserver.status == 'unverified'
       send_notices
       
       render :json => { :success => true, :data => render_to_string(:partial => 'reservations/step3') }

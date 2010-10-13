@@ -62,7 +62,7 @@ $(function(){
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
 		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				// update the row with the new values
 				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
@@ -88,22 +88,33 @@ $(function(){
 	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
 		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
 		
-		
+		if (!unit_clone.length) {
+			$.getJSON('/ajax/get_partial?partial=sizes/size&model=Size&sub_model=Listing&sub_id='+ $('input[name=listing_id]').val(), function(response) {
+				$.with_json(response, function(data) {
+					unit_clone = $(data).appendTo('#sl-tabs-sizes-in');
+					prep_unit_size_edit(unit_clone);
+				});
+			});
 			
-		var hidden_form = $('form:hidden', unit_clone);
-				
-		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
-		unit_clone.fadeIn();
-		$('.edit-btn', unit_clone).eq(0).click();
+		} else {
+			$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
+			prep_unit_size_edit(unit_clone);
+		}
+		
+		return false;
+	});
+	
+	function prep_unit_size_edit(unit_size) {
+		var hidden_form = $('form:hidden', unit_size);
+		unit_size.fadeIn();
+		$('.edit-btn', unit_size).eq(0).click();
 		
 		// change form attr to reroute the ajax call to the create action
 		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
 		hidden_form.find('input[name=_method]').val('post');
 		
-		$('input', unit_clone).eq(0).focus()
-		
-		return false;
-	});
+		$('input', unit_size).eq(0).focus();
+	}
 
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
@@ -171,7 +182,7 @@ $(function(){
 			$.clone_and_attach_inputs('input.i', container, hidden_form);
 
 			$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$('input.i', container).each(function(){
 						var input = $(this),
 							val	  = input.val();
@@ -202,7 +213,7 @@ $(function(){
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, {}, function(response) {
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				$this.toggleClass('selected');
 				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
 			});
@@ -221,10 +232,14 @@ $(function(){
 		setTimeout(function(){ $this.next('#facility_feature_submit').hide('fast') }, 300);
 	});
 	$('#new_facility_feature').submit(function(){
-		var form = $(this),
-			data = form.serialize();
+		var form = $(this);
 		
-		$.log(data)
+		$.post(form.attr('action'), form.serialize(), function(response){
+			$.with_json(response, function(data) {
+				$.log(data);
+			});
+		});
+		
 		return false;
 	});
 	
@@ -459,7 +474,7 @@ $(function(){
 			$panel.attr('rel', this.rel);
 
 			$.getJSON(this.href, function(response) {
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$('.tab_link, .listing, .panel').removeClass('active');
 					$('li', '.tabs').removeClass('active');
 					$this.parent().addClass('active');

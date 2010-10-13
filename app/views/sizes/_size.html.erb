@@ -1,0 +1,31 @@
+<% @listing = listing %>
+<div class="sl-table-wrap">
+	<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
+		<li class="st-size"><%= size.display_dimensions %></li>
+		<li class="st-type"><%= size.title %></li>
+		<li class="st-desc" title="<%= size.description %>"><%= size.description %></li>
+		<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
+		<% if in_edit_mode? && @listing.issn_enabled? %>
+			<li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li>
+		<% end %>
+		<li class="st-rese">
+			<% if in_edit_mode? && !@listing.issn_enabled? %>
+				<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn' %>
+				<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
+			<% elsif in_mode? 'show' %>
+				<a href="#" class="rsr-btn">Select</a>
+			<% end %>
+		</li>
+		<li class="st-sele">
+			<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel' %>
+		</li>
+	</ul>
+
+	<% if is_facility_owner? && !@listing.issn_enabled? %>
+		<% form_for [@listing, size], :html => { :class => 'hidden hidden_form' }, :method => :put do |f| %><% end %>
+	<% elsif in_mode?('locator', 'get_partial', 'show') %>
+		<div class="reserve_form hidden">
+			<%= render :partial => 'views/partials/greyresults/reserve', :locals => { :listing => @listing, :unit_type => size.unit_type } %>
+		</div>
+	<% end %>
+</div>

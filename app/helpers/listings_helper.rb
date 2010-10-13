@@ -126,7 +126,9 @@ module ListingsHelper
   end
   
   def claim_listing_link(listing)
-    link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}" if listing.client.nil?
+    if listing.client.nil? || listing.client.status == 'unverified'
+      link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}"
+    end
   end
   
 end
