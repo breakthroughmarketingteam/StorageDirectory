@@ -21,10 +21,10 @@ class UserSessionsController < ApplicationController
         format.html do
           flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Welcome!"
           
-          case @user_session.user.role.title.downcase.to_sym when :admin
+          case current_user.role.title.downcase when 'admin'
             redirect_back_or_default admin_index_path
-          when :advertiser
-            redirect_back_or_default client_account_path
+          when 'advertiser'
+            redirect_to client_account_path
           else
             redirect_back_or_default root_path
           end
