@@ -16,8 +16,8 @@ class Listing < ActiveRecord::Base
   has_many :web_specials   , :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
-  has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
-  has_many :office_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "office"'
+  has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) IS "access"'
+  has_many :office_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) IS "office"'
   
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
