@@ -1,7 +1,7 @@
 <% @listing = (@listing || @model) %>
 <div id="sl-tabs-pict" class="inner tab_content">
   <div id="sl-tabs-pict-in">
-	<div class="uncollapse gallery">
+	<div class="gallery">
 	    <ul id="sl-tabs-pict-gall">
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>

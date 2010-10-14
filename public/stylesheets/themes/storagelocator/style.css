@@ -576,18 +576,17 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat center;}
 #sl-tabs-pict{overflow:hidden;}
-#sl-tabs-pict-in{width:721px;position:relative;left:15px;float:left;margin-bottom:17px;overflow:hidden;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall{width:218px;float:left;}
-#sl-tabs-pict-gall li{height:80px;}
+#sl-tabs-pict-in{width:721px;position:relative;left:15px;float:left;margin-bottom:17px;}
+#sl-tabs-pict-in ul#sl-tabs-pict-gall{width:230px;float:left;overflow:visible;}
 .panel #sl-tabs-pict-gall{}
 .panel ul#sl-tabs-pict-gall{overflow:auto;max-height:320px;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;width:80px;position:relative;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall li img:hover,#sl-tabs-pict-in ul#sl-tabs-pict-gall .active{display:inline;-moz-box-shadow:0px 0px 5px #666;-webkit-box-shadow:0px 0px 5px #666;box-shadow:0px 0px 5px #666;}
+#sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;position:relative;}
 #sl-tabs-pict-in ul#sl-tabs-pict-gall .delete_link{position:absolute;right:0;bottom:-16px;}
 #sl-tabs-pict-in img.big-pic{float:right;width:480px;}
 .panel #sl-tabs-pict-in{left:0;width:100%;margin:0;}
-.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li{margin:0 20px 15px 0;}
-.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li img{margin:0;}
+.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li{border:2px solid #FFFFFF;margin:0 7px 7px 0;}
+.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li:hover, .panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li.active{box-shadow:0px 0px 3px #666;-moz-box-shadow:0px 0px 3px #666;-webkit-box-shadow:0px 0px 3px #666;}
+.panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li img{margin:0;height:60px;width:60px;}
 .panel #sl-tabs-pict-in img.big-pic{margin:0;}
 #sl-questions{float:left;width:300px;background:url(/images/ui/storagelocator/sl-questions-head.png) no-repeat center top;position:relative;top:-10px;}
 #sl-questions ul li{list-style:none;width:270px;position:relative;left:25px;margin:10px 0px;height:24px;line-height:28px;clear:both;}
