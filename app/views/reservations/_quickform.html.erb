@@ -28,7 +28,7 @@
 	<p class="datepicker_wrap">
         <span class="hidden">Move In Date</span> 
 		<%= label_tag "#{request_type}[move_in_date]", 'Move-In Date', :class => 'block ' %> 
-		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}_#{(unit_type || size.unit_type).id rescue ''}", :class => 'mini_calendar numeric_date' %>
+		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}_#{size.id rescue rand(99999)}", :class => 'mini_calendar numeric_date' %>
 	</p>
 	<div class="rental_duration">
         <p>How many months do you plan to rent?</p>
