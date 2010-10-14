@@ -71,7 +71,6 @@ class ApplicationController < ActionController::Base
   before_filter :init, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
-  before_filter :kick_out_unwanted_user
   
   layout lambda { app_config[:theme] }
   
@@ -123,10 +122,6 @@ class ApplicationController < ActionController::Base
         redirect_back_or_default(home_page) and return
       end
     end
-  end
-  
-  def kick_out_unwanted_user
-    session.destroy if current_user && current_user.status == 'unverified'
   end
   
   # hidden field hack_me must pass through empty, cheap reverse captcha trick

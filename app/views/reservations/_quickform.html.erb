@@ -7,6 +7,7 @@
 	</p>
 	<p>
         <%= label_tag 'reserver[email]', 'Email', :class => 'block' %> <%= text_field_tag 'reserver[email]', nil, :class => 'email' %>
+		<%= hidden_field_tag "#{request_type}[listing_id]", listing.id %>
 	</p>
 </div>
 <div class="sl-table-exp-form-r">
@@ -32,9 +33,9 @@
 	<div class="rental_duration">
         <p>How many months do you plan to rent?</p>
 		<ul>
-			<li><%= radio_button_tag "#{request_type}[duration]", '1-3', true, :class => 'radio_btn' %> <%= label_tag '1 to 3' %></li>
-			<li><%= radio_button_tag "#{request_type}[duration]", '3-6', false, :class => 'radio_btn' %> <%= label_tag '3 to 6' %></li>
-			<li><%= radio_button_tag "#{request_type}[duration]", '6+', false, :class => 'radio_btn' %> <%= label_tag '6+' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '1-3', nil, :class => 'radio_btn required' %> <%= label_tag '1 to 3' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '3-6', nil, :class => 'radio_btn required' %> <%= label_tag '3 to 6' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '6+', nil, :class => 'radio_btn required' %> <%= label_tag '6+' %></li>
 		</ul>
 	</div>
 </div>
@@ -43,8 +44,9 @@
 <p class="verisign">
        <span class="hidden">Verisign Secure</span>
 </p>
+<% unless request_type == 'reservation' %>
 <p class="right">
-	<%= hidden_field_tag "#{request_type}[listing_id]", listing.id %>
 	<%= ajax_loader %>
     <input id="submit-btn" type="submit" value="Next" name="commit" />
 </p>
+<% end %>

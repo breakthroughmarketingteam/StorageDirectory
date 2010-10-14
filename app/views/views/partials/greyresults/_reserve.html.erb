@@ -1,10 +1,25 @@
-<div class="sl-table-exp">
-	<div class="uncollapse">
-		<%= image_tag(size.icon(:medium).icon.url, :class => 'left size_icon') if defined?(size) && size.icon(:medium) %>
-		<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
+<div id="reserve_steps" class="sl-table-exp">
+	<div id="reserve_step1" class="workflow_step">
+		<div class="uncollapse">
+			<%= image_tag(size.icon(:medium).icon.url, :class => 'left size_icon') if defined?(size) && size.icon(:medium) %>
+			<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
+		</div>
+	
+		<% form_for Reservation.new, :html => { :id => 'reservation_form1', :class => 'silent' } do |f| %>
+			<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => listing, :request_type => 'reservation', :size => (defined?(size) && size) } %>
+		<% end %>
 	</div>
 	
-	<% form_for Reservation.new, :html => { :id => "new_reservation_#{listing.id}", :class => 'silent new_listing_request' } do |f| %>
-		<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => (@model || listing), :request_type => 'reservation', :size => (defined?(size) && size) } %>
-	<% end %>
+	<div id="reserve_step2" class="workflow_step">
+		<%= ajax_loader 'ajax-loader-lrg.gif' %>
+	</div>
+	
+	<div id="reserve_step3" class="workflow_step">
+		<%= ajax_loader 'ajax-loader-lrg.gif' %>
+	</div>
+	
+	<div id="workflow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+	  	<a class="button next" id="next" href="#next">Next</a>
+	</div>
 </div>

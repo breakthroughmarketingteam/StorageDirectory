@@ -217,7 +217,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:16px;display:block;position:relative;top:30px;color:#666;}
 .listing ul li span.shifted-text span{display:block;font-weight:bold;font-size:110%;}
-.progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 23px 0 0}
+.progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 11px 0 0;}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:10px;}
@@ -242,12 +242,19 @@ li.rslt-price{font-size:12px;padding-top:10px;width:150px;}
 .listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
 li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;color:#333;height:88px;}
 .listing ul li.rslt-price ul li{float:none;margin-right:20px;margin-top:5px;text-align:right;}
+.listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .listing ul li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;width:91px;height:100px;line-height:6.5;margin:0 6px 0 0;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;float:right;}
 .listing ul li.rslt-reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
 .listing ul li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 .listing .compare{float:right;}
-.listing .compare input{margin:0 0 0 8px;}
-.listing .compare label{}
+.listing .compare input{margin:0 0 0 8px;cursor:pointer;}
+.listing .compare label{cursor:pointer;font-size:80%;}
+#reserve_steps{min-height:420px;}
+#reserve_steps .workflow_step{width:97%;padding:11px;height:auto;}
+#reserve_steps #workflow_nav{width:94%;top:auto;bottom:80px;left:22px;}
+#reserve_step1 .sl-table-exp-form-l{margin-left:14px;}
+#reserve_step1 .sl-table-exp-form-r{width:52%;}
+#reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;}
 li.compare_li{margin:37px 0 0 7px;}
 ul.tabs{float:left;}
 ul.tabs li{-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;height:16px;line-height:1.5;float:left;margin-left:3px;background:#ccc;padding:0 7px 1px 7px;}
@@ -423,7 +430,7 @@ ul#specials_list {margin:15px 10px;}
 #results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:.5px .5px 0 #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
-#main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;display:none;/*-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;*/}
+#main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;}
 #sl-header h2,#results_header h2{float:left;line-height:2.5;text-shadow:.5px .5px 0px #333;margin-left:20px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 .city-name-heading{color:#4C4BCC;font-weight:bold;text-shadow:1px 1px #dadada;}
@@ -652,7 +659,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
-form.edit_reservation{padding-top:10px;}
+form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Ending the overview page styles here */
 #greenspace-box{color:#555;text-align:center;margin-bottom:20px;}
 #greenspace-box-in{width:165px;background:url(/images/ui/storagelocator/recycle-logo.png) no-repeat bottom right;position:relative;left:10px;top:17px;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -692,7 +699,7 @@ form.edit_reservation{padding-top:10px;}
 .ui-datepicker{width:222px;}
 .ui-datepicker .ui-datepicker-title{line-height:1.3;}
 .ui-datepicker table{font-size:80%;}
-.new_listing_request input.mini_calendar{width:34%;}
+.new_listing_request input.mini_calendar,#reservation_form1 input.mini_calendar{width:34%;}
 .wysiwyg,.shadow_wrap textarea,input[type="text"]{width:100%;}
 .wysiwyg{height:400px;}
 .model_options{position:absolute;z-index:9999;}

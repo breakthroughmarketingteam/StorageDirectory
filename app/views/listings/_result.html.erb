@@ -42,21 +42,27 @@
 					  	<ul>
 							<% unless (@upper_type_size = result.get_upper_type_size(unit_size)).nil? %>
 								<li>
-									Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
+									<label title="<%= @upper_type_size.description || @upper_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
+									</label>
 									<%= radio_button_tag "listing[#{result.id}][unit_size]", @upper_type_size.id %>
 								</li>
 							<% end %>
 							
 							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
 								<li>	
-									Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
+									<label title="<%= @drive_up_type_size.desctipion || @drive_up_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
+									</label>
 									<%= radio_button_tag "listing[#{result.id}][unit_size]", @drive_up_type_size.id %>
 								</li>
 							<% end %>
 
 							<% unless (@interior_type_size = result.get_interior_type_size(unit_size)).nil? %>
 								<li>	
-									Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
+									<label title="<%= @interior_type_size.description || @interior_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
+									</label>
 									<%= radio_button_tag "listing[#{result.id}][unit_size]", @interior_type_size.id %>
 								</li>
 							<% end %>

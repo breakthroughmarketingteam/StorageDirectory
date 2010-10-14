@@ -24,7 +24,11 @@ class ReservationsController < ApplicationController
     @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
     @m.save(false) if @m
     
+    @reservation.size.update_reserve_costs!
+    
     if @reserver.save
+      session.clear if current_user && current_user.status == 'unverified'
+      
       respond_to do |format|
         format.html
         format.js do
@@ -81,8 +85,8 @@ class ReservationsController < ApplicationController
   
   def split_name_param! # in the front end we use a simple 'Your Name' field rather than 2 separate fields, we need to split them for the model
     name = params[:reserver].delete :name
-    params[:reserver][:first_name] = name.split(' ')[0]
-    params[:reserver][:last_name] = name.split(' ')[1]
+    params[:reserver][:first_name] = name.split(' ')[0].titleize
+    params[:reserver][:last_name] = name.split(' ')[1, name.split(' ').size-1].join(' ').titleize
   end
   
 end

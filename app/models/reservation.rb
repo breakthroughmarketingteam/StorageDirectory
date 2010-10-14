@@ -2,7 +2,7 @@ class Reservation < ActiveRecord::Base
   
   belongs_to :listing, :counter_cache => true
   belongs_to :reserver
-  belongs_to :size, :conditions => 'size_id IS NOT NULL'
+  belongs_to :size
   
   acts_as_commentable
   access_shared_methods
@@ -78,15 +78,15 @@ class Reservation < ActiveRecord::Base
   end
   
   def unit_size
-    self.unit_type ? self.unit_type.size.display_dimensions : self.unit_type_size
+    self.size ? self.size.display_dimensions : self.unit_type_size
   end
   
   def unit_description
-    self.unit_type.size.description rescue self.unit_type.StorageSvrDescription
+    self.size.description
   end
   
   def fee
-    self.unit_type.reserve_cost.total_cost
+    self.size.unit_type.reserve_cost.total_cost
   end
   
   def reserve_until_date

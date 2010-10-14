@@ -496,7 +496,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
+		$('.datepicker_wrap', context).click(function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -577,6 +577,7 @@ $(function(){
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
 						$('.numeric_phone', $panel).formatPhoneNum();
+						var wizard = new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
 					}
 				});
 			});
@@ -611,9 +612,86 @@ $(function(){
 		});
 	});
 	
-	// Reservation process, submit reserver details, then billing info
+	var reservation_workflow = {
+		title		 : 'Real Time Reservations',
+		nav_id : 'workflow_nav',
+		set_slides : false,
+		slides : [
+			{
+				div_id  : 'reserve_step1',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['back', 'fadeOut'] 
+				],
+				validate : function(wizard) {
+					var form = $('#reservation_form1', wizard.workflow);
+
+					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
+						wizard.workflow.animate({'height': '610px'}, 'fast', function() {
+							next_slide.html(response_data).children().hide().fadeIn();
+						});
+					});
+				} // END validate
+			}, // END slide 1
+			{ 
+				div_id  : 'reserve_step2',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Next').data('done', false); }],
+					['back', 'fadeIn']
+				],
+				validate : function(wizard) {
+					var form = $('#reservation_form2', wizard.workflow);
+					
+					return bool_submit_once_and_do(form, wizard, 3, function(response_data, next_slide) {
+						wizard.workflow.animate({'height': '440px'}, 'fast', function() {
+							next_slide.html(response_data).children().hide().fadeIn();
+						});
+					});
+				} // END validate
+			}, // END slide 2
+			{ 
+				div_id  : 'reserve_step3',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
+					['back', 'fadeIn']
+				]
+			} // END slide 3
+		],
+		finish_action : function(wizard) {
+			wizard.workflow.parent().slideUp();
+		}
+	};
+	
+	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
+	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
+		if (!form.data('submitted')) form.runValidation();
+		
+		if (!form.data('submitted') && form.data('valid')) {
+			form.data('submitted', true);
+			
+			var next_slide = $(wizard.slides[slide_num-1]),
+				ajax_loader = $('.ajax_loader', next_slide).show();
+			
+			wizard.workflow.animate({'height': '100px'}, 'fast');
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					callback.call(this, data, next_slide, ajax_loader)
+				}, function(data) { // error
+					next_slide.html(data);
+				});
+				
+				ajax_loader.hide();
+			});
+			return true;
+		} else if (form.data('submitted')) return true;
+		
+		return false;
+	}
+	
+	// Info request: submit reserver details
 	$('form.new_listing_request').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
+		submit_info_request_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
 				inner_panel.html(response.data).children().hide().fadeIn();
@@ -624,7 +702,8 @@ $(function(){
 		return false;
 	});
 	
-	$('form.edit_reservation').live('submit', function() {
+	// ...then billing info, used to be used also for the reservations, until moved that into a workflow
+	/*$('form.edit_reservation').live('submit', function() {
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
@@ -633,13 +712,9 @@ $(function(){
 		});
 		
 		return false;
-	});
+	});*/
 	
-	$('#reserve_done').live('click', function(){
-		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
-	});
-	
-	function submit_reservation_and_do(form, callback) {
+	function submit_info_request_and_do(form, callback) {
 		var form = $(form).runValidation(),
 			data = form.serialize(),
 			ajax_loader = $('.ajax_loader', form).show();
