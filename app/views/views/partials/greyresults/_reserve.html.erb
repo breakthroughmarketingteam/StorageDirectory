@@ -1,10 +1,10 @@
 <div class="sl-table-exp">
 	<div class="uncollapse">
-		<%= image_tag(unit_type.size.icon(:medium).icon.url, :class => 'left size_icon') if defined?(unit_type) && unit_type.size.icon(:medium) %>
+		<%= image_tag(size.icon(:medium).icon.url, :class => 'left size_icon') if defined?(size) && size.icon(:medium) %>
 		<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
 	</div>
 	
 	<% form_for Reservation.new, :html => { :id => "new_reservation_#{listing.id}", :class => 'silent new_listing_request' } do |f| %>
-		<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => (@model || listing), :request_type => 'reservation', :unit_type => (defined?(unit_type) && unit_type), :size => (defined?(size) && size) } %>
+		<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => (@model || listing), :request_type => 'reservation', :size => (defined?(size) && size) } %>
 	<% end %>
 </div>

@@ -305,8 +305,17 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
-	$('#narrow_results_form').submit(function(){
-		var form = $(this);
+	$('#XXXnarrow_results_form').submit(function(){
+		var form = $(this),
+			results = $('#rslt-list-bg').addClass('loading').children().hide();
+		
+		$.getJSON(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				results.replaceWith(data);
+			});
+		});
+		
+		return false;
 	});
 	
 	$('.rslt-price', '.listing').each(function(){
