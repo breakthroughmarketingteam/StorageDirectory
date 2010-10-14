@@ -200,7 +200,7 @@ class IssnAdapter
   end
   
   def self.path_str(method, query)
-    return method if method =~ /(MyIPaddress)/i
+    return method if "/#{method}" =~ /(MyIPaddress)/i
     '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
   end
 
