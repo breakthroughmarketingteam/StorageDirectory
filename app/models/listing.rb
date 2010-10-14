@@ -117,7 +117,7 @@ class Listing < ActiveRecord::Base
   end
   
   def unit_sizes_options_array
-    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
+    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.id] }.uniq
   end
   
   def available_sizes
@@ -157,9 +157,13 @@ class Listing < ActiveRecord::Base
     end
     
     @model_data = Listing.all options
-    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?
-    #@model_data = smart_order(@model_data) if is_city? query
+    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
     { :data => @model_data, :location => @location }
+  end
+  
+  # TODO: work on this to make sure it sorts correctly
+  def self.smart_order(data)
+    data.sort_by { |d| (d.impressions_count || 0) }
   end
   
   def self.extrapolate_query(params)
@@ -178,11 +182,6 @@ class Listing < ActiveRecord::Base
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
       Geokit::Geocoders::MultiGeocoder.geocode guessed
     end
-  end
-  
-  def self.extract_pieces_from_query(query)
-    extracted = {}
-    
   end
   
   def self.is_address_query?(query)
@@ -206,11 +205,6 @@ class Listing < ActiveRecord::Base
   
   def self.is_state?(query)
     query.match(/#{@@states_regex}/i)
-  end
-  
-  # TODO: work on this to make sure it sorts correctly
-  def self.smart_order(data)
-    data.sort_by { |d| (d.impressions_count || 0) }
   end
   
   # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.

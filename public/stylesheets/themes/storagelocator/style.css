@@ -194,7 +194,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar{-moz-border-radius-bottomleft:22px;-moz-border-radius-bottomright:22px;border-color:-moz-use-text-color #ccc #ccc;border-right:1px solid #ccc;border-style:none solid solid;border-width:0 1px 1px;position:relative;width:772px;margin-bottom:2px;}
 #listings_controller #type-one-top-bar{width:97.7%;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
-#rslt-list-bg{}
+#rslt-list-bg.loading{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
 .listing > .inner{border-top:1px solid #ccc;}
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
 #rslt-list-bg > div.active > .inner .rslt-title h3,#rslt-list-bg > div > .inner:hover .rslt-title h3{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
@@ -517,6 +517,7 @@ div.sl-table-exp .rental_duration ul li{font-size:80%;margin-right:10px;}
 .sl-table-exp .zip_field{float:left;width:100px;}
 div.sl-table-exp-form-l{border:none;width:49%;float:left;margin:0 0 20px 20px;}
 div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;right:30px;margin:0 -25px 20px 0;}
+#info_request_sent{padding:10px 10px 20px;}
 .panel div.sl-table-exp-form-l{width:52%;margin:0 0 20px 4px;}
 .panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
 #sl-tabs-hours{padding:10px 12px 17px;}

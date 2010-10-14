@@ -10,24 +10,17 @@
 	</p>
 </div>
 <div class="sl-table-exp-form-r">
-	<% begin %>
-		<% if unit_type || size.unit_type %>
-			<%= hidden_field_tag "#{request_type}[unit_type_id]", (unit_type || size.unit_type).id %>
-		<% else %>
-			<p>
-			<% if listing.available_sizes.empty? %>
-				<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
-				<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
-			<% else %>
-				<%= label_tag "#{request_type}[unit_type_id]", 'Unit Size', :class => 'block' %>
-				<%= select_tag "#{request_type}[unit_type_id]", option_tags(listing.unit_sizes_options_array, (unit_type || size.unit_type).id, 'Select one'), :class => 'required' %>
-			<% end %>
-			</p>
-		<% end %>
-	<% rescue => e %>
+	<% if defined?(size) && size %>
+		<%= hidden_field_tag "#{request_type}[size_id]", size.id %>
+	<% else %>
 		<p>
-		<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
-		<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
+		<% if listing.available_sizes.empty? %>
+			<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
+			<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
+		<% else %>
+			<%= label_tag "#{request_type}[size_id]", 'Unit Size', :class => 'block' %>
+			<%= select_tag "#{request_type}[size_id]", option_tags(listing.unit_sizes_options_array, size.id, 'Select one'), :class => 'required' %>
+		<% end %>
 		</p>
 	<% end %>
 

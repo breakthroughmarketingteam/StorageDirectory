@@ -305,6 +305,10 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('#narrow_results_form').submit(function(){
+		var form = $(this);
+	});
+	
 	$('.rslt-price', '.listing').each(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
@@ -508,8 +512,9 @@ $(function(){
 	});
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
-	$('.reserve_btn', '.listing').live('click', function(){
-		var $this = $(this), new_href = $this.attr('href').replace('/sizes', '/reserve'),
+	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
+		var $this = $(this), 
+			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			unit_size = $(':radio:checked', $this.parent().parent());
 		
 		if (unit_size.length) {

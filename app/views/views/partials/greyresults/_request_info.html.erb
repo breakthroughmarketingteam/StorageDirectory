@@ -1,7 +1,7 @@
 <div class="sl-table-exp">
 	<p class="blue-text">Tell us what you're looking for and <strong>we'll get you the best deals</strong>. <a href="#request_info" class="blue-search-button">More info</a></p>
 	
-	<% form_tag info_requests_listings_path, :class => 'new_listing_request' do %>
-		<%= render :partial => 'reservations/quickform', :locals => { :listing => @model, :request_type => 'info_request' } %>
+	<% form_tag @model.info_requests.new, :class => 'new_listing_request' do %>
+		<%= render :partial => 'reservations/quickform', :locals => { :listing => @model, :request_type => 'info_request', :size => size } %>
 	<% end %>
 </div>

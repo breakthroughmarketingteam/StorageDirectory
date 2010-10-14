@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101010223123) do
+ActiveRecord::Schema.define(:version => 20101014003254) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20101010223123) do
     t.datetime "move_in_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "size_id"
   end
 
   create_table "issn_facility_features", :force => true do |t|
@@ -378,11 +379,12 @@ ActiveRecord::Schema.define(:version => 20101010223123) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
-    t.integer  "clicks_count",       :default => 0
-    t.integer  "impressions_count",  :default => 0
-    t.integer  "reservations_count", :default => 0
+    t.integer  "clicks_count",        :default => 0
+    t.integer  "impressions_count",   :default => 0
+    t.integer  "reservations_count",  :default => 0
     t.boolean  "office_24_hours"
     t.boolean  "access_24_hours"
+    t.integer  "info_requests_count", :default => 0
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
@@ -552,7 +554,7 @@ ActiveRecord::Schema.define(:version => 20101010223123) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "referrer"
-    t.integer  "unit_type_id"
+    t.integer  "size_id"
     t.string   "reserve_code"
     t.text     "response"
     t.string   "duration"

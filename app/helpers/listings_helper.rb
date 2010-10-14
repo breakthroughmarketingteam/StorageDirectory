@@ -41,7 +41,7 @@ module ListingsHelper
     if listing.accepts_reservations?
       link_to 'Reserve', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
     else
-      link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
+      link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => 'reserve'
     end
   end
   
@@ -50,7 +50,7 @@ module ListingsHelper
   end
   
   def more_results_link(data)
-    per_page = data.per_page
+    per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1
     
     range_start = (per_page * page) - (per_page - 1)

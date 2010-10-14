@@ -1127,7 +1127,8 @@ $(document).ready(function() {
 	if (stats_graph.length > 0) {
 		stats_graph.addClass('loading');
 		
-		var stats_models = 'clicks, impressions, reservations',
+		var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
+			stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
 			d = new Date(), // getMonth returns 0-11
 			end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate());
@@ -1153,7 +1154,7 @@ $(document).ready(function() {
 					series: [ 
 				        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
 				        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
-				        { label: '&nbsp;Reservations', lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
+				        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
 				    ],
 					highlighter: { sizeAdjust: 7.5 },
 					cursor: { show: true, zoom: true },

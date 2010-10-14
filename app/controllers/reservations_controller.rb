@@ -45,6 +45,7 @@ class ReservationsController < ApplicationController
     render :layout => false if request.xhr?
   end
   
+  # we would arrive here if there is a second step in the reserve process, only for issn enabled listings
   def update
     @reserver = @reservation.reserver
     @billing = @reserver.billing_info || @reserver.billing_infos.create
