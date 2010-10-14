@@ -1,10 +1,10 @@
-<div id="head" class="blue"><h5>North Miami's Finest Climate Controlled Self Storage</h5></div>
+<div id="head" class="blue dir-head"><h5>North Miami's Finest Climate Controlled Self Storage</h5></div>
 
-<div id="map_partial" class="inner_box">
+<div id="map_partial" class="inner inner_box">
 	<div class="left">
 		
 		<div class="facility-intro">
-			<p>All ground floor units with some upper level units accessible with a rolling latter, and drive-up outdoor units also available.</p>
+			<p>All ground floor units with some upper level units accessible with a rolling ladder, and drive-up outdoor units also available.</p>
 		</div>
 		
 		<div class="office-hours">
@@ -138,17 +138,16 @@
 			</table>
 		</div>
 	</div>
-	<div class="right">
-		<div class="google_map">
-			<div id="map_<%= listing.map.id %>" class="map_wrap"></div>
-			<ul class="get_dir">
-				<li>
-					<% form_tag '/ajax/directions' do %>
-					<div>
-						<input type="text" value="" title="Get Directions" name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
-					</div><% end %>
-				</li>
-			</ul>
-		</div>
-	</div>
+
+</div>
+<div class="google_map">
+	<div id="map_<%= listing.map.id %>" class="map_wrap"></div>
+	<ul class="get_dir">
+		<li>
+			<% form_tag '/ajax/directions' do %>
+			<div>
+				<input type="text" value="" title="For directions enter your starting address and... " name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
+			</div><% end %>
+		</li>
+	</ul>
 </div>

@@ -3,6 +3,13 @@
 		<div class="in">
 			<div class="rslt-title">
 				<h3><%= link_to result.title, facility_path(result.title.parameterize, result.id) %></h3>
+
+					<div class="rslt-features">
+						<a href="" class="hours"></a>
+						<a href="" class="climate"></a>
+						<a href="" class="driveup"></a>
+					</div>
+					
 			</div>
 
 			<div class="num_icon"><%= result_index(result) %></div>

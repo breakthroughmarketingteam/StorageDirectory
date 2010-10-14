@@ -3,9 +3,9 @@
 		<div class="left">
 			Specials: <span>First Month Free! Lowest Price Garaunteed. Exclusive Web Special</span>
 		</div>
-
-		<div class="right">
-			<!--Unit Size: <span class="size_display" rel="<%= unit_size.id %>"><%= unit_size.display_dimensions %></span> <span class="month_rate"><%= number_to_currency unit_size.dollar_price %> per month</span>-->
+		
+		<div class="compare">
+			<%= label_tag "compare_#{listing.id}", 'Compare 2 or more' %><input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>">	
 		</div>
 	</div>
 <% end %>
