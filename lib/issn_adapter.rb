@@ -19,6 +19,10 @@ class IssnAdapter
   #
   # Data Retrieval
   #
+  def my_ip
+    call_and_parse '_MyIPaddress'
+  end
+  
   def self.find_facilities(args = {})
     query = "&sPostalCode=#{escape_query args[:zip] || '85021'}&sCity=#{escape_query args[:city]}&sState=#{escape_query args[:state]}&sStreetAddress=#{escape_query args[:address]}&sMilesDistance=#{escape_query args[:within] || '15'}&sSizeCodes=#{escape_query args[:size_code]}&sFacilityFeatureCodes=#{escape_query args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{escape_query args[:size_type_feature_code]}&sOrderBy=#{escape_query args[:order]}"
     call_and_parse 'findFacilities', query
@@ -196,6 +200,7 @@ class IssnAdapter
   end
   
   def self.path_str(method, query)
+    return method if method =~ /(MyIPaddress)/i
     '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
   end
 
