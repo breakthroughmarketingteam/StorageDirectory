@@ -19,7 +19,7 @@ class IssnAdapter
   #
   # Data Retrieval
   #
-  def my_ip
+  def self.my_ip
     call_and_parse '_MyIPaddress'
   end
   
