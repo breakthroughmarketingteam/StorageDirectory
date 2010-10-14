@@ -51,7 +51,7 @@
 							
 							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
 								<li>	
-									<label title="<%= @drive_up_type_size.desctipion || @drive_up_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+									<label title="<%= @drive_up_type_size.description || @drive_up_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
 										Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
 									</label>
 									<%= radio_button_tag "listing[#{result.id}][unit_size]", @drive_up_type_size.id %>
