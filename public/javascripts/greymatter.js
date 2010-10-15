@@ -935,6 +935,39 @@ function titleize(string) {
 	}
 }
 
+// pulls the pop_up template and runs the callback
+// params requires sub_partial. e.g params.sub_partial 
+function get_pop_up_and_do(options, params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up';
+	
+	$.get('/ajax/get_multipartial', params, function(response) {
+		var pop_up = $(response).dialog({
+			title: 	   options.title,
+			width: 	   options.width || 785,
+			minHeight: options.minHeight || 420,
+			height:    options.height,
+			resizable: false,
+			modal: 	   options.modal,
+			close: 	   function() {
+				$('.ajax_loader').hide();
+				$(this).dialog('destroy').remove();
+			}
+		});
+		
+		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function get_partial_and_do(params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up_box';
+	
+	$.get('/ajax/get_partial', params, function(response) {
+		callback.call(this, response);
+	});
+}
+
 /**************** slide show and workflow object *******************/
 // Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
 var GreyShow = function(options) {

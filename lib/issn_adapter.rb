@@ -225,7 +225,7 @@ class IssnAdapter
   
   def self.simple_soap_data_set(body, method)
     case method when 'MyIPaddress'
-      CobraVsMongoose.xml_to_hash(body)['string']['$'].reject { |k| useless_keys.include? k }
+      CobraVsMongoose.xml_to_hash(body)['string']['$'].reject { |key| useless_keys.include? key }.first
     else
       CobraVsMongoose.xml_to_hash(body).reject { |k| useless_keys.include? k }
     end

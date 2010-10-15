@@ -318,6 +318,27 @@ $(function(){
 		return false;
 	});
 	
+	// narrow search form sliders
+	$('.slider').each(function(){
+		var $this = $(this),
+			value = $('.slider_val', $this.parent()).val();
+
+		$this.slider({
+			max: 50,
+			min:5,
+			step: 5,
+			animate: true,
+			value: value,
+			start: function(e, ui) {
+				var slider = $('.slider_val', $(e.target).parent());
+				if (slider.attr('disabled')) slider.attr('disabled', false);
+			},
+			slide: function(e, ui) {
+				$('.slider_val', $(this).parent()).val(ui.value);
+			}
+		});
+	});
+	
 	$('.rslt-price', '.listing').each(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
@@ -356,28 +377,6 @@ $(function(){
 		
 		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
 		else $('#compare-btn').slideUp();
-	});
-	
-	// bind event handlers and implement ajax functionality for search results.
-	
-	// opens the specific reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').live('click', function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent());
-			
-		if (rform.hasClass('active')) {
-			rform.slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-		} else {
-			$('.reserve_form').slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-			$('.sl-table', rform.parent()).addClass('active');
-			rform.slideDown().addClass('active');
-			$.activate_datepicker(rform);
-		}
-
-		$('input[type=text]:first', rform).focus();
-		return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */
@@ -577,7 +576,7 @@ $(function(){
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
 						$('.numeric_phone', $panel).formatPhoneNum();
-						var wizard = new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
+						new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
 					}
 				});
 			});
@@ -590,26 +589,47 @@ $(function(){
 
 		return false;
 	});
-
-	// narrow search form sliders
-	$('.slider').each(function(){
+	
+	// opens the specific reserve or request form in the unit sizes tab
+	var unit_size_form_partials = {};
+	$('.open_reserve_form').live('click', function(){
 		var $this = $(this),
-			value = $('.slider_val', $this.parent()).val();
-
-		$this.slider({
-			max: 50,
-			min:5,
-			step: 5,
-			animate: true,
-			value: value,
-			start: function(e, ui) {
-				var slider = $('.slider_val', $(e.target).parent());
-				if (slider.attr('disabled')) slider.attr('disabled', false);
-			},
-			slide: function(e, ui) {
-				$('.slider_val', $(this).parent()).val(ui.value);
+			rform = $('.reserve_form', $this.parent()),
+			listing = rform.parents('.listing'),
+			listing_id = listing.attr('id').replace('listing_', ''),
+			size_id = $this.parent().attr('id').replace('Size_', ''),
+			accepts_reservations = listing.attr('has-res') == 'true' ? true : false,
+			form_partial;
+			
+		if (rform.hasClass('active')) {
+			rform.slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+		} else {
+			$('.reserve_form').slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			$('.sl-table', rform.parent()).addClass('active');
+			
+			if (unit_size_form_partials[size_id]) rform.slideDown().addClass('active');
+			else {
+				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
+					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						console.log(response.data)
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+						
+						new GreyWizard($('#reserve_steps', rform), reservation_workflow).begin_workflow_on(0);
+					});
+				} else {
+					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+					});
+				}
 			}
-		});
+		}
+
+		$('input[type=text]:first', rform).focus();
+		return false;
 	});
 	
 	var reservation_workflow = {

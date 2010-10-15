@@ -1396,38 +1396,6 @@ function get_checked_listings_addresses(wizard, address_part) {
 	return addresses;
 }
 
-// pulls the pop_up template and runs the callback
-// params requires sub_partial. e.g params.sub_partial 
-function get_pop_up_and_do(options, params, callback) {
-	var params = params || {}
-	params.partial = params.partial || '/shared/pop_up';
-	
-	$.get('/ajax/get_multipartial', params, function(response) {
-		var pop_up = $(response).dialog({
-			title: 	   options.title,
-			width: 	   options.width || 785,
-			minHeight: options.minHeight || 420,
-			height:    options.height,
-			resizable: false,
-			modal: 	   options.modal,
-			close: 	   function() {
-				$('.ajax_loader').hide();
-				$(this).dialog('destroy').remove();
-			}
-		});
-		
-		if (typeof callback == 'function') callback.call(this, pop_up);
-	});
-}
-
-function get_partial_and_do(params, callback) {
-	var params = params || {}
-	params.partial = params.partial || '/shared/pop_up_box';
-	
-	$.get('/ajax/get_partial', params, function(response) {
-		callback.call(this, $(response));
-	});
-}
 
 function preload_us_map_imgs() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
