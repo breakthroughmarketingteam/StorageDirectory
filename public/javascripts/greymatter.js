@@ -890,12 +890,9 @@ $.fn.save_state = function() {
 
 // check previously saved state against the current one and return true if changed
 $.fn.state_changed = function() {
-	return this.each(function(){
-		var form = $(this), prev_state = form.data('state');
-		if (!prev_state) return false;
-		console.log('check', prev_state != form.serialize())
-		return prev_state != form.serialize();
-	});
+	var prev_state = this.data('state');
+	if (!prev_state) return false;
+	return prev_state != this.serialize();
 }
 
 /******************************************* SUCCESS CALLBACKS *******************************************/
@@ -1076,7 +1073,7 @@ var GreyWizard = function(container, settings) {
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
-		self.nav_bar  	   = $('#'+ self.nav_id, self.workflow).children().hide().end(); // set initial nav visibility
+		self.nav_bar  	   = $('#'+ (self.nav_id || 'workflow_nav'), self.workflow).children().hide().end(); // set initial nav visibility
 		self.current  	   = step || 0;
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
@@ -1088,7 +1085,7 @@ var GreyWizard = function(container, settings) {
 		self.nav_bar.find('.next, .skip').click(self.next);
 		self.nav_bar.find('.back').click(self.prev);
 		
-		self.title_bar.change(function(){
+		if (self.title_bar.length) self.title_bar.change(function(){
 			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
 			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
 		}).trigger('change');

@@ -642,9 +642,6 @@ $(function(){
 	});
 	
 	var reservation_workflow = {
-		title		 : 'Real Time Reservations',
-		nav_id : 'workflow_nav',
-		set_slides : false,
 		slides : [
 			{
 				div_id  : 'reserve_step1',
@@ -653,7 +650,7 @@ $(function(){
 					['back', 'fadeOut'] 
 				],
 				action : function(wizard) {
-					if (wizard.workflow.height() != 380) wizard.workflow.animate({'height': '380px'}, 'fast');
+					wizard.workflow.animate({'height': '380px'}, 'fast');
 				},
 				validate : function(wizard) {
 					var form = $('#reservation_form1', wizard.workflow);
@@ -670,7 +667,7 @@ $(function(){
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
+					wizard.workflow.animate({'height': '610px'}, 'fast');
 				},
 				validate : function(wizard) {
 					var form = $('#reservation_form2', wizard.workflow);
@@ -687,7 +684,7 @@ $(function(){
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					if (wizard.workflow.height() != 440) wizard.workflow.animate({'height': '440px'}, 'fast');
+					wizard.workflow.animate({'height': '440px'}, 'fast');
 				}
 			} // END slide 3
 		],
@@ -697,75 +694,75 @@ $(function(){
 	};
 	
 	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
+	// returns true so the workflow can go to the next slide
 	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
-		if (!form.data('submitted') || form.state_changed()) form.runValidation();
+		var next_slide = $(wizard.slides[slide_num-1]),
+			ajax_loader = $('.ajax_loader', next_slide);
+			
+		if (!form.data('submitted')) form.runValidation();
 		
-		if ((!form.data('submitted') || form.state_changed()) && form.data('valid')) {
-			form.data('submitted', true).save_state();
+		if (!form.data('submitted') && form.data('valid')) {
+			form.data('submitted', true).save_state(); // in case the user clicked back and changed an input value
+			ajax_loader.show();
 			
-			var next_slide = $(wizard.slides[slide_num-1]),
-				ajax_loader = $('.ajax_loader', next_slide).show();
-			
-			wizard.workflow.animate({'height': '100px'}, 'fast');
-			
-			$.post(form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, function(data) {
-					callback.call(this, data, next_slide, ajax_loader)
-				}, function(data) { // error
-					next_slide.html(data);
-				});
-				
-				ajax_loader.hide();
-			});
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
 			return true;
+			
+		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
+			ajax_loader.show();
+			// get the reservation id so the server can update it
+			var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
+				reservation_id = $('form', step2).attr('action').split('/');
+			
+			reservation_id = reservation_id[reservation_id.length-1];
+			form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
+			form.save_state();
+			
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
+			return true;
+			
 		} else if (form.data('submitted')) return true;
 		
 		return false;
 	}
 	
+	function submit_reservation_form(form, next_slide, ajax_loader, callback) {
+		$.post(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				callback.call(this, data, next_slide, ajax_loader);
+			}, function(data) { // error
+				next_slide.html(data);
+			});
+			
+			ajax_loader.hide();
+		});
+	}
+	
 	// Info request: submit reserver details
 	$('form.new_listing_request').live('submit', function() {
-		submit_info_request_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-				$('.hintable', inner_panel).hinty();
-			});
-		});
-		
-		return false;
-	});
-	
-	// ...then billing info, used to be used also for the reservations, until moved that into a workflow
-	/*$('form.edit_reservation').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-			});
-		});
-		
-		return false;
-	});*/
-	
-	function submit_info_request_and_do(form, callback) {
-		var form = $(form).runValidation(),
-			data = form.serialize(),
+		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form).show();
 		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
 			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
-			$.post(form.attr('action'), data, function(response) {
-				if (response.success) callback.call(this, form, response);
-				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				if (response.success) {
+					var inner_panel = form.parent();
+					inner_panel.children().fadeOut(300, function(){
+						inner_panel.html(response.data).children().hide().fadeIn();
+						$('.hintable', inner_panel).hinty();
+					});
+				} else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		} else ajax_loader.hide();
-	}
+		
+		return false;
+	});
 	
 	$('.tos').live('click', function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });

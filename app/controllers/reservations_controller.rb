@@ -20,13 +20,18 @@ class ReservationsController < ApplicationController
   def create
     split_name_param!
     @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
-    @reservation = @reserver.reservations.build params[:reservation].merge(:status => 'pending')
+
+    # reservation_id comes through if the user had gone back and changed an input in the first step, if the user changed their email, we won't find the reservation, so fallback to build
+    @reservation = @reserver.reservations.find_by_id(params[:reservation_id]) || @reserver.reservations.build
+    @reservation.attributes = params[:reservation].merge(:status => 'pending')
+    
     @m = @reserver.mailing_addresses.build params[:mailing_address] unless @reserver.has_address?(params[:mailing_address])
     @m.save(false) if @m
     
     @reservation.size.update_reserve_costs!
     
     if @reserver.save
+      @reservation.save
       session.clear if current_user && current_user.status == 'unverified'
       
       respond_to do |format|
