@@ -710,14 +710,19 @@ $(function(){
 			
 		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
 			ajax_loader.show();
-			// get the reservation id so the server can update it
-			var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
-				reservation_id = $('form', step2).attr('action').split('/');
 			
-			reservation_id = reservation_id[reservation_id.length-1];
-			form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
+			if (slide_num == 2) {
+				// get the reservation id so the server can update it
+				var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
+					reservation_id = $('form', step2).attr('action').split('/');
+
+				reservation_id = reservation_id[reservation_id.length-1];
+				form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
+			} else if (slide_num == 3) {
+				
+			}
+			
 			form.save_state();
-			
 			submit_reservation_form(form, next_slide, ajax_loader, callback);
 			return true;
 			
