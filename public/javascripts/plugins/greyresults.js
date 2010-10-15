@@ -590,39 +590,48 @@ $(function(){
 		return false;
 	});
 	
-	// opens the specific reserve or request form in the unit sizes tab
-	var unit_size_form_partials = {};
+	// opens the unit size specific reserve or request form in the unit sizes tab
+	var unit_size_form_partials = {}; // cache the forms here
 	$('.open_reserve_form').live('click', function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent()),
+		var $this = $(this), rform = $('.reserve_form', $this.parent()),
 			listing = rform.parents('.listing'),
 			listing_id = listing.attr('id').replace('listing_', ''),
 			size_id = $this.parent().attr('id').replace('Size_', ''),
 			accepts_reservations = listing.attr('has-res') == 'true' ? true : false,
-			form_partial;
+			ajax_loader = $('.ajax_loader', this);
 			
-		if (rform.hasClass('active')) {
+		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
-		} else {
+			
+		} else { // get or open the form for this size
 			$('.reserve_form').slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
 			$('.sl-table', rform.parent()).addClass('active');
 			
 			if (unit_size_form_partials[size_id]) rform.slideDown().addClass('active');
 			else {
+				ajax_loader.show();
+				
 				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
 					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
-						console.log(response.data)
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						
-						new GreyWizard($('#reserve_steps', rform), reservation_workflow).begin_workflow_on(0);
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
+						
+						new GreyWizard($('.sl-table-exp', rform), reservation_workflow).begin_workflow_on(0);
 					});
 				} else {
 					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
+						
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
 					});
 				}
 			}
@@ -643,13 +652,14 @@ $(function(){
 					['next', 'fadeIn'],
 					['back', 'fadeOut'] 
 				],
+				action : function(wizard) {
+					if (wizard.workflow.height() != 380) wizard.workflow.animate({'height': '380px'}, 'fast');
+				},
 				validate : function(wizard) {
 					var form = $('#reservation_form1', wizard.workflow);
 
 					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
-						wizard.workflow.animate({'height': '610px'}, 'fast', function() {
-							next_slide.html(response_data).children().hide().fadeIn();
-						});
+						next_slide.html(response_data).children().hide().fadeIn();
 					});
 				} // END validate
 			}, // END slide 1
@@ -659,13 +669,14 @@ $(function(){
 					['next', function(btn, wizard){ btn.text('Next').data('done', false); }],
 					['back', 'fadeIn']
 				],
+				action : function(wizard) {
+					if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
+				},
 				validate : function(wizard) {
 					var form = $('#reservation_form2', wizard.workflow);
 					
 					return bool_submit_once_and_do(form, wizard, 3, function(response_data, next_slide) {
-						wizard.workflow.animate({'height': '440px'}, 'fast', function() {
-							next_slide.html(response_data).children().hide().fadeIn();
-						});
+						next_slide.html(response_data).children().hide().fadeIn();
 					});
 				} // END validate
 			}, // END slide 2
@@ -674,7 +685,10 @@ $(function(){
 				nav_vis : [
 					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
 					['back', 'fadeIn']
-				]
+				],
+				action : function(wizard) {
+					if (wizard.workflow.height() != 440) wizard.workflow.animate({'height': '440px'}, 'fast');
+				}
 			} // END slide 3
 		],
 		finish_action : function(wizard) {
@@ -684,10 +698,10 @@ $(function(){
 	
 	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
 	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
-		if (!form.data('submitted')) form.runValidation();
+		if (!form.data('submitted') || form.state_changed()) form.runValidation();
 		
-		if (!form.data('submitted') && form.data('valid')) {
-			form.data('submitted', true);
+		if ((!form.data('submitted') || form.state_changed()) && form.data('valid')) {
+			form.data('submitted', true).save_state();
 			
 			var next_slide = $(wizard.slides[slide_num-1]),
 				ajax_loader = $('.ajax_loader', next_slide).show();

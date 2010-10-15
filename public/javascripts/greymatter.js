@@ -880,6 +880,24 @@ $.fn.formatPhoneNum = function() {
 	});
 }
 
+// save a form's state to be used by the date_changed method
+$.fn.save_state = function() {
+	return this.each(function(){
+		var form = $(this);
+		form.data('state', form.serialize());
+	});
+}
+
+// check previously saved state against the current one and return true if changed
+$.fn.state_changed = function() {
+	return this.each(function(){
+		var form = $(this), prev_state = form.data('state');
+		if (!prev_state) return false;
+		console.log('check', prev_state != form.serialize())
+		return prev_state != form.serialize();
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {
@@ -1058,12 +1076,13 @@ var GreyWizard = function(container, settings) {
 	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
-		self.nav_bar  	= $('#'+ self.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
+		self.nav_bar  	   = $('#'+ self.nav_id, self.workflow).children().hide().end(); // set initial nav visibility
 		self.current  	   = step || 0;
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
 		
 		self.set_slides();
+		self.set_nav();
 		
 		// bind events
 		self.nav_bar.find('.next, .skip').click(self.next);
@@ -1072,13 +1091,12 @@ var GreyWizard = function(container, settings) {
 		self.title_bar.change(function(){
 			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
 			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
-			
 		}).trigger('change');
 		
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
-		self.set_nav();
 	}
 	
+	// find jquery scrolling slider to make this animation smoother
 	this.set_slides = function() {
 		if (typeof set_display == 'undefined') set_display = false;
 		
@@ -1116,7 +1134,7 @@ var GreyWizard = function(container, settings) {
 	this.set_nav = function() {
 		if (typeof self.slide_data[self.current] != 'undefined') {
 			$.each(self.slide_data[self.current].nav_vis, function(){ // get the current slide's nav actions
-				var btn = $('#'+ this[0]),
+				var btn = $('.'+ this[0], self.nav_bav),
 					action = this[1];
 			
 				if (action) {
@@ -1126,7 +1144,7 @@ var GreyWizard = function(container, settings) {
 			});
 		}
 		
-		setTimeout(function() {
+		if (self.settings.set_slides) setTimeout(function() {
 			$('.slide_display', self.workflow.parent()).removeClass('active');
 			$('#tab_step_'+ self.current, self.workflow.parent()).addClass('active');
 		}, self.fade_speed);
