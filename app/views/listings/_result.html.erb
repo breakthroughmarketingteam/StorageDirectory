@@ -76,9 +76,12 @@
 			</ul>
 		</div>
 		
-		<div class="unit_detail">
-			<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
-		</div>
+		<% if result.premium? %>
+			<div class="unit_detail">
+				<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
+			</div>
+			
+		<% end %>
 	</div>
 	
 	<div class="panel"></div>

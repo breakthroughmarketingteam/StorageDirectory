@@ -38,14 +38,11 @@
 			<li><%= radio_button_tag "#{request_type}[duration]", '6+', nil, :class => 'radio_btn required' %> <%= label_tag '6+' %></li>
 		</ul>
 	</div>
-	
-	<p class="verisign"><span class="hidden">Verisign Secure</span></p>
 </div>
 
-<div class="clear"></div>
 <% unless request_type == 'reservation' %>
-<p class="right">
-	<%= ajax_loader %>
-    <input id="submit-btn" type="submit" value="Next" name="commit" />
-</p>
+	<p class="right clear">
+		<%= ajax_loader %>
+		<%= submit_tag 'Done', :id => 'submit-btn' %>
+	</p>
 <% end %>

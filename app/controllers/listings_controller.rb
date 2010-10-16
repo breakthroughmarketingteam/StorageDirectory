@@ -19,7 +19,9 @@ class ListingsController < ApplicationController
     #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
     
     result = Listing.geo_search params, session
-    @listings = result[:data]
+    @premium_listings = result[:premium]
+    @regular_listings = result[:regular]
+    @listings = @premium_listings | @regular_listings
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     

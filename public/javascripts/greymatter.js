@@ -18,7 +18,7 @@ $(function(){
 	$('.param_filled').fillWithParam(); 		 // fill matching inputs with the param from its rel attr
 	$('.table_sort').appendParamAndGo();		 // append the key-val in the elements rel attr to the href and go to it
 	$('.openDiv').openDiv();					 // click a link to open a hidden div near by
-	$('.search-btn, .search-button').submitBtn();						 // make a link act as a submit button
+	$.liveSubmit('.search-btn, .search-button, .submit_btn'); // make a link act as a submit button
 	$('h4 a', '#info-accordion').accordion(); // my very own accordion widget :)
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
@@ -792,18 +792,6 @@ $.fn.openDiv = function() {
 	});
 }
 
-// make a link act as a submit button
-$.fn.submitBtn = function() {
-	return this.each(function() {
-		var $this = $(this);
-		
-		$this.click(function(){
-			$this.parents('form').submit();
-			return false;
-		})
-	});
-}
-
 $.fn.accordion = function() {
 	return this.each(function() {
 		$(this).click(function() {
@@ -843,6 +831,16 @@ $.fn.tabular_content = function() {
 			panels.hide().removeClass('active');
 			$('#'+ clicked_tab.attr('rel'), $this).show().addClass('active');
 			
+			return false;
+		});
+	});
+}
+
+// make matched elements act as a submit button
+$.liveSubmit = function() {
+	$.each(arguments, function(){
+		$(this).live('click', function(){
+			$(this).parents('form').submit();
 			return false;
 		});
 	});

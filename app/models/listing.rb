@@ -158,7 +158,15 @@ class Listing < ActiveRecord::Base
     
     @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
-    { :data => @model_data, :location => @location }
+    { :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+  end
+  
+  def premium?
+    self.client && self.client.status == 'active'
+  end
+  
+  def unverified?
+    self.client.nil? || self.client.status == 'unverified'
   end
   
   # TODO: work on this to make sure it sorts correctly

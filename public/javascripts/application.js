@@ -510,25 +510,13 @@ $(document).ready(function() {
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
 		$('.selective_hider').live('click', function(){
-			var dont_hide  = $(this).attr('rel'),
-				hide_these = $('.hideable');
+			var dont_hide = $(this).attr('rel'), hide_these = $('.hideable');
 			
-			if (dont_hide) {
-				hide_these.each(function(){
-					if (this.id != dont_hide) {
-						$(this).slideUp();
-						$(this).prev('.user_hint').slideUp();
-					
-					} else {
-						$(this).slideDown();
-						$(this).prev('.user_hint').slideDown();
-					}
-				});
-
-			} else {
-				hide_these.slideDown();
-				$('.user_hint').slideDown();
-			}
+			if (dont_hide) hide_these.each(function(){
+				if (this.id != dont_hide) $(this).slideUp();
+				else $(this).slideDown();
+			});
+			else hide_these.slideDown();
 
 			return false;
 		});
@@ -696,14 +684,13 @@ $(document).ready(function() {
 			$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
 		});
 		
-		var inline_save_orig_values = {};
-		$('.inline_save').each(function(){
-			inline_save_orig_values[this.id] = this.value.replace(this.title, '');
-		});
-		
 		$('.inline_save').live('focus', function() {
 			var input = $(this);
-			$('<a class="attribute_save" href="/ajax/update?'+ input.attr('params') +'">Save</a>').appendTo('#email_reports_settings');
+			input.after('<a class="submit_btn" href="#">Save</a>');
+		});
+		
+		$('#client_settings').submit(function(){
+			
 		});
 		
 		$('.attribute_save').live('click', function() {
@@ -1066,7 +1053,7 @@ $(document).ready(function() {
 			stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
 			d = new Date(), // getMonth returns 0-11
 			end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate());
+			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate()); // month in the past
 		
 		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
 			$.with_json(response, function(data){

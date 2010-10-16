@@ -29,38 +29,55 @@ jQuery.fn.runValidation = function() {
 	}
 	
 	function error_html(input, msg) {
-		var name = input.attr('name').split('[');
-		name = name[name.length-1].replace(']', '').replaceAll('_', ' ');
-		return '<p>' + capitalize(name) + ' '+ msg +'.</p>';
+		if (form.hasClass('less_verbose')) {
+			return '<p>'+ msg +'</p>';
+		} else {
+			var name = input.attr('name').split('[');
+			name = name[name.length-1].replace(']', '').replaceAll('_', ' ');
+			return '<p>' + capitalize(name) + ' '+ msg +'.</p>';
+		}
 	}
 
 	function markInvalid(input, form) {
 		if (!input.hasClass('invalid')) input.addClass('invalid');
-		jQuery('.invalid', form).eq(0).focus();
+		$('.invalid', form).eq(0).focus();
 
-		jQuery('.invalid', 'form.silent').blur(function(){ jQuery(this).removeClass('invalid'); });
+		$('.invalid', 'form.silent').blur(function(){ $(this).removeClass('invalid'); });
 	}
 	
 	function is_numeric(input) {
 		return numeric_class_regex.test(input.attr('class'));
 	}
+	
+	// remove previous errors
+	$('.error', form).remove();
 
 	jQuery('input, select, textarea', form).each(function(){
-		var input = jQuery(this),
-			error = '';
+		var input = jQuery(this), error = '';
 
 		input.removeClass('invalid');
 		
 		if (!input.attr('disabled')) {
 			
-			if (input.hasClass('required') && ((input.val() == '' || input.val() == input.attr('title') || input.attr('type') == 'checkbox' && !input.is(':checked'))) ) {
-				error = error_html(input, 'is required');
+			if (input.hasClass('required')) {
+				if (input.is(':checkbox') && !input.is(':checked')) {
+					error = error_html(input, 'must be checked');
+					markInvalid(input, form);
+					
+				} else if (input.is(':radio') && !$('input[name='+ input.attr('name') +']:checked').length) {
+					error = '<p>pick one</p>';
+					markInvalid(input, form);
+					
+				} else if (input.attr('type') == 'text' && input.val() == '' || input.val() == input.attr('title')) {
+					error = error_html(input, 'is required');
+					markInvalid(input, form);
+				}
+				
 				errors += error;
-				markInvalid(input, form);
 			}
 
 			if (input.hasClass('email') && valid_email.test(input.val()) == false) {
-				error = error_html(input, 'is not a valid email');
+				error = error_html(input, 'is not valid');
 				errors += error;
 				markInvalid(input, form);
 			}
@@ -85,7 +102,7 @@ jQuery.fn.runValidation = function() {
 		
 		if (error != '' && !form.hasClass('silent')) {
 			jQuery('.error', input.parent()).remove();
-			input.before('<div class=\'flash error hidden\' style=\'float:'+ input.css('float') +'\'>' + error + '</div>');
+			input.before('<div class=\'flash error hidden\'>' + error + '</div>');
 			jQuery('.error', input.parent()).slideDown();
 		}
 

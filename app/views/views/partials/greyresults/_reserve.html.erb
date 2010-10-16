@@ -5,9 +5,11 @@
 			<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
 		</div>
 	
-		<% form_for Reservation.new, :html => { :id => 'reservation_form1', :class => 'silent' } do |f| %>
+		<% form_for Reservation.new, :html => { :id => 'reservation_form1', :class => 'less_verbose' } do |f| %>
 			<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => listing, :request_type => 'reservation', :size => (defined?(size) && size) } %>
 		<% end %>
+		
+		<p class="verisign"><span class="hidden">Verisign Secure</span></p>
 	</div>
 	
 	<div id="reserve_step2" class="workflow_step">
@@ -20,6 +22,6 @@
 	
 	<div id="workflow_nav">
 		<a class="button back" href="#back">Back</a>
-	  	<a class="button next" href="#next">Next</a>
+	  	<a class="button next"\ href="#next">Next</a>
 	</div>
 </div>

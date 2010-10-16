@@ -657,6 +657,7 @@ $(function(){
 
 					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
 						next_slide.html(response_data).children().hide().fadeIn();
+						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
 					});
 				} // END validate
 			}, // END slide 1
@@ -667,7 +668,8 @@ $(function(){
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					wizard.workflow.animate({'height': '610px'}, 'fast');
+					// expand slide 2 automatically if it's already filled (the user went back), otherwise this is handled in slide 1's validate method
+					if ($('#reservation_form2', wizard.workflow).length) wizard.workflow.animate({'height': '610px'}, 'fast');
 				},
 				validate : function(wizard) {
 					var form = $('#reservation_form2', wizard.workflow);
@@ -689,7 +691,7 @@ $(function(){
 			} // END slide 3
 		],
 		finish_action : function(wizard) {
-			wizard.workflow.parent().slideUp();
+			wizard.workflow.parent().slideUp().removeClass('active').parent().find('.sl-table').removeClass('active');
 		}
 	};
 	
@@ -706,7 +708,7 @@ $(function(){
 			ajax_loader.show();
 			
 			submit_reservation_form(form, next_slide, ajax_loader, callback);
-			return true;
+			return true; // while the form is submitting, this function returns true and causes the workflow to move next
 			
 		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
 			ajax_loader.show();
@@ -734,7 +736,7 @@ $(function(){
 	function submit_reservation_form(form, next_slide, ajax_loader, callback) {
 		$.post(form.attr('action'), form.serialize(), function(response) {
 			$.with_json(response, function(data) {
-				callback.call(this, data, next_slide, ajax_loader);
+				callback.call(this, data, next_slide);
 			}, function(data) { // error
 				next_slide.html(data);
 			});

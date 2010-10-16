@@ -1,4 +1,4 @@
-<% form_for @reservation, :html => { :id => 'reservation_form2', :class => 'silent' } do |f| %>
+<% form_for @reservation, :html => { :id => 'reservation_form2', :class => 'less_verbose' } do |f| %>
 	<h4>Lock In This Rate</h4>
 
 	<div id="cost_display" class="sl-table-exp-form-l">
@@ -48,7 +48,7 @@
 				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
 			</p>
 			<p class="zip_field">
-		        <%= label_tag 'billing_info[zip]', 'Zip Code', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required', :maxlength => 5 %>
+		        <%= label_tag 'billing_info[zip]', 'Zip', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required', :maxlength => 5 %>
 			</p>
 		</div>
 	</div>
@@ -74,8 +74,4 @@
 	</div>
 	
 	<p class="verisign"><span class="hidden">Verisign Secure</span></p>
-	<!--<p class="right">
-		<%= ajax_loader %>
-        <input id="submit-btn" type="submit" value="Submit" name="commit" />
-	</p>-->
 <% end %>
