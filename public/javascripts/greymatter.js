@@ -817,7 +817,7 @@ $.fn.accordion = function() {
 $.fn.tabular_content = function() {
 	return this.each(function(){
 		var $this = $(this), // the container
-			tabs = $('.tabular', $this), // ul
+			tabs = $('.tabular'), // ul
 			panels = $('.tab_content', $this); // tab content divs
 		
 		tabs.find('li').eq(0).addClass('active');
