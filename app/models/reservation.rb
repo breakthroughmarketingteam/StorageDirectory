@@ -55,14 +55,14 @@ class Reservation < ActiveRecord::Base
         :ccv          => billing_info.ccv.to_s,
         :expires => {
           :month => billing_info.expires_month,
-          :year  => billing_info.expires_year
+          :year  => "20#{billing_info.expires_year}"
         }
       },
       :bank => {},
       :check_number => '',
       :amount_to_apply => self.fee.to_s + '0'
     }
-    puts args.pretty_inspect
+    puts args.inspect
     response = self.listing.process_new_tenant args
     
     if response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i

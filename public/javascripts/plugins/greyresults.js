@@ -343,33 +343,39 @@ $(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
 	
-	$compare_btns = $('.compare', '.listing');
+	$compare_btns = $('input[name=compare]', '.listing');
 	
-	if ($('.listing.active').length > 1) $('#compare-btn').show();
-	else $('#compare-btn').hide();
-	
-	$compare_btns.live('click', function(){
-		var compare 		= $(this),
-			listing 		= compare.parents('.listing'),
-			id 				= listing.attr('id').split('_')[1];
+	$compare_btns.live('change', function(){
+		var compare	= $(this),
+			listing	= compare.parents('.listing'),
+			blank_compare_href = $('.compare a', '.listing').eq(0).attr('href'),
+			id 	   	= compare.val(), marker, compare_links;
 		
 		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
 		
-		if (!compare.data('on')) {
+		if (compare.is(':checked')) {
 			listing.addClass('active');
-			compare.data('on', true);
-			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
 			
-			if (typeof marker != 'undefined'){
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length >= 2) {
+				$('a', '.active .compare').show();
+				$('label', '.active .compare').hide();
+			}
+			
+			if (marker) {
 				marker.GmapState = 'selected';
 				highlightMarker(marker);
 			}
 		} else {
-			listing.removeClass('active');
-			compare.data('on', false);
-			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length <= 2) {
+				$('a', '.active .compare').hide();
+				$('label', '.active .compare').show();
+			}
 			
-			if (typeof marker != 'undefined'){
+			listing.removeClass('active');
+			
+			if (marker) {
 				marker.GmapState = '';
 				unhighlightMarker(marker);
 			}
@@ -657,6 +663,7 @@ $(function(){
 
 					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
 						next_slide.html(response_data).children().hide().fadeIn();
+						$('.hintable', next_slide).hinty();
 						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
 					});
 				} // END validate

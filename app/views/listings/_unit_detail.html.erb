@@ -5,7 +5,9 @@
 		<% end %>
 	</div>
 	
-	<div class="compare">
-		<%= label_tag "compare_#{listing.id}", 'Compare 2 or more' %><input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>">	
+	<div class="compare" title="Select 2 or more to compare">
+		<%= link_to 'Click to compare', compare_listings_path, :class => 'hide' %>
+		<%= label_tag "compare_#{listing.id}", 'Compare' %>
+		<input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>" />
 	</div>
 </div>
