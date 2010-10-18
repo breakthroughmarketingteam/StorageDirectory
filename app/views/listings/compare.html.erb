@@ -17,17 +17,25 @@ Gmaps_data = <%= @maps_data.to_json %>;
 <div id="main_map">
 </div>
 
-<div id="compare_view">
-	<% @listings.each_with_index do |listing, i| %>
-		
-		<div id="listing_<%= listing.id %>" class="compare_listing<%= ' last' if i == @listings.size-1 %>">
-			<h3><%= link_to listing.title, facility_path(listing.title.parameterize, listing.id) %></h2>
-			<ul>
-				<% listing.compare_attributes.each_with_index do |attrs, j| %>
-				<li class="<%= j % 2 == 0 ? 'even' : 'odd' %>"><span class="key"><%= attrs.keys.first %></span><span class="val"><%= attrs.values.first %></span></li>
-				<% end %>
-			</ul>
-		</div>
-		
-	<% end %>
+<div class="uncollpase stack">
+	<ul id="compare_labels">
+		<li class="odd">Reservations</li>
+		<li>Average Rate</li>
+		<li class="odd">24 Hour Access</li>
+	</ul>
+
+	<div id="compare_view">
+		<% @listings.each_with_index do |listing, i| %>
+			<div id="listing_<%= listing.id %>" class="compare_listing<%= ' last' if i == @listings.size-1 %>">
+				<h3><%= link_to selective_abbrev(listing.title).titleize, facility_path(listing.title.parameterize, listing.id) %></h2>
+				<ul>
+					<li class="odd"><%= listing.accepts_reservations? ? 'Yes' : 'No' %></li>
+					<li><%= listing.average_rate == 'N/A' ? 'N/A' : number_to_currency(listing.average_rate) %></li>
+					<li class="odd"><%= listing.access_24_hours ? 'Yes' : 'No' %></li>
+				</ul>
+			</div>
+		<% end %>
+	</div>
 </div>
+
+<p><%= link_to 'Back To Results', :back %></p>

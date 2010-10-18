@@ -105,12 +105,6 @@ class Listing < ActiveRecord::Base
       :lng     => self.lng }
   end
   
-  def compare_attributes
-    attrs = []
-    attrs << { :title => self.title }
-    attrs << { :reservations => self.client.try(:accepts_reservations?) ? 'Yes' : 'No' }
-  end
-  
   # create a stat record => clicks, impressions
   def update_stat stat, request
     eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
@@ -122,6 +116,11 @@ class Listing < ActiveRecord::Base
   
   def available_sizes
     @available_sizes ||= self.issn_enabled? ? self.sizes.sorted.select { |size| size.unit_type.units_available? } : self.sizes.sorted
+  end
+  
+  def average_rate
+    return 'N/A' if self.available_sizes.empty?
+    self.available_sizes.map(&:dollar_price).mean
   end
   
   #

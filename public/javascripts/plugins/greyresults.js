@@ -344,12 +344,10 @@ $(function(){
 	});
 	
 	$compare_btns = $('input[name=compare]', '.listing');
-	
 	$compare_btns.live('change', function(){
-		var compare	= $(this),
-			listing	= compare.parents('.listing'),
+		var compare	= $(this), listing = compare.parents('.listing'),
 			blank_compare_href = $('.compare a', '.listing').eq(0).attr('href'),
-			id 	   	= compare.val(), marker, compare_links;
+			id = compare.val(), marker, compare_links;
 		
 		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
 		
@@ -367,6 +365,9 @@ $(function(){
 				highlightMarker(marker);
 			}
 		} else {
+			$('a', compare.parent()).hide();
+			$('label', compare.parent()).show();
+			
 			compare_links = $('.compare a', '.listing.active');
 			if (compare_links.length <= 2) {
 				$('a', '.active .compare').hide();
@@ -380,9 +381,19 @@ $(function(){
 				unhighlightMarker(marker);
 			}
 		}
-		
-		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
-		else $('#compare-btn').slideUp();
+	});
+	
+	$('a', '.compare').live('click', function() {
+		var compares = $('input:checked', '.compare'), compare_href = '';
+		if (compares.length) {
+			compares.each(function(){
+				compare_href += this.value + ',';
+			});
+			
+			this.href += compare_href;
+			console.log(this.href)
+			
+		} else return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */

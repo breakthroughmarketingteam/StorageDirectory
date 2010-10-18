@@ -113,6 +113,10 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #pages_controller.home #content{float:none;position:static;width:auto;}
 #listings_controller.locator_action #content{border-left:1px dashed #ccc;left:3px;top:0;padding-left:10px;width:760px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;}
 #type-one-r-col{left:0;}
+#listings_controller.compare_action #content{width:auto;margin-left:15px;float:none;}
+#listings_controller.compare_action #content #type-one-r-col-in{width:auto;}
+#listings_controller.compare_action #content #type-one-r-col-in #results_header{width:98.5%;}
+#listings_controller.compare_action #content #type-one-r-col-in #main_map{width:98.3%;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{width:500px;position:absolute;top:-133px;left:35px;z-index:500;}
@@ -426,7 +430,7 @@ ul#specials_list {margin:15px 10px;}
 #type-three-r-col-in{width:745px;float:right;margin:13px 12px 0 0;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #sl-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #ccc;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
-#results_header{margin-top:13px;width:96.2%;}
+#results_header{margin-top:13px;width:97.5%;}
 #results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:.5px .5px 0 #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
@@ -804,11 +808,13 @@ img.left{margin:0 10px 10px 0;}
 img.right{margin:0 0 10px 10px;}
 .ajax_loader{display:none;}
 #latch-img{position:absolute;right:0;z-index:0;top:50%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
-#compare_view{margin:15px 0 20px 0;overflow:hidden;}
+#compare_labels{float:left;width:19%;margin:65px 0 0 0;}
+#compare_view{margin:15px 0 20px 0;overflow:hidden;float:left;width:80%;}
 .compare_listing{float:left;margin:0 15px 0 0;max-width:32.7%;}
 .compare_listing h3 a{display:block;font-size:90%;color:#fff;height:40px;line-height:2.7;padding:0 15px;text-shadow:1px 1px 2px #333;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;-moz-border-radius-topleft:20px;border-radius-topleft:20px;-webkit-border-top-left-radius:20px;-moz-border-radius-topright:20px;border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
-.compare_listing ul{margin:10px;}
-.compare_listing ul li{padding:3px 0;}
+.compare_listing ul{margin:10px 0;}
+.compare_listing ul li,#compare_labels li{padding:3px 5px;}
+.compare_listing ul li{text-align:center;}
 .compare_listing .key{font-weight:bold;margin-right:7px;}
 .compare_listing .val{}
 /* cities */
