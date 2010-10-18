@@ -872,10 +872,10 @@ img.right{margin:0 0 10px 10px;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
-#new_client a.search-button{text-shadow:1px 1px 0 #666;margin-right:5px;line-height:2.2;}
-#narrow-box a.search-btn{text-shadow:1px 1px 0 #666;line-height:1.8;}
+#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:2.2;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
+#narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
-#sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #CCC;}
+#sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #ccc;}
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
 #sl-tabs-sizes-in .reserve_form{font-size:80%;}
 .sl-table-wrap .st-type{font-size:80%;}
