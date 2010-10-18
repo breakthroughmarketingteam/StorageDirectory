@@ -1,4 +1,4 @@
-<div id="listing_<%= result.id %>" class="listing">
+<div id="listing_<%= result.id %>" class="listing" has-res="<%= result.accepts_reservations? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
@@ -42,22 +42,28 @@
 					  	<ul>
 							<% unless (@upper_type_size = result.get_upper_type_size(unit_size)).nil? %>
 								<li>
-									Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
-									<%= radio_button_tag 'unit_size', @upper_type_size.id %>
+									<label title="<%= @upper_type_size.description || @upper_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
+									</label>
+									<%= radio_button_tag "listing[#{result.id}][unit_size]", @upper_type_size.id %>
 								</li>
 							<% end %>
 							
 							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
 								<li>	
-									Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
-									<%= radio_button_tag 'unit_size', @drive_up_type_size.id %>
+									<label title="<%= @drive_up_type_size.description || @drive_up_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
+									</label>
+									<%= radio_button_tag "listing[#{result.id}][unit_size]", @drive_up_type_size.id %>
 								</li>
 							<% end %>
 
 							<% unless (@interior_type_size = result.get_interior_type_size(unit_size)).nil? %>
 								<li>	
-									Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
-									<%= radio_button_tag 'unit_size', @interior_type_size.id %>
+									<label title="<%= @interior_type_size.description || @interior_type_size.title %>" for="listing[<%= result.id %>][unit_size]">
+										Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
+									</label>
+									<%= radio_button_tag "listing[#{result.id}][unit_size]", @interior_type_size.id %>
 								</li>
 							<% end %>
 						</ul>		
@@ -70,12 +76,15 @@
 			</ul>
 		</div>
 		
-		<div class="unit_detail">
-			<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
-		</div>
+		<% if result.premium? %>
+			<div class="unit_detail">
+				<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
+			</div>
+			
+		<% end %>
 	</div>
 	
-	<div class="panel hidden"></div>
+	<div class="panel"></div>
 	
 	<ul class="tabs">
 		<li class="open_tab_li">

@@ -3,13 +3,16 @@ class Client < User
   has_many :listings, :foreign_key => 'user_id'
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
-  has_one :account_setting, :dependent => :destroy
+  has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
+  accepts_nested_attributes_for :settings
+  
+  attr_reader :upsets # hidden field to trigger settings update from the edit form
   
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'
   end
-  
+
   def active_mailing_address
     self.mailing_addresses.first
   end
@@ -27,9 +30,19 @@ class Client < User
   end
   
   def update_info(info)
-    mailing_address = self.active_mailing_address || self.mailing_addresses.build
-    billing_info = self.active_billing_info || self.billing_infos.build
-    mailing_address.update_attributes(info[:mailing_address]) && billing_info.update_attributes(info[:billing_info])
+    if info[:mailing_address]
+      mailing_address = self.active_mailing_address || self.mailing_addresses.build
+      mailing_address.update_attributes(info[:mailing_address])
+    end
+    
+    if info[:billing_info]
+      billing_info = self.active_billing_info || self.billing_infos.build
+      billing_info.update_attributes(info[:billing_info])
+    end
+    
+    if info[:settings]
+      self.update_attributes info
+    end
   end
   
   # a simple listing search for the add your facility page

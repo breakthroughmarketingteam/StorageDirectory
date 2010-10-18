@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   $_user_hint_places = [:owner_info, :facilities, :reports, :services, :settings, :listing_detail, :info_tabs, :extras]
   
   # for the geo_search methods in Listing
-  $_listing_search_distance = 50
+  $_listing_search_distance = 25
   
   # for the enable issn connectivity workflow
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
@@ -71,7 +71,6 @@ class ApplicationController < ActionController::Base
   before_filter :init, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
-  before_filter :kick_out_unwanted_user
   
   layout lambda { app_config[:theme] }
   
@@ -125,10 +124,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def kick_out_unwanted_user
-    session.destroy if current_user && current_user.status == 'unverified'
-  end
-  
   # hidden field hack_me must pass through empty, cheap reverse captcha trick
   def reverse_captcha_check
     redirect_to("/#{home_page}") and return if params.has_key?(:hack_me) && !params[:hack_me].empty?
@@ -160,7 +155,8 @@ class ApplicationController < ActionController::Base
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
-    @per_page = 15                                                                
+    @per_page = 15
+    @listings_per_page = 10                                                           
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?

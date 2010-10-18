@@ -7,51 +7,42 @@
 	</p>
 	<p>
         <%= label_tag 'reserver[email]', 'Email', :class => 'block' %> <%= text_field_tag 'reserver[email]', nil, :class => 'email' %>
+		<%= hidden_field_tag "#{request_type}[listing_id]", listing.id %>
 	</p>
 </div>
 <div class="sl-table-exp-form-r">
-	<% begin %>
-		<% if unit_type || size.unit_type %>
-			<%= hidden_field_tag "#{request_type}[unit_type_id]", (unit_type || size.unit_type).id %>
-		<% else %>
-			<p>
-			<% if listing.available_sizes.empty? %>
-				<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
-				<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
-			<% else %>
-				<%= label_tag "#{request_type}[unit_type_id]", 'Unit Size', :class => 'block' %>
-				<%= select_tag "#{request_type}[unit_type_id]", option_tags(listing.unit_sizes_options_array, (unit_type || size.unit_type).id, 'Select one'), :class => 'required' %>
-			<% end %>
-			</p>
-		<% end %>
-	<% rescue => e %>
+	<% if defined?(size) && size %>
+		<%= hidden_field_tag "#{request_type}[size_id]", size.id %>
+	<% else %>
 		<p>
-		<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
-		<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
+		<% if listing.available_sizes.empty? %>
+			<%= label_tag "#{request_type}[unit_type_size]", 'Unit Size', :class => 'block' %>
+			<%= select_tag "#{request_type}[unit_type_size]", option_tags(listing.unit_sizes_options_array, params[:storage_size], 'Select one'), :class => 'required' %>
+		<% else %>
+			<%= label_tag "#{request_type}[size_id]", 'Unit Size', :class => 'block' %>
+			<%= select_tag "#{request_type}[size_id]", option_tags(listing.unit_sizes_options_array, size.id, 'Select one'), :class => 'required' %>
+		<% end %>
 		</p>
 	<% end %>
 
 	<p class="datepicker_wrap">
         <span class="hidden">Move In Date</span> 
 		<%= label_tag "#{request_type}[move_in_date]", 'Move-In Date', :class => 'block ' %> 
-		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}_#{(unit_type || size.unit_type).id rescue ''}", :class => 'mini_calendar numeric_date' %>
+		<%= text_field_tag "#{request_type}[move_in_date]", nil, :id => "move_in_#{listing.id}_#{size.id rescue rand(99999)}", :class => 'mini_calendar numeric_date' %>
 	</p>
 	<div class="rental_duration">
         <p>How many months do you plan to rent?</p>
 		<ul>
-			<li><%= radio_button_tag "#{request_type}[duration]", '1-3', true, :class => 'radio_btn' %> <%= label_tag '1 to 3' %></li>
-			<li><%= radio_button_tag "#{request_type}[duration]", '3-6', false, :class => 'radio_btn' %> <%= label_tag '3 to 6' %></li>
-			<li><%= radio_button_tag "#{request_type}[duration]", '6+', false, :class => 'radio_btn' %> <%= label_tag '6+' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '1-3', nil, :class => 'radio_btn required' %> <%= label_tag '1 to 3' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '3-6', nil, :class => 'radio_btn required' %> <%= label_tag '3 to 6' %></li>
+			<li><%= radio_button_tag "#{request_type}[duration]", '6+', nil, :class => 'radio_btn required' %> <%= label_tag '6+' %></li>
 		</ul>
 	</div>
 </div>
 
-<div class="clear"></div>
-<p class="verisign">
-       <span class="hidden">Verisign Secure</span>
-</p>
-<p class="right">
-	<%= hidden_field_tag "#{request_type}[listing_id]", listing.id %>
-	<%= ajax_loader %>
-    <input id="submit-btn" type="submit" value="Next" name="commit" />
-</p>
+<% unless request_type == 'reservation' %>
+	<p class="right clear">
+		<%= ajax_loader %>
+		<%= submit_tag 'Done', :id => 'submit-btn' %>
+	</p>
+<% end %>

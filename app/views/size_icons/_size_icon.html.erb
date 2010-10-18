@@ -1,0 +1,5 @@
+<div class="size_icon">
+	<%= image_tag(size_icon.icon.url, :class => 'left') %>
+	<%= content_tag :p, size_icon.title, :class => 'bold' %>
+	<%= content_tag :p, size_icon.description unless size_icon.description.blank? %>
+</div>

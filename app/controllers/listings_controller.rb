@@ -19,15 +19,21 @@ class ListingsController < ApplicationController
     #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
     
     result = Listing.geo_search params, session
-    @listings = result[:data]
+    @premium_listings = result[:premium]
+    @regular_listings = result[:regular]
+    @listings = @premium_listings | @regular_listings
     @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
+    @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     # updates the impressions only for listings on current page
-    @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || 10)
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
+    
+    # TODO: figure out how to smart order these results
+    # if searching by city sort the first page of listings so that the least seen ones are on top
+    #@listings = Listing.smart_order(@listings) if params[:page].blank? && (params[:city] || Listing.is_city?(params[:q]))
     
     if session[:location].blank? || params[:q] && params[:state].blank?
       session[:location] = @location.to_hash
@@ -103,18 +109,6 @@ class ListingsController < ApplicationController
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
-    end
-  end
-  
-  # receives from the info_request form on free listings in the results page
-  def info_requests
-    @listing = Listing.find params[:info_request][:listing_id]
-    @info_request = @listing.info_requests.build params[:info_request].merge(:status => 'pending').merge(params[:reserver]).merge(params[:mailing_address])
-    
-    if @listing.save
-      render :json => { :success => true, :data => render_to_string(:partial => 'info_requests/done') }
-    else
-      render :json => { :success => false, :data => model_errors(@info_request) }
     end
   end
   

@@ -1,12 +1,11 @@
-<% @reservations = model.reservations.paginate :page => params[:page], :per_page => 11 %>
-<div>
+<% @reservations = model.reservations.paginate :page => params[:page], :per_page => 11, :order => 'move_in_date DESC' %>
+<div id="clients_reservations">
 	<% unless @reservations.empty? %>
 		<table class="table_view" id="client_reservations">
 			<thead>
 				<tr>
 					<th>By</th>
 					<th>In date</th>
-					<th>Out date</th>
 					<th>Duration</th>
 					<th></th>
 				</tr>
@@ -16,8 +15,7 @@
 					<tr class="<%= cycle('odd', 'even') %>">
 						<td><%= link_to reservation.name, reserver_path(reservation.reserver), :class => 'reserver_detail_link' %></td>
 						<td><%= reservation.nice_move_in_date %></td>
-						<td><%= reservation.nice_move_out_date %></td>
-						<td><%= duration_of reservation %></td>
+						<td><%= reservation.duration %> months</td>
 						<td class="region">
 							<%= link_to 'Details', reservation.partial_link, :class => 'rsvr_detail_link' %>
 							<%= ajax_loader %>

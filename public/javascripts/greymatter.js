@@ -18,7 +18,7 @@ $(function(){
 	$('.param_filled').fillWithParam(); 		 // fill matching inputs with the param from its rel attr
 	$('.table_sort').appendParamAndGo();		 // append the key-val in the elements rel attr to the href and go to it
 	$('.openDiv').openDiv();					 // click a link to open a hidden div near by
-	$('.search-btn, .search-button').submitBtn();						 // make a link act as a submit button
+	$.liveSubmit('.search-btn, .search-button, .submit_btn'); // make a link act as a submit button
 	$('h4 a', '#info-accordion').accordion(); // my very own accordion widget :)
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
@@ -792,18 +792,6 @@ $.fn.openDiv = function() {
 	});
 }
 
-// make a link act as a submit button
-$.fn.submitBtn = function() {
-	return this.each(function() {
-		var $this = $(this);
-		
-		$this.click(function(){
-			$this.parents('form').submit();
-			return false;
-		})
-	});
-}
-
 $.fn.accordion = function() {
 	return this.each(function() {
 		$(this).click(function() {
@@ -848,6 +836,16 @@ $.fn.tabular_content = function() {
 	});
 }
 
+// make matched elements act as a submit button
+$.liveSubmit = function() {
+	$.each(arguments, function(){
+		$(this).live('click', function(){
+			$(this).parents('form').submit();
+			return false;
+		});
+	});
+}
+
 $.fn.clickOnLoad = function() {
 	return this.each(function(){
 		$(this).click();
@@ -878,6 +876,21 @@ $.fn.formatPhoneNum = function() {
 			}
 		});
 	});
+}
+
+// save a form's state to be used by the date_changed method
+$.fn.save_state = function() {
+	return this.each(function(){
+		var form = $(this);
+		form.data('state', form.serialize());
+	});
+}
+
+// check previously saved state against the current one and return true if changed
+$.fn.state_changed = function() {
+	var prev_state = this.data('state');
+	if (!prev_state) return false;
+	return prev_state != this.serialize();
 }
 
 /******************************************* SUCCESS CALLBACKS *******************************************/
@@ -932,6 +945,246 @@ function titleize(string) {
 		}
 	
 		return titleized;
+	}
+}
+
+// pulls the pop_up template and runs the callback
+// params requires sub_partial. e.g params.sub_partial 
+function get_pop_up_and_do(options, params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up';
+	
+	$.get('/ajax/get_multipartial', params, function(response) {
+		var pop_up = $(response).dialog({
+			title: 	   options.title,
+			width: 	   options.width || 785,
+			minHeight: options.minHeight || 420,
+			height:    options.height,
+			resizable: false,
+			modal: 	   options.modal,
+			close: 	   function() {
+				$('.ajax_loader').hide();
+				$(this).dialog('destroy').remove();
+			}
+		});
+		
+		if (typeof callback == 'function') callback.call(this, pop_up);
+	});
+}
+
+function get_partial_and_do(params, callback) {
+	var params = params || {}
+	params.partial = params.partial || '/shared/pop_up_box';
+	
+	$.get('/ajax/get_partial', params, function(response) {
+		callback.call(this, response);
+	});
+}
+
+/**************** slide show and workflow object *******************/
+// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
+var GreyShow = function(options) {
+	var self = this;
+	this.context 	= options.context;
+	this.slides  	= options.slides;
+	this.delay 	 	= options.delay;
+	this.num_slides = options.slides.length;
+	this.time_int 	= 0;
+	
+	this.start = function() {
+		self.current = 0;
+		self.startSlide();
+	}
+	
+	this.startSlide = function() {
+		if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
+		
+		self.hidePrevSlide();
+		self.slide_objects = self.slides[self.current].objects;
+		self.current_object = 0;
+		self.runObject(self.slide_objects[0]);
+	}
+	
+	this.gotoSlide = function(n) {
+		self.current = n;
+		
+		if (n == self.num_slides) {
+			self.current = 0;
+			self.gotoSlide(0);
+			
+		} else self.startSlide();
+	}
+	
+	this.runObject = function(o) {
+		var $object = $('#'+ o.id);
+		$object.children().hide();
+		
+		if (typeof o.callback == 'function')
+			o.callback.call(this, $object, self);
+		
+		$object[o.action](o.speed, function(){ self.nextObject(o) });
+	}
+	
+	this.nextObject = function(o) {
+		self.current_object++;
+		
+		if (self.slide_objects[self.current_object]) {
+			setTimeout(function(){
+				self.runObject(self.slide_objects[self.current_object]);
+			}, o.delay);
+			
+		} else {
+			setTimeout(function(){
+				self.slides[self.current].end.call(this, self);
+			}, self.delay);
+		}
+	}
+	
+	this.hidePrevSlide = function(callback) {
+		var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
+		
+		for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
+			var $object = $('#'+ self.slides[prev].objects[i].id);
+			$object.fadeOut(900);
+		}
+	}
+}
+
+// first implemented for the client sign up page (add your facility), now also used for the US Map and the Reservation process
+var GreyWizard = function(container, settings) {
+	var self = this;
+	self.form_data 	= {};
+	self.settings 	= settings;
+	self.slide_data = settings.slides;
+	self.slides_class = settings.slides_class || 'workflow_step',
+	self.nav_id		= settings.nav_id || 'workflow_nav',
+	self.num_slides = self.slide_data.length;
+	self.workflow 	= $(container);
+	self.title_bar 	= $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
+	self.width	  	= self.workflow.width();
+	self.height   	= self.workflow.height();
+	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
+	self.spacer		= settings.spacer || 100; // to give the slides space between transitions
+	self.slide_speed = settings.slide_speed || 1500,
+	self.btn_speed  = settings.btn_speed || 900,
+	self.fade_speed = settings.fade_speed || 1000,
+	
+	this.begin_workflow_on = function(step) {
+		self.workflow.parents('#pop_up').show();
+		self.nav_bar  	   = $('#'+ (self.nav_id || 'workflow_nav'), self.workflow).children().hide().end(); // set initial nav visibility
+		self.current  	   = step || 0;
+		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
+		self.skipped_first = step > 0 ? true : false;
+		
+		self.set_slides();
+		self.set_nav();
+		
+		// bind events
+		self.nav_bar.find('.next, .skip').click(self.next);
+		self.nav_bar.find('.back').click(self.prev);
+		
+		if (self.title_bar.length) self.title_bar.change(function(){
+			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
+			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
+		}).trigger('change');
+		
+		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
+	}
+	
+	// find jquery scrolling slider to make this animation smoother
+	this.set_slides = function() {
+		if (typeof set_display == 'undefined') set_display = false;
+		
+		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
+		self.slides.each(function(i){
+			// calculate the left position so that the initial slide is at 0
+			var left = -((self.width + self.spacer) * (self.current - i))
+			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
+		});
+		
+		if (self.settings.set_slides) { // build the slide tabbed nav
+			var slide_display_html = '<div id="slide_nav">',
+				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
+				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
+				done_skipping 	   = false;
+			
+			for (var i = 0; i < self.num_slides; i++) {
+				if (self.skipped_first && !done_skipping) {
+					done_skipping = true; 
+					continue; 
+				}
+				
+				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
+										   '<p>Step '+ (i+1) +'</p>'+
+											(typeof self.slide_data[i].slide_display != 'undefined' ? self.slide_data[i].slide_display : '') +
+									   '</div>';
+											
+			}
+			
+			slide_display_html += '</div>';
+			self.workflow.parent().append(slide_display_html);
+		}
+	}
+	
+	this.set_nav = function() {
+		if (typeof self.slide_data[self.current] != 'undefined') {
+			$.each(self.slide_data[self.current].nav_vis, function(){ // get the current slide's nav actions
+				var btn = $('.'+ this[0], self.nav_bav),
+					action = this[1];
+			
+				if (action) {
+					if (typeof action == 'function') action.call(this, btn, self); 
+					else if (typeof action == 'string') btn[action]((action == 'hide' || action == 'show' ? null : self.btn_speed));
+				}
+			});
+		}
+		
+		if (self.settings.set_slides) setTimeout(function() {
+			$('.slide_display', self.workflow.parent()).removeClass('active');
+			$('#tab_step_'+ self.current, self.workflow.parent()).addClass('active');
+		}, self.fade_speed);
+	}
+	
+	this.may_move = function(step) {
+		var validated = true;
+		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) validated = self.slide_data[self.current].validate.call(this, self);
+		
+		return validated && ((self.current + step) >= 0 && (self.current + step) <= self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
+	}
+	
+	this.next = function(step) {
+		if (typeof step != 'number') var step = 1;
+		
+		self.move(step);
+		return false;
+	}
+	
+	this.prev = function(step) {
+		if (typeof step != 'number') var step = -1;
+		
+		self.move(step);
+		return false;
+	}
+	
+	this.move = function(step) {
+		if (self.may_move(step)) {
+			self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically 
+			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
+			self.current += step;
+			
+			self.slides.each(function(i){
+				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
+				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
+			});
+			
+			self.set_nav();
+			self.title_bar.trigger('change');
+			
+			if (typeof self.slide_data[self.current].action == 'function')
+				self.slide_data[self.current].action.call(this, self);
+			
+		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') 
+			self.settings.finish_action.call(this, self);
 	}
 }
 

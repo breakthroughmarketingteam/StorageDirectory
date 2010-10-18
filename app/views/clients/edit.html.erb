@@ -31,8 +31,14 @@
         <div id="ov-item-head">
           <h3><span>Reports</span></h3>
         </div>
-        <div id="ov-reports-cnt">
-			<div id="stats_graph"></div>
+        <div id="ov-reports-cnt" class="Xtabular_content">
+			<!--<ul class="tabular">
+				<li><%= link_to 'Overview', '#', :rel => 'stats_graph' %></li>
+				<li><%= link_to 'Clicks', '#', :rel => 'stats_graph' %></li>
+				<li><%= link_to 'Impressions', '#', :rel => 'stats_graph' %></li>
+				<li><%= link_to 'All Time', '#', :rel => 'stats_graph' %></li>
+			</ul>-->
+			<div id="stats_graph" class="Xtab_content"></div>
         </div>
       </div>
 		
@@ -65,13 +71,28 @@
         </div>
       </div>
 
+	<%= render_hints_for :services %>
+      <div id="ov-services" class="hideable">
+        <div id="ov-item-head">
+          <h3><span>Services</span></h3>
+        </div>
+        <div id="ov-services-cnt">
+			<div>
+				<ul>
+					<li><%= link_to '<span>Reservations</span>', '#reservations', :id => 'reservations' %></li>
+					<li><%= link_to '<span>Call Tracking</span>', '#calls', :id => 'calls' %></li>
+				</ul>
+			</div>
+        </div>
+      </div>
+
 	<%= render_hints_for :owner_info %>
  	  <div id="ov-info" class="instant_form hideable">
         <div id="ov-item-head">
           <h3><span>Owner / Management Info.</span></h3>
 
   	      <%= ajax_loader %>
-          <a id="client_edit_contact" class="btn instant_submit<%= ' clickerd' if flash[:notice] && flash[:notice] == @flash_msgs[:new_client] rescue false %>" href="#">Edit</a></p>
+          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a></p>
         </div>
 
         <div class="ov-info-cnt">
@@ -97,22 +118,6 @@
         </div>
   	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>
       </div>
-    
-	<%= render_hints_for :services %>
-      <div id="ov-services" class="hideable">
-        <div id="ov-item-head">
-          <h3><span>Services</span></h3>
-        </div>
-        <div id="ov-services-cnt">
-			
-			<div>
-				<ul>
-					<li><%= link_to '<span>Reservations</span>', '#reservations', :id => 'reservations' %></li>
-					<li><%= link_to '<span>Call Tracking</span>', '#calls', :id => 'calls' %></li>
-				</ul>
-			</div>
-        </div>
-      </div>
  
 	<%= render_hints_for :settings %>
       <div id="ov-settings" class="hideable">
@@ -120,25 +125,32 @@
           <h3><span>Settings</span></h3>
         </div>
         <div id="ov-settings-cnt" class="framed">
-          
-			<table id="client_settings" cellspacing="0" cellpadding="0">
-				<tr>
-					<th title="Setup where and when to send reports"><p>Email reports: </p></th>
-					<td id="email_reports_settings">
-						<p>
-							<%= text_field_tag 'reports_recipient', @client.report_recipients, :id => 'reports_recipient_input', :params => "model=Client&id=#{@client.id}&attribute=reports_recipient&value=", :class => 'hintable text inline_save', :title => 'Recipient(s)' %>
-							<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
-					<td id="user_hint_toggles">
-						<p><%= radio_button_tag 'user_hints', 'open' %> Show</p>
-						<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
-					</td>
-				</tr>
-			</table>
+          	
+			<% form_for @client, :id => 'client_settings' do |f| %>
+				<table cellspacing="0" cellpadding="0">
+					<tr>
+						<th title="Setup where and when to send reports"><p>Email reports: </p></th>
+						<td id="email_reports_settings">
+							<% f.fields_for :settings, @settings do |s| %>
+								<p>
+									<%= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
+									<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
+								</p>
+							<% end %>
+						</td>
+					</tr>
+					<tr>
+						<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
+						<td id="user_hint_toggles">
+							<p><%= radio_button_tag 'user_hints', 'open' %> Show</p>
+							<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
+						</td>
+					</tr>
+				</table>
+				<div class="hide">
+					<%= f.hidden_field :upsets %><%= f.submit %>
+				</div>
+			<% end %>
 			
         </div>
       </div>

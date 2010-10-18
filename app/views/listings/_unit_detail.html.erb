@@ -1,11 +1,11 @@
-<% if unit_size = listing.get_closest_unit_size(params[:storage_size]) %>
-	<div class="unit_detail_in">
-		<div class="left">
-			Specials: <span>First Month Free! Lowest Price Garaunteed. Exclusive Web Special</span>
-		</div>
-		
-		<div class="compare">
-			<%= label_tag "compare_#{listing.id}", 'Compare 2 or more' %><input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>">	
-		</div>
+<div class="unit_detail_in">
+	<div class="left">
+		<% if listing.web_special %>
+			<%= listing.web_special.label %>: <span title="<%= listing.web_special.description %>"><%= listing.web_special.title %></span>
+		<% end %>
 	</div>
-<% end %>
+	
+	<div class="compare">
+		<%= label_tag "compare_#{listing.id}", 'Compare 2 or more' %><input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>">	
+	</div>
+</div>

@@ -305,6 +305,40 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('#XXXnarrow_results_form').submit(function(){
+		var form = $(this),
+			results = $('#rslt-list-bg').addClass('loading').children().hide();
+		
+		$.getJSON(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				results.replaceWith(data);
+			});
+		});
+		
+		return false;
+	});
+	
+	// narrow search form sliders
+	$('.slider').each(function(){
+		var $this = $(this),
+			value = $('.slider_val', $this.parent()).val();
+
+		$this.slider({
+			max: 50,
+			min:5,
+			step: 5,
+			animate: true,
+			value: value,
+			start: function(e, ui) {
+				var slider = $('.slider_val', $(e.target).parent());
+				if (slider.attr('disabled')) slider.attr('disabled', false);
+			},
+			slide: function(e, ui) {
+				$('.slider_val', $(this).parent()).val(ui.value);
+			}
+		});
+	});
+	
 	$('.rslt-price', '.listing').each(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
@@ -343,28 +377,6 @@ $(function(){
 		
 		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
 		else $('#compare-btn').slideUp();
-	});
-	
-	// bind event handlers and implement ajax functionality for search results.
-	
-	// opens the specific reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').live('click', function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent());
-			
-		if (rform.hasClass('active')) {
-			rform.slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-		} else {
-			$('.reserve_form').slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-			$('.sl-table', rform.parent()).addClass('active');
-			rform.slideDown().addClass('active');
-			$.activate_datepicker(rform);
-		}
-
-		$('input[type=text]:first', rform).focus();
-		return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */
@@ -483,7 +495,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
+		$('.datepicker_wrap', context).click(function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -508,8 +520,9 @@ $(function(){
 	});
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
-	$('.reserve_btn', '.listing').live('click', function(){
-		var $this = $(this), new_href = $this.attr('href').replace('/sizes', '/reserve'),
+	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
+		var $this = $(this), 
+			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			unit_size = $(':radio:checked', $this.parent().parent());
 		
 		if (unit_size.length) {
@@ -563,6 +576,7 @@ $(function(){
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
 						$('.numeric_phone', $panel).formatPhoneNum();
+						new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
 					}
 				});
 			});
@@ -575,74 +589,187 @@ $(function(){
 
 		return false;
 	});
-
-	// narrow search form sliders
-	$('.slider').each(function(){
-		var $this = $(this),
-			value = $('.slider_val', $this.parent()).val();
-
-		$this.slider({
-			max: 50,
-			min:5,
-			step: 5,
-			animate: true,
-			value: value,
-			start: function(e, ui) {
-				var slider = $('.slider_val', $(e.target).parent());
-				if (slider.attr('disabled')) slider.attr('disabled', false);
-			},
-			slide: function(e, ui) {
-				$('.slider_val', $(this).parent()).val(ui.value);
+	
+	// opens the unit size specific reserve or request form in the unit sizes tab
+	var unit_size_form_partials = {}; // cache the forms here
+	$('.open_reserve_form').live('click', function(){
+		var $this = $(this), rform = $('.reserve_form', $this.parent()),
+			listing = rform.parents('.listing'),
+			listing_id = listing.attr('id').replace('listing_', ''),
+			size_id = $this.parent().attr('id').replace('Size_', ''),
+			accepts_reservations = listing.attr('has-res') == 'true' ? true : false,
+			ajax_loader = $('.ajax_loader', this);
+			
+		if (rform.hasClass('active')) { // clicking on an open form, close it
+			rform.slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			
+		} else { // get or open the form for this size
+			$('.reserve_form').slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			$('.sl-table', rform.parent()).addClass('active');
+			
+			if (unit_size_form_partials[size_id]) rform.slideDown().addClass('active');
+			else {
+				ajax_loader.show();
+				
+				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
+					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+						
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
+						
+						new GreyWizard($('.sl-table-exp', rform), reservation_workflow).begin_workflow_on(0);
+					});
+				} else {
+					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+						
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
+					});
+				}
 			}
-		});
+		}
+
+		$('input[type=text]:first', rform).focus();
+		return false;
 	});
 	
-	// Reservation process, submit reserver details, then billing info
+	var reservation_workflow = {
+		slides : [
+			{
+				div_id  : 'reserve_step1',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['back', 'fadeOut'] 
+				],
+				action : function(wizard) {
+					wizard.workflow.animate({'height': '380px'}, 'fast');
+				},
+				validate : function(wizard) {
+					var form = $('#reservation_form1', wizard.workflow);
+
+					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
+						next_slide.html(response_data).children().hide().fadeIn();
+						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
+					});
+				} // END validate
+			}, // END slide 1
+			{ 
+				div_id  : 'reserve_step2',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Next').data('done', false); }],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					// expand slide 2 automatically if it's already filled (the user went back), otherwise this is handled in slide 1's validate method
+					if ($('#reservation_form2', wizard.workflow).length) wizard.workflow.animate({'height': '610px'}, 'fast');
+				},
+				validate : function(wizard) {
+					var form = $('#reservation_form2', wizard.workflow);
+					
+					return bool_submit_once_and_do(form, wizard, 3, function(response_data, next_slide) {
+						next_slide.html(response_data).children().hide().fadeIn();
+					});
+				} // END validate
+			}, // END slide 2
+			{ 
+				div_id  : 'reserve_step3',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					wizard.workflow.animate({'height': '440px'}, 'fast');
+				}
+			} // END slide 3
+		],
+		finish_action : function(wizard) {
+			wizard.workflow.parent().slideUp().removeClass('active').parent().find('.sl-table').removeClass('active');
+		}
+	};
+	
+	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
+	// returns true so the workflow can go to the next slide
+	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
+		var next_slide = $(wizard.slides[slide_num-1]),
+			ajax_loader = $('.ajax_loader', next_slide);
+			
+		if (!form.data('submitted')) form.runValidation();
+		
+		if (!form.data('submitted') && form.data('valid')) {
+			form.data('submitted', true).save_state(); // in case the user clicked back and changed an input value
+			ajax_loader.show();
+			
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
+			return true; // while the form is submitting, this function returns true and causes the workflow to move next
+			
+		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
+			ajax_loader.show();
+			
+			if (slide_num == 2) {
+				// get the reservation id so the server can update it
+				var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
+					reservation_id = $('form', step2).attr('action').split('/');
+
+				reservation_id = reservation_id[reservation_id.length-1];
+				form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
+			} else if (slide_num == 3) {
+				
+			}
+			
+			form.save_state();
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
+			return true;
+			
+		} else if (form.data('submitted')) return true;
+		
+		return false;
+	}
+	
+	function submit_reservation_form(form, next_slide, ajax_loader, callback) {
+		$.post(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				callback.call(this, data, next_slide);
+			}, function(data) { // error
+				next_slide.html(data);
+			});
+			
+			ajax_loader.hide();
+		});
+	}
+	
+	// Info request: submit reserver details
 	$('form.new_listing_request').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-				$('.hintable', inner_panel).hinty();
-			});
-		});
-		
-		return false;
-	});
-	
-	$('form.edit_reservation').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-			});
-		});
-		
-		return false;
-	});
-	
-	$('#reserve_done').live('click', function(){
-		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
-	});
-	
-	function submit_reservation_and_do(form, callback) {
-		var form = $(form).runValidation(),
-			data = form.serialize(),
+		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form).show();
 		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
 			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
-			$.post(form.attr('action'), data, function(response) {
-				if (response.success) callback.call(this, form, response);
-				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				if (response.success) {
+					var inner_panel = form.parent();
+					inner_panel.children().fadeOut(300, function(){
+						inner_panel.html(response.data).children().hide().fadeIn();
+						$('.hintable', inner_panel).hinty();
+					});
+				} else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		} else ajax_loader.hide();
-	}
+		
+		return false;
+	});
 	
 	$('.tos').live('click', function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
