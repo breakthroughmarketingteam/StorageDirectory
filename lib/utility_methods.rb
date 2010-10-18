@@ -74,4 +74,15 @@ module UtilityMethods
     end
   end
   
+  Array.class_eval do
+    def sum_all
+      inject(0.0) { |result, el| result + el }
+    end
+
+    def mean 
+      sum_all / size
+    end
+  end
+  
+  
 end

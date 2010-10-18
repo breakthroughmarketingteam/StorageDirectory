@@ -78,9 +78,8 @@
 		
 		<% if result.premium? %>
 			<div class="unit_detail">
-				<%= render :partial => 'listings/unit_detail', :locals => { :listing => result } %>
+				<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
 			</div>
-			
 		<% end %>
 	</div>
 	

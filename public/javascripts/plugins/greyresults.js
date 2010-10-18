@@ -343,40 +343,57 @@ $(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
 	
-	$compare_btns = $('.compare', '.listing');
-	
-	if ($('.listing.active').length > 1) $('#compare-btn').show();
-	else $('#compare-btn').hide();
-	
-	$compare_btns.live('click', function(){
-		var compare 		= $(this),
-			listing 		= compare.parents('.listing'),
-			id 				= listing.attr('id').split('_')[1];
+	$compare_btns = $('input[name=compare]', '.listing');
+	$compare_btns.live('change', function(){
+		var compare	= $(this), listing = compare.parents('.listing'),
+			blank_compare_href = $('.compare a', '.listing').eq(0).attr('href'),
+			id = compare.val(), marker, compare_links;
 		
 		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
 		
-		if (!compare.data('on')) {
+		if (compare.is(':checked')) {
 			listing.addClass('active');
-			compare.data('on', true);
-			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
 			
-			if (typeof marker != 'undefined'){
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length >= 2) {
+				$('a', '.active .compare').show();
+				$('label', '.active .compare').hide();
+			}
+			
+			if (marker) {
 				marker.GmapState = 'selected';
 				highlightMarker(marker);
 			}
 		} else {
-			listing.removeClass('active');
-			compare.data('on', false);
-			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			$('a', compare.parent()).hide();
+			$('label', compare.parent()).show();
 			
-			if (typeof marker != 'undefined'){
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length <= 2) {
+				$('a', '.active .compare').hide();
+				$('label', '.active .compare').show();
+			}
+			
+			listing.removeClass('active');
+			
+			if (marker) {
 				marker.GmapState = '';
 				unhighlightMarker(marker);
 			}
 		}
-		
-		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
-		else $('#compare-btn').slideUp();
+	});
+	
+	$('a', '.compare').live('click', function() {
+		var compares = $('input:checked', '.compare'), compare_href = '';
+		if (compares.length) {
+			compares.each(function(){
+				compare_href += this.value + ',';
+			});
+			
+			this.href += compare_href;
+			console.log(this.href)
+			
+		} else return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */
@@ -594,10 +611,10 @@ $(function(){
 	var unit_size_form_partials = {}; // cache the forms here
 	$('.open_reserve_form').live('click', function(){
 		var $this = $(this), rform = $('.reserve_form', $this.parent()),
-			listing = rform.parents('.listing'),
-			listing_id = listing.attr('id').replace('listing_', ''),
-			size_id = $this.parent().attr('id').replace('Size_', ''),
-			accepts_reservations = listing.attr('has-res') == 'true' ? true : false,
+			wrap = $this.parent('.sl-table-wrap'),
+			listing_id = wrap.attr('rel').replace('listing_', ''),
+			size_id = wrap.attr('id').replace('Size_', ''),
+			accepts_reservations = wrap.attr('has-res') == 'true' ? true : false,
 			ajax_loader = $('.ajax_loader', this);
 			
 		if (rform.hasClass('active')) { // clicking on an open form, close it
@@ -657,6 +674,7 @@ $(function(){
 
 					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
 						next_slide.html(response_data).children().hide().fadeIn();
+						$('.hintable', next_slide).hinty();
 						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
 					});
 				} // END validate

@@ -1,5 +1,5 @@
 <% @listing ||= listing %>
-<div id="Size_<%= size.id %>" class="sl-table-wrap">
+<div id="Size_<%= size.id %>" class="sl-table-wrap" rel="listing_<%= @listing.id %>" has-res="<%= @listing.accepts_reservations? %>">
 	<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 		<li class="st-size"><%= size.display_dimensions %></li>
 		<li class="st-type"><%= size.title %></li>
