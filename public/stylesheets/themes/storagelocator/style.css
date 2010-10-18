@@ -507,6 +507,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-sizes-in .sl-table .st-desc{line-height:3.3;overflow:hidden;height:35px;}
 #sl-tabs-sizes-in ul li.st-rese{width:13%;text-align:center;float:right;margin-right:3px;position:relative;}
 #sl-tabs-sizes-in ul li.st-rese .ajax_loader{left:-13px;position:absolute;top:-2px;}
+.show_action #sl-tabs-sizes-in ul li.st-rese .ajax_loader{top:13px;}
 #sl-tabs-sizes-in ul li.st-rese a{position:relative;top:2.2px;right:-8px;display:block;font-size:100%;width:84px;height:32px;line-height:32px;color:#fff;text-shadow:1px 1px 0px #666;text-decoration:none;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat center;font-weight:normal;}
 #sl-tabs-sizes-in ul.active li.st-rese a,#sl-tabs-sizes-in ul:hover li.st-rese a,#sl-tabs-sizes-in ul:active li.st-rese a{background:url(/images/ui/storagelocator/sl-table-reserve-active.png) no-repeat center;}
 #sl-tabs-sizes-in ul li.st-sele{float:right;height:34px;width:40px;}

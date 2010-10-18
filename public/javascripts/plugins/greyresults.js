@@ -594,10 +594,10 @@ $(function(){
 	var unit_size_form_partials = {}; // cache the forms here
 	$('.open_reserve_form').live('click', function(){
 		var $this = $(this), rform = $('.reserve_form', $this.parent()),
-			listing = rform.parents('.listing'),
-			listing_id = listing.attr('id').replace('listing_', ''),
-			size_id = $this.parent().attr('id').replace('Size_', ''),
-			accepts_reservations = listing.attr('has-res') == 'true' ? true : false,
+			wrap = $this.parent('.sl-table-wrap'),
+			listing_id = wrap.attr('rel').replace('listing_', ''),
+			size_id = wrap.attr('id').replace('Size_', ''),
+			accepts_reservations = wrap.attr('has-res') == 'true' ? true : false,
 			ajax_loader = $('.ajax_loader', this);
 			
 		if (rform.hasClass('active')) { // clicking on an open form, close it
