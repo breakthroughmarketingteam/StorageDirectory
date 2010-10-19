@@ -209,7 +209,7 @@ $(document).ready(function() {
 
 					} else {
 						$.getJSON('/ajax/get_cities?state='+ state, function(response) {
-							$.handle_json_response(response, function(data){
+							$.with_json(response, function(data){
 								wizard.slide_data[1].build_city_list = true;
 								wizard.slide_data[1].pop_up_title = 'Pick a City in '+ state
 								wizard.slide_data[1].data = { state: state, cities: data };
@@ -326,73 +326,7 @@ $(document).ready(function() {
 	$('.storage_in_city', '#cities_list').css('width', '23%');
 	$('.storage_in_city span', '#cities_list').hide();
 	
-	// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
-	var GreyShow = function(options) {
-		var self = this;
-		this.context 	= options.context;
-		this.slides  	= options.slides;
-		this.delay 	 	= options.delay;
-		this.num_slides = options.slides.length;
-		this.time_int 	= 0;
-		
-		this.start = function() {
-			self.current = 0;
-			self.startSlide();
-		}
-		
-		this.startSlide = function() {
-			if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
-			
-			self.hidePrevSlide();
-			self.slide_objects = self.slides[self.current].objects;
-			self.current_object = 0;
-			self.runObject(self.slide_objects[0]);
-		}
-		
-		this.gotoSlide = function(n) {
-			self.current = n;
-			
-			if (n == self.num_slides) {
-				self.current = 0;
-				self.gotoSlide(0);
-				
-			} else self.startSlide();
-		}
-		
-		this.runObject = function(o) {
-			var $object = $('#'+ o.id);
-			$object.children().hide();
-			
-			if (typeof o.callback == 'function')
-				o.callback.call(this, $object, self);
-			
-			$object[o.action](o.speed, function(){ self.nextObject(o) });
-		}
-		
-		this.nextObject = function(o) {
-			self.current_object++;
-			
-			if (self.slide_objects[self.current_object]) {
-				setTimeout(function(){
-					self.runObject(self.slide_objects[self.current_object]);
-				}, o.delay);
-				
-			} else {
-				setTimeout(function(){
-					self.slides[self.current].end.call(this, self);
-				}, self.delay);
-			}
-		}
-		
-		this.hidePrevSlide = function(callback) {
-			var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
-			
-			for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
-				var $object = $('#'+ self.slides[prev].objects[i].id);
-				$object.fadeOut(900);
-			}
-		}
-	}
+	
 	
 	// storage tips page
 	var tips_head = $('#tips-head'); 
@@ -444,7 +378,7 @@ $(document).ready(function() {
 		if (this.href == '#') $(div_to_print).jqprint(print_opts);
 		else {
 			$.getJSON(this.href, function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var wrap = $(data).appendTo('body'),
 						coup = $(div_to_print).clone().appendTo('#print_content');
 					
@@ -487,37 +421,38 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#top_map_btn').click(function(){
-		var $this = $(this),
-			location = $this.attr('rel').split(','),
-			lat = parseFloat(location[0]),
-			lng = parseFloat(location[1]),
-			main_map = $('#main_map');
-
-		if ($this.text() == 'Show Map') {
-			if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', true, { expires: 30 });
-			$('span', $this).text('Hide Map');
-			main_map.slideDown();
-		} else {
-			if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', null);
-			$('span', $this).text('Show Map');
-			main_map.slideUp();
-		}
-
-		// center the map the first time it opens
-		if (main_map.is(':visible')) setTimeout(function(){
-			Gmap.checkResize();
-			Gmap.setCenter(new GLatLng(lat, lng), 12);
-		}, 500);
-	});
-	
 	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
 	
 	if ($.on_page([['locator', 'listings']])) {
 		var main_map = $('#main_map');
 		
-		if ($.cookie('main_map_open')) $.open_map(main_map);
-		else main_map.hide();
+		$('#top_map_btn').live('click', function(){
+			var $this = $(this),
+				location = $this.attr('rel').split(','),
+				lat = parseFloat(location[0]),
+				lng = parseFloat(location[1]);
+
+			if ($this.text() == 'Show Map') {
+				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', true, { expires: 30 });
+				$('span', $this).text('Hide Map');
+				main_map.slideDown();
+			} else {
+				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', null);
+				$('span', $this).text('Show Map');
+				main_map.slideUp();
+			}
+
+			// center the map the first time it opens
+			if (main_map.is(':visible')) setTimeout(function(){
+				Gmap.checkResize();
+				Gmap.setCenter(new GLatLng(lat, lng), 12);
+			}, 300);
+		});
+		
+		if (!$.cookie('main_map_open')) {
+			$.cookie('main_map_open', true);
+			$.open_map(main_map);
+		}
 		
 		/*/ move the sidebar with the page
 		var move_me = $('#content_bottom .region_content_bottom');
@@ -553,11 +488,11 @@ $(document).ready(function() {
 				};
 			
 			$.post('/ajax/find_listings', form_data, function(response){
-				$.handle_json_response(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // preping step 2
+				$.with_json(response, function(data){
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
-						if (data[0]) {
+						if (data[0]) { // we found matching listings, start on the first step of the workflow
 							workflow_settings.slides[0].data = data;
 							wizard.begin_workflow_on(0);
 							
@@ -575,25 +510,13 @@ $(document).ready(function() {
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
 		$('.selective_hider').live('click', function(){
-			var dont_hide  = $(this).attr('rel'),
-				hide_these = $('.hideable');
+			var dont_hide = $(this).attr('rel'), hide_these = $('.hideable');
 			
-			if (dont_hide) {
-				hide_these.each(function(){
-					if (this.id != dont_hide) {
-						$(this).slideUp();
-						$(this).prev('.user_hint').slideUp();
-					
-					} else {
-						$(this).slideDown();
-						$(this).prev('.user_hint').slideDown();
-					}
-				});
-
-			} else {
-				hide_these.slideDown();
-				$('.user_hint').slideDown();
-			}
+			if (dont_hide) hide_these.each(function(){
+				if (this.id != dont_hide) $(this).slideUp();
+				else $(this).slideDown();
+			});
+			else hide_these.slideDown();
 
 			return false;
 		});
@@ -661,7 +584,7 @@ $(document).ready(function() {
 				ajax_loader.show();
 				
 				$.getJSON('/ajax/get_partial?partial=clients/client_info_text&model=Client&id='+ $('#client_id').text(), function(response){
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						wizard.slide_data[1].client_info = data;
 						$('.client_info_preview', active_opt).append(data);
 					});
@@ -696,7 +619,7 @@ $(document).ready(function() {
 					ajax_loader = $('.ajax_loader', '#issnstep_3').show();
 				
 				$.post(form.attr('action'), form.serialize(), function(response) {
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						inner.html('<h2 class="framed">'+ data +'</h2>');
 						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload(); return false; });
 					});
@@ -723,7 +646,7 @@ $(document).ready(function() {
 				
 			} else {
 				$.getJSON(this.href, {}, function(response) {
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						var box = $(data).append('<a class="close_btn" href="#">X</a>');
 
 						$('.reservation_wrap', 'td.region').hide();
@@ -744,7 +667,6 @@ $(document).ready(function() {
 		});
 		
 		$('.hint_toggle').live('click', function() {
-			console.log(this)
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
 				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
@@ -762,14 +684,13 @@ $(document).ready(function() {
 			$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
 		});
 		
-		var inline_save_orig_values = {};
-		$('.inline_save').each(function(){
-			inline_save_orig_values[this.id] = this.value.replace(this.title, '');
-		});
-		
 		$('.inline_save').live('focus', function() {
 			var input = $(this);
-			$('<a class="attribute_save" href="/ajax/update?'+ input.attr('params') +'">Save</a>').appendTo('#email_reports_settings');
+			input.after('<a class="submit_btn" href="#">Save</a>');
+		});
+		
+		$('#client_settings').submit(function(){
+			
 		});
 		
 		$('.attribute_save').live('click', function() {
@@ -796,7 +717,7 @@ $(document).ready(function() {
 		
 			// GET PARTIAL
 			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var partial 	  = $(data).hide(),
 						title_input   = $('input[name="listing[title]"]', partial),
 						tip_text	  = $('.new_listing_tip', partial);
@@ -903,7 +824,7 @@ $(document).ready(function() {
 
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
-						$.handle_json_response(response, function(data){
+						$.with_json(response, function(data){
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 
 							listing_html = $(data);
@@ -1016,7 +937,7 @@ $(document).ready(function() {
 			ajax_loader.show();
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$this.after('<span id="msg">Saved!</span>');
 					setTimeout(function(){ $('#msg', form).fadeOut(1000, function(){ $(this).remove() }); }, 3000);
 				});
@@ -1038,7 +959,7 @@ $(document).ready(function() {
 		$('.edit-btn', sizes_in).hide();
 		
 		$.post($this.attr('href'), {}, function(response) {
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				$this.text('Reloading');
 				
 				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(resp){
@@ -1071,7 +992,7 @@ $(document).ready(function() {
 				setTimeout(function(){ $('#picture_facility_image', $form).val('') }, 100);
 			},
 			success: function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					var thumb_img = $('img', thumb);
 					thumb_img.attr({ src: data.thumb, id: 'Picture_'+ data.id }).removeClass('loading');
 					thumb_img.next('a').attr('href', '/listings/'+ data.listing_id +'/pictures/'+ data.id);
@@ -1108,7 +1029,7 @@ $(document).ready(function() {
 				id = img.attr('id').replace('Picture_', '');
 
 			$.post($(this).attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
@@ -1128,13 +1049,14 @@ $(document).ready(function() {
 	if (stats_graph.length > 0) {
 		stats_graph.addClass('loading');
 		
-		var stats_models = 'clicks, impressions, reservations',
+		var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
+			stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
 			d = new Date(), // getMonth returns 0-11
 			end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate());
+			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate()); // month in the past
 		
 		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				var plot_data = [],
 					stats_arr = stats_models.split(/,\W?/);
 				
@@ -1154,7 +1076,7 @@ $(document).ready(function() {
 					series: [ 
 				        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
 				        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
-				        { label: '&nbsp;Reservations', lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
+				        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
 				    ],
 					highlighter: { sizeAdjust: 7.5 },
 					cursor: { show: true, zoom: true },
@@ -1232,7 +1154,7 @@ $.fn.instantForm = function() {
 				$('input', $this).each(function(){ hidden_form.append($(this).clone()); });
 				
 				$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-					$.handle_json_response(response, function(data){
+					$.with_json(response, function(data){
 						$('.value', $this).each(function(){
 							var this_val   = $(this),
 								this_input = $('input', this_val.parent()).hide();
@@ -1263,139 +1185,6 @@ $.fn.instantForm = function() {
 	});
 }
 
-// first implemented for the client sign up page (add your facility)
-var GreyWizard = function(container, settings) {
-	var self = this;
-	self.form_data 	= {};
-	self.settings 	= settings;
-	self.slide_data = settings.slides;
-	self.slides_class = settings.slides_class || 'workflow_step',
-	self.nav_id		= settings.nav_id || 'workflow_nav',
-	self.num_slides = self.slide_data.length;
-	self.workflow 	= $(container);
-	self.title_bar 	= $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
-	self.width	  	= self.workflow.width();
-	self.height   	= self.workflow.height();
-	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
-	self.spacer		= settings.spacer || 100; // to give the slides space between transitions
-	self.slide_speed = settings.slide_speed || 1500,
-	self.btn_speed  = settings.btn_speed || 900,
-	self.fade_speed = settings.fade_speed || 1000,
-	
-	this.begin_workflow_on = function(step) {
-		self.workflow.parents('#pop_up').show();
-		self.nav_bar  	= $('#'+ self.nav_id, self.workflow).children().hide().end(); // set initial nav state on each run
-		self.current  	   = step || 0;
-		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
-		self.skipped_first = step > 0 ? true : false;
-		
-		self.set_slides();
-		
-		// bind events
-		self.nav_bar.find('.next, .skip').click(self.next);
-		self.nav_bar.find('.back').click(self.prev);
-		
-		self.title_bar.change(function(){
-			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
-			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
-			
-		}).trigger('change');
-		
-		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
-		self.set_nav();
-	}
-	
-	this.set_slides = function() {
-		if (typeof set_display == 'undefined') set_display = false;
-		
-		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
-		self.slides.each(function(i){
-			// calculate the left position so that the initial slide is at 0
-			var left = -((self.width + self.spacer) * (self.current - i))
-			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
-		});
-		
-		if (self.settings.set_slides) { // build the slide tabbed nav
-			var slide_display_html = '<div id="slide_nav">',
-				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
-				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
-				done_skipping 	   = false;
-			
-			for (var i = 0; i < self.num_slides; i++) {
-				if (self.skipped_first && !done_skipping) { done_skipping = true; continue; }
-				
-				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
-										   '<p>Step '+ (i+1) +'</p>'+
-											self.slide_data[i].slide_display +
-									   '</div>';
-											
-			}
-			
-			slide_display_html += '</div>';
-			self.workflow.parent().append(slide_display_html);
-		}
-	}
-	
-	this.set_nav = function() {
-		if (typeof self.slide_data[self.current] != 'undefined') {
-			$.each(self.slide_data[self.current].nav_vis, function(){ // get the current slide's nav actions
-				var btn = $('#'+ this[0]),
-					action = this[1];
-			
-				if (action) {
-					if (typeof action == 'function') action.call(this, btn, self); 
-					else if (typeof action == 'string') btn[action]((action == 'hide' || action == 'show' ? null : self.btn_speed));
-				}
-			});
-		}
-		
-		setTimeout(function() {
-			$('.slide_display', self.workflow.parent()).removeClass('active');
-			$('#tab_step_'+ self.current, self.workflow.parent()).addClass('active');
-		}, self.fade_speed);
-	}
-	
-	this.may_move = function(step) {
-		var validated = true;
-		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) validated = self.slide_data[self.current].validate.call(this, self);
-		
-		return validated && ((self.current + step) >= 0 && (self.current + step) <= self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
-	}
-	
-	this.next = function(step) {
-		if (typeof step != 'number') var step = 1;
-		
-		self.move(step);
-		return false;
-	}
-	
-	this.prev = function(step) {
-		if (typeof step != 'number') var step = -1;
-		
-		self.move(step);
-		return false;
-	}
-	
-	this.move = function(step) {
-		if (self.may_move(step)) {
-			self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically 
-			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
-			self.current += step;
-			
-			self.slides.each(function(i){
-				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
-				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
-			});
-			
-			self.set_nav();
-			self.slide_data[self.current].action.call(this, self);
-			self.title_bar.trigger('change');
-			
-		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') 
-			self.settings.finish_action.call(this, self);
-	}
-}
-
 // NEW CLIENT Workflow (sign up through the add-your-facility page)
 var workflow_settings = {
 	title		 : 'Add Your Facility',
@@ -1419,7 +1208,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
-				['back', function(btn, wizard){ /*wizard.skipped_first ? btn.hide() : btn.fadeIn();*/ btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
+				['back', function(btn, wizard){ btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
 			],
 			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
 		},
@@ -1463,7 +1252,11 @@ function workflow_step2() {
 			listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
 		});
 
-		setTimeout(function(){ listings_box.fadeIn(wizard.settings.fade_speed) }, 350);
+		setTimeout(function(){
+			listings_box.fadeIn(wizard.settings.fade_speed);
+			listing_id = $.get_param_value('listing_id');
+			if (listing_id) $('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+		}, 350);
 	}
 }
 
@@ -1564,7 +1357,7 @@ function finish_workflow() {
 		next_button.prev('.ajax_loader').show();
 
 		$.post('/clients', wizard.form_data, function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				wizard.workflow.parents('#pop_up').dialog('close');
 				$('#top_fac_page').html(data);
 			});
@@ -1590,46 +1383,6 @@ function get_checked_listings_addresses(wizard, address_part) {
 	return addresses;
 }
 
-// pulls the pop_up template and runs the callback
-// params requires sub_partial. e.g params.sub_partial 
-function get_pop_up_and_do(options, params, callback) {
-	var params = params || {}
-	params.partial = params.partial || '/shared/pop_up';
-	
-	$.get('/ajax/get_multipartial', params, function(response) {
-		var pop_up = $(response).dialog({
-			title: 	   options.title,
-			width: 	   options.width || 785,
-			minHeight: options.minHeight || 420,
-			height:    options.height,
-			resizable: false,
-			modal: 	   options.modal,
-			close: 	   function() {
-				$('.ajax_loader').hide();
-				$(this).dialog('destroy').remove();
-			}
-		});
-		
-		if (typeof callback == 'function') callback.call(this, pop_up);
-	});
-}
-
-function get_partial_and_do(params, callback) {
-	var params = params || {}
-	params.partial = params.partial || '/shared/pop_up_box';
-	
-	$.get('/ajax/get_partial', params, function(response) {
-		callback.call(this, $(response));
-	});
-}
-
-// updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
-function update_info_tab_count(label, i) {
-	var	tab = $('#tab_'+ label, '#sl-tabs'),
-			count = parseInt(tab.text().split('(')[1].replace(')', '')) + i;
-	
-	tab.text(label + ' ('+ count +')');
-}
 
 function preload_us_map_imgs() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];

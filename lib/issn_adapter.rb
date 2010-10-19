@@ -149,6 +149,11 @@ class IssnAdapter
     call_and_parse 'processTenantPayment'
   end
   
+  # other methods
+  def self.my_ip
+    call_and_parse_simple 'MyIPaddress'
+  end
+  
   # Database updater
   # :data => issn data, :assoc => model to create or update, :find_method => to update an existing assoc model, :find_attr => the atr to find by
   def self.update_models_from_issn(args)
@@ -180,6 +185,11 @@ class IssnAdapter
     parse_response response, method
   end
   
+  def self.call_and_parse_simple(method)
+    response = call_issn method
+    parse_simple response, method
+  end
+  
   def self.call_issn(method, query = '')
     uri = URI.parse(@@host + @@url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -196,6 +206,7 @@ class IssnAdapter
   end
   
   def self.path_str(method, query)
+    return "/_#{method}" if method =~ /(MyIPaddress)/i
     '/ISSN' + (/^(admin)/.match(method) ? method : "_#{method}") + @@auth + query
   end
 
@@ -203,9 +214,21 @@ class IssnAdapter
   def self.parse_response(response, method)
     parse_hash_or_array soap_data_set(response.body, method)
   end
+  
+  def self.parse_simple(response, method)
+    simple_soap_data_set(response.body, method)
+  end
 
   def self.soap_data_set(body, method)
     CobraVsMongoose.xml_to_hash(body)['DataSet']['diffgr:diffgram']['NewDataSet'][data_key_for(method)]
+  end
+  
+  def self.simple_soap_data_set(body, method)
+    case method when 'MyIPaddress'
+      CobraVsMongoose.xml_to_hash(body)['string']['$'].reject { |key| useless_keys.include? key }.first
+    else
+      CobraVsMongoose.xml_to_hash(body).reject { |k| useless_keys.include? k }
+    end
   end
 
   def self.parse_soap_array(data)

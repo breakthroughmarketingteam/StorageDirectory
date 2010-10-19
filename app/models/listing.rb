@@ -16,8 +16,8 @@ class Listing < ActiveRecord::Base
   has_many :web_specials   , :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
-  has_many :access_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "access"'
-  has_many :office_hours, :class_name => 'BusinessHour', :conditions => 'LOWER(hours_type) = "office"'
+  has_many :access_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
+  has_many :office_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'office'"
   
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
@@ -105,23 +105,22 @@ class Listing < ActiveRecord::Base
       :lng     => self.lng }
   end
   
-  def compare_attributes
-    attrs = []
-    attrs << { :title => self.title }
-    attrs << { :reservations => self.client.try(:accepts_reservations?) ? 'Yes' : 'No' }
-  end
-  
   # create a stat record => clicks, impressions
   def update_stat stat, request
     eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
   end
   
   def unit_sizes_options_array
-    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.unit_type.id] }.uniq
+    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.id] }.uniq
   end
   
   def available_sizes
     @available_sizes ||= self.issn_enabled? ? self.sizes.sorted.select { |size| size.unit_type.units_available? } : self.sizes.sorted
+  end
+  
+  def average_rate
+    return 'N/A' if self.available_sizes.empty?
+    self.available_sizes.map(&:dollar_price).mean
   end
   
   #
@@ -157,9 +156,21 @@ class Listing < ActiveRecord::Base
     end
     
     @model_data = Listing.all options
-    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?
-    #@model_data = smart_order(@model_data) if is_city? query
-    { :data => @model_data, :location => @location }
+    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
+    { :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+  end
+  
+  def premium?
+    self.client && self.client.status == 'active'
+  end
+  
+  def unverified?
+    self.client.nil? || self.client.status == 'unverified'
+  end
+  
+  # TODO: work on this to make sure it sorts correctly
+  def self.smart_order(data)
+    data.sort_by { |d| (d.impressions_count || 0) }
   end
   
   def self.extrapolate_query(params)
@@ -178,11 +189,6 @@ class Listing < ActiveRecord::Base
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
       Geokit::Geocoders::MultiGeocoder.geocode guessed
     end
-  end
-  
-  def self.extract_pieces_from_query(query)
-    extracted = {}
-    
   end
   
   def self.is_address_query?(query)
@@ -206,11 +212,6 @@ class Listing < ActiveRecord::Base
   
   def self.is_state?(query)
     query.match(/#{@@states_regex}/i)
-  end
-  
-  # TODO: work on this to make sure it sorts correctly
-  def self.smart_order(data)
-    data.sort_by { |d| (d.impressions_count || 0) }
   end
   
   # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.

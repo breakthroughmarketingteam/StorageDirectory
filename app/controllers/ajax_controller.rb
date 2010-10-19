@@ -203,7 +203,7 @@ class AjaxController < ApplicationController
     @model_class = params[:model].constantize 
     @model = params[:id].blank? ? @model_class.new : @model_class.find(params[:id])
     
-    @locals = { params[:model].downcase.to_sym => @model }
+    @locals = { params[:model].downcase.to_sym => @model, :pretend_action => params[:pretend_action] }
     
     if params[:sub_model]
       @sub_model_class = params[:sub_model].constantize

@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   $_user_hint_places = [:owner_info, :facilities, :reports, :services, :settings, :listing_detail, :info_tabs, :extras]
   
   # for the geo_search methods in Listing
-  $_listing_search_distance = 50
+  $_listing_search_distance = 25
   
   # for the enable issn connectivity workflow
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
@@ -155,7 +155,8 @@ class ApplicationController < ActionController::Base
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
-    @per_page = 15                                                                
+    @per_page = 15
+    @listings_per_page = 10                                                           
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?

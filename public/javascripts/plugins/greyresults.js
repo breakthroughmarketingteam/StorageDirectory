@@ -7,44 +7,86 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	$.convert_unit_size_row_values_to_inputs = function(container) {
+	// we needed to adjust the style of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
+	var sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
+		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
+	
+	$.convert_unit_size_row_values_to_inputs = function(container, cancel_btn, delete_btn) {
 		// values and such
+		container.addClass('active');
+		
 		var sizes_li	= $('.st-size', container),
 			type_li 	= $('.st-type', container),
+			desc_li 	= $('.st-desc', container),
 			price_li 	= $('.st-pric', container),
 			specials_li = $('.st-spec', container),
 			load_li		= $('.st-sele', container),
-
 			// to revert the content on cancel
 			sizes_orig		= sizes_li.text(),
 			type_orig		= type_li.text(),
+			desc_orig		= desc_li.text(),
 			price_orig		= price_li.html(),
 			specials_orig  	= specials_li.html(),
-
 			// build the input fields with the original values preset
 			x = sizes_orig.split(/\W?x\W?/)[0],
 			y = sizes_orig.split(/\W?x\W?/)[1],
 			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
 			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
 			ti = '<input type="text" class="small_text_field i" name="size[title]" value="'+ type_orig +'" />',
+			di = '<input type="text" class="small_text_field i" name="size[description]" value="'+ desc_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
 
-			// replace the content in the unit size row
-			sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
-			type_li.html(ti);
-			price_li.html('<span class="left">$ </span>'+ pi);
-			specials_li.html(si);
+		// replace the content in the unit size row
+		sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
+		type_li.html(ti);
+		desc_li.html(di);
+		price_li.html('<span class="left">$ </span>'+ pi);
+		specials_li.html(si);
+		
+		cancel_btn.show().click(function(){
+			switch (cancel_btn.attr('rel')) {
+				case 'close':
+					container.fadeOut(300, function() { $(this).remove(); update_info_tab_count('Unit_Sizes', -1); });
+				break;
+				case 'cancel':
+					// revert to original content
+					sizes_li.html(sizes_orig).css(sizes_li_revertment);
+					type_li.html(type_orig);
+					price_li.html(price_orig);
+					specials_li.html(specials_orig);
 
-		$('.cancel_link', container).live('click', function(){
-			// revert to original content
-			sizes_li.html(sizes_orig).css(sizes_li_revertment);
-			type_li.html(type_orig);
-			price_li.html(price_orig);
-			specials_li.html(specials_orig);
+					$('.edit-btn', container).text('Edit');
+					cancel_btn.hide();
+					delete_btn.hide();
+				break;
+			}
+			
+			container.removeClass('active');
+			return false;
+		});
+		
+		delete_btn.show().click(function(){
+			if (!delete_btn.data('deleting')) {
+				delete_btn.data('deleting', true);
+				
+				var listing_id = $('input[name=listing_id]').val(),
+					size_id = $('input[name=size_id]', container).val();
 
-			$('.edit-btn', container).text('Edit');
-			$(this).hide();
+				if (confirm('Are you sure you want to delete this unit size?')) {
+					$.post('/listings/'+ listing_id +'/sizes/'+ size_id, { _method: 'delete' }, function(response) {
+						$.with_json(response, function(data) {
+							container.fadeOut(300, function() {
+								$(this).remove();
+								update_info_tab_count('Unit_Sizes', -1);
+							});
+						});
+						
+						delete_btn.data('deleting', false);
+					}, 'json');
+				}
+			}
+			
 			return false;
 		});
 	}
@@ -53,16 +95,18 @@ $(function(){
 		$(inputs, context).each(function(){ form.append($(this).clone()); });
 	}
 
-	$.post_new_unit_size_values_and_revert = function(container, hidden_form) {
+	$.post_new_unit_size_values_and_revert = function(container, hidden_form, cancel_btn, delete_btn) {
 		var sizes_li	= $('.st-size', container),
 			type_li 	= $('.st-type', container),
 			price_li 	= $('.st-pric', container),
 			specials_li = $('.st-spec', container);
 
 		$.clone_and_attach_inputs('input.i', container, hidden_form);
+		cancel_btn.hide();
+		delete_btn.hide();
 		
 		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				// update the row with the new values
 				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
@@ -77,59 +121,84 @@ $(function(){
 				specials_li.html(specials_html);
 
 				$('.edit-btn', container).text('Edit');
-				$('.cancel_link', container).hide();
+				cancel_btn.attr('rel', 'cancel');
+				
+				container.replaceWith($(data));
+				
+			}, function(data) { // error
+				cancel_btn.show();
+				delete_btn.show();
+				
+				$.ajax_error(data); 
 			});
 			
 			$('.st-sele', container).removeClass('active_load');
-
+			container.removeClass('active');
+			
 		}, 'json');
 	}
 	
 	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
-		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
+		var unit_clone = $('.sl-table-wrap:not(.active)', '#sl-tabs-sizes-in').eq(0).clone().hide(),
+			ajax_loader = $('.ajax_loader', $(this).parent()).show();
 		
-		
+		if (!unit_clone.length) {
+			$.getJSON('/ajax/get_partial?partial=sizes/size&pretend_action=new&model=Size&sub_model=Listing&sub_id='+ $('input[name=listing_id]').val(), function(response) {
+				$.with_json(response, function(data) {
+					unit_clone = $(data).appendTo('#sl-tabs-sizes-in');
+					prep_unit_size_edit(unit_clone, ajax_loader);
+				});
+			});
 			
-		var hidden_form = $('form:hidden', unit_clone);
-				
-		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
-		unit_clone.fadeIn();
-		$('.edit-btn', unit_clone).eq(0).click();
+		} else {
+			$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
+			prep_unit_size_edit(unit_clone, ajax_loader);
+		}
+		
+		return false;
+	});
+	
+	function prep_unit_size_edit(unit_size, ajax_loader) {
+		var hidden_form = $('form:hidden', unit_size),
+			cancel_btn = $('.cancel_link', unit_size);
+		
+		hidden_form.find('input[name=_method]').val('post').end();
+		unit_size.fadeIn();
+		
+		$.convert_unit_size_row_values_to_inputs(unit_size, cancel_btn, $('.delete_link', unit_size));
+		
+		$('.edit-btn', unit_size).text('Save');
+		cancel_btn.attr('rel', 'close');
+		$('.delete_link', unit_size).remove();
+		$('input[name=size_id]', unit_size).val('').attr('id', '');
 		
 		// change form attr to reroute the ajax call to the create action
 		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
 		hidden_form.find('input[name=_method]').val('post');
 		
-		$('input', unit_clone).eq(0).focus()
+		$('input', unit_size).eq(0).focus();
+		ajax_loader.hide();
 		
-		return false;
-	});
+		update_info_tab_count('Unit_Sizes', 1);
+	}
 
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
 		var $this 		= $(this),
-			container 	= $this.parents('.sl-table'),
-			hidden_form	= $('form:hidden', container.parent()),
-			cancel_btn	= $('.cancel_link', container),
+			container 	= $this.parents('.sl-table-wrap'),
+			hidden_form	= $('form:hidden', container),
+			cancel_btn	= $('.cancel_link', container).attr('rel', $this.attr('rel')), // the cancel btn's rel dictates whether it should remove the size (new size) or revert it (existing size)
+			delete_btn  = $('.delete_link', container),
 			load_li		= $('.st-sele', container);
-			
-		hidden_form.find('input[name=_method]').val('put');
-		
-		// we needed to adjust the size of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-		sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
 
-		if ($(this).text() == 'Edit') {
-			$.convert_unit_size_row_values_to_inputs(container);
-
-			cancel_btn.show();
+		if ($this.text() == 'Edit') {
+			hidden_form.find('input[name=_method]').val('put');
+			$.convert_unit_size_row_values_to_inputs(container, cancel_btn, delete_btn);
 			$this.text('Save');
 
-		} else if ($(this).text() == 'Save') {
+		} else if ($this.text() == 'Save') {
 			load_li.addClass('active_load'); // loading anim
-			cancel_btn.hide();
-			
-			$.post_new_unit_size_values_and_revert(container, hidden_form);
+			$.post_new_unit_size_values_and_revert(container, hidden_form, cancel_btn, delete_btn);
 		}
 
 		return false;
@@ -171,7 +240,7 @@ $(function(){
 			$.clone_and_attach_inputs('input.i', container, hidden_form);
 
 			$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$('input.i', container).each(function(){
 						var input = $(this),
 							val	  = input.val();
@@ -202,7 +271,7 @@ $(function(){
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, {}, function(response) {
-			$.handle_json_response(response, function(data){
+			$.with_json(response, function(data){
 				$this.toggleClass('selected');
 				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
 			});
@@ -221,10 +290,14 @@ $(function(){
 		setTimeout(function(){ $this.next('#facility_feature_submit').hide('fast') }, 300);
 	});
 	$('#new_facility_feature').submit(function(){
-		var form = $(this),
-			data = form.serialize();
+		var form = $(this);
 		
-		$.log(data)
+		$.post(form.attr('action'), form.serialize(), function(response){
+			$.with_json(response, function(data) {
+				$.log(data);
+			});
+		});
+		
 		return false;
 	});
 	
@@ -232,66 +305,95 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('#XXXnarrow_results_form').submit(function(){
+		var form = $(this),
+			results = $('#rslt-list-bg').addClass('loading').children().hide();
+		
+		$.getJSON(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				results.replaceWith(data);
+			});
+		});
+		
+		return false;
+	});
+	
+	// narrow search form sliders
+	$('.slider').each(function(){
+		var $this = $(this),
+			value = $('.slider_val', $this.parent()).val();
+
+		$this.slider({
+			max: 50,
+			min:5,
+			step: 5,
+			animate: true,
+			value: value,
+			start: function(e, ui) {
+				var slider = $('.slider_val', $(e.target).parent());
+				if (slider.attr('disabled')) slider.attr('disabled', false);
+			},
+			slide: function(e, ui) {
+				$('.slider_val', $(this).parent()).val(ui.value);
+			}
+		});
+	});
+	
 	$('.rslt-price', '.listing').each(function(){
 		$(':radio', this).eq(0).attr('checked', true);
 	});
 	
-	$compare_btns = $('.compare', '.listing');
-	
-	if ($('.listing.active').length > 1) $('#compare-btn').show();
-	else $('#compare-btn').hide();
-	
-	$compare_btns.live('click', function(){
-		var compare 		= $(this),
-			listing 		= compare.parents('.listing'),
-			id 				= listing.attr('id').split('_')[1];
+	$compare_btns = $('input[name=compare]', '.listing');
+	$compare_btns.live('change', function(){
+		var compare	= $(this), listing = compare.parents('.listing'),
+			blank_compare_href = $('.compare a', '.listing').eq(0).attr('href'),
+			id = compare.val(), marker, compare_links;
 		
 		if (typeof Gmaps_data != 'undefined') marker = getMarkerById(id);
 		
-		if (!compare.data('on')) {
+		if (compare.is(':checked')) {
 			listing.addClass('active');
-			compare.data('on', true);
-			$('#compare-btn').attr('href', ($('#compare-btn').attr('href') + id + ','));
 			
-			if (typeof marker != 'undefined'){
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length >= 2) {
+				$('a', '.active .compare').show();
+				$('label', '.active .compare').hide();
+			}
+			
+			if (marker) {
 				marker.GmapState = 'selected';
 				highlightMarker(marker);
 			}
 		} else {
-			listing.removeClass('active');
-			compare.data('on', false);
-			$('#compare-btn').attr('href', $('#compare-btn').attr('href').replace(id, ''));
+			$('a', compare.parent()).hide();
+			$('label', compare.parent()).show();
 			
-			if (typeof marker != 'undefined'){
+			compare_links = $('.compare a', '.listing.active');
+			if (compare_links.length <= 2) {
+				$('a', '.active .compare').hide();
+				$('label', '.active .compare').show();
+			}
+			
+			listing.removeClass('active');
+			
+			if (marker) {
 				marker.GmapState = '';
 				unhighlightMarker(marker);
 			}
 		}
-		
-		if ($('.listing.active').length > 1) $('#compare-btn').slideDown();
-		else $('#compare-btn').slideUp();
 	});
 	
-	// bind event handlers and implement ajax functionality for search results.
-	
-	// opens the specific reserve form in the unit sizes tab in the single listing page
-	$('.open_reserve_form').live('click', function(){
-		var $this = $(this),
-			rform = $('.reserve_form', $this.parent());
+	$('a', '.compare').live('click', function() {
+		var compares = $('input:checked', '.compare'), compare_href = '';
+		if (compares.length) {
+			compares.each(function(){
+				compare_href += this.value + ',';
+			});
 			
-		if (rform.hasClass('active')) {
-			rform.slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-		} else {
-			$('.reserve_form').slideUp().removeClass('active');
-			$('.sl-table').removeClass('active');
-			$('.sl-table', rform.parent()).addClass('active');
-			rform.slideDown().addClass('active');
-			$.activate_datepicker(rform);
-		}
-
-		$('input[type=text]:first', rform).focus();
-		return false;
+			this.href += compare_href;
+			console.log(this.href)
+			
+		} else return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */
@@ -410,7 +512,7 @@ $(function(){
 	
 	$.activate_datepicker = function(context) {
 		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).live('click', function(){ $('.hasDatepicker', this).focus(); });
+		$('.datepicker_wrap', context).click(function(){ $('.hasDatepicker', this).focus(); });
 	}
 
 	// panel openers
@@ -435,8 +537,9 @@ $(function(){
 	});
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
-	$('.reserve_btn', '.listing').live('click', function(){
-		var $this = $(this), new_href = $this.attr('href').replace('/sizes', '/reserve'),
+	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
+		var $this = $(this), 
+			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			unit_size = $(':radio:checked', $this.parent().parent());
 		
 		if (unit_size.length) {
@@ -459,7 +562,7 @@ $(function(){
 			$panel.attr('rel', this.rel);
 
 			$.getJSON(this.href, function(response) {
-				$.handle_json_response(response, function(data){
+				$.with_json(response, function(data){
 					$('.tab_link, .listing, .panel').removeClass('active');
 					$('li', '.tabs').removeClass('active');
 					$this.parent().addClass('active');
@@ -490,81 +593,201 @@ $(function(){
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
 						$('.numeric_phone', $panel).formatPhoneNum();
+						new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
 					}
 				});
 			});
+			
+		} else {
+			$panel.slideUp();
+			$('.tab_link, .listing, .panel').removeClass('active');
+			$('li', '.tabs').removeClass('active');
 		}
 
 		return false;
 	});
-
-	// narrow search form sliders
-	$('.slider').each(function(){
-		var $this = $(this),
-			value = $('.slider_val', $this.parent()).val();
-
-		$this.slider({
-			max: 50,
-			min:5,
-			step: 5,
-			animate: true,
-			value: value,
-			start: function(e, ui) {
-				var slider = $('.slider_val', $(e.target).parent());
-				if (slider.attr('disabled')) slider.attr('disabled', false);
-			},
-			slide: function(e, ui) {
-				$('.slider_val', $(this).parent()).val(ui.value);
+	
+	// opens the unit size specific reserve or request form in the unit sizes tab
+	var unit_size_form_partials = {}; // cache the forms here
+	$('.open_reserve_form').live('click', function(){
+		var $this = $(this), rform = $('.reserve_form', $this.parent()),
+			wrap = $this.parent('.sl-table-wrap'),
+			listing_id = wrap.attr('rel').replace('listing_', ''),
+			size_id = wrap.attr('id').replace('Size_', ''),
+			accepts_reservations = wrap.attr('has-res') == 'true' ? true : false,
+			ajax_loader = $('.ajax_loader', this);
+			
+		if (rform.hasClass('active')) { // clicking on an open form, close it
+			rform.slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			
+		} else { // get or open the form for this size
+			$('.reserve_form').slideUp().removeClass('active');
+			$('.sl-table').removeClass('active');
+			$('.sl-table', rform.parent()).addClass('active');
+			
+			if (unit_size_form_partials[size_id]) rform.slideDown().addClass('active');
+			else {
+				ajax_loader.show();
+				
+				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
+					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+						
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
+						
+						new GreyWizard($('.sl-table-exp', rform), reservation_workflow).begin_workflow_on(0);
+					});
+				} else {
+					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+						unit_size_form_partials[size_id] = response.data;
+						rform.html(response.data).slideDown().addClass('active');
+						
+						ajax_loader.hide();
+						$.activate_datepicker(rform);
+						$('.numeric_phone', rform).formatPhoneNum();
+					});
+				}
 			}
-		});
+		}
+
+		$('input[type=text]:first', rform).focus();
+		return false;
 	});
 	
-	// Reservation process, submit reserver details, then billing info
+	var reservation_workflow = {
+		slides : [
+			{
+				div_id  : 'reserve_step1',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['back', 'fadeOut'] 
+				],
+				action : function(wizard) {
+					wizard.workflow.animate({'height': '380px'}, 'fast');
+				},
+				validate : function(wizard) {
+					var form = $('#reservation_form1', wizard.workflow);
+
+					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
+						next_slide.html(response_data).children().hide().fadeIn();
+						$('.hintable', next_slide).hinty();
+						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
+					});
+				} // END validate
+			}, // END slide 1
+			{ 
+				div_id  : 'reserve_step2',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Next').data('done', false); }],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					// expand slide 2 automatically if it's already filled (the user went back), otherwise this is handled in slide 1's validate method
+					if ($('#reservation_form2', wizard.workflow).length) wizard.workflow.animate({'height': '610px'}, 'fast');
+				},
+				validate : function(wizard) {
+					var form = $('#reservation_form2', wizard.workflow);
+					
+					return bool_submit_once_and_do(form, wizard, 3, function(response_data, next_slide) {
+						next_slide.html(response_data).children().hide().fadeIn();
+					});
+				} // END validate
+			}, // END slide 2
+			{ 
+				div_id  : 'reserve_step3',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					wizard.workflow.animate({'height': '440px'}, 'fast');
+				}
+			} // END slide 3
+		],
+		finish_action : function(wizard) {
+			wizard.workflow.parent().slideUp().removeClass('active').parent().find('.sl-table').removeClass('active');
+		}
+	};
+	
+	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
+	// returns true so the workflow can go to the next slide
+	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
+		var next_slide = $(wizard.slides[slide_num-1]),
+			ajax_loader = $('.ajax_loader', next_slide);
+			
+		if (!form.data('submitted')) form.runValidation();
+		
+		if (!form.data('submitted') && form.data('valid')) {
+			form.data('submitted', true).save_state(); // in case the user clicked back and changed an input value
+			ajax_loader.show();
+			
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
+			return true; // while the form is submitting, this function returns true and causes the workflow to move next
+			
+		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
+			ajax_loader.show();
+			
+			if (slide_num == 2) {
+				// get the reservation id so the server can update it
+				var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
+					reservation_id = $('form', step2).attr('action').split('/');
+
+				reservation_id = reservation_id[reservation_id.length-1];
+				form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
+			} else if (slide_num == 3) {
+				
+			}
+			
+			form.save_state();
+			submit_reservation_form(form, next_slide, ajax_loader, callback);
+			return true;
+			
+		} else if (form.data('submitted')) return true;
+		
+		return false;
+	}
+	
+	function submit_reservation_form(form, next_slide, ajax_loader, callback) {
+		$.post(form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, function(data) {
+				callback.call(this, data, next_slide);
+			}, function(data) { // error
+				next_slide.html(data);
+			});
+			
+			ajax_loader.hide();
+		});
+	}
+	
+	// Info request: submit reserver details
 	$('form.new_listing_request').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-				$('.hintable', inner_panel).hinty();
-			});
-		});
-		
-		return false;
-	});
-	
-	$('form.edit_reservation').live('submit', function() {
-		submit_reservation_and_do(this, function(form, response) {
-			var inner_panel = form.parent();
-			inner_panel.children().fadeOut(300, function(){
-				inner_panel.html(response.data).children().hide().fadeIn();
-			});
-		});
-		
-		return false;
-	});
-	
-	$('#reserve_done').live('click', function(){
-		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
-	});
-	
-	function submit_reservation_and_do(form, callback) {
-		var form = $(form).runValidation(),
-			data = form.serialize(),
+		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form).show();
 		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
 			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
 			
-			$.post(form.attr('action'), data, function(response) {
-				if (response.success) callback.call(this, form, response);
-				else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				if (response.success) {
+					var inner_panel = form.parent();
+					inner_panel.children().fadeOut(300, function(){
+						inner_panel.html(response.data).children().hide().fadeIn();
+						$('.hintable', inner_panel).hinty();
+					});
+				} else form.prepend('<div class="flash flash-error">'+ (typeof(response.data) == 'object' ? response.data.join('<br />') : response.data) +'</div>');
 				
 				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		} else ajax_loader.hide();
-	}
+		
+		return false;
+	});
 	
 	$('.tos').live('click', function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
@@ -753,6 +976,14 @@ $(function(){
 	}
 	
 });
+
+// updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
+function update_info_tab_count(label, i) {
+	var	tab = $('#tab_'+ label, '#sl-tabs'),
+		count = parseInt(tab.text().split('(')[1].replace(')', '')) + i;
+	
+	tab.text(label.replace('_', ' ') + ' ('+ count +')');
+}
 
 // build a query string for the google directions gadget: http://maps.google.com/help/maps/gadgets/directions/
 function build_gmap_src(options) {

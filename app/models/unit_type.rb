@@ -74,7 +74,7 @@ class UnitType < ActiveRecord::Base
   
   # issn method: getFacilityUnits
   def get_unit_info
-    @facility_units ||= [IssnAdapter.get_unit_info self.listing.facility_id, self.sID].flatten
+    @facility_units ||= [IssnAdapter.get_unit_info(self.listing.facility_id), self.sID].flatten
   end
   
 end

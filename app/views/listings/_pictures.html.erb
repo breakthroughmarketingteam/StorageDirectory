@@ -1,17 +1,17 @@
 <% @listing = (@listing || @model) %>
-<div id="sl-tabs-pict" class="tab_content">
+<div id="sl-tabs-pict" class="inner tab_content">
   <div id="sl-tabs-pict-in">
-	<div class="uncollapse gallery">
+	<div class="gallery">
 	    <ul id="sl-tabs-pict-gall">
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>
-				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0) %>
+				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
 				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'iconOnly16 delete_link right', :title => 'Delete this picture' if action_name == 'edit' %>
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>
 
-	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :class => 'big-pic' unless @listing.pictures.empty? %>
+	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt =>"", :class => 'big-pic' unless @listing.pictures.empty? %>
 	</div>
 
 	<% form_for Picture.new, :html => { :multipart => true } do |f| %>

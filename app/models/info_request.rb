@@ -1,6 +1,8 @@
 class InfoRequest < ActiveRecord::Base
   
-  belongs_to :listing
+  belongs_to :listing, :counter_cache => true
+  belongs_to :size, :conditions => 'size_id IS NOT NULL'
+  
   validates_presence_of :name, :email, :phone, :duration, :move_in_date
   access_shared_methods
   
