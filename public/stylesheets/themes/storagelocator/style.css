@@ -145,7 +145,6 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt > p{float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:5px 0;}
 .rslt-head-txt > p span{color:#333;}
-#type-one-r-col-in h2{font-weight:normal;}
 .green-head{width:742px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
 #tips-head{background:#000;position:relative;overflow:hidden;width:740px;}
@@ -167,6 +166,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(/images/ui/storagelocator/info-hdr-img.png) no-repeat;}
 #add-fac-head{background:url(/images/ui/storagelocator/add-hdr-img.png) no-repeat;height:225px;}
+#add-fac-head a.try-free{background:url("/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
 /* End the header images for each page */
@@ -298,7 +298,7 @@ li.map-plus{background:url(/images/ui/storagelocator/plus-sign-bg.png) no-repeat
 li.map-plus a{width:22px;}
 /* End the results page styles here */
 #pages_controller.admin #column_5{float:left;}
-#add-fac-head-in{float:left;min-width:250px;padding:20px;}
+#add-fac-head-in{background:url("/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
 #type-two-top-bar-head ul li#sort{position:relative;left:30px;width:253px;}
 #type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;font-size:100%;}
@@ -306,7 +306,7 @@ li.map-plus a{width:22px;}
 #type-two-top-bar-head ul li#search a{background:url(/images/ui/storagelocator/go-button.png) no-repeat center left;width:45px;height:26px;top:-1px;display:block;float:left;text-align:center;color:#fff;text-decoration:none;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:-20px;font-size:100%;line-height:1.9;}
 #type-two-top-bar-head ul input{height:19px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 26px 1px 4px;position:relative;float:left;}
 #type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;font-size:100%;}
-div.green-head div.inner h2{font-weight:bold;margin-bottom:7px;font-size:220%;left:20px;}
+div.green-head div.inner h2{font-size:28px;font-weight:bold;left:20px;line-height:36px;width:470px;}
 .green-head .inner p{font-size:12px;left:20px;color:#666;position:relative;left:20px;width:240px;line-height:1.2;}
 .sub-head-txt{color:#fff;font-size:100%;font-weight:bold;text-shadow:1px 1px 0px #333;position:relative;left:20px;top:-3px;padding-bottom:10px;}
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:20px;}
@@ -426,7 +426,7 @@ ul#specials_list {margin:15px 10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
 /* Changes made to the existing media box */
-#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
+#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 /* Here are a couple of changes to the footer elements inorder to shift them up the page when the new admin bar is added. */
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
@@ -879,10 +879,10 @@ img.right{margin:0 0 10px 10px;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
-#new_client a.search-button{text-shadow:1px 1px 0 #666;margin-right:5px;line-height:2.2;}
-#narrow-box a.search-btn{text-shadow:1px 1px 0 #666;line-height:1.8;}
+#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:2.2;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
+#narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
-#sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #CCC;}
+#sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #ccc;}
 #sl-tabs-sizes-in .sl-table-wrap{overflow:hidden;}
 #sl-tabs-sizes-in .reserve_form{font-size:80%;}
 .sl-table-wrap .st-type{font-size:80%;}
