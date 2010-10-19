@@ -472,7 +472,8 @@ $(document).ready(function() {
 	
 	// add your facility
 	$('form#new_client').submit(function(){
-		alert('wtf')
+		if (!$('#chk_avail').hasClass('avail')) check_client_email_avail($('#client_email', this));
+		
 		var signup_form = $(this).runValidation();
 		
 		if (signup_form.data('valid') && !signup_form.data('saving')) {
@@ -482,7 +483,7 @@ $(document).ready(function() {
 			var pop_up_title  = 'Add Your Facility',
 				pop_up_height = 600,
 				sub_partial   = '/clients/signup_steps',
-				ajax_loader	  = $('.ajax_loader', this).show(),
+				ajax_loader	  = $('#submit_wrap .ajax_loader', this).show(),
 				current_step  = 1,
 				form_data     = { 
 					company : $('#client_company', signup_form).val(),
@@ -510,6 +511,52 @@ $(document).ready(function() {
 		
 		return false;
 	});
+	
+	$('#chk_avail').click(function(){ return false; });
+	$('#client_email', '#new_client').blur(function() { check_client_email_avail($(this)); });
+	
+	function check_client_email_avail(email_input) {
+		var $this = email_input, form = $('#new_client').data('saving', true), // will prevent the form from submitting
+			chk_avail = $('#chk_avail', $this.parent()).removeClass('avail').removeClass('not_avail'), email = $this.val(),
+			ajax_loader = $('.ajax_loader', $this.parent()).show();
+		
+		chk_avail.text('Checking');
+		
+		if (!chk_avail.data('checking')) {
+			chk_avail.data('checking', true);
+			
+			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
+				$.with_json(response, function(data) {
+					if (data.length) {
+						$this.addClass('invalid').focus();
+						chk_avail.text('Not Available').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
+					} else {
+						$this.removeClass('invalid');
+						form.data('saving', false);
+						chk_avail.text('Available').attr('title', 'Good to go!').removeClass('not_avail').addClass('avail');
+
+						if (form_has_inputs_filled(form, ['#listing_city', '#listing_state'])) form.submit();
+					}
+					
+					chk_avail.data('checking', false);
+				});
+
+				ajax_loader.hide();
+			});
+		}
+	}
+	
+	function form_has_inputs_filled(form, input_ids) {
+		var all_filled = true;
+		
+		$.each(input_ids, function(){
+			var input = $(eval("'"+ this +"'"));
+			
+			if (input.val() == '' || input.val() == input.attr('title')) all_filled = false;
+		});
+		
+		return all_filled;
+	}
 	
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {

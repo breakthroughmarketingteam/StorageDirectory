@@ -5,7 +5,7 @@ class AjaxController < ApplicationController
   
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy, :get_multipartial, :model_method]
-  before_filter :_get_model_class, :only => [:get_listing, :get_attributes, :model_method]
+  before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method]
   
   def get_all
     if (has_name = _get_model_class.first.respond_to?('name')) || _get_model_class.first.respond_to?('title')
@@ -29,6 +29,11 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
+  end
+  
+  def find
+    @found = eval "@model_class.find_all_by_#{params[:by]}('#{params[:value]}')" rescue nil
+    render :json => { :success => true, :data => @found }
   end
   
   # find listings in a city or state which don't have an owner

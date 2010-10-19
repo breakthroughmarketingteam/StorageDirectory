@@ -339,7 +339,7 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 .listing .review h6{font-size:100%;margin-bottom:8px;padding-top:5px;}
 .listing .review .stack{font-size:80%;line-height:18px;}
 form#new_client{text-align:left;width:47%;}
-form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
+form#new_client .ajax_loader{float:right;margin:12px 10px 0 0;}
 #new_client span.sub_head{color:#ff3333;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:13px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
@@ -437,7 +437,6 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
 #sl-fac-detail-in-edit p.tags .value{}
 #sl-fac-detail,#thumb_gallery{width:52%;float:right;position:relative;}
-#thumb_gallery{}
 #sl-fac-coup{width:45%;float:left;position:relative;border:2px dashed #ccc;margin-right:2px;}
 #sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:130px;padding:10px 12px;color:#666;text-align:left;}
 #sl-fac-coup-in .sl-special,#sl-fac-coup-in-edit .sl-special{font-size:200%;color:#333;margin:10px 0;text-align:center;font-variant:small-caps;display:block;}
@@ -859,6 +858,11 @@ img.right{margin:0 0 10px 10px;}
 .new_listing_request select{margin-bottom:14px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
 #new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:2.2;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
+#new_client #email_check{overflow:hidden;position:relative;margin-bottom:7px;}
+#new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
+#chk_avail{color:#CCC;float:right;margin:3px 6px 0 0;text-transform:uppercase;padding:3px 0;}
+#chk_avail.avail{padding-right:24px;background:url(/images/ui/storagelocator/checkmark.png) no-repeat right center;}
+#chk_avail.not_avail{padding-right:18px;background:url(/images/ui/cancel_icon.png) no-repeat right center;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
 #sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #ccc;}
@@ -987,6 +991,7 @@ form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
 #workflow_nav,#map_flow_nav{position:absolute;top:376px;left:0;width:100%;}
+#clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:100%;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 2px #333;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
 #workflow_nav .button:hover,#map_flow_nav .button:hover{background-image:url(/images/ui/storagelocator/sl-table-reserve-active.png);}

@@ -48,9 +48,10 @@
 						<%= f.text_field :company, :class => 'required hintable param_filled focus_me', :rel => 'client[company]', :title => 'Your Facility\'s Name' %>
 					</div>
 
-					<div>
+					<div id="email_check">
 						<%= f.label :email, 'Contact Email', :class => 'hidden' %>
 						<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
+						<%= ajax_loader %>
 						<%= link_to 'Confirm Availability', '#', :id => 'chk_avail' %>
 					</div>
 
@@ -60,9 +61,9 @@
 						<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[state]', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 					</div>
 
-					<div>
-						<%= ajax_loader %>
+					<div id="submit_wrap">
 						<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+						<%= ajax_loader %>
 						<input type="submit" name="commit" class="hidden">
 					</div>
 				<% end %>					
