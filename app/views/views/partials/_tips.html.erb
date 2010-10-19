@@ -1,17 +1,19 @@
 <div id="type-one-top-bar">
   
 	 <div id="type-two-top-bar-head">
-	   <form action="post">
+	   	<form action="post" class="tips">
 		   <ul>
 			 	<li id="sort">Sort by: <a href="">Rating</a> / <a href="">Views</a></li>
-				<li id="search"><input type="text" class="hintable" title="Search by keyword " /> <a href="">GO</a></li>
+				<li id="search"><input type="text" class="hintable" title="Search by keyword " /> <a href="">Go</a></li>
 				<li><a href="/tips/new" class="search-options openDiv" rel="add_new_tip">Add your tips</a></li>
 			 </ul>
-		 </form>
+		</form>
 	 </div>
-	 
-    <div id="add_new_tip" class="hidden">
-      <% form_tag create_tip_path do %>
+	
+	<hr class="tips" />
+    
+	<div id="add_new_tip" class="hidden">
+		<% form_tag create_tip_path do %>
         <fieldset>
           <legend>Share Your Self Storage Tips</legend>
           
