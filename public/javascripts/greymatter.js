@@ -25,6 +25,8 @@ $(function(){
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	
+	$('.focus_onload').eq(0).focus();
+	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
 	

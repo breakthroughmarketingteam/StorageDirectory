@@ -8,8 +8,12 @@
 	<div id="type-one-r-col-in">
 		<div class="green-head" id="add-fac-head">
 			<div class="inner" id="add-fac-head-in">
-				<h2>Add Your Self Storage Facility</h2>
-				<p>Lorem ipsum text in here...</p>
+				<h2>Market Your Self Storage Facility Online, and Stay on Top!</h2>
+				<div>
+					<%= ajax_loader %>
+					<a id="signup_button" class="try-free" href="#">Try it for Free</a>
+					<input type="submit" name="commit" class="hidden">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -47,6 +51,7 @@
 					<div>
 						<%= f.label :email, 'Contact Email', :class => 'hidden' %>
 						<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
+						<%= link_to 'Confirm Availability', '#', :id => 'chk_avail' %>
 					</div>
 
 					<div>

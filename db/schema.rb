@@ -420,6 +420,22 @@ ActiveRecord::Schema.define(:version => 20101016014832) do
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
 
+<<<<<<< HEAD
+  create_table "models_modules", :force => true do |t|
+    t.string   "name"
+    t.integer  "model_id"
+    t.string   "model_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+<<<<<<< HEAD
+  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
+
+=======
+>>>>>>> 2086a34c80efeac9208065d45af9cf338ff5ce15
+=======
+>>>>>>> 99802818843915c9329cd05a1587e32efdd066e4
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
     t.integer  "model_id"

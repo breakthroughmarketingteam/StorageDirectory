@@ -133,7 +133,7 @@
 						<td id="email_reports_settings">
 							<% f.fields_for :settings, @settings do |s| %>
 								<p>
-									<%= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
+									<%#= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
 									<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
 								</p>
 							<% end %>

@@ -472,6 +472,7 @@ $(document).ready(function() {
 	
 	// add your facility
 	$('form#new_client').submit(function(){
+		alert('wtf')
 		var signup_form = $(this).runValidation();
 		
 		if (signup_form.data('valid') && !signup_form.data('saving')) {
@@ -492,7 +493,7 @@ $(document).ready(function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				$.with_json(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (data[0]) { // we found matching listings, start on the first step of the workflow
@@ -1374,7 +1375,7 @@ function finish_workflow() {
 }
 
 function get_checked_listings_addresses(wizard, address_part) {
-	if (typeof address_part == 'undefined') var address_part = 'street_address'
+	if (typeof address_part == 'undefined') var address_part = 'street_address';
 	var checked = $('#signupstep_2 :checkbox:checked', wizard.workflow),
 		addresses = [];
 	
