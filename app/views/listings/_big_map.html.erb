@@ -2,10 +2,4 @@
   <div id="sl-tabs-map-in">
     <%= @Gmap.div :width => '700px', :height => '360px' if @Gmap %>
   </div>
-  <ul>
-    <li class="sl-map-dir">
-      <%= link_to 'Get Directions', google_directions_link(@listing.map.try :full_address), :target => '_blank' %>
-    </li>
-    <li class="sl-map-pri"><a href="">Print map</a></li>
-  </ul>
 </div>

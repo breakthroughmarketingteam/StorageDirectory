@@ -884,11 +884,12 @@ img.right{margin:0 0 10px 10px;}
 #listings_controller .sl-table a.hidden{display:none;position:relative;top:10px;}
 .attr_editable{position:relative;}
 .attr_edit,.attr_editable .cancel_btn,.attr_editable .ajax_loader{position:absolute;top:8px;right:10px;color:#999;display:none;}
+.attr_edit{display:inline;color:#ccc;}
 .attr_editable .ajax_loader{right:50px;}
 .attr_editable .cancel_btn{top:131px;}
 #sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #listing_detail{overflow:hidden;margin-bottom:10px;}
-.attr_editable:hover .attr_edit{display:inline;}
+.attr_editable:hover .attr_edit{color:#393;}
 #sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
 #sl-fac-detail-in-edit input.address{margin-bottom:6px;}
 #sl-fac-detail-in-edit input.address,#sl-fac-detail-in-edit input.title{float:none;width:94%;}

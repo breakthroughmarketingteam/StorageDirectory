@@ -717,24 +717,6 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		$('.hint_toggle').live('click', function() {
-			var btn = $(this),
-				hint = btn.parents('.user_hint'),
-				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
-				ajax_loader = $('.ajax_loader', hint).show();
-
-			$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
-				hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
-				ajax_loader.hide();
-			});
-			
-			return false;
-		});
-		
-		$('input', '#user_hint_toggles').click(function(){
-			$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
-		});
-		
 		$('.inline_save').live('focus', function() {
 			var input = $(this);
 			input.after('<a class="submit_btn" href="#">Save</a>');
@@ -756,6 +738,25 @@ $(document).ready(function() {
 		});
 		
 	} // END page clients edit
+	
+	// client and listing edit page
+	$('.hint_toggle').live('click', function() {
+		var btn = $(this),
+			hint = btn.parents('.user_hint'),
+			placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
+			ajax_loader = $('.ajax_loader', hint).show();
+
+		$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+			hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
+			ajax_loader.hide();
+		});
+		
+		return false;
+	});
+	
+	$('input', '#user_hint_toggles').click(function(){
+		$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
+	});
 	
 	// Listing Edit
 	// NEW LISTING WORKFLOW
