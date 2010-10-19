@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
     
     @listings = Listing.find(session[:compare_listing_ids])
     @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
   end
 
   def show

@@ -391,8 +391,6 @@ $(function(){
 			});
 			
 			this.href += compare_href;
-			console.log(this.href)
-			
 		} else return false;
 	});
 
