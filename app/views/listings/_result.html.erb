@@ -8,34 +8,55 @@
 			<div class="num_icon"><%= result_index(result) %></div>
 			
 			<div class="facility-logo">
-				<img src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+				<img class="logo" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
 			</div>
+			
 			<div class="rslt-contact">
-
 				<p>
-					<span class="rslt-address"><%= result.map.address %></span><br>
+					<span class="rslt-address"><%= result.map.address %></span><br />
 					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
 				</p>
 				<p>
 					<span class="rslt-phone">1-800-567-4321</span>
 				</p>
 			</div>
+			
 			<ul>
 				<li class="rslt-miles">
 					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
-				<li class="rslt-features">
-				  	<% unless result.user_id.blank? %>
-						<ul>
-							<li>24 Hour Access</li>
-							<li>Climate Controlled</li>	
-							<li>Business Center</li>
-							<li>Boxes and Packing Supplies</li>
-						</ul>
-					<% end %>
-				</li>
-			
+				<% if (unit_size = result.get_closest_unit_size(params[:storage_size])) %>
+					<li class="rslt-size">
+						<%= image_tag unit_size.icon(:thumb).icon.url %>
+						<span class="size"><%= unit_size.display_dimensions %></span>
+					</li>
+					<li class="rslt-price">
+					  	<ul>
+							<% unless (@upper_type_size = result.get_upper_type_size(unit_size)).nil? %>
+								<li>
+									Upper:<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @upper_type_size.id %>
+								</li>
+							<% end %>
+							
+							<% unless (@drive_up_type_size = result.get_drive_up_type_size(unit_size)).nil? %>
+								<li>	
+									Drive Up:<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @drive_up_type_size.id %>
+								</li>
+							<% end %>
+
+							<% unless (@interior_type_size = result.get_interior_type_size(unit_size)).nil? %>
+								<li>	
+									Interior:<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
+									<%= radio_button_tag 'unit_size', @interior_type_size.id %>
+								</li>
+							<% end %>
+						</ul>		
+					</li>			
+				<% end %>
+				
 				<li class="rslt-reserve">
 					<%= results_main_button(result) %>
 				</li>

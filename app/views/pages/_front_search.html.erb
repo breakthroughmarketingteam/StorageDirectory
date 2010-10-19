@@ -1,7 +1,7 @@
 <% form_tag '/self-storage', :id => 'front_search', :method => 'get' do %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
-		<%= text_field_tag :q, nil, :class => 'hintable autocomplete', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_names|3' %>
+		<%= text_field_tag :q, nil, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
 		<%= submit_tag 'Locate', :class => 'grn_btn' %>
 		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
 	</div>

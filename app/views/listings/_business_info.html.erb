@@ -58,6 +58,9 @@
 			</div>
 			<% end %>
 		</li>
+		<li>
+			<%= claim_listing_link(@listing) %>
+		</li>
 	</ul>
 	
 	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>

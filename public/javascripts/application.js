@@ -14,21 +14,11 @@ $(document).ready(function() {
 		if ($this.hasClass('active')) return false;
 		
 		$this.addClass('active');
-		var pop_up = $('#pop_up_box');
+		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
 		
-		if (pop_up.length == 1) pop_up.fadeIn();
-		else {
-			pop_up = $('<div id="pop_up_box"></div>').css({ top: '50px', right: '20px' });
-
-			pop_up.appendTo('body').load('/login', function(response, status) {
-				if (status == 'success') {
-					pop_up.fadeIn();
-					$('input[type=text]', pop_up).eq(0).focus();
-					$.bindPlugins();
-
-				} else alert(response);
-			});
-		}
+		pop_up.fadeIn();
+		$('input[type=text]', pop_up).eq(0).focus();
+		$.bindPlugins();
 		
 		// close login box when user clicks outside of it
 		$(document).click(function(e) {
@@ -96,14 +86,22 @@ $(document).ready(function() {
 	
 	// advanced search options
 	var $size_picker = $('#size_picker'),
-		$size_img = $('img', $size_picker);
+		$size_img = $('img', $size_picker),
+		$size_select = $('#storage_size');
+	
+	if ($size_select.length) {
+		size_icon_change($size_select); // update on page load
+		$size_select.live('change', size_icon_change);
+		$('option', $size_select).live('mouseover', size_icon_change);
+	}
+	
+	function size_icon_change(input) {
+		var self = input[0] || this,
+			$this = $(self),
+			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
+			new_img = $('<img src="'+ selected +'" alt="" />');
 		
-	$('option', '#storage_size').mouseover(function(){
-		var $this = $(this),
-			size  = this.value,
-			new_img = $('<img src="/images/ui/storagelocator/unit_sizes/'+ size +'-sm.png" alt="'+ size +'" />');
-		
-		if ($size_img.attr('src').split('.')[0].replace('/images/ui/storagelocator/unit_sizes/', '').replace('-sm', '') != size) {
+		if ($size_img.attr('src') != selected) {
 			$size_img.fadeOut(100, function(){
 				$size_picker.html(new_img)
 				new_img.hide().fadeIn(120);
@@ -112,7 +110,7 @@ $(document).ready(function() {
 				if (new_img.width() > 183) new_img.width(183);
 			});
 		}
-	});
+	}
 	
 	var advanced_slider = $('.advanced_slider', '#advanced_opts'),
 		advanced_slider_value = $('.slider_val', advanced_slider.parent()).val();
@@ -440,7 +438,21 @@ $(document).ready(function() {
 	
 	// listings show page
 	$('.ps').live('click', function() {
-		$(this.rel).jqprint({ operaSupport: $.browser.opera });
+		var div_to_print = this.rel,
+			print_opts = { operaSupport: $.browser.opera };
+		
+		if (this.href == '#') $(div_to_print).jqprint(print_opts);
+		else {
+			$.getJSON(this.href, function(response){
+				$.handle_json_response(response, function(data){
+					var wrap = $(data).appendTo('body'),
+						coup = $(div_to_print).clone().appendTo('#print_content');
+					
+					wrap.jqprint(print_opts, function(){ wrap.remove(); });
+				});
+			});
+		}
+		
 		return false;
 	});
 	
@@ -731,7 +743,8 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		$('.hint_toggle').live('click', function(){
+		$('.hint_toggle').live('click', function() {
+			console.log(this)
 			var btn = $(this),
 				hint = btn.parents('.user_hint'),
 				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
@@ -952,6 +965,8 @@ $(document).ready(function() {
 		if (!checkbox.is(':checked')) fields.attr('disabled', true);
 		else fields.attr('disabled', false);
 	});
+	
+	
 	
 	$('.day_closed', '#business_hours_form').live('change', function(){
 		var check = $(this),
@@ -1563,7 +1578,7 @@ function finish_workflow() {
 }
 
 function get_checked_listings_addresses(wizard, address_part) {
-	if (typeof address_part == 'undefined') var address_part = 'street_address'
+	if (typeof address_part == 'undefined') var address_part = 'street_address';
 	var checked = $('#signupstep_2 :checkbox:checked', wizard.workflow),
 		addresses = [];
 	

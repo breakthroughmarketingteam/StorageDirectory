@@ -21,8 +21,8 @@ class Size < ActiveRecord::Base
     width * length
   end
   
-  def size_icon
-    @size_icon ||= SizeIcon.first :conditions => ['width = ? AND length = ?', width, length]
+  def icon(size)
+    @size_icon ||= SizeIcon.first :conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]
   end
   
 end

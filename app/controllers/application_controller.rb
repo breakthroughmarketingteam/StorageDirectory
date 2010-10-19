@@ -154,15 +154,15 @@ class ApplicationController < ActionController::Base
       @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
     end
     
-    @user              = User.find(params[:user_id]) unless params[:user_id].blank?
-    @per_page          = 15
+    @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
+    @per_page = 15                                                                
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?
       @facility_features = IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_sizes        = IssnUnitTypeSize.labels
-      @unit_size_icons   = SizeIcon.all
+      @unit_size_icons   = SizeIcon.medium_icons
     end
   end
   
@@ -178,7 +178,7 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'blog_roll'
     elsif controller_name == 'posts' || controller_name == 'user_hints'
       session[:view_type] = 'list'
-    elsif controller_name =~ /(images)|(galleries)|(pictures)/
+    elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'

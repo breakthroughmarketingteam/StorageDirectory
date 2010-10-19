@@ -13,6 +13,10 @@ class ListingsController < ApplicationController
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
+    @unit_size_thumbs = SizeIcon.thumb_icons
+    
+    # TODO: extract pieces from search query: zip, city, title, address
+    #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
     
     result = Listing.geo_search params, session
     @listings = result[:data]
@@ -89,6 +93,7 @@ class ListingsController < ApplicationController
     end
   end
   
+  # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
     @listing = current_user.listings.build :title => params[:title]
     
@@ -101,6 +106,18 @@ class ListingsController < ApplicationController
     end
   end
   
+  # receives from the info_request form on free listings in the results page
+  def info_requests
+    @listing = Listing.find params[:info_request][:listing_id]
+    @info_request = @listing.info_requests.build params[:info_request].merge(:status => 'pending').merge(params[:reserver]).merge(params[:mailing_address])
+    
+    if @listing.save
+      render :json => { :success => true, :data => render_to_string(:partial => 'info_requests/done') }
+    else
+      render :json => { :success => false, :data => model_errors(@info_request) }
+    end
+  end
+  
   private
   
   def get_listing_relations
@@ -108,7 +125,7 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
-    @web_special = @listing.web_specials.first || @listing.web_specials.new
+    @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
     @facility_features = @listing.facility_features.map(&:label)
     
     if action_name == 'edit'

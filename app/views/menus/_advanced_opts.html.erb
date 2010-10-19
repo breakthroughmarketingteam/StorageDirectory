@@ -6,7 +6,7 @@
 		</div>
 		
 		<div id="size_picker">
-			<img src="/images/ui/storagelocator/unit_sizes/5x10-sm.png" alt="Size" />
+			<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
 		</div>
 		
 		<div>
@@ -23,7 +23,7 @@
 				<div class="advanced_slider"><div id="slide_bg"></div></div>
 				<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
 				<%= label_tag 'miles.' %>
-				<%= hidden_field_tag :within, nil, :class => 'slider_val' %>
+				<%= hidden_field_tag :within, (params[:within] || 20), :class => 'slider_val' %>
 			</div>
 			
 			<div id="loc_btn">

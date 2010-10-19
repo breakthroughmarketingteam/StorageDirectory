@@ -3,7 +3,7 @@ class IssnFacilityFeature < ActiveRecord::Base
   
   @@unwanted_features = []
   def self.labels
-    ['Self Storage'] + (self.all.reject { |f| @@unwanted_features.include? f.ShortDescription.downcase }.map(&:ShortDescription).sort || [])
+    self.all.reject { |f| @@unwanted_features.include? f.ShortDescription.downcase }.map(&:ShortDescription).sort || []
   end
   
   def self.update_from_issn

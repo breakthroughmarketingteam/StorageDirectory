@@ -1,4 +1,4 @@
-<li id="<%= sortable_id rescue '' %>" class="block inBlock<%= block.id %> <%= controller_name %>" rel="position">
+<li id="<%= (sortable_id rescue '') if is_admin? %>" class="block" rel="position">
 	
 	<%= render :partial => 'shared/model_options', :locals => { :model => block, :edit_path => contextual_edit_block_path(block), :hide_anchor => "hide_collapseable_inBlock#{block.id}" } %>
 	

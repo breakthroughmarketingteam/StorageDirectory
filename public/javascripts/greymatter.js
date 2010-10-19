@@ -715,12 +715,14 @@ $.fn.fillWithParam = function() {
 	if (!params) return false;
 	
 	return this.each(function(){
-		var $this = $(this),
-				attr  = $this.attr('rel'),
-				value = false;
+		var $this = $(this), value = false, 
+			attr  = $this.attr('param') || $this.attr('rel');
 		
 		$.each(params.split('&'), function(){
-			if (this.split('=')[0] == attr) { value = this.split('=')[1]; return; }
+			if (this.split('=')[0] == attr) {
+				value = this.split('=')[1];
+				return;
+			}
 		});
 		
 		if (value) 

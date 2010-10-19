@@ -18,11 +18,20 @@ jQuery.fn.formBouncer = function(){
 
 jQuery.fn.runValidation = function() {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+		valid_phone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+		valid_date = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
+		numeric_class_regex = /(numeric_)/,
 		form  = $(this),
 		errors = '';
 
 	function password_input_exists(form) {
 		return jQuery('input[type=password]', form).length > 0
+	}
+	
+	function error_html(input, msg) {
+		var name = input.attr('name').split('[');
+		name = name[name.length-1].replace(']', '').replaceAll('_', ' ');
+		return '<p>' + capitalize(name) + ' '+ msg +'.</p>';
 	}
 
 	function markInvalid(input, form) {
@@ -33,8 +42,7 @@ jQuery.fn.runValidation = function() {
 	}
 	
 	function is_numeric(input) {
-		alert(input.attr('class'))
-		return input.attr('class')
+		return numeric_class_regex.test(input.attr('class'));
 	}
 
 	jQuery('input, select, textarea', form).each(function(){
@@ -45,22 +53,27 @@ jQuery.fn.runValidation = function() {
 		
 		if (!input.attr('disabled')) {
 			
-			if (input.hasClass('required') && (input.val() == '' || input.val() == input.attr('title')) ) {
-				error = '<p>' + input.attr('id').replace('_', ' ') + ' is required.</p>';
+			if (input.hasClass('required') && ((input.val() == '' || input.val() == input.attr('title') || input.attr('type') == 'checkbox' && !input.is(':checked'))) ) {
+				error = error_html(input, 'is required');
 				errors += error;
 				markInvalid(input, form);
 			}
 
 			if (input.hasClass('email') && valid_email.test(input.val()) == false) {
-				error = '<p>' + input.attr('id').replace('_', ' ') + ' is not a valid email.</p>';
+				error = error_html(input, 'is not a valid email');
 				errors += error;
 				markInvalid(input, form);
 			}
 
-			if (input.hasClass('numeric') && isNaN(input.val())) {
-				error = '<p>' + input.attr('id').replace('_', ' ') + ' must be numeric.</p>';
+			if (is_numeric(input)) {
+				if (input.hasClass('numeric_phone') && !valid_phone.test(input.val())) {
+					error = error_html(input, 'must be a valid US phone number w/ area code');
+					markInvalid(input, form);
+				} else if (input.hasClass('numeric_date') && !valid_date.test(input.val())) {
+					error = error_html(input, 'must be a valid date: mm/dd/yyyy');
+					markInvalid(input, form);
+				}
 				errors += error;
-				markInvalid(input, form);
 			}
 
 			if (input.hasClass('confirm') && password_input_exists(form) && jQuery('input[type=password]', form)[0].value != input.val() ) {

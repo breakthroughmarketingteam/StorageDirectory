@@ -103,8 +103,8 @@ class AjaxController < ApplicationController
   def get_partial
     _get_model_and_locals
     render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => @locals) }
-  rescue => e
-    render :json => { :success => false, :data => e.message }
+  #rescue => e
+  #  render :json => { :success => false, :data => e.message }
   end
   
   def get_multipartial
@@ -202,7 +202,14 @@ class AjaxController < ApplicationController
     @locals = {}
     @model_class = params[:model].constantize 
     @model = params[:id].blank? ? @model_class.new : @model_class.find(params[:id])
+    
     @locals = { params[:model].downcase.to_sym => @model }
+    
+    if params[:sub_model]
+      @sub_model_class = params[:sub_model].constantize
+      @sub_model = params[:sub_id].blank? ? @sub_model_class.new : @sub_model_class.find(params[:sub_id])
+      @locals.merge!(params[:sub_model].downcase.to_sym => @sub_model)
+    end
   rescue
     nil
   end

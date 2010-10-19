@@ -1,0 +1,52 @@
+<div id="narrow-box">
+	<div id="sb-title">
+		<h2><%= in_mode? 'locator' ? 'Narrow' : 'Start' %> Your Search</h2>
+	</div>
+	<form id="narrow_results_form" action="/self-storage" method="get" name="narrow_results_form">
+		<div id="offset_search_box">
+			<%= text_field_tag :q, (params[:q] || params[:city] || '').titleize, :class => 'hintable autocomplete', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= submit_tag 'Locate', :class => 'grn_btn' %>
+		</div>
+		<div id="advanced_opts">
+			<div id="type_select">
+				<%= label_tag 'Type:' %>
+				<%= select_tag 'storage_type', option_tags(@facility_features, 'Self Storage') %>
+			</div>
+			<div id="size_option">
+				<div id="size_picker">
+					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+				</div>
+				<div>
+					<%= label_tag 'Unit Size:' %>
+					<%= select_tag_for_unit_size_icons 'storage_size' %>
+				</div>
+			</div>
+			<div id="distance_slider">
+				<%= label_tag 'Within' %>
+				<div id="slide_wrap">
+					<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less">
+					<div class="advanced_slider">
+						<div id="slide_bg"></div>
+					</div>
+					<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more"> 
+					<%= hidden_field_tag :within, (params[:within] || 20), :class => 'slider_val', :disabled => true %>
+				</div>
+				<%= label_tag 'miles.', nil, :class => 'right' %>
+			</div>
+			<div id="unit_features" class="hide">
+				<p><%= link_to 'Features', { :anchor => 'show_collapseable_unit_features' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+				
+				<div class="collapseable">
+					<% @unit_features.each do |feature| %>
+					<div class="selectable_wrap">
+						<div class="selectable">
+							<%= check_box_tag 'features', feature %>
+						</div>
+						<%= label_tag feature %>
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

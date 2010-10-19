@@ -1,39 +1,44 @@
-<% form_for @reservation do |f| %>
-	<div id="print_box">
-		<h4 class="left_space">Your Storage Unit Has Been Reserved</h4>
-	
-		<div class="sl-table-exp-form-l">
-			<p>Move In Date: <%= @reservation.move_in_date.asctime %></p>
+<div id="print_box">
+	<h4 class="left_space">Your Storage Unit Has Been Reserved!</h4>
+
+	<div class="sl-table-exp-form-l">
+		<p>Move In Date: <%= @reservation.nice_move_in_date %></p>
+		
+		<% unless @reservation.reserve_code.blank? %>
 			<p>Reservation Code: <%= @reservation.reserve_code %></p>
-			<p>Unit Number: <%= @response['sUnitName'] || @response['sUnitId'] %> %>
+		<% end %>
 		
-			<p>Storage Facility: </p>
-			<div class="framed">
-				<p><%= @reservation.listing.title %></p>
-				<div class="listing_address">
-					<p>
-						<%= @reservation.listing.address %><br />
-						<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
-					</p>
-				</div>
-			</div>
-		
-			<div class="framed right_space">
+		<% unless (unit_name = (@response['sUnitName'] || @response['sUnitId'])).blank? %>
+			<p>Unit Number: <%= unit_name %>
+		<% end %>
+	
+		<p>Storage Facility: </p>
+		<div>
+			<p class="listing_title"><%= @reservation.listing.title %></p>
+			<div class="listing_address">
 				<p>
-					<%= print_link('#reserve_print') %> this page and bring it with you to <%= @reservation.listing.title %> along with your credit card.
+					<%= @reservation.listing.address %><br />
+					<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
 				</p>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="sl-table-exp-form-r">
-		<div class="clear"></div>
-		<p class="verisign">
-	        <span class="hidden">Verisign Secure</span>
-		</p>
-		<p class="right">
-			<%= ajax_loader %>
-	        <input id="reserve_done" type="submit" value="Done" name="commit" />
-		</p>
-	</div>
-<% end %>
+<div class="clear stack">
+	<p>
+		<%= print_link('#print_box', "/ajax/get_partial?partial=reservations/print_wrap&model=Reservation&id=#{@reservation.id}") %>
+		this page and bring it with you to <%= @reservation.listing.title %>.
+	</p>
+</div>
+
+<div class="uncollapse stack">
+	<div class="clear"></div>
+	<p class="verisign">
+        <span class="hidden">Verisign Secure</span>
+	</p>
+	<p class="right">
+		<%= ajax_loader %>
+        <input id="reserve_done" type="submit" value="Done" name="commit" />
+	</p>
+</div>

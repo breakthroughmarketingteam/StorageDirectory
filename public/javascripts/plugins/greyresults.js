@@ -87,7 +87,10 @@ $(function(){
 	
 	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
 		var unit_clone = $('.sl-table-wrap', '#sl-tabs-sizes-in').eq(0).clone().hide();
-				hidden_form = $('form:hidden', unit_clone);
+		
+		
+			
+		var hidden_form = $('form:hidden', unit_clone);
 				
 		$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
 		unit_clone.fadeIn();
@@ -191,9 +194,9 @@ $(function(){
 	
 	$('.facility_feature', '.edit_action #sl-tabs-feat').click(function(){
 		var $this = $(this),
-				feature = $this.find('input').val().replaceAll(' ', '-'),
-				ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
-				path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
+			feature = encodeURIComponent($this.find('input').val().replaceAll(' ', '-')),
+			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
+			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
 		
 		$this.after(ajax_loader.show()).siblings('.f').hide();
 		path += $this.hasClass('selected') ? '/false' : '/true';
@@ -228,6 +231,10 @@ $(function(){
 	/*
 	 * FRONT END, results page
 	*/
+	
+	$('.rslt-price', '.listing').each(function(){
+		$(':radio', this).eq(0).attr('checked', true);
+	});
 	
 	$compare_btns = $('.compare', '.listing');
 	
@@ -271,7 +278,7 @@ $(function(){
 	$('.open_reserve_form').live('click', function(){
 		var $this = $(this),
 			rform = $('.reserve_form', $this.parent());
-
+			
 		if (rform.hasClass('active')) {
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -426,6 +433,17 @@ $(function(){
 
 		return false
 	});
+	
+	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
+	$('.reserve_btn', '.listing').live('click', function(){
+		var $this = $(this), new_href = $this.attr('href').replace('/sizes', '/reserve'),
+			unit_size = $(':radio:checked', $this.parent().parent());
+		
+		if (unit_size.length) {
+			$this.attr('href', new_href +'&sub_model=Size&sub_id='+ unit_size.val());
+			$this.attr('rel', 'reserve');
+		}
+	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
 	$('.tab_link', '.listing').live('click', function() {
@@ -467,9 +485,11 @@ $(function(){
 						var $map_wrap = $('.map_wrap', $panel);
 						$map_wrap.append('<iframe />');
 						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
+						$('.hintable', $panel).hinty();
 
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
+						$('.numeric_phone', $panel).formatPhoneNum();
 					}
 				});
 			});
@@ -500,12 +520,12 @@ $(function(){
 	});
 	
 	// Reservation process, submit reserver details, then billing info
-	$('form.new_reservation').live('submit', function() {
+	$('form.new_listing_request').live('submit', function() {
 		submit_reservation_and_do(this, function(form, response) {
 			var inner_panel = form.parent();
 			inner_panel.children().fadeOut(300, function(){
 				inner_panel.html(response.data).children().hide().fadeIn();
-				$('.hintable', inner_panel).hinty()
+				$('.hintable', inner_panel).hinty();
 			});
 		});
 		
@@ -523,8 +543,8 @@ $(function(){
 		return false;
 	});
 	
-	$('#reserve_done', '.reserve_form').live('click', function(){
-		$(this).parents('.reserve_form').slideUp();
+	$('#reserve_done').live('click', function(){
+		$(this).parents('.reserve_form').slideUp().parent().removeClass('active');
 	});
 	
 	function submit_reservation_and_do(form, callback) {
@@ -548,6 +568,19 @@ $(function(){
 	
 	$('.tos').live('click', function(){
 		get_pop_up_and_do({ title: 'Terms of Service', modal: true }, { sub_partial: 'pages/terms_of_service' });
+		return false;
+	});
+	
+	$('#get_dirs', '#map_partial').live('click', function(){
+		var $this = $(this),
+			from_address = $('#gmap_dirs', $this.parent().parent()).val();
+		
+		if (from_address != '') {
+			var src = build_gmap_src({ from: from_address, to: $this.attr('rel'), title: $this.attr('title') });
+			$map_wrap.append('<iframe />');
+			$('iframe', $map_wrap).src('/ajax/get_dir_frame?script_src='+ src);
+		}
+		
 		return false;
 	});
 	
@@ -720,3 +753,20 @@ $(function(){
 	}
 	
 });
+
+// build a query string for the google directions gadget: http://maps.google.com/help/maps/gadgets/directions/
+function build_gmap_src(options) {
+	var script_src = 'http://www.gmodules.com/ig/ifr?url=http://hosting.gmodules.com/ig/gadgets/file/114281111391296844949/driving-directions.xml'+
+					 '&amp;up_fromLocation='+ escape(options.from) +
+					 '&amp;up_myLocations='+ escape(options.to) +
+					 '&amp;up_defaultDirectionsType='+ 
+					 '&amp;synd=open'+
+					 '&amp;w='+ (options.w || 320) +
+					 '&amp;h='+ (options.h || 55) +
+					 '&amp;title='+ escape(options.title) || 'Directions+by+Google+Maps'+
+					 '&amp;brand=light'+
+					 '&amp;lang='+ (options.lang || 'en') +
+					 '&amp;country=US'+
+					 '&amp;output=js';
+	return script_src;
+}

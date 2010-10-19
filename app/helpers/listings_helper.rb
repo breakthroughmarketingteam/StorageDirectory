@@ -37,8 +37,9 @@ module ListingsHelper
   end
   
   def results_main_button(listing)
+    partial = listing.available_sizes.empty? ? :reserve : :sizes
     if listing.accepts_reservations?
-      link_to 'Reserve', listing.get_partial_link(:sizes), :class => 'tab_link', :rel => 'reserve'
+      link_to 'Reserve', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link', :rel => 'reserve'
     end
@@ -122,6 +123,10 @@ module ListingsHelper
   
   def if_tabs_empty_text
     '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
+  end
+  
+  def claim_listing_link(listing)
+    link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}" if listing.client.nil?
   end
   
 end

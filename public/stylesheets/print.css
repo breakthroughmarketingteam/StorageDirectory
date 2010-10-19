@@ -1,4 +1,16 @@
 /* no print */
 .ps{display:none !important;}
+.dp{position:static !important;}
+img.left{margin:0 10px 10px 0;}
 /* Storagelocator v1 print style mods */
-#sl-fac-coup{float:right !important;}
+#sl-fac-coup{float:left !important;}
+#sl-fac-coup{width:45%;float:right;position:relative;border:2px dashed #ccc;margin-right:2px;}
+#sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:130px;padding:10px 12px;color:#666;text-align:left;}
+#sl-fac-coup-in .sl-special,#sl-fac-coup-in-edit .sl-special{font-size:200%;color:#333;margin:10px 0;text-align:center;font-variant:small-caps;display:block;}
+#sl-fac-coup-in .special_desc,#sl-fac-coup-in-edit .special_desc{display:block;font-size:80%;margin-bottom:20px;}
+#sl-fac-coup-in .coup_sponsor,#sl-fac-coup-in-edit .coup_sponsor{position:absolute;bottom:8px;color:#393;}
+#sl-fac-coup-in .coup_sponsor{position:static;}
+#sl-fac-coup-in-edit .coup_code{position:absolute;color:#666;right:10px;bottom:6px;font-family:Courier, monospace;font-size:10px;}
+#sl-fac-coup-in .coup_code{position:static;color:#666;font-family:Courier, monospace;font-size:10px;}
+#sl-fac-coup-in .special_label,#sl-fac-coup-in-edit .special_label{text-transform:uppercase;display:block;font-size:80%;}
+#listings_controller #sl-fac-coup-in-edit input.coupon_code{font-size:100%;}
