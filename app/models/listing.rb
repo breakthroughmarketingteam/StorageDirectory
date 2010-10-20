@@ -3,7 +3,6 @@ class Listing < ActiveRecord::Base
   belongs_to :client, :foreign_key => 'user_id'
   
   has_one  :map, :dependent => :destroy
-  acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
   
   has_many :specials       , :dependent => :destroy
@@ -36,6 +35,8 @@ class Listing < ActiveRecord::Base
   
   access_shared_methods
   acts_as_taggable_on :tags
+  acts_as_mappable :through => :map
+  sitemap
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@upper_types = %w(upper)

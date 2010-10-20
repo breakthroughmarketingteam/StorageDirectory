@@ -1,5 +1,11 @@
 class UsCity < ActiveRecord::Base
   
+  sitemap :change_frequency => :weekly, :priority => 0.9
+  
+  def to_param
+    self.name
+  end
+  
   def self.states
     all(:select => 'DISTINCT state', :order => 'state').map(&:state)
   end

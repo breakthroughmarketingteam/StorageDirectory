@@ -127,7 +127,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #oldlogo a{position:absolute;}
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
-#narrow-box{overflow:hidden;}
+#listings_controller.edit_action #narrow-box{overflow:hidden;}
 #sb-title{background:url("/images/ui/storagelocator/block-title-bg.png") no-repeat;height:49px;margin:0 0 0 4px;padding-top:1px;}
 #narrow-box h2{background:url("/images/ui/storagelocator/loupe-icon.png") no-repeat;color:#fff;height:42px;text-shadow:1px 1px 0 #333;margin:4px 0 0 7px;padding:2px 0 0 54px;}
 #add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 0px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
@@ -360,6 +360,7 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #add-fac-form-extra{position:relative;}
 #add-fac-form-extra-in{}
 #type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
+#listings_controller #sl-tabs-nav{margin-left:0;}
 #type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:5px;}
 #type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
 #type-one-r-col ul.tabular li.active{}
