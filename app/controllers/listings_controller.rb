@@ -6,9 +6,6 @@ class ListingsController < ApplicationController
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
-  caches_page :index, :show
-  cache_sweeper :page_sweeper, :only => [:quick_create, :update]
-  
   def index 
     render :layout => false if request.xhr?
   end
@@ -17,9 +14,6 @@ class ListingsController < ApplicationController
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
-    
-    # TODO: extract pieces from search query: zip, city, title, address
-    #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
     
     result = Listing.geo_search params, session
     @premium_listings = result[:premium]

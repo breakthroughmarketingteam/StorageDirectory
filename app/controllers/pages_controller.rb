@@ -3,9 +3,6 @@ class PagesController < ApplicationController
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
   
-  caches_page :index, :show
-  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
-  
   include Geokit
   geocode_ip_address :only => :show
   

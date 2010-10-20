@@ -37,13 +37,13 @@
 					<div class="tab_content active" id="fac-signup">
 						
 						
-						<div id="add-fac-txt">
-				<h3><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a> is today’s most complete Self Storage locator on the web. </h3>
-				<p><span class="blue">In today’s market you’re missing out on business if your self storage facility is not accessible on the Internet.</span> Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
+				<div id="add-fac-txt">
+					<h3><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a> is today’s most complete Self Storage locator on the web. </h3>
+					<p>In today’s market <span class="blue">you’re missing out on business</span> if your self storage facility is not accessible on the Internet. Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
 				
-			</div>
-						<div id="add-fac-form">
-				<% form_for @client do |f| %>
+				</div>
+			<div id="add-fac-form">
+				<% form_for @client, :html => { :class => 'silent' } do |f| %>
 					<span class="sub_head">Locate Your Facility and Get Started.</span>
 					<div>
 						<%= f.label :company, 'Facility Name', :class => 'hidden' %>

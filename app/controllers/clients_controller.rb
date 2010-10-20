@@ -3,9 +3,6 @@ class ClientsController < ApplicationController
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :test_issn]
   
-  caches_page :index, :show, :new
-  cache_sweeper :page_sweeper, :only => [:create, :update]
-  
   def index
     render :layout => false if request.xhr?
   end

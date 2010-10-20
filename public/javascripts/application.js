@@ -516,26 +516,28 @@ $(document).ready(function() {
 	$('#client_email', '#new_client').blur(function() { check_client_email_avail($(this)); });
 	
 	function check_client_email_avail(email_input) {
-		var $this = email_input, form = $('#new_client').data('saving', true), // will prevent the form from submitting
-			chk_avail = $('#chk_avail', $this.parent()).removeClass('avail').removeClass('not_avail'), email = $this.val(),
-			ajax_loader = $('.ajax_loader', $this.parent()).show();
-		
-		chk_avail.text('Checking');
+		var form = $('#new_client').data('saving', true), // will prevent the form from submitting
+			chk_avail = $('#chk_avail', email_input.parent()).removeClass('avail').removeClass('not_avail'), email = email_input.val(),
+			ajax_loader = $('.ajax_loader', email_input.parent());
+			
+		if (email == '' || email == email_input.attr('title')) return false;
 		
 		if (!chk_avail.data('checking')) {
-			chk_avail.data('checking', true);
+			ajax_loader.show();
+			chk_avail.text('Checking').data('checking', true);
 			
 			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
 				$.with_json(response, function(data) {
 					if (data.length) {
-						$this.addClass('invalid').focus();
-						chk_avail.text('Not Available').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
+						email_input.addClass('invalid').focus();
+						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
 					} else {
-						$this.removeClass('invalid');
+						email_input.removeClass('invalid');
 						form.data('saving', false);
 						chk_avail.text('Available').attr('title', 'Good to go!').removeClass('not_avail').addClass('avail');
 
-						if (form_has_inputs_filled(form, ['#listing_city', '#listing_state'])) form.submit();
+						if (form_has_inputs_filled(form, ['#listing_city', '#listing_state']))
+							form.submit();
 					}
 					
 					chk_avail.data('checking', false);

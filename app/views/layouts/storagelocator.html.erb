@@ -45,32 +45,9 @@
 						<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
 						<h2><%= @slogan %></h2>
 					</div>
-					<div id="dock">
-						<a id="map_nav_btn" href="#us-map" name="map_nav_btn">
-							<img src="/images/ui/storagelocator/us-map-icon.png" alt="US Map" title="US Map">
-							US Map
-						</a> 
-						<!--<a href="#us-cities">
-							<img src="/images/ui/storagelocator/us-cities-icon.png" alt="US Cities" title="US Cities">
-							US Cities
-						</a>-->
-						<a href="/storage-info">
-							<img src="/images/ui/storagelocator/storage-info-icon.png" alt="Storage Info" title="Storage Info">
-							Storage Info
-						</a>
-						<a href="/storage-tips">
-							<img src="/images/ui/storagelocator/storage-tips-icon.png" alt="Storage Tips" title="Storage Tips">
-							Storage Tips
-						</a>
-						<a href="/spanish">
-							<img src="/images/ui/storagelocator/spanish-icon.png" alt="Spanish" title="Spanish">
-							Spanish
-						</a>
-						<a href="/add-your-facility">
-							<img src="/images/ui/storagelocator/add-facility-icon.png" alt="Add Your Facility" title="Add Your Facility">
-							Add Your Facility
-						</a>
-					</div>
+					
+					<%= render :partial => 'pages/home' %>
+					
 				</div>
 			</div><!-- END header container -->
 			<div id="page-ctr-in">

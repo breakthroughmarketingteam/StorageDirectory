@@ -3,9 +3,6 @@ class PostsController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
-  caches_page :index, :show
-  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
-  
   def index
     render :layout => false if request.xhr?
   end

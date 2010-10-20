@@ -136,9 +136,15 @@ class Listing < ActiveRecord::Base
     }
     
     unless query.blank?
-      if is_address_query?(query)
+      if is_address_query? query
         @location = Geokit::Geocoders::MultiGeocoder.geocode query
         options.merge! :origin => @location
+        
+        if is_zip? query # strip any non digit chars
+          options.merge! :conditions => ['maps.zip = ?', query.gsub(/\D/, '')]
+        elsif
+          options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{query.downcase}%"]
+        end
       else # query by name?
         conditions = { :conditions => ['listings.title LIKE ?', "%#{query}%"] }
         options.merge! conditions
@@ -146,7 +152,7 @@ class Listing < ActiveRecord::Base
         unless session[:geo_location].blank?
           options.merge! :origin => sess_loc
         else
-          guessed = Listing.first(conditions).map.full_address rescue nil
+          guessed = Listing.first(conditions).map.zip
           @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
           options.merge! :origin => @location
         end
@@ -194,9 +200,7 @@ class Listing < ActiveRecord::Base
   
   def self.is_address_query?(query)
     query.gsub!('-', ' ')
-    return true if is_zip?(query)
-    return true if is_city?(query)
-    is_state?(query)
+    is_zip?(query) || is_city?(query) || is_state?(query)
   end
   
   @@zip_regex = /\d{5}/
@@ -204,7 +208,7 @@ class Listing < ActiveRecord::Base
   @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
   
   def self.is_zip?(query)
-    query.match @@zip_regex # zip code
+    query.match @@zip_regex
   end
   
   def self.is_city?(query)
