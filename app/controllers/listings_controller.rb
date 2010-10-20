@@ -16,9 +16,12 @@ class ListingsController < ApplicationController
     @unit_size_thumbs = SizeIcon.thumb_icons
     
     result = Listing.geo_search params, session
-    @premium_listings = result[:premium]
-    @regular_listings = result[:regular]
-    @listings = @premium_listings | @regular_listings
+    @very_specific_listings = result[:very_specific] # listings that have the exact unit size if the searcher specified one
+    @kinda_specific_listings = result[:kinda_specific] # has any sizes
+    @premium_listings = result[:premium] # owned listings
+    @regular_listings = result[:regular] # free
+    @listings = @very_specific_listings | @kinda_specific_listings | @premium_listings | @regular_listings
+    
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     

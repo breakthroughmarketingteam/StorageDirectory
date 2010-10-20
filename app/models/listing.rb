@@ -164,7 +164,23 @@ class Listing < ActiveRecord::Base
     
     @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
-    { :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+    ret = { :very_specific => [], :kinda_specific => [], :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+    
+    unless params[:storage_size].blank?
+      kinda_specific = ret[:premium].select { |p| !p.sizes.empty? }
+
+      very_specific = kinda_specific.select do |p|
+        p.sizes.any? { |s| s.dims == params[:storage_size] }
+      end
+
+      premium = ret[:premium].reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }
+      
+      ret[:premium] = premium
+      ret[:very_specific] = very_specific
+      ret[:kinda_specific] = kinda_specific
+    end
+    
+    ret
   end
   
   def premium?

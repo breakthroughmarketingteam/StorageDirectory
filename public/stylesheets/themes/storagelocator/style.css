@@ -197,10 +197,10 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg.loading{height:40px;background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
 .listing > .inner{border-top:1px solid #ccc;}
-#rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
-#rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > div > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
-#rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > div > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
-#rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > div > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
+#rslt-list-bg > div.active > .inner,#rslt-list-bg > .premium > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
+#rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > .premium > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
+#rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > .premium > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
+#rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > .premium > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
 .listing .inner .in{overflow:hidden;position:relative;padding:0 0 10px 0;}
 .listing ul li{float:left;}
 .listing .rslt-features {float:right;margin:7px 10px 0 0;overflow:hidden;}
