@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<link href="/stylesheets/plugins/jquery.ui.css?1281227638" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/common.css?1287534531" media="screen" rel="stylesheet" type="text/css" />
+		
+		
+		<link href="/stylesheets/themes/storagelocator/style.css?1287532578" media="screen" rel="stylesheet" type="text/css" />
+		
+		<meta charset="utf-8" />
+		<title>Home - US Self Storage Locator</title>
+
+		
+<meta name='keywords' content='some keywords' />
+<meta name='description' content='some description' />
+		<script src="/javascripts/swfobject_modified.js?1279660394" type="text/javascript"></script>
+		
+		<script src="/javascripts/jquery.all.js?1286834504" type="text/javascript"></script>
+		
+		<script src="/javascripts/plugins/greyresults.js?1287439721" type="text/javascript"></script>
+<script src="/javascripts/plugins/inflector.js?1278001523" type="text/javascript"></script>
+<script src="/javascripts/plugins/jquery.formbouncer.js?1287183788" type="text/javascript"></script>
+<script src="/javascripts/plugins/jquery.hinty.js?1278001523" type="text/javascript"></script>
+<script src="/javascripts/plugins/jquery.iframe.js?1278001523" type="text/javascript"></script>
+<script src="/javascripts/plugins/jquery.jqDock.min.js?1282056902" type="text/javascript"></script>
+	  	<script src="/javascripts/greymatter.js?1287515023" type="text/javascript"></script>
+<script src="/javascripts/application.js?1287516689" type="text/javascript"></script>
+		
+	  	
+    
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		
+		<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+		<!--[if lte IE 7]>
+			<link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
+		<![endif]-->
+	</head>
+	<body id="pages_controller" class="show_action home authenticated admin">
+	
+	<div id="topbar">
+		<ul id="storage_types">
+	<li><a href="/self-storage" class="">Self Storage</a></li>
+	<li><a href="/mobile-storage" class="">Mobile Storage</a></li>
+	<li><a href="/car-storage" class="">Car Storage</a></li>
+	<li><a href="/rv-storage" class="">RV Storage</a></li>
+	<li><a href="/boat-storage" class="">Boat Storage</a></li>
+	<li><a href="/cold-storage" class="">Cold Storage</a></li>
+</ul>
+<ul id="moving_help">
+	<li><a href="#">Truck Rentals</a></li>
+	<li><a href="#">Moving Companies</a></li>
+	<li><a href="#">Supplies</a></li>
+</ul>
+<ul class="right">
+	<li>
+		<a href="/users/1" class="" id="account_link">My Account</a><a href="/admin" class="" id="admin_index_link">Admin</a><a href="/logout">Log out</a>
+	</li>
+</ul>
+	</div>
+	
+	<div id="body">
+		<div id="logo">
+			<a href="/"><img src="/images/ui/storagelocator/us-self-storage-locator-logo-lg.gif" alt="US Self Storage Locator" /></a>
+			<img src="/images/ui/storagelocator/us-self-storage-locator-heading.png" alt="US Self Storage Locator" />
+			<h1>Locate, Select and Reserve Self Storage Anywhere, Anytime.</h1>
+		</div>
+		
+		<form action="/self-storage" id="front_search" method="get">
+	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
+	<div id="search_field">
+		<input class="hintable autocomplete required focus_onload" id="q" name="q" rel="UsCity_namesNstate|3" title="Zip Code, City, or Street Address" type="text" />
+		<input class="grn_btn" name="commit" type="submit" value="Locate" />
+		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
+	</div>
+	
+	<div id="advanced_opts">
+		<p id="ao_top">Choose your options for a refined Self Storage search:</p>
+	<div class="left">
+		<div>
+			<label for="Type:">Type:</label>
+			<select id="storage_type" name="storage_type"><option>24 Access</option><option>Climate Controlled</option><option>Door Monitoring System</option><option>Drive Up</option><option>Gate Access</option><option>Perimeter Alarm System</option><option>Rv / Boat</option><option>Self Service Kiosk</option><option>Vehicle</option><option>Wine Storage Area</option></select>
+		</div>
+		
+		<div id="size_picker">
+			<img alt="Original_5x5-m" src="http://storagelocator.s3.amazonaws.com/icons/11/original_5x5-m.png" />
+		</div>
+		
+		<div>
+			<label for="Unit_Size:">Unit size:</label>
+			<select id="storage_size" name="storage_size"><option value='5x5' rel='http://storagelocator.s3.amazonaws.com/icons/11/original_5x5-m.png'>5x5</option><option value='5x10' rel='http://storagelocator.s3.amazonaws.com/icons/12/original_5x10-m.png'>5x10</option><option value='5x15' rel='http://storagelocator.s3.amazonaws.com/icons/13/original_5x15-m.png'>5x15</option><option value='10x10' rel='http://storagelocator.s3.amazonaws.com/icons/14/original_10x10-m.png'>10x10</option><option value='10x15' rel='http://storagelocator.s3.amazonaws.com/icons/15/original_10x15-m.png'>10x15</option><option value='10x20' rel='http://storagelocator.s3.amazonaws.com/icons/16/original_10x20-m.png'>10x20</option><option value='10x25' rel='http://storagelocator.s3.amazonaws.com/icons/17/original_10x25-m.png'>10x25</option><option value='10x30' rel='http://storagelocator.s3.amazonaws.com/icons/18/original_10x30-m.png'>10x30</option></select>
+		</div>
+	</div>
+	
+	<div class="right">
+		<div class="top">
+			<div id="slide_wrap">
+				<label for="Within">Within</label>
+				<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less" />
+				<div class="advanced_slider"><div id="slide_bg"></div></div>
+				<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
+				<label for="miles.">Miles.</label>
+				<input class="slider_val" id="within" name="within" type="hidden" value="20" />
+			</div>
+			
+			<div id="loc_btn">
+				<input class="grn_btn" name="commit" type="submit" value="Locate" />
+			</div>
+		</div>
+		
+		<div class="bottom">
+			<p><label for="Features:">Features:</label></p>
+			
+			<div id="features">
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="A/C Storage" /></div>
+						<label for="A_C_Storage">A/c storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Air Cooled Storage" /></div>
+						<label for="Air_Cooled_Storage">Air cooled storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Climate Controlled" /></div>
+						<label for="Climate_Controlled">Climate controlled</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Container" /></div>
+						<label for="Container">Container</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Covered" /></div>
+						<label for="Covered">Covered</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Dehumidified Storage" /></div>
+						<label for="Dehumidified_Storage">Dehumidified storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Drive Up Access" /></div>
+						<label for="Drive_Up_Access">Drive up access</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Economy" /></div>
+						<label for="Economy">Economy</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Electrical Usage" /></div>
+						<label for="Electrical_Usage">Electrical usage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Elevator" /></div>
+						<label for="Elevator">Elevator</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Heated Storage" /></div>
+						<label for="Heated_Storage">Heated storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Inside" /></div>
+						<label for="Inside">Inside</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Locker Storage" /></div>
+						<label for="Locker_Storage">Locker storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="MailBox" /></div>
+						<label for="MailBox">Mailbox</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Multiple Doors" /></div>
+						<label for="Multiple_Doors">Multiple doors</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Office Suite" /></div>
+						<label for="Office_Suite">Office suite</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Outside" /></div>
+						<label for="Outside">Outside</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Oversize Door" /></div>
+						<label for="Oversize_Door">Oversize door</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Premium" /></div>
+						<label for="Premium">Premium</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="RV / Parking" /></div>
+						<label for="RV___Parking">Rv / parking</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Stacks" /></div>
+						<label for="Stacks">Stacks</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Stairs" /></div>
+						<label for="Stairs">Stairs</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Standard Storage" /></div>
+						<label for="Standard_Storage">Standard storage</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Upper Level" /></div>
+						<label for="Upper_Level">Upper level</label>
+					</div>
+				
+					<div class="selectable_wrap">
+						<div class="selectable"><input id="storage_features_" name="storage_features[]" type="checkbox" value="Wine Storage" /></div>
+						<label for="Wine_Storage">Wine storage</label>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+	</div>
+</form>
+		
+		
+
+<div id="ajax_wrap_inner">
+  
+
+  
+  <div id="page_1_buttons" class="model_options buttons right">
+		<a href="/#hide_collapseable_staticContent" class="iconOnly16 toggle_action toggle_right right note" title="Toggle Page_Home">Hide</a>
+        
+  	<a href="/pages/1/edit" class="iconOnly16 edit_link right note" title="Edit Page">Edit Page</a>
+  </div>
+
+	
+  
+
+  <div class="collapseable">
+  	<div id="dock">
+						<a id="map_nav_btn" href="#us-map" name="map_nav_btn">
+							<img src="/images/ui/storagelocator/us-map-icon.png" alt="US Map" title="US Map">
+							US Map
+						</a> 
+						<!--<a href="#us-cities">
+							<img src="/images/ui/storagelocator/us-cities-icon.png" alt="US Cities" title="US Cities">
+							US Cities
+						</a>-->
+						<a href="/storage-info">
+							<img src="/images/ui/storagelocator/storage-info-icon.png" alt="Storage Info" title="Storage Info">
+							Storage Info
+						</a>
+						<a href="/storage-tips">
+							<img src="/images/ui/storagelocator/storage-tips-icon.png" alt="Storage Tips" title="Storage Tips">
+							Storage Tips
+						</a>
+						<a href="/spanish">
+							<img src="/images/ui/storagelocator/spanish-icon.png" alt="Spanish" title="Spanish">
+							Spanish
+						</a>
+						<a href="/add-your-facility">
+							<img src="/images/ui/storagelocator/add-facility-icon.png" alt="Add Your Facility" title="Add Your Facility">
+							Add Your Facility
+						</a>
+					</div>
+  </div>
+  
+  
+</div>
+		
+	</div> <!-- /#body -->
+		
+	<div id="footer">
+		<div id="footer_top">
+			<div class="divide">
+				<p class="wrapper">Need to find Self Storage? It's Easy!</p>
+			</div>
+		</div>
+		
+		<div class='region_footer region'><ul class="block_sortable"><li id="BlocksModel_3323" class="block" rel="position">
+	
+	
+  <div id="block_2_buttons" class="model_options buttons right">
+		<a href="/#hide_collapseable_inBlock2" class="iconOnly16 toggle_action toggle_right right note" title="Toggle Block_Home Footer ">Hide</a>
+        
+  	<a href="/pages/1/edit#show_collapseable_BlocksFields" class="iconOnly16 edit_link right note" title="Edit Block">Edit Block</a>
+  </div>
+
+	
+	<div class="collapseable">
+		
+		<div class="block_content">
+			<div id="footer_mid">
+	<div id="bg-highlight">
+	<div id="steps">
+		<div id="step1" class="step">
+			<h3>Locate</h3>
+			<div class="in">
+			  <img src="/images/ui/storagelocator/locate-img.png" alt="Locate" />
+			  <p>
+  				Locate a self storage facility that suits your needs! Narrow your results by city, zip code, or street address. You can even choose to search by unit size, distance from your home, and facility amenities.
+  			</p>
+			</div>
+		</div>
+		
+		<div id="step2" class="step">
+			<h3>Select</h3>
+			<div class="in">
+			  <img src="/images/ui/storagelocator/select-img.png" alt="Select" />
+        <p>
+				Select a self storage facility that has exactly what you need using our feature enhanced, easy-to-use locator. You can sort locations by distance and features so you can find your perfect self-storage solution with ease.
+			  </p>
+			</div>
+		</div>
+		
+		<div id="step3" class="step last">
+			<h3>Reserve</h3>
+			<div class="in">
+			  <img src="/images/ui/storagelocator/reserve-img.png" alt="Reserve" />
+        <p>
+				Reserve the self storage unit you choose with one last easy step. Once your confirmation e-mail is sent, you're ready to go! The self storage facility you chose will hold the storage unit and contact you for further instruction.
+			  </p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="more_info">
+		<h4>USSelfStorageLocator.com Helps<br> You Find a Self Storage Unit Anywhere Anytime!</h4>
+		
+		<div class="inner">
+			<p>
+				<img class="right" src="/files/content/more-info-pic.png" alt="Self Storage Reservations" />
+			</p>
+			<p>
+				Donec sodales ornare eros, nec hendrerit leo suscipit a? Ut pellentesque tellus quis quam porta aliquet! Vivamus et est et tortor imperdiet rutrum at vel enim. Nam velit mi, cursus vitae bibendum in, auctor sit amet ligula! Suspendisse non dui massa, id sagittis neque.
+			</p>
+				
+			<h5>Ut Neque Met Cursus Semper</h4>
+			<p>
+				Integer euismod sollicitudin augue ut elementum. Ut quam felis, dapibus in tempus id, vestibulum quis nibh. Morbi sem neque, viverra eget eleifend sit amet, malesuada sit amet nulla. Praesent rhoncus pharetra ipsum; pellentesque feugiat metus vulputate lacinia. Maecenas libero magna, vehicula quis lacinia sit amet, aliquet eget libero. Mauris in neque eget sem porttitor laoreet? Quisque eget fermentum nisl. Proin aliquet nunc sed neque congue ultricies! Aliquam commodo suscipit elit, eget tincidunt metus varius sed. Sed quis neque turpis.
+			</p>
+				
+			<h5>Ut Commodo Diam Sit Amet</h4>
+			<p>
+				Donec vehicula elit mi, porttitor porta sem. Vestibulum interdum ipsum posuere quam placerat semper. Cras a risus sed urna accumsan mattis? Duis eros eros, mollis bibendum varius tristique, pulvinar nec nisl. Proin laoreet dui sed odio euismod hendrerit. Sed ligula libero, consequat sit amet dictum et, volutpat a nulla. Donec mattis luctus metus ac varius. <a href="http://storagelocator.heroku.com/add-your-facility"><strong>advertise your services</strong></a>, <a href="http://storagelocator.heroku.com"><strong>USSelfStorageLocator.com</strong></a> can help!
+			</p>
+				
+			<p>
+				<a href="http://storagelocator.heroku.com"><strong>USSelfStorageLocator.com</strong></a> makes it easy for you to research all of your self storage needs and questions. Here, you can find and compare <a href="http://storagelocator.heroku.com/storage-locator"><strong>self storage facilities</strong></a> by location, amenities, and storage type, learn what packing essentials (link to packing and supplies) you will need to protect important items, and browse our many tips!
+			</p>
+				
+			<p>
+				If you have a specific question and haven’t found the answer here, please <a href="http://storagelocator.heroku.com"><strong>contact us!</strong></a>
+			</p>
+		</div>
+	</div>
+	
+	<a href="#more_info" rel="more_info" id="red_tab">Click for more</a>
+	<div id="handle"></div>
+	
+</div>
+
+<div id="footer_btm">
+	<div id="wrapper1">
+	
+		<div class="strip"></div>
+
+		<div id="affiliates">
+			<p><strong>Affiliate Progams</strong> - Get great deals and save on your next Self Storage rental with one of our affiliate partners.</p>
+			<div class="wrapper">
+				<div class="previous_ad"></div>
+				<div class="ad"><a href="http://www.publicstorage.com"><img src="/files/content/affiliates/publicstorage.jpg" alt="Public Storage Self Storage" /></a></div>
+				<div class="ad"><a href="http://www.pods.com"><img src="/files/content/affiliates/pods.jpg" alt="Pods Self Storage" /></a></div>
+				<div class="ad"><a href="http://www.extraspace.com"><img src="/files/content/affiliates/extraspace.jpg" alt="Extra Space Self Storage" /></a></div>
+				<div class="ad"><a href="http://www.ustoreit.com"><img src="/files/content/affiliates/ustoreit.jpg" alt="U-Store-It Self Storage" /></a></div>
+				<div class="ad"><a href="http://www.unclebobs.com"><img src="/files/content/affiliates/unclebobs.jpg" alt="Uncle Bob's Self Storage" /></a></div>
+				<div class="ad"><a href="http://www.publicstorage.com"><img src="/files/content/affiliates/publicstorage.jpg" alt="Public Storage Self Storage" /></a></div>
+				<div class="next_ad"></div>
+			</div>
+		</div>
+	
+	
+		<div id="social-media">
+			<p><strong>Share This Site</strong> - We’ll be coming out with awesome specials through our social and business network pages.</p>
+				<div id="icons">
+					<a href="http://www.facebook.com"><img src="/files/content/socialmedia/facebook.png" alt="Follow us on Facebook" /></a>
+					<a href="http://www.twitter.com"><img src="/files/content/socialmedia/twitter.png" alt="Follow us on Twitter" /></a>
+					<a href="http://www.digg.com"><img src="/files/content/socialmedia/digg.png" alt="Share us on Digg" /></a>
+					<a href="http://www.usselfstoragelocator.com/rss"><img src="/files/content/socialmedia/rss.png" alt="USSelfStorageLocator.com RSS Feed" /></a>
+					<a href="http://www.linkedin.com"><img src="/files/content/socialmedia/linkedin.png" alt="Follow us on Linkedin" /></a>
+					<a href="http://www.stumbleupon.com"><img src="/files/content/socialmedia/stumbleupon.png" alt="Share us on Stumbleupon" /></a>
+				</div>
+			</div>
+			<div id="wrapper2">
+		
+				<div id="footer-menu">
+					<a href="/self-storage">Locate Self Storage</a> - 
+					<a href="/storage-info">Self Storage Info</a> - 
+					<a href="/add-your-facility">Add Your Facility</a> - 
+					<a href="/privacy">Privacy Policy</a> - 
+					<a href="/contact">Contact Us</a>
+				</div>
+	
+				<div id="copyright">
+					<p>© 2010 USSelfStorageLocator.com All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+		</div>
+	
+		
+		
+	</div>
+</li></ul></div>
+		
+	</div>
+	<div id="pop_up_box"><div id="login_page">
+	<form action="/user_sessions" class="new_user_session" id="new_user_session" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="aVSy8t4g6fBy8e6I5T4H8xQMj+4I+N2JJdQ/3w55Cu8=" /></div>
+		<fieldset>
+			<h2>Login to your account</h2>
+		
+			<div class="stack i">
+				<label class="hidden" for="user_session_email">Email</label>
+				<div class="shadow_wrap">
+	  			<input class="email hintable" id="user_session_email" name="user_session[email]" size="30" title="Your Email Address" type="text" />
+				</div>
+			</div>
+		
+			<div class="stack i">
+	  		<label class="hidden" for="user_session_password">Password</label>
+				<div class="shadow_wrap">
+			  	<input class="required hintable" id="user_session_password" name="user_session[password]" size="30" title="Password" type="password" />
+				</div>
+			</div>
+		
+			<div class="stack region">
+				<input name="user_session[remember_me]" type="hidden" value="0" /><input id="user_session_remember_me" name="user_session[remember_me]" type="checkbox" value="1" /><label for="user_session_remember_me">Remember me</label>
+				<img alt="Ajax-loader-facebook" class="ajax_loader" src="/images/ui/ajax-loader-facebook.gif?1262744391" />
+				<input id="user_session_submit" name="commit" type="submit" value="Login" />
+			</div>
+			
+			<div class="stack">
+				<a href="/password_resets/new" id="forgot_pass_link">Forgot Password</a>
+			</div>
+		
+		</fieldset>
+	</form>
+</div></div>
+	</body>
+</html>

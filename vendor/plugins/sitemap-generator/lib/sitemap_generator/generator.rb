@@ -92,12 +92,11 @@ module SitemapGenerator
     end
 
     def generate(&block)
-
       File.open(@filename, "w") do |file|  
         xml = Builder::XmlMarkup.new(:target => file, :indent => 2)  
         xml.instruct! 'xml-stylesheet', {:href=>'sitemap.xsl', :type=>'text/xsl'}
 
-        xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation" => "http://www.google.com/schemas/sitemap/0.84 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" do  
+        xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation" => "http://www.google.com/schemas/sitemap/0.84 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" do
           block.call(Sitemap.new(xml))
         end
       end
@@ -139,12 +138,12 @@ module SitemapGenerator
 
       sitemap = "http://#{Options.domain}/sitemap.xml"
 
-      [ "http://www.google.com/webmasters/tools/ping?sitemap=#{sitemap}",
-        "http://search.yahooapis.com/SiteExplorerService/V1/ping?sitemap=#{sitemap}",
-        "http://submissions.ask.com/ping?sitemap=#{sitemap}",
-        "http://www.bing.com/webmaster/ping.aspx?siteMap=#{sitemap}" ].each do |url|
+      ["http://www.google.com/webmasters/tools/ping?sitemap=#{sitemap}",
+       "http://search.yahooapis.com/SiteExplorerService/V1/ping?sitemap=#{sitemap}",
+       "http://submissions.ask.com/ping?sitemap=#{sitemap}",
+       "http://www.bing.com/webmaster/ping.aspx?siteMap=#{sitemap}"].each do |url|
         open(url) do |f|
-          if f.status[0] == "200"
+          if f.status[0] == '200'
             p "Sitemap successfully submitted to #{url}"      
           else
             p "Failed to submit sitemap to #{url}"
@@ -158,7 +157,7 @@ module SitemapGenerator
         Generator.new.find_models_and_generate
       end
 
-      def generate(&block)
+      def generate(f, &block)
         Generator.new.generate(&block)
       end
     end

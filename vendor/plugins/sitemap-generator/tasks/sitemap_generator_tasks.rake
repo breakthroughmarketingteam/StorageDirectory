@@ -5,24 +5,26 @@ namespace :sitemap do
   desc "Generates the sitemap"
   task :generate do
     # Finds models and generates the sitemap
-    SitemapGenerator::Generator.run 
+    #SitemapGenerator::Generator.run 
     
     # You can also generate a sitemap 'manually' like this:
-=begin
-    SitemapGenerator::Generator.generate 'config' do |host, data|
-      Post.all(:order => 'created_at desc', :limit => 5000).each do |post|
-        data.add post, 0.7, :monthly
+    SitemapGenerator::Generator.generate 'config' do |sitemap|
+      Listing.all(:order => 'user_id desc', :limit => nil).each do |listing|
+        sitemap.add listing, 1, :weekly
+      end
+      
+      UsCity.all_that_have_listings.each do |city|
+        sitemap.add city, 0.9, :weekly
+      end
+      
+      Post.all(:order => 'updated_at desc', :limit => nil).each do |post|
+        sitemap.add post, 0.8, :weekly
       end
 
-      Category.all(:order => 'created_at desc', :limit => 5000).each do |category|
-        data.add category, 0.6, :weekly
-      end
-
-      Tag.all(:order => 'created_at desc', :limit => 5000).each do |tag|
-        data.add tag, 0.5, :weekly
+      Page.all(:order => 'updated_at desc', :limit => nil).each do |page|
+        sitemap.add page, 0.7, :monthly
       end
     end
-=end
   end
 
 end

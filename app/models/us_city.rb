@@ -2,8 +2,12 @@ class UsCity < ActiveRecord::Base
   
   sitemap :change_frequency => :weekly, :priority => 0.9
   
-  def to_param
-    self.name
+  def self.all_that_have_listings
+    self.find_by_sql <<-RUBY
+      SELECT DISTINCT us_cities.name, us_cities.state FROM us_cities, maps
+      WHERE us_cities.name LIKE maps.city
+      ORDER BY us_cities.name
+    RUBY
   end
   
   def self.states
@@ -26,12 +30,11 @@ class UsCity < ActiveRecord::Base
     all(:select => 'name', :conditions => ['LOWER(state) = ?', state.downcase.gsub('-', ' ')], :order => 'name').map(&:name)
   end
   
-  # converts the list of cities into a hash: { first_letter: [city_names...], etc... }
+  # converts the list of cities into a hash: { first_letter: [city_names...], ... }
   def self.tabbed_cities_of(state)
     tabbed = {}
     cities_of(state).each do |city|
-      tabbed[city[0,1]] ||= []
-      tabbed[city[0,1]] << city
+      (tabbed[city[0,1]] ||= []) << city
     end
     tabbed.sort
   end

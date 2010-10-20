@@ -6,6 +6,9 @@ class ListingsController < ApplicationController
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
+  caches_page :index, :show
+  cache_sweeper :page_sweeper, :only => [:quick_create, :update]
+  
   def index 
     render :layout => false if request.xhr?
   end

@@ -36,7 +36,7 @@ class Listing < ActiveRecord::Base
   access_shared_methods
   acts_as_taggable_on :tags
   acts_as_mappable :through => :map
-  sitemap
+  sitemap :order => 'updated_at DESC'
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@upper_types = %w(upper)
