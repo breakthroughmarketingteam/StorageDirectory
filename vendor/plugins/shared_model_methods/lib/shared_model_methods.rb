@@ -83,8 +83,12 @@ module SharedModelMethods #:nodoc:
       self.content.stripped_teaser(limit) unless self.content.blank?
     end
     
+    def has_extra_options?
+      self.respond_to?(:process_erb)
+    end
+    
     def is_using_extra_options?
-      self.respond_to?(:process_erb) && self.process_erb?
+       self.has_extra_options? && self.process_erb?
     end
     
     def update_assoc(assoc, params)

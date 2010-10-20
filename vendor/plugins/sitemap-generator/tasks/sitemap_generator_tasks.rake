@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../lib/sitemap_generator')
+require File.join(File.dirname(__FILE__), '/../lib/sitemap_generator.rb')
 
 namespace :sitemap do
 
