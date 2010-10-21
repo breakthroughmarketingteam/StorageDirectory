@@ -144,9 +144,9 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt > p{float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:5px 0;}
 .rslt-head-txt > p span{color:#333;}
-.green-head{width:742px;margin:15px 0;float:left;position:relative;left:15px;}
+.green-head{width:745px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
-#tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:740px;}
+#tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:745px;}
 #tips-head #tips-hdr{position:absolute;z-index:750;}
 #tips-head .purple_bgs,#tips-head .bubble{position:absolute;height:100px;width:100px;display:none;}
 #tips-head .bubble{z-index:800;text-align:center;}
