@@ -2,9 +2,9 @@
 	<div id="sb-title">
 		<h2>Narrow Your Search</h2>
 	</div>
-	<form id="narrow_results_form" action="/self-storage" method="get" name="narrow_results_form">
+	<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">
 		<div id="offset_search_box">
-			<%= text_field_tag :q, (params[:q] || params[:city] || '').titleize, :class => 'hintable autocomplete', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= text_field_tag :q, (params[:q] || params[:city] || '').titleize, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
 			<%= submit_tag 'Locate', :class => 'grn_btn' %>
 		</div>
 		<div id="advanced_opts">

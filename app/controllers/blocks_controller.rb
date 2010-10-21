@@ -36,7 +36,7 @@ class BlocksController < ApplicationController
         if @block.save
           flash.now[:notice] = @block.title + ' has been created.'
           @blocks = Block.all_for_index_view
-          get_block
+          @blocks = Block.all_for_index_view
           render :action => :index, :layout => false
         else
           flash.now[:error] = model_errors(@block)
@@ -70,8 +70,8 @@ class BlocksController < ApplicationController
         if @block.update_attributes(params[:block])
           flash.now[:notice] = @block.title + ' has been updated.'
           @blocks = Block.all_for_index_view
-          get_block
-          render :action => :index, :layout => false
+          @blocks = Block.all_for_index_view
+          render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@block)
           get_associations

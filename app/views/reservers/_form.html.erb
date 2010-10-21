@@ -1,0 +1,41 @@
+<fieldset>
+	<div class="uncollapse stack">
+		<div class="left stack right_space">
+			<%= f.label :first_name %>
+			<div class="shadow_wrap">
+				<%= f.text_field :first_name, :class => 'required' %>
+			</div>
+		</div>
+		
+		<div class="left stack right_space">
+			<%= f.label :last_name %>
+			<div class="shadow_wrap">
+				<%= f.text_field :last_name, :class => 'required' %>
+			</div>
+		</div>
+
+		<div class="left">
+			<%= f.label :email %>
+			<div class="shadow_wrap">
+				<%= f.text_field :email, :class => 'email' %>
+			</div>
+		</div>
+	</div>
+	
+	<div class="half_fields uncollapse">
+		<div class="left right_space stack">
+			<%= f.label :password %>
+			<div class="shadow_wrap">
+				<%= f.password_field :password, :class => 'password' %>
+			</div>
+		</div>
+
+		<div class="left stack">
+			<%= f.label :password_confirmation %>
+			<div class="shadow_wrap">
+				<%= f.password_field :password_confirmation, :class => 'confirm' %>
+			</div>
+		</div>
+	</div>
+
+</fieldset>

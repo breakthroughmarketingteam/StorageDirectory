@@ -1,0 +1,13 @@
+<% declare_content_for %>
+
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
+
+	<h2 class="stack"><%= user_account_title %></h2>
+
+	<%= render :partial => 'reserver', :locals => { :reserver => @reserver } %>
+
+	<div class="uncollapse">
+	  <div class="buttons"><%= button_to 'Edit', edit_reserver_path, { :method => 'get' } %></div>
+	</div>
+</div>

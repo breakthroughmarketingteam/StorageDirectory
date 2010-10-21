@@ -531,12 +531,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .panel div.sl-table-exp-form-l{width:52%;margin:0 0 20px 4px;}
 .panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
 #sl-tabs-hours{padding:10px 12px 17px;}
-#sl-tabs-hours-in{overflow:hidden;padding:0 17px 10px;}
+#sl-tabs-hours-in{overflow:hidden;padding:0 17px;}
 #sl-tabs-hours .day_field{width:9%;font-size:80%;display:block;float:left;line-height:1.4;}
 #business_hours_form .left,#business_hours_form .right{width:48%;}
 #business_hours_form ul{margin-left:13px;}
 #business_hours_form ul li{padding:0 0 15px;overflow:hidden;}
-#business_hours_form h4{margin-bottom:20px;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#business_hours_form h4{margin:0 0 20px 0;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
 #business_hours_form h4 span{float:right;color:#333;font-size:60%;font-weight:normal;}
 #business_hours_form h4 span label,#business_hours_form h4 span input{cursor:pointer;}
 #business_hours_form .hour_range{display:inline;margin-left:5px;}
