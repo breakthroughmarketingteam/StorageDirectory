@@ -3,7 +3,6 @@ class Listing < ActiveRecord::Base
   belongs_to :client, :foreign_key => 'user_id'
   
   has_one  :map, :dependent => :destroy
-  acts_as_mappable :through => :map
   accepts_nested_attributes_for :map
   
   has_many :specials       , :dependent => :destroy
@@ -36,6 +35,8 @@ class Listing < ActiveRecord::Base
   
   access_shared_methods
   acts_as_taggable_on :tags
+  acts_as_mappable :through => :map
+  sitemap :order => 'updated_at DESC'
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@upper_types = %w(upper)
@@ -135,9 +136,15 @@ class Listing < ActiveRecord::Base
     }
     
     unless query.blank?
-      if is_address_query?(query)
+      if is_address_query? query
         @location = Geokit::Geocoders::MultiGeocoder.geocode query
         options.merge! :origin => @location
+        
+        if is_zip? query # strip any non digit chars
+          options.merge! :conditions => ['maps.zip = ?', query.gsub(/\D/, '')]
+        elsif
+          options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{query.downcase}%"]
+        end
       else # query by name?
         conditions = { :conditions => ['listings.title LIKE ?', "%#{query}%"] }
         options.merge! conditions
@@ -145,7 +152,7 @@ class Listing < ActiveRecord::Base
         unless session[:geo_location].blank?
           options.merge! :origin => sess_loc
         else
-          guessed = Listing.first(conditions).map.full_address rescue nil
+          guessed = Listing.first(conditions).map.zip
           @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
           options.merge! :origin => @location
         end
@@ -157,7 +164,23 @@ class Listing < ActiveRecord::Base
     
     @model_data = Listing.all options
     @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
-    { :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+    ret = { :very_specific => [], :kinda_specific => [], :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+    
+    unless params[:storage_size].blank?
+      kinda_specific = ret[:premium].select { |p| !p.sizes.empty? }
+
+      very_specific = kinda_specific.select do |p|
+        p.sizes.any? { |s| s.dims == params[:storage_size] }
+      end
+
+      premium = ret[:premium].reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }
+      
+      ret[:premium] = premium
+      ret[:very_specific] = very_specific
+      ret[:kinda_specific] = kinda_specific
+    end
+    
+    ret
   end
   
   def premium?
@@ -193,9 +216,7 @@ class Listing < ActiveRecord::Base
   
   def self.is_address_query?(query)
     query.gsub!('-', ' ')
-    return true if is_zip?(query)
-    return true if is_city?(query)
-    is_state?(query)
+    is_zip?(query) || is_city?(query) || is_state?(query)
   end
   
   @@zip_regex = /\d{5}/
@@ -203,7 +224,7 @@ class Listing < ActiveRecord::Base
   @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
   
   def self.is_zip?(query)
-    query.match @@zip_regex # zip code
+    query.match @@zip_regex
   end
   
   def self.is_city?(query)

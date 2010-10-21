@@ -14,8 +14,8 @@ class Post < ActiveRecord::Base
   acts_as_commentable
   acts_as_taggable_on :tags, :categories
   access_shared_methods
-  
   #ajaxful_rateable :dimensions => [:usefulness]
+  sitemap :change_frequency => :weekly, :priority => 0.8, :order => 'updated_at DESC' 
   
   # Class Methods
   def self.all_for_index_view

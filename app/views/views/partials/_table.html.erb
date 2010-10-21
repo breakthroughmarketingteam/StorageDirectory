@@ -34,7 +34,7 @@
 						
 						<td>
 							<span class="title">
-								<%= link_to val.titleize, model %>
+								<%= link_to val.try(:titleize), model %>
 							</span>
 						</td>
 						

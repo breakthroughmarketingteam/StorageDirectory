@@ -1,12 +1,58 @@
 <% form_tag '/self-storage', :id => 'front_search', :method => 'get' do %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
-		<%= text_field_tag :q, nil, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+		<%= text_field_tag :q, nil, :class => 'hintable autocomplete required focus_onload', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
 		<%= submit_tag 'Locate', :class => 'grn_btn' %>
 		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
 	</div>
 	
 	<div id="advanced_opts">
-		<%= render :partial => 'menus/advanced_opts' %>
+		<p id="ao_top">Choose your options for a refined Self Storage search:</p>
+			<div class="left">
+				<div>
+					<%= label_tag 'Type:' %>
+					<%= select_tag 'storage_type', option_tags(@facility_features, 'Self Storage') %>
+				</div>
+
+				<div id="size_picker">
+					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+				</div>
+
+				<div>
+					<%= label_tag 'Unit Size:' %>
+					<%= select_tag_for_unit_size_icons 'storage_size' %>
+				</div>
+			</div>
+
+			<div class="right">
+				<div class="top">
+					<div id="slide_wrap">
+						<%= label_tag 'Within' %>
+						<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less" />
+						<div class="advanced_slider"><div id="slide_bg"></div></div>
+						<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
+						<%= label_tag 'miles.' %>
+						<%= hidden_field_tag :within, (params[:within] || 10), :class => 'slider_val' %>
+					</div>
+
+					<div id="loc_btn">
+						<%= submit_tag 'Locate', :class => 'grn_btn' %>
+					</div>
+				</div>
+
+				<div class="bottom">
+					<p><%= label_tag 'Features:' %></p>
+
+					<div id="features">
+						<% @unit_features.each do |feature| %>
+							<div class="selectable_wrap">
+								<div class="selectable"><%= check_box_tag 'storage_features[]', feature %></div>
+								<%= label_tag feature %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 <% end %>

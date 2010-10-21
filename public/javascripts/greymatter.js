@@ -18,12 +18,14 @@ $(function(){
 	$('.param_filled').fillWithParam(); 		 // fill matching inputs with the param from its rel attr
 	$('.table_sort').appendParamAndGo();		 // append the key-val in the elements rel attr to the href and go to it
 	$('.openDiv').openDiv();					 // click a link to open a hidden div near by
-	$.liveSubmit('.search-btn, .search-button, .submit_btn'); // make a link act as a submit button
+	$.liveSubmit('.search-btn', '.search-button', '.submit_btn'); // make a link act as a submit button
 	$('h4 a', '#info-accordion').accordion(); // my very own accordion widget :)
 	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
+	
+	$('.focus_onload').eq(0).focus();
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
@@ -839,7 +841,7 @@ $.fn.tabular_content = function() {
 // make matched elements act as a submit button
 $.liveSubmit = function() {
 	$.each(arguments, function(){
-		$(this).live('click', function(){
+		$(eval("'"+ this +"'")).live('click', function(){
 			$(this).parents('form').submit();
 			return false;
 		});

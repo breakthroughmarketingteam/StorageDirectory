@@ -10,27 +10,30 @@ $(document).ready(function() {
 	
 	// ajaxify the login form and forgot password link
 	$('#login_link').click(function() {
-		var $this = $(this);
-		if ($this.hasClass('active')) return false;
-		
-		$this.addClass('active');
-		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
-		
-		pop_up.fadeIn();
-		$('input[type=text]', pop_up).eq(0).focus();
-		$.bindPlugins();
-		
-		// close login box when user clicks outside of it
-		$(document).click(function(e) {
-			if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
-				pop_up.fadeOut(300, function() { 
-					$('#login_link').removeClass('active');
-					pop_up.hide();
-				});
-			}
-		});
-		
-		return false;
+		// TODO: this is a quickfix, find out why in IE the login box closes even when clicking inside of it, good luck.
+		if (!$.browser.msie) {
+			var $this = $(this);
+			if ($this.hasClass('active')) return false;
+
+			$this.addClass('active');
+			var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
+
+			pop_up.fadeIn();
+			$('input[type=text]', pop_up).eq(0).focus();
+			$.bindPlugins();
+
+			// close login box when user clicks outside of it
+			$(document).click(function(e) {
+				if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
+					pop_up.fadeOut(300, function() { 
+						$('#login_link').removeClass('active');
+						pop_up.hide();
+					});
+				}
+			});
+
+			return false;
+		}
 	});
 	
 	// log the user in and change the topbar to the logged in links
@@ -469,6 +472,8 @@ $(document).ready(function() {
 	
 	// add your facility
 	$('form#new_client').submit(function(){
+		if (!$('#chk_avail').hasClass('avail')) check_client_email_avail($('#client_email', this));
+		
 		var signup_form = $(this).runValidation();
 		
 		if (signup_form.data('valid') && !signup_form.data('saving')) {
@@ -478,7 +483,7 @@ $(document).ready(function() {
 			var pop_up_title  = 'Add Your Facility',
 				pop_up_height = 600,
 				sub_partial   = '/clients/signup_steps',
-				ajax_loader	  = $('.ajax_loader', this).show(),
+				ajax_loader	  = $('#submit_wrap .ajax_loader', this).show(),
 				current_step  = 1,
 				form_data     = { 
 					company : $('#client_company', signup_form).val(),
@@ -489,7 +494,7 @@ $(document).ready(function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				$.with_json(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (data[0]) { // we found matching listings, start on the first step of the workflow
@@ -506,6 +511,54 @@ $(document).ready(function() {
 		
 		return false;
 	});
+	
+	$('#chk_avail').click(function(){ return false; });
+	$('#client_email', '#new_client').blur(function() { check_client_email_avail($(this)); });
+	
+	function check_client_email_avail(email_input) {
+		var form = $('#new_client').data('saving', true), // will prevent the form from submitting
+			chk_avail = $('#chk_avail', email_input.parent()).removeClass('avail').removeClass('not_avail'), email = email_input.val(),
+			ajax_loader = $('.ajax_loader', email_input.parent());
+			
+		if (email == '' || email == email_input.attr('title')) return false;
+		
+		if (!chk_avail.data('checking')) {
+			ajax_loader.show();
+			chk_avail.text('Checking').data('checking', true);
+			
+			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
+				$.with_json(response, function(data) {
+					if (data.length) {
+						email_input.addClass('invalid').focus();
+						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
+					} else {
+						email_input.removeClass('invalid');
+						form.data('saving', false);
+						chk_avail.text('Available').attr('title', 'Good to go!').removeClass('not_avail').addClass('avail');
+
+						if (form_has_inputs_filled(form, ['#listing_city', '#listing_state']))
+							form.submit();
+					}
+					
+					chk_avail.data('checking', false);
+				});
+
+				ajax_loader.hide();
+			});
+		}
+	}
+	
+	function form_has_inputs_filled(form, input_ids) {
+		var all_filled = true;
+		
+		$.each(input_ids, function(){
+			var input = $(eval("'"+ this +"'"));
+			
+			if (input.val() == '' || input.val() == input.attr('title')) all_filled = false;
+		});
+		
+		return all_filled;
+	}
 	
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
@@ -666,24 +719,6 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		$('.hint_toggle').live('click', function() {
-			var btn = $(this),
-				hint = btn.parents('.user_hint'),
-				placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
-				ajax_loader = $('.ajax_loader', hint).show();
-
-			$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
-				hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
-				ajax_loader.hide();
-			});
-			
-			return false;
-		});
-		
-		$('input', '#user_hint_toggles').click(function(){
-			$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
-		});
-		
 		$('.inline_save').live('focus', function() {
 			var input = $(this);
 			input.after('<a class="submit_btn" href="#">Save</a>');
@@ -705,6 +740,25 @@ $(document).ready(function() {
 		});
 		
 	} // END page clients edit
+	
+	// client and listing edit page
+	$('.hint_toggle').live('click', function() {
+		var btn = $(this),
+			hint = btn.parents('.user_hint'),
+			placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
+			ajax_loader = $('.ajax_loader', hint).show();
+
+		$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
+			hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
+			ajax_loader.hide();
+		});
+		
+		return false;
+	});
+	
+	$('input', '#user_hint_toggles').click(function(){
+		$('.hint_toggle[rel='+ this.value +']:'+ (this.value == 'open' ? 'hidden' : 'visible' )).click();
+	});
 	
 	// Listing Edit
 	// NEW LISTING WORKFLOW
