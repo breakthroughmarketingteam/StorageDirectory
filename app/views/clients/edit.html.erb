@@ -113,7 +113,7 @@
             <li><span class="label">Address:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.address if @client.has_billing_info? %></span></li>
   			<li><span class="label">Phone:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span></li>
             <li><span class="label">Card Type:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_type if @client.has_billing_info? %></span></li>
-            <li><span class="label">Card Number:</span><span class="value" rel="billing_info"><%= @client.active_billing_info.card_number if @client.has_billing_info? %></span></li>
+            <li><span class="label">Card Number:</span><span class="value" rel="billing_info"><%= card_num_obscure(@client.active_billing_info.card_number) if @client.has_billing_info? %></span></li>
           </ul>
         </div>
   	    <% form_for @client, :html => { :id => "client_edit_#{@client.id}", :class => 'hidden' } do |f| %><% end %>

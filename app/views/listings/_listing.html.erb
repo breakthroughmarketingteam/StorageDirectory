@@ -18,7 +18,7 @@
 			<%= listing.display_special %>
 		<% end %>
       </li>
-      <li class="rslt-reserve">
+      <li class="action_btn crud_btn">
         <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (listing.new_record? ? '' : (current_user.has_role?('admin') ? edit_listing_path(listing) : client_listing_path(listing))) %>
       </li>
     </ul>

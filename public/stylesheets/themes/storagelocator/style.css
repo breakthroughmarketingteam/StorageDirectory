@@ -261,8 +261,8 @@ li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocato
 .listing ul li.reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
 .listing ul li.hold_unit{background:url(/images/ui/storagelocator/hold-btn.png) no-repeat center;}
 .listing ul li.hold_unit:hover{background:url(/images/ui/storagelocator/hold-btn-hover.png) no-repeat center;}
-.listing ul li.request{background:url(/images/ui/storagelocator/request-btn.png) no-repeat center;}
-.listing ul li.request:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) no-repeat center;}
+.listing ul li.request,.crud_btn{background:url(/images/ui/storagelocator/request-btn.png) no-repeat center;}
+.listing ul li.request:hover,.crud_btn:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) no-repeat center;}
 .listing .compare{float:right;}
 .listing .compare input{margin:0;cursor:pointer;}
 .listing .compare label{cursor:pointer;font-size:80%;}
@@ -632,11 +632,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units #rslt-list-bg{position:relative;left:0px;border:1px solid #ccc;border-top:0 none;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 15px;}
-#ov-units .listing{overflow:auto;margin-bottom:0;}
+#ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
-#ov-units .listing .inner .rslt-reserve{width:108px;position:absolute;right:20px;}
+#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:20px;}
 #ov-services ul li{list-style:none;display:inline;}
 #ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
@@ -856,7 +856,7 @@ img.right{margin:0 0 10px 10px;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units #rslt-list-bg {width:99.4%;top:-10px;}
-#ov-units .listing .rslt-reserve{width:145px;}
+#ov-units .listing .crud_btn{width:145px;}
 #ov-reports-cnt{padding:10px 9px;overflow:hidden;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
 #ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;}
