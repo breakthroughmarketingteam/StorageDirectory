@@ -135,7 +135,6 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #add-fac-box p{margin:10px;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
 #new_client a.search-button,#narrow-box a.search-btn,#compare-btn{background:url(/images/ui/storagelocator/search-btn.png) no-repeat top left;width:161px;margin:10px auto;height:38px;line-height:33px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;text-shadow:1px 1px 2px #000;position:relative;left:-10px;}
-#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat top left;float:right;width:138px;height:45px;line-height:45px;left:5px;top:-10px;margin-bottom:0px;}
 input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:130px;padding:2px 14px;font-weight:bold;height:20px;line-height:20px;color:#333;margin-bottom:10px;-moz-box-shadow:1px 1px 2px #999 inset;box-shadow:1px 1px 2px #999 inset;-webkit-box-shadow:1px 1px 2px #999 inset;}
 .slider{margin-bottom:15px;}
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
@@ -356,33 +355,31 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 .listing .review h6{font-size:100%;margin-bottom:8px;padding-top:5px;}
 .listing .review .stack{font-size:80%;line-height:18px;}
 /* Start the add facility page styles here */
-form#new_client{background:url(/images/ui/storagelocator/signup-bg.png) no-repeat;float:left;height:238px;padding:15px;width:366px;}
+form#new_client{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;background:none repeat scroll 0 0 #4C4BCC;border:3px solid #CCCCCC;float:left;height:230px;padding:15px;width:330px;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
-#new_client span.sub_head{color:#ff3333;display:block;font-size:20px;margin-bottom:15px;}
+#new_client span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:13px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
 #new_client .flash p{height:auto;margin:0;font-size:80%;width:auto;position:absolute;right:0;top:-15px;}
 #new_client input,#signupstep_3 input{padding:5px 10px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;font-size:100%;}
-#new_client input{width:92%;}
+#new_client input{width:308px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
-#new_client #listing_city{width:63%;}
-#new_client #listing_state{margin-left:4px;width:20%;}
+#new_client #listing_city{width:208px;}
+#new_client #listing_state{margin-left:5px;width:68px;}
 #add-fac-txt{float:left;width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:28px;}
 #add-fac-txt a:hover;{text-decoration:underline;}
-#add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:15px 0;}
-#add-fac-txt h4{font-size:14px;margin:;}
-#add-fac-txt p{font-size:12px;margin:20px 0px;line-height:1.3;}
+#add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:0;}
+#add-fac-txt h4{font-size:14px;}
 #add-fac-form-extra,#add-fac-form-extra-in,#add-fac-form-extra ul{}
 #add-fac-form-extra{position:relative;}
 #add-fac-form-extra-in{}
-.add_our_facility #type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
-#type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-58px 0 0 10px;width:100%;z-index:4;}
+#type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-37px 0 0 10px;width:100%;z-index:4;}
 #listings_controller #sl-tabs-nav{margin-left:0;}
-#type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:15px;}
-#type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
+#type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;height:37px;text-align:center;position:relative;}
+#type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:48px;padding-top:12px;position:relative;width:135px;}
 #type-one-r-col ul.tabular li.active{}
-#type-one-r-col ul.tabular li.active a{color:#fff;background:url(/images/ui/storagelocator/active-add-tab.png) no-repeat 8px 5px;display:block;text-shadow:1px 1px 0px #333;position:relative;left:-2px;}
+#type-one-r-col ul.tabular li.active a{color:#fff;background:url(/images/ui/storagelocator/active-add-tab.png) no-repeat 6px 6px;display:block;text-shadow:1px 1px 0px #333;position:relative;}
 #fac-signup ul{margin-left:20px;}
 #fac-signup ul li{list-style:disc inside none;margin:10px;}
 .tab_content{clear:both;position:relative;}
@@ -875,13 +872,12 @@ img.right{margin:0 0 10px 10px;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
-#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:2.2;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
 #new_client #email_check{overflow:hidden;position:relative;margin-bottom:7px;}
 #new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
 #chk_avail{color:#CCC;float:right;margin:3px 6px 0 0;text-transform:uppercase;padding:3px 0;}
 #chk_avail.avail{padding-right:24px;background:url(/images/ui/storagelocator/checkmark.png) no-repeat right center;}
 #chk_avail.not_avail{padding-right:18px;background:url(/images/ui/cancel_icon.png) no-repeat right center;}
-#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:1.9;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
+#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:1.9;margin-bottom:0;margin-top:10px;text-shadow:1px 1px 0 #333;width:130px;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
 #sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #ccc;}
@@ -1005,7 +1001,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #stats_graph.loading{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 45%;}
 #Reservation .stack{font-size:120%;}
 /*signup workflow*/
-#top_fac_page{margin:25px 40px 0;overflow:visible;}
+#top_fac_page{margin:40px 40px 0;overflow:visible;}
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
@@ -1260,3 +1256,18 @@ form .error p{margin:0 0 7px 0;}
 #top_fac_page #fac-bottom .feat h4.box5{background:url("/images/ui/storagelocator/notify.png") no-repeat;}
 #top_fac_page #fac-bottom .feat h4.box6{background:url("/images/ui/storagelocator/market.png") no-repeat;}
 #top_fac_page #fac-bottom .feat p{font-size:12px;line-height:20px;margin:0;}
+
+#fac-features{margin-top:20px;}
+#top_fac_page h3{font-size:28px;line-height:36px;}
+#add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
+#add-fac-form-extra ul{margin-left:30px;}
+#top_fac_page #fac-features h4{margin-bottom:20px;margin-left:0;}
+#text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:none repeat scroll 0 0 #FEFFD3;border:3px solid #ccc;margin-bottom:40px;padding:25px;}
+#text-box p.tb{font-size:20px;}
+#text-box p{font-size:16px;line-height:26px;margin:0;}
+
+#price-block{float:left;margin-top:13px;width:326px;}
+#price-block h4{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:82px;line-height:28px;margin:10px 0 15px 10px;padding:11px 0 0 6px;text-align:center;width:322px;}
+#price-block p{color:#000;font-size:15px;margin:0;margin:0 0 0 32px;text-align:center;}
+#price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;}
+#price-block span{color:#4C4BCC;}
