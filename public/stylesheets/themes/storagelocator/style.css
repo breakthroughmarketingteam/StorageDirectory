@@ -362,7 +362,7 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
 #new_client #listing_city{width:63%;}
 #new_client #listing_state{margin-left:4px;width:20%;}
-#add-fac-txt{float:right;}
+#add-fac-txt{float:left;width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:28px;}
 #add-fac-txt a:hover;{text-decoration:underline;}
 #add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:15px 0;}
