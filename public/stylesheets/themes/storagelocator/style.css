@@ -10,7 +10,6 @@ a:link, a:visited {text-decoration:none;}
 .hidden{display:none;}
 span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4px;font-weight:bold;}
 span.blue{color:#4c4bcc;}
-hr.hr-line{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;display:block;float:left;width:100%;}
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
 /* Start complex layout styles - includes the changing background garage door etc*/
@@ -128,7 +127,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #oldlogo a{position:absolute;}
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
-#narrow-box{}
+#listings_controller.edit_action #narrow-box{overflow:hidden;}
 #sb-title{background:url("/images/ui/storagelocator/block-title-bg.png") no-repeat;height:49px;margin:0 0 0 4px;padding-top:1px;}
 #narrow-box h2{background:url("/images/ui/storagelocator/loupe-icon.png") no-repeat;color:#fff;height:42px;text-shadow:1px 1px 0 #333;margin:4px 0 0 7px;padding:2px 0 0 54px;}
 #add-fac-box h2{width:110px;font-size:100%;color:#fff;text-shadow:1px 1px 0px #333;height:47px;text-align:left;position:relative;left:55px;top:7px;margin-top:20px;}
@@ -147,7 +146,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt > p span{color:#333;}
 .green-head{width:742px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
-#tips-head{background:#000;position:relative;overflow:hidden;width:740px;}
+#tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:740px;}
 #tips-head #tips-hdr{position:absolute;z-index:750;}
 #tips-head .purple_bgs,#tips-head .bubble{position:absolute;height:100px;width:100px;display:none;}
 #tips-head .bubble{z-index:800;text-align:center;}
@@ -164,20 +163,18 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub1{width:529px;height:143px;bottom:0;left:0;background:url(/images/ui/storagelocator/tips-hdr-img-bubble1.png) no-repeat;}
 #tips-head #bub2{width:596px;height:159px;bottom:0;left:14%;background:url(/images/ui/storagelocator/tips-hdr-img-bubble2.png) no-repeat;}
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
-#info-head{background:url(/images/ui/storagelocator/info-hdr-img.png) no-repeat;}
+#info-head{background:url(/images/ui/storagelocator/info-hdr-img.png) no-repeat;height:200px;}
 #add-fac-head{background:url(/images/ui/storagelocator/add-hdr-img.png) no-repeat;height:225px;}
 #add-fac-head a.try-free{background:url("/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
-/* End the header images for each page */
 #rslt-number{border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;color:#3333CB;background:#eee;}
 #narrow-box p span#rslt-number,.sl-dist #rslt-number{color:#000;}
 #narrow-box p span span,#rslt-head h2 span span,.sl-dist #rslt-number span{margin:8px;}
 #rslt-head p{margin-top:23px;background:url(/images/ui/storagelocator/results-header-search.png) no-repeat top right;text-shadow:1px 1px 0 #666;width:300px;}
 #rslt-head p a{margin-left:15px;color:#fff;font-weight:bold;font-size:120%;text-decoration:none;}
 input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:185px;height:28px;padding:0 12px;line-height:28px;color:#777;font-size:120%;}
-/*#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:774px;background:url(/images/ui/storagelocator/results-list-bg.png) no-repeat top left;height:40px;line-height:20px;position:relative;left:-3px;}*/
-#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:770px;height:40px;background:url(/images/ui/storagelocator/sort-head-bg.png) repeat-x;border-bottom:1px solid #ccc;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;}
+#type-three-top-bar-head,#type-one-top-bar-head,#type-two-top-bar-head{width:770px;height:42px;}
 #type-one-top-bar-head{margin-bottom:10px;}
 #type-three-top-bar-head{left:-1px;}
 #type-two-top-bar-head li{list-style:none;float:left;margin-top:10px;}
@@ -187,7 +184,6 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar-head li#list-name a{width:315px;}
 #type-one-top-bar-head li#list-miles{border:1px solid #ccc;margin-left:10px;width:100px;}
 #type-one-top-bar-head li#list-miles a{width:100px;}
-
 #search-head{margin-bottom:10px;}
 #search-head ul{overflow:hidden;}
 #search-head li{float:left;}
@@ -196,16 +192,15 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head li#list-name a{background:url(/images/ui/storagelocator/sorting-arrow.png) no-repeat 107px 10px;border-bottom:5px solid #66cc66;height:15px;padding-left:20px;width:320px;}
 #search-head li#list-miles{}
 #search-head li#list-miles a{background:url(/images/ui/storagelocator/sorting-arrow.png) no-repeat 50px 10px;border-bottom:5px solid #6666ff;height:15px;padding-left:10px;width:63px;}
-
-#type-one-top-bar{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;position:relative;width:772px;}
+#type-one-top-bar{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;padding-bottom:15px;min-height:700px;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:97.7%;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg.loading{height:40px;background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
 .listing > .inner{border-top:1px solid #ccc;}
-#rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
-#rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > div > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
-#rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > div > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
-#rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > div > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
+#rslt-list-bg > div.active > .inner,#rslt-list-bg > .premium > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
+#rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > .premium > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
+#rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > .premium > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
+#rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > .premium > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
 .listing .inner .in{overflow:hidden;position:relative;padding:0 0 10px 0;}
 .listing ul li{float:left;}
 .listing .rslt-features {float:right;margin:7px 10px 0 0;overflow:hidden;}
@@ -281,8 +276,7 @@ p.rslt-foot a{color:#666;text-decoration:none;}
 .exp-rslt-map{width:710px;border:1px solid #ccc;position:relative;left:7px;top:10px;margin-bottom:20px;background-color:#fff;}
 .exp-title{background-color:#c30;}
 .exp-title h3{color:#fff;text-shadow:1px 1px 2px #000;height:2em;line-height:2em;margin-left:20px;}
-.exp-rslt h4,
-.exp-rslt p{margin-bottom:10px;font-size:1.3em;}
+.exp-rslt h4,.exp-rslt p{margin-bottom:10px;font-size:1.3em;}
 .exp-info{width:350px;float:left;margin-top:20px;position:relative;left:30px;margin-bottom:30px;}
 .exp-mapbox{width:310px;float:right;position:relative;top:-15px;}
 .exp-mapbox-in{background:url(/images/ui/storagelocator/map-example.png) no-repeat top left;height:209px;width:298px;background-color:#000;border:2px solid #555;}
@@ -296,16 +290,16 @@ li.map-print{background:url(/images/ui/storagelocator/print-map-bg.png) no-repea
 li.map-print a{width:89px;}
 li.map-plus{background:url(/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
-/* End the results page styles here */
 #pages_controller.admin #column_5{float:left;}
 #add-fac-head-in{background:url("/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
 #type-two-top-bar-head ul li#sort{position:relative;left:30px;width:253px;}
 #type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;font-size:100%;}
-#type-two-top-bar-head ul li#search{width:345px;float:left;}
-#type-two-top-bar-head ul li#search a{background:url(/images/ui/storagelocator/go-button.png) no-repeat center left;width:45px;height:26px;top:-1px;display:block;float:left;text-align:center;color:#fff;text-decoration:none;font-weight:bold;text-shadow:1px 1px 2px #000;position:relative;left:-20px;font-size:100%;line-height:1.9;}
-#type-two-top-bar-head ul input{height:19px;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 26px 1px 4px;position:relative;float:left;}
+#type-two-top-bar-head ul li#search{float:left;margin-top:11px;width:345px;}
+#type-two-top-bar-head ul li#search a{background:url("/images/ui/storagelocator/go-button.png") no-repeat left center;color:#fff;display:block;float:left;font-size:14px;height:24px;line-height:23px;margin-left:10px;position:relative;text-align:center;text-shadow:1px 1px 0 #666666;width:32px;}
+#type-two-top-bar-head ul input{height:19px;border:1px solid #ccc;width:120px;color:#777;font-size:1em;padding:2px 26px 1px 10px;position:relative;float:left;}
 #type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;font-size:100%;}
+#type-one-top-bar hr{border-color:#CCCCCC -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;margin:0 2px 0 3px;}
 div.green-head div.inner h2{font-size:28px;font-weight:bold;left:20px;line-height:36px;width:470px;}
 .green-head .inner p{font-size:12px;left:20px;color:#666;position:relative;left:20px;width:240px;line-height:1.2;}
 .sub-head-txt{color:#fff;font-size:100%;font-weight:bold;text-shadow:1px 1px 0px #333;position:relative;left:20px;top:-3px;padding-bottom:10px;}
@@ -319,13 +313,12 @@ div.green-head div.inner h2{font-size:28px;font-weight:bold;left:20px;line-heigh
 #city-box ul li{clear:both;list-style:none;margin-top:5px;}
 #city-box ul li a{color:#000;}
 #city-box ul li a span{float:right;color:#3333CB;}
-
 #media-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #000;height:47px;border-radius-topleft:10px;-moz-border-radius-topleft:10px;-webkit-border-top-left-radius:10px;text-align:left;position:relative;left:55px;top:18px;}
 #media-box p{font-style:italic;color:#555;line-height:1;width:145px;position:relative;left:10px;margin-top:10px;overflow:hidden;}
 #media-box p span{font-size:25px;position:relative;top:4px;left:-2px;font-family:arial;font-weight:bold;}
 #media-box p span.quote{font-style:normal;color:#3333CB;line-height:2.5em;font-size:80%;float:right;margin-bottom:30px;}
 #type-two-top-bar{position:relative;left:2px;}
-#tips-wrap{padding-top:10px;}
+#tips-wrap{margin:0 2px 10px 3px;}
 .blog-lock,.review{background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #ccc;margin:15px 20px 20px;clear:both;padding:0 20px 15px 40px;}
 .blog-lock h3,.blog-lock p{font-weight:normal;color:#555;margin:0 0 18px 0;}
 .blog-lock .stack{font-size:80%;line-height:1.3;}
@@ -346,7 +339,7 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 .listing .review h6{font-size:100%;margin-bottom:8px;padding-top:5px;}
 .listing .review .stack{font-size:80%;line-height:18px;}
 /* Start the add facility page styles here */
-form#new_client{text-align:left;width:47%;}
+form#new_client{background:url(/images/ui/storagelocator/signup-bg.png) no-repeat;float:left;height:213px;padding:15px;width:342px;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #new_client span.sub_head{color:#ff3333;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:13px;}
@@ -360,14 +353,14 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #add-fac-txt{float:right;}
 #add-fac-txt a{color:#4c4bcc;font-size:22px;}
 #add-fac-txt a:hover;{text-decoration:underline;}
-#add-fac-txt h2{font-size:22px;margin:15px 0;}
-#add-fac-txt p{color:#555;font-size:90%;margin:20px 0px;line-height:1.3;}
-p.phone{font-size:120%;}
-p.phone span{color:#4c4bcc;font-weight:bold;}
+#add-fac-txt h3{color:#555;font-size:22px;line-height:26px;margin:15px 0;}
+#add-fac-txt h4{font-size:14px;margin:;}
+#add-fac-txt p{font-size:12px;margin:20px 0px;line-height:1.3;}
 #add-fac-form-extra,#add-fac-form-extra-in,#add-fac-form-extra ul{}
 #add-fac-form-extra{position:relative;}
 #add-fac-form-extra-in{}
 .add_our_facility #type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
+#listings_controller #sl-tabs-nav{margin-left:0;}
 #type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:5px;}
 #type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
 #type-one-r-col ul.tabular li.active{}
@@ -375,11 +368,10 @@ p.phone span{color:#4c4bcc;font-weight:bold;}
 #fac-signup ul{margin-left:20px;}
 #fac-signup ul li{list-style:disc inside none;margin:10px;}
 .tab_content{clear:both;position:relative;}
-.tab_content h3,#new_client legend{margin:10px 0px 10px 0px;background:#E1EBF5;line-height:35px;color:#555;font-size:120%;padding:3px 15px;}
+#new_client legend{margin:10px 0px 10px 0px;background:#E1EBF5;line-height:35px;color:#555;font-size:120%;padding:3px 15px;}
 .tab_content h4, .tab_content p{color:#555;}
-.tab_content p{font-size:100%;margin:25px 0;line-height:1.3;}
+.tab_content p{font-size:12px;margin:25px 0;line-height:1.3;}
 .tab_content h4{color:#3333CB;font-size:120%;margin:10px;}
-/* Start footer styles here */
 .blue-line{background-color:#4745CC;clear:both;margin:5px 0px;color:#fff;height:3em;line-height:3em;}
 .blue-line ul#bottom-nav li{display:inline;margin-right:20px;text-shadow:1px 1px 2px #000;}
 .blue-line ul#bottom-nav li.last-item{margin-right:0px;}
@@ -393,14 +385,8 @@ p#foot-text-r{float:right;margin-right:20px}
 #foot-box-cnt{text-align:left;margin:0px auto;width:940px;}
 #foot-box-cnt-in{float:left;width:940px;}
 p.foot-text{margin:40px;font-weight:bold;}
-/******************************************************************************************************************************
-** ADDITIONS.CSS - added after the 2nd phase of the elance project to optimize html/css code
-/******************************************************************************************************************************/
-/* New left column styles included here to introduce that dotted line. SOme of these may be able to be ignored or removeed. Get in touch with me if you need a hand... */
 #type-two-l-col,#type-one-l-col{width:197px;float:left;position:relative;}
-/* Change made in these two divs on the existing stylesheet in order to include that dotted line. These can possibly be ignored or changed back - get in touch if you need me to explain anything... */
 #add-fac-box{background:url(/images/ui/storagelocator/add-facility-box-header.png) no-repeat top left;width:164px;position:relative;color:#555;margin-bottom:20px;top:-17px;}
-/* New left hand boxes - for welcome,admin and tips */
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/admin-facility-head.png) no-repeat top left;width:164px;position:relative;color:#555;text-align:left;margin:0 0 20px 10px;}
 #tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;left:10px;color:#555;text-align:center;margin-top:5px;}
@@ -411,30 +397,24 @@ p.foot-text{margin:40px;font-weight:bold;}
 #tips-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #333;height:47px;line-height:47px;text-align:left;position:relative;left:60px;margin-bottom:10px;}
 #welcome-box p{margin:15px 10px;font-size:1em;text-align:left;line-height:1.8em;}
 #tips-box p{margin:15px 10px;font-size:100%;text-align:left;line-height:1.5;}
-/* An additional type of number-in-a-box */
 #sl-fac-dist p span#rslt-number{border:1px solid #aaa;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;color:#3333CB;margin:2px;}
-/* New list item type added (this can be combined with an existing group of selectors) */
 li.rslt-offer{float:left;list-style:none;display:inline;margin-left:20px;}
-/* Two new additions */
 li.rslt-offer{border-left:1px solid #ccc;width:120px;}
 li.rslt-offer span{position:relative;top:20px;left:10px;font-size:80%;}
 ul#specials_list {margin:15px 10px;}
 #specials_list li{float:none;margin-bottom:10px;}
-/* Change made to the existing city box */
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:50px;}
 #city-box-in{width:165px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
-/* Changes made to the existing media box */
-#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
-/* Here are a couple of changes to the footer elements inorder to shift them up the page when the new admin bar is added. */
+#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
-/* And finally... here are all the brand new pages CSS starting from here */
 #type-three-r-col-in{width:745px;float:right;margin:13px 12px 0 0;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #sl-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #ccc;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
 #results_header{margin-top:13px;width:97.5%;}
+.locator_action #results_header{width:96.3%;}
 #results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:.5px .5px 0 #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
@@ -458,7 +438,6 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
 #sl-fac-detail-in-edit p.tags .value{}
 #sl-fac-detail,#thumb_gallery{width:52%;float:right;position:relative;}
-#thumb_gallery{}
 #sl-fac-coup{width:45%;float:left;position:relative;border:2px dashed #ccc;margin-right:2px;}
 #sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:130px;padding:10px 12px;color:#666;text-align:left;}
 #sl-fac-coup-in .sl-special,#sl-fac-coup-in-edit .sl-special{font-size:200%;color:#333;margin:10px 0;text-align:center;font-variant:small-caps;display:block;}
@@ -485,7 +464,7 @@ ul#specials_list {margin:15px 10px;}
 p.blue-edit{background:url(/images/ui/storagelocator/blue-edit.png) no-repeat top left;width:68px;height:22px;line-height:22px;text-align:center;font-weight:bold;position:relative;left:20px;}
 p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22px;}
 #sl-footer{border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;background-color:#ddd;height:30px;clear:both;margin-bottom:15px;}
-#sl-tabs{background:url(/images/ui/storagelocator/sl-tabs-bg.png) repeat-y top left;width:755px;margin-bottom:15px;position:relative;}
+#sl-tabs{background:url(/images/ui/storagelocator/sl-tabs-bg.png) repeat-y top left;width:755px;margin:55px 0 15px;position:relative;}
 #sl-tabs-in{background:url(/images/ui/storagelocator/sl-tabs-bg-bottom.png) no-repeat bottom left;width:755px;}
 #sl-tabs ul#sl-tabs-nav{background:url(/images/ui/storagelocator/sl-tabs-bg-top.png) no-repeat bottom left;font-size:120%;font-weight:bold;width:755px;height:63px;position:relative;z-index:4;background-color:#fff;}
 #sl-tabs ul#sl-tabs-nav li{background:url(/images/ui/storagelocator/sl-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:130px;float:left;text-align:center;position:relative;top:5px;margin-right:5px;}
@@ -552,12 +531,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .panel div.sl-table-exp-form-l{width:52%;margin:0 0 20px 4px;}
 .panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
 #sl-tabs-hours{padding:10px 12px 17px;}
-#sl-tabs-hours-in{overflow:hidden;padding:0 17px 10px;}
+#sl-tabs-hours-in{overflow:hidden;padding:0 17px;}
 #sl-tabs-hours .day_field{width:9%;font-size:80%;display:block;float:left;line-height:1.4;}
 #business_hours_form .left,#business_hours_form .right{width:48%;}
 #business_hours_form ul{margin-left:13px;}
 #business_hours_form ul li{padding:0 0 15px;overflow:hidden;}
-#business_hours_form h4{margin-bottom:20px;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#business_hours_form h4{margin:0 0 20px 0;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
 #business_hours_form h4 span{float:right;color:#333;font-size:60%;font-weight:normal;}
 #business_hours_form h4 span label,#business_hours_form h4 span input{cursor:pointer;}
 #business_hours_form .hour_range{display:inline;margin-left:5px;}
@@ -787,11 +766,11 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .google_map{background:url("/images/ui/storagelocator/gmap-bg.png") no-repeat center bottom;height:300px;margin-right:-7px;padding:10px;position:absolute;right:14px;top:10px;width:361px;z-index:1000;}
 .map_wrap{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;width:360px;}
 .map_wrap iframe{height:260px;width:360px;}
-#storage-info-content{padding:0 40px;}
+#storage-info-content{padding:25px 30px 0;}
 #storage-info-content > h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
 #storage-info-content > h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #storage-info-content p{font-size:12px;line-height:1.4;}
-#info-accordion{margin:40px 0;position:relative;}
+#info-accordion{margin:40px 0 0;position:relative;}
 #info-accordion > li{overflow:hidden;min-height:34px;margin-bottom:12px;position:relative;}
 #info-accordion li > h4{height:31px;padding-left:10px;font-size:120%;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
 #info-accordion li ul li{list-style:disc outside none;margin:10px 0 0 30px;}
@@ -813,7 +792,7 @@ img.right{margin:0 0 10px 10px;}
 .ajax_loader{display:none;}
 #latch-img{position:absolute;right:0;z-index:0;top:50%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
 #compare_labels{float:left;width:19%;margin:65px 0 0 0;}
-#compare_view{margin:15px 0 20px 0;overflow:hidden;float:left;width:80%;}
+#compare_view{margin:2px 12px 15px 14px;overflow:hidden;float:left;width:80%;}
 .compare_listing{float:left;margin:0 15px 0 0;max-width:32.7%;}
 .compare_listing h3 a{display:block;font-size:90%;color:#fff;height:40px;line-height:2.7;padding:0 15px;text-shadow:1px 1px 2px #333;background:url("/images/ui/storagelocator/list-page-header-bg.png") repeat-x;-moz-border-radius-topleft:20px;border-radius-topleft:20px;-webkit-border-top-left-radius:20px;-moz-border-radius-topright:20px;border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
 .compare_listing ul{margin:10px 0;}
@@ -845,11 +824,10 @@ img.right{margin:0 0 10px 10px;}
 .tabular_content .tab_content{display:none;}
 .tabular_content .active{display:block;}
 /* add tip */
-#add_new_tip{background:#ebebeb;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
+#add_new_tip{background:#ebebeb;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #CCCCCC;margin:10px 13px 30px 14px;padding:7px 10px;}
 #add_new_tip legend{margin-bottom:10px;font-size:14px;font-weight:bold;color:#666;}
 #add_new_tip p{margin-bottom:10px;}
 #add_new_tip .submit input{width:auto;}
-#add_new_tip{margin:13px 13px 0 14px;padding:7px 10px;border:1px solid #ccc;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* add size */
 #sl-tabs-sizes .btn{float:right;margin:0 0 10px 10px;}
@@ -880,6 +858,12 @@ img.right{margin:0 0 10px 10px;}
 .new_listing_request select{margin-bottom:14px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
 #new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:2.2;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
+#new_client #email_check{overflow:hidden;position:relative;margin-bottom:7px;}
+#new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
+#chk_avail{color:#CCC;float:right;margin:3px 6px 0 0;text-transform:uppercase;padding:3px 0;}
+#chk_avail.avail{padding-right:24px;background:url(/images/ui/storagelocator/checkmark.png) no-repeat right center;}
+#chk_avail.not_avail{padding-right:18px;background:url(/images/ui/cancel_icon.png) no-repeat right center;}
+#new_client a.search-button{background:url(/images/ui/storagelocator/submit-button.png) no-repeat;float:right;height:37px;left:0;line-height:1.9;margin-bottom:0;margin-right:6px;text-shadow:1px 1px 0 #333;top:-10px;width:130px;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
 #sl-tabs-sizes{position:relative;background:#fff;border-bottom:1px solid #ccc;}
@@ -901,11 +885,12 @@ img.right{margin:0 0 10px 10px;}
 #listings_controller .sl-table a.hidden{display:none;position:relative;top:10px;}
 .attr_editable{position:relative;}
 .attr_edit,.attr_editable .cancel_btn,.attr_editable .ajax_loader{position:absolute;top:8px;right:10px;color:#999;display:none;}
+.attr_edit{display:inline;color:#ccc;}
 .attr_editable .ajax_loader{right:50px;}
 .attr_editable .cancel_btn{top:131px;}
 #sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #listing_detail{overflow:hidden;margin-bottom:10px;}
-.attr_editable:hover .attr_edit{display:inline;}
+.attr_editable:hover .attr_edit{color:#393;}
 #sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
 #sl-fac-detail-in-edit input.address{margin-bottom:6px;}
 #sl-fac-detail-in-edit input.address,#sl-fac-detail-in-edit input.title{float:none;width:94%;}
@@ -1002,12 +987,13 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #stats_graph.loading{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 45%;}
 #Reservation .stack{font-size:120%;}
 /*signup workflow*/
-#top_fac_page{margin:0 20px 15px;}
+#top_fac_page{margin:15px 30px 0;}
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
 #workflow_nav,#map_flow_nav{position:absolute;top:376px;left:0;width:100%;}
+#clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:100%;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 2px #333;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
 #workflow_nav .button:hover,#map_flow_nav .button:hover{background-image:url(/images/ui/storagelocator/sl-table-reserve-active.png);}
@@ -1214,10 +1200,24 @@ form .error p{margin:0 0 7px 0;}
 #footer_btm #wrapper2 a:hover {color:#339933;}
 
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
-.grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 2px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
+.grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 0px #333;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 .ui-menu .ui-menu-item a{padding:6px 12px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:100%;margin-bottom:5px;}
 .darkgreen{color:#393;}
 .dp{position:absolute;left:-99999px;}
+
+#top_fac_page .phone span{color:#4c4bcc;}
+#top_fac_page .phone{font-size:22px;font-weight:bold;}
+#top_fac_page hr{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;display:block;float:left;margin:15px 0;width:100%;}
+#top_fac_page #fac-bottom{float:left;}
+#top_fac_page #fac-bottom .feat{float:left;margin:15px 30px 15px 0;width:207px;}
+#top_fac_page #fac-bottom .feat h4{color:#000;height:47px;font-size:14px;line-height:18px;margin:0;padding-left:55px;padding-top:8px;}
+#top_fac_page #fac-bottom .feat h4.box1{background:url("/images/ui/storagelocator/profile.png") no-repeat;}
+#top_fac_page #fac-bottom .feat h4.box2{background:url("/images/ui/storagelocator/reserve.png") no-repeat;}
+#top_fac_page #fac-bottom .feat h4.box3{background:url("/images/ui/storagelocator/tracking.png") no-repeat;width:180px;}
+#top_fac_page #fac-bottom .feat h4.box4{background:url("/images/ui/storagelocator/sync.png") no-repeat;}
+#top_fac_page #fac-bottom .feat h4.box5{background:url("/images/ui/storagelocator/notify.png") no-repeat;}
+#top_fac_page #fac-bottom .feat h4.box6{background:url("/images/ui/storagelocator/market.png") no-repeat;width:170px;}
+#top_fac_page #fac-bottom .feat p{font-size:12px;line-height:20px;margin:0;}

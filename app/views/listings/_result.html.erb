@@ -1,15 +1,16 @@
-<div id="listing_<%= result.id %>" class="listing" has-res="<%= result.accepts_reservations? %>">
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_reservations? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
 				<h3><%= link_to result.title, facility_path(result.title.parameterize, result.id) %></h3>
-
+				
+				<% if result.premium? %>
 					<div class="rslt-features">
 						<a href="" class="hours"></a>
 						<a href="" class="climate"></a>
 						<a href="" class="driveup"></a>
 					</div>
-					
+				<% end %>
 			</div>
 
 			<div class="num_icon"><%= result_index(result) %></div>
@@ -23,9 +24,11 @@
 					<span class="rslt-address"><%= result.map.address %></span><br />
 					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
 				</p>
-				<p>
-					<span class="rslt-phone">1-800-567-4321</span>
-				</p>
+				<% if result.premium? %>
+					<p>
+						<span class="rslt-phone">1-800-567-4321</span>
+					</p>
+				<% end %>
 			</div>
 			
 			<ul>

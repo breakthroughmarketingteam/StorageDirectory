@@ -35,22 +35,26 @@
 				
 
 					<div class="tab_content active" id="fac-signup">
-						<div id="add-fac-txt">
-				<h2><strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> is today’s most complete Self Storage locator on the web. </h2>
-				<p><span class="blue">In today’s market you’re missing out on business if your self storage facility is not accessible on the Internet.</span> Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
+						
+						
+				<div id="add-fac-txt">
+					<h3><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a> is today’s most complete Self Storage locator on the web. </h3>
+					<p>In today’s market <span class="blue">you’re missing out on business</span> if your self storage facility is not accessible on the Internet. Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
 				
-			</div>
-						<div id="add-fac-form">
-				<% form_for @client do |f| %>
+				</div>
+			<div id="add-fac-form">
+				<% form_for @client, :html => { :class => 'silent' } do |f| %>
 					<span class="sub_head">Locate Your Facility and Get Started.</span>
 					<div>
 						<%= f.label :company, 'Facility Name', :class => 'hidden' %>
 						<%= f.text_field :company, :class => 'required hintable param_filled focus_me', :rel => 'client[company]', :title => 'Your Facility\'s Name' %>
 					</div>
 
-					<div>
+					<div id="email_check">
 						<%= f.label :email, 'Contact Email', :class => 'hidden' %>
 						<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
+						<%= ajax_loader %>
+						<%= link_to 'Confirm Availability', '#', :id => 'chk_avail' %>
 					</div>
 
 					<div>
@@ -59,9 +63,9 @@
 						<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[state]', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 					</div>
 
-					<div>
-						<%= ajax_loader %>
+					<div id="submit_wrap">
 						<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+						<%= ajax_loader %>
 						<input type="submit" name="commit" class="hidden">
 					</div>
 				<% end %>					
@@ -74,7 +78,41 @@
 				<p class="phone">Call <span>1-800-888-5555</span> For More Information.</p>
 			</div>			
 						<hr class="hr-line"/>
+						
+					<div id="fac-bottom">
+						<div class="feat">
+							<h4 class="box1">Create & Customize your Facility’s profile.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
+						<div class="feat">
+							<h4 class="box2">Take Reservations Online 24 Hours a Day.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
+						<div class="feat">
+							<h4 class="box3">Easy to Use Lead Tracking and Activity Graphs.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
+						<div class="feat">
+							<h4 class="box4">Sync Your Profile with Your Facility’s System.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
+						<div class="feat">
+							<h4 class="box5">Always Get Notified of Potential Tenants.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
+						<div class="feat">
+							<h4 class="box6">Best Online Marketing Solution for Your Facility.</h4>
+							<p>Praesent aliquam, mauris ac ornare ornare, lacus tellus elementum quam, vitae rutrum arcu nisi a tortor.</p>
+						</div>
 					</div>
+						
+						
+					</div>
+					
+					
+					
+					
+					
 					<div class="tab_content" id="fac-overview">
 						<p>
 							At <strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> we offer a variety of tools to help you promote your facility and grow your business. Today’s businesses thrive on Internet exposure, and your potential customers are turning to specialized directories like ours to find professional services. We offer our network members a variety of services for marketing and customer leads including:

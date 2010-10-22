@@ -3,12 +3,12 @@ class PostsController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
-  
   def index
     render :layout => false if request.xhr?
   end
 
   def show
+    @post ||= Post.find :first, :conditions => ['LOWER(title) = ?', params[:title].gsub('-', ' ')]
     render :layout => false if request.xhr?
   end
 

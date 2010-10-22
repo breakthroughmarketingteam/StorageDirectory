@@ -2,21 +2,11 @@
 	
 	<%= render :partial => 'shared/model_options', :locals => { :model => block, :edit_path => contextual_edit_block_path(block), :hide_anchor => "hide_collapseable_inBlock#{block.id}" } %>
 	
-	<% if block.show_title_in_this(region, global) %>
-		<h5><%= block.title %></h5>
-	<% end %>
-	
 	<div class="collapseable">
 		
 		<div class="block_content">
 			<%= render_model_content(block) %>
 		</div>
-	
-		<% unless block.forms.empty? %>
-			<div class="block_forms_view block_render">
-				<%= render_forms_in_this(block) %>
-			</div>
-		<% end %>
 	
 		<% unless block.views.empty? %>
 			<div class="block_models_view block_render">
@@ -25,6 +15,4 @@
 		<% end %>
 		
 	</div>
-	
-	<%= add_widget_for(block, region) unless region.nil? || block.widget.blank? %>
 </li>

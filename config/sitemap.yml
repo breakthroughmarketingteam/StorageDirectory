@@ -1,0 +1,6 @@
+domain: usselfstoragelocator.com
+limit:
+order: 'update_at DESC'
+ping: false
+priority: 1
+change_frequency: weekly

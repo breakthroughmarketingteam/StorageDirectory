@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
-
+  
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new'
   
@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   # clean seo friendly
   map.storage_state_zip '/self-storage/:state/:zip', :controller => 'listings', :action => 'locator', :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i, :zip => /\d{5}/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  map.storage_state_city '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i }
+  map.storage_state_city '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
   map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
 
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
@@ -129,6 +129,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :payments
   map.resources :facility_features
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
+  map.resources :us_cities
   
   map.resources :admin
   map.resource :site_setting
@@ -151,6 +152,7 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   
+  map.connect 'posts/:title', :controller => 'posts', :action => 'show'
   map.connect ':title', :controller => 'pages', :action => 'show'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

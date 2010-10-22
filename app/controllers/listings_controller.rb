@@ -15,13 +15,13 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     
-    # TODO: extract pieces from search query: zip, city, title, address
-    #@location_query = Listing.extract_pieces_from_query(params[:q]) if params[:q]
-    
     result = Listing.geo_search params, session
-    @premium_listings = result[:premium]
-    @regular_listings = result[:regular]
-    @listings = @premium_listings | @regular_listings
+    @very_specific_listings = result[:very_specific] # listings that have the exact unit size if the searcher specified one
+    @kinda_specific_listings = result[:kinda_specific] # has any sizes
+    @premium_listings = result[:premium] # owned listings
+    @regular_listings = result[:regular] # free
+    @listings = @very_specific_listings | @kinda_specific_listings | @premium_listings | @regular_listings
+    
     @location = result[:location]
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
     
     @listings = Listing.find(session[:compare_listing_ids])
     @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 10 }, :maps => @listings.collect(&:map_data) }
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
   end
 
   def show
