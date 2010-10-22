@@ -13,6 +13,7 @@
 				<%= f.label :storage_type, 'Type:' %>
 				<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type) %>
 			</div>
+			
 			<div id="size_option">
 				<div id="size_picker">
 					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
@@ -22,6 +23,7 @@
 					<%= select_tag_for_unit_size_icons 'search[unit_size]', @prev_search.try(:unit_size) %>
 				</div>
 			</div>
+			
 			<div id="distance_slider">
 				<%= f.label :within %>
 				<div id="slide_wrap">
@@ -34,6 +36,7 @@
 				</div>
 				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>
+			
 			<div id="unit_features" class="hide">
 				<p><%= link_to 'Features', { :anchor => 'show_collapseable_unit_features' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
 				
@@ -48,6 +51,11 @@
 					<% end %>
 				</div>
 			</div>
+			
+			<div id="sub_submit">
+				<%= f.submit 'Locate', :class => 'grn_btn' %>
+			</div>
+			
 		</div>
 	<% end %>
 </div>

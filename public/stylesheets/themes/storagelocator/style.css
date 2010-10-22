@@ -1070,12 +1070,12 @@ form .error p{margin:0 0 7px 0;}
 #body{width:872px;margin:0 auto;text-align:left;}
 #topbar{min-width:965px;border-bottom:1px solid #c0bedf;height:27px;background:#fff;}
 #topbar ul{list-style:none;float:left;}
-#topbar #storage_types{width:260px;margin-right:15px;border-right:1px solid #ccc;}
+#topbar #storage_types{border-right:1px solid #ccc;}
 #topbar #moving_help{width:320px;}
 #topbar .right{float:right;}
 #topbar .toplink{padding-right:10px;background:url(/images/ui/storagelocator/down-grn.png) no-repeat;}
 #self_storage_li .toplink{background-position:90% 55%;}
-#vehicle_storage_li .toplink{background-position:100% 55%;}
+#topbar ul #vehicle_storage_li .toplink{background-position:90% 55%;padding-right:23px;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#359946;text-decoration:none;}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
 #topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#5256a5;}
@@ -1159,6 +1159,7 @@ form .error p{margin:0 0 7px 0;}
 #narrow_results_form #advanced_opts #unit_features .selectable_wrap{overflow:hidden;padding:3px 0;background:url(/images/ui/storagelocator/checkbox.png) no-repeat bottom left;}
 #narrow_results_form #advanced_opts #unit_features .selectable{float:left;width:21px;height:18px;margin-right:5px;}
 #narrow_results_form #advanced_opts #unit_features .selectable_wrap label{font-size:80%;font-weight:normal;}
+#sub_submit{text-align:center;margin:20px 0;}
 
 #dock,#dock_nav{width:450px;height:60px;margin:160px auto 20px;visibility:hidden;}
 #dock a,#dock_nav a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}
