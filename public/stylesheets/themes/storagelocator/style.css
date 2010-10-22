@@ -29,9 +29,9 @@ padding-bottom:84px;}
 /* Start header styles */
 #logotop{position:absolute;z-index:999;}
 #logoimg{position:relative;top:6px;}
-#logoshadow{margin-left:15px;position:relative;top:8px;z-index:999;}
-#title{background:url(/images/ui/storagelocator/us-self-storage-locator-heading.png) no-repeat top left;float:left;margin-top:60px;margin-left:30px;height:70px;width:655px;position:relative;left:150px;}
-#title h2{bottom:6px;color:#333;font-weight:normal;left:2px;position:absolute;}
+#logoshadow{margin-left:15px;position:relative;z-index:999;}
+#title{background:url(/images/ui/storagelocator/usselfstoragelocator-sml.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:655px;position:relative;left:140px;}
+#title h2{bottom:10px;color:#333;font-weight:normal;left:4px;position:absolute;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -123,7 +123,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #offset_search_box{width:500px;position:absolute;top:-133px;left:35px;z-index:500;}
 #offset_search_box #q{-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;border:1px solid #999999;height:28px;width:62%;padding:2px 7px;margin-right:10px;font-size:120%;}
 #offset_search_box .grn_btn{position:relative;top:-1px;}
-#oldlogo{float:left;margin-left:35px;position:relative;}
+#oldlogo{float:left;margin-left:40px;margin-top:10px;position:relative;}
 #oldlogo a{position:absolute;}
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
@@ -144,9 +144,9 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt > p{float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:5px 0;}
 .rslt-head-txt > p span{color:#333;}
-.green-head{width:742px;margin:15px 0;float:left;position:relative;left:15px;}
+.green-head{width:745px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
-#tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:740px;}
+#tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:745px;}
 #tips-head #tips-hdr{position:absolute;z-index:750;}
 #tips-head .purple_bgs,#tips-head .bubble{position:absolute;height:100px;width:100px;display:none;}
 #tips-head .bubble{z-index:800;text-align:center;}
@@ -192,7 +192,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head li#list-name a{background:url(/images/ui/storagelocator/sorting-arrow.png) no-repeat 107px 10px;border-bottom:5px solid #66cc66;height:15px;padding-left:20px;width:320px;}
 #search-head li#list-miles{}
 #search-head li#list-miles a{background:url(/images/ui/storagelocator/sorting-arrow.png) no-repeat 50px 10px;border-bottom:5px solid #6666ff;height:15px;padding-left:10px;width:63px;}
-#type-one-top-bar{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;padding-bottom:15px;min-height:700px;position:relative;width:772px;}
+#type-one-top-bar{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;padding-bottom:15px;min-height:700px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:97.7%;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-list-bg.loading{height:40px;background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
@@ -206,14 +206,26 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing .rslt-features {float:right;margin:7px 10px 0 0;overflow:hidden;}
 .listing .rslt-features a {display:block;float:left;height:25px;margin-left:5px;width:25px;}
 .listing a.hours{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
-.listing a.climate{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
+.listing a.security{background:url(/images/ui/storagelocator/security.png) no-repeat;}
+.listing a.ac{background:url(/images/ui/storagelocator/ac.png) no-repeat;}
 .listing a.driveup{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
+.listing a.spanish{background:url(/images/ui/storagelocator/spanish.png) no-repeat;}
+.listing a.climate{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
+.listing a.keypad{background:url(/images/ui/storagelocator/keypad.png) no-repeat;}
 #rslt-list-bg .listing .rslt-features a.hours:hover{background:url(/images/ui/storagelocator/hours-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.climate:hover{background:url(/images/ui/storagelocator/climate-over.png) no-repeat;}
+#rslt-list-bg .listing .rslt-features a.security:hover{background:url(/images/ui/storagelocator/security-over.png) no-repeat;}
+#rslt-list-bg .listing .rslt-features a.ac:hover{background:url(/images/ui/storagelocator/ac-over.png) no-repeat;}
 #rslt-list-bg .listing .rslt-features a.driveup:hover{background:url(/images/ui/storagelocator/driveup-over.png) no-repeat;}
+#rslt-list-bg .listing .rslt-features a.spanish:hover{background:url(/images/ui/storagelocator/spanish-over.png) no-repeat;}
+#rslt-list-bg .listing .rslt-features a.climate:hover{background:url(/images/ui/storagelocator/climate-over.png) no-repeat;}
+#rslt-list-bg .listing .rslt-features a.keypad:hover{background:url(/images/ui/storagelocator/keypad-over.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.hours,#rslt-list-bg > div > .inner:hover a.hours{background:url(/images/ui/storagelocator/hours-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.climate,#rslt-list-bg > div > .inner:hover a.climate{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.security,#rslt-list-bg > div > .inner:hover a.security{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(/images/ui/storagelocator/ac-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.driveup,#rslt-list-bg > div > .inner:hover a.driveup{background:url(/images/ui/storagelocator/driveup-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.spanish,#rslt-list-bg > div > .inner:hover a.spanish{background:url(/images/ui/storagelocator/spanish-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.climate,#rslt-list-bg > div > .inner:hover a.climate{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.keypad,#rslt-list-bg > div > .inner:hover a.keypad{background:url(/images/ui/storagelocator/keypad-hover.png) no-repeat;}
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:16px;display:block;position:relative;top:30px;color:#666;}
@@ -339,7 +351,7 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 .listing .review h6{font-size:100%;margin-bottom:8px;padding-top:5px;}
 .listing .review .stack{font-size:80%;line-height:18px;}
 /* Start the add facility page styles here */
-form#new_client{background:url(/images/ui/storagelocator/signup-bg.png) no-repeat;float:left;height:213px;padding:15px;width:342px;}
+form#new_client{background:url(/images/ui/storagelocator/signup-bg.png) no-repeat;float:left;height:238px;padding:15px;width:366px;}
 form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #new_client span.sub_head{color:#ff3333;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:13px;}
@@ -350,18 +362,19 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
 #new_client #listing_city{width:63%;}
 #new_client #listing_state{margin-left:4px;width:20%;}
-#add-fac-txt{float:right;}
-#add-fac-txt a{color:#4c4bcc;font-size:22px;}
+#add-fac-txt{float:left;width:705px;}
+#add-fac-txt a{color:#4c4bcc;font-size:28px;}
 #add-fac-txt a:hover;{text-decoration:underline;}
-#add-fac-txt h3{color:#555;font-size:22px;line-height:26px;margin:15px 0;}
+#add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:15px 0;}
 #add-fac-txt h4{font-size:14px;margin:;}
 #add-fac-txt p{font-size:12px;margin:20px 0px;line-height:1.3;}
 #add-fac-form-extra,#add-fac-form-extra-in,#add-fac-form-extra ul{}
 #add-fac-form-extra{position:relative;}
 #add-fac-form-extra-in{}
 .add_our_facility #type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
+#type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-58px 0 0 10px;width:100%;z-index:4;}
 #listings_controller #sl-tabs-nav{margin-left:0;}
-#type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:5px;}
+#type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:15px;}
 #type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
 #type-one-r-col ul.tabular li.active{}
 #type-one-r-col ul.tabular li.active a{color:#fff;background:url(/images/ui/storagelocator/active-add-tab.png) no-repeat 8px 5px;display:block;text-shadow:1px 1px 0px #333;position:relative;left:-2px;}
@@ -407,7 +420,7 @@ ul#specials_list {margin:15px 10px;}
 #city-box-in{width:165px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
-#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
+#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{width:745px;float:right;margin:13px 12px 0 0;}
@@ -987,7 +1000,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #stats_graph.loading{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 45%;}
 #Reservation .stack{font-size:120%;}
 /*signup workflow*/
-#top_fac_page{margin:15px 30px 0;}
+#top_fac_page{margin:25px 40px 0;overflow:visible;}
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
@@ -1209,15 +1222,15 @@ form .error p{margin:0 0 7px 0;}
 .dp{position:absolute;left:-99999px;}
 
 #top_fac_page .phone span{color:#4c4bcc;}
-#top_fac_page .phone{font-size:22px;font-weight:bold;}
+#top_fac_page .phone{color:#000;font-size:28px;font-weight:bold;}
 #top_fac_page hr{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;display:block;float:left;margin:15px 0;width:100%;}
-#top_fac_page #fac-bottom{float:left;}
-#top_fac_page #fac-bottom .feat{float:left;margin:15px 30px 15px 0;width:207px;}
+#top_fac_page #fac-bottom{float:left;margin-bottom:20px;width:900px;}
+#top_fac_page #fac-bottom .feat{float:left;height:105px;margin:15px 30px 15px 0;width:340px;}
 #top_fac_page #fac-bottom .feat h4{color:#000;height:47px;font-size:14px;line-height:18px;margin:0;padding-left:55px;padding-top:8px;}
 #top_fac_page #fac-bottom .feat h4.box1{background:url("/images/ui/storagelocator/profile.png") no-repeat;}
 #top_fac_page #fac-bottom .feat h4.box2{background:url("/images/ui/storagelocator/reserve.png") no-repeat;}
-#top_fac_page #fac-bottom .feat h4.box3{background:url("/images/ui/storagelocator/tracking.png") no-repeat;width:180px;}
+#top_fac_page #fac-bottom .feat h4.box3{background:url("/images/ui/storagelocator/tracking.png") no-repeat;}
 #top_fac_page #fac-bottom .feat h4.box4{background:url("/images/ui/storagelocator/sync.png") no-repeat;}
 #top_fac_page #fac-bottom .feat h4.box5{background:url("/images/ui/storagelocator/notify.png") no-repeat;}
-#top_fac_page #fac-bottom .feat h4.box6{background:url("/images/ui/storagelocator/market.png") no-repeat;width:170px;}
+#top_fac_page #fac-bottom .feat h4.box6{background:url("/images/ui/storagelocator/market.png") no-repeat;}
 #top_fac_page #fac-bottom .feat p{font-size:12px;line-height:20px;margin:0;}
