@@ -12,6 +12,7 @@ class ClientsController < ApplicationController
   end
 
   def new
+    @page = Page.find_by_title_in_params params[:title]
     @client = Client.new
     render :layout => false if request.xhr?
   end

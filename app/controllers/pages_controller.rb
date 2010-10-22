@@ -100,10 +100,10 @@ class PagesController < ApplicationController
   
   def get_page
     # monkey patched parameterize method. see: /lib/utility_methods.rb:31
-    @page = params[:title] ? Page.all.detect { |page| page.title.parameterize == params[:title] } : (Page.find(params[:id]) rescue nil)
+    @page = params[:title] ? Page.find_by_title_in_params(params[:title]) : (Page.find(params[:id]) rescue nil)
     
     if @page.nil?
-      flash[:warning] = "Page Not Found"
+      #flash[:warning] = "Page Not Found"
       @page = Page.find_by_title('Home')
     end
   end
