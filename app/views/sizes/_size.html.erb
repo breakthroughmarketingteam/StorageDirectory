@@ -16,7 +16,7 @@
 				<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
 			<% elsif defined?(pretend_action) && pretend_action == 'new' %>
 				<%= link_to 'Edit', listing_sizes_path(@listing), :class => 'edit-btn', :rel => 'close' %>
-			<% else %>
+			<% elsif current_user.nil? || (current_user && current_user.is_a?(Reserver)) %>
 				<%= ajax_loader %>
 				<a href="#" class="rsr-btn">Select</a>
 			<% end %>

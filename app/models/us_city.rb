@@ -4,7 +4,7 @@ class UsCity < ActiveRecord::Base
   
   def self.all_that_have_listings
     self.find_by_sql <<-RUBY
-      SELECT DISTINCT us_cities.name, us_cities.state FROM us_cities, maps
+      SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
       WHERE us_cities.name LIKE maps.city
       ORDER BY us_cities.name
     RUBY

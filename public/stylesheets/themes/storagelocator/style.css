@@ -121,7 +121,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{width:500px;position:absolute;top:-133px;left:35px;z-index:500;}
-#offset_search_box #q{-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;border:1px solid #999999;height:28px;width:62%;padding:2px 7px;margin-right:10px;font-size:120%;}
+#offset_search_box #search_query{-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;border:1px solid #999999;height:28px;width:62%;padding:2px 7px;margin-right:10px;font-size:120%;}
 #offset_search_box .grn_btn{position:relative;top:-1px;}
 #oldlogo{float:left;margin-left:40px;margin-top:10px;position:relative;}
 #oldlogo a{position:absolute;}
@@ -541,12 +541,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .panel div.sl-table-exp-form-l{width:52%;margin:0 0 20px 4px;}
 .panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
 #sl-tabs-hours{padding:10px 12px 17px;}
-#sl-tabs-hours-in{overflow:hidden;padding:0 17px 10px;}
+#sl-tabs-hours-in{overflow:hidden;padding:0 17px;}
 #sl-tabs-hours .day_field{width:9%;font-size:80%;display:block;float:left;line-height:1.4;}
 #business_hours_form .left,#business_hours_form .right{width:48%;}
 #business_hours_form ul{margin-left:13px;}
 #business_hours_form ul li{padding:0 0 15px;overflow:hidden;}
-#business_hours_form h4{margin-bottom:20px;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#business_hours_form h4{margin:0 0 20px 0;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
 #business_hours_form h4 span{float:right;color:#333;font-size:60%;font-weight:normal;}
 #business_hours_form h4 span label,#business_hours_form h4 span input{cursor:pointer;}
 #business_hours_form .hour_range{display:inline;margin-left:5px;}
@@ -1056,18 +1056,29 @@ form .error p{margin:0 0 7px 0;}
 #review_contact .listing_title{margin-bottom:0;padding:6px 0 4px 32px;background:url(/images/ui/storagelocator/opt_in.png) no-repeat left center;}
 #review_contact .listing_address{font-size:70%;}
 #signupstep_4 .left .opt_in{font-size:80%;}
-/*request form*/
 #quote_done{padding:10px;float:left;}
-/* NEW DESIGN */
+
 #body{width:872px;margin:0 auto;text-align:left;}
-#topbar{min-width:965px;border-bottom:1px solid #c0bedf;overflow:hidden;background:#fff;}
-#topbar ul{list-style:none;overflow:hidden;float:left;}
-#topbar #storage_types{width:600px;}
-#topbar #moving_help{width:320px;border-left:1px solid #ccc;}
+#topbar{min-width:965px;border-bottom:1px solid #c0bedf;height:27px;background:#fff;}
+#topbar ul{list-style:none;float:left;}
+#topbar #storage_types{width:260px;margin-right:15px;border-right:1px solid #ccc;}
+#topbar #moving_help{width:320px;}
 #topbar .right{float:right;}
-#topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#5256a5;text-decoration:none;}
+#topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#359946;text-decoration:none;}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
-#topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#359946;}
+#topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#5256a5;}
+#topbar ul.dropdown,ul.dropdown li,ul.dropdown ul{list-style:none;margin:0;padding:0;}
+#topbar ul.dropdown{position:relative;z-index:597;float:left;}
+#topbar ul.dropdown li{float:left;vertical-align:middle;zoom:1;}
+#topbar ul.dropdown li.hover,ul.dropdown li:hover{position:relative;z-index:599;cursor:default;}
+#topbar ul.dropdown ul{visibility:hidden;position:absolute;top:100%;left:0;z-index:598;width:100%;}
+#topbar ul.dropdown ul li{float:none;}
+#topbar ul.dropdown ul ul{top:1px;left:99%;}
+#topbar ul.dropdown li:hover > ul{visibility:visible;}
+#topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;text-align:left;}
+#topbar ul.dropdown li a:link,#topbar ul.dropdown li a:visited{float:none;}
+#topbar ul li a:hover,#topbar ul li a:active{background:#393;color:#fff !important;}
+#self_storage_li{width:112px;margin-left:15px;}
 
 .wrapper{width:1026px;margin:0 auto;text-align:left;}
 #logo{width:100%;margin-top:60px;overflow:hidden;}
@@ -1076,12 +1087,12 @@ form .error p{margin:0 0 7px 0;}
 #logo a img{float:none;margin:0;}
 #logo h1{float:left;font-size:130%;font-weight:normal;margin-top:10px;}
 
-#front_search{width:872px;margin:0 auto;}
-#front_search #search_field{width:621px;;overflow:hidden;margin-left:218px;margin-top:-15px;}
-#front_search #search_field input.hintable{width:382px;padding:6px 12px;float:left;font-size:100%;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
-#front_search #search_field #ab{text-align:right;clear:both;padding:15px 0 20px;margin-right:213px;}
-#front_search #search_field #ab a{padding-right:15px;color:#333;background:url(/images/ui/storagelocator/green-arrow-btn.png) no-repeat right center;}
-#front_search .grn_btn{margin-left:30px;}
+#new_search{width:872px;margin:0 auto;}
+#new_search #search_field{width:621px;;overflow:hidden;margin-left:218px;margin-top:-15px;}
+#new_search #search_field input.hintable{width:382px;padding:6px 12px;float:left;font-size:100%;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
+#new_search #search_field #ab{text-align:right;clear:both;padding:15px 0 20px;margin-right:213px;}
+#new_search #search_field #ab a{padding-right:15px;color:#333;background:url(/images/ui/storagelocator/green-arrow-btn.png) no-repeat right center;}
+#new_search .grn_btn{margin-left:30px;}
 
 #advanced_opts{margin:0 0 -130px 0;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
 #advanced_opts #ao_top{padding:11px 16px;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}

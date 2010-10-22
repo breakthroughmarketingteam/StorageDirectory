@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101016014832) do
+ActiveRecord::Schema.define(:version => 20101021233626) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -420,22 +420,6 @@ ActiveRecord::Schema.define(:version => 20101016014832) do
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
 
-<<<<<<< HEAD
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-<<<<<<< HEAD
-  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
-
-=======
->>>>>>> 2086a34c80efeac9208065d45af9cf338ff5ce15
-=======
->>>>>>> 99802818843915c9329cd05a1587e32efdd066e4
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
     t.integer  "model_id"
@@ -599,6 +583,23 @@ ActiveRecord::Schema.define(:version => 20101016014832) do
 
   create_table "roles", :force => true do |t|
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "searches", :force => true do |t|
+    t.string   "query"
+    t.string   "unit_size"
+    t.string   "storage_type"
+    t.string   "features"
+    t.integer  "within"
+    t.string   "referrer"
+    t.string   "remote_ip"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zip"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

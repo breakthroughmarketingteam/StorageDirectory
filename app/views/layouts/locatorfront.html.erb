@@ -28,6 +28,10 @@
 		<!--[if lte IE 7]>
 			<link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
 		<![endif]-->
+		
+		<!--[if lt IE 7]>
+			<script type="text/javascript" src="javascripts/jquery.dropdown.js"></script>
+		<![endif]-->
 	</head>
 	<body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
 	

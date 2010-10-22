@@ -366,6 +366,7 @@ module Geokit
       @success=false
       @precision='unknown'
       @full_address=nil
+      
       super(h[:lat],h[:lng])
     end
 

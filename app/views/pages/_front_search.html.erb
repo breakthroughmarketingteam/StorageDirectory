@@ -1,8 +1,8 @@
-<% form_tag '/self-storage', :id => 'front_search', :method => 'get' do %>
+<% form_for @search do |f| %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
-		<%= text_field_tag :q, nil, :class => 'hintable autocomplete required focus_onload', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
-		<%= submit_tag 'Locate', :class => 'grn_btn' %>
+		<%= f.text_field :query, :class => 'hintable autocomplete required focus_onload', :title => location_guess, :rel => 'UsCity_namesNstate|4' %>
+		<%= f.submit 'Locate', :class => 'grn_btn' %>
 		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
 	</div>
 	
@@ -10,8 +10,8 @@
 		<p id="ao_top">Choose your options for a refined Self Storage search:</p>
 			<div class="left">
 				<div>
-					<%= label_tag 'Type:' %>
-					<%= select_tag 'storage_type', option_tags(@facility_features, 'Self Storage') %>
+					<%= f.label :storage_type, 'Type:' %>
+					<%= f.select :storage_type, @facility_features %>
 				</div>
 
 				<div id="size_picker">
@@ -19,24 +19,24 @@
 				</div>
 
 				<div>
-					<%= label_tag 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'storage_size' %>
+					<%= f.label :unit_size %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]' %>
 				</div>
 			</div>
 
 			<div class="right">
 				<div class="top">
 					<div id="slide_wrap">
-						<%= label_tag 'Within' %>
+						<%= f.label :within %>
 						<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less" />
 						<div class="advanced_slider"><div id="slide_bg"></div></div>
 						<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
 						<%= label_tag 'miles.' %>
-						<%= hidden_field_tag :within, (params[:within] || 10), :class => 'slider_val' %>
+						<%= f.hidden_field :within, :value => (params[:within] || 10), :class => 'slider_val' %>
 					</div>
 
 					<div id="loc_btn">
-						<%= submit_tag 'Locate', :class => 'grn_btn' %>
+						<%= f.submit 'Locate', :class => 'grn_btn' %>
 					</div>
 				</div>
 

@@ -13,35 +13,20 @@ class ListingsController < ApplicationController
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
+    @search = Search.find session[:search_id]
     @unit_size_thumbs = SizeIcon.thumb_icons
     
-    result = Listing.geo_search params, session
-    @very_specific_listings = result[:very_specific] # listings that have the exact unit size if the searcher specified one
-    @kinda_specific_listings = result[:kinda_specific] # has any sizes
-    @premium_listings = result[:premium] # owned listings
-    @regular_listings = result[:regular] # free
-    @listings = @very_specific_listings | @kinda_specific_listings | @premium_listings | @regular_listings
+    results = Listing.find_by_location @search
     
-    @location = result[:location]
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    @listings = results[:listings]
+    @location = results[:query_location]
+    @maps_data = { :center => { :lat => Search.get_coord_from(:lat, @location), :lng => Search.get_coord_from(:lng, @location), :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     # updates the impressions only for listings on current page
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
-    
-    # TODO: figure out how to smart order these results
-    # if searching by city sort the first page of listings so that the least seen ones are on top
-    #@listings = Listing.smart_order(@listings) if params[:page].blank? && (params[:city] || Listing.is_city?(params[:q]))
-    
-    if session[:location].blank? || params[:q] && params[:state].blank?
-      session[:location] = @location.to_hash
-      #params_back = {}
-      #params_back.merge! :zip => @location.zip if params[:q] && Listing.is_zip?(params[:q])
-      #params_back.merge! :within => params[:within] if params[:within]
-      #redirect_to storage_state_city_path(@location.state.parameterize, @location.city.parameterize, params_back) and return
-    end
     
     respond_to do |format|
       format.html
