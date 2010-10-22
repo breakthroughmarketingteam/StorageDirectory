@@ -49,6 +49,16 @@ module ListingsHelper
     number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue nil
   end
   
+  def listing_action_btn_class(listing)
+    if listing.accepts_reservations?
+      ' reserve'
+    elsif listing.premium?
+      ' hold_unit'
+    else
+      ' request'
+    end
+  end
+  
   def more_results_link(data)
     per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1

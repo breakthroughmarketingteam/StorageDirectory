@@ -9,6 +9,10 @@ class Map < ActiveRecord::Base
   access_shared_methods
   attr_reader :full_address
   
+  def self.top_cities(limit = 50)
+    self.find_by_sql "SELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT #{limit}"
+  end
+  
   # Instance Methods
   
   def before_save

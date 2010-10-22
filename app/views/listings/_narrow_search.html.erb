@@ -5,13 +5,13 @@
 	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
 	<% form_for @search, :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
-			<%= f.text_field :query, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= f.text_field :query, :value => @prev_search.try(:query), :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
 			<%= f.submit 'Locate', :class => 'grn_btn' %>
 		</div>
 		<div id="advanced_opts">
 			<div id="type_select">
 				<%= f.label :storage_type, 'Type:' %>
-				<%= f.select :storage_type, @facility_features %>
+				<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type) %>
 			</div>
 			<div id="size_option">
 				<div id="size_picker">
@@ -19,7 +19,7 @@
 				</div>
 				<div>
 					<%= f.label :unit_size, 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]' %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', @prev_search.try(:unit_size) %>
 				</div>
 			</div>
 			<div id="distance_slider">
@@ -30,7 +30,7 @@
 						<div id="slide_bg"></div>
 					</div>
 					<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more"> 
-					<%= f.hidden_field :within, :class => 'slider_val', :disabled => true %>
+					<%= f.hidden_field :within, :value => @prev_search.try(:within), :class => 'slider_val', :disabled => true %>
 				</div>
 				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>

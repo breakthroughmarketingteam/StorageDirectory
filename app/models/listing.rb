@@ -22,6 +22,8 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
+  has_many :searches # user searches are associated to listings to gather search behavior data
+  
   # OpentTech ISSN data
   has_one  :facility_info, :dependent => :destroy
   has_many :unit_types, :dependent => :destroy
@@ -124,6 +126,10 @@ class Listing < ActiveRecord::Base
     self.available_sizes.map(&:dollar_price).mean
   end
   
+  def root_search
+    self.searches.detect &:root?
+  end
+  
   #
   # Search methods
   #
@@ -136,15 +142,14 @@ class Listing < ActiveRecord::Base
       :origin => search.lat_lng || search.zip || search.city_and_state
     }
     
-    # TODO: find more efficient way to get a GeoLoc object, since it was already geocoded in the search model
-    @location = Geokit::GeoLoc.new search
+    @location = search.location
     
     unless search.query.blank?
-      if Search.is_address_query? search.query # has one of zip, city or state
+      if search.is_address_query? # has one of zip, city or state
         # restrict the results only to the zip or city in question
-        if Search.is_zip? search.query
+        if search.is_zip?
           options.merge! :conditions => ['maps.zip = ?', search.query.gsub(/\D/, '')] # strip any non digit chars
-        elsif Search.is_city? search.query
+        elsif search.within.blank? && search.is_city?
           options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{search.query.downcase}%"]
         end
         
@@ -188,7 +193,7 @@ class Listing < ActiveRecord::Base
       @listings.sort_by_distance_from @location
     end
     
-    { :listings => @listings, :query_location => @location }
+    @listings
   end
   
   def premium?

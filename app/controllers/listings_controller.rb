@@ -13,14 +13,14 @@ class ListingsController < ApplicationController
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
-    @search = Search.find session[:search_id]
     @unit_size_thumbs = SizeIcon.thumb_icons
     
-    results = Listing.find_by_location @search
+    @prev_search = Search.find session[:search_id]
+    @location = @prev_search.location
+    @search = Search.new
     
-    @listings = results[:listings]
-    @location = results[:query_location]
-    @maps_data = { :center => { :lat => Search.get_coord_from(:lat, @location), :lng => Search.get_coord_from(:lng, @location), :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    @listings = Listing.find_by_location @prev_search
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
     get_map @location
     
@@ -30,7 +30,7 @@ class ListingsController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.js do # implementing this ajax response for the search results 'More Link'
+      format.js do # implementing this ajax response for the search results 'Show More Results' button
         render :json => { :success => !@listings.blank?, :data => prep_hash_for_js(@listings), :maps_data => @maps_data }
       end
     end
@@ -49,6 +49,12 @@ class ListingsController < ApplicationController
 
   def show
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
+    
+    if session[:search_id]
+      @search = Search.find session[:search_id]
+      @search.update_attribute :listing_id, @listing.id
+    end
+    
     render :layout => false if request.xhr?
   end
 

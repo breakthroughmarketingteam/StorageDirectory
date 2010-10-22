@@ -7,12 +7,18 @@ class SearchesController < ApplicationController
   end
   
   def create
-    @search = Search.build_from_params params[:search], request, session[:geo_location]
+    @search = Search.build_new params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
     
     respond_to do |format|
       format.html do
         if @search.save
+          if session[:search_id]
+            @prev_search = Search.find_by_id session[:search_id]
+            @prev_search.add_child @search
+          end
+          
           session[:search_id] = @search.id
+          
           redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city
         else
           flash[:error] = model_errors @search

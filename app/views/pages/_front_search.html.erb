@@ -11,7 +11,7 @@
 			<div class="left">
 				<div>
 					<%= f.label :storage_type, 'Type:' %>
-					<%= f.select :storage_type, @facility_features %>
+					<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type) %>
 				</div>
 
 				<div id="size_picker">
@@ -20,7 +20,7 @@
 
 				<div>
 					<%= f.label :unit_size %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]' %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', @prev_search.try(:unit_size) %>
 				</div>
 			</div>
 
@@ -32,7 +32,7 @@
 						<div class="advanced_slider"><div id="slide_bg"></div></div>
 						<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more" />
 						<%= label_tag 'miles.' %>
-						<%= f.hidden_field :within, :value => (params[:within] || 10), :class => 'slider_val' %>
+						<%= f.hidden_field :within, :value => (@prev_search.try(:within) || 10), :class => 'slider_val' %>
 					</div>
 
 					<div id="loc_btn">

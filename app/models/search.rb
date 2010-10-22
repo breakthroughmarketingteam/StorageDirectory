@@ -1,61 +1,57 @@
 class Search < ActiveRecord::Base
   
+  belongs_to :listing
+  
   validates_presence_of :query
   access_shared_methods
+  acts_as_nested_set
   
-  def self.build_from_params(search, request, geo_location)
-    @search = self.new search.merge :remote_ip => request.remote_ip, :referrer => request.referrer, :zip => (is_zip?(search[:query]) && search[:query].gsub(/\D/, ''))
+  def self.build_new(search, geo_location)
+    @search = self.new search.merge :zip => (is_zip?(search[:query]) && search[:query].gsub(/\D/, ''))
     
     # geocode the query and set the origin for the find options
     unless @search.query.blank?
-      if is_address_query? @search.query # has one of zip, city or state
+      if @search.is_address_query? # has one of zip, city or state
         query_location = Geokit::Geocoders::MultiGeocoder.geocode(@search.query)
-        @search.build_location query_location
+        @search.set_location query_location
         
       # must be a facility name query, find a listing and set the query location to the listing's location
       elsif (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{@search.query}%"]))
         guessed_location = Geokit::Geocoders::MultiGeocoder.geocode(named_listing.map)
-        @search.build_location guessed_location
+        @search.set_location guessed_location
       end
     else # blank search, save the guessed location from the geocoder (ip address)
-      @search.build_location geo_location
+      @search.set_location geo_location
     end
     
     @search
   end
   
-  def self.is_address_query?(query)
-    query.gsub!('-', ' ')
-    is_zip?(query) || is_city?(query) || is_state?(query)
+  def is_address_query?
+    self.is_zip? || self.is_city? || self.is_state?
   end
   
   @@zip_regex = /\d{5}/
   @@city_regex = Proc.new { |query| /#{query.split(/(,\W?)|(\W*)/) * '|'}/i }
   @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
   
-  def self.is_zip?(query)
-    query.match @@zip_regex
+  def self.is_zip?(q)
+    q.match @@zip_regex
   end
   
-  def self.is_city?(query)
-    UsCity.names.any? { |c| c =~ @@city_regex.call(query) }
+  def is_zip?
+    self.class.is_zip? self.query
   end
   
-  def self.is_state?(query)
-    query.match(/#{@@states_regex}/i)
+  def is_city?
+    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) }
   end
   
-  def self.get_coord_from(coord, location)
-    if location.respond_to? coord
-      location.send coord
-    elsif location.is_a? Hash
-      location.send coord
-    elsif location.is_a? Array
-      coord == :lat ? location[0] : location[1]
-    end
+  def is_state?
+    self.query.match(/#{@@states_regex}/i)
   end
   
-  # TODO: the default location should be geocoded from the request.ip_address and stored in the session. Using a test IP right now.
+  # TODO: the default location should be geocoded from the request.remote_ip and stored in the session. Using a test IP right now.
   def self.geocode_query(query)
     if query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
@@ -67,13 +63,17 @@ class Search < ActiveRecord::Base
     end
   end
   
-  def build_location(query_location)
-    if query_location.lat
-      self.lat   = query_location.lat
-      self.lng   = query_location.lng
-      self.city  = query_location.city
-      self.state = query_location.state
-      self.zip   = query_location.zip if self.zip.nil?
+  def location
+    @location ||= GeoKit::GeoLoc.new self
+  end
+  
+  def set_location(location)
+    if location.respond_to?(:lat) || location.is_a?(Hash)
+      self.lat   = location.respond_to?(:lat) ? location.lat : location[:lat]
+      self.lng   = location.respond_to?(:lng) ? location.lng : location[:lng]
+      self.city  = location.respond_to?(:city) ? location.city : location[:city]
+      self.state = location.respond_to?(:state) ? location.state : location[:state]
+      self.zip   = location.respond_to?(:zip) ? location.zip : location[:zip] if self.zip.nil?
     end
   end
   

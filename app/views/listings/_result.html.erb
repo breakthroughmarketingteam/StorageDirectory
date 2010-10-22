@@ -29,9 +29,7 @@
 					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
 				</p>
 				<% if result.premium? %>
-					<p>
-						<span class="rslt-phone">1-800-567-4321</span>
-					</p>
+					<p><span class="rslt-phone">1-800-567-4321</span></p>
 				<% end %>
 			</div>
 			
@@ -77,7 +75,7 @@
 					</li>			
 				<% end %>
 				
-				<li class="rslt-reserve">
+				<li class="action_btn<%= listing_action_btn_class(result) %>">
 					<%= results_main_button(result) %>
 				</li>
 			</ul>

@@ -232,13 +232,13 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li span.shifted-text span{display:block;font-weight:bold;font-size:110%;}
 .progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 11px 0 0;}
 .progress.active{background-position:0 100%;}
-li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
+li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:10px;}
 .facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat center bottom;float:left;height:88px;margin:11px 0 0 35px;width:108px;}
 .listing img.logo{margin-left:3px;}
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
-li.rslt-price,li.rslt-miles,li.rslt-reserve,li.rslt-reserve a{text-align:center;margin-top:-1px;}
+li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;margin-top:-1px;}
 .rslt-contact{width:159px;color:#555;margin-top:10px;padding-right:10px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0 0 7px;overflow:hidden;}
 .rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
@@ -256,9 +256,14 @@ li.rslt-price{font-size:12px;padding-top:10px;width:150px;}
 li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;color:#333;height:88px;}
 .listing ul li.rslt-price ul li{float:none;margin-right:20px;margin-top:5px;text-align:right;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
-.listing ul li.rslt-reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;width:91px;height:100px;line-height:6.5;margin:0 6px 0 0;font-size:1.2em;text-shadow:1px 1px 0 #666;position:relative;float:right;}
-.listing ul li.rslt-reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
-.listing ul li.rslt-reserve a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
+.listing ul li.action_btn{width:91px;height:100px;line-height:6.5;margin:0 6px 0 0;font-size:120%;text-shadow:1px 1px 0 #666;position:relative;float:right;}
+.listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
+.listing ul li.reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;}
+.listing ul li.reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
+.listing ul li.hold_unit{background:url(/images/ui/storagelocator/hold-btn.png) no-repeat center;}
+.listing ul li.hold_unit:hover{background:url(/images/ui/storagelocator/hold-btn-hover.png) no-repeat center;}
+.listing ul li.request{background:url(/images/ui/storagelocator/request-btn.png) no-repeat center;}
+.listing ul li.request:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) no-repeat center;}
 .listing .compare{float:right;}
 .listing .compare input{margin:0;cursor:pointer;}
 .listing .compare label{cursor:pointer;font-size:80%;}
@@ -1068,6 +1073,9 @@ form .error p{margin:0 0 7px 0;}
 #topbar #storage_types{width:260px;margin-right:15px;border-right:1px solid #ccc;}
 #topbar #moving_help{width:320px;}
 #topbar .right{float:right;}
+#topbar .toplink{padding-right:10px;background:url(/images/ui/storagelocator/down-grn.png) no-repeat;}
+#self_storage_li .toplink{background-position:90% 55%;}
+#vehicle_storage_li .toplink{background-position:100% 55%;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#359946;text-decoration:none;}
 #topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
 #topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#5256a5;}
@@ -1081,7 +1089,7 @@ form .error p{margin:0 0 7px 0;}
 #topbar ul.dropdown li:hover > ul{visibility:visible;}
 #topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;text-align:left;}
 #topbar ul.dropdown li a:link,#topbar ul.dropdown li a:visited{float:none;}
-#topbar ul li a:hover,#topbar ul li a:active{background:#393;color:#fff !important;}
+#topbar ul li a:hover,#topbar ul li a:active{background-color:#393;color:#fff !important;}
 #self_storage_li{width:112px;margin-left:15px;}
 
 .wrapper{width:1026px;margin:0 auto;text-align:left;}
@@ -1196,7 +1204,7 @@ form .error p{margin:0 0 7px 0;}
 #more_info .inner p{margin-bottom:20px;}
 
 #footer_btm{color:#ccccff;font-size:90%;min-height:350px;border-top:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-#footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:12px;width:975px;}
+#footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:20px;width:975px;}
 #footer_btm .ad{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 #footer_btm .ad:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #6666cc;-moz-box-shadow:2px 2px 2px #6666cc;-webkit-box-shadow:2px 2px 2px #6666cc;}
 #footer_btm .next_ad{background:url(/images/ui/storagelocator/next.png) no-repeat;cursor:pointer;height:35px;width:7px;float:right;margin:46px 4px 0 0;}
@@ -1208,16 +1216,22 @@ form .error p{margin:0 0 7px 0;}
 #footer_btm a:hover{color:#fff;}
 
 #h-divider{background:url(/images/ui/storagelocator/dotted-line.png) repeat-x;margin:20px auto;height:2px;width:900px;}
-#affiliates{margin:25px auto 0;width:975px;}
+#affiliates{margin:40px auto 0;width:975px;}
 #affiliates p{margin-left:20px;text-align:left;}
 #affiliates img {margin:10px;}
-#social-media{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;margin:0 auto;overflow:hidden;margin-top:12px;width:975px;}
+#social-media{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;margin:0 auto;overflow:hidden;margin-top:40px;width:975px;}
 #social-media p{float:left;margin-left:20px;margin-top:26px;width:599px;text-align:left;}
 #social-media a{display:block;float:left;margin:4px;}
 #social-media #icons{float:right;margin:5px 15px 2px 0;}
+#top_cities{width:975px;margin:40px auto;text-align:left;padding-left:29px;}
+#top_cities p{margin-bottom:10px;padding:0 5px;}
+#top_cities ul{overflow:hidden;}
+#top_cities ul li{display:inline;}
+#top_cities ul li a{display:block;float:left;margin-bottom:3px;padding:3px 5px;text-align:left;width:18.9%;}
 
-#footer_btm #wrapper1{background:url(/images/ui/storagelocator/footer-bg.png) repeat-x bottom;min-height:350px;}
-#footer_btm #wrapper2{color:#4C4BCC;margin:50px auto 0;width:975px;}
+#footer_btm #wrapper1{min-height:574px;}
+#footer_btm #wrapper2{background:url(/images/ui/storagelocator/footer-bg.png) repeat-x;color:#4C4BCC;margin:0 auto;height:57px;}
+#footer_btm #wrapper2 .inner{width:975px;margin:0 auto;padding-top:25px;}
 #footer_btm #wrapper2 #footer-menu{float:right;font-size:110%;margin-right:20px;margin-top:-1px;}
 #footer_btm #wrapper2 #copyright{float:left;margin-left:20px;margin-top:3px;}
 #footer_btm #wrapper2 a {color:#4C4BCC;}
