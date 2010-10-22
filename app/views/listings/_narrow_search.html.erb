@@ -2,34 +2,35 @@
 	<div id="sb-title">
 		<h2>Narrow Your Search</h2>
 	</div>
-	<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">
+	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
+	<% form_for @search, :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
-			<%= text_field_tag :q, (params[:q] || params[:city] || '').titleize, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
-			<%= submit_tag 'Locate', :class => 'grn_btn' %>
+			<%= f.text_field :query, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= f.submit 'Locate', :class => 'grn_btn' %>
 		</div>
 		<div id="advanced_opts">
 			<div id="type_select">
-				<%= label_tag 'Type:' %>
-				<%= select_tag 'storage_type', option_tags(@facility_features, 'Self Storage') %>
+				<%= f.label :storage_type, 'Type:' %>
+				<%= f.select :storage_type, @facility_features %>
 			</div>
 			<div id="size_option">
 				<div id="size_picker">
 					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
 				</div>
 				<div>
-					<%= label_tag 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'storage_size' %>
+					<%= f.label :unit_size, 'Unit Size:' %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]' %>
 				</div>
 			</div>
 			<div id="distance_slider">
-				<%= label_tag 'Within' %>
+				<%= f.label :within %>
 				<div id="slide_wrap">
 					<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less">
 					<div class="advanced_slider">
 						<div id="slide_bg"></div>
 					</div>
 					<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more"> 
-					<%= hidden_field_tag :within, (params[:within] || 20), :class => 'slider_val', :disabled => true %>
+					<%= f.hidden_field :within, :class => 'slider_val', :disabled => true %>
 				</div>
 				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>
@@ -40,7 +41,7 @@
 					<% @unit_features.each do |feature| %>
 					<div class="selectable_wrap">
 						<div class="selectable">
-							<%= check_box_tag 'features', feature %>
+							<%= check_box_tag 'search[features]', feature %>
 						</div>
 						<%= label_tag feature %>
 					</div>
@@ -48,5 +49,5 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	<% end %>
 </div>

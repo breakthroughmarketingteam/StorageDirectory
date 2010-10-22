@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  query: MyString
+  storage_type: MyString
+  features: MyString
+  within: 1
+  referrer: MyString
+  ip_address: MyString
+  lat: 1.5
+  lng: 1.5
+  city: MyString
+  state: MyString
+  zip: 1
+
+two:
+  query: MyString
+  storage_type: MyString
+  features: MyString
+  within: 1
+  referrer: MyString
+  ip_address: MyString
+  lat: 1.5
+  lng: 1.5
+  city: MyString
+  state: MyString
+  zip: 1

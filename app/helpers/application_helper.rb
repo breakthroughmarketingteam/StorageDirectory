@@ -512,4 +512,8 @@ module ApplicationHelper
     content_for :stylesheets, stylesheets.map { |css| stylesheet_link_tag "plugins/#{css}" }
   end
   
+  def location_guess
+    session[:geolocation][:city] rescue 'Zip Code, City, or Street Address'
+  end
+  
 end

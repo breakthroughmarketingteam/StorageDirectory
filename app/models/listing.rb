@@ -127,60 +127,68 @@ class Listing < ActiveRecord::Base
   #
   # Search methods
   #
-  def self.geo_search(params, session)
-    query = extrapolate_query(params)
-    sess_loc = [session[:geo_location][:lat].to_f, session[:geo_location][:lng].to_f] rescue nil
+  
+  def self.find_by_location(search, geo_location = nil)
+    # build the options for the model find method
     options = {
       :include => [:map, :specials, :sizes, :pictures, :reviews],
-      :within  => (params[:within].blank? ? $_listing_search_distance : params[:within])
+      :within  => (search.within.blank? ? $_listing_search_distance : search.within),
+      :origin => search.lat_lng || search.zip || search.city_and_state
     }
     
-    unless query.blank?
-      if is_address_query? query
-        @location = Geokit::Geocoders::MultiGeocoder.geocode query
-        options.merge! :origin => @location
-        
-        if is_zip? query # strip any non digit chars
-          options.merge! :conditions => ['maps.zip = ?', query.gsub(/\D/, '')]
-        elsif
-          options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{query.downcase}%"]
+    # TODO: find more efficient way to get a GeoLoc object, since it was already geocoded in the search model
+    @location = Geokit::GeoLoc.new search
+    
+    unless search.query.blank?
+      if Search.is_address_query? search.query # has one of zip, city or state
+        # restrict the results only to the zip or city in question
+        if Search.is_zip? search.query
+          options.merge! :conditions => ['maps.zip = ?', search.query.gsub(/\D/, '')] # strip any non digit chars
+        elsif Search.is_city? search.query
+          options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{search.query.downcase}%"]
         end
-      else # query by name?
-        conditions = { :conditions => ['listings.title LIKE ?', "%#{query}%"] }
+        
+      else # try query by name?
+        conditions = { :conditions => ['listings.title LIKE ?', "%#{search.query}%"] }
         options.merge! conditions
         
-        unless session[:geo_location].blank?
-          options.merge! :origin => sess_loc
+        # they didnt query by address so lets base it on where the geocoder thinks they are
+        unless search.lat.nil?
+          options.merge! :origin => search.lat_lng
+          
+        # we don't know where they are so lets set the origin to the location of the first result
         else
           guessed = Listing.first(conditions).map.zip
           @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
           options.merge! :origin => @location
         end
       end
-    else
-      @location = sess_loc || Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
+    else # blank search, guess the location (geocoded ip address) or fall back on a test location
+      @location = geo_location.nil? ? Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126') : [geo_location[:lat].to_f, geo_location[:lng].to_f]
       options.merge! :origin => @location
     end
     
-    @model_data = Listing.all options
-    @model_data.sort_by_distance_from @location if params[:order] == 'distance' || params[:order].blank?    
-    ret = { :very_specific => [], :kinda_specific => [], :premium => @model_data.select(&:premium?), :regular => @model_data.select(&:unverified?), :location => @location }
+    @listings = Listing.all options
     
-    unless params[:storage_size].blank?
-      kinda_specific = ret[:premium].select { |p| !p.sizes.empty? }
-
-      very_specific = kinda_specific.select do |p|
-        p.sizes.any? { |s| s.dims == params[:storage_size] }
-      end
-
-      premium = ret[:premium].reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }
+    # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
+    unless search.unit_size.blank?
+      all_premium = @listings.select(&:premium?)
       
-      ret[:premium] = premium
-      ret[:very_specific] = very_specific
-      ret[:kinda_specific] = kinda_specific
+      kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
+      
+      # TODO: refine this part in case the seracher also chose
+      very_specific = kinda_specific.select do |p|
+        p.sizes.any? { |s| s.dims == search.unit_size }
+      end.sort_by_distance_from @location
+
+      remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from @location
+      # ordering the results
+      @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(@location)
+    else
+      @listings.sort_by_distance_from @location
     end
     
-    ret
+    { :listings => @listings, :query_location => @location }
   end
   
   def premium?
@@ -189,50 +197,6 @@ class Listing < ActiveRecord::Base
   
   def unverified?
     self.client.nil? || self.client.status == 'unverified'
-  end
-  
-  # TODO: work on this to make sure it sorts correctly
-  def self.smart_order(data)
-    data.sort_by { |d| (d.impressions_count || 0) }
-  end
-  
-  def self.extrapolate_query(params)
-    return params[:q] if params[:q]
-    return params[:zip] if params[:zip]
-    params[:city] ? "#{params[:city].titleize}, #{params[:state].titleize}" : params[:state].titleize rescue ''
-  end
-  
-  # TODO: the default location should be geocoded from the request.ip_address and stored in the session. Using a test IP right now.
-  def self.geocode_query(query)
-    if query.blank?
-      Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
-    elsif is_address_query? query
-      Geokit::Geocoders::MultiGeocoder.geocode query
-    else
-      guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
-      Geokit::Geocoders::MultiGeocoder.geocode guessed
-    end
-  end
-  
-  def self.is_address_query?(query)
-    query.gsub!('-', ' ')
-    is_zip?(query) || is_city?(query) || is_state?(query)
-  end
-  
-  @@zip_regex = /\d{5}/
-  @@city_regex = Proc.new { |query| /#{query.split(/(,\W?)|(\W*)/) * '|'}/i }
-  @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
-  
-  def self.is_zip?(query)
-    query.match @@zip_regex
-  end
-  
-  def self.is_city?(query)
-    UsCity.names.any? { |c| c =~ @@city_regex.call(query) }
-  end
-  
-  def self.is_state?(query)
-    query.match(/#{@@states_regex}/i)
   end
   
   # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.
