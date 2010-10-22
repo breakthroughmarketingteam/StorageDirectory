@@ -367,7 +367,7 @@ p.phone span{color:#4c4bcc;font-weight:bold;}
 #add-fac-form-extra,#add-fac-form-extra-in,#add-fac-form-extra ul{}
 #add-fac-form-extra{position:relative;}
 #add-fac-form-extra-in{}
-#type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
+.add_our_facility #type-one-r-col ul.tabular{font-size:140%;float:left;position:relative;margin:-47px 0 0 10px;width:100%;z-index:4;}
 #type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/fac-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:138px;float:left;text-align:center;position:relative;top:5px;}
 #type-one-r-col ul.tabular li a{color:#555;text-decoration:none;display:block;height:58px;line-height:48px;width:135px;position:relative;top:5px;}
 #type-one-r-col ul.tabular li.active{}
