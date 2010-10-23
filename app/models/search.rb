@@ -13,7 +13,8 @@ class Search < ActiveRecord::Base
   end
   
   def self.create_from_path(city, state, zip = nil, request = nil)
-    search = self.build_from_path(city, state, zip, request).save
+    search = self.build_from_path(city, state, zip, request)
+    search.save
     search
   end
   
