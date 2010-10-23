@@ -4,7 +4,17 @@
 
 <div id="type-one-r-col-in">
   <div id="results_header">
-    <h2>We found <%= @listings.total_entries %> facilities within <%= "#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}" %> miles <%= "of <span class='city-name-heading'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank? %></h2>
+    <h2>
+		We found <%= @listings.total_entries %> facilities
+		<% if @prev_search.is_zip? %>
+			in <span class='city-name-heading'><%= @location.city %>, <%= @location.state %> <%= @location.zip %></span>
+		<% elsif @prev_search.is_city? %>
+			within <%= "#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}" %> miles 
+			<%= "of <span class='city-name-heading'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank? %>
+		<% else %>	
+			matching <span class="city-name-heading"><%= @prev_search.extrapolate :title %></span>
+		<% end %>
+	</h2>
 	<%= link_to '<span>Hide Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#hide_open-map', :id => 'top_map_btn', :rel => "#{@location.lat},#{@location.lng}" %>
   </div>
 </div>

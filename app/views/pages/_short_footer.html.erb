@@ -44,7 +44,7 @@
 			<p><strong>Most Popular Self Storage Cities</strong></p>
 			<ul>
 				<% Map.top_cities.each do |city| %>
-					<li><%= link_to "#{city.name} (#{city.map_count})", storage_state_city_path(city.state, city.name) %></li>
+					<li><%= link_to "#{city.name} (#{city.map_count})", search_listings_path(city.state, city.name) %></li>
 				<% end %>
 			</ul>
 		</div>

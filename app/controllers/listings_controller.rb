@@ -14,15 +14,21 @@ class ListingsController < ApplicationController
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
-    
-    @prev_search = Search.find session[:search_id]
-    @location = @prev_search.location
     @search = Search.new
     
+    # came from a form that submitted to searches controller and then redirected here
+    @prev_search = Search.find_by_id session[:search_id]
+      
+    if params[:city] # came from a link
+      @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
+    elsif params[:storage_type]
+      # TODO
+    end unless @prev_search
+    
+    @location = @prev_search.location
+    get_map
     @listings = Listing.find_by_location @prev_search
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-    
-    get_map @location
     
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     # updates the impressions only for listings on current page
@@ -126,18 +132,17 @@ class ListingsController < ApplicationController
     @client = @listing.client
   end
   
-  def get_map(loc = nil)
-    unless (@listing.map.nil? || @listing.map.lat.nil? rescue false) && loc.nil?
-      @map = (@listing.try(:map) || loc)
+  def get_map
+    unless (@listing.map.nil? || @listing.map.lat.nil? rescue false) && @location.nil?
+      @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
-  		@Gmap.zoom = (loc.nil? ? 16 : 12) # 2 miles
-  		@Gmap.markers << GoogleMap::Marker.new(:map => @Gmap, 
-                                             :lat => @map.lat, 
-                                             :lng => @map.lng,
-                                             :html => (@listing.nil? ? 'You Are here' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>"),
-                                             :marker_hover_text => @listing.try(:title),
-                                             :marker_icon_path => '/images/ui/map_marker.png')
+  		@Gmap.zoom = (@location.nil? ? 16 : 12) # 2 miles
+  		@Gmap.markers << GoogleMap::Marker.new(
+  		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
+        :html => @listing.nil? ? 'You Are here' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
+        :marker_hover_text => @listing.try(:title), :marker_icon_path => '/images/ui/map_marker.png'
+      )
     end
   end
   

@@ -19,16 +19,15 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users',         :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
-  # clean seo friendly
-  map.storage_state_zip '/self-storage/:state/:zip', :controller => 'listings', :action => 'locator', :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'}/i, :zip => /\d{5}/ }
+  # clean paths for searches
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  map.storage_state_city '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
-  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
+  map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(washington-dc){0}|(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
+  #map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
 
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
-  map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
+  map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }
   
   # Sample resource route with options:

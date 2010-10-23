@@ -7,7 +7,11 @@ class SearchesController < ApplicationController
   end
   
   def create
-    @search = Search.build_new params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
+    if params[:city]
+      @search = Search.build_from_path params[:city], params[:state], params[:zip], request
+    else
+      @search = Search.build_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
+    end
     
     respond_to do |format|
       format.html do
@@ -18,10 +22,10 @@ class SearchesController < ApplicationController
           end
           
           session[:search_id] = @search.id
-          
           redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city
         else
           flash[:error] = model_errors @search
+          raise [@search, flash[:error]].pretty_inspect
           redirect_back_or_default root_path(params)
         end
       end
