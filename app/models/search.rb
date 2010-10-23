@@ -89,7 +89,7 @@ class Search < ActiveRecord::Base
   end
   
   def location
-    @location ||= GeoKit::GeoLoc.new self
+    @location ||= GeoKit::GeoLoc.new(self)
   end
   
   def set_location!(location = nil)
