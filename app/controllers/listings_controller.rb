@@ -19,7 +19,7 @@ class ListingsController < ApplicationController
     if params[:city] # came from a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
       
-    elsif params[:search]   # came from a form that submitted to searches controller and then redirected here
+    elsif params[:search] # came from a form that submitted to searches controller and then redirected here
       @prev_search = Search.find_by_id session[:search_id]
       
     elsif params[:storage_type]
