@@ -51,11 +51,6 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-ActionMailer::Base.smtp_settings = {
-  :address => '192.168.1.10',
-  :port => 25
-} if RAILS_ENV == 'development'
-
 if defined? Hirb
   Hirb.enable :pager => true
   Hirb.enable :formatter => true
