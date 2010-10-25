@@ -18,6 +18,12 @@ class Search < ActiveRecord::Base
     search
   end
   
+  def self.create_from_params(search, geo_location)
+    search = self.build_from_params search, geo_location
+    search.save
+    search
+  end
+  
   def self.build_from_params(search, geo_location)
     @search = self.new search.merge :zip => (is_zip?(search[:query]) && search[:query].gsub(/\D/, ''))
     
@@ -72,9 +78,6 @@ class Search < ActiveRecord::Base
           return match[0]
         end
       end
-    when :title
-      # TODO
-      self.query
     end
   end
   

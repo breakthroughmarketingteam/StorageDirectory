@@ -393,7 +393,8 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 ul#bottom-nav li a{color:#fff;text-decoration:none;margin-right:20px;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;}
 .blue-line-in{width:920px;margin:0px auto;text-align:left;font-weight:bold;text-shadow:1px 1px 2px #333;}
-#extended-footer{}
+.more_results_form,.results_showing{float:right;}
+.results_showing{font-size:80%;}
 p#foot-text-l{float:left;margin-left:20px;}
 p#foot-text-r{float:right;margin-right:20px}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;}
@@ -1154,7 +1155,7 @@ form .error p{margin:0 0 7px 0;}
 #narrow_results_form #advanced_opts #unit_features .selectable_wrap label{font-size:80%;font-weight:normal;}
 #sub_submit{text-align:center;margin:20px 0;}
 
-#dock,#dock_nav{width:450px;height:60px;margin:160px auto 20px;visibility:hidden;}
+#dock,#dock_nav{width:545px;height:60px;margin:160px auto 20px;visibility:hidden;}
 #dock a,#dock_nav a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}
 #dock a img,#dock_nav a img{margin:10px auto;display:block;}
 #dock span,#dock_nav span{display:none;}
