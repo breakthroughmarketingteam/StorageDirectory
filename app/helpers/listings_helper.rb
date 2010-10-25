@@ -33,7 +33,7 @@ module ListingsHelper
   end
   
   def result_index(listing)
-    (params[:page] || 1) * (@listings.index(listing) + 1)
+    @listings.index(listing) + 1
   end
   
   def results_main_button(listing)
@@ -59,6 +59,34 @@ module ListingsHelper
     end
   end
   
+  def display_listing_hours(listing)
+    html = ''
+    unless listing.access_24_hours.nil? && listing.access_hours.empty?
+		  html += '<div class="access_hours">'
+		  html += '<p class="info_heading">Access Hours</p>'
+			if listing.access_24_hours
+				html += '<p>Every day, 24 hours</p>'
+			else
+				html += '<ul class="greylist">'
+					html += render(:partial => listing.access_hours)
+				html += '</ul>'
+			end
+		  html += '</div>'
+		end
+		unless listing.office_24_hours.nil? && listing.office_hours.empty?
+		  html += '<div class="office_hours">'
+		  html += '<p class="info_heading">Office Hours</p>'
+			if listing.office_24_hours
+				html += '<p>Every day, 24 hours</p>'
+			else
+				html += '<ul class="greylist">'
+					html += render(:partial => listing.office_hours)
+				html += '</ul>'
+			end
+		  html += '</div>'
+		end
+  end
+  
   def more_results_link(data)
     per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1
@@ -66,18 +94,20 @@ module ListingsHelper
     range_start = (per_page * page) - (per_page - 1)
     range_end = (per_page * page) > data.total_entries ? data.total_entries : per_page * page
     remaining = data.total_entries - (range_start + per_page - 1)
-    
-    html = "<span>Showing <span class='results_range'>#{range_start}-#{range_end}</span> of <span class='results_total'>#{data.total_entries}</span> results. </span>"
+    html = ''
     
     # only show the More link if there are more
-    if range_start < data.total_entries - per_page+1
-      html << link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results')
-      html << "<span class='hidden' name='params_pagetitle'>#{@page.title.parameterize}</span>"
-      html << "<span class='hidden' name='params_query'>#{params[:q] || params[:city]}</span>"
-      html << "<span class='hidden' name='params_page'>#{((params[:page] ? params[:page].to_i : 1) + 1)}</span>"
-      html << "<span class='hidden' name='params_within'>#{params[:within]}</span>"
+    if range_start < data.total_entries - per_page + 1
+      html << "<form action='/#{@page.title.parameterize}' method='get' class='more_results_form'>" + 
+        link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
+        "<input class='hidden' name='search[query]' value='#{@prev_search.query}' />" + 
+        "<input class='hidden' name='page' value='#{page + 1}' />" + 
+        (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
+        "<input class='hidden' name='search[within]' value='#{@prev_search.within || $_listing_search_distance}' />" +
+      '</form>'
     end
     
+    html << "<span class='results_showing'>Showing <span class='results_range'>#{range_start}-#{range_end}</span> of <span class='results_total'>#{data.total_entries}</span> results. </span>"
     html 
   end
   

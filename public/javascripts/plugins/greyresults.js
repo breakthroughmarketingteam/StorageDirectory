@@ -396,97 +396,49 @@ $(function(){
 
 	/* AJAX pagination, load next page results in the same page */
 	$('.more_results').live('click', function(){
-		var $this 		= $('.more_results'),
-			plus_sign 	= $this.find('span > span').hide(),
-			ajax_loader = $('.ajax_loader', $this).show(),
-			last_index  = parseInt($('.num_icon', '.listing:last').text());
-			
-		// params to build the url that will query the same data the visitor searched for, advanced one page
-		var pagetitle = $('span[name=params_pagetitle]', $this.parent()).eq(0).text(),
-			query 	  = $('span[name=params_query]', $this.parent()).eq(0).text(),
-			within 	  = $('span[name=params_within]', $this.parent()).eq(0).text(),
-			page 	  = $('span[name=params_page]', $this.parent()).eq(0).text();
-
-		// to build each listing object
-		var listing_clone = $('.listing:first').clone(),
-			results_wrap = $('#rslt-list-bg');
-
-		var url = '/'+ pagetitle +'?q=';
-		if (query != '') url += query;
-		if (within != '') url += '&within='+ within;
-		if (page != '') url += '&page='+ page;
+		var $this 	 	 = $('.more_results'),
+			this_form 	 = $this.parents('form'),
+			results_wrap = $('#rslt-list-bg'),
+			plus_sign 	 = $this.find('span > span').hide(),
+			ajax_loader  = $('.ajax_loader', $this).show(),
+			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
+			page = $('span[name=params_page]', $this.parent()).eq(0).text();
 		
-		$.getJSON(url, function(response){
-			ajax_loader.hide();
-			plus_sign.show();
-
-			if (response.success) {
-				// we get an array JSON objects, each represents a listing including related models attributes
-				$.each(response.data, function(i){
-					var info 		 = this.info, // listing attributes
-						this_listing = listing_clone.clone().attr('id', 'listing_'+ info.id), // a new copy of a .listing div
-						map 		 = this.map, // related model attributes
-						sizes	 	 = this.sizes,
-						specials	 = this.specials,
-						pictures	 = this.pictures,
-						this_index 	 = last_index + i + 1;
-					
-					// update tab urls
-					var tabs = [
-						$('.fac-map a', this_listing),
-						$('.fac-sizes a', this_listing),
-						$('.fac-specials a', this_listing),
-						$('.fac-pictures a', this_listing)
-					];
-
-					for (var i = 0, len = tabs.length; i < len; i++) {
-						if (tabs[i].length > 0) 
-							tabs[i].attr('href', tabs[i].attr('href').replace(/id=\d*/, 'id='+ info.id));
-							
-						if (this[tabs[i].attr('rel')].length > 0) 
-							tabs[i].parent().show();
+		if (!this_form.data('submitting')) {
+			this_form.data('submitting', true);
+			
+			$.getJSON(this_form.attr('action'), this_form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					for (var i = 0, len = data.length; i < len; i++) {
+						var listing = $(data[i]);
+						$('.num_icon', listing).text(last_index + i);
+						results_wrap.append(listing);
 					}
 
-					// update the content in the copy of the listing html and add it to the dom
-					$('.rslt-title a', this_listing)		.text(info.title);
-					$('.num_icon', this_listing)			.text(this_index);
-					$('.rslt-title a', this_listing)		.attr('href', '/self-storage/'+ info.title.toLowerCase().replaceAll(' ', '-') +'/' + info.id);
-					$('.rslt-address', this_listing)		.text(map.address);
-					$('.rslt-citystate', this_listing)		.text(map.city + ', ' + map.state + ' ' + map.zip);
-					$('.rslt-phone', this_listing)			.text(map.phone);
-					$('.rslt-miles span span', this_listing).text(parseFloat(map.distance).toPrecision(2));
-					$('.rslt-specials h5', this_listing)	.text(specials.title);
-					$('.rslt-specials p', this_listing)		.text(specials.content);
-					
-					var reserve_link = $('.rslt-reserve a', this_listing);
-					if (this.accepts_reservations) reserve_link.text('Reserve').attr('href', this.reserve_link_href)
-					
-					$(this_listing).removeClass('active').find('.active').removeClass('active');
-					$('.panel', this_listing).hide();
-					this_listing.appendTo(results_wrap).hide().slideDown('slow');
-					$('.inner:first', this_listing).effect('highlight', { color: '#c2cee9' }, 1700);
+					// this updates the page count so the next time the user clicks, we pull the correct data
+					$('span[name=params_page]').text(parseInt(page) + 1);
+
+					var range 		= $('.results_range'),
+						range_start = parseInt(range.eq(0).text().split('-')[0]),
+						range_end 	= parseInt(range.eq(0).text().split('-')[1]),
+						per_page	= parseInt($('#per_page').text()),
+						total 		= parseInt($('.results_total').eq(0).text()),
+						remaining	= total - (range_end + per_page);		
+
+					// update the range text and adjust the range end if we're near the end of the data set
+					range_end += parseInt($('#per_page').text());
+					if (range_end >= total) range_end = total;
+					range.text(range_start + '-' + range_end);
+
+					if (remaining <= 0) $this.hide();
+					if (remaining < per_page) $this.find('span').html('<span class="plus">+</span> Show ' + remaining + ' more');
 				});
 
-				// this updates the page count so the next time the user clicks, we pull the correct data
-				$('span[name=params_page]').text(parseInt(page) + 1);
-
-				var range 		= $('.results_range'),
-					range_start = parseInt(range.eq(0).text().split('-')[0]),
-					range_end 	= parseInt(range.eq(0).text().split('-')[1]),
-					per_page	= parseInt($('#per_page').text()),
-					total 		= parseInt($('.results_total').eq(0).text()),
-					remaining	= total - (range_end + per_page);		
-				
-				// update the range text and adjust the range end if we're near the end of the data set
-				range_end += parseInt($('#per_page').text());
-				if (range_end >= total) range_end = total;
-				range.text(range_start + '-' + range_end);
-
-				if (remaining <= 0) $this.hide();
-				if (remaining < per_page) $this.find('span').html('<span class="plus">+</span> Show ' + remaining + ' more');
-				
-			} else alert('Ooops, try again');
-		});
+				ajax_loader.hide();
+				plus_sign.show();
+				this_form.data('submitting', false);
+			});
+		}
 
 		return false;
 	});

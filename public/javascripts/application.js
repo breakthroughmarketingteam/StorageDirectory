@@ -90,7 +90,13 @@ $(document).ready(function() {
 	// advanced search options
 	var $size_picker = $('#size_picker'),
 		$size_img = $('img', $size_picker),
-		$size_select = $('#storage_size');
+		$size_select = $('#search_unit_size');
+	
+	// preload
+	$('option', $size_select).each(function(){
+		var img = new Image();
+		img.src = $(this).attr('rel');
+	});
 	
 	if ($size_select.length) {
 		size_icon_change($size_select); // update on page load

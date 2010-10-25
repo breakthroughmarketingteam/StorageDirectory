@@ -33,30 +33,7 @@
 			<% end %>
 		</li>
 		<li id="display_hours" class="stack">
-			<% unless @listing.access_24_hours.nil? && @listing.access_hours.empty? %>
-			<div class="access_hours">
-				<% if @listing.access_24_hours %>
-					<p class="info_heading">Access 24/7</p>
-				<% else %>
-					<p class="info_heading">Access Hours:</p>
-					<ul class="greylist">
-						<%= render :partial => @listing.access_hours %>
-					</ul>
-				<% end %>
-			</div>
-			<% end %>
-			<% unless @listing.office_24_hours.nil? && @listing.office_hours.empty? %>
-			<div class="office_hours">
-				<% if @listing.office_24_hours %>
-					<p class="info_heading">Office Open 24/7</p>
-				<% else %>
-					<p class="info_heading">Office Hours:</p>
-					<ul class="greylist">
-						<%= render :partial => @listing.office_hours %>
-					</ul>
-				<% end %>
-			</div>
-			<% end %>
+			<%= display_listing_hours(@listing) %>
 		</li>
 		<li>
 			<%= claim_listing_link(@listing) %>

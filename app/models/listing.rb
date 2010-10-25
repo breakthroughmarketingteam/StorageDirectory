@@ -139,22 +139,17 @@ class Listing < ActiveRecord::Base
     options = {
       :include => [:map, :specials, :sizes, :pictures, :reviews],
       :within  => (search.within.blank? ? $_listing_search_distance : search.within),
-      :origin => search.lat_lng || search.zip || search.city_and_state
+      :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
     }
     
     @location = search.location
     
     unless search.query.blank?
-      if search.is_address_query? # has one of zip, city or state
-        # restrict the results only to the zip or city in question
-        if search.is_zip?
-          options.merge! :conditions => ['maps.zip = ?', search.extrapolate(:zip)] # strip any non digit chars
-        elsif search.is_city?
-          options.merge! :conditions => ['LOWER(maps.city) LIKE ?', "%#{search.extrapolate :city}%"]
-        end
+      if search.is_zip?
+        options.merge! :conditions => ['maps.zip = ?', search.extrapolate(:zip)]
         
-      else # try query by name?
-        conditions = { :conditions => ['listings.title LIKE ?', "%#{search.extrapolate :title}%"] }
+      elsif !search.is_address_query? # try query by name? 
+        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?)', "%#{search.query}%", search.query.split(/\s|,\s?/)] }
         options.merge! conditions
         
         # they didnt query by address so lets base it on where the geocoder thinks they are
