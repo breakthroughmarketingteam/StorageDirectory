@@ -59,6 +59,34 @@ module ListingsHelper
     end
   end
   
+  def display_listing_hours(listing)
+    html = ''
+    unless listing.access_24_hours.nil? && listing.access_hours.empty?
+		  html += '<div class="access_hours">'
+		  html += '<p class="info_heading">Access Hours</p>'
+			if listing.access_24_hours
+				html += '<p>Every day, 24 hours</p>'
+			else
+				html += '<ul class="greylist">'
+					html += render(:partial => listing.access_hours)
+				html += '</ul>'
+			end
+		  html += '</div>'
+		end
+		unless listing.office_24_hours.nil? && listing.office_hours.empty?
+		  html += '<div class="office_hours">'
+		  html += '<p class="info_heading">Office Hours</p>'
+			if listing.office_24_hours
+				html += '<p>Every day, 24 hours</p>'
+			else
+				html += '<ul class="greylist">'
+					html += render(:partial => listing.office_hours)
+				html += '</ul>'
+			end
+		  html += '</div>'
+		end
+  end
+  
   def more_results_link(data)
     per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1
