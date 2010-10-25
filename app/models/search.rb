@@ -115,8 +115,12 @@ class Search < ActiveRecord::Base
     self.lat ? [self.lat, self.lng] : nil
   end
   
+  def full_location_if_zip
+    self.zip? ? self.city_state_and_zip : self.city_and_state
+  end
+  
   def city_state_and_zip
-    self.is_zip? ? self.zip : self.city_and_state
+    "#{self.city_and_state} #{self.zip}"
   end
   
   def city_and_state

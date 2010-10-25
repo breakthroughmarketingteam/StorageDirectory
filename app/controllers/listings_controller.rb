@@ -15,7 +15,6 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
-    raise params.pretty_inspect
     
     if flash[:search_id]
       @prev_search = Search.find_by_id flash[:search_id]
