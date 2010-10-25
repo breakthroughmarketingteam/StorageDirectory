@@ -1167,9 +1167,9 @@ form .error p{margin:0 0 7px 0;}
 
 #footer{overflow:hidden;clear:both;}
 #footer_top{position:relative;background:url(/images/ui/storagelocator/sky-blue-bg.png) repeat-x;}
-#footer_top .divide{padding:5px 0;position:relative;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border:1px solid #3c3d98;box-shadow:0px 1px 2px #999;-moz-box-shadow:0px 1px 2px #999;-webkit-box-shadow:0px 1px 2px #999;}
+#footer_top .divide{-moz-box-shadow:0 1px 2px #999;box-shadow:0 1px 2px #999;-webkit-box-shadow:0 1px 2px #999;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border:1px solid #3C3D98;height:20px;margin-bottom:10px;padding:5px 0;position:relative;}
 #footer_top .divide .wrapper{width:920px;color:#fff;text-shadow:1px 1px 1px #333;font-size:120%;}
-#footer_mid{border-top:1px solid #333;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
+#footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 
