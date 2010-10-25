@@ -164,6 +164,7 @@ class ApplicationController < ActionController::Base
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_sizes        = IssnUnitTypeSize.labels
       @unit_size_icons   = SizeIcon.medium_icons
+      @listing_logos = %w(y w r o g b).map { |color| { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :width => '164', :height => '120' } }
     end
   end
   

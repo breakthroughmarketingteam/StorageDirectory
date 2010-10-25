@@ -120,7 +120,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #listings_controller.compare_action #content #type-one-r-col-in #main_map{width:98.3%;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
-#offset_search_box{width:500px;position:absolute;top:-133px;left:35px;z-index:500;}
+#offset_search_box{width:500px;position:absolute;top:-133px;left:16px;z-index:500;}
 #offset_search_box #search_query{-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;border:1px solid #999999;height:28px;width:62%;padding:2px 7px;margin-right:10px;font-size:120%;}
 #offset_search_box .grn_btn{position:relative;top:-1px;}
 #oldlogo{float:left;margin-left:40px;margin-top:10px;position:relative;}
@@ -458,7 +458,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in-edit p.tags .value{}
 #sl-fac-detail,#thumb_gallery{width:52%;float:right;position:relative;}
 #sl-fac-coup{width:45%;float:left;position:relative;border:2px dashed #ccc;margin-right:2px;}
-#sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:130px;padding:10px 12px;color:#666;text-align:left;}
+#sl-fac-coup-in,#sl-fac-coup-in-edit{min-height:150px;padding:10px 12px;color:#666;text-align:left;}
 #sl-fac-coup-in .sl-special,#sl-fac-coup-in-edit .sl-special{font-size:200%;color:#333;margin:10px 0;text-align:center;font-variant:small-caps;display:block;}
 #sl-fac-coup-in .special_desc,#sl-fac-coup-in-edit .special_desc{display:block;font-size:80%;margin-bottom:20px;}
 #sl-fac-coup-in .coup_sponsor,#sl-fac-coup-in-edit .coup_sponsor{position:absolute;bottom:8px;color:#393;}
@@ -470,7 +470,7 @@ ul#specials_list {margin:15px 10px;}
 .ps{color:#666;padding-left:18px;background:url(/images/ui/storagelocator/print_icon.gif) no-repeat left;}
 #sl-fac-coup-in .ps,#sl-fac-coup-in-edit .ps{position:absolute;bottom:5px;right:5px;}
 #sl-fac-detail-in-edit{position:relative;}
-#sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:132px;padding:10px 12px;}
+#sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:152px;padding:10px 12px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}
@@ -487,7 +487,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-in{background:url(/images/ui/storagelocator/sl-tabs-bg-bottom.png) no-repeat bottom left;width:755px;}
 #sl-tabs ul#sl-tabs-nav{background:url(/images/ui/storagelocator/sl-tabs-bg-top.png) no-repeat bottom left;font-size:120%;font-weight:bold;width:755px;height:63px;position:relative;z-index:4;background-color:#fff;}
 #sl-tabs ul#sl-tabs-nav li{background:url(/images/ui/storagelocator/sl-tabs-bg-inactive.png) no-repeat top left;display:block;list-style:none;width:130px;float:left;text-align:center;position:relative;top:5px;margin-right:5px;}
-#sl-tabs ul#sl-tabs-nav li a{color:#fff;text-decoration:none;display:block;height:58px;line-height:43px;width:130x;position:relative;top:5px;}
+#sl-tabs ul#sl-tabs-nav li a{color:#fff;text-decoration:none;display:block;height:58px;line-height:1.1;width:130x;position:relative;top:5px;}
 #sl-tabs ul#sl-tabs-nav li.active{background:url(/images/ui/storagelocator/sl-tabs-bg-active.png) no-repeat left top;position:relative;}
 #sl-tabs ul#sl-tabs-nav li.active a{color:#fff;background:url(/images/ui/storagelocator/sl-tabs-add-tab.png) no-repeat 1px 8px;display:block;text-shadow:1px 1px 2px #000;position:relative;}
 #sl-tabs-sizes{padding:0 14px 14px;}
