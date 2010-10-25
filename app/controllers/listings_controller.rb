@@ -15,15 +15,16 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
+    raise params.pretty_inspect
+    
+    if flash[:search_id]
+      @prev_search = Search.find_by_id flash[:search_id]
       
-    if params[:city] # came from a link
-      @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
-      
-    elsif params[:search] # came from a form that submitted to searches controller and then redirected here
+    elsif session[:search_id] # came from a form that submitted to searches controller and then redirected here
       @prev_search = Search.find_by_id session[:search_id]
       
-    elsif params[:storage_type]
-      # TODO
+    else # just use whats in the URL
+      @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
     end
     
     @location = @prev_search.location

@@ -5,7 +5,8 @@
 	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
 	<% form_for @search, :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
-			<%= f.text_field :query, :value => @prev_search.try(:city_and_state), :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= f.text_field :query, :value => @prev_search.try(:zip_or_city_and_state), :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= reverse_captcha %>
 			<%= f.submit 'Locate', :class => 'grn_btn' %>
 		</div>
 		<div id="advanced_opts">

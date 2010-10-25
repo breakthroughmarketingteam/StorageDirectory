@@ -115,6 +115,10 @@ class Search < ActiveRecord::Base
     self.lat ? [self.lat, self.lng] : nil
   end
   
+  def city_state_and_zip
+    self.is_zip? ? self.zip : self.city_and_state
+  end
+  
   def city_and_state
     "#{self.city}#{', ' + self.state if self.state}" if self.city
   end

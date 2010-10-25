@@ -1,5 +1,6 @@
 class SearchesController < ApplicationController
   
+  skip_before_filter :init, :get_content_vars, :clean_home_url, :set_default_view_type, :load_app_config
   before_filter :get_models_paginated, :only => :index
   
   def index
@@ -16,13 +17,15 @@ class SearchesController < ApplicationController
     respond_to do |format|
       format.html do
         if @search.save
+          flash[:search_id] = @search.id # to let the listings controller know we're coming from here
+          
           if session[:search_id]
             @prev_search = Search.find_by_id session[:search_id]
             @prev_search.add_child @search
           end
           
           session[:search_id] = @search.id
-          redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city
+          redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city, :zip => (@search.is_zip? && @search.zip)
         else
           flash[:error] = model_errors @search
           raise [@search, flash[:error]].pretty_inspect
