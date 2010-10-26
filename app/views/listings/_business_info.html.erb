@@ -5,7 +5,7 @@
 
 	<div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
 
-	<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="164" height="120">
+	<%= display_logo @listing, :id => 'listing_img' %>
 	
 	<ul>
 		<li id="location_display" class="stack">

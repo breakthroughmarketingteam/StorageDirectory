@@ -13,7 +13,7 @@ class PagesController < ApplicationController
 
   def show
     @search = Search.new
-    @prev_search = Search.find_by_id session[:search_id] if session[:search_id]
+    @prev_search = Search.find_by_id session[:search_id]
     
     if params[:title] == 'home' || params[:id].to_i == 1
       #@unit_sizes        = IssnUnitTypeSize.labels

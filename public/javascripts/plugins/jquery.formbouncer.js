@@ -39,7 +39,7 @@ jQuery.fn.runValidation = function() {
 	}
 
 	function markInvalid(input, form) {
-		if (!input.hasClass('invalid')) input.addClass('invalid');
+		if (!input.hasClass('invalid')) input.addClass('invalid').removeClass('hint_text');
 		$('.invalid', form).eq(0).focus();
 
 		$('.invalid', 'form.silent').blur(function(){ $(this).removeClass('invalid'); });

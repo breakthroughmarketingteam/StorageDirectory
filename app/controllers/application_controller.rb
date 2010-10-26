@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   $_user_hint_places = [:owner_info, :facilities, :reports, :services, :settings, :listing_detail, :info_tabs, :extras]
   
   # for the geo_search methods in Listing
-  $_listing_search_distance = 25
+  $_listing_search_distance = 20
   
   # for the enable issn connectivity workflow
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
@@ -160,10 +160,11 @@ class ApplicationController < ActionController::Base
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?
-      @facility_features = IssnFacilityFeature.labels
+      @facility_features = ['Self', 'Mobile', 'Cold', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" } #IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_sizes        = IssnUnitTypeSize.labels
       @unit_size_icons   = SizeIcon.medium_icons
+      @listing_logos = %w(y w r o g b).map { |color| { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :width => '164', :height => '120' } }
     end
   end
   

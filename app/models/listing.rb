@@ -33,6 +33,16 @@ class Listing < ActiveRecord::Base
   has_many :facility_features, :dependent => :destroy
   has_many :facility_insurances, :dependent => :destroy
   
+  has_attached_file :logo,
+    :storage => :s3, 
+    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+    :styles => { :thumb => '164x120#' },
+    :url => ":s3_domain_url",
+    :path => ":attachment/:id/:style_:basename.:extension"
+  
+  validates_attachment_presence :logo
+  validates_attachment_content_type :logo, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
+  
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods

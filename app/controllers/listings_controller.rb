@@ -16,18 +16,22 @@ class ListingsController < ApplicationController
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
     
-    if flash[:search_id]
+    if flash[:search_id] # redirected from the search controller
       @prev_search = Search.find_by_id flash[:search_id]
      
-    elsif params[:search]
-      @prev_search = Search.create_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
+    elsif params[:search] # ajax call from the 'show more' button
+      @last_search = Search.find session[:search_id] # get the last search so we don't have to geocode again
+      @prev_search = Search.create @last_search.attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
       
-    else # just use whats in the URL
+    elsif params[:search_id] # clicked on Back to Results from a listing show page
+      @prev_search = Search.find params[:search_id]
+      
+    else # clicked on a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
     end
     
-    if session[:search_id]
-      @old_search = Search.find session[:search_id]
+    if session[:search_id] && !params[:search_id] && !params[:search]
+      @old_search = @last_search.nil? ? Search.find(session[:search_id]) : @last_search
       @old_search.add_child @prev_search
     end
     
@@ -64,8 +68,8 @@ class ListingsController < ApplicationController
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
     
     if session[:search_id]
-      @search = Search.find session[:search_id]
-      @search.update_attribute :listing_id, @listing.id
+      @prev_search = Search.find session[:search_id]
+      @prev_search.update_attribute :listing_id, @listing.id
     end
     
     render :layout => false if request.xhr?
@@ -106,6 +110,7 @@ class ListingsController < ApplicationController
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
     @listing = current_user.listings.build :title => params[:title]
+    @listing.default_logo = rand(@listing_logos.size)
     
     if @listing.save
       @map = @listing.build_map

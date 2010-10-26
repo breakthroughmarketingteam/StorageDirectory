@@ -87,6 +87,16 @@ module ListingsHelper
 		end
   end
   
+  def display_logo(listing, options = {})
+    if listing.logo.exists?
+      link_to image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id)
+    else
+      img_hash = @listing_logos[listing.default_logo]
+      img_hash[:alt] = listing.title
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= 17}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+    end
+  end
+  
   def more_results_link(data)
     per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1
@@ -103,6 +113,9 @@ module ListingsHelper
         "<input class='hidden' name='search[query]' value='#{@prev_search.query}' />" + 
         "<input class='hidden' name='page' value='#{page + 1}' />" + 
         (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
+        (@prev_search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@prev_search.unit_size}' />" : '') +
+        (@prev_search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@prev_search.storage_type}' />" : '') +
+        (@prev_search.features ? "<input class='hidden' name='search[features]' value='#{@prev_search.features}' />" : '') +
         "<input class='hidden' name='search[within]' value='#{@prev_search.within || $_listing_search_distance}' />" +
       '</form>'
     end

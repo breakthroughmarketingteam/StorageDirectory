@@ -5,7 +5,7 @@ class BillingInfo < ActiveRecord::Base
   access_shared_methods
   
   def obscured_card_number
-    "**** **** **** #{self.card_number[-4]}" if self.card_number
+    "**** **** **** #{self.card_number[self.card_number.size - 4, self.card_number.size]}" if self.card_number
   end
   
 end
