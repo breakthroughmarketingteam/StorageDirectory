@@ -89,11 +89,11 @@ module ListingsHelper
   
   def display_logo(listing, options = {})
     if listing.logo.exists?
-      listing.logo.url :thumb
+      link_to image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id)
     else
       img_hash = @listing_logos[listing.default_logo]
       img_hash[:alt] = listing.title
-      image_tag img_hash.delete(:src), img_hash.merge(options)
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= 17}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
   end
   

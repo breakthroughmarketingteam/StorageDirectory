@@ -17,10 +17,12 @@
 				<% end %>
 			</div>
 
-			<div class="num_icon"><%= result_index(result) %></div>
+			<div class="num_icon">
+				<%= result_index(result) %>
+			</div>
 			
 			<div class="facility-logo">
-				<img class="logo" src="/images/ui/storagelocator/bobs-logo.gif" alt="" width="102" height="77">
+				<%= display_logo result, :width => '102px', :height => '77px' %>
 			</div>
 			
 			<div class="rslt-contact">
@@ -38,7 +40,7 @@
 					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
-				<% if (unit_size = result.get_closest_unit_size(params[:storage_size])) %>
+				<% if (unit_size = result.get_closest_unit_size(@prev_search.unit_size)) %>
 					<li class="rslt-size">
 						<%= image_tag unit_size.icon(:thumb).icon.url %>
 						<span class="size"><%= unit_size.display_dimensions %></span>

@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean paths for searches
+  map.connect '/self-storage/search/:search_id/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(washington-dc){0}|(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
   #map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
