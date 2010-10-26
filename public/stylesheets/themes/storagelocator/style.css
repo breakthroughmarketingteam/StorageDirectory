@@ -6,6 +6,7 @@ h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
 button{cursor:pointer;}
 strong{color:#000;}
+strong.blue{color:#4c4bcc;}
 a:link, a:visited {text-decoration:none;}
 .hidden{display:none;}
 span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4px;font-weight:bold;}
@@ -832,12 +833,12 @@ img.right{margin:0 0 10px 10px;}
 #map_nav{position:relative;}
 #map_nav_img{opacity:0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
 #map_nav .map_overlay{position:absolute;top:0;}
-#map_nav #state_name{position:absolute;top:390px;right:0;color:#666;font-weight:bold;}
+#map_nav #state_name{color:#666;font-size:20px;font-weight:bold;margin-right:20px;position:absolute;right:0;top:385px;}
 #map_nav .map_flow_step{height:395px;position:relative;overflow:visible;}
-#map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;}
+#map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;margin:10px 0 20px 20px;}
 #map_nav #map_step2{overflow:hidden;}
 #map_step2 #city_nav{width:102%;height:30px;}
-#map_step2 #city_nav a{display:block;padding:3px 6px;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+#map_step2 #city_nav a{display:block;padding:3px 0;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 0 #666;;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #999;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;text-align:center;width:26px;}
 #map_step2 #city_nav a:hover,#map_step2 #city_nav a:active,#map_step2 #city_nav li.active a{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #map_step2 #cities_list{height:320px;margin-top:14px;overflow:auto;}
 #map_step2 #cities_list li{display:none;position:static;}
@@ -984,7 +985,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
 #forgot_pass_link{color:#666;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
-.invalid{background-color:#FFCDCD;border:1px solid #FF9999 !important;color:#F00;}
+.invalid{background-color:#ffd8d8;border:1px solid #FF0000 !important;color:#F00;}
 .fieldWithErrors{background:none;padding:0;}
 .fieldWithErrors input{background-color:#FFCDCD;border:1px solid #FF9999 !important}
 #aops{position:absolute;width:89.5%;min-height:93px;background:#fff;border:1px solid #ccc;z-index:999;top:116px;padding:10px 15px;}
@@ -1018,7 +1019,7 @@ form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
 #workflow_nav,#map_flow_nav{position:absolute;top:376px;left:0;width:100%;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
-#workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:100%;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 2px #333;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
+#workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:14px;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0 #666;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
 #workflow_nav .button:hover,#map_flow_nav .button:hover{background-image:url(/images/ui/storagelocator/sl-table-reserve-active.png);}
 #workflow_nav .skip{right:122px;}
@@ -1093,7 +1094,7 @@ form .error p{margin:0 0 7px 0;}
 #topbar ul.dropdown ul li{float:none;}
 #topbar ul.dropdown ul ul{top:1px;left:99%;}
 #topbar ul.dropdown li:hover > ul{visibility:visible;}
-#topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;text-align:left;}
+#topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;border-top:none;text-align:left;}
 #topbar ul.dropdown li a:link,#topbar ul.dropdown li a:visited{float:none;}
 #topbar ul li a:hover,#topbar ul li a:active{background-color:#393;color:#fff !important;}
 #self_storage_li{width:112px;margin-left:15px;}
@@ -1174,9 +1175,9 @@ form .error p{margin:0 0 7px 0;}
 
 #footer{overflow:hidden;clear:both;}
 #footer_top{position:relative;background:url(/images/ui/storagelocator/sky-blue-bg.png) repeat-x;}
-#footer_top .divide{padding:5px 0;position:relative;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border:1px solid #3c3d98;box-shadow:0px 1px 2px #999;-moz-box-shadow:0px 1px 2px #999;-webkit-box-shadow:0px 1px 2px #999;}
+#footer_top .divide{-moz-box-shadow:0 1px 2px #999;box-shadow:0 1px 2px #999;-webkit-box-shadow:0 1px 2px #999;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border:1px solid #3C3D98;height:20px;margin-bottom:10px;padding:5px 0;position:relative;}
 #footer_top .divide .wrapper{width:920px;color:#fff;text-shadow:1px 1px 1px #333;font-size:120%;}
-#footer_mid{border-top:1px solid #333;overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
+#footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;}
 #footer_btm .ad{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 
@@ -1266,14 +1267,16 @@ form .error p{margin:0 0 7px 0;}
 #top_fac_page #fac-bottom .feat h4.box6{background:url("/images/ui/storagelocator/market.png") no-repeat;}
 #top_fac_page #fac-bottom .feat p{font-size:12px;line-height:20px;margin:0;}
 
+
 #fac-features{margin-top:20px;}
 #top_fac_page h3{font-size:28px;line-height:36px;}
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
 #add-fac-form-extra ul{margin-left:30px;}
 #top_fac_page #fac-features h4{margin-bottom:20px;margin-left:0;}
-#text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:none repeat scroll 0 0 #FEFFD3;border:3px solid #ccc;margin-bottom:40px;padding:25px;}
-#text-box p.tb{font-size:20px;}
+#text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffffcc;border:3px solid #ccc;margin-bottom:40px;padding:25px;}
+#text-box p.tb{font-size:22px;font-variant:small-caps;font-weight:bold;}
 #text-box p{font-size:16px;line-height:26px;margin:0;}
+#feat-desc strong{color:#4c4bcc;font-size:16px;}
 
 #price-block{float:left;margin-top:13px;width:326px;}
 #price-block h4{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:82px;line-height:28px;margin:10px 0 15px 10px;padding:11px 0 0 6px;text-align:center;width:322px;}
