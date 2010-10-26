@@ -15,6 +15,8 @@ class PagesController < ApplicationController
     @search = Search.new
     @prev_search = Search.find_by_id session[:search_id]
     
+    raise session.pretty_inspect
+    
     if params[:title] == 'home' || params[:id].to_i == 1
       #@unit_sizes        = IssnUnitTypeSize.labels
       @unit_features     = IssnUnitTypeFeature.labels

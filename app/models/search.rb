@@ -24,6 +24,13 @@ class Search < ActiveRecord::Base
     search
   end
   
+  def self.build_from_geoloc(geoloc)
+    if geoloc[:lat] && geoloc[:lng]
+      @search = self.new
+      @search.set_location! geoloc
+    end
+  end
+  
   def self.build_from_params(search, geo_location)
     @search = self.new search.merge :zip => (is_zip?(search[:query]) && search[:query].gsub(/\D/, ''))
     
@@ -41,6 +48,23 @@ class Search < ActiveRecord::Base
     end
     
     @search
+  end
+  
+  def location
+    @location ||= GeoKit::GeoLoc.new(self)
+  end
+  
+  def set_location!(location = nil)
+    if location.respond_to?(:lat) || location.is_a?(Hash)
+      self.lat   = location.respond_to?(:lat)   ? location.lat   : location[:lat]
+      self.lng   = location.respond_to?(:lng)   ? location.lng   : location[:lng]
+      self.city  = location.respond_to?(:city)  ? location.city  : location[:city]
+      self.state = location.respond_to?(:state) ? location.state : location[:state]
+      self.zip   = location.respond_to?(:zip)   ? location.zip   : location[:zip] if self.zip.nil?
+    elsif self.is_address_query?
+      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode(self.query)
+    end
+    self
   end
   
   def is_address_query?
@@ -91,23 +115,6 @@ class Search < ActiveRecord::Base
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
       Geokit::Geocoders::MultiGeocoder.geocode guessed
     end
-  end
-  
-  def location
-    @location ||= GeoKit::GeoLoc.new(self)
-  end
-  
-  def set_location!(location = nil)
-    if location.respond_to?(:lat) || location.is_a?(Hash)
-      self.lat   = location.respond_to?(:lat) ? location.lat : location[:lat]
-      self.lng   = location.respond_to?(:lng) ? location.lng : location[:lng]
-      self.city  = location.respond_to?(:city) ? location.city : location[:city]
-      self.state = location.respond_to?(:state) ? location.state : location[:state]
-      self.zip   = location.respond_to?(:zip) ? location.zip : location[:zip] if self.zip.nil?
-    else
-      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode self.query
-    end
-    self
   end
   
   def title

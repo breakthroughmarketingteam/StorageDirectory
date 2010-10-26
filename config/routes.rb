@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
   map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
   
   $_storage_types.each do |type|
-    map.connect "/#{type.parameterize}", :controller => 'listings', :action => 'locator', :storage_type => type
+    map.connect "/#{type.parameterize}", :controller => 'searches', :action => 'create', :storage_type => type
   end
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'

@@ -16,7 +16,9 @@ class SearchesController < ApplicationController
   end
   
   def create
-    if params[:city]
+    if params[:storage_type]
+      @search = Search.build_from_geoloc session[:geo_location]
+    elsif params[:city]
       @search = Search.build_from_path params[:city], params[:state], params[:zip], request
     else
       @search = Search.build_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
