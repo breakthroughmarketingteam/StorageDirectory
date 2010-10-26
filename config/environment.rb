@@ -8,6 +8,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'
 require 'issn_adapter'
 
+$_storage_types = ['Self', 'Mobile', 'Cold', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers

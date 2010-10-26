@@ -1,9 +1,10 @@
 class FormsController < ApplicationController
+  
+  before_filter :get_models, :only => :index
   before_filter :get_form, :except => [:index, :new, :create]
   before_filter :get_field, :only => [:new, :edit]
   
   def index
-    @forms = Form.all
     render :layout => false if request.xhr?
   end
   
@@ -19,11 +20,26 @@ class FormsController < ApplicationController
   def create
     @form = Form.new(params[:form])
     
-    if @form.save
-      flash[:notice] = @form.name + ' has been created.'
-      redirect_back_or_default forms_path
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @form.save
+          flash[:notice] = @form.name + ' has been created.'
+          redirect_back_or_default forms_path
+        else
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @form.save
+          flash.now[:notice] = @form.name + ' has been created.'
+          get_models
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@form)
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
 
@@ -32,22 +48,52 @@ class FormsController < ApplicationController
   end
 
   def update
-    if @form.update_attributes(params[:form])
-      flash[:notice] = @form.name + ' has been updated.'
-      redirect_back_or_default forms_path
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @form.update_attributes(params[:form])
+          flash[:notice] = @form.name + ' has been updated.'
+          redirect_back_or_default forms_path
+        else
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @form.update_attributes(params[:form])
+          flash.now[:notice] = @form.name + ' has been updated.'
+          get_models
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors(@form)
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
 
   def destroy
-    if @form.destroy
-      flash[:notice] = @form.name + ' DESTROYED!'
-    else
-      flash[:error] = 'Error destroying ' + @form.name
+    respond_to do |format|
+      format.html do
+        if @form.destroy
+          flash[:notice] = @form.name + ' DESTROYED!'
+        else
+          flash[:error] = 'Error destroying ' + @form.name
+        end
+
+        redirect_back_or_default forms_path
+      end
+      
+      format.js do
+        if @form.destroy
+          flash.now[:notice] = @form.name + ' DESTROYED!'
+        else
+          flash.now[:error] = 'Error destroying ' + @form.name
+        end
+
+        get_models
+        render :action => 'index', :layout => false
+      end
     end
-    
-    redirect_back_or_default forms_path
   end
 
   private

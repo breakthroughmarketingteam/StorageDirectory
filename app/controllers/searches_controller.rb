@@ -7,6 +7,14 @@ class SearchesController < ApplicationController
     render :layout => false if request.xhr?
   end
   
+  def show
+    if params[:search_id]
+      flash[:search_id] = params[:search_id]
+      flash[:search_back] = true
+      redirect_to :controller => 'listings', :action => 'locator', :state => params[:state], :city => params[:city], :zip => params[:zip]
+    end
+  end
+  
   def create
     if params[:city]
       @search = Search.build_from_path params[:city], params[:state], params[:zip], request
@@ -27,7 +35,6 @@ class SearchesController < ApplicationController
           redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city, :zip => (@search.is_zip? && @search.zip)
         else
           flash[:error] = model_errors @search
-          raise [@search, flash[:error]].pretty_inspect
           redirect_back_or_default root_path(params)
         end
       end

@@ -94,6 +94,13 @@ $(function(){
 			$this.data('selected', false).removeClass('selected');
 			checkbox.trigger('change').attr('checked', false);
 		}
+		
+	}).siblings('label').live('click', function(){
+		var $this = $(this);
+		
+		$this.click(function(){
+			$this.siblings('.selectable').eq(0).click();
+		});
 	});
 	
 	// Admin index page menu

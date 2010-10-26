@@ -11,10 +11,10 @@
 		<li id="location_display" class="stack">
 			<p class="info_heading">Location</p>
 			
-			<div class="address">
+			<div class="address grey">
 				<span rel="address" class="block value"><%= edit_listing_address @listing %></span>
 				<% unless @listing.map.nil? %>
-					<span rel="city" class="value"><%= @listing.map.city %></span> <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
+					<span rel="city" class="value"><%= @listing.map.city %></span>, <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
 				<% else %>
 					<%= edit_listing_city_state_zip @listing %>
 				<% end %>
