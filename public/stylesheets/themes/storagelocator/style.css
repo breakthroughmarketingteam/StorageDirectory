@@ -1083,7 +1083,7 @@ form .error p{margin:0 0 7px 0;}
 #self_storage_li .toplink{background-position:90% 55%;}
 #topbar ul #vehicle_storage_li .toplink{background-position:90% 55%;padding-right:23px;}
 #topbar ul li a:link,#topbar ul li a:visited{float:left;display:block;padding:7px 12px;color:#359946;text-decoration:none;}
-#topbar ul li a.active,#topbar ul li a:active{color:#fff;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
+#topbar ul li a:hover,#topbar ul li a:active,#topbar ul li a.active,#topbar ul li a:active{color:#fff !important;text-shadow:1px 1px 2px #333;background:url(/images/ui/storagelocator/active-nav-bg.png) repeat-x;}
 #topbar #moving_help li a:link,#topbar #moving_help li a:visited{color:#5256a5;}
 #topbar ul.dropdown,ul.dropdown li,ul.dropdown ul{list-style:none;margin:0;padding:0;}
 #topbar ul.dropdown{position:relative;z-index:597;float:left;}
@@ -1095,7 +1095,6 @@ form .error p{margin:0 0 7px 0;}
 #topbar ul.dropdown li:hover > ul{visibility:visible;}
 #topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;border-top:none;text-align:left;}
 #topbar ul.dropdown li a:link,#topbar ul.dropdown li a:visited{float:none;}
-#topbar ul li a:hover,#topbar ul li a:active{background-color:#393;color:#fff !important;}
 #self_storage_li{width:112px;margin-left:15px;}
 
 .wrapper{width:1026px;margin:0 auto;text-align:left;}

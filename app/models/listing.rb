@@ -178,6 +178,8 @@ class Listing < ActiveRecord::Base
       options.merge! :origin => @location
     end
     
+    # TODO: storage_type
+    
     @listings = Listing.all options
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)

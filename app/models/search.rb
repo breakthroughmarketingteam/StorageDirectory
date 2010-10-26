@@ -13,20 +13,30 @@ class Search < ActiveRecord::Base
   end
   
   def self.create_from_path(city, state, zip = nil, request = nil)
-    search = self.build_from_path(city, state, zip, request)
-    search.save
-    search
+    @search = self.build_from_path city, state, zip, request
+    @search.save
+    @search
   end
   
   def self.create_from_params(search, geo_location)
-    search = self.build_from_params search, geo_location
-    search.save
-    search
+    @search = self.build_from_params search, geo_location
+    @search.save
+    @search
   end
   
-  def self.build_from_geoloc(geoloc)
+  def self.create_from_geoloc(geoloc, storage_type = nil)
+    @search = self.build_from_geoloc geoloc, storage_type
+    @search.save
+    @search
+  end
+  
+  def self.build_from_geoloc(geoloc, storage_type = nil)
     @search = self.new
-    @search.set_location! geoloc
+    # TODO: remove test ip address
+    @search.set_location! geoloc || Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146')
+    @search.storage_type = storage_type
+    @search.query = "#{@search.city}, #{@search.state}"
+    @search
   end
   
   def self.build_from_params(search, geo_location)
@@ -74,7 +84,7 @@ class Search < ActiveRecord::Base
   @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
   
   def self.is_zip?(q)
-    q.match @@zip_regex
+    q.match @@zip_regex if q
   end
   
   def is_zip?
@@ -82,11 +92,11 @@ class Search < ActiveRecord::Base
   end
   
   def is_city?
-    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) }
+    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) if self.query }
   end
   
   def is_state?
-    self.query.match(/#{@@states_regex}/i)
+    self.query.match(/#{@@states_regex}/i) if self.query
   end
   
   def extrapolate(part)

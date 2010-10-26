@@ -16,9 +16,7 @@ class SearchesController < ApplicationController
   end
   
   def create
-    if params[:storage_type]
-      @search = Search.build_from_geoloc session[:geo_location]
-    elsif params[:city]
+    if params[:city]
       @search = Search.build_from_path params[:city], params[:state], params[:zip], request
     else
       @search = Search.build_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
@@ -37,7 +35,7 @@ class SearchesController < ApplicationController
           redirect_to :controller => 'listings', :action => 'locator', :state => @search.state, :city => @search.city, :zip => (@search.is_zip? && @search.zip)
         else
           flash[:error] = model_errors @search
-          redirect_back_or_default root_path(params)
+          redirect_back_or_default root_path
         end
       end
       

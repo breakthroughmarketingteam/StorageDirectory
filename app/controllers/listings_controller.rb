@@ -16,7 +16,10 @@ class ListingsController < ApplicationController
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
     
-    if flash[:search_id] # redirected from the search controller
+    if params[:storage_type] # clicked on one of the storage types links
+      @prev_search = Search.create_from_geoloc session[:geo_location], params[:storage_type]
+      
+    elsif flash[:search_id] # redirected from the search controller
       @prev_search = Search.find flash[:search_id]
      
     elsif params[:search] # ajax call from the 'show more' button
