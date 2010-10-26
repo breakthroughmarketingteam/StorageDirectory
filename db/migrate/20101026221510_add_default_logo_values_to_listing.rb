@@ -10,7 +10,7 @@ class AddDefaultLogoValuesToListing < ActiveRecord::Migration
       if l.save
         puts "def logo #{l.default_logo} for listing #{l.title}"
       else
-        l.errors.full_messages * ' '
+        puts l.errors.full_messages * ' '
       end
     end
   end
