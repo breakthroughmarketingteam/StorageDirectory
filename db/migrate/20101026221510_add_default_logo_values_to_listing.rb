@@ -1,8 +1,8 @@
 class AddDefaultLogoValuesToListing < ActiveRecord::Migration
   def self.up
-    listings = Listing.all :conditions => "LOWER(maps.state) = 'florida' OR LOWER(maps.state) = 'fl'", :include => :map
+    listings = Listing.all
     
-    puts "found #{listings.size} in florida"
+    puts "found #{listings.size} listings"
     
     listings.each do |l|
       x = rand(6)
