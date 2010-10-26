@@ -162,7 +162,6 @@ class ApplicationController < ActionController::Base
     unless controller_name == 'user_sessions' && request.xhr?
       @facility_features = $_storage_types #IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
-      @unit_sizes        = IssnUnitTypeSize.labels
       @unit_size_icons   = SizeIcon.medium_icons
       @listing_logos = %w(y w r o g b).map { |color| { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :width => '164', :height => '120' } }
     end

@@ -2,7 +2,7 @@ class Search < ActiveRecord::Base
   
   belongs_to :listing
   
-  validates_presence_of :query
+  validates_presence_of :lat, :lng
   access_shared_methods
   acts_as_nested_set
   
@@ -25,10 +25,8 @@ class Search < ActiveRecord::Base
   end
   
   def self.build_from_geoloc(geoloc)
-    if geoloc[:lat] && geoloc[:lng]
-      @search = self.new
-      @search.set_location! geoloc
-    end
+    @search = self.new
+    @search.set_location! geoloc
   end
   
   def self.build_from_params(search, geo_location)
