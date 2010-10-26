@@ -16,9 +16,6 @@ class PagesController < ApplicationController
     @prev_search = Search.find_by_id session[:search_id]
     
     if params[:title] == 'home' || params[:id].to_i == 1
-      #@unit_sizes        = IssnUnitTypeSize.labels
-      @unit_features     = IssnUnitTypeFeature.labels
-      @facility_features = IssnFacilityFeature.labels
       render :layout => 'locatorfront'
     end
   end

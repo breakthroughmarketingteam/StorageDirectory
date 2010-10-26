@@ -160,9 +160,8 @@ class ApplicationController < ActionController::Base
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?
-      @facility_features = ['Self', 'Mobile', 'Cold', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" } #IssnFacilityFeature.labels
+      @facility_features = $_storage_types #IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
-      @unit_sizes        = IssnUnitTypeSize.labels
       @unit_size_icons   = SizeIcon.medium_icons
       @listing_logos = %w(y w r o g b).map { |color| { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :width => '164', :height => '120' } }
     end

@@ -46,7 +46,7 @@ module ListingsHelper
   end
   
   def listing_distance_from
-    number_with_precision(@listing.distance_from([session[:location][:lat], session[:location][:lng]]), 2) rescue nil
+    number_with_precision(@listing.distance_from(@prev_search.lat_lng), 2) rescue nil
   end
   
   def listing_action_btn_class(listing)
@@ -65,7 +65,7 @@ module ListingsHelper
 		  html += '<div class="access_hours">'
 		  html += '<p class="info_heading">Access Hours</p>'
 			if listing.access_24_hours
-				html += '<p>Every day, 24 hours</p>'
+				html += '<p class="grey">Every day, 24 hours</p>'
 			else
 				html += '<ul class="greylist">'
 					html += render(:partial => listing.access_hours)
@@ -77,7 +77,7 @@ module ListingsHelper
 		  html += '<div class="office_hours">'
 		  html += '<p class="info_heading">Office Hours</p>'
 			if listing.office_24_hours
-				html += '<p>Every day, 24 hours</p>'
+				html += '<p class="grey">Every day, 24 hours</p>'
 			else
 				html += '<ul class="greylist">'
 					html += render(:partial => listing.office_hours)
@@ -88,12 +88,14 @@ module ListingsHelper
   end
   
   def display_logo(listing, options = {})
+    @min_title_len = 21
+    
     if listing.logo.exists?
       link_to image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id)
     else
-      img_hash = @listing_logos[listing.default_logo]
+      img_hash = @listing_logos[listing.default_logo || 0]
       img_hash[:alt] = listing.title
-      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= 17}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
   end
   

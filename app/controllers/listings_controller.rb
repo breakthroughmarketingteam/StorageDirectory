@@ -16,21 +16,24 @@ class ListingsController < ApplicationController
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
     
-    if flash[:search_id] # redirected from the search controller
-      @prev_search = Search.find_by_id flash[:search_id]
+    if params[:storage_type] # clicked on one of the storage types links
+      @prev_search = Search.create_from_geoloc session[:geo_location], params[:storage_type]
+      
+    elsif flash[:search_id] # redirected from the search controller
+      @prev_search = Search.find flash[:search_id]
      
     elsif params[:search] # ajax call from the 'show more' button
       @last_search = Search.find session[:search_id] # get the last search so we don't have to geocode again
       @prev_search = Search.create @last_search.attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
-      
-    elsif params[:search_id] # clicked on Back to Results from a listing show page
-      @prev_search = Search.find params[:search_id]
-      
+    
+    elsif session[:search_id] # reloaded the page?
+      @prev_search = Search.find session[:search_id]
+    
     else # clicked on a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
     end
     
-    if session[:search_id] && !params[:search_id] && !params[:search]
+    if session[:search_id] && !flash[:search_back] && !params[:search]
       @old_search = @last_search.nil? ? Search.find(session[:search_id]) : @last_search
       @old_search.add_child @prev_search
     end

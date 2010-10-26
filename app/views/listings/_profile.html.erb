@@ -53,16 +53,16 @@
 	    <div id="sl-tabs">
 	      <div id="sl-tabs-in" class="tabular_content">
 	        <ul id="sl-tabs-nav" class="tabular">
+				<%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
 				<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
 				<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
-	          	<%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
 	          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
 	          	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})"}", '#pictures', :id => 'tab_Pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
 	        </ul>
 	        <!-- tab content -->
+			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
 			<%= render :partial => 'hours' if in_edit_mode? %>
 			<%= render :partial => 'big_map' if in_edit_mode? %>
-	        <%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
 	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
 	        <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
 	      </div>

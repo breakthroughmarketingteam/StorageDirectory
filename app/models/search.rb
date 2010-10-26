@@ -2,7 +2,7 @@ class Search < ActiveRecord::Base
   
   belongs_to :listing
   
-  validates_presence_of :query
+  validates_presence_of :lat, :lng
   access_shared_methods
   acts_as_nested_set
   
@@ -13,15 +13,30 @@ class Search < ActiveRecord::Base
   end
   
   def self.create_from_path(city, state, zip = nil, request = nil)
-    search = self.build_from_path(city, state, zip, request)
-    search.save
-    search
+    @search = self.build_from_path city, state, zip, request
+    @search.save
+    @search
   end
   
   def self.create_from_params(search, geo_location)
-    search = self.build_from_params search, geo_location
-    search.save
-    search
+    @search = self.build_from_params search, geo_location
+    @search.save
+    @search
+  end
+  
+  def self.create_from_geoloc(geoloc, storage_type = nil)
+    @search = self.build_from_geoloc geoloc, storage_type
+    @search.save
+    @search
+  end
+  
+  def self.build_from_geoloc(geoloc, storage_type = nil)
+    @search = self.new
+    # TODO: remove test ip address
+    @search.set_location! geoloc || Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146')
+    @search.storage_type = storage_type
+    @search.query = "#{@search.city}, #{@search.state}"
+    @search
   end
   
   def self.build_from_params(search, geo_location)
@@ -43,6 +58,23 @@ class Search < ActiveRecord::Base
     @search
   end
   
+  def location
+    @location ||= GeoKit::GeoLoc.new(self)
+  end
+  
+  def set_location!(location = nil)
+    if location.respond_to?(:lat) || location.is_a?(Hash)
+      self.lat   = location.respond_to?(:lat)   ? location.lat   : location[:lat]
+      self.lng   = location.respond_to?(:lng)   ? location.lng   : location[:lng]
+      self.city  = location.respond_to?(:city)  ? location.city  : location[:city]
+      self.state = location.respond_to?(:state) ? location.state : location[:state]
+      self.zip   = location.respond_to?(:zip)   ? location.zip   : location[:zip] if self.zip.nil?
+    elsif self.is_address_query?
+      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode(self.query)
+    end
+    self
+  end
+  
   def is_address_query?
     self.is_zip? || self.is_city? || self.is_state?
   end
@@ -52,7 +84,7 @@ class Search < ActiveRecord::Base
   @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
   
   def self.is_zip?(q)
-    q.match @@zip_regex
+    q.match @@zip_regex if q
   end
   
   def is_zip?
@@ -60,11 +92,11 @@ class Search < ActiveRecord::Base
   end
   
   def is_city?
-    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) }
+    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) if self.query }
   end
   
   def is_state?
-    self.query.match(/#{@@states_regex}/i)
+    self.query.match(/#{@@states_regex}/i) if self.query
   end
   
   def extrapolate(part)
@@ -91,23 +123,6 @@ class Search < ActiveRecord::Base
       guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
       Geokit::Geocoders::MultiGeocoder.geocode guessed
     end
-  end
-  
-  def location
-    @location ||= GeoKit::GeoLoc.new(self)
-  end
-  
-  def set_location!(location = nil)
-    if location.respond_to?(:lat) || location.is_a?(Hash)
-      self.lat   = location.respond_to?(:lat) ? location.lat : location[:lat]
-      self.lng   = location.respond_to?(:lng) ? location.lng : location[:lng]
-      self.city  = location.respond_to?(:city) ? location.city : location[:city]
-      self.state = location.respond_to?(:state) ? location.state : location[:state]
-      self.zip   = location.respond_to?(:zip) ? location.zip : location[:zip] if self.zip.nil?
-    else
-      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode self.query
-    end
-    self
   end
   
   def title

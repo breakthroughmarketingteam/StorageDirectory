@@ -42,17 +42,13 @@
 		
 		<div id="top_cities">
 			<p><strong>Most Popular Self Storage Cities</strong></p>
-			<ul>
-				<% Map.top_cities.each do |city| %>
-					<li><%= link_to "#{city.name} (#{city.map_count})", search_listings_path(city.state, city.name) %></li>
-				<% end %>
-			</ul>
+			<%= display_top_cities %>
 		</div>
 		
 		<div id="wrapper2">
 			<div class="inner">
 				<div id="footer-menu">
-					<a href="/sitemap.xml">Sitemap</a> - <a href="/storage-info">Self Storage Info</a> - <a href="/add-your-facility">Add Your Facility</a> - <a href="/privacy">Privacy Policy</a> - <a href="/contact">Contact Us</a>
+					<a href="/sitemap.xml">Sitemap</a> - <a href="/storage-info">Self Storage Info</a> - <a href="/add-your-facility">Add Your Facility</a> - <a href="/privacy">Privacy Policy</a> - <a href="/contact-us">Contact Us</a>
 				</div>
 				<div id="copyright">
 					<p>&copy; 2010 USSelfStorageLocator.com All rights reserved.</p>

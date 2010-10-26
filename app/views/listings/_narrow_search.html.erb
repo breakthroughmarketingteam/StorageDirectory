@@ -38,19 +38,19 @@
 				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>
 			
-			<div id="unit_features" class="hide">
-				<p><%= link_to 'Features', { :anchor => 'show_collapseable_unit_features' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+			<div id="unit_features" class="unitfeatures">
+				<p><%= link_to 'Select Features', { :anchor => 'show_collapseable_unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
 				
-				<div class="collapseable">
+				<ul class="collapseable hide">
 					<% @unit_features.each do |feature| %>
-					<div class="selectable_wrap">
+					<li class="selectable_wrap">
 						<div class="selectable">
 							<%= check_box_tag 'search[features]', feature %>
 						</div>
 						<%= label_tag feature %>
-					</div>
+					</li>
 					<% end %>
-				</div>
+				</ul>
 			</div>
 			
 			<div id="sub_submit">
