@@ -5,7 +5,7 @@ namespace :import do
     require 'csv'
     count = 0; errors = ''; result = { :success => false, :message => '' }
   
-    file = "#{RAILS_ROOT}/lib/tasks/#{ARGV[1]}"
+    file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{ARGV[1]}"
     
     puts "Loading file: #{file}."
     read_file = File.read(file)
