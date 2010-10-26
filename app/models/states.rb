@@ -65,4 +65,10 @@ class States
   def self.abbrevs
     @state_abbrevs ||= NAMES.map(&:last).reject(&:nil?)
   end
+  
+  def self.state_abbrev_hash
+    hash = {}
+    NAMES.each { |name| hash.store(name[0], name[1]) }
+    hash
+  end
 end

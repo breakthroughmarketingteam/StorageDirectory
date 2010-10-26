@@ -15,17 +15,23 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage'
     @unit_size_thumbs = SizeIcon.thumb_icons
     @search = Search.new
+    
+    if flash[:search_id]
+      @prev_search = Search.find_by_id flash[:search_id]
+     
+    elsif params[:search]
+      @prev_search = Search.create_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer), session[:geo_location]
       
-    if params[:city] # came from a link
+    else # just use whats in the URL
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
-      
-    elsif params[:search] # came from a form that submitted to searches controller and then redirected here
-      @prev_search = Search.find_by_id session[:search_id]
-      
-    elsif params[:storage_type]
-      # TODO
     end
     
+    if session[:search_id]
+      @old_search = Search.find session[:search_id]
+      @old_search.add_child @prev_search
+    end
+    
+    session[:search_id] = @prev_search.id
     @location = @prev_search.location
     get_map
     @listings = Listing.find_by_location @prev_search
@@ -38,7 +44,7 @@ class ListingsController < ApplicationController
     respond_to do |format|
       format.html
       format.js do # implementing this ajax response for the search results 'Show More Results' button
-        render :json => { :success => !@listings.blank?, :data => prep_hash_for_js(@listings), :maps_data => @maps_data }
+        render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @maps_data }
       end
     end
   end
@@ -147,23 +153,8 @@ class ListingsController < ApplicationController
     end
   end
   
-  def prep_hash_for_js(listings)
-    # include listing's related data
-    listings.map do |listing|
-      res = listing.accepts_reservations?
-      mapped = { 
-        :info     => listing.attributes, 
-        :map      => listing.map.attributes, 
-        :specials => listing.specials, 
-        :sizes    => listing.available_sizes, 
-        :pictures => listing.pictures, 
-        :reviews  => listing.reviews, 
-        :accepts_reservations => res, 
-        :reserve_link_href    => listing.get_partial_link(res ? :reserve : :request_info) 
-      }
-      mapped[:map].merge! :distance => listing.distance_from(@location)
-      mapped
-    end
+  def _get_listing_partials(listings)
+    listings.map { |listing| render_to_string :partial => 'listings/result', :locals => { :result => listing } }
   end
   
 end

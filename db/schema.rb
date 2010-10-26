@@ -428,8 +428,6 @@ ActiveRecord::Schema.define(:version => 20101022204744) do
     t.datetime "updated_at"
   end
 
-  add_index "models_modules", ["model_id", "model_type"], :name => "index_models_modules_on_model_id_and_model_type"
-
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
     t.integer  "model_id"
