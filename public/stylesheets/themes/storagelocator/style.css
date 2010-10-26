@@ -1083,7 +1083,7 @@ form .error p{margin:0 0 7px 0;}
 #topbar ul.dropdown ul li{float:none;}
 #topbar ul.dropdown ul ul{top:1px;left:99%;}
 #topbar ul.dropdown li:hover > ul{visibility:visible;}
-#topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;text-align:left;}
+#topbar ul.dropdown ul{background:#fff;border:1px solid #ccc;border-top:none;text-align:left;}
 #topbar ul.dropdown li a:link,#topbar ul.dropdown li a:visited{float:none;}
 #topbar ul li a:hover,#topbar ul li a:active{background-color:#393;color:#fff !important;}
 #self_storage_li{width:112px;margin-left:15px;}
