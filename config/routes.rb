@@ -25,6 +25,10 @@ ActionController::Routing::Routes.draw do |map|
   map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(washington-dc){0}|(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
   map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
   
+  $_storage_types.each do |type|
+    map.connect "/#{type.parameterize}", :controller => 'listings', :action => 'locator', :storage_type => type
+  end
+  
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   
