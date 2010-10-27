@@ -42,7 +42,7 @@
 		
 		<div id="top_cities">
 			<p><strong>Most Popular Self Storage Cities</strong></p>
-			<%= display_top_cities %>
+			<%= in_mode? 'locator' ? display_top_local_cities : display_top_us_cities %>
 		</div>
 		
 		<div id="wrapper2">

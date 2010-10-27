@@ -522,14 +522,13 @@ module ApplicationHelper
     session[:geolocation][:city] rescue 'Zip Code, City, or Street Address'
   end
   
-  def display_top_cities
-    @top_cities = Map.top_cities
+  def display_top_cities(cities)
     lists = ''
     
     5.times do |i|
       lists << '<ul>'
       
-      @top_cities[i*10, 10].each do |city|
+      cities[i*10, 10].each do |city|
         lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", search_listings_path(city.state, city.name)) +'</li>'
       end
       
