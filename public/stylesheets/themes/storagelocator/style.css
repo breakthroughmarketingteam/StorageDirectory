@@ -411,7 +411,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 #tips-box-bottom{background:url(/images/ui/storagelocator/tips-bottom.png) no-repeat top left;width:164px;height:36px;}
 #tips-box-bottom p a{width:21px;height:20px;display:block;float:left;position:relative;left:98px;top:8px;margin-right:5px;}
 #welcome-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #333;height:47px;line-height:47px;text-align:left;position:relative;left:60px;}
-#admin-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #333;height:47px;line-height:47px;text-align:left;position:relative;left:56px;margin-bottom:10px;}
+#admin-box h2{width:110px;color:#fff;text-shadow:1px 1px 0 #666;;height:47px;line-height:47px;text-align:left;position:relative;left:56px;margin-bottom:10px;}
 #tips-box h2{width:110px;color:#fff;text-shadow:1px 1px 2px #333;height:47px;line-height:47px;text-align:left;position:relative;left:60px;margin-bottom:10px;}
 #welcome-box p{margin:15px 10px;font-size:1em;text-align:left;line-height:1.8em;}
 #tips-box p{margin:15px 10px;font-size:100%;text-align:left;line-height:1.5;}
@@ -437,7 +437,7 @@ ul#specials_list {margin:15px 10px;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
 #main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;}
-#sl-header h2,#results_header h2{float:left;line-height:2.4;text-shadow:.5px .5px 0px #333;margin-left:20px;font-size:120%;}
+#sl-header h2,#results_header h2{float:left;line-height:2.4;text-shadow:1px 1px 0px #666;margin-left:20px;font-size:120%;}
 #sl-header h2 span{font-size:1.4em;}
 .city-name-heading{color:#4C4BCC;font-weight:bold;text-shadow:1px 1px #dadada;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:6px;right:17px;text-align:center;}
@@ -626,9 +626,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-top ul#ov-top-list li{display:block;width:200px;float:left;text-align:center;margin-bottom:10px;font-weight:bold;}
 #ov-top ul#ov-top-list li span{color:#33c;}
 #ov-top ul#ov-top-list{width:725px;background:#000;}
-#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;margin-top:20px;margin-bottom:10px;clear:both;width:99.4%;}
-#ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;line-height:41px;position:relative;}
-#ov-units-head{border:1px solid #ccc;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:20px;-moz-border-radius-topleft:20px;-webkit-border-top-left-radius:20px;border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;}
+#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
+#ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
+#ov-units-head{border:1px solid #ccc;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,#ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,#ov-item-head p{float:right;}
 #ov-item-head #client_edit_contact{float:right;margin:6px;}
@@ -691,7 +691,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #reserveonline-box p span{color:#33c;}
 #girl-pic{background:url(/images/ui/storagelocator/girl.png) no-repeat center 70px ;height:435px;width:169px;position:relative;left:15px;margin-bottom:20px;}
 #admin-box ul li{list-style:none;}
-#admin-box ul li a{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat 0 -31px;width:163px;height:31px;line-height:31px;color:#fff;text-shadow:1px 1px 2px #000;text-decoration:none;display:block;margin:5px 0px;cursor:pointer;}
+#admin-box ul li a{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat 0 -31px;width:163px;height:31px;line-height:31px;color:#fff;text-shadow:1px 1px 0 #666;;text-decoration:none;display:block;margin:5px 0px;cursor:pointer;}
 #admin-box ul li a span{position:relative;left:10px;}
 #admin-box ul li a:hover,#admin-box ul li a.active{background:url(/images/ui/storagelocator/admin-facility-btn.png) no-repeat top left;}
 /************************************************** END additions.css *********************************************************/
@@ -942,8 +942,8 @@ img.right{margin:0 0 10px 10px;}
 .listing #listing_map_attributes_zip{width:35px;}
 .listing .listing_advice{padding:10px 0 0 16px;width:110%;}
 #client_listing_box{padding-top:10px;}
-.user_hint{width:99%;border:2px solid #fed747;background:#fff1bb;-moz-border-radius:18px;-webkit-border-radius:18px;border-radius:18px;box-shadow:1px 4px 6px #999;-moz-box-shadow:1px 4px 6px #999;-webkit-box-shadow:1px 4px 6px #999;}
-.user_hint .hint_title_bar{padding:4px 10px 3px 10px;border-bottom:2px solid #FAC325;background:#fed747;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;}
+.user_hint{width:99%;border:2px solid #fed747;background:#fff1bb;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;box-shadow:1px 1px 2px #ccc;-moz-box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;}
+.user_hint .hint_title_bar{padding:4px 10px 3px 10px;background:#fed747;border-radius-topright:6px;-moz-border-radius-topright:6px;-webkit-border-top-right-radius:6px;border-radius-topleft:6px;-moz-border-radius-topleft:6px;-webkit-border-top-left-radius:6px;}
 .user_hint .hint_title{color:#FFF;font-size:100%;font-weight:bold;line-height:1.4;text-shadow:1px 1px 0 #333;}
 .user_hint .hint_content{padding:10px;font-size:80%;line-height:1.2;}
 .hint_title_bar .right{width:6%;}
@@ -1225,9 +1225,9 @@ form .error p{margin:0 0 7px 0;}
 #footer_btm a:hover{color:#fff;}
 
 #h-divider{background:url(/images/ui/storagelocator/dotted-line.png) repeat-x;margin:20px auto;height:2px;width:900px;}
-#affiliates{margin:40px auto 0;width:975px;}
-#affiliates p{margin-left:20px;text-align:left;}
-#affiliates img {margin:10px;}
+#aff-box{margin:40px auto 0;width:975px;}
+#aff-box p{margin-left:20px;text-align:left;}
+#aff-box img {margin:10px;}
 #social-media{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;margin:0 auto;overflow:hidden;margin-top:40px;width:975px;}
 #social-media p{float:left;margin-left:20px;margin-top:26px;width:599px;text-align:left;}
 #social-media a{display:block;float:left;margin:4px;}
