@@ -7,8 +7,11 @@ class AddDefaultLogoValuesToListing < ActiveRecord::Migration
     listings.each do |l|
       x = rand(6)
       l.default_logo = x
-      l.save
-      puts "def logo #{x} for listing #{l.title}"
+      if l.save
+        puts "def logo #{l.default_logo} for listing #{l.title}"
+      else
+        puts l.errors.full_messages * ' '
+      end
     end
   end
 
