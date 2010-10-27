@@ -20,7 +20,7 @@ $(function(){
 	$('.openDiv').openDiv();					 // click a link to open a hidden div near by
 	$.liveSubmit('.search-btn', '.search-button', '.submit_btn'); // make a link act as a submit button
 	$('h4 a', '#info-accordion').accordion(); // my very own accordion widget :)
-	$('.tabular_content').tabular_content(); // a div with a list as the tab nav and hidden divs below it as the tabbed content
+	$('.tabular_content').tabular_content(); // a div that contains divs as the tabbed content, the tab list can be anywhere
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
@@ -824,22 +824,26 @@ $.fn.accordion = function() {
 }
 
 $.fn.tabular_content = function() {
+	function what_action(el) {
+		if (el.hasClass('slide')) 	  return ['slideUp', 'slideDown'];
+		else if (el.hasClass('fade')) return ['fadeOut', 'fadeIn'];
+		else 						  return ['hide', 'show'];
+	}
+	
 	return this.each(function(){
 		var $this = $(this), // the container
 			tabs = $('.tabular'), // ul
-			panels = $('.tab_content', $this); // tab content divs
+			panels = $('.tab_content', $this), // tab content divs
+			action = what_action($this);
 		
 		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
 				
 		$('a', tabs).click(function(){
-			$('li', tabs).removeClass('active')
-			clicked_tab = $(this);
-			clicked_tab.parent().addClass('active');
-			
-			panels.hide().removeClass('active');
-			$('#'+ clicked_tab.attr('rel'), $this).show().addClass('active');
-			
+			panels[action[0]]('slow').removeClass('active');
+			$('li', tabs).removeClass('active');
+			$(this).addClass('active');
+			$('#'+ $(this).attr('rel'), $this)[action[1]]('slow').addClass('active');
 			return false;
 		});
 	});

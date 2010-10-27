@@ -15,9 +15,9 @@
 			</div>
 		
 			<% if model.has_extra_options? %>
-			<div class="uncollapse stack">
-		    <%= render :partial => "shared/extra_model_options", :locals => { :f => f, :model => model } %>
-			</div>
+				<div class="uncollapse stack">
+			    	<%= render :partial => "shared/extra_model_options", :locals => { :f => f, :model => model } %>
+				</div>
 			<% end %>
 		
 			<div class="uncollapse stack">

@@ -1,6 +1,6 @@
 <fieldset class="ExtraOptions">
   <legend>
-  <%= link_to 'Extra Options', { :anchor => "#{model.is_using_extra_options? ? 'slideUp' : 'slideDown'}_collapseable_ExtraOptions" }, :class => 'toggle_action toggle_right toggle_down' %>
+  	<%= link_to 'Extra Options', { :anchor => "#{model.is_using_extra_options? ? 'slideUp' : 'slideDown'}_collapseable_ExtraOptions" }, :class => 'toggle_action toggle_right toggle_down' %>
   </legend>
 
   <div class="collapseable uncollapse framed round odd<%= ' hide' unless model.is_using_extra_options? %>">
