@@ -36,19 +36,28 @@
 				<strong>Share This Site</strong> - We’ll be coming out with awesome specials through our social and business network pages.
 			</p>
 			<div id="icons">
-				<a href="http://www.facebook.com"><img src="/files/content/socialmedia/facebook.png" alt="Follow us on Facebook"></a> <a href="http://www.twitter.com"><img src="/files/content/socialmedia/twitter.png" alt="Follow us on Twitter"></a> <a href="http://www.digg.com"><img src="/files/content/socialmedia/digg.png" alt="Share us on Digg"></a> <a href="http://www.usselfstoragelocator.com/rss"><img src="/files/content/socialmedia/rss.png" alt="USSelfStorageLocator.com RSS Feed"></a> <a href="http://www.linkedin.com"><img src="/files/content/socialmedia/linkedin.png" alt="Follow us on Linkedin"></a> <a href="http://www.stumbleupon.com"><img src="/files/content/socialmedia/stumbleupon.png" alt="Share us on Stumbleupon"></a>
+				<a href="http://www.facebook.com"><img src="/files/content/socialmedia/facebook.png" alt="Follow us on Facebook"></a> 
+				<a href="http://www.twitter.com"><img src="/files/content/socialmedia/twitter.png" alt="Follow us on Twitter"></a> 
+				<a href="http://www.digg.com"><img src="/files/content/socialmedia/digg.png" alt="Share us on Digg"></a> 
+				<a href="http://www.usselfstoragelocator.com/rss"><img src="/files/content/socialmedia/rss.png" alt="USSelfStorageLocator.com RSS Feed"></a> 
+				<a href="http://www.linkedin.com"><img src="/files/content/socialmedia/linkedin.png" alt="Follow us on Linkedin"></a> 
+				<a href="http://www.stumbleupon.com"><img src="/files/content/socialmedia/stumbleupon.png" alt="Share us on Stumbleupon"></a>
 			</div>
 		</div>
 		
 		<div id="top_cities">
-			<p><strong>Most Popular Self Storage Cities</strong></p>
-			<%= in_mode? 'locator' ? display_top_local_cities : display_top_us_cities %>
+			<p><strong>Most Popular Self Storage Cities <%= "in #{States.name_of @prev_search.state}" if in_mode? 'locator' %></strong></p>
+			<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@prev_search.state) : Map.top_cities %>
 		</div>
 		
 		<div id="wrapper2">
 			<div class="inner">
 				<div id="footer-menu">
-					<a href="/sitemap.xml">Sitemap</a> - <a href="/storage-info">Self Storage Info</a> - <a href="/add-your-facility">Add Your Facility</a> - <a href="/privacy">Privacy Policy</a> - <a href="/contact-us">Contact Us</a>
+					<a href="/sitemap.xml">Sitemap</a> - 
+					<a href="/storage-info">Self Storage Info</a> - 
+					<a href="/add-your-facility">Add Your Facility</a> - 
+					<a href="/privacy">Privacy Policy</a> - 
+					<a href="/contact-us">Contact Us</a>
 				</div>
 				<div id="copyright">
 					<p>&copy; 2010 USSelfStorageLocator.com All rights reserved.</p>
