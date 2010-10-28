@@ -410,14 +410,14 @@ p.foot-text{margin:40px;font-weight:bold;}
 #add-fac-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;margin:-1px 0 30px;}
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;text-align:left;margin:0 0 20px 5px;}
-#tips-box{background:url(/images/ui/storagelocator/lightbulb-head.png) no-repeat top left;width:164px;position:relative;color:#555;text-align:center;margin:5px 0 0 5px;min-height:300px;}
-#tips-box-bottom{background:url(/images/ui/storagelocator/tips-bottom.png) no-repeat top left;bottom:0;width:164px;height:36px;position:absolute;}
+#tips-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat left top;color:#555;margin:5px 0 0 5px;min-height:220px;padding-bottom:25px;position:relative;text-align:center;}
+#tips-box-bottom{background:url(/images/ui/storagelocator/red-box-b.png) no-repeat left top ;bottom:0;height:22px;position:absolute;width:175px;}
 #tips-box-bottom p a{width:21px;height:20px;display:block;float:left;position:relative;left:98px;top:8px;margin-right:5px;}
 #welcome-box h2{width:110px;color:#fff;text-shadow:1px 1px 0px #666;height:47px;line-height:47px;text-align:left;position:relative;left:60px;}
-#admin-box h2{width:110px;color:#fff;text-shadow:1px 1px 0 #666;;height:47px;line-height:47px;text-align:left;position:relative;margin:0 0 10px 10px;}
-#tips-box h2{width:110px;color:#fff;text-shadow:1px 1px 0px #666;height:47px;line-height:47px;text-align:left;position:relative;left:60px;margin-bottom:10px;}
+#admin-box h2{background:url(/images/ui/storagelocator/money.png) no-repeat 0 7px;color:#fff;height:47px;line-height:56px;margin:0 0 10px;padding-left:64px;position:relative;text-align:left;text-shadow:1px 1px 0 #666;}
+#tips-box h2{background:url(/images/ui/storagelocator/bulb.png) no-repeat 1px -4px;color:#fff;height:30px;padding:19px 0 0 60px;position:relative;text-align:left;text-shadow:1px 1px 0 #666;}
 #welcome-box p{margin:15px 10px;font-size:1em;text-align:left;line-height:1.8em;}
-#tips-box p{font-size:12px;line-height:18px;margin:15px 10px;text-align:left;}
+#tips-box p{font-size:12px;line-height:18px;margin:15px 10px;text-align:left;width:155px;}
 #sl-fac-dist p span#rslt-number{border:1px solid #aaa;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;color:#3333CB;margin:2px;}
 li.rslt-offer{float:left;list-style:none;display:inline;margin-left:20px;}
 li.rslt-offer{width:120px;}
@@ -431,7 +431,7 @@ ul#specials_list {margin:15px 10px;}
 #media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
-#type-three-r-col-in{width:745px;float:right;margin:13px 12px 0 0;}
+#type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #sl-header,#ov-header,#results_header{background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x top left;height:47px;line-height:1.6;overflow:hidden;margin-bottom:10px;border:1px solid #999;color:#fff;border-radius-topleft:15px;-moz-border-radius-topleft:15px;-webkit-border-top-left-radius:15px;border-radius-topright:15px;-moz-border-radius-topright:15px;-webkit-border-top-right-radius:15px;}
 #results_header{margin-top:13px;width:97.5%;}
@@ -633,7 +633,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header ul{}
 #ov-units,#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
 #ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
-#ov-units-head{border:1px solid #ccc;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
+#ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,#ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,#ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
 #ov-item-head #add_fac,#ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
@@ -647,8 +647,13 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
+<<<<<<< HEAD
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
+=======
+#ov-units #rslt-list-bg{position:relative;left:0px;border:1px solid #ccc;border-top:0 none;overflow:hidden;}
+#ov-units #rslt-list-bg .listing .inner{border-top:none;position:relative;}
+>>>>>>> 092de4c853f50c14bd51c9535d37cd940da1910c
 #ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
@@ -688,11 +693,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .issn_enable_opts .error{position:static;}
 form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Ending the overview page styles here */
-#greenspace-box{color:#555;text-align:center;margin-bottom:20px;}
-#greenspace-box-in{width:165px;background:url(/images/ui/storagelocator/recycle-logo.png) no-repeat bottom right;margin-left:5px;position:relative;top:17px;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
-#greenspace-box h2{background:url(/images/ui/storagelocator/green-space-head.png) no-repeat 2px center;width:163px;color:#fff;text-shadow:1px 1px 0px #666;height:47px;line-height:51px;border-radius-topleft:10px;-moz-border-radius-topleft:10px;-webkit-border-top-left-radius:10px;text-align:center;}
-#greenspace-box p{margin:15px;font-size:120%;text-align:left;line-height:1.4;}
-#greenspace-box p a.blue-info{background:url(/images/ui/storagelocator/blue-more-info.png) no-repeat top left;width:66%;height:32px;display:block;text-align:center;line-height:2;text-decoration:none;color:#fff;font-weight:bold;margin-top:70px;font-size:80%;}
+#greenspace-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat 0 0;margin:20px 0 0 4px;padding-bottom:25px;position:relative;}
+#greenspace-box h2{background:url(/images/ui/storagelocator/recycle.png) no-repeat 4px 3px;color:#fff;height:32px;padding:19px 0 0 60px;text-shadow:1px 1px 0 #666;}
+#greenspace-box p{font-size:12px;line-height:18px;margin:15px 10px;text-align:left;width:155px;}
+#greenspace-box a.blue-info{background:url(/images/ui/storagelocator/red-box-b.png) no-repeat left top;bottom:0;color:#fff;height:18px;padding-top:4px;position:absolute;text-align:center;text-shadow:1px 1px 0 #666;width:175px;}
+#greenspace-box a.blue-info:hover{text-shadow:-1px -1px 0 #666}
 #greenspace-box p span{color:#33c;}
 #reserveonline-box{width:197px;color:#555;text-align:center;margin-bottom:20px;}
 #reserveonline-box-in{width:165px;background:url(/images/ui/storagelocator/reserveonline-box-bg.png) no-repeat top center;position:relative;left:20px;top:17px;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -1302,4 +1307,14 @@ form .note{clear:both;display:block;font-size:80%;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
+<<<<<<< HEAD
 #hint-arrow{background:url(/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
+=======
+
+#hint-arrow{background:url(/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
+
+#tips-box-bottom #prev_tip{background:url(/images/ui/storagelocator/prev-tip.png) no-repeat 10px 4px;display:block;float:left;height:22px;width:30px;}
+#tips-box-bottom #next_tip{background:url(/images/ui/storagelocator/next-tip.png) no-repeat 3px 4px;display:block;float:right;height:22px;width:30px;}
+#tips-box-bottom #prev_tip:hover{background:url(/images/ui/storagelocator/prev-tip-hover.png) no-repeat 10px 4px;}
+#tips-box-bottom #next_tip:hover{background:url(/images/ui/storagelocator/next-tip-hover.png) no-repeat 3px 4px;}
+>>>>>>> 092de4c853f50c14bd51c9535d37cd940da1910c
