@@ -735,8 +735,26 @@ $(document).ready(function() {
 			input.after('<a class="submit_btn" href="#">Save</a>');
 		});
 		
-		$('#client_settings').submit(function(){
-			
+		$('#client_edit_settings').click(function(){
+			var $this = $(this),
+				form = $('.edit_client', '#ov-settings-cnt').runValidation(),
+				ajax_loader = $('.ajax_loader', $this.parent());
+				
+			if (form.data('valid') && !form.data('saving')) {
+				form.data('saving', true);
+				$this.text('Updating');
+				ajax_loader.show();
+				
+				$.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						$('#ov-settings-cnt', '#ov-settings').replaceWith(data);
+					});
+					
+					form.data('saving', false);
+					$this.text('Update');
+					ajax_loader.hide();
+				});
+			}
 		});
 		
 		$('.attribute_save').live('click', function() {

@@ -56,14 +56,17 @@ class ClientsController < ApplicationController
   
   def update
     respond_to do |format|
-      if @client.update_info(params[:client])
+      if @client.update_info params[:client]
+        # upsets is a hidden field set to true in the settings partial
+        partial = params[:upsets] ? 'settings' : 'owner_info'
+        
         format.html do
-          flash[:notice] = 'Info updated successfully'
+          flash[:notice] = "#{partial.titleize} updated successfully"
           redirect_to :action => 'edit'
         end
         
         format.js do
-          render :json => { :success => true, :data => render_to_string(:partial => 'owner_info', :locals => { :client => @client }) }
+          render :json => { :success => true, :data => render_to_string(:partial => partial) }
         end
         
       else

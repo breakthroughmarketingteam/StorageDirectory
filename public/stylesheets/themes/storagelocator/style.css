@@ -259,7 +259,7 @@ li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocato
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .listing ul li.action_btn{float:right;font-size:120%;height:50px;line-height:3.1;margin:27px 10px 0 0;position:relative;text-shadow:1px 1px 0 #666;width:91px;}
 .listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
-.listing ul li.action_btn a.cancel_link,.listing ul li.action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:5px;top:43px;}
+.listing ul li.action_btn a.cancel_link,.listing ul li.action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:0;top:17px;}
 .listing ul li.reserve{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;}
 .listing ul li.reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) no-repeat center;}
 .listing ul li.hold_unit{background:url(/images/ui/storagelocator/reserve-btn.png) no-repeat center;}
@@ -476,13 +476,13 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in-edit,#sl-fac-detail-in-edit{height:152px;padding:10px 12px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
-.dlogo_wrap{height:72px;position:relative;}
+.dlogo_wrap{width:164px;height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;}
 .dlogo_wrap .default_logo{position:absolute;z-index:1;top:0;left:0;}
-.dlogo_wrap a{position:relative;z-index:2;color:#fff;font-weight:bold;font-size:100%;text-shadow:1px 1px 1px #333;line-height:1.5;}
-.dlogo_wrap .w{color:#393;text-shadow:1px 1px 1px #fff;}
-.dlogo_wrap .short{padding:0 5px 0;display:block;}
-.listing .dlogo_wrap{width:94%;height:72px;}
-.listing .dlogo_wrap span{}
+.dlogo_wrap span{position:relative;z-index:2;color:#fff;font-weight:bold;font-size:140%;text-shadow:1px 1px 1px #333;line-height:1.5;}
+.dlogo_wrap span.w{color:#393;text-shadow:1px 1px 1px #fff;}
+.dlogo_wrap span.short{padding:0 5px 0;display:block;}
+.listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;}
+.listing .dlogo_wrap span{font-size:90%;line-height:1.4;width:90%;top:7px;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist,#ls_top .sl-dist{color:#33c;font-size:120%;}
 #sl-fac-detail-in-edit #listing_img{width:35%;float:left;margin-right:12px;}
@@ -631,12 +631,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header ul li{display:block;float:right;margin:14px 18px 0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
 #ov-header ul{}
-#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
+#ov-units,#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
 #ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
 #ov-units-head{border:1px solid #ccc;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,#ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,#ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
-#ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
+#ov-item-head #add_fac,#ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
 #ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
 #ov-info h3{overflow:hidden;width:82%;}
@@ -647,7 +647,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
-#ov-units #rslt-list-bg{position:relative;left:0px;border:1px solid #ccc;border-top:0 none;overflow:hidden;}
+#ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
@@ -666,7 +666,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-settings p{margin:10px;}
 #ov-settings-cnt table{width:100%;}
 #ov-settings-cnt table th{vertical-align:top;}
-#ov-settings-cnt table #listing_description textarea{font-size:80%;font-family:Arial, sans-serif;height:100px;margin:10px;padding:5px 7px;width:93%;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+#ov-settings-cnt table #listing_description textarea{font-size:80%;height:100px;margin:10px;width:93%;}
+#ov-settings-cnt input.text{width:96.9%;margin-bottom:3px;}
+#ov-settings-cnt textarea,#ov-settings-cnt input.text{font-family:Arial, sans-serif;padding:5px 7px;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
 #ov-services-cnt{line-height:1.3;padding:15px 20px;overflow:hidden;}
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
 #enable_issn{text-decoration:underline;}
@@ -876,11 +878,10 @@ img.right{margin:0 0 10px 10px;}
 /* create client */
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
-#ov-units #rslt-list-bg {width:99.4%;top:-10px;}
 #ov-units .listing .crud_btn{width:145px;}
 #ov-reports-cnt{padding:10px 9px;overflow:hidden;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
-#ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;}
+#ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;border:1px solid #ccc;}
 #ov-page-cnt #ov-top{margin:18px 0 10px;overflow:hidden;}
 #ov-page-cnt #ov-info{padding-bottom:18px;overflow:hidden;position:relative;}
 #cancel_btn{position:absolute;bottom:10px;right:20px;color:#999;}
@@ -936,7 +937,7 @@ img.right{margin:0 0 10px 10px;}
 #sl-fac-detail-in-edit input.tag_list{margin-bottom:0;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
-#ov-units-head #add_fac{float:right;height:24px;margin:8px 40px 0 0;padding:1px;width:79px;}
+/*#ov-units-head #add_fac{float:right;height:24px;margin:8px 19px 0 0;padding:1px;width:79px;}*/
 .btn{font-weight:bold;display:block;width:84px;height:32px;color:#fff;text-shadow:1px 1px 0px #666;line-height:1.8;text-align:center;background:url("/images/ui/storagelocator/sl-table-reserve.png") no-repeat;}
 .my_account .flash{width:96%;}
 #client_listing_picker{padding:0 3px 0 0;}
@@ -948,8 +949,7 @@ img.right{margin:0 0 10px 10px;}
 #ov-units .listing .rslt-contact p #listing_map_attributes_city{width:39%;}
 .listing #listing_map_attributes_state{margin-right:4px;}
 .listing #listing_map_attributes_zip{width:35px;}
-.listing .listing_advice{padding:10px 0 0 16px;width:110%;}
-#client_listing_box{padding-top:10px;}
+.listing .listing_advice{padding:10px 0 0 16px;width:110%;color:#555;}
 .user_hint{width:99%;border:2px solid #f99;background:#ffc;position:relative;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;box-shadow:2px 2px 5px #ccc;-moz-box-shadow:2px 2px 5px #ccc;-webkit-box-shadow:2px 2px 5px #ccc;}
 .user_hint .hint_title_bar{padding:4px 10px 3px 10px;background:#fc3;border-radius-topright:6px;-moz-border-radius-topright:6px;-webkit-border-top-right-radius:6px;border-radius-topleft:6px;-moz-border-radius-topleft:6px;-webkit-border-top-left-radius:6px;}
 .user_hint .hint_title{color:#333;font-size:100%;font-weight:bold;line-height:1.4;}

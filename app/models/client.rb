@@ -7,8 +7,6 @@ class Client < User
   has_one :listing_description
   accepts_nested_attributes_for :settings, :listing_description
   
-  attr_reader :upsets # hidden field to trigger settings update from the edit form
-  
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'

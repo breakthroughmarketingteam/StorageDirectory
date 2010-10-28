@@ -534,4 +534,17 @@ module ApplicationHelper
     lists
   end
   
+  def greeting
+    time = Time.now
+    if time.hour < 12
+      "Good morning"
+    elsif time.hour >= 12 && time.hour < 15
+      "Hello" 
+    elsif time.hour >= 15 && time.hour < 18
+      "Good afternoon"
+    else
+      "Good evening"
+    end
+  end
+  
 end

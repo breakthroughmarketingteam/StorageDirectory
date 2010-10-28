@@ -43,7 +43,7 @@ img.right{margin:0 7px 7px 0;}
 .uncollapse{overflow:hidden;}
 .hide{display:none;}
 .hhh{position:absolute;top:-99999px;}
-.note{font-size:12px;font-style:italic;}
+.note{font-size:12px;font-style:italic;color:#999;}
 .toggle,.note{font-size:12px;}
 .mtop7{margin-top:7px;}
 .mleft10{margin-left:10px;}

@@ -1,0 +1,45 @@
+<div id="ov-settings-cnt" class="framed">  	
+	<% form_for @client, :id => 'client_settings' do |f| %>
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<th title="Setup where and when to send reports"><p>Email reports: </p></th>
+				<td id="email_reports_settings">
+					<% f.fields_for :settings, @settings do |s| %>
+						<p>
+							<%= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
+							<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
+						</p>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
+				<td id="user_hint_toggles">
+					<p><%= radio_button_tag 'user_hints', 'open' %> Show</p>
+					<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
+				</td>
+			</tr>
+			<% f.fields_for :listing_description, @listing_description do |lf| %>
+				<tr>
+					<th title="Show this description on all your facilities pages"><p>Global description: </p></th>
+					<td id="listing_description">
+						<%= lf.text_area :description, :class => 'hintable', :title => 'Draw your customers in with a personable introduction to your company. Whatever you write in here will appear on your facilities\' pages. You can also edit this description for each individual facility by going to its Manage page above.' %>
+					</td>
+				</tr>
+				<tr>
+					<th><p>Apply description to:</p></th>
+					<td>
+						<p>
+							<%= lf.radio_button :show_in, 'all' %><%= lf.label :show_in, 'All Listings' %> 
+							<%= lf.radio_button :show_in, 'only' %><%= lf.label :show_in, 'Only listings with no description' %> 
+							<%= lf.radio_button :show_in, 'none' %><%= lf.label :show_in, 'None' %> 
+						</p>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+		<div class="hide">
+			<%= hidden_field_tag :upsets, true %><%= f.submit %>
+		</div>
+	<% end %>
+</div>
