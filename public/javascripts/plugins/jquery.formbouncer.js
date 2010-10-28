@@ -7,7 +7,7 @@
 
 jQuery.fn.formBouncer = function(){
 	return this.each(function(){
-		jQuery(this).live('submit', function(){
+		jQuery(this).live('submit', function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			

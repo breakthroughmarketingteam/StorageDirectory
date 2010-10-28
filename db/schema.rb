@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101026231741) do
+ActiveRecord::Schema.define(:version => 20101028004048) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -357,6 +357,15 @@ ActiveRecord::Schema.define(:version => 20101026231741) do
     t.datetime "updated_at"
   end
 
+  create_table "listing_descriptions", :force => true do |t|
+    t.text     "description"
+    t.string   "show_in"
+    t.integer  "client_id"
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "listings", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -409,14 +418,6 @@ ActiveRecord::Schema.define(:version => 20101026231741) do
   end
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
-
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"

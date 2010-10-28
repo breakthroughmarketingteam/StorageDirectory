@@ -64,11 +64,11 @@ class Listing < ActiveRecord::Base
   end
   
   def web_special
-    self.web_specials.first
+    self.web_specials.last
   end
   
   def special
-    self.specials.first
+    self.specials.last
   end
   
   def get_partial_link(name)

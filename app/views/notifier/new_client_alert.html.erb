@@ -1,0 +1,12 @@
+Client: <%= @client.attributes.inspect %>
+
+Account Page: <%= edit_client_path client %>
+
+Listings: 
+<% @client.listings.each do |listing| %>
+	<%= listing.attributes.inspect %>
+	
+	Map:
+	<%= listing.map.attributes.inspect %>
+	
+<% end %>

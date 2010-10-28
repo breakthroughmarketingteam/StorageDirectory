@@ -70,7 +70,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :clients, :member => { :test_issn => :post } do |clients|
-    clients.resources :listings
+    clients.resources :listings, :member => { :disable => :post }
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'
   end

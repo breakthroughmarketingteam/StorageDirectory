@@ -18,8 +18,14 @@
 			<%= listing.display_special %>
 		<% end %>
       </li>
-      <li class="action_btn crud_btn">
-        <%= link_to "#{listing.new_record? ? 'Save' : 'Edit'}", (listing.new_record? ? '' : (current_user.has_role?('admin') ? edit_listing_path(listing) : client_listing_path(listing))) %>
+      <li class="action_btn">
+		<% if listing.new_record? %>
+			<%= link_to 'Save', listings_path, :class => 'crud_btn' %>
+			<%= link_to 'Cancel', '#', :class => 'iconOnly16 cancel_link right', :title => 'Cancel adding a new facility' %>
+		<% else %>
+			<%= link_to 'Manage', (current_user.has_role?('admin') ? edit_listing_path(listing) : client_listing_path(listing)), :class => 'crud_btn' %>
+			<%= link_to 'Delete', listing_path(listing), :class => 'iconOnly16 delete_link right', :title => 'Delete this facility' %>
+		<% end %>
       </li>
     </ul>
   </div>

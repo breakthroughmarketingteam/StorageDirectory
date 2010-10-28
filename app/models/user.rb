@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   
   has_many :posts
   has_many :images
-  has_one  :profile_image, :class_name => 'Image', :order => 'id'
+  has_one  :profile_image, :class_name => 'Image'
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
   has_many :mailing_addresses

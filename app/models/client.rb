@@ -4,7 +4,8 @@ class Client < User
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
-  accepts_nested_attributes_for :settings
+  has_one :listing_description
+  accepts_nested_attributes_for :settings, :listing_description
   
   attr_reader :upsets # hidden field to trigger settings update from the edit form
   
@@ -14,12 +15,16 @@ class Client < User
   end
 
   def active_mailing_address
-    self.mailing_addresses.first
+    self.mailing_addresses.last
   end
   
   def active_billing_info
-    self.billing_infos.first
+    self.billing_infos.last
   end
+  
+  #def listing_description
+    #self.listing_descriptions.find :last, :conditions => { :listing_id => nil }
+  #end
   
   def has_mailing_address?
     !active_mailing_address.nil?
@@ -32,17 +37,35 @@ class Client < User
   def update_info(info)
     if info[:mailing_address]
       mailing_address = self.active_mailing_address || self.mailing_addresses.build
-      mailing_address.update_attributes(info[:mailing_address])
+      mailing_address.update_attributes info[:mailing_address]
     end
     
     if info[:billing_info]
       billing_info = self.active_billing_info || self.billing_infos.build
-      billing_info.update_attributes(info[:billing_info])
+      billing_info.update_attributes info[:billing_info]
     end
     
     if info[:settings]
       self.update_attributes info
     end
+    
+    if self.save && ((defined?(billing_info) && billing_info.valid?) || (defined?(mailing_address) && mailing_address.valid?))
+      true
+    else
+      if defined?(billing_info) && !billing_info.valid?
+        errors = billing_info.errors.full_messages.map
+      elsif defined?(mailing_address) && !mailing_address.valid?
+        errors = mailing_address.errors.full_messages.map
+      else
+        errors = self.errors.full_messages.map
+      end
+      self.errors.add_to_base errors
+      false
+    end
+  end
+  
+  def enable_listings!
+    self.listings.each { |listing| listing.update_attributes :enabled => true }
   end
   
   # a simple listing search for the add your facility page
@@ -52,6 +75,10 @@ class Client < User
   
   def issn_enabled?
     self.listings.any? &:issn_enabled?
+  end
+  
+  def call_tracking_enabled?
+    false
   end
   
   def issn_enabled_listings

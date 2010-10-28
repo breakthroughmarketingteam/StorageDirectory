@@ -1,4 +1,4 @@
-<% form_for @search do |f| %>
+<% form_for @search, :html => { :class => 'silent' } do |f| %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
 		<%= f.text_field :query, :class => 'hintable autocomplete required focus_onload', :title => location_guess, :rel => 'UsCity_namesNstate|4' %>
@@ -37,7 +37,7 @@
 					</div>
 
 					<div id="loc_btn">
-						<%= f.submit 'Locate', :class => 'grn_btn' %>
+						<%= f.submit 'Locate', :id => 'search_submit2', :class => 'grn_btn' %>
 					</div>
 				</div>
 

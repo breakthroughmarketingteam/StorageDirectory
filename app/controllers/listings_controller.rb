@@ -1,8 +1,8 @@
 class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit]
-  before_filter :get_client, :only => :edit
+  before_filter :get_model, :only => [:show, :edit, :disable]
+  before_filter :get_client, :only => [:edit, :disable]
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
@@ -97,6 +97,7 @@ class ListingsController < ApplicationController
     @listing = current_user.listings.find(params[:id])
     case params[:from]
     when 'quick_create'
+      @listing.update_attribute :enabled => true
       @map = @listing.map
       
       if @map.update_attributes params[:listing][:map_attributes]
@@ -121,6 +122,15 @@ class ListingsController < ApplicationController
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
+    end
+  end
+  
+  def disable
+    if is_admin? || @client.listings.any? { |l| l.id == @listing.id }
+      @listing.update_attributes :enabled => false, :status => 'disabled'
+      render :json => { :success => true }
+    else
+      render :json => { :success => false, :data => "Sorry, not allowed." }
     end
   end
   
