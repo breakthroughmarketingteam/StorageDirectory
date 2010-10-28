@@ -28,7 +28,9 @@ config.action_view.cache_template_loading            = true
 # config.threadsafe!
 
 # key for storagelocator.heroku.com
-GOOGLE_APPLICATION_ID = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BRr_2tWjaRtZSAUCEDqSPiw8R7KmxSDLwHhFSM8wxLOt_2aL5uhHL0hyw'
+#GOOGLE_APPLICATION_ID = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BRr_2tWjaRtZSAUCEDqSPiw8R7KmxSDLwHhFSM8wxLOt_2aL5uhHL0hyw'
+# key for usselfstoragelocator.com
+GOOGLE_APPLICATION_ID = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BTE80FJOyH0zSjklzaO53DwmhIGKBRKU-jRd2cnKjEC9l0Jasfmrz4oRQ'
 
 # for heroku
 #config.cache_store = :mem_cache_store, Memcached::Rails.new
