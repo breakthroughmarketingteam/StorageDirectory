@@ -647,13 +647,8 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
-<<<<<<< HEAD
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
-=======
-#ov-units #rslt-list-bg{position:relative;left:0px;border:1px solid #ccc;border-top:0 none;overflow:hidden;}
-#ov-units #rslt-list-bg .listing .inner{border-top:none;position:relative;}
->>>>>>> 092de4c853f50c14bd51c9535d37cd940da1910c
 #ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
@@ -1307,14 +1302,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
-<<<<<<< HEAD
-#hint-arrow{background:url(/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
-=======
-
 #hint-arrow{background:url(/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
 
 #tips-box-bottom #prev_tip{background:url(/images/ui/storagelocator/prev-tip.png) no-repeat 10px 4px;display:block;float:left;height:22px;width:30px;}
 #tips-box-bottom #next_tip{background:url(/images/ui/storagelocator/next-tip.png) no-repeat 3px 4px;display:block;float:right;height:22px;width:30px;}
 #tips-box-bottom #prev_tip:hover{background:url(/images/ui/storagelocator/prev-tip-hover.png) no-repeat 10px 4px;}
 #tips-box-bottom #next_tip:hover{background:url(/images/ui/storagelocator/next-tip-hover.png) no-repeat 3px 4px;}
->>>>>>> 092de4c853f50c14bd51c9535d37cd940da1910c
