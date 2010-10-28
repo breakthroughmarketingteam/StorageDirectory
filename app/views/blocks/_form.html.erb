@@ -62,39 +62,3 @@
 <%= render :partial => 'shared/assoc_form',
 	:locals => { :model => @block, :model_field => f, :fields_title => 'Views', :enabled_models => @block.views,
 	:disabled_models => reject_views_enabled_on_this(@block, @views) } %>
-
-<fieldset class="WidgetFields subfields">
-	<legend>
-		<%= link_to 'Widgets', { :anchor => 'show_collapseable_WidgetFields' }, :class => 'toggle_action toggle_right', :title => 'Open the widgets form' %>
-	</legend>
-	
-	<% unless @widgets.blank? %>
-	
-		<div class="field_wrap collapseable hide">
-			<div class="buttons">
-				<%= link_to 'New Widget', new_widget_path(return_here_and('slideDown_collapseable_WidgetFields')), :class => 'small_option_link' %>
-			</div>
-			
-			<% @widgets.each do |widget| %>
-				<div class="row_checkable <%= cycle('odd', 'even') %>">
-					
-					<% f.fields_for :block_widget, block_widget_object(widget) do |bw_field| %>
-						<div class="left">
-							<%= bw_field.check_box :widget_id %>
-						</div>
-
-						<div class="left">
-							<p class="title"><%=h widget.title %></p>
-						</div>
-
-						<div class="text-right buttons">
-							<a>buttons</a>
-						</div>
-					<% end %>
-
-				</div>
-			<% end %>
-		</div>
-		
-	<% end %>
-</fieldset>

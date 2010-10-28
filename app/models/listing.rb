@@ -2,6 +2,9 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
+  # contact info from the csv file, internal use only
+  has_one :contact, :class_name => 'ListingContact'
+  
   has_one  :map, :dependent => :destroy
   accepts_nested_attributes_for :map
   

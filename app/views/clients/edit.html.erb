@@ -9,27 +9,33 @@
 <div id="type-one-r-col">
   <div id="type-three-r-col-in">
     
-    <div id="sl-header">
-      <h2>Account Overview</h2>
-    </div>
-    
-    <div id="ov-page-cnt">
-
-      <div id="ov-top">
-        <ul id="ov-top-list">
-			<li><%= @client.name %></li>
+    <div id="ov-header">
+      	<h2>Account Overview</h2>
+		<ul>
           	<li>Account #: <span id="client_id"><%= @client.id %></span></li>
           	<li>
 				Number of listings: <span id="listings_size"><%= @client.listings.size %></span>
 				<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
 		  	</li>
         </ul>
+    </div>
+
+	<div id="w-msg">
+		<h3>Welcome <span id="client_name"><%= @client.name %></span>!</h3>
+		<p>Here you can review your customer leads and profile activity reports, as well as add, customize, and review your facility listings. Check out our Help section for more info about setting up your facility listings and how to take advantage of all our facility marketing tools.</p>
+	</div>
+    
+    <div id="ov-page-cnt">
+
+      <div id="ov-top">
+        
       </div>
      
 	<%= render_hints_for :reports %>
       <div id="ov-reports" class="hideable">
         <div id="ov-item-head">
-          <h3><span>Reports</span></h3>
+          	<h3><span>Activity Tracker</span></h3>
+			<p>-&nbsp; Total activity for all your listed facilities.</p>
         </div>
         <div id="ov-reports-cnt" class="Xtabular_content">
 			<!--<ul class="tabular">

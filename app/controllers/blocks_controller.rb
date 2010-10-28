@@ -98,9 +98,8 @@ class BlocksController < ApplicationController
   end
   
   def get_associations
-    @views       = View.all
+    @views = View.all
     @forms = Form.all
-    @widgets     = Widget.all
   end
   
 end

@@ -71,4 +71,20 @@ class States
     NAMES.each { |name| hash.store(name[0], name[1]) }
     hash
   end
+  
+  def self.state_name_hash
+    hash = {}
+    NAMES.each { |name| hash.store(name[1], name[0]) }
+    hash
+  end
+  
+  def self.abbrev_of(name)
+    return name if name.size == 2
+    state_abbrev_hash[name]
+  end
+  
+  def self.name_of(abbrev)
+    return abbrev if abbrev.size > 2
+    state_name_hash[abbrev]
+  end
 end
