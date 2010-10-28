@@ -937,7 +937,7 @@ img.right{margin:0 0 10px 10px;}
 #ov-units-head #address_sort{float:left;}
 #ov-units-head #add_fac{float:right;height:24px;margin:8px 40px 0 0;padding:1px;width:79px;}
 .btn{font-weight:bold;display:block;width:84px;height:32px;color:#fff;text-shadow:1px 1px 0px #666;line-height:1.8;text-align:center;background:url("/images/ui/storagelocator/sl-table-reserve.png") no-repeat;}
-.my_account .flash{margin-left:20px;margin-top:12px;width:93.5%;}
+.my_account .flash{width:96%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
 #ov-units-head .ajax_loader{position:absolute;right:110px;top:14px;}

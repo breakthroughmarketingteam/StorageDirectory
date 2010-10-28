@@ -26,7 +26,7 @@ class SearchesController < ApplicationController
       format.html do
         if @search.save
           if session[:search_id]
-            @prev_search = Search.find_by_id session[:search_id]
+            @prev_search = Search.find session[:search_id]
             @prev_search.add_child @search
           end
           
