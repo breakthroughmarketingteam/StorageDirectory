@@ -4,8 +4,8 @@
 <div id="type-one-r-col">
   <div id="type-three-r-col-in">
     
-    <div id="sl-header">
-      <h2><%= selective_abbrev(@listing.title).titleize %> <%= ' in '+ (@listing.city_and_state * ', ') unless @listing.map.lat.nil? %></h2>
+    <div id="<%= in_mode?('edit') ? 'ov-header' : 'sl-header' %>">
+      <h2><%= selective_abbrev(@listing.title).titleize %> <%= ' in <span class="city-name-heading">'+ (@listing.city_and_state * ', ') + '</span>' unless @listing.map.lat.nil? %></h2>
       
 		<% if in_edit_mode? %>
 			<p class="editing-btn">

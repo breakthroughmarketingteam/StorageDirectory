@@ -165,7 +165,7 @@ class ListingsController < ApplicationController
   		@Gmap.zoom = (@location.nil? ? 16 : 12) # 2 miles
   		@Gmap.markers << GoogleMap::Marker.new(
   		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
-        :html => @listing.nil? ? 'You Are here' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
+        :html => @listing.nil? ? '<p><strong>Searc distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
         :marker_hover_text => @listing.try(:title), :marker_icon_path => '/images/ui/map_marker.png'
       )
     end
