@@ -20,24 +20,27 @@
 				<% end %>
 			</div>
 		</li>
-		<li id="display_features" class="stack">
-			<% unless @facility_features.empty? %>
-			<div class="facility_features">
-				<p class="info_heading">Features</p>
-				<ul class="greylist">
-					<% @facility_features.each do |feature| %>
-						<li><%= feature %></li>
-					<% end %>
-				</ul>
-			</div>
-			<% end %>
-		</li>
-		<li id="display_hours" class="stack">
-			<%= display_listing_hours(@listing) %>
-		</li>
-		<li>
-			<%= claim_listing_link(@listing) %>
-		</li>
+		<% if @listing.premium? %>
+			<li id="display_features" class="stack">
+				<% unless @facility_features.empty? %>
+				<div class="facility_features">
+					<p class="info_heading">Features</p>
+					<ul class="greylist">
+						<% @facility_features.each do |feature| %>
+							<li><%= feature %></li>
+						<% end %>
+					</ul>
+				</div>
+				<% end %>
+			</li>
+			<li id="display_hours" class="stack">
+				<%= display_listing_hours(@listing) %>
+			</li>
+		<% else %>
+			<li>
+				<%= claim_listing_link(@listing) %>
+			</li>
+		<% end %>
 	</ul>
 	
 	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>

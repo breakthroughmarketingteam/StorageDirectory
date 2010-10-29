@@ -15,7 +15,9 @@ module ApplicationHelper
   def declare_content_for # renders blocks in regions based on current page
     return if request.xhr?
     
-    if controller_name == 'listings' && action_name == 'show'
+    if @title
+      title = @title
+    elsif controller_name == 'listings' && [].include?(action_name) == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
       title = "Self Storage in #{@prev_search.city}, #{@prev_search.state}"

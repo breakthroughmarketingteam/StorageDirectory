@@ -1,7 +1,6 @@
 <div id="sl-fac-detail">
   <div id="sl-fac-detail-in-edit" class="attr_editable">
-	<img id="listing_img" src="/images/ui/storagelocator/bobs-logo.gif" alt="" />
-	
+	<%= display_logo @listing, :id => 'listing_img' %>
 	
 	<div class="attr_wrap">
 		<p class="field_group listing_title" rel="listing">
@@ -9,12 +8,23 @@
 		</p>
 		<p class="field_group address" rel="map">
 			<span class="value block" rel="address"><%= @listing.address %></span>
-			<span class="value" rel="city"><%= @listing.city %></span> 
+			<span class="value left" rel="city"><%= @listing.city %></span><span class="left">,&nbsp;</span> 
 			<span class="value" rel="state"><%= @listing.state %></span> 
 			<span class="value" rel="zip"><%= @listing.zip %></span>
 		</p>
 	</div>
 	
-	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } %>
+	<% form_for @listing, :html => { :id => 'listing_logo_form' } do |f| %>
+		<div>
+			<%= f.label :logo, 'New logo' %> 
+			<%= f.file_field :logo, :size => 13, :class => 'text' %>
+			<%= f.submit 'Upload' %>
+			<%= ajax_loader %>
+		</div>
+		
+		<%= link_to 'Or choose a colorful logo', '/listings/logo_choices', :id => 'logo_picker', :class => 'open_small_partial', :title => 'Choose A Colorful Logo' %>
+	<% end %>
+	
+	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @listing.map], :info => 'address' } %>
   </div>
 </div>

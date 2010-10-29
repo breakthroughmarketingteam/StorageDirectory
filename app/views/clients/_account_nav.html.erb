@@ -15,6 +15,9 @@
 				<a href="<%= controller_name == 'clients' ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-services') %>" class="<%= 'selective_hider' if controller_name == 'clients' %>" rel="ov-services"><span>Services</span></a>
 			</li>
 			<li>
+				<a href="<%= controller_name == 'clients' ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-info') %>" class="<%= 'selective_hider' if controller_name == 'clients' %>" rel="ov-info"><span>Billing &amp; Mailing Info</span></a>
+			</li>
+			<li>
 				<a href="<%= controller_name == 'clients' ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-settings') %>" class="<%= 'selective_hider' if controller_name == 'clients' %>" rel="ov-settings"><span>Settings</span></a>
 			</li>
 			<li>
