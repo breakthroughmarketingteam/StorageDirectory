@@ -22,19 +22,15 @@
 	<div id="w-msg">
 		<%= display_message flash %>
 		
-		<h3>Hi <span id="client_name"><%= @client.name %></span></h3>
-		<p>Welcome to your account. Here review your customer leads and activity reports, as well as add, customize, and review your facility listings. Keep track of requests or <%= link_to 'reservations', '#' %>.</p>
+		<h3><%= greeting %> <span id="client_name"><%= @client.name %></span></h3>
+		<%= @client_welcome %>
 	</div>
     
     <div id="ov-page-cnt">
-
-      <div id="ov-top">
-        
-      </div>
-     
+	
 	<%= render_hints_for :reports %>
       <div id="ov-reports" class="hideable">
-        <div id="ov-item-head">
+        <div class="ov-item-head">
           	<h3><span>Activity Tracker</span></h3>
 			<p>-&nbsp; Total activity for all your listed facilities.</p>
         </div>
@@ -46,12 +42,17 @@
 				<li><%= link_to 'All Time', '#', :rel => 'stats_graph' %></li>
 			</ul>-->
 			<div id="stats_graph" class="Xtab_content"></div>
+			<div id="graph_controls">
+				<%= label_tag 'Starting from' %> 
+				<%= select_tag 'months_ago', option_tags([1..24].map(&:to_a).flatten), :class => 'auto_change' %> 
+				months ago.
+			</div>
         </div>
       </div>
 		
 	<%= render_hints_for :facilities %>
       <div id="ov-units" class="hideable">
-		<div id="ov-units-head">
+		<div class="ov-item-head">
 			<h3><span>Facilities</span></h3>
 			<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
 			<%= ajax_loader %>
@@ -70,7 +71,7 @@
 
 	<%= render_hints_for :services %>
       <div id="ov-services" class="hideable">
-        <div id="ov-item-head">
+        <div class="ov-item-head">
           <h3><span>Services</span></h3>
         </div>
         <div id="ov-services-cnt">
@@ -86,71 +87,25 @@
 
 	<%= render_hints_for :owner_info %>
  	  <div id="ov-info" class="instant_form hideable">
-        <div id="ov-item-head">
+        <div class="ov-item-head">
           <h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
 
   	      <%= ajax_loader %>
-          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a></p>
+          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a>
         </div>
 		
-		<%= render :partial => 'owner_info', :locals => { :client => @client } %>
+		<%= render :partial => 'owner_info' %>
       </div>
  
 	<%= render_hints_for :settings %>
       <div id="ov-settings" class="hideable">
-        <div id="ov-item-head">
+        <div class="ov-item-head">
         	<h3><span>Settings</span></h3>
 
-			<%= ajax_loader %>
-	        <a id="client_edit_settings" class="btn" href="#">Update</a></p>
+			<%= ajax_loader 'ajax-loader-facebook.gif', :id => 'sf_loader' %>
+	        <a id="client_edit_settings" class="btn save_btn" context="#ov-settings" loader="#sf_loader" replace="#ov-settings-cnt" href="#">Update</a>
         </div>
-        <div id="ov-settings-cnt" class="framed">
-          	
-			<% form_for @client, :id => 'client_settings' do |f| %>
-				<table cellspacing="0" cellpadding="0">
-					<tr>
-						<th title="Setup where and when to send reports"><p>Email reports: </p></th>
-						<td id="email_reports_settings">
-							<% f.fields_for :settings, @settings do |s| %>
-								<p>
-									<%= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
-									<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>
-								</p>
-							<% end %>
-						</td>
-					</tr>
-					<tr>
-						<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
-						<td id="user_hint_toggles">
-							<p><%= radio_button_tag 'user_hints', 'open' %> Show</p>
-							<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
-						</td>
-					</tr>
-					<% f.fields_for :listing_description, @listing_description do |lf| %>
-						<tr>
-							<th title="Show this description on all your facilities pages"><p>Global description: </p></th>
-							<td id="listing_description">
-								<%= lf.text_area :description, :class => 'hintable', :title => 'Draw your customers in with a personable introduction to your company. Whatever you write in here will appear on your facilities\' pages. You can also edit this description for each individual facility by going to its Manage page above.' %>
-							</td>
-						</tr>
-						<tr>
-							<th><p>Apply description to:</p></th>
-							<td>
-								<p>
-									<%= lf.radio_button :show_in, 'all' %><%= lf.label :show_in, 'None' %> 
-									<%= lf.radio_button :show_in, 'all' %><%= lf.label :show_in, 'All Listings' %> 
-									<%= lf.radio_button :show_in, 'all' %><%= lf.label :show_in, 'Only listings with no description' %>
-								</p>
-							</td>
-						</tr>
-					<% end %>
-				</table>
-				<div class="hide">
-					<%= f.hidden_field :upsets %><%= f.submit %>
-				</div>
-			<% end %>
-			
-        </div>
+        <%= render :partial => 'settings' %>
       </div>
       
       <div id="sl-footer"></div>

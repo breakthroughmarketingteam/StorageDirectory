@@ -735,10 +735,6 @@ $(document).ready(function() {
 			input.after('<a class="submit_btn" href="#">Save</a>');
 		});
 		
-		$('#client_settings').submit(function(){
-			
-		});
-		
 		$('.attribute_save').live('click', function() {
 			var save_btn = $(this),
 				input = $('.inline_save', save_btn.parent());
@@ -1151,17 +1147,27 @@ $(document).ready(function() {
 		init_stats_graph();
 	});
 	
-	function init_stats_graph() {
-		var stats_graph = $('#stats_graph');
+	$('.auto_change', '#ov-reports-cnt').change(function(){
+		$('#stats_graph').children().fadeOut('slow', function() { $(this).remove() });
+		init_stats_graph({ months_ago : this.value, force: true });
+	});
+	
+	function init_stats_graph(options) {
+		if (typeof options == 'undefined') var options = {}
+		var stats_graph = $('#stats_graph'),
+			days_ago = options.days_ago || 0,
+			months_ago = options.months_ago || 1,
+			years_ago = options.years_ago || 0,
+			force = options.force || false;
 		
-		if (stats_graph.length > 0 && stats_graph.children().length == 0) {
+		if (stats_graph.length > 0) {
 			stats_graph.addClass('loading');
 
 			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
 				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
 				d = new Date(), // getMonth returns 0-11
 				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-				start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate()); // month in the past
+				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
 			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
 				$.with_json(response, function(data){
@@ -1187,7 +1193,7 @@ $(document).ready(function() {
 					        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
 					    ],
 						highlighter: { sizeAdjust: 7.5 },
-						cursor: { show: true, zoom: true },
+						cursor: { show: true, zoom: true, followMouse: true, tooltipLocation: 'ne' },
 						grid: { background: '#ffffff' }
 					});
 				});
@@ -1196,7 +1202,7 @@ $(document).ready(function() {
 			});
 		}
 	}
-	init_stats_graph();
+	init_stats_graph({ months_ago : $('select.auto_change', '#ov-reports-cnt').val() });
 	
 	// Client tips block
 	$('.client_tip:not(:first)', '#tips-box').hide();
@@ -1222,8 +1228,34 @@ $(document).ready(function() {
 			return false;
 		});
 	}
+		
+	// TODO: refactor all button events that do ajax calls
+	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content
+	$('.save_btn').click(function(){
+		var $this = $(this),
+			form = $('form', $this.attr('context')).runValidation(), // the context the form is in
+			ajax_loader = $($this.attr('loader')); // the context the ajax_loader is in
+			console.log($this.attr('loader'), ajax_loader)
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			$this.text('Updating');
+			ajax_loader.show();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					$($this.attr('replace'), $this.attr('context')).replaceWith(data);
+				});
+				
+				form.data('saving', false);
+				$this.text('Update');
+				ajax_loader.hide();
+			});
+		}
+		
+		return false;
+	});
 	
-});
+}); // END document ready
 
 // jQuery Plugins
 

@@ -7,8 +7,6 @@ class Client < User
   has_one :listing_description
   accepts_nested_attributes_for :settings, :listing_description
   
-  attr_reader :upsets # hidden field to trigger settings update from the edit form
-  
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'
@@ -34,34 +32,27 @@ class Client < User
     !active_billing_info.nil?
   end
   
-  def update_info(info)
+  def update_info(info) 
+    if info[:settings_attributes]
+      settings = self.settings || self.build_settings(info[:settings_attributes])
+      settings.new_record? ? settings.save : settings.update_attributes(info[:settings_attributes])
+    end
+    
+    if info[:listing_description_attributes]
+      listing_description = self.listing_description || self.build_listing_description(info[:listing_description_attributes])
+      listing_description.new_record? ? listing_description.save : listing_description.update_attributes(info[:listing_description_attributes])
+    end
+
     if info[:mailing_address]
-      mailing_address = self.active_mailing_address || self.mailing_addresses.build
-      mailing_address.update_attributes info[:mailing_address]
+      mailing_address = self.active_mailing_address || self.mailing_addresses.build(info[:mailing_address])
+      mailing_address.new_record? ? mailing_address.save : mailing_address.update_attributes(info[:mailing_address])
     end
-    
+  
     if info[:billing_info]
-      billing_info = self.active_billing_info || self.billing_infos.build
-      billing_info.update_attributes info[:billing_info]
+      billing_info = self.active_billing_info || self.billing_infos.build(info[:billing_info])
+      billing_info.new_record? ? billing_info.save : billing_info.update_attributes(info[:billing_info])
     end
-    
-    if info[:settings]
-      self.update_attributes info
-    end
-    
-    if self.save && ((defined?(billing_info) && billing_info.valid?) || (defined?(mailing_address) && mailing_address.valid?))
-      true
-    else
-      if defined?(billing_info) && !billing_info.valid?
-        errors = billing_info.errors.full_messages.map
-      elsif defined?(mailing_address) && !mailing_address.valid?
-        errors = mailing_address.errors.full_messages.map
-      else
-        errors = self.errors.full_messages.map
-      end
-      self.errors.add_to_base errors
-      false
-    end
+    self.save
   end
   
   def enable_listings!
