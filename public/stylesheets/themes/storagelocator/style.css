@@ -626,12 +626,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-extra p{font-size:12px;margin:10px 0px;line-height:1.8em;}
 #sl-logos{border:1px solid #ccc;float:right;background:#f9f9f9;margin-bottom:15px;}
 /* Starting the overview page styles here */
-#ov-page-cnt{position:relative;left:3px;}
+#ov-page-cnt{position:relative;}
 #ov-header{text-shadow:1px 1px 0 #666;}
 #ov-header ul li{display:block;float:right;margin:14px 18px 0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
 #ov-header ul{}
-#ov-units,#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
+#ov-units,#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;}
 .ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
 #ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,.ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
@@ -663,7 +663,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services ul li a#clicks{background:url(/images/ui/storagelocator/click-logo.png) no-repeat top center;}
 #ov-services ul li a#calls{background:url(/images/ui/storagelocator/calls-logo.png) no-repeat top center;}
 #ov-services ul li a#reservations{background:url(/files/content/issn_networklogo.jpg) no-repeat top center;}
-#ov-settings p{margin:10px;}
+#ov-settings p{float:left;margin:10px;}
 #ov-settings-cnt table{width:100%;}
 #ov-settings-cnt table th{vertical-align:top;}
 #ov-settings-cnt table #listing_description textarea{font-size:80%;height:100px;margin:10px;width:93%;}
@@ -691,8 +691,8 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #greenspace-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat 0 0;margin:20px 0 0 4px;padding-bottom:25px;position:relative;}
 #greenspace-box h2{background:url(/images/ui/storagelocator/recycle.png) no-repeat 4px 3px;color:#fff;height:32px;padding:19px 0 0 60px;text-shadow:1px 1px 0 #666;}
 #greenspace-box p{font-size:12px;line-height:18px;margin:15px 10px;text-align:left;width:155px;}
-#greenspace-box a.blue-info{background:url(/images/ui/storagelocator/red-box-b.png) no-repeat left top;bottom:0;color:#fff;height:18px;padding-top:4px;position:absolute;text-align:center;text-shadow:1px 1px 0 #666;width:175px;}
-#greenspace-box a.blue-info:hover{text-shadow:-1px -1px 0 #666}
+#greenspace-box a#green-info{background:url(/images/ui/storagelocator/red-box-b.png) no-repeat left top;bottom:0;color:#fff;height:18px;padding-top:4px;position:absolute;text-align:center;text-shadow:1px 1px 0 #666;width:175px;}
+#greenspace-box a#green-info:hover{text-shadow:-1px -1px 0 #666}
 #greenspace-box p span{color:#33c;}
 #reserveonline-box{width:197px;color:#555;text-align:center;margin-bottom:20px;}
 #reserveonline-box-in{width:165px;background:url(/images/ui/storagelocator/reserveonline-box-bg.png) no-repeat top center;position:relative;left:20px;top:17px;background-color:#fff;border:1px solid #ccc;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
@@ -952,7 +952,7 @@ img.right{margin:0 0 10px 10px;}
 .user_hint{width:99%;border:2px solid #f99;background:#ffc;position:relative;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;box-shadow:2px 2px 5px #ccc;-moz-box-shadow:2px 2px 5px #ccc;-webkit-box-shadow:2px 2px 5px #ccc;}
 .user_hint .hint_title_bar{padding:4px 10px 3px 10px;background:#fc3;border-radius-topright:6px;-moz-border-radius-topright:6px;-webkit-border-top-right-radius:6px;border-radius-topleft:6px;-moz-border-radius-topleft:6px;-webkit-border-top-left-radius:6px;}
 .user_hint .hint_title{color:#333;font-size:100%;font-weight:bold;line-height:1.4;}
-.user_hint .hint_content{padding:10px;font-size:80%;line-height:1.2;}
+.user_hint .hint_content{padding:10px;font-size:12px;line-height:1.2;}
 .hint_title_bar .right{width:6%;}
 .user_hint .ajax_loader{margin-top:5px;}
 .hint_toggle{background:url(/images/ui/storagelocator/hint_close.png) no-repeat center;display:block;height:24px;text-indent:-99999px;width:24px;margin-right:-5px;float:right;}
@@ -1260,7 +1260,7 @@ form .error p{margin:0 0 7px 0;}
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 .ui-menu .ui-menu-item a{padding:6px 12px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
-.hint_content p{font-size:100%;margin-bottom:5px;}
+.hint_content p{margin-bottom:10px;}
 .darkgreen{color:#393;}
 .dp{position:absolute;left:-99999px;}
 
