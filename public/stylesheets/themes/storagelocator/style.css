@@ -632,11 +632,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
 #ov-header ul{}
 #ov-units,#ov-reports,#ov-info,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;width:99.4%;}
-#ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
+.ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
 #ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
-#ov-units-head h3,#ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
-#ov-units-head p,#ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
-#ov-item-head #add_fac,#ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
+#ov-units-head h3,.ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
+#ov-units-head p,.ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
+.ov-item-head #add_fac,.ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
 #ov-units-head p{background:url(/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
 #ov-info h3{overflow:hidden;width:82%;}
@@ -715,7 +715,6 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #controller_list li a{display:block;padding:5px 7px 5px 12px;font-weight:bold;border-radius:10px 0 0 10px;-moz-border-radius:10px 0 0 10px;-webkit-border-radius:10px 0 0 10px;}
 #controller_list li a:link,#controller_list li a:visited{color:#777;}
 #controller_list li a:hover,#controller_list li a:active,#controller_list li a.active{color:#333;background:#fff;}
-#model_filter_by_tag{margin-top:-15px;}
 #model_filter_by_tag li a{padding:1px 5px;}
 #model_filter_by_tag li a:link,#model_filter_by_tag li a:visited{color:#666;}
 #model_filter_by_tag li a:hover,#model_filter_by_tag li a:active,#model_filter_by_tag li a.active{color:#fff;background:#999;}
@@ -879,7 +878,7 @@ img.right{margin:0 0 10px 10px;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units .listing .crud_btn{width:145px;}
-#ov-reports-cnt{padding:10px 9px;overflow:hidden;}
+#ov-reports-cnt{padding:10px 9px;overflow:hidden;min-height:350px;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
 #ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;border:1px solid #ccc;}
 #ov-page-cnt #ov-top{margin:18px 0 10px;overflow:hidden;}
@@ -915,7 +914,7 @@ img.right{margin:0 0 10px 10px;}
 #listings_controller .st-type input.small_text_field{font-size:100%;}
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
-#ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
+.ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
 .sl-table input.small_num{width:15px;padding:3px;}
 .sl-table .small_text_field{width:80%;float:left;margin-top:7px;}
 #listings_controller .sl-table a.hidden{display:none;position:relative;top:10px;}
@@ -1018,6 +1017,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 .ui-autocomplete-loading{background:url(/images/ui//jquery/south_street/ui-anim_basic_16x16.gif) no-repeat scroll 96% 50% white;}
 #stats_graph{width:700px;height:300px;margin:0 0 0 8px;}
 #stats_graph.loading{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 45%;}
+#graph_controls{color:#555;font-size:80%;padding:20px 0 0 10px;}
 #Reservation .stack{font-size:120%;}
 #top_fac_page{margin:40px 40px 0;overflow:visible;}
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
@@ -1298,7 +1298,7 @@ form .error p{margin:0 0 7px 0;}
 #new_client_message{margin:0 auto;width:950px;}
 form .note{clear:both;display:block;font-size:80%;}
 
-#w-msg{margin:25px;}
+#w-msg{margin:20px;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}

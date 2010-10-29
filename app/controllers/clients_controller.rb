@@ -51,6 +51,8 @@ class ClientsController < ApplicationController
     @settings = @client.settings || @client.build_settings
     @listing_description = @client.listing_description || @client.build_listing_description
     
+    @client_welcome = Post.tagged_with('client_welcome').last.try :content
+    
     redirect_to new_client_path if @client.nil?
   end
   

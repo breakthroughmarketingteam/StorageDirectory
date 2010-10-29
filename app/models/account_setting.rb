@@ -2,10 +2,6 @@ class AccountSetting < ActiveRecord::Base
   
   belongs_to :client
   
-  def after_find
-    raise virtuabutes.pretty_inspect
-  end
-  
 end
 
 String.class_eval do
