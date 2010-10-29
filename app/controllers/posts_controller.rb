@@ -8,8 +8,14 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post ||= Post.find :first, :conditions => ['LOWER(title) = ?', params[:title].gsub('-', ' ')]
-    render :layout => false if request.xhr?
+    @post ||= Post.find :first, :conditions => ['LOWER(title) = ?', (params[:title] || params[:id]).gsub('-', ' ')]
+    
+    respond_to do |format|
+      format.html {}
+      format.js do
+        render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+      end
+    end
   end
 
   def new

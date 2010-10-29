@@ -831,9 +831,9 @@ $.fn.accordion = function() {
 
 $.fn.tabular_content = function() {
 	function what_action(el) {
-		if (el.hasClass('slide')) 	  return ['slideUp', 'slideDown'];
-		else if (el.hasClass('fade')) return ['fadeOut', 'fadeIn'];
-		else 						  return ['hide', 'show'];
+		if (el.hasClass('slide')) 	  return ['slideUp', 'slideDown', 'slow'];
+		else if (el.hasClass('fade')) return ['fadeOut', 'fadeIn', 'slow'];
+		else 						  return ['hide', 'show', null];
 	}
 	
 	return this.each(function(){
@@ -846,7 +846,7 @@ $.fn.tabular_content = function() {
 		panels.eq(0).show();
 				
 		$('a', tabs).click(function(){
-			panels[action[0]]('slow').removeClass('active');
+			panels[action[0]](action[2]).removeClass('active');
 			$('li', tabs).removeClass('active');
 			$(this).addClass('active');
 			$('#'+ $(this).attr('rel'), $this)[action[1]]('slow').addClass('active');
@@ -967,6 +967,21 @@ function titleize(string) {
 	}
 }
 
+function default_pop_up_options(options) {
+	return {
+		title: 	   options.title,
+		width: 	   options.width || 785,
+		minHeight: options.minHeight || 420,
+		height:    options.height,
+		resizable: false,
+		modal: 	   options.modal,
+		close: 	   function() {
+			$('.ajax_loader').hide();
+			$(this).dialog('destroy').remove();
+		}
+	};
+}
+
 // pulls the pop_up template and runs the callback
 // params requires sub_partial. e.g params.sub_partial 
 function get_pop_up_and_do(options, params, callback) {
@@ -974,18 +989,7 @@ function get_pop_up_and_do(options, params, callback) {
 	params.partial = params.partial || '/shared/pop_up';
 	
 	$.get('/ajax/get_multipartial', params, function(response) {
-		var pop_up = $(response).dialog({
-			title: 	   options.title,
-			width: 	   options.width || 785,
-			minHeight: options.minHeight || 420,
-			height:    options.height,
-			resizable: false,
-			modal: 	   options.modal,
-			close: 	   function() {
-				$('.ajax_loader').hide();
-				$(this).dialog('destroy').remove();
-			}
-		});
+		var pop_up = $(response).dialog(default_pop_up_option(options));
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
 	});
@@ -996,7 +1000,7 @@ function get_partial_and_do(params, callback) {
 	params.partial = params.partial || '/shared/pop_up_box';
 	
 	$.get('/ajax/get_partial', params, function(response) {
-		callback.call(this, response);
+		if (typeof callback == 'function') callback.call(this, response);
 	});
 }
 

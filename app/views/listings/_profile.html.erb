@@ -25,7 +25,10 @@
 			<% if listing_distance_from %>
 				<p class="sl-dist left">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
 			<% end %>
-			<p class="sl-phone right">Call: 1 (800) 180-0180</p>
+			
+			<% if @listing.premium? %>
+				<p class="sl-phone right">Call: 1 (800) 180-0180</p>
+			<% end %>
 		</div>
 	<% end %>
 	

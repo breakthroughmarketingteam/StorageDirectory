@@ -163,7 +163,7 @@ class ApplicationController < ActionController::Base
       @facility_features = $_storage_types #IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
       @unit_size_icons   = SizeIcon.medium_icons
-      @listing_logos = %w(y w r o g b).map { |color| { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :width => '164', :height => '120' } }
+      @listing_logos = get_listing_logos
     end
   end
   
@@ -474,6 +474,14 @@ class ApplicationController < ActionController::Base
   # returns a boolean if the the current action matches any of the action passed in as a string or an array
   def in_mode?(*modes)
     [modes].flatten.any? { |m| action_name == m }
+  end
+  
+  def get_listing_logos
+    logos = []
+    %w(y w r o g b).each_with_index do |color, i|
+      logos << { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :ci => i }
+    end
+    logos
   end
   
 end

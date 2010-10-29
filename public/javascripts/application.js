@@ -1255,6 +1255,36 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	$('.default_logo', '#logo_choices').live('click', function() {
+		var img = $(this), index = img.attr('ci');
+		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '88px', 'border-color': '#fff' });
+		
+		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'default_logo', default_logo: index, _method: 'put' }, function(response) {
+			$.with_json(response, function(data) {
+				$('#sl-fac-detail').replaceWith(data);
+				img.parents('#pop_up').dialog('close').remove();
+			});
+		});
+	});
+	
+	// trying to refactor functionality for links that open a pop up, eaither a partial, or a post
+	$('.open_small_partial').live('click', function() {
+		var $this = $(this);
+		get_pop_up_and_do({ title: $this.attr('title'), width: 400, height: 275 }, { sub_partial: $this.attr('href') });
+		return false;
+	});
+	
+	$('.popup-post').live('click', function() {
+		$.getJSON(this.href, function(response) {
+			$.with_json(response, function(data) {
+				var pop_up = $('<div id="pop_up"></div>');
+				pop_up.html(data).dialog(default_pop_up_options({ title: 'Post' }));
+			});
+		});
+		
+		return false;
+	});
+	
 }); // END document ready
 
 // jQuery Plugins

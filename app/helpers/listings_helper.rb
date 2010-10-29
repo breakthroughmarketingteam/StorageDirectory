@@ -36,6 +36,10 @@ module ListingsHelper
     @listings.index(listing) + 1
   end
   
+  def display_default_logo_choices
+    @listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
+  end
+  
   def results_main_button(listing)
     partial = listing.available_sizes.empty? ? :reserve : :sizes
     if listing.accepts_reservations?
