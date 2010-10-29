@@ -19,29 +19,24 @@ class ClientsController < ApplicationController
   
   def create
     @client = Client.new params[:client]
-    @mailing_address = @client.mailing_addresses.build params[:mailing_address]
+    @mailing_address = @client.mailing_addresses.build params[:mailing_address].merge(:name => @client.name, :company => @client.company, :email => @client.email)
     
     @client.user_hints = UserHint.all
-    #@client.report_recipients = @client.email
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
+      @client.enable_listings!
     else
-      @listing = @client.listings.build :title => @client.company, :status => 'unverified'
+      @listing = @client.listings.build :title => @client.company, :status => 'unverified', :enabled => true
       @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
     end
     
     if @client.save_without_session_maintenance
       Notifier.deliver_client_notification @client
+      Notifier.deliver_new_client_alert @client
       
-      msg = "<p class='stack'>Great job, you're almost ready! We sent you an email with an activation link. \
-              You'll be able to play around with your account after you click on that link. \
-              See you soon!</p> \
-              <p class='stack'><strong>Click below to sign in:</strong</p> \
-              <p>Email: #{@client.email}</p> \
-              <p class='stack'>Password: #{@client.temp_password}</p>
-              <p><a href='/clients/activate/#{@client.activation_code}'>Activate Test</a></p>"
-      render :json => { :success => true, :data => msg }
+      flash[:new_client_created] = "We've sent you an email to #{@client.email} with your new account details. You'll be able to login by following the link in your email to activate your account."
+      render :json => { :success => true }
     else
       render :json => { :success => false, :data => model_errors(@client) }
     end
@@ -51,8 +46,10 @@ class ClientsController < ApplicationController
     redirect_to client_account_path if current_user.has_role?('advertiser') && params[:id]
    
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
+    @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
+    
     @settings = @client.settings || @client.build_settings
-    @listings = @client.listings.paginate(:per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
+    @listing_description = @client.listing_description || @client.build_listing_description
     
     redirect_to new_client_path if @client.nil?
   end
@@ -66,7 +63,7 @@ class ClientsController < ApplicationController
         end
         
         format.js do
-          render :json => { :success => true }
+          render :json => { :success => true, :data => render_to_string(:partial => 'owner_info', :locals => { :client => @client }) }
         end
         
       else

@@ -8,6 +8,7 @@
 	<p>
         <%= label_tag 'reserver[email]', 'Email', :class => 'block' %> <%= text_field_tag 'reserver[email]', nil, :class => 'email' %>
 		<%= hidden_field_tag "#{request_type}[listing_id]", listing.id %>
+		<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
 	</p>
 </div>
 <div class="sl-table-exp-form-r">

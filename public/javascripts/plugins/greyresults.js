@@ -848,26 +848,30 @@ $(function(){
 		return marker;
 	}
 
-	function addMarker(icon, lat, lng, title, body){
+	function addMarker(icon, lat, lng, title, body, bind_mouse_overs) {
+		if (typeof bind_mouse_overs == 'undefined') var bind_mouse_overs = true;
+		
 		var point = new GLatLng(lat, lng);
 		var marker = new GMarker(point, { 'title': title, 'icon': icon, width: '25px' });
-
+		
 		GEvent.addListener(marker, 'click', function(){
 			marker.openInfoWindowHtml(body);
 			$('.listing').removeClass('active');
 			$('#listing_'+ marker.listing_id).addClass('active');
 		});
 		
-		GEvent.addListener(marker, 'mouseover', function(){
-			$('.listing').removeClass('active');
-			highlightMarker(marker);
-			$('#listing_'+ marker.listing_id).addClass('active');
-		});
-		
-		GEvent.addListener(marker, 'mouseout', function(){
-			$('#listing_'+ marker.listing_id).removeClass('active');
-			unhighlightMarker(marker);
-		});
+		if (bind_mouse_overs) {
+			GEvent.addListener(marker, 'mouseover', function(){
+				$('.listing').removeClass('active');
+				highlightMarker(marker);
+				$('#listing_'+ marker.listing_id).addClass('active');
+			});
+
+			GEvent.addListener(marker, 'mouseout', function(){
+				$('#listing_'+ marker.listing_id).removeClass('active');
+				unhighlightMarker(marker);
+			});
+		}
 
 		Gmap.addOverlay(marker);
 		return marker;
@@ -888,7 +892,7 @@ $(function(){
 		Gmap.disableContinuousZoom();
 		Gmap.disableScrollWheelZoom();
 		
-		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'You are here', 'You are here');
+		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
 
 		//add result markers
 		var markers = data.maps;

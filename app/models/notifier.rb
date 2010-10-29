@@ -1,5 +1,5 @@
 class Notifier < ActionMailer::Base
-  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost:3000' : 'storagelocator.heroku.com'
+  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost:3000' : 'usselfstoragelocator.com'
   
   def comment_notification(recipient, comment, host)
     setup_email recipient, comment.email, 'New website comment'
@@ -22,6 +22,11 @@ class Notifier < ActionMailer::Base
     setup_email reserver.email, 'notifier@usselfstoragelocator.com', 'Self Storage Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
+  end
+  
+  def deliver_new_client_alert(client)
+    setup_email 'customer_care@usselfstoragelocator.com', 'admin@usselfstoragelocator.com', 'New Client!'
+    @body[:client] = client
   end
   
   def admin_reservation_alert(reserver, reservation, comments)

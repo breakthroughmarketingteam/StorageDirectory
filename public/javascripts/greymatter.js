@@ -53,28 +53,34 @@ $(function(){
 		return false;
 	});
 	
-	var $autocompleters = $('.autocomplete'),
-		$autcompleted = {};
-	if ($autocompleters.length > 0) {
-		$autocompleters.each(function(){
-			var $this   = $(this), rel = $this.attr('rel'),
-				info	= rel.split('|')[0],
-				minLen	= rel.split('|')[1],
-				model   = info.split('_')[0],
-				method  = info.split('_')[1];
-			
-			if (!$autcompleted[rel]) {
-				$.getJSON('/ajax/get_autocomplete', { 'model': model, 'method': method }, function(response){
-					if (response.success && response.data.length > 0) { 
-						$autcompleted[rel] = response.data;
-						$this.autocomplete({
-							source: response.data,
-							minLength: minLen
-						});
-					} else $.ajax_error(response);
-				});
-			}
-		});
+	$.setup_autocomplete = function(els, context) {
+		if (typeof els == 'undefined') var $autocompleters = $('.autocomplete');
+		else if (els && typeof(context) == 'undefined') var $autocompleters = $(els);
+		else var $autocompleters = $(els, context);
+		
+		var $autcompleted = {};
+		
+		if ($autocompleters.length > 0) {
+			$autocompleters.each(function(){
+				var $this   = $(this), rel = $this.attr('rel'),
+					info	= rel.split('|')[0],
+					minLen	= rel.split('|')[1],
+					model   = info.split('_')[0],
+					method  = info.split('_')[1];
+
+				if (!$autcompleted[rel]) {
+					$.getJSON('/ajax/get_autocomplete', { 'model': model, 'method': method }, function(response){
+						if (response.success && response.data.length > 0) { 
+							$autcompleted[rel] = response.data;
+							$this.autocomplete({
+								source: response.data,
+								minLength: minLen
+							});
+						} else $.ajax_error(response);
+					});
+				}
+			});
+		}
 	}
 	
 	$('a', '#admin-box').click(function(){
@@ -1098,7 +1104,7 @@ var GreyWizard = function(container, settings) {
 		
 		if (self.title_bar.length) self.title_bar.change(function(){
 			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);
-			else $(this).text(self.settings.title + ' - Step '+ (self.current+1));
+			else $(this).text(self.settings.title);
 		}).trigger('change');
 		
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);

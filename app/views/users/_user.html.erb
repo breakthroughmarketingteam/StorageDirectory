@@ -1,6 +1,6 @@
 <div class="round box framed uncollapse stack">
   <div class="right framed">
-  	<%= link_to image_tag(user.profile_image.image.url(:thumb), :alt => user.name), user.profile_image unless user.images.empty? %>
+  	<%= link_to image_tag(user.profile_image.image.url(:thumb), :alt => user.name), paperclip_attachment_path(user.profile_image) unless user.images.empty? %>
   </div>
   
   <ul class="plain with_floats spaced_list_items">

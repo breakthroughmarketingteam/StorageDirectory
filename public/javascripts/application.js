@@ -7,6 +7,11 @@ $(document).ready(function() {
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 	
 	// front page
+	$('#search_submit, #search_submit2').click(function() {
+		// the live submit handler in formbouncer doesn't seem to work on the search form
+		// temporary workaround...
+		return $(this).parents('form').runValidation().data('valid');
+	})
 	
 	// ajaxify the login form and forgot password link
 	$('#login_link').click(function() {
@@ -64,7 +69,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#forgot_pass_link').live('click', function() {
+	$('#forgot_pass_link', '#pop_up_box').live('click', function() {
 		$('#pop_up_box').load(this.href, function(response, status) {
 			$('input[type=text]', this).eq(0).focus();
 			$.bindPlugins();
@@ -588,7 +593,7 @@ $(document).ready(function() {
 				
 			} else {
 				var partial = 'clients/issn_steps', 
-					title = 'Enable Online Reservations', 
+					title = 'Activate Real Time Reservations', 
 					height = '486';
 
 				get_pop_up_and_do({ title: title, height: height, modal: true }, { sub_partial: partial, model: 'Client', id: $('#client_id').text() }, function(pop_up) {
@@ -755,7 +760,8 @@ $(document).ready(function() {
 			ajax_loader = $('.ajax_loader', hint).show();
 
 		$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
-			hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown']();
+			hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown'](900);
+			hint.children()[btn.attr('rel') == 'hide' ? 'fadeOut' : 'fadeIn'](600);
 			ajax_loader.hide();
 		});
 		
@@ -804,6 +810,38 @@ $(document).ready(function() {
 		
 			return false;
 		});
+		
+		$('.cancel_link', '#client_listing_box').live('click', function() {
+			var $this = $(this),
+				listing = $this.parents('.listing'),
+				listing_id = listing.attr('id');
+				
+			if (listing_id.length) delete_client_listing(listing_id);
+			else listing.slideUp('fast', function(){ $(this).remove() });
+			
+			return false;
+		});
+		
+		$('.delete_link', '#client_listing_box').click(function() {
+			var listing_id = $(this).parents('.listing').attr('id');
+			delete_client_listing(listing_id);
+			
+			return false;
+		});
+		
+		function delete_client_listing(listing_id) {
+			if (confirm('Are you sure you want to delete this facility and all information associated with it?')) {
+				var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
+				
+				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
+					$.with_json(response, function(data) {
+						$('#'+ listing_id).slideUp('fast', function(){ $(this).remove() });
+					});
+					
+					ajax_loader.hide();
+				});
+			}
+		}
 	
 		// 2). bind events to the inputs in the new partial: 
 		// SAVE TITLE ON BLUR
@@ -822,12 +860,14 @@ $(document).ready(function() {
 				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
 					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
 					else title_input.addClass('invalid').focus(); // SERVER VALIDATION DID NOT PASS
+					
 					ajax_loader.hide();
 				}, 'json');
 			
 			} else {
-				title_input.addClass('invalid').focus();
+				title_input.focus();
 				ajax_loader.hide();
+				setTimeout(function() { title_input.addClass('invalid') }, 300); // wait a little bit to turn this red, just in case the clicked on cancel and the listing is slideing up
 			}
 		
 		});
@@ -1105,55 +1145,66 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	var stats_graph = $('#stats_graph');
-	if (stats_graph.length > 0) {
-		stats_graph.addClass('loading');
+	$('#account_home_link').click(function() {
+		// for some reason the stats_graph div was getting a width of 400px when the page loaded with it hidden (navigated from the listing edit page through one of the client option links)
+		$('#stats_graph').css('width', '700px');
+		init_stats_graph();
+	});
+	
+	function init_stats_graph() {
+		var stats_graph = $('#stats_graph');
 		
-		var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
-			stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
-			d = new Date(), // getMonth returns 0-11
-			end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-			start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate()); // month in the past
-		
-		$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
-			$.with_json(response, function(data){
-				var plot_data = [],
-					stats_arr = stats_models.split(/,\W?/);
-				
-				for (i in stats_arr) 
-					plot_data.push(data['data'][stats_arr[i]]);
-				
-				$.jqplot('stats_graph', plot_data, {
-					axes: {
-						xaxis: { 
-							renderer: $.jqplot.DateAxisRenderer,
-							rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
-				            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
+		if (stats_graph.length > 0 && stats_graph.children().length == 0) {
+			stats_graph.addClass('loading');
+
+			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
+				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
+				d = new Date(), // getMonth returns 0-11
+				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
+				start_date = new Date(d.getFullYear(), d.getMonth()-1, d.getDate()); // month in the past
+
+			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
+				$.with_json(response, function(data){
+					var plot_data = [],
+						stats_arr = stats_models.split(/,\W?/);
+
+					for (i in stats_arr) 
+						plot_data.push(data['data'][stats_arr[i]]);
+
+					$.jqplot('stats_graph', plot_data, {
+						axes: {
+							xaxis: { 
+								renderer: $.jqplot.DateAxisRenderer,
+								rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
+					            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
+							},
+							yaxis: { min: 0, max: parseInt(data['max']) + 1 },
 						},
-						yaxis: { min: 0, max: parseInt(data['max']) + 1 },
-					},
-					legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
-					series: [ 
-				        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
-				        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
-				        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
-				    ],
-					highlighter: { sizeAdjust: 7.5 },
-					cursor: { show: true, zoom: true },
-					grid: { background: '#ffffff' }
+						legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
+						series: [ 
+					        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
+					        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
+					        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
+					    ],
+						highlighter: { sizeAdjust: 7.5 },
+						cursor: { show: true, zoom: true },
+						grid: { background: '#ffffff' }
+					});
 				});
+
+				stats_graph.removeClass('loading');
 			});
-			
-			stats_graph.removeClass('loading');
-		});
+		}
 	}
+	init_stats_graph();
 	
 	// Client tips block
 	$('.client_tip:not(:first)', '#tips-box').hide();
 	var client_tip_boxes = $('.client_tip', '#tips-box');
 	
 	if (client_tip_boxes.length > 0) {
-		$('a', '#tips-box-bottom').click(function(){
+		$('a', '#tips-box-bottom').click(function() {
+			console.log(this, client_tip_boxes)
 			if (client_tip_boxes.length > 1) {
 				var $this = $(this),
 					direction = $this.attr('id') == 'next_tip' ? 1 : -1,
@@ -1197,7 +1248,7 @@ $.fn.instantForm = function() {
 					var $self 		= $(this).hide(),
 						label_text 	= $self.prev('.label').text().replace(':', '').replace(' ', '_').toLowerCase(),
 						field_name	= 'client'+ ($self.attr('rel') ? '['+ $self.attr('rel') +']' : '') +'[' + label_text +']', 
-						input 		= $('<input type="text" class="small_text_field '+ label_text +'" name="'+ field_name +'" value="'+ $self.text() +'" />');
+						input 		= $('<input type="text" class="small_text_field '+ label_text +' '+ $self.attr('validate') +'" name="'+ field_name +'" value="'+ $self.text() +'" />');
 
 					input.prependTo($self.parent());
 				});
@@ -1205,6 +1256,7 @@ $.fn.instantForm = function() {
 				$('.small_text_field', $this).eq(0).focus();
 				$(this).text('Save');
 				$.bindPlugins(); // so that hinty and formbouncer will work.
+				$('.numeric_phone', $this).formatPhoneNum();
 				
 			} else if ($(this).text() == 'Save' && !$(this).data('saving')) {
 				$(this).data('saving', true);
@@ -1215,13 +1267,7 @@ $.fn.instantForm = function() {
 				
 				$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
 					$.with_json(response, function(data){
-						$('.value', $this).each(function(){
-							var this_val   = $(this),
-								this_input = $('input', this_val.parent()).hide();
-
-							this_val.text(this_input.val()).fadeIn(1000);
-						});
-						
+						$('#owner_info_wrap', $this).replaceWith(data);
 						submit_btn.text('Edit');
 					});
 					
@@ -1327,8 +1373,10 @@ function workflow_step3() {
 		state 	  = $('#listing_state', '#new_client').val(),
 		zips	  = get_checked_listings_addresses(wizard, 'zip');
 	
+	$.setup_autocomplete('#listing_city', wizard.workflow);
+	
 	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(addresses[0]);
-	else $('#listing_address', wizard.workflow).autocomplete({ source: addresses });
+	else $('#listing_address', wizard.workflow).autocomplete({ source: (addresses || []) });
 	
 	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
 	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
@@ -1417,9 +1465,9 @@ function finish_workflow() {
 		next_button.prev('.ajax_loader').show();
 
 		$.post('/clients', wizard.form_data, function(response){
-			$.with_json(response, function(data){
-				wizard.workflow.parents('#pop_up').dialog('close');
-				$('#top_fac_page').html(data);
+			$.with_json(response, function(){
+				// redirect to home page to show the flash message
+				window.location = '/';
 			});
 			
 			next_button.prev('.ajax_loader').hide().data('saving', false);

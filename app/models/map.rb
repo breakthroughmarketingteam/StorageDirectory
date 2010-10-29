@@ -10,11 +10,13 @@ class Map < ActiveRecord::Base
   attr_reader :full_address
   
   def self.top_cities(limit = 50)
-    self.find_by_sql "SELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY name LIMIT #{limit}"
+    cities = self.find_by_sql "SELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT #{limit}"
+    cities.sort_by &:name
   end
   
   def self.top_cities_of(state, limit = 50)
-    cities = self.find_by_sql "SELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps WHERE maps.state = '#{States.abbrev_of state}' GROUP BY name, state ORDER BY name LIMIT #{limit}"
+    cities = self.find_by_sql "SELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps WHERE maps.state = '#{States.abbrev_of state}' GROUP BY name, state ORDER BY map_count DESC LIMIT #{limit}"
+    cities.sort_by &:name
   end
   
   # Instance Methods
