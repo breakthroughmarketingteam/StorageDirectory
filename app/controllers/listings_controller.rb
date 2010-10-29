@@ -105,9 +105,16 @@ class ListingsController < ApplicationController
       else
         render :json => { :success => true, :data => model_errors(@map) }
       end
-    when 'default_logo'
-      @listing.update_attribute :default_logo, params[:default_logo]
-      render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
+    when 'uplogo'
+      if params[:default_logo]
+        @listing.update_attribute :default_logo, params[:default_logo]
+        render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
+      elsif params[:listing]
+        @listing.update_attributes params[:listing]
+        render :text => render_to_string(:partial => 'edit_detail')
+      end
+      
+      
     else
       raise ['params[:from] is nil or unrecognized', params].pretty_inspect
     end

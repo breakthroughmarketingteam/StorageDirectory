@@ -8,4 +8,8 @@ class BillingInfo < ActiveRecord::Base
     "**** **** **** #{self.card_number[self.card_number.size - 4, self.card_number.size]}" unless self.card_number.blank?
   end
   
+  def full_address
+    "#{address} #{city}, #{state} #{zip}"
+  end
+  
 end

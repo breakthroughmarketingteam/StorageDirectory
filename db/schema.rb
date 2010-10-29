@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101028183750) do
+ActiveRecord::Schema.define(:version => 20101029195110) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20101028183750) do
     t.string   "PromosAvailable"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ErrorMessage"
   end
 
   create_table "features", :force => true do |t|

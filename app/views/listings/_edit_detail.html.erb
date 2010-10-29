@@ -18,7 +18,8 @@
 		<div>
 			<%= f.label :logo, 'New logo' %> 
 			<%= f.file_field :logo, :size => 13, :class => 'text' %>
-			<%= f.submit 'Upload' %>
+			<%= f.submit 'Upload', :id => 'listing_logo_upload' %>
+			<%= hidden_field_tag :from, 'uplogo' %>
 			<%= ajax_loader %>
 		</div>
 		

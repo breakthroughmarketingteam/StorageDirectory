@@ -10,7 +10,11 @@ class Reserver < User
   end
   
   def billing_info
-    self.billing_infos.first
+    self.billing_infos.last
+  end
+  
+  def full_address
+    self.billing_info.full_address
   end
   
 end
