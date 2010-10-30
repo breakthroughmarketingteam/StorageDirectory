@@ -39,7 +39,7 @@ class Listing < ActiveRecord::Base
   has_attached_file :logo,
     :storage => :s3, 
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :styles => { :thumb => '164x120#' },
+    :styles => { :thumb => '164x120>' },
     :url => ":s3_domain_url",
     :path => ":attachment/:id/:style_:basename.:extension"
   
@@ -340,6 +340,10 @@ class Listing < ActiveRecord::Base
                                         :find_attr  => 'sID'
   end
   
+  def update_units
+    self.unit_types.each &:update_units
+  end
+  
   def update_promos
     IssnAdapter.update_models_from_issn :class => Promo,
                                         :data => IssnAdapter.get_facility_promos(self.facility_id), 
@@ -351,6 +355,7 @@ class Listing < ActiveRecord::Base
   def update_unit_types_and_sizes
     puts "\nUpdating Unit Types...\n"
     update_unit_types
+    update_units
     #puts "\nUpdating Unit Features...\n"
     #update_unit_features
     puts "Done.\nSyncing Units With Unit Types...\n"

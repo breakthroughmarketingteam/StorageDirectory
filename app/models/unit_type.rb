@@ -8,7 +8,7 @@ class UnitType < ActiveRecord::Base
   has_many :reserve_costs, :dependent => :destroy
   
   def units_available?
-    self.units.any? { |u| u.Available.downcase == 'y' }
+    self.units.any? { |u| (u.Available || '').downcase == 'y' }
   end
   
   def reserve_cost
@@ -61,7 +61,7 @@ class UnitType < ActiveRecord::Base
   end
   
   def get_features
-    @features ||= [IssnAdapter.get_unit_features(self.listing.facility_id, self.sID)].flatten
+    [IssnAdapter.get_unit_features(self.listing.facility_id, self.sID)].flatten
   end
   
   def update_units
@@ -74,7 +74,7 @@ class UnitType < ActiveRecord::Base
   
   # issn method: getFacilityUnits
   def get_unit_info
-    @facility_units ||= [IssnAdapter.get_unit_info(self.listing.facility_id), self.sID].flatten
+    @facility_units ||= [IssnAdapter.get_unit_info(self.listing.facility_id, self.sID)].flatten
   end
   
 end

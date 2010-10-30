@@ -159,11 +159,10 @@ class IssnAdapter
   def self.update_models_from_issn(args)
     (args[:class] || args[:model]).transaction(:requires_new => true) do
       args[:data].each do |m|
-        next if m.keys.include?('sErrorMessage') && !m['sErrorMessage'].blank?
         # assoc is the authoritative assoc model in the rails app that will be synced with the similar issn model
         # e.g: Specials to FacilityPromos, Sizes to Unit Types... Note: these are assoc to Listing (the issn enabled model)
+        
         model = args[:model].send(args[:find_method], m[args[:find_attr]]) || args[:model].create
-      
         m.each do |name, value|
           name = name.sub /^s/, '' unless name == 'sID'
           model.update_attribute name, value if model.respond_to? name

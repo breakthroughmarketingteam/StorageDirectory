@@ -3,8 +3,9 @@ class Size < ActiveRecord::Base
   belongs_to :listing
   has_one :unit_type
   
-  validates_presence_of :title
-  validates_numericality_of :width, :length, :price
+  # TODO: this breaks the syncing methods in listing, can we do it differently?
+  #validates_presence_of :title, :only => :update
+  #validates_numericality_of :width, :length, :price
 
   attr_accessor :special
   

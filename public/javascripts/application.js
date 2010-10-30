@@ -1255,11 +1255,20 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	$('#listing_logo_form').ajaxForm({
+		beforeSubmit: function() {
+			$('.ajax_loader', '#listing_logo_form').show();
+		},
+		success: function(response) {
+			$('#sl-fac-detail').replaceWith(response);
+		}
+	});
+	
 	$('.default_logo', '#logo_choices').live('click', function() {
 		var img = $(this), index = img.attr('ci');
 		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '88px', 'border-color': '#fff' });
 		
-		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'default_logo', default_logo: index, _method: 'put' }, function(response) {
+		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'uplogo', default_logo: index, _method: 'put' }, function(response) {
 			$.with_json(response, function(data) {
 				$('#sl-fac-detail').replaceWith(data);
 				img.parents('#pop_up').dialog('close').remove();
@@ -1279,6 +1288,7 @@ $(document).ready(function() {
 			$.with_json(response, function(data) {
 				var pop_up = $('<div id="pop_up"></div>');
 				pop_up.html(data).dialog(default_pop_up_options({ title: 'Post' }));
+				$('')
 			});
 		});
 		

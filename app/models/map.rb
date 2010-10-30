@@ -26,7 +26,7 @@ class Map < ActiveRecord::Base
   end
   
   def full_address
-    "#{address.gsub('#', '')} #{city}, #{state}"
+    "#{address.gsub('#', '')} #{city}, #{state} #{zip}"
   end
   
 end

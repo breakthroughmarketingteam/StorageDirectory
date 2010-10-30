@@ -36,10 +36,6 @@ module ListingsHelper
     @listings.index(listing) + 1
   end
   
-  def display_default_logo_choices
-    @listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
-  end
-  
   def results_main_button(listing)
     partial = listing.available_sizes.empty? ? :reserve : :sizes
     if listing.accepts_reservations?
@@ -95,12 +91,16 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      link_to image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id)
+      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id))}</div>"
     else
       img_hash = @listing_logos[listing.default_logo || 0]
       img_hash[:alt] = listing.title
       link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
+  end
+  
+  def display_default_logo_choices
+    @listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
   end
   
   def more_results_link(data)

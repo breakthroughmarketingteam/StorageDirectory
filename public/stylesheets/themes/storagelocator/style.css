@@ -479,7 +479,7 @@ ul#specials_list {margin:15px 10px;}
 .dlogo_wrap span{position:relative;z-index:2;color:#fff;font-weight:bold;font-size:140%;text-shadow:1px 1px 1px #333;line-height:1.5;}
 .dlogo_wrap span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .dlogo_wrap span.short{padding:0 5px 0;display:block;}
-#sl-fac-detail-in-edit .dlogo_wrap{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
+#sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;}
 .listing .dlogo_wrap span{font-size:90%;line-height:1.4;width:90%;top:7px;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}

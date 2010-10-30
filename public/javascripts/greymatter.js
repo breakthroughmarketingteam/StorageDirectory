@@ -989,7 +989,7 @@ function get_pop_up_and_do(options, params, callback) {
 	params.partial = params.partial || '/shared/pop_up';
 	
 	$.get('/ajax/get_multipartial', params, function(response) {
-		var pop_up = $(response).dialog(default_pop_up_option(options));
+		var pop_up = $(response).dialog(default_pop_up_options(options));
 		
 		if (typeof callback == 'function') callback.call(this, pop_up);
 	});
