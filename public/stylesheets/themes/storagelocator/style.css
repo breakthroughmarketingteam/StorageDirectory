@@ -188,8 +188,8 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head{margin-bottom:5px;}
 #search-head ul{overflow:hidden;}
 #search-head li{color:#fff;float:left;font-size:12px;height:21px;}
-#search-head li a{color:#fff;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;display:block;float:left;font-size:12px;height:21px;padding:10px 0 0 0;text-decoration:underline;}
-#search-head li a:hover{background:url(/images/ui/storagelocator/sort-bg-hover.png) repeat-x;}
+#search-head li a{color:#fff;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;display:block;float:left;font-size:12px;height:21px;padding:10px 0 0 0;}
+#search-head li a:hover{text-decoration:underline;}
 #search-head li#list-name{}
 #search-head li#list-name a{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;padding-left:20px;width:303px;}
 #search-head li#list-miles{}
@@ -1344,5 +1344,6 @@ form .note{clear:both;display:block;font-size:80%;}
 #green p{font-size:12px;line-height:18px;margin-bottom:20px;}
 #green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#339933;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #green a:hover{text-decoration:underline;}
-#ajax_wrap_inner > h2 {font-size:28px;margin-bottom:20px;}
-#pop_up{border:20px solid #ccc;padding:30px;}
+
+#green-popup > h2 {font-size:28px;margin-bottom:20px;}
+#green-popup{border:20px solid #ccc;padding:30px;}
