@@ -1339,5 +1339,5 @@ form .note{clear:both;display:block;font-size:80%;}
 #green p{font-size:12px;line-height:18px;margin-bottom:20px;}
 #green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#339933;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #green a:hover{text-decoration:underline;}
-#ajax_wrap_inner > h2 {font-size:28px;margin-bottom:20px;}
-#pop_up{border:20px solid #ccc;padding:30px;}
+#green-popup > h2 {font-size:28px;margin-bottom:20px;}
+#green-popup{border:20px solid #ccc;padding:30px;}
