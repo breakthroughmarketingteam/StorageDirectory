@@ -630,7 +630,6 @@ $(document).ready(function() {
 		
 		function issnstep1(wizard) {
 			$('#issn_status_option a', '#issnstep_1').unbind('click').click(function(){
-				wizard.slide_data[1].opt_id = $(this).attr('rel');
 				wizard.slide_data[2].issn_status = $(this).attr('id');
 				wizard.next();
 				return false;
@@ -638,11 +637,7 @@ $(document).ready(function() {
 		}
 		
 		function issnstep2(wizard) {
-			var active_opt = $('#'+ wizard.slide_data[1].opt_id, '#issnstep_2'),
-				ajax_loader = $('.ajax_loader', active_opt);
-
-			$('.opt', '#issnstep_2').hide();
-			active_opt.show();
+			var ajax_loader = $('.ajax_loader', active_opt);
 			
 			if (typeof wizard.slide_data[1].client_info == 'undefined') {
 				ajax_loader.show();

@@ -68,6 +68,10 @@ class Client < User
     self.listings.any? &:issn_enabled?
   end
   
+  def issn_id
+    "NM-#{self.id}"
+  end
+  
   def call_tracking_enabled?
     false
   end

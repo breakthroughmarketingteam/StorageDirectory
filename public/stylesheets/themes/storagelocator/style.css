@@ -487,7 +487,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist,#ls_top .sl-dist{color:#33c;font-size:120%;}
 #sl-fac-detail-in-edit #listing_img{width:100%;height:100%;}
 #sl-fac-detail-in-edit .listing_title{margin-top:15px;}
-#sl-fac-detail-in-edit .address,#sl-fac-detail-in-edit .listing_title{float:left;line-height:1.3;}
+#sl-fac-detail-in-edit .address,#sl-fac-detail-in-edit .listing_title{line-height:1.3;}
 #listings_controller #sl-fac-coup-in-edit input.title,#listings_controller #sl-fac-coup-in-edit input.description{width:96%;}
 #sl-fac-coup-in-edit input.special{width:100%;}
 #sl-fac-detail-in-edit .attr_wrap{overflow:hidden;width:;}
@@ -886,7 +886,7 @@ img.right{margin:0 0 10px 10px;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units .listing .crud_btn{width:145px;}
-#ov-reports-cnt{padding:10px 9px;overflow:hidden;min-height:350px;}
+#ov-reports-cnt{padding:10px 9px;min-height:350px;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
 #ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;border:1px solid #ccc;}
 #ov-page-cnt #ov-top{margin:18px 0 10px;overflow:hidden;}
@@ -1216,6 +1216,7 @@ form .error p{margin:0 0 7px 0;}
 #step3 .in img{margin-right:-13px;}
 #step3 .in{margin-right:0;border-right:0 none;}
 #step2 #cost_display{border:1px dashed #ccc;margin:10px 0 15px;width:45%;background:#fff;}
+#step3 #gmap_dirs{float:right;width:400px;}
 
 #handle,#red_tab{margin:0 auto;}
 #handle{width:196px;height:51px;margin-top:-42px;margin-bottom:40px;position:relative;z-index:1;background:url(/images/ui/storagelocator/handle.png) no-repeat;}
@@ -1317,3 +1318,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #tips-box-bottom #next_tip{background:url(/images/ui/storagelocator/next-tip.png) no-repeat 3px 4px;display:block;float:right;height:22px;width:30px;}
 #tips-box-bottom #prev_tip:hover{background:url(/images/ui/storagelocator/prev-tip-hover.png) no-repeat 10px 4px;}
 #tips-box-bottom #next_tip:hover{background:url(/images/ui/storagelocator/next-tip-hover.png) no-repeat 3px 4px;}
+
+#netmem_agree .signature_line,#netmem_agree .label{width:400px;}
+#netmem_agree .signature_line{border-bottom:1px solid #555;height:50px;margin:10px 0 0 0;}
+#netmem_agree .label{text-align:center;font-size:60%;color:#666;margin:0;}

@@ -1,7 +1,3 @@
-<div class="client_info_preview stack">
-	<%= ajax_loader 'ajax-loader-lrg.gif' %>
-</div>
-
 <form action="" method="" class="issn_enable_opts">
 	<p>Supported Property Management Systems: <%= select_tag 'pm_software', option_tags($_pm_softwares, nil, 'Choose Your System'), :class => 'required' %></p>
 

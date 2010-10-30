@@ -24,7 +24,7 @@ class Notifier < ActionMailer::Base
     @body[:reservation] = reservation
   end
   
-  def deliver_new_client_alert(client)
+  def new_client_alert(client)
     setup_email 'customer_care@usselfstoragelocator.com', 'admin@usselfstoragelocator.com', 'New Client!'
     @body[:client] = client
   end
