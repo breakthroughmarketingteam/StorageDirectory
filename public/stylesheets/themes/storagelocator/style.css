@@ -259,7 +259,10 @@ li.rslt-size img{margin-left:1px;}
 li.rslt-price{font-size:12px;padding-top:10px;width:145px;}
 .listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
 li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;color:#333;height:88px;}
-.listing ul li.rslt-price ul li{float:none;margin-right:20px;margin-top:5px;text-align:right;}
+.listing ul li.rslt-price ul li.radio_wrap{background:url(/images/ui/storagelocator/checkbox.png) no-repeat 123px 0;float:none;height:16px;margin-top:5px;overflow:hidden;padding-top:2px;position:relative;}
+.listing ul li.rslt-price ul li.radio_wrap .radio_select{float:right;height:16px;position:absolute;right:6px;top:0;width:16px;}
+.listing ul li.rslt-price ul li.radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
+.listing ul li.rslt-price ul li input{display:none;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .listing ul li.action_btn{float:right;font-size:120%;height:50px;line-height:3.1;margin:27px 10px 0 0;position:relative;text-shadow:1px 1px 0 #666;width:91px;}
 .listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
@@ -1024,7 +1027,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .ui-dialog .ui-dialog-titlebar-close{margin:-10px 6px 0;}
 .ui-menu-item{padding:5px 4px;}
 .page-break{display:none;}
-ul.ui-autocomplete{padding-bottom:3px;}
+ul.ui-autocomplete{}
 ul.ui-autocomplete .ui-menu-item{width:100%;}
 .ui-menu-item a{padding:3px 7px;}
 ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
@@ -1038,7 +1041,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:300px;}
-#workflow_nav,#map_flow_nav{position:absolute;top:376px;left:0;width:100%;}
+#workflow_nav,#map_flow_nav{bottom:45px;position:absolute;right:20px;width:100%;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:14px;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0 #666;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
@@ -1278,7 +1281,7 @@ form .error p{margin:0 0 7px 0;}
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 0px #666;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;box-shadow:1px 1px 1px #8c8c8c;-moz-box-shadow:1px 1px 1px #8c8c8c;-webkit-box-shadow:1px 1px 1px #8c8c8c;}
 .grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-.ui-menu .ui-menu-item a{padding:6px 12px;}
+.ui-menu .ui-menu-item a{padding:2px 11px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:12px;margin-bottom:10px;}
 .darkgreen{color:#393;}
@@ -1367,3 +1370,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #green-popup{border:20px solid #ccc;padding:30px;}
 
 .ui-dialog .ui-dialog-title{font-size:16px;}
+
+.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #327e04;background:#46cb44;font-weight:bold;color:#ffffff;}
+
+
