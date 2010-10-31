@@ -48,40 +48,10 @@
 		</div>
 		
 		<div id="print_issn_auth">
-			<%= print_link('#print_box') %> this page.
+			<%= print_link('#print_box') %> this page
 		</div>
 		
 	</div> <!-- END step 2 -->
-	
-	<div id="issnstep_3" class="workflow_step">
-		<h4>What Happens Next...</h4>
-		
-		<div class="inner">
-			<p id="issn_enabled" class="hide">
-				We'll send you an email notification once OpenTech has finished connecting your account. Click on the link within the email to finish up. 
-			</p>
-		
-			<p id="join_issn" class="hide">
-				An OpenTech technician will contact you to finish the setup. Then, we'll send you an activation email once OpenTech has finished connecting your account. Click on the link within the email to finish up.
-			</p>
-		
-			<% if is_admin? %>
-				<form id="enable_test_form" action="/clients/<%= model.id %>/test_issn" method="post">
-					<p>
-						<%= check_box_tag 'enable_test', true, false %>
-						<%= label_tag 'enable_test', 'Enable Test Facility' %>
-					</p>
-					<p>
-						<%= label_tag 'facility_id', 'Test Facility Id' %>
-						<%= text_field_tag 'facility_id', IssnAdapter.rand_facility_id %>
-						<%= submit_tag 'Done', :class => 'hide' %>
-					</p>
-				</form>
-			<% end %>
-		</div>
-		
-		<%= ajax_loader 'ajax-loader-lrg.gif' %>
-	</div> <!-- END step 3 -->
 	
 	<div id="workflow_nav">
 		<a class="button back" id="back" href="#back">Back</a>

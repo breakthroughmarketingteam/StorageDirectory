@@ -1205,8 +1205,12 @@ var GreyWizard = function(container, settings) {
 			if (typeof self.slide_data[self.current].action == 'function')
 				self.slide_data[self.current].action.call(this, self);
 			
-		} else if (self.current == self.num_slides-1 && typeof(self.settings.finish_action) == 'function') 
-			self.settings.finish_action.call(this, self);
+		} else if (self.current == self.num_slides-1) {
+			if (typeof(self.settings.finish_action) == 'function')
+				self.settings.finish_action.call(this, self);
+				
+			else if (self.settings.finish_action == 'close') self.workflow.parent().dialog('close').remove();
+		} 
 	}
 }
 

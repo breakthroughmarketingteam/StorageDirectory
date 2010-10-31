@@ -1340,9 +1340,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #netmem_agree table td{padding-top:3px;padding-bottom:3px;}
 #netmem_agree table td.value{}
 #netmem_agree table input{width:95%;border:0 none;}
-#netmem_agree select#pm_software{margin-top:3px;}
+#netmem_agree select#pm_software{margin:3px 5px 0 0;}
 #client_listings_table{height:160px;overflow:auto;}
-#print_issn_auth a{font-size:100%;}
+#print_issn_auth a{font-size:100%;margin-top:10px;}
 #print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
 
 #info_tabs li.first{}

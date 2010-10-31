@@ -385,24 +385,6 @@ $(document).ready(function() {
 	}
 	
 	// listings show page
-	$('.ps').live('click', function() {
-		var div_to_print = this.rel,
-			print_opts = { operaSupport: $.browser.opera };
-		
-		if ($(this).attr('href') == '#') $(div_to_print).jqprint(print_opts);
-		else {
-			$.getJSON(this.href, function(response){
-				$.with_json(response, function(data){
-					var wrap = $(data).appendTo('body'),
-						coup = $(div_to_print).clone().appendTo('#print_content');
-					
-					wrap.jqprint(print_opts, function(){ wrap.remove(); });
-				});
-			});
-		}
-		
-		return false;
-	});
 	
 	// the google map breaks when it's loaded in a hidden div, then shown by js
 	$('a[rel=sl-tabs-map]').click(function(){
@@ -604,23 +586,16 @@ $(document).ready(function() {
 								pop_up_title : title,
 								div_id  : 'issnstep_1',
 								action  : issnstep1,
-								nav_vis : [['back', 'hide'], ['next', 'fadeOut']]
+								nav_vis : [['back', 'hide'], ['next', function(btn, wizard) { btn.text('Next').data('done', false).fadeOut(); }]]
 							},
 							{ 
 								pop_up_title : 'Grant Access',
 								div_id  : 'issnstep_2',
 								action  : issnstep2,
-								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Send').data('done', false).fadeIn(); }]],
-								validate : issnstep2_validate
-							},
-							{	
-								pop_up_title : 'Request In Process',
-								div_id  : 'issnstep_3',
-								action  : issnstep3,
-								nav_vis : [['back', 'hide'], ['next', function(btn, wizard){ btn.text('Done').data('done', true) }]]
+								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Done').data('done', true).fadeIn(); }]]
 							}
 						],
-						finish_action : issn_steps_finish
+						finish_action: 'close'
 					}).begin_workflow_on(0);
 				});
 			}
@@ -630,7 +605,6 @@ $(document).ready(function() {
 		
 		function issnstep1(wizard) {
 			$('#issn_status_option a', '#issnstep_1').unbind('click').click(function(){
-				wizard.slide_data[2].issn_status = $(this).attr('id');
 				wizard.next();
 				return false;
 			});
@@ -645,13 +619,35 @@ $(document).ready(function() {
 						
 						wizard.workflow.parent().animate({ height: '900px' });
 						
+						// printing the page doesn't show the select's value so put it in a hidden span which is visible in the print css
+						var pm_select = $('select[name=pm_software]', wizard.workflow);
+						pm_select.change(function(){ 
+							pm_select.removeClass('invalid'); 
+							
+							var span = pm_select.siblings('.val');
+							if (!span.length) 
+								span = pm_select.after('<span class="val dp"></span>').siblings('.val');
+							
+							span.text(pm_select.val());
+						});
+						
+						// make sure they select a pm software before printing
+						$('.ps', wizard.workflow).click(function(){
+							if (pm_select.val() == '') {
+								pm_select.addClass('invalid');
+								return false;
+							}
+						});
 					});
 				});
 				
 			} else $('#client_info_preview', wizard.workflow).html(wizard.slide_data[1].client_info);
+			
 		}
 		
-		function issnstep2_validate(wizard) {
+		
+		
+		/*function issnstep2_validate(wizard) {
 			$('.error', '.issn_enable_opts').remove();
 			var error = '', pms = $('select#pm_software', '#'+ wizard.slide_data[1].opt_id);
 			
@@ -683,7 +679,7 @@ $(document).ready(function() {
 					ajax_loader.hide();
 				}, 'json');
 			} else $('#pop_up').dialog('close');
-		}
+		}*/
 		
 		$('.pagination a, .table_sorter', '#pop_up').live('click', function() {
 			$('#pop_up').load(this.href + ' #pop_up > div');
@@ -1283,6 +1279,25 @@ $(document).ready(function() {
 				$('')
 			});
 		});
+		
+		return false;
+	});
+	
+	$('.ps').live('click', function() {
+		var div_to_print = this.rel,
+			print_opts = { operaSupport: $.browser.opera };
+		
+		if ($(this).attr('href') == '#') $(div_to_print).jqprint(print_opts);
+		else {
+			$.getJSON(this.href, function(response){
+				$.with_json(response, function(data){
+					var wrap = $(data).appendTo('body'),
+						coup = $(div_to_print).clone().appendTo('#print_content');
+					
+					wrap.jqprint(print_opts, function(){ wrap.remove(); });
+				});
+			});
+		}
 		
 		return false;
 	});
