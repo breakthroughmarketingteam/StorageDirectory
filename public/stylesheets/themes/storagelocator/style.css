@@ -994,8 +994,8 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_page{margin-bottom:10px;overflow:hidden;float:left;width:33%;margin-right:20px;padding-right:15px;}
-#login_page h2{font-size:120%;margin-bottom:10px;}
+#login_page{margin-bottom:10px;overflow:hidden;float:left;width:100%;margin-right:20px;padding-right:15px;}
+#login_page h2{-moz-border-radius-topleft:15px;border-radius-topleft:15px;-webkit-border-radius-topleft:15px;-moz-border-radius-topright:15px;border-radius-topright:15px;-webkit-border-radius-topright:15px;background:url(/images/ui/storagelocator/list-page-header-bg.png) repeat-x scroll 0 0 transparent;color:#fff;font-size:120%;height:33px;margin-bottom:20px;padding:14px 0 0 20px;text-shadow:1px 1px 0 #666;width:300px;}
 #login_page .i{height:40px;position:relative;}
 #login_page input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:97%;}
 #user_session_submit{cursor:pointer;}
@@ -1373,4 +1373,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #327e04;background:#46cb44;font-weight:bold;color:#ffffff;}
 
-
+.login #page-cnt-top-bg{width:100%;}
+.login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
+.login #page-ctr-in{}
+.login .stack {width:308px;}
