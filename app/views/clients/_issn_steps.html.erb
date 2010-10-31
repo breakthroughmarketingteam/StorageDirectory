@@ -32,25 +32,25 @@
 	</div> <!-- END step 1 -->
 
 	<div id="issnstep_2" class="workflow_step">
-		<div id="opt_1" class="opt">
-			<h4>Authorization</h4>
-			
-			<p class="stack">
-				We need your permission to pull your facility information through the ISSN. If you agree, click Continue and we'll send the following information to OpenTech's ISSN to complete the process:
-			</p>
-			
-			<%= render :partial => 'clients/client_info_preview' %>
+		<h4>Authorization</h4>
+		
+		<p class="stack">
+			Almost done! We just need to authorize the connection with Opentech. We're working hard to make everything as easy as possible. But still, somethings have to work the old way. Your real signature is required for the authorization between Opentech and us (<%= @app_name %>). You'll have to print out this form - which we've kindly filled out for you - sign it and either fax or scan and email it back to us. 
+		</p>
+		
+		<p>
+			<%= @send_issn_auth_to %>
+		</p>
+		
+		<div id="print_box">
+			<%= render :partial => 'vendors/issn_tos' %>
+			<div id="client_info_preview"></div>
 		</div>
 		
-		<div id="opt_2" class="opt">
-			<h4>Join The INSOMNIAC Self Storage Network</h4>
-			
-			<p class="stack">
-				In order to set your facility up on the ISSN, we will send the following information about your facility to OpenTech's ISSN. They will contact you soon to setup special software on your system to allow it to connect to the ISSN.
-			</p>
-			
-			<%= render :partial => 'clients/client_info_preview' %>
+		<div id="print_issn_auth">
+			<%= print_link('#print_box') %> this page.
 		</div>
+		
 	</div> <!-- END step 2 -->
 	
 	<div id="issnstep_3" class="workflow_step">
@@ -58,24 +58,26 @@
 		
 		<div class="inner">
 			<p id="issn_enabled" class="hide">
-				We'll send you an activation email once OpenTech has finished connecting your account. Click on the link within the email to finish up.
+				We'll send you an email notification once OpenTech has finished connecting your account. Click on the link within the email to finish up. 
 			</p>
 		
 			<p id="join_issn" class="hide">
 				An OpenTech technician will contact you to finish the setup. Then, we'll send you an activation email once OpenTech has finished connecting your account. Click on the link within the email to finish up.
 			</p>
 		
-			<form id="enable_test_form" action="/clients/<%= model.id %>/test_issn" method="post">
-				<p>
-					<%= check_box_tag 'enable_test', true, false %>
-					<%= label_tag 'enable_test', 'Enable Test Facility' %>
-				</p>
-				<p>
-					<%= label_tag 'facility_id', 'Test Facility Id' %>
-					<%= text_field_tag 'facility_id', IssnAdapter.rand_facility_id %>
-					<%= submit_tag 'Done', :class => 'hide' %>
-				</p>
-			</form>
+			<% if is_admin? %>
+				<form id="enable_test_form" action="/clients/<%= model.id %>/test_issn" method="post">
+					<p>
+						<%= check_box_tag 'enable_test', true, false %>
+						<%= label_tag 'enable_test', 'Enable Test Facility' %>
+					</p>
+					<p>
+						<%= label_tag 'facility_id', 'Test Facility Id' %>
+						<%= text_field_tag 'facility_id', IssnAdapter.rand_facility_id %>
+						<%= submit_tag 'Done', :class => 'hide' %>
+					</p>
+				</form>
+			<% end %>
 		</div>
 		
 		<%= ajax_loader 'ajax-loader-lrg.gif' %>

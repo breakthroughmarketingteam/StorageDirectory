@@ -490,7 +490,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist,#ls_top .sl-dist{color:#33c;font-size:120%;}
 #sl-fac-detail-in-edit #listing_img{width:100%;height:100%;}
 #sl-fac-detail-in-edit .listing_title{margin-top:15px;}
-#sl-fac-detail-in-edit .address,#sl-fac-detail-in-edit .listing_title{float:left;line-height:1.3;}
+#sl-fac-detail-in-edit .address,#sl-fac-detail-in-edit .listing_title{line-height:1.3;}
 #listings_controller #sl-fac-coup-in-edit input.title,#listings_controller #sl-fac-coup-in-edit input.description{width:96%;}
 #sl-fac-coup-in-edit input.special{width:100%;}
 #sl-fac-detail-in-edit .attr_wrap{overflow:hidden;width:;}
@@ -684,10 +684,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
 #enable_issn{text-decoration:underline;}
 #issn_steps{line-height:1.3;}
+#issn_steps #issnstep_1{height:400px;}
 #issnstep_1 img.right{margin:0 0 7px 10px;border:1px solid #ccc;}
 #issnstep_1 blockquote{margin-bottom:15px;font-size:80%;}
 #issnstep_1 ul{list-style:inside;margin-bottom:15px;font-size:80%;}
-#issn_steps .workflow_step{height:400px;padding:15px 20px;}
+#issn_steps .workflow_step{height:auto;padding:15px 20px;}
 #issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{bottom:10px;margin-top:15px;padding:15px 20px;position:absolute;width:88.5%;}
 #issn_status_option .left,#issn_status_option .right{width:49%;text-align:center;font-weight:bold;}
@@ -697,6 +698,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
+#issn_tos{background:#EBEBEB;border:1px solid #CCC;font-size:80%;height:100px;margin:0 0 20px;overflow:auto;padding:5px 7px;}
 form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Ending the overview page styles here */
 #greenspace-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat 0 0;margin:20px 0 0 4px;padding-bottom:25px;position:relative;}
@@ -848,7 +850,7 @@ img.right{margin:0 0 10px 10px;}
 .compare_listing .key{font-weight:bold;margin-right:7px;}
 .compare_listing .val{}
 /* cities */
-#map_nav{position:relative;}
+#map_nav{position:relative;height:423px;}
 #map_nav_img{opacity:0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
 #map_nav .map_overlay{position:absolute;top:0;}
 #map_nav #state_name{color:#666;font-size:20px;font-weight:bold;margin-right:20px;position:absolute;right:0;top:385px;}
@@ -888,7 +890,7 @@ img.right{margin:0 0 10px 10px;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units .listing .crud_btn{width:145px;}
-#ov-reports-cnt{padding:10px 9px;overflow:hidden;min-height:350px;}
+#ov-reports-cnt{padding:10px 9px;min-height:350px;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
 #ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;border:1px solid #ccc;}
 #ov-page-cnt #ov-top{margin:18px 0 10px;overflow:hidden;}
@@ -1021,6 +1023,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .ui-dialog .ui-dialog-titlebar{}
 .ui-dialog .ui-dialog-titlebar-close{margin:-10px 6px 0;}
 .ui-menu-item{padding:5px 4px;}
+.page-break{display:none;}
 ul.ui-autocomplete{padding-bottom:3px;}
 ul.ui-autocomplete .ui-menu-item{width:100%;}
 .ui-menu-item a{padding:3px 7px;}
@@ -1223,6 +1226,7 @@ form .error p{margin:0 0 7px 0;}
 #step3 .in img{margin-right:-13px;}
 #step3 .in{margin-right:0;border-right:0 none;}
 #step2 #cost_display{border:1px dashed #ccc;margin:10px 0 15px;width:45%;background:#fff;}
+#step3 #gmap_dirs{float:right;width:400px;}
 
 #handle,#red_tab{margin:0 auto;}
 #handle{width:196px;height:51px;margin-top:-42px;margin-bottom:40px;position:relative;z-index:1;background:url(/images/ui/storagelocator/handle.png) no-repeat;}
@@ -1328,6 +1332,22 @@ form .note{clear:both;display:block;font-size:80%;}
 #tips-box-bottom #prev_tip:hover{background:url(/images/ui/storagelocator/prev-tip-hover.png) no-repeat 10px 4px;}
 #tips-box-bottom #next_tip:hover{background:url(/images/ui/storagelocator/next-tip-hover.png) no-repeat 3px 4px;}
 
+#netmem_agree #sig_box{margin-bottom:10px;text-align:center;}
+#netmem_agree .signature_line,#netmem_agree .label{width:400px;margin:0 auto;}
+#netmem_agree .signature_line{border-bottom:1px solid #555;padding-top:15px;margin-top:10px;}
+#netmem_agree .signature_line input{text-align:center;border:0 none;}
+#netmem_agree .label{text-align:center;font-size:60%;color:#666;}
+#netmem_agree table{width:99%;margin:10px 0;font-size:80%;}
+#netmem_agree table th{width:130px;}
+#netmem_agree table th,#netmem_agree table td{border:1px solid #ccc;vertical-align:middle;padding-left:5px;}
+#netmem_agree table td{padding-top:3px;padding-bottom:3px;}
+#netmem_agree table td.value{}
+#netmem_agree table input{width:95%;border:0 none;}
+#netmem_agree select#pm_software{margin-top:3px;}
+#client_listings_table{height:160px;overflow:auto;}
+#print_issn_auth a{font-size:100%;}
+#print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
+
 #info_tabs li.first{}
 #info_tabs li.first a{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;height:34px;margin-left:4px;padding:15px 0 0 17px;color:#fff;font-size:18px;font-weight:bold;text-shadow:1px 1px 0 #666;}
 #info_tabs li{}
@@ -1342,6 +1362,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #green p{font-size:12px;line-height:18px;margin-bottom:20px;}
 #green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#339933;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #green a:hover{text-decoration:underline;}
+
 #green-popup > h2 {font-size:28px;margin-bottom:20px;}
 #green-popup{border:20px solid #ccc;padding:30px;}
 

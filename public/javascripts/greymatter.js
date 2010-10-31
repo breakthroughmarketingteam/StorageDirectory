@@ -971,8 +971,13 @@ function default_pop_up_options(options) {
 	return {
 		title: 	   options.title,
 		width: 	   options.width || 785,
+<<<<<<< HEAD
 		height:    options.height,
 		resizable: false,
+=======
+		height:    (options.height === false ? 'auto' : options.height),
+		resizable: options.height,
+>>>>>>> 0f98cb10b4d69ce34c5e7f253cdde9f4799bb69b
 		modal: 	   options.modal,
 		close: 	   function() {
 			$('.ajax_loader').hide();

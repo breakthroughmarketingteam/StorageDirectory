@@ -156,7 +156,8 @@ class ApplicationController < ActionController::Base
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
     @per_page = 15
-    @listings_per_page = 10                                                           
+    @listings_per_page = 10        
+    @app_name = 'USSelfStorageLocator.com'                                                  
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?

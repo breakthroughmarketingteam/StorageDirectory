@@ -1,6 +1,69 @@
-<ul>
-	<li><span class="block left w150">Owner</span> <%= client.name %></li>
-	<li><span class="block left w150">Contact Email</span> <%= client.email %></li>
-	<li><span class="block left w150">Facility Name</span> <%= client.listings.first.title %></li>
-	<li><span class="block left w150">Facility Address</span> <%= client.listings.first.map.full_address %></li>
-</ul>
+<div id="netmem_agree">
+	<p class="bold">Network Member</p>
+	
+	<div class="signature_line"></div>
+	<p class="label">Authorized Signature</p>
+	
+	<div class="signature_line">
+		<%= text_field_tag '', client.name %>
+	</div>
+	<p class="label">Print Name</p>
+	
+	<div class="signature_line">
+		<%= text_field_tag '', Time.now.strftime "%B, %d %Y" %>
+	</div>
+	<p class="label">Date</p>
+
+	<p class="bold">Network Member Information</p>
+	<table>
+		<tr>
+			<th>Name:</th>
+			<td class="value">
+				<%= text_field_tag '', client.company %>
+			</td>
+		</tr>
+		<tr>
+			<th>Account ID:</th>
+			<td class="value">
+				<%= client.issn_id %>
+			</td>
+		</tr>
+		<tr>
+			<th>Address:</th>
+			<td class="value">
+				<%= text_field_tag '', (client.listings.first.map.full_address rescue false) %>
+			</td>
+		</tr>
+		<tr>
+			<th>Contact Name:</th>
+			<td class="value">
+				<%= text_field_tag '', client.name %>
+			</td>
+		</tr>
+		<tr>
+			<th>Contact Email:</th>
+			<td class="value">
+				<%= text_field_tag '', client.email %>
+			</td>
+		</tr>
+		<tr>
+			<th>Phone (work):</th>
+			<td class="value">
+				<%= text_field_tag '', (client.listings.first.map.phone rescue false) %>
+			</td>
+		</tr>
+		<tr>
+			<th>Phone (cell):</th>
+			<td class="value">
+				<%= text_field_tag '' %>
+			</td>
+		</tr>
+		<tr>
+			<th>PMSoftware*:</th>
+			<td class="value">
+				<p class="np">Supported Property Management Systems</p>
+				<%= select_tag 'pm_software', option_tags($_pm_softwares, nil, 'Choose Your System'), :class => 'required' %>
+			</td>
+		</tr>
+	</table>
+</div>

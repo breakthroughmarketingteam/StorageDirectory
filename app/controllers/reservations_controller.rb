@@ -70,8 +70,8 @@ class ReservationsController < ApplicationController
     else
       render :json => { :success => false, :data => (@response['sErrorMessage'].blank? ? model_errors(@reserver) : @response['sErrorMessage']) }
     end
-  rescue => e
-    render :json => { :success => false, :data => e.message }
+  #rescue => e
+  #  render :json => { :success => false, :data => e.message }
   end
   
   def destroy

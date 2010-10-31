@@ -655,6 +655,17 @@ $(function(){
 				],
 				action : function(wizard) {
 					wizard.workflow.animate({'height': '440px'}, 'fast');
+					
+					var map_dirs  = $('#gmap_dirs');
+					if (!map_dirs.children().length) {
+						map_dirs.jmap({ 
+							mapCenter: [Gmaps_data.center.lat, Gmaps_data.center.lng] 
+						}, function(map, el) { 
+							$(el).jmap('SearchAddress', {
+								query: ''
+							}); 
+						});
+					}
 				}
 			} // END slide 3
 		],

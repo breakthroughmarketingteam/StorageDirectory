@@ -174,6 +174,10 @@ class AjaxController < ApplicationController
     render_error e
   end
   
+  def dirs
+    render :layout => false
+  end
+  
   private
   
   def authorize_and_perform_restful_action_on_model(resource, action, &block)

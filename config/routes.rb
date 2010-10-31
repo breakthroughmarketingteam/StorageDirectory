@@ -31,6 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
+  map.map_dirs '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }

@@ -95,6 +95,7 @@ class ListingsController < ApplicationController
   
   def update
     @listing = is_admin? ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
+    
     case params[:from]
     when 'quick_create'
       @listing.update_attribute :enabled => true
@@ -105,6 +106,7 @@ class ListingsController < ApplicationController
       else
         render :json => { :success => true, :data => model_errors(@map) }
       end
+      
     when 'uplogo'
       if params[:default_logo]
         @listing.update_attribute :default_logo, params[:default_logo]
@@ -113,7 +115,6 @@ class ListingsController < ApplicationController
         @listing.update_attributes params[:listing]
         render :text => render_to_string(:partial => 'edit_detail')
       end
-      
       
     else
       raise ['params[:from] is nil or unrecognized', params].pretty_inspect
