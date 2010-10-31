@@ -492,7 +492,7 @@ $(document).ready(function() {
 			
 			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
 			var pop_up_title  = 'Add Your Facility',
-				pop_up_height = 600,
+				pop_up_height = 'auto',
 				sub_partial   = '/clients/signup_steps',
 				ajax_loader	  = $('#submit_wrap .ajax_loader', this).show(),
 				current_step  = 1,

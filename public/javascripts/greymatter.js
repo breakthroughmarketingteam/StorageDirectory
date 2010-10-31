@@ -971,7 +971,6 @@ function default_pop_up_options(options) {
 	return {
 		title: 	   options.title,
 		width: 	   options.width || 785,
-		minHeight: options.minHeight || 420,
 		height:    options.height,
 		resizable: false,
 		modal: 	   options.modal,
