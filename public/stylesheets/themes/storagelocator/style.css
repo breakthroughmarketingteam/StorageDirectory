@@ -684,10 +684,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
 #enable_issn{text-decoration:underline;}
 #issn_steps{line-height:1.3;}
+#issn_steps #issnstep_1{height:400px;}
 #issnstep_1 img.right{margin:0 0 7px 10px;border:1px solid #ccc;}
 #issnstep_1 blockquote{margin-bottom:15px;font-size:80%;}
 #issnstep_1 ul{list-style:inside;margin-bottom:15px;font-size:80%;}
-#issn_steps .workflow_step{height:400px;padding:15px 20px;}
+#issn_steps .workflow_step{height:auto;padding:15px 20px;}
 #issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{bottom:10px;margin-top:15px;padding:15px 20px;position:absolute;width:88.5%;}
 #issn_status_option .left,#issn_status_option .right{width:49%;text-align:center;font-weight:bold;}
@@ -697,6 +698,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
+#issn_tos{background:#EBEBEB;border:1px solid #CCC;font-size:80%;height:100px;margin:0 0 20px;overflow:auto;padding:5px 7px;}
 form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Ending the overview page styles here */
 #greenspace-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat 0 0;margin:20px 0 0 4px;padding-bottom:25px;position:relative;}
@@ -848,7 +850,7 @@ img.right{margin:0 0 10px 10px;}
 .compare_listing .key{font-weight:bold;margin-right:7px;}
 .compare_listing .val{}
 /* cities */
-#map_nav{position:relative;}
+#map_nav{position:relative;height:423px;}
 #map_nav_img{opacity:0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
 #map_nav .map_overlay{position:absolute;top:0;}
 #map_nav #state_name{color:#666;font-size:20px;font-weight:bold;margin-right:20px;position:absolute;right:0;top:385px;}
@@ -1021,6 +1023,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .ui-dialog .ui-dialog-titlebar{height:28px;}
 .ui-dialog .ui-dialog-titlebar-close{margin:-10px 6px 0;}
 .ui-menu-item{padding:5px 4px;}
+.page-break{display:none;}
 ul.ui-autocomplete{padding-bottom:3px;}
 ul.ui-autocomplete .ui-menu-item{width:100%;}
 .ui-menu-item a{padding:3px 7px;}
@@ -1035,7 +1038,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps{overflow:hidden;position:relative;height:434px;}
-#workflow_nav,#map_flow_nav{position:absolute;top:376px;left:0;width:100%;}
+#workflow_nav,#map_flow_nav{position:absolute;bottom:43px;left:0;width:100%;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:14px;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0 #666;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
@@ -1326,9 +1329,21 @@ form .note{clear:both;display:block;font-size:80%;}
 #tips-box-bottom #prev_tip:hover{background:url(/images/ui/storagelocator/prev-tip-hover.png) no-repeat 10px 4px;}
 #tips-box-bottom #next_tip:hover{background:url(/images/ui/storagelocator/next-tip-hover.png) no-repeat 3px 4px;}
 
-#netmem_agree .signature_line,#netmem_agree .label{width:400px;}
-#netmem_agree .signature_line{border-bottom:1px solid #555;height:50px;margin:10px 0 0 0;}
-#netmem_agree .label{text-align:center;font-size:60%;color:#666;margin:0;}
+#netmem_agree #sig_box{margin-bottom:10px;text-align:center;}
+#netmem_agree .signature_line,#netmem_agree .label{width:400px;margin:0 auto;}
+#netmem_agree .signature_line{border-bottom:1px solid #555;padding-top:15px;margin-top:10px;}
+#netmem_agree .signature_line input{text-align:center;border:0 none;}
+#netmem_agree .label{text-align:center;font-size:60%;color:#666;}
+#netmem_agree table{width:99%;margin:10px 0;font-size:80%;}
+#netmem_agree table th{width:130px;}
+#netmem_agree table th,#netmem_agree table td{border:1px solid #ccc;vertical-align:middle;padding-left:5px;}
+#netmem_agree table td{padding-top:3px;padding-bottom:3px;}
+#netmem_agree table td.value{}
+#netmem_agree table input{width:95%;border:0 none;}
+#netmem_agree select#pm_software{margin-top:3px;}
+#client_listings_table{height:160px;overflow:auto;}
+#print_issn_auth a{font-size:100%;}
+#print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
 
 #info_tabs li.first{}
 #info_tabs li.first a{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;height:34px;margin-left:4px;padding:15px 0 0 17px;color:#fff;font-size:18px;font-weight:bold;text-shadow:1px 1px 0 #666;}

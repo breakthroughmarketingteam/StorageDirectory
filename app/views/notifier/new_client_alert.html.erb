@@ -1,6 +1,6 @@
 Client: <%= @client.attributes.inspect %>
 
-Account Page: <%= edit_client_path client %>
+Account Page: <%= edit_client_path @client %>
 
 Listings: 
 <% @client.listings.each do |listing| %>

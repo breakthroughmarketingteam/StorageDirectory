@@ -389,7 +389,7 @@ $(document).ready(function() {
 		var div_to_print = this.rel,
 			print_opts = { operaSupport: $.browser.opera };
 		
-		if (this.href == '#') $(div_to_print).jqprint(print_opts);
+		if ($(this).attr('href') == '#') $(div_to_print).jqprint(print_opts);
 		else {
 			$.getJSON(this.href, function(response){
 				$.with_json(response, function(data){
@@ -492,7 +492,7 @@ $(document).ready(function() {
 			
 			// 1). gather the facility name and location and ask the server for matching listings to allow the user to pick
 			var pop_up_title  = 'Add Your Facility',
-				pop_up_height = 600,
+				pop_up_height = 'auto',
 				sub_partial   = '/clients/signup_steps',
 				ajax_loader	  = $('#submit_wrap .ajax_loader', this).show(),
 				current_step  = 1,
@@ -637,21 +637,18 @@ $(document).ready(function() {
 		}
 		
 		function issnstep2(wizard) {
-			var ajax_loader = $('.ajax_loader', active_opt);
-			
 			if (typeof wizard.slide_data[1].client_info == 'undefined') {
-				ajax_loader.show();
-				
-				$.getJSON('/ajax/get_partial?partial=clients/client_info_text&model=Client&id='+ $('#client_id').text(), function(response){
+				$.getJSON('/ajax/get_partial?partial=clients/issn_agreement&model=Client&id='+ $('#client_id').text(), function(response){
 					$.with_json(response, function(data){
 						wizard.slide_data[1].client_info = data;
-						$('.client_info_preview', active_opt).append(data);
+						$('#client_info_preview', wizard.workflow).append(data);
+						
+						wizard.workflow.parent().animate({ height: '900px' });
+						
 					});
-					
-					ajax_loader.hide();
 				});
 				
-			} else $('.client_info_preview', active_opt).html(wizard.slide_data[1].client_info);
+			} else $('#client_info_preview', wizard.workflow).html(wizard.slide_data[1].client_info);
 		}
 		
 		function issnstep2_validate(wizard) {

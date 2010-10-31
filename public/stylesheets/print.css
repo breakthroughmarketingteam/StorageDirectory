@@ -1,6 +1,7 @@
 /* no print */
-.ps{display:none !important;}
+.ps,.np{display:none !important;}
 .dp{position:static !important;}
+.page-break{display:block;page-break-before:always;}
 img.left{margin:0 10px 10px 0;}
 /* Storagelocator v1 print style mods */
 #sl-fac-coup{float:left !important;}
@@ -14,3 +15,14 @@ img.left{margin:0 10px 10px 0;}
 #sl-fac-coup-in .coup_code{position:static;color:#666;font-family:Courier, monospace;font-size:10px;}
 #sl-fac-coup-in .special_label,#sl-fac-coup-in-edit .special_label{text-transform:uppercase;display:block;font-size:80%;}
 #listings_controller #sl-fac-coup-in-edit input.coupon_code{font-size:100%;}
+
+#issn_tos{height:auto;}
+#netmem_agree table th{text-align:left;}
+#netmem_agree table th,#netmem_agree table td{border:1px solid #ccc;}
+#netmem_agree table input,#netmem_agree .signature_line input{border:0 none;}
+#netmem_agree #sig_box{margin-bottom:10px;text-align:center;}
+#netmem_agree .signature_line,#netmem_agree .label{width:400px;margin:0 auto;}
+#netmem_agree .signature_line{border-bottom:1px solid #555;padding-top:15px;margin-top:10px;}
+#netmem_agree .signature_line input{text-align:center;border:0 none;}
+#netmem_agree .label{text-align:center;font-size:60%;color:#666;}
+#client_listings_table{height:auto;overflow:visible;}
