@@ -21,13 +21,13 @@ if defined? Geokit
 	# This is your yahoo application key for the Yahoo Geocoder.
 	# See http://developer.yahoo.com/faq/index.html#appid
 	# and http://developer.yahoo.com/maps/rest/V1/geocode.html
-	Geokit::Geocoders::yahoo = 'kJHUAZfV34G.g3h8nkZhfUzkrTW24gBzuE1RzXUZb9QWw3UPYVQrU8ocmgkkmkI02kq3NGzy'
+	Geokit::Geocoders::yahoo = RAILS_ENV == 'development' ? 'rfBdnxPV34G_7pRl_iU8hOzFtT3fc0_lEaglWrFcgzjAVrkJHweHBZMJU2ISd.30_VNHiFIY' : 'KzP5mZPV34FJZbJqoajQvKzTv2yawH_8mFI5CDb9YWsJhKykEW198HzUDYbk.KHwCZTBoeZa'
     
 	# This is your Google Maps geocoder key. 
 	# See http://www.google.com/apis/maps/signup.html
 	# and http://www.google.com/apis/maps/documentation/#Geocoding_Examples
 	# moved to environment files
-	Geokit::Geocoders::google = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BRr_2tWjaRtZSAUCEDqSPiw8R7KmxSDLwHhFSM8wxLOt_2aL5uhHL0hyw' # heroku key
+	Geokit::Geocoders::google = RAILS_ENV == 'development' ? 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQ1oK1Ytp6gJYBvrXawCQUTyWBHJw' : 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BTE80FJOyH0zSjklzaO53DwmhIGKBRKU-jRd2cnKjEC9l0Jasfmrz4oRQ'
 	#Geokit::Geocoders::google = {
 	#  'localhost' => 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BTJQa0g3IQ9GZqIMmInSLzwtGDKaBSNojJ59l416c_5H1dXEmzZt3yWnw',
 	#  'storagelocator.heroku.com' => 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BRr_2tWjaRtZSAUCEDqSPiw8R7KmxSDLwHhFSM8wxLOt_2aL5uhHL0hyw'
@@ -38,7 +38,7 @@ if defined? Geokit
 	# usage tied to an account, the value should be set to username:password.
 	# See http://geocoder.us
 	# and http://geocoder.us/user/signup
-	Geokit::Geocoders::geocoder_us = false 
+	Geokit::Geocoders::geocoder_us = 'diegosalazar214:4TflAgsR' 
 
 	# This is your authorization key for geocoder.ca.
 	# To use the free service, the value can be set to nil or false.  For 

@@ -101,6 +101,7 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def full_address; self.map.full_address end
   def address; self.map.address end
   def city;    self.map.city end
   def state;   self.map.state end

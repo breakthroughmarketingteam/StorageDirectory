@@ -530,7 +530,7 @@ module ApplicationHelper
       lists << '<ul>'
       cities[i*rows, rows].each do |city|
         lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", search_listings_path(city.state, city.name)) +'</li>'
-      end
+      end if cities[i*rows, rows]
       lists << '</ul>'
     end
     lists
