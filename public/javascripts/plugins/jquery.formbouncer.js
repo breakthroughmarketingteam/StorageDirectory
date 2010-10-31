@@ -20,6 +20,7 @@ jQuery.fn.runValidation = function() {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
 		valid_phone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
 		valid_date = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
+		valid_zip = /\d{5}/,
 		numeric_class_regex = /(numeric_)/,
 		form  = $(this),
 		errors = '';
@@ -88,6 +89,9 @@ jQuery.fn.runValidation = function() {
 					markInvalid(input, form);
 				} else if (input.hasClass('numeric_date') && !valid_date.test(input.val())) {
 					error = error_html(input, 'must be a valid date: mm/dd/yyyy');
+					markInvalid(input, form);
+				} else if (input.hasClass('numeric_zip') && !valid_zip.test(input.val())) {
+					error = error_html(input, 'must be a 5 digit zip');
 					markInvalid(input, form);
 				}
 				errors += error;

@@ -1095,6 +1095,7 @@ var GreyWizard = function(container, settings) {
 		self.workflow.parents('#pop_up').show();
 		self.nav_bar  	   = $('#'+ (self.nav_id || 'workflow_nav'), self.workflow).children().hide().end(); // set initial nav visibility
 		self.current  	   = step || 0;
+		self.slide_steps   = $('<div id="slide_nav" />').appendTo(self.workflow.parent());
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
 		
@@ -1124,8 +1125,9 @@ var GreyWizard = function(container, settings) {
 			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
 		});
 		
+		console.log(self.settings.set_slides, this)
 		if (self.settings.set_slides) { // build the slide tabbed nav
-			var slide_display_html = '<div id="slide_nav">',
+			var step_display = '',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
 				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
 				done_skipping 	   = false;
@@ -1136,15 +1138,12 @@ var GreyWizard = function(container, settings) {
 					continue; 
 				}
 				
-				slide_display_html += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
-										   '<p>Step '+ (i+1) +'</p>'+
-											(typeof self.slide_data[i].slide_display != 'undefined' ? self.slide_data[i].slide_display : '') +
-									   '</div>';
-											
+				step_display += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
+									'<p>Step '+ (i+1) +'</p>'+
+									(typeof self.slide_data[i].slide_display != 'undefined' ? self.slide_data[i].slide_display : '') +
+								'</div>';			
 			}
-			
-			slide_display_html += '</div>';
-			self.workflow.parent().append(slide_display_html);
+			self.slide_steps.html(step_display);
 		}
 	}
 	
