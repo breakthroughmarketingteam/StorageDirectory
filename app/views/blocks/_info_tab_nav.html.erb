@@ -1,0 +1,11 @@
+<% unless (@info_posts ||= Post.tagged_with('storageinfo')).blank? %>
+	<ul class="block_sortable tabular" id="info_tabs">
+		<% @info_posts.sort_by(&:position).each_with_index do |post, i| %>
+			<li id="Post_<%= post.id %>" rel="position"<%= ' class="first"' if i == 0 %>>
+				<h4><%= link_to post.title, post, :rel => "info_#{post.id}" %></h4>
+			</li>
+		<% end %>
+	</ul>
+<% else %>
+	<p class="flash error">No Storage Info Available.</p>
+<% end %>
