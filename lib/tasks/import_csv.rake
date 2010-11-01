@@ -2,16 +2,13 @@ namespace :import do
   
   desc "Import Listings from a CSV file."
   task :listings => :environment do
-    require 'csv'
+    require 'fastercsv'
     require 'PP'
     
     file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{ARGV.slice!(1)}" # remove and return the second arg, in this case the csv filename
     
-    puts "Loading file: #{file}"
-    read_file = File.read file
-    
-    puts "Parsing CSV format"
-    records = CSV.parse read_file
+    puts "Loading and Parsing CSV file"
+    records = FasterCSV.read file
     records.shift # discard the header row
     
     puts "Ready to import #{records.size-1} records." # dont count the the header row
@@ -27,14 +24,8 @@ namespace :import do
     @geocode_count = 0
     @retry_count = 0
     @max_retry = 3
-    geocode_with_retry @filtered[:wanted]
-    puts "Done Geocoding. Did #{@geocoded.size} listings."
-    
-    puts "Begin committing #{@geocoded.size} listings to database..."
-    @saved = []
-    @invalid = []
-    import_rows @geocoded
-    puts "DONE! imported: #{@saved.size} listings. Invalid listings not saved: #{@invalid.size}"
+    process_with_retry @filtered[:wanted]
+    puts "Done Processing. Did #{@geocoded.size} listings."
 
     exit
   end
@@ -96,8 +87,8 @@ def filter_records_and_build_listings(records)
   @filtered = { :wanted => @wanted, :rejected => @rejected }
 end
 
-def geocode_with_retry(listings)
-  geocode_listings listings
+def process_with_retry(listings)
+  geocode_and_save listings
   
   if @failed.size > 0
     retries = @failed; @failed = []
@@ -116,7 +107,7 @@ def geocode_with_retry(listings)
   @geocoded
 end
 
-def geocode_listings(listings)
+def geocode_and_save(listings)
   listings.each do |listing|
     @geocode_count += 1
     
@@ -129,21 +120,15 @@ def geocode_listings(listings)
     if listing.map.auto_geocode_address
       @geocoded << listing
       puts "Successfully geocoded #{listing.title}: [#{listing.map.lat}, #{listing.map.lng}]"
+      puts "Saving..."
+      if listing.save
+        puts "Saved listing #{listing.title}, #{listing.city}, #{listing.state}"
+      else
+        
+      end
     else
       @failed << listing
       puts "Failed to geocode #{listing.title}"
-    end
-  end
-end
-
-def import_rows(listings)
-  listings.each_with_index do |listing, i|
-    if listing.save
-      @saved << listing
-      puts "Saved #{listing.title}!"
-    else
-      @invalid << listing
-      puts "Failed to save #{listing.title}; Error: #{listing.errors.full_messages.map * '; '}"
     end
   end
 end
