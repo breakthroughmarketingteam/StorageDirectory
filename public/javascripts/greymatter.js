@@ -1125,7 +1125,6 @@ var GreyWizard = function(container, settings) {
 			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
 		});
 		
-		console.log(self.settings.set_slides, this)
 		if (self.settings.set_slides) { // build the slide tabbed nav
 			var step_display = '',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
