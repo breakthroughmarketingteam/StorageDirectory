@@ -1353,11 +1353,12 @@ form .note{clear:both;display:block;font-size:80%;}
 #print_issn_auth a{font-size:100%;margin-top:10px;}
 #print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
 
-#info_tabs li.first{}
-#info_tabs li.first a{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;height:34px;margin-left:4px;padding:15px 0 0 17px;color:#fff;font-size:18px;font-weight:bold;text-shadow:1px 1px 0 #666;}
-#info_tabs li{}
+#info_tabs li.first a{background:none;margin-left:-1px;}
+#info_tabs li.first{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;color:#fff;font-size:24px;font-weight:bold;height:42px;margin:0 0 4px 4px;padding:7px 0 0 0;text-shadow:1px 1px 0 #666;}
+#info_tabs li.first a:hover{background:none;}
 #info_tabs li a{background:url(/images/ui/storagelocator/info-btn.png) no-repeat;color:#fff;display:block;font-weight:normal;height:21px;margin:0 0 4px 4px;padding:9px 0 0 15px;}
-#info_tabs li a:hover, #info_tabs li.active{background:url(/images/ui/storagelocator/info-btn-hover.png) no-repeat;}
+#info_tabs li a:hover{background:url(/images/ui/storagelocator/info-btn-hover.png) no-repeat;}
+
 
 #footer hr{background:#fff;border:none;height:10px;margin:0;}
 #footer_mid hr{background:#fff;border:none;height:15px;margin:0;}
