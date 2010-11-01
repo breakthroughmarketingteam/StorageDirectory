@@ -20,7 +20,7 @@
   
   $.search.filters = {
     'by substring' : function(search) {
-      return ! this.text().match(search)  
+      return ! this.text().toLowerCase().match(search.toLowerCase())
     },
     
     'by keyword' : function(search) {

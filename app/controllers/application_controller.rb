@@ -168,7 +168,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # TODO move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }
+  # TODO: move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }
   def set_default_view_type
     model_class = controller_name.singular.camelcase.constantize rescue nil
     

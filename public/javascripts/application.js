@@ -463,6 +463,12 @@ $(document).ready(function() {
 		$('a.add_link', '.partial_addable').click();
 	} // END New Permissions
 	
+	// user tips page
+	$('input', '#search_tips').keyup(function() {
+		console.log(this.value)
+		$('h3, div', '.blog-lock').search(this.value, 'by substring', { remove: 'parent' });
+	})
+	
 	// add your facility
 	$('form#new_client').submit(function(){
 		if (!$('#chk_avail').hasClass('avail')) check_client_email_avail($('#client_email', this));
@@ -644,42 +650,6 @@ $(document).ready(function() {
 			} else $('#client_info_preview', wizard.workflow).html(wizard.slide_data[1].client_info);
 			
 		}
-		
-		
-		
-		/*function issnstep2_validate(wizard) {
-			$('.error', '.issn_enable_opts').remove();
-			var error = '', pms = $('select#pm_software', '#'+ wizard.slide_data[1].opt_id);
-			
-			if (!$('input#agree', '#issnstep_2').is(':checked')) error += '<p>You must agree to grant access in order to continue.</p>'
-			if (pms.val() == '') error += '<p>Please select your Property Management System.</p>'
-			
-			if (error != '') $('.issn_enable_opts', '#'+ wizard.slide_data[1].opt_id).prepend('<div class="flash error">'+ error +'</div>');
-			
-			return error == '';
-		}
-		
-		function issnstep3(wizard) {
-			$('.hide', '#issnstep_3').hide();
-			$('#'+ wizard.slide_data[2].issn_status, '#issnstep_3').show();
-		}
-		
-		function issn_steps_finish(wizard) {
-			if ($('#enable_test', '#issnstep_3').is(':checked')) {
-				var inner = $('.inner', '#issnstep_3'),
-					form = $('#enable_test_form', inner).hide(),
-					ajax_loader = $('.ajax_loader', '#issnstep_3').show();
-				
-				$.post(form.attr('action'), form.serialize(), function(response) {
-					$.with_json(response, function(data){
-						inner.html('<h2 class="framed">'+ data +'</h2>');
-						wizard.nav_bar.find('.next').text('Close').unbind('click').click(function(){ window.location.reload(); return false; });
-					});
-					
-					ajax_loader.hide();
-				}, 'json');
-			} else $('#pop_up').dialog('close');
-		}*/
 		
 		$('.pagination a, .table_sorter', '#pop_up').live('click', function() {
 			$('#pop_up').load(this.href + ' #pop_up > div');

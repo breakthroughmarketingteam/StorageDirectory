@@ -1114,7 +1114,7 @@ var GreyWizard = function(container, settings) {
 		if (typeof self.slide_data[self.current].action == 'function') self.slide_data[self.current].action.call(this, self);
 	}
 	
-	// find jquery scrolling slider to make this animation smoother
+	// TODO: find jquery scrolling slider to make this animation smoother
 	this.set_slides = function() {
 		if (typeof set_display == 'undefined') set_display = false;
 		
