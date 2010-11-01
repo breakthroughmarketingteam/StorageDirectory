@@ -22,9 +22,13 @@
 	</div> <!-- END step 2 -->
 
 	<div id="signupstep_3" class="workflow_step">
-	  	<h3>More Information</h4>
-	  
-		<form action="" method="" id="contact_info_form" class="silent">
+		
+		<div id="intro">
+			<h3>Great! One more step to get you signed up.</h3> 
+			<p>Please enter the name and address you would like to use for your main Administrator Account, this user will have access to all the facilities added to the account. You will also be able to create <em>limited</em> user accounts for each of your self storage facilities.</p>
+		</div>
+		
+	    <form action="" method="" id="contact_info_form" class="silent">
 			<p>
 				<label class="hidden">Contact Name</label>
 				<input type="text" id="first_name" name="first_name" class="hintable required" title="First Name" />
@@ -35,7 +39,7 @@
 				<input type="text" id="listing_address" name="listing_address" class="hintable required" title="Street Address" />
 			</p>
 			<p class="city_state_zip">
-				<input type="text" id="listing_city" name="listing_city" class="hintable required autocomplete" rel="UsCity_names" title="City" />
+				<input type="text" id="listing_city" name="listing_city" class="hintable required autocomplete" rel="UsCity_names|5" title="City" />
 				<input type="text" id="listing_state" name="listing_state" class="hintable required autocomplete" rel="States_abbrevs|1" title="State" />
 				<input type="text" id="listing_zip" maxlength="5" name="listing_zip" class="hintable numeric_zip" title="Zip" />
 			</p>
@@ -49,11 +53,6 @@
 				<label for="wants_newsletter">Send me the latest news.</label>
 			</p>
 		</form>
-
-		<div class="right">
-		  <h4>There are many variations</h4> 
-		  <p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words which don't look even slightly believable. </p>
-		</div>
 	  
 	</div> <!-- END step 3 -->
 
