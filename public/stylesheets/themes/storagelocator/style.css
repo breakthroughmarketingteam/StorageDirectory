@@ -822,7 +822,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #storage-info-content{padding:25px 30px 0;}
 #storage-info-content > h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
 #storage-info-content > h4{font-size:22px;margin-bottom:10px;line-height:25px;}
-#storage-info-content h3{color:#4c4bcc;font-size:28px;line-height:32px;margin-bottom:30px;}
+#storage-info-content h3{color:#4c4bcc;font-size:28px;line-height:32px;margin-bottom:20px;}
 #info-accordion{margin:40px 0 0;position:relative;}
 #info-accordion > li{overflow:hidden;min-height:34px;margin-bottom:12px;position:relative;}
 #info-accordion li > h4{height:31px;padding-left:10px;font-size:120%;color:#333;border:1px solid #999;background:url(/images/ui/storagelocator/info-hdr-strip.png) repeat-x top;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
@@ -1353,10 +1353,10 @@ form .note{clear:both;display:block;font-size:80%;}
 #print_issn_auth a{font-size:100%;margin-top:10px;}
 #print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
 
-#info_tabs li.first a{background:none;margin-left:-1px;}
+#info_tabs li.first a{background:none;margin-left:-1px;text-shadow:1px 1px 0 #666;}
 #info_tabs li.first{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;color:#fff;font-size:24px;font-weight:bold;height:42px;margin:0 0 4px 4px;padding:7px 0 0 0;text-shadow:1px 1px 0 #666;}
 #info_tabs li.first a:hover{background:none;}
-#info_tabs li a{background:url(/images/ui/storagelocator/info-btn.png) no-repeat;color:#fff;display:block;font-weight:normal;height:21px;margin:0 0 4px 4px;padding:9px 0 0 15px;}
+#info_tabs li a{background:url(/images/ui/storagelocator/info-btn.png) no-repeat;color:#fff;display:block;font-weight:normal;height:21px;margin:0 0 4px 4px;padding:9px 0 0 15px;text-shadow:1px 1px 0 #333;}
 #info_tabs li a:hover{background:url(/images/ui/storagelocator/info-btn-hover.png) no-repeat;}
 
 
