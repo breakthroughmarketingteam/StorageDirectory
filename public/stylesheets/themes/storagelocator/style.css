@@ -821,7 +821,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .map_wrap{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;width:360px;}
 .map_wrap iframe{height:260px;width:360px;}
 #storage-info-content{padding:25px 30px 0;}
-#storage-info-content h2{color:#4c4bcc;font-size:28px;line-height:32px;margin-bottom:20px;}
+#storage-info-content h2{color:#4c4bcc;font-size:32px;line-height:36px;margin-bottom:20px;}
 #storage-info-content h3{color:#333;font-size:22px;margin-bottom:15px;padding-top:15px;}
 #storage-info-content ul#info_content h4{display:none;}
 #storage-info-content li li{color:#555;font-size:12px;line-height:18px;list-style:disc;margin:10px 0 10px 35px;}
@@ -1313,6 +1313,9 @@ form .error p{margin:0 0 7px 0;}
 #top_fac_page h3{font-size:22px;line-height:28px;}
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
 #add-fac-form-extra ul{margin-left:30px;}
+#add-fac-form-extra ul li{list-style:none;}
+#add-fac-form-extra ul li a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
+#add-fac-form-extra ul li a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
 #top_fac_page #fac-features h4{margin-bottom:20px;margin-left:0;}
 #top_fac_page #fac-features strong{font-size:12px;}
 #text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
