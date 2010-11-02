@@ -97,7 +97,7 @@ def process_with_retry(listings)
     
     if @retry_count <= @max_retry
       puts "Retry Geocoding #{retries.size} listings; Retry count: #{@retry_count}"
-      geocode_with_retry retries
+      process_with_retry retries
     else
       puts "Done retrying. #{retries.size} listings were not geocoded."
     end

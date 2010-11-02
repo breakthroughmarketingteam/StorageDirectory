@@ -847,9 +847,9 @@ $.fn.tabular_content = function() {
 				
 		$('a', tabs).click(function(){
 			panels[action[0]](action[2]).removeClass('active');
-			$('li', tabs).removeClass('active');
-			$(this).addClass('active');
-			$('#'+ $(this).attr('rel'), $this)[action[1]]('slow').addClass('active');
+			$('li, a', tabs).removeClass('active');
+			$(this).addClass('active').parent().addClass('active');
+			$('#'+ $(this).attr('rel'), $this)[action[1]]((action[0] == 'hide' ? null : 'slow')).addClass('active');
 			return false;
 		});
 	});
@@ -1087,6 +1087,7 @@ var GreyWizard = function(container, settings) {
 	self.height   	= self.workflow.height();
 	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
 	self.spacer		= settings.spacer || 100; // to give the slides space between transitions
+	self.pad_left	= settings.pad_left || 15; // to align the slides away from the left wall of the workflow wrapper
 	self.slide_speed = settings.slide_speed || 1500,
 	self.btn_speed  = settings.btn_speed || 900,
 	self.fade_speed = settings.fade_speed || 1000,
@@ -1119,11 +1120,13 @@ var GreyWizard = function(container, settings) {
 		if (typeof set_display == 'undefined') set_display = false;
 		
 		// arrange the slides so they are horizontal to each other, allowing for arbitrary initial slide number
-		self.slides.each(function(i){
+		/*/self.slides.each(function(i) {
 			// calculate the left position so that the initial slide is at 0
 			var left = -((self.width + self.spacer) * (self.current - i))
-			$(this).css({ position: 'absolute', top: 0, left: left +'px' });
-		});
+			$(this).css({ position: 'absolute', top: 0, left: (left + self.pad_left) +'px' });
+		});*/
+		
+		self.workflow.scrollable();
 		
 		if (self.settings.set_slides) { // build the slide tabbed nav
 			var step_display = '',
@@ -1140,7 +1143,7 @@ var GreyWizard = function(container, settings) {
 				step_display += '<div id="tab_step_'+ i +'" class="slide_display '+ (self.current == i ? ' active' : '') + (i == (self.skipped_first ? 1 : 0) ? ' first' : (i == self.num_slides-1 ? ' last' : '')) +'" style="width:'+ slide_tab_width +'%;">'+
 									'<p>Step '+ (i+1) +'</p>'+
 									(typeof self.slide_data[i].slide_display != 'undefined' ? self.slide_data[i].slide_display : '') +
-								'</div>';			
+								'</div>';
 			}
 			self.slide_steps.html(step_display);
 		}
@@ -1192,10 +1195,12 @@ var GreyWizard = function(container, settings) {
 			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
 			self.current += step;
 			
-			self.slides.each(function(i){
+			/*self.slides.each(function(i){
 				var left = (self.width + self.spacer) * (-step) + parseInt($(this).css('left'));
 				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
-			});
+			});*/
+			
+			self.workflow.scrollable().move(step, 1000);
 			
 			self.set_nav();
 			self.title_bar.trigger('change');

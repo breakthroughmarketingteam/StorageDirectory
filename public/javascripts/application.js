@@ -465,7 +465,7 @@ $(document).ready(function() {
 	
 	// user tips page
 	$('a', '#sort').live('click', function() {
-		get_partial_and_do({ partial: 'views/partials/tips', sort_by: this.href.replace('#', '') }, function(response) {
+		get_partial_and_do({ partial: 'views/partials/tips', sort_by: this.href.replace('#', ' ') }, function(response) {
 			$.with_json(response, function(partial) {
 				$('#tips_view').replaceWith(partial);
 			});
@@ -1394,9 +1394,8 @@ function close_pop_up_and_focus_on_fac_name(event){
 	$('#client_company', '#new_client').focus();
 }
 
-function workflow_step2() {
-	var wizard 	     = arguments[0],
-		listings_box = $('.small_listings', arguments[0].workflow);
+function workflow_step2(wizard) {
+	var listings_box = $('.small_listings', arguments[0].workflow);
 	
 	if (!$('#tab_step_0', wizard.workflow.parent()).hasClass('done')) {
 		listings_box.hide();
@@ -1421,6 +1420,12 @@ function workflow_step2() {
 			if (listing_id) $('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
 		}, 350);
 	}
+	
+	// animate the height, depending on how many potential listing results there are, max 420px
+	if (wizard.slide_data[0].data.length < 3) var anim_height = 205;
+	else if (wizard.slide_data[0].data.length >= 4)  var anim_height = 420;
+	else var anim_height = wizard.slide_data[0].data.length * 105;
+	wizard.workflow.animate({ 'height': anim_height +'px' }, 'fast');
 }
 
 function workflow_step3() {
@@ -1445,6 +1450,8 @@ function workflow_step3() {
 	$('.hintable', wizard.workflow).hinty();
 	$('.numeric_phone', wizard.workflow).formatPhoneNum();
 	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
+	
+	wizard.workflow.animate({ 'height': '300px' });
 	
 	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
