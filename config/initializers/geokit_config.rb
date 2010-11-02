@@ -38,7 +38,7 @@ if defined? Geokit
 	# usage tied to an account, the value should be set to username:password.
 	# See http://geocoder.us
 	# and http://geocoder.us/user/signup
-	Geokit::Geocoders::geocoder_us = 'diegosalazar214:4TflAgsR' 
+	Geokit::Geocoders::geocoder_us = false
 
 	# This is your authorization key for geocoder.ca.
 	# To use the free service, the value can be set to nil or false.  For 
@@ -57,7 +57,7 @@ if defined? Geokit
 	# Be aware that there are Terms of Use restrictions on how you can use the 
 	# various geocoders.  Make sure you read up on relevant Terms of Use for each
 	# geocoder you are going to use.
-	Geokit::Geocoders::provider_order = [:google, :yahoo, :us, :ca]
+	Geokit::Geocoders::provider_order = [:yahoo]#[:google, :yahoo, :us, :ca]
 
 	# The IP provider order. Valid symbols are :ip,:geo_plugin.
 	# As before, make sure you read up on relevant Terms of Use for each

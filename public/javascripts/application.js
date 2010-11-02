@@ -590,7 +590,7 @@ $(document).ready(function() {
 			} else {
 				var partial = 'clients/issn_steps', 
 					title = 'Activate Real Time Reservations', 
-					height = '486';
+					height = 'auto';
 
 				get_pop_up_and_do({ title: title, height: height, modal: true }, { sub_partial: partial, model: 'Client', id: $('#client_id').text() }, function(pop_up) {
 					new GreyWizard($('#issn_steps', pop_up), {
@@ -622,6 +622,7 @@ $(document).ready(function() {
 				wizard.next();
 				return false;
 			});
+			$('#slide_nav').remove();
 		}
 		
 		function issnstep2(wizard) {
@@ -631,7 +632,7 @@ $(document).ready(function() {
 						wizard.slide_data[1].client_info = data;
 						$('#client_info_preview', wizard.workflow).append(data);
 						
-						wizard.workflow.parent().animate({ height: '900px' });
+						wizard.workflow.animate({ height: '900px' });
 						
 						// printing the page doesn't show the select's value so put it in a hidden span which is visible in the print css
 						var pm_select = $('select[name=pm_software]', wizard.workflow);
@@ -740,7 +741,6 @@ $(document).ready(function() {
 		$('#add_fac', '#ov-units').click(function(){
 			var $this 		   = $(this),
 				listing_box    = $('#client_listing_box', $this.parent().parent()),
-				empty_listings = $('#empty_listings', listing_box),
 				ajax_loader    = $this.prev('.ajax_loader').show();
 		
 			// GET PARTIAL
@@ -751,11 +751,8 @@ $(document).ready(function() {
 						tip_text	  = $('.new_listing_tip', partial);
 
 					// insert the new listing into either the #empty_listings box or #rslt-list-bg
-					if (empty_listings.length > 0) {
-						$('.client_tip', empty_listings).remove();
-						empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
-
-					} else $('#rslt-list-bg', listing_box).prepend(partial);
+					if ($('.listing', listing_box).length == 0) listing_box.html('<div id="rslt-list-bg"></div>').find('#rslt-list-bg').append(partial);
+					else $('#rslt-list-bg', listing_box).prepend(partial);
 
 					$('.listing', listing_box).removeClass('active');
 					partial.addClass('active').slideDown(300, function() { 
@@ -867,7 +864,7 @@ $(document).ready(function() {
 			});
 			
 			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
-			$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+			$('.action_btn a', '.listing:eq(0)').live('click', function(){
 				var partial 	= $('.listing:eq(0)', '#client_listing_box'),
 					button  	= $(this),
 					ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
@@ -1452,7 +1449,6 @@ function workflow_step3() {
 	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
 	
 	wizard.workflow.animate({ 'height': '300px' });
-	
 	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
 
@@ -1517,6 +1513,7 @@ function workflow_step4() { // form data review
 	}
 	
 	review.append(review_html);
+	wizard.workflow.animate({ 'height': '435px' }, 'fast');
 	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 

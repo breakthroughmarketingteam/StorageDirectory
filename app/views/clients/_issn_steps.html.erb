@@ -1,57 +1,59 @@
 <div id="issn_steps">
-	<div id="issnstep_1" class="workflow_step">
-		<%= link_to image_tag('/files/content/issn_networklogo.jpg', :class => 'right'), 'http://www.opentechalliance.com/products/insomniac-network.php' %>
+	<div class="items">
+		<div id="issnstep_1" class="workflow_step">
+			<%= link_to image_tag('/files/content/issn_networklogo.jpg', :class => 'right'), 'http://www.opentechalliance.com/products/insomniac-network.php' %>
 		
-		<h4>Online Reservations through the INSOMNIAC Self Storage Network (ISSN)</h4>
-		<blockquote>
-			The INSOMNIAC Self Storage Network (ISSN) is the only real-time reservations platform in the self storage industry. ISSN provides a secure, real-time connection between self storage facilities (Network Members) and marketing companies (Marketing Partners) for the purpose of processing real-time reservations. 
-			<cite title="OpenTech Alliance"><a href="http://www.opentechalliance.com/products/insomniac-network.php" target="_blank">Opentech Alliance</a>.</cite>
-		</blockquote>
+			<h4>Online Reservations through the INSOMNIAC Self Storage Network (ISSN)</h4>
+			<blockquote>
+				The INSOMNIAC Self Storage Network (ISSN) is the only real-time reservations platform in the self storage industry. ISSN provides a secure, real-time connection between self storage facilities (Network Members) and marketing companies (Marketing Partners) for the purpose of processing real-time reservations. 
+				<cite title="OpenTech Alliance"><a href="http://www.opentechalliance.com/products/insomniac-network.php" target="_blank">Opentech Alliance</a>.</cite>
+			</blockquote>
 		
-		<h4>Features of the INSOMNIAC Self Storage Network:</h4>
-		<ul>
-		    <li>Allows self storage operators to accept online reservations through multiple sales channels</li>
-		    <li>Frees facility managers from wasting time updating their available unit information in multiple systems</li>
-		    <li>Eliminates the need to play phone tag with customers who requested a quote</li>
-		</ul>
+			<h4>Features of the INSOMNIAC Self Storage Network:</h4>
+			<ul>
+			    <li>Allows self storage operators to accept online reservations through multiple sales channels</li>
+			    <li>Frees facility managers from wasting time updating their available unit information in multiple systems</li>
+			    <li>Eliminates the need to play phone tag with customers who requested a quote</li>
+			</ul>
 		
-		<p>
-			Choose the option below that applies to you to enable this feature on your account.
-		</p>
+			<p>
+				Choose the option below that applies to you to enable this feature on your account.
+			</p>
 		
-		<div id="issn_status_option" class="uncollapse">
-			<div class="left">
-				<a href="#" id="issn_enabled" rel="opt_1">Already an ISSN Member</a>
-			</div>
+			<div id="issn_status_option" class="uncollapse">
+				<div class="left">
+					<a href="#" id="issn_enabled" rel="opt_1">Already an ISSN Member</a>
+				</div>
 			
-			<div class="right">
-				<a href="#" id="join_issn" rel="opt_2">Join the ISSN</a>
+				<div class="right">
+					<a href="#" id="join_issn" rel="opt_2">Join the ISSN</a>
+				</div>
 			</div>
-		</div>
 		
-	</div> <!-- END step 1 -->
+		</div> <!-- END step 1 -->
 
-	<div id="issnstep_2" class="workflow_step">
-		<h4>Authorization</h4>
+		<div id="issnstep_2" class="workflow_step">
+			<h4>Authorization</h4>
 		
-		<p class="stack">
-			Almost done! We just need to authorize the connection with Opentech. We're working hard to make everything as easy as possible. But still, somethings have to work the old way. Your real signature is required for the authorization between Opentech and us (<%= @app_name %>). You'll have to print out this form - which we've kindly filled out for you - sign it and either fax or scan and email it back to us. 
-		</p>
+			<p class="stack">
+				Almost done! We just need to authorize the connection with Opentech. We're working hard to make everything as easy as possible. But still, somethings have to work the old way. Your real signature is required for the authorization between Opentech and us (<%= @app_name %>). You'll have to print out this form - which we've kindly filled out for you - sign it and either fax or scan and email it back to us. 
+			</p>
 		
-		<p>
-			<%= @send_issn_auth_to %>
-		</p>
+			<p>
+				<%= @send_issn_auth_to %>
+			</p>
 		
-		<div id="print_box">
-			<%= render :partial => 'vendors/issn_tos' %>
-			<div id="client_info_preview"></div>
-		</div>
+			<div id="print_box">
+				<%= render :partial => 'vendors/issn_tos' %>
+				<div id="client_info_preview"></div>
+			</div>
 		
-		<div id="print_issn_auth">
-			<%= print_link('#print_box') %> this page
-		</div>
+			<div id="print_issn_auth">
+				<%= print_link('#print_box') %> this page
+			</div>
 		
-	</div> <!-- END step 2 -->
+		</div> <!-- END step 2 -->
+	</div>
 	
 	<div id="workflow_nav">
 		<a class="button back" id="back" href="#back">Back</a>

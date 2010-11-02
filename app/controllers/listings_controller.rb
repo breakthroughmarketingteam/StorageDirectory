@@ -26,7 +26,7 @@ class ListingsController < ApplicationController
       @last_search = Search.find session[:search_id] # get the last search so we don't have to geocode again
       @prev_search = Search.create @last_search.attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
     
-    elsif session[:search_id] # reloaded the page?
+    elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
     
     else # clicked on a link
@@ -98,7 +98,7 @@ class ListingsController < ApplicationController
     
     case params[:from]
     when 'quick_create'
-      @listing.update_attribute :enabled => true
+      @listing.update_attribute :enabled, true
       @map = @listing.map
       
       if @map.update_attributes params[:listing][:map_attributes]
