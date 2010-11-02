@@ -25,6 +25,14 @@ class Map < ActiveRecord::Base
     auto_geocode_address if self.zip || self.city
   end
   
+  def auto_geocode_field
+    :full_address
+  end
+  
+  def auto_geocode_error_message
+    'could not be geocoded'
+  end
+  
   def full_address
     "#{address.gsub('#', '') +' ' if address}#{city}, #{state} #{zip}"
   end

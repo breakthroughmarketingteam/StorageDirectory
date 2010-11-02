@@ -809,14 +809,18 @@ $(document).ready(function() {
 				title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
 				tip_text	  = $('.new_listing_tip', partial),
 				tip_inner	  = tip_text.find('strong'),
+				listing_id	  = partial.attr('id') ? partial.attr('id').replace('Listing_', '') : null;
 				ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
-		
+			
 			if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
 				tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
 				tip_inner.text('Enter the street address.');
 				ajax_loader.show();
-
-				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+				
+				var params = { title: title_input.val() };
+				if (listing_id) params['id'] = listing_id;
+				
+				$.post('/listings/quick_create', params, function(response){
 					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
 					else title_input.addClass('invalid').focus(); // SERVER VALIDATION DID NOT PASS
 					
@@ -883,12 +887,13 @@ $(document).ready(function() {
 
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+						console.log(response)
 						$.with_json(response, function(data){
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
-
-							listing_html = $(data);
-							partial.html(listing_html.html()).removeClass('active');
-							$('#listings_size').text(parseInt($('#listings_size').text())+1);
+							
+							listing = $(data);
+							partial.html(listing.html()).removeClass('active');
+							$('#listings_size').text(parseInt($('#listings_size').text()) + 1);
 						});
 
 						button.data('saving', false);

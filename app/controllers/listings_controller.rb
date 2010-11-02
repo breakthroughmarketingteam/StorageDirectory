@@ -113,7 +113,7 @@ class ListingsController < ApplicationController
         render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
       elsif params[:listing]
         @listing.update_attributes params[:listing]
-        render :text => render_to_string(:partial => 'edit_detail')
+        render :json => { :success => false, :data => model_errors(@listing) }
       end
       
     else
@@ -123,10 +123,10 @@ class ListingsController < ApplicationController
   
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
-    @listing = current_user.listings.build :title => params[:title]
+    @listing = params[:id] ? Listing.find(params[:id]) : current_user.listings.build(:title => params[:title])
     @listing.default_logo = rand(@listing_logos.size)
     
-    if @listing.save
+    if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map
       @map.save(false)
       render :json => { :success => true, :data => { :listing_id => @listing.id } }

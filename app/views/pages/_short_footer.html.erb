@@ -7,10 +7,19 @@
 			<p>
 				<strong>Affiliate Progams</strong> - Get great deals and save on your next Self Storage rental with one of our affiliate partners.
 			</p>
+			
 			<div class="wrapper">
 				<div class="previous_ad"></div>
+				
+				<% @ad_partners.each do |ad| %>
+					<div id="ap_<%= ad.title %>" class="ad">
+						<%= link_to image_tag(ad.image.url(:thumb), :alt => ad.description), ad.url, ad.html_attributes %>
+					</div>
+				<% end %>
+				
 				<div class="ad">
-					<a href="http://www.publicstorage.com" target="_blank"><img src="/files/content/affiliates/publicstorage.jpg" alt="Public Storage Self Storage"></a>
+					<a href="http://www.dpbolvw.net/te105uoxuowBGDHKIGCBDCHLHIKL" target="_blank" onmouseover="window.status='http://www.angieslist.com/AngiesList/default.asp?af=102961';return true;" onmouseout="window.status=' ';return true;">
+					<img src="http://www.tqlkg.com/1g81uuymsqBGDHKIGCBDCHLHIKL" alt="Save Ten With Angie's List!" border="0"/></a>
 				</div>
 				<div class="ad">
 					<a href="http://www.get-a-cow.net" target="_blank"><img src="/files/content/affiliates/cows.jpg" alt="Cows Portable Storage Containers"></a>
@@ -25,7 +34,8 @@
 					<a href="http://www.unclebobs.com" target="_blank"><img src="/files/content/affiliates/unclebobs.jpg" alt="Uncle Bob's Self Storage"></a>
 				</div>
 				<div class="ad">
-					<a href="http://www.publicstorage.com" target="_blank"><img src="/files/content/affiliates/publicstorage.jpg" alt="Public Storage Self Storage"></a>
+					<a href="http://www.anrdoezrs.net/6d103ft1zt0GLIMPNLHGIHOMLOKO" target="_blank" onmouseover="window.status='http://www.24-7pressrelease.com';return true;" onmouseout="window.status=' ';return true;">
+					<img src="http://www.awltovhc.com/3c100ax0pvtEJGKNLJFEGFMKJMIM" alt="Have a Big Announcement? Get the Word Out! | 24-7P" border="0"/></a>
 				</div>
 				<div class="next_ad"></div>
 			</div>

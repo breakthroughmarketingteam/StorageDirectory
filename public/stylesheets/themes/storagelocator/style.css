@@ -245,7 +245,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;margin-top:-1px;}
-.rslt-contact{width:159px;color:#555;margin:10px 0 0 10px;padding-right:10px;}
+.rslt-contact{width:159px;color:#555;margin:12px 0 0 10px;padding-right:10px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0 0 7px;overflow:hidden;}
 .rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
 .rslt-title h3 a{color:#060;}
@@ -664,7 +664,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
-#ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 10px;}
+#ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}

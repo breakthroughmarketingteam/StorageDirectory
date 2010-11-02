@@ -152,6 +152,7 @@ class ApplicationController < ActionController::Base
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       @nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
+      @ad_partners       = AdPartner.all
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        

@@ -464,28 +464,29 @@ $.toggleAction = function(href, scroll_to_it) {
 	var url_hash = href.split('#');
 	
 	if (url_hash[1]) {
-		var url_hash	 = url_hash[1],
-	 		action		 = url_hash.split('_')[0],
-			elementClass = url_hash.split('_')[1],
-			contextClass = url_hash.split('_')[2],
-			target		 = $('.' + elementClass, '.' + contextClass);
-		
+		var url_hash = url_hash[1],
+	 		action	 = url_hash.split('_')[0],
+			element  = url_hash.split('_')[1],
+			context  = url_hash.split('_')[2],
+			target	 = $(element, context);
+			
 		// validate action name and do it.
 		if ($.validateAnimationAction(action)) {
-			if (elementClass.match(/^ov-.*/)) { // used on the client options (#admin-box)
+			if (element.match(/^ov-.*/)) { // used on the client options (#admin-box)
 				setTimeout(function(){
-					$('a[rel='+ elementClass +']', '#admin-box').click();
+					$('a[rel='+ element +']', '#admin-box').click();
 				}, 1);
 				
 			} else {
-				var context = $('.' + contextClass);
-				var actionLink = $('.toggle_action', context);
-
+				var oContext = $(context);
+				var actionLink = $('.toggle_action', oContext);
+				
 				// change the state of the toggle_action link
-				if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
-
-				if (scroll_to_it) $(document).scrollTo(context, 800);
-
+				if (actionLink.length) $.switch_action_hash($('.toggle_action', oContext), action, element, context);
+				try {
+					if (scroll_to_it) $(document).scrollTo(oContext, 800);
+				} catch (e) { }
+				
 				target[action]();
 			}
 		}
