@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101031020530) do
+ActiveRecord::Schema.define(:version => 20101102010612) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -512,9 +512,10 @@ ActiveRecord::Schema.define(:version => 20101031020530) do
     t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "comments_count",   :default => 0
+    t.integer  "comments_count",    :default => 0
     t.boolean  "comments_enabled"
-    t.integer  "position",         :default => 0
+    t.integer  "position",          :default => 0
+    t.integer  "impressions_count", :default => 0
   end
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"

@@ -2,16 +2,13 @@ namespace :import do
   
   desc "Import Listings from a CSV file."
   task :listings => :environment do
-    require 'csv'
+    require 'fastercsv'
     require 'PP'
     
     file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{ARGV.slice!(1)}" # remove and return the second arg, in this case the csv filename
     
-    puts "Loading file: #{file}"
-    read_file = File.read file
-    
-    puts "Parsing CSV format"
-    records = CSV.parse read_file
+    puts "Loading and Parsing CSV file"
+    records = FasterCSV.read file
     records.shift # discard the header row
     
     puts "Ready to import #{records.size-1} records." # dont count the the header row
@@ -27,22 +24,16 @@ namespace :import do
     @geocode_count = 0
     @retry_count = 0
     @max_retry = 3
-    geocode_with_retry @filtered[:wanted]
-    puts "Done Geocoding. Did #{@geocoded.size} listings."
+    process_with_retry @filtered[:wanted]
+    puts "Done Processing. Did #{@geocoded.size} listings. Failed #{@failed.size}"
     
-    puts "Begin committing #{@geocoded.size} listings to database..."
-    @saved = []
-    @invalid = []
-    import_rows @geocoded
-    puts "DONE! imported: #{@saved.size} listings. Invalid listings not saved: #{@invalid.size}"
-
-    exit
+    save_failed_to_file(@geocoded) and exit # whoopie!
   end
 end
 
 # get only the storage, moving and truck companies
 def filter_records_and_build_listings(records)
-  @category = ''; @wanted = []; @rejected = []
+  @category = ''; @wanted = []; @rejected = []; @wanted_rows = []
   
   @storage_regex = /(storage)|(stge)|(strge)|(container)|(warehouse)/i
   @truck_regex = /(truck)/i
@@ -86,6 +77,7 @@ def filter_records_and_build_listings(records)
         @listing.build_contact :title => contact_title, :first_name => contact_first_name, :last_name => contact_last_name, :phone => phone, :sic_description => sic_description
       
         @wanted << @listing
+        @wanted_rows << row
         puts "Added (#{@category}) #{@listing.title} [#{sic_description}] - #{@listing.city}, #{@listing.state}"
       end
     rescue => e
@@ -93,11 +85,11 @@ def filter_records_and_build_listings(records)
     end
   end
   
-  @filtered = { :wanted => @wanted, :rejected => @rejected }
+  @filtered = { :wanted => @wanted, :rejected => @rejected, :wanted_rows => @wanted_rows }
 end
 
-def geocode_with_retry(listings)
-  geocode_listings listings
+def process_with_retry(listings)
+  geocode_and_save listings
   
   if @failed.size > 0
     retries = @failed; @failed = []
@@ -105,7 +97,7 @@ def geocode_with_retry(listings)
     
     if @retry_count <= @max_retry
       puts "Retry Geocoding #{retries.size} listings; Retry count: #{@retry_count}"
-      geocode_with_retry retries
+      process_with_retry retries
     else
       puts "Done retrying. #{retries.size} listings were not geocoded."
     end
@@ -113,37 +105,45 @@ def geocode_with_retry(listings)
     puts "Successfuly geocoded #{@geocode_count} listings #{@geocoded.size}"
   end
   
+  @failed = retries || []
   @geocoded
 end
 
-def geocode_listings(listings)
+def geocode_and_save(listings)
   listings.each do |listing|
-    @geocode_count += 1
-    
-    if @geocode_count % 50 == 0
-      puts "geocode count: #{@geocode_count}, waiting for 15 secs..."
-      sleep(15)
-      puts 'Proceeding...'
-    end
-    
     if listing.map.auto_geocode_address
       @geocoded << listing
       puts "Successfully geocoded #{listing.title}: [#{listing.map.lat}, #{listing.map.lng}]"
+      puts "Saving..."
+      if listing.save
+        puts "Saved listing #{listing.title}, #{listing.city}, #{listing.state}"
+      else
+        @failed << listing
+        puts "Error saving listing #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
+      end
     else
       @failed << listing
       puts "Failed to geocode #{listing.title}"
     end
+    
+    @geocode_count += 1
+    
+    if @geocode_count % 50 == 0
+      puts "geocode count: #{@geocode_count}, waiting for 15 secs..."
+      sleep(30)
+      puts 'Proceeding...'
+    end
   end
 end
 
-def import_rows(listings)
-  listings.each_with_index do |listing, i|
-    if listing.save
-      @saved << listing
-      puts "Saved #{listing.title}!"
-    else
-      @invalid << listing
-      puts "Failed to save #{listing.title}; Error: #{listing.errors.full_messages.map * '; '}"
+def save_failed_to_file(listings)
+  if listings.size > 0
+    path = "#{RAILS_ROOT}/lib/tasks/csv_data/failed_records.csv"
+    puts "Saving #{listings.size} failed records to file (#{path})"
+    
+    FasterCSV.open(path, 'w') do |csv|
+      csv << listings.first.attributes.keys.map(&:to_s)
+      listings.each { |listing| csv << listing.attributes.values.map }
     end
   end
 end

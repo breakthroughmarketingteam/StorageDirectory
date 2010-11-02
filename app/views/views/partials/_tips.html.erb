@@ -1,16 +1,16 @@
 <div id="type-one-top-bar">
   
 	 <div id="type-two-top-bar-head">
-	   	<form action="post" class="tips">
+	   	<form action="" method="" class="tips">
 		   <ul>
-			 	<li id="sort">Sort by: <a href="">Rating</a> / <a href="">Views</a></li>
+			 	<li id="sort">Sort by: <a href="#ratings_count">Rating</a> / <a href="#impressions_count">Views</a></li>
 				<li id="search_tips"><input type="text" class="hintable" title="Search by keyword " /> <a href="">Go</a></li>
 				<li><a href="/tips/new" class="search-options openDiv" rel="add_new_tip">Add your tips</a></li>
 			 </ul>
 		</form>
 	 </div>
 	
-	<hr class="tips" />
+	<hr />
     
 	<div id="add_new_tip" class="hidden">
 		<% form_tag create_tip_path do %>
@@ -41,6 +41,7 @@
     </div>
 	 
 	<div id="tips-wrap">
+		<% if params[:sort] then data = Post.tagged_with('tip').sort_by{ |d| d.send params[:sort] } end %>
 		<% data.each do |tip| %>
 			<%= render :partial => 'comments/tip', :locals => { :tip => tip } %>
 		<% end %>

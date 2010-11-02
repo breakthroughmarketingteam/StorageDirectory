@@ -21,7 +21,7 @@
 				</div>
 				<div>
 					<%= f.label :unit_size, 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]', @prev_search.try(:unit_size) %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', (@prev_search.try(:unit_size) || $_listing_search_distance) %>
 				</div>
 			</div>
 			

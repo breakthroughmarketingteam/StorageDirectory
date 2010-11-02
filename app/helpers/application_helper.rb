@@ -282,7 +282,7 @@ module ApplicationHelper
   end
   
   def show_title(model)
-    "<h2>#{model.title}</h2>" if (model.respond_to?(:show_title) && model.show_title) || !model.respond_to?(:show_title)
+    "<h2>#{model.title}</h2>" if (model.respond_to?(:show_title) && model.show_title)
   end
   
   def contextual_index_view_title(title = nil)
