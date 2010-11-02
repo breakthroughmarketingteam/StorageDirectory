@@ -464,13 +464,21 @@ $(document).ready(function() {
 	} // END New Permissions
 	
 	// user tips page
+	$('a', '#sort').live('click', function() {
+		get_partial_and_do({ partial: 'views/partials/tips', sort_by: this.href.replace('#', '') }, function(response) {
+			$.with_json(response, function(partial) {
+				$('#tips_view').replaceWith(partial);
+			});
+		});
+	});
+	
 	$('input', '#search_tips').keyup(function() {
-		console.log(this.value)
-		$('h3, div', '.blog-lock').search(this.value, 'by substring', { remove: 'parent' });
-	})
+		var parent = function() { return $(this).parents('.blog-lock') };
+		$('h3 a, div', '.blog-lock').search(this.value, 'by substring', { remove: parent });
+	});
 	
 	// add your facility
-	$('form#new_client').submit(function(){
+	$('form#new_client').submit(function() {
 		if (!$('#chk_avail').hasClass('avail')) check_client_email_avail($('#client_email', this));
 		
 		var signup_form = $(this).runValidation();

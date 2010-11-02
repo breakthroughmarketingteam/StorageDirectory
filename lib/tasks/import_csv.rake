@@ -25,15 +25,15 @@ namespace :import do
     @retry_count = 0
     @max_retry = 3
     process_with_retry @filtered[:wanted]
-    puts "Done Processing. Did #{@geocoded.size} listings."
-
-    exit
+    puts "Done Processing. Did #{@geocoded.size} listings. Failed #{@failed.size}"
+    
+    save_failed_to_file(@geocoded) and exit # whoopie!
   end
 end
 
 # get only the storage, moving and truck companies
 def filter_records_and_build_listings(records)
-  @category = ''; @wanted = []; @rejected = []
+  @category = ''; @wanted = []; @rejected = []; @wanted_rows = []
   
   @storage_regex = /(storage)|(stge)|(strge)|(container)|(warehouse)/i
   @truck_regex = /(truck)/i
@@ -77,6 +77,7 @@ def filter_records_and_build_listings(records)
         @listing.build_contact :title => contact_title, :first_name => contact_first_name, :last_name => contact_last_name, :phone => phone, :sic_description => sic_description
       
         @wanted << @listing
+        @wanted_rows << row
         puts "Added (#{@category}) #{@listing.title} [#{sic_description}] - #{@listing.city}, #{@listing.state}"
       end
     rescue => e
@@ -84,7 +85,7 @@ def filter_records_and_build_listings(records)
     end
   end
   
-  @filtered = { :wanted => @wanted, :rejected => @rejected }
+  @filtered = { :wanted => @wanted, :rejected => @rejected, :wanted_rows => @wanted_rows }
 end
 
 def process_with_retry(listings)
@@ -104,19 +105,12 @@ def process_with_retry(listings)
     puts "Successfuly geocoded #{@geocode_count} listings #{@geocoded.size}"
   end
   
+  @failed = retries || []
   @geocoded
 end
 
 def geocode_and_save(listings)
   listings.each do |listing|
-    @geocode_count += 1
-    
-    if @geocode_count % 50 == 0
-      puts "geocode count: #{@geocode_count}, waiting for 15 secs..."
-      sleep(15)
-      puts 'Proceeding...'
-    end
-    
     if listing.map.auto_geocode_address
       @geocoded << listing
       puts "Successfully geocoded #{listing.title}: [#{listing.map.lat}, #{listing.map.lng}]"
@@ -124,11 +118,32 @@ def geocode_and_save(listings)
       if listing.save
         puts "Saved listing #{listing.title}, #{listing.city}, #{listing.state}"
       else
-        
+        @failed << listing
+        puts "Error saving listing #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
       end
     else
       @failed << listing
       puts "Failed to geocode #{listing.title}"
+    end
+    
+    @geocode_count += 1
+    
+    if @geocode_count % 50 == 0
+      puts "geocode count: #{@geocode_count}, waiting for 15 secs..."
+      sleep(30)
+      puts 'Proceeding...'
+    end
+  end
+end
+
+def save_failed_to_file(listings)
+  if listings.size > 0
+    path = "#{RAILS_ROOT}/lib/tasks/csv_data/failed_records.csv"
+    puts "Saving #{listings.size} failed records to file (#{path})"
+    
+    FasterCSV.open(path, 'w') do |csv|
+      csv << listings.first.attributes.keys.map(&:to_s)
+      listings.each { |listing| csv << listing.attributes.values.map }
     end
   end
 end

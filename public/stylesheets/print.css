@@ -3,6 +3,7 @@
 .dp{position:static !important;}
 .page-break{display:block;page-break-before:always;}
 img.left{margin:0 10px 10px 0;}
+.note{clear:both;display:block;font-size:80%;}
 /* Storagelocator v1 print style mods */
 #sl-fac-coup{float:left !important;}
 #sl-fac-coup{width:45%;float:right;position:relative;border:2px dashed #ccc;margin-right:2px;}
