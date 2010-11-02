@@ -823,7 +823,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #storage-info-content h2{color:#4c4bcc;font-size:28px;line-height:32px;margin-bottom:20px;}
 #storage-info-content h3{color:#333;font-size:22px;margin-bottom:15px;padding-top:15px;}
 #storage-info-content ul#info_content h4{display:none;}
-#storage-info-content li li{color:#555;font-size:12px;line-height:18px;list-style:disc inside;margin:10px 0 10px 25px;}
+#storage-info-content li li{color:#555;font-size:12px;line-height:18px;list-style:disc;margin:10px 0 10px 35px;}
 #storage-info-content li li em{color:#4c4bcc;font-weight:bold;}
 #storage-info-content li ul{padding:0 0 10px;}
 #storage-info-content a{color:#4c4bcc;font-size:12px;}
