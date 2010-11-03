@@ -22,7 +22,7 @@ class Map < ActiveRecord::Base
   # Instance Methods
   
   def before_save
-    auto_geocode_address if self.zip || self.city
+    #auto_geocode_address if self.zip || self.city
   end
   
   def auto_geocode_field

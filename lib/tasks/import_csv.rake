@@ -18,16 +18,13 @@ namespace :import do
     filter_records_and_build_listings records
     puts "Done Filtering. Listings in Queue: #{@filtered[:wanted].size}; Rejected: #{@filtered[:rejected].size}"
     
-    puts "Begin geocoding #{@filtered[:wanted].size} listings..."
-    @geocoded = []
-    @failed = []
-    @geocode_count = 0
-    @retry_count = 0
-    @max_retry = 3
-    process_with_retry @filtered[:wanted]
-    puts "Done Processing. Did #{@geocoded.size} listings. Failed #{@failed.size}"
+    @listings = @filtered[:wanted]
+    puts "Begin saving #{@listings.size} listings..."
+    @lisitngs.each do |listing|
+      listing
+    end
     
-    save_failed_to_file(@geocoded) and exit # whoopie!
+    save_failed_to_file(@listings) and exit # whoopie!
   end
 end
 
