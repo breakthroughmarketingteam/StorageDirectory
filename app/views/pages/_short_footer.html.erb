@@ -11,11 +11,7 @@
 			<div class="wrapper">
 				<div class="previous_ad"></div>
 				
-				<% @ad_partners.each do |ad| %>
-					<div id="ap_<%= ad.title %>" class="ad">
-						<%= link_to image_tag(ad.image.url(:thumb), :alt => ad.description), ad.url, ad.html_attributes %>
-					</div>
-				<% end %>
+				<%= render @ad_partners %>
 				
 				<div class="ad">
 					<a href="http://www.dpbolvw.net/te105uoxuowBGDHKIGCBDCHLHIKL" target="_blank" onmouseover="window.status='http://www.angieslist.com/AngiesList/default.asp?af=102961';return true;" onmouseout="window.status=' ';return true;">

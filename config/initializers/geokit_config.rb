@@ -46,7 +46,7 @@ if defined? Geokit
 	# Geocoder.ca.
 	# See http://geocoder.ca
 	# and http://geocoder.ca/?register=1
-	Geokit::Geocoders::geocoder_ca = false
+	Geokit::Geocoders::geocoder_ca = false#251014844614058825992x1575
 
 	# Uncomment to use a username with the Geonames geocoder
 	#Geokit::Geocoders::geonames="REPLACE_WITH_YOUR_GEONAMES_USERNAME"

@@ -3,7 +3,6 @@ class AdPartnersController < ApplicationController
   before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   
   def index
-    @ad_partners = AdPartner.all_for_index_view
     render :layout => false if request.xhr?
   end
 
@@ -32,7 +31,7 @@ class AdPartnersController < ApplicationController
       format.js do
         if @ad_partner.save
           flash.now[:notice] = @ad_partner.title + ' has been created.'
-          @ad_partners = AdPartner.all_for_index_view
+          get_models
           render :action => :index, :layout => false
         else
           flash.now[:error] = model_errors(@ad_partner)
@@ -60,7 +59,7 @@ class AdPartnersController < ApplicationController
       format.js do
         if @ad_partner.update_attributes(params[:ad_partner])
           flash.now[:notice] = @ad_partner.title + ' has been updated.'
-          @ad_partners = AdPartner.all_for_index_view
+          get_models
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@ad_partner)
