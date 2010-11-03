@@ -8,7 +8,8 @@ button{cursor:pointer;}
 strong{color:#000;}
 strong.blue{color:#4c4bcc;}
 a{color:#33c;}
-a:link, a:visited {text-decoration:none;}
+a:link,a:visited {text-decoration:none;}
+a:hover{text-decoration:underline;}
 .hidden{display:none;}
 span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4px;font-weight:bold;}
 span.blue{color:#4c4bcc;}
@@ -104,7 +105,7 @@ p#click-more{width:226px;position:absolute;height:35px;line-height:25px;backgrou
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
 #type-two-l-col,#type-one-l-col,#content_bottom{width:190px;float:left;margin-left:5px;}
-#type-one-l-col,#content_bottom{margin:13px 0 0 9px;}
+#type-one-l-col,#content_bottom{margin:13px 0 25px 9px;}
 #posts_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,
