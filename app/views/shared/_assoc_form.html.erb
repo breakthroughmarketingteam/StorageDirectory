@@ -1,7 +1,7 @@
 <fieldset id="<%= fields_title %>" class="<%= fields_title %>Fields <%= action_name %> <%= model.class.name %> subfields anchorListener">
 	<legend>
 		<%= link_to fields_title,
-				{ :anchor => "#{enabled_models.blank? ? 'slideDown' : 'slideUp'}_collapseable_#{fields_title}Fields" }, 
+				{ :anchor => "#{enabled_models.blank? ? 'slideDown' : 'slideUp'}_.collapseable_.#{fields_title}Fields" }, 
 				:class => "toggle_action toggle_right#{' toggle_down' unless enabled_models.blank?}", 
 				:title => "Open #{fields_title}" %>
 	</legend>

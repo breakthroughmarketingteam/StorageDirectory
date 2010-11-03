@@ -464,28 +464,29 @@ $.toggleAction = function(href, scroll_to_it) {
 	var url_hash = href.split('#');
 	
 	if (url_hash[1]) {
-		var url_hash	 = url_hash[1],
-	 		action		 = url_hash.split('_')[0],
-			elementClass = url_hash.split('_')[1],
-			contextClass = url_hash.split('_')[2],
-			target		 = $('.' + elementClass, '.' + contextClass);
-		
+		var url_hash = url_hash[1],
+	 		action	 = url_hash.split('_')[0],
+			element  = url_hash.split('_')[1],
+			context  = url_hash.split('_')[2],
+			target	 = $(element, context);
+			
 		// validate action name and do it.
 		if ($.validateAnimationAction(action)) {
-			if (elementClass.match(/^ov-.*/)) { // used on the client options (#admin-box)
+			if (element.match(/^ov-.*/)) { // used on the client options (#admin-box)
 				setTimeout(function(){
-					$('a[rel='+ elementClass +']', '#admin-box').click();
+					$('a[rel='+ element +']', '#admin-box').click();
 				}, 1);
 				
 			} else {
-				var context = $('.' + contextClass);
-				var actionLink = $('.toggle_action', context);
-
+				var oContext = $(context);
+				var actionLink = $('.toggle_action', oContext);
+				
 				// change the state of the toggle_action link
-				if (actionLink.length) $.switch_action_hash($('.toggle_action', context), action, elementClass, contextClass);
-
-				if (scroll_to_it) $(document).scrollTo(context, 800);
-
+				if (actionLink.length) $.switch_action_hash($('.toggle_action', oContext), action, element, context);
+				try {
+					if (scroll_to_it) $(document).scrollTo(oContext, 800);
+				} catch (e) { }
+				
 				target[action]();
 			}
 		}
@@ -1126,9 +1127,14 @@ var GreyWizard = function(container, settings) {
 			$(this).css({ position: 'absolute', top: 0, left: (left + self.pad_left) +'px' });
 		});*/
 		
-		self.workflow.scrollable();
+		// give the slides some space between each other
+		self.slides.css({ 'margin-right': self.spacer +'px' });
 		
-		if (self.settings.set_slides) { // build the slide tabbed nav
+		// jquery tools scrollable
+		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' });
+		self.workflow.children('.items').width(self.num_slides * (self.width + self.spacer + self.pad_left));
+		
+		if (self.settings.set_slides) { // build the slide tabbed display
 			var step_display = '',
 				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
 				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
@@ -1191,7 +1197,8 @@ var GreyWizard = function(container, settings) {
 	
 	this.move = function(step) {
 		if (self.may_move(step)) {
-			self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically 
+			console.log(self.may_move(step))
+			//self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically
 			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
 			self.current += step;
 			
@@ -1200,7 +1207,8 @@ var GreyWizard = function(container, settings) {
 				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
 			});*/
 			
-			self.workflow.scrollable().move(step, 1000);
+			console.log(self.current, step)
+			self.workflow.data('scrollable').seekTo(self.current);
 			
 			self.set_nav();
 			self.title_bar.trigger('change');
@@ -1212,7 +1220,8 @@ var GreyWizard = function(container, settings) {
 			if (typeof(self.settings.finish_action) == 'function')
 				self.settings.finish_action.call(this, self);
 				
-			else if (self.settings.finish_action == 'close') self.workflow.parent().dialog('close').remove();
+			else if (self.settings.finish_action == 'close')
+				self.workflow.parent().dialog('close').remove();
 		} 
 	}
 }

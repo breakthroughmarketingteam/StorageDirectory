@@ -590,7 +590,7 @@ $(document).ready(function() {
 			} else {
 				var partial = 'clients/issn_steps', 
 					title = 'Activate Real Time Reservations', 
-					height = '486';
+					height = 'auto';
 
 				get_pop_up_and_do({ title: title, height: height, modal: true }, { sub_partial: partial, model: 'Client', id: $('#client_id').text() }, function(pop_up) {
 					new GreyWizard($('#issn_steps', pop_up), {
@@ -622,6 +622,7 @@ $(document).ready(function() {
 				wizard.next();
 				return false;
 			});
+			$('#slide_nav').remove();
 		}
 		
 		function issnstep2(wizard) {
@@ -631,7 +632,7 @@ $(document).ready(function() {
 						wizard.slide_data[1].client_info = data;
 						$('#client_info_preview', wizard.workflow).append(data);
 						
-						wizard.workflow.parent().animate({ height: '900px' });
+						wizard.workflow.animate({ height: '900px' });
 						
 						// printing the page doesn't show the select's value so put it in a hidden span which is visible in the print css
 						var pm_select = $('select[name=pm_software]', wizard.workflow);
@@ -740,7 +741,6 @@ $(document).ready(function() {
 		$('#add_fac', '#ov-units').click(function(){
 			var $this 		   = $(this),
 				listing_box    = $('#client_listing_box', $this.parent().parent()),
-				empty_listings = $('#empty_listings', listing_box),
 				ajax_loader    = $this.prev('.ajax_loader').show();
 		
 			// GET PARTIAL
@@ -751,11 +751,8 @@ $(document).ready(function() {
 						tip_text	  = $('.new_listing_tip', partial);
 
 					// insert the new listing into either the #empty_listings box or #rslt-list-bg
-					if (empty_listings.length > 0) {
-						$('.client_tip', empty_listings).remove();
-						empty_listings.attr('id', 'rslt-list-bg').prepend(partial);
-
-					} else $('#rslt-list-bg', listing_box).prepend(partial);
+					if ($('.listing', listing_box).length == 0) listing_box.html('<div id="rslt-list-bg"></div>').find('#rslt-list-bg').append(partial);
+					else $('#rslt-list-bg', listing_box).prepend(partial);
 
 					$('.listing', listing_box).removeClass('active');
 					partial.addClass('active').slideDown(300, function() { 
@@ -812,14 +809,18 @@ $(document).ready(function() {
 				title_input   = $('input[name="listing[title]"]', partial).removeClass('invalid'),
 				tip_text	  = $('.new_listing_tip', partial),
 				tip_inner	  = tip_text.find('strong'),
+				listing_id	  = partial.attr('id') ? partial.attr('id').replace('Listing_', '') : null;
 				ajax_loader   = $('#add_fac', '#ov-units').prev('.ajax_loader').show();
-		
+			
 			if (title_input.val() != '' && title_input.val() != title_input.attr('title')) {
 				tip_text.animate({ top: '36px' }); // MOVE TIP TEXT down to address row
 				tip_inner.text('Enter the street address.');
 				ajax_loader.show();
-
-				$.post('/listings/quick_create', { title: title_input.val() }, function(response){
+				
+				var params = { title: title_input.val() };
+				if (listing_id) params['id'] = listing_id;
+				
+				$.post('/listings/quick_create', params, function(response){
 					if (response.success) partial.attr('id', 'Listing_'+ response.data.listing_id);
 					else title_input.addClass('invalid').focus(); // SERVER VALIDATION DID NOT PASS
 					
@@ -867,7 +868,7 @@ $(document).ready(function() {
 			});
 			
 			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
-			$('.rslt-reserve a', '.listing:eq(0)').live('click', function(){
+			$('.action_btn a', '.listing:eq(0)').live('click', function(){
 				var partial 	= $('.listing:eq(0)', '#client_listing_box'),
 					button  	= $(this),
 					ajax_loader = $('#add_fac', '#ov-units').prev('.ajax_loader');
@@ -886,12 +887,13 @@ $(document).ready(function() {
 
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+						console.log(response)
 						$.with_json(response, function(data){
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
-
-							listing_html = $(data);
-							partial.html(listing_html.html()).removeClass('active');
-							$('#listings_size').text(parseInt($('#listings_size').text())+1);
+							
+							listing = $(data);
+							partial.html(listing.html()).removeClass('active');
+							$('#listings_size').text(parseInt($('#listings_size').text()) + 1);
 						});
 
 						button.data('saving', false);
@@ -1452,7 +1454,6 @@ function workflow_step3() {
 	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
 	
 	wizard.workflow.animate({ 'height': '300px' });
-	
 	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
 
@@ -1517,6 +1518,7 @@ function workflow_step4() { // form data review
 	}
 	
 	review.append(review_html);
+	wizard.workflow.animate({ 'height': '435px' }, 'fast');
 	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 

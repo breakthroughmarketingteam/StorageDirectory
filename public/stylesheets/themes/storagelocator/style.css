@@ -245,7 +245,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;margin-top:-1px;}
-.rslt-contact{width:159px;color:#555;margin:10px 0 0 10px;padding-right:10px;}
+.rslt-contact{width:159px;color:#555;margin:12px 0 0 10px;padding-right:10px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0 0 7px;overflow:hidden;}
 .rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
 .rslt-title h3 a{color:#060;}
@@ -397,7 +397,7 @@ form#new_client .ajax_loader{bottom:28px;position:absolute;right:150px;}
 #fac-signup ul li{list-style:disc inside none;margin:10px;}
 .tab_content{clear:both;position:relative;}
 #new_client legend{margin:10px 0px 10px 0px;background:#E1EBF5;line-height:35px;color:#555;font-size:120%;padding:3px 15px;}
-.tab_content p{color:#555;font-size:12px;line-height:1.3;margin:20px 0 15px;}
+.tab_content p{color:#555;font-size:12px;line-height:18px;margin:20px 0 15px;}
 .tab_content h4{font-size:18px;margin:30px 0 15px;}
 .blue-line{background-color:#4745CC;clear:both;margin:5px 0px;color:#fff;height:3em;line-height:3em;}
 .blue-line ul#bottom-nav li{display:inline;margin-right:20px;text-shadow:1px 1px 2px #000;}
@@ -664,7 +664,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{position:relative;}
-#ov-units #rslt-list-bg .listing .inner > img{margin:12px 0 0 10px;}
+#ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}
@@ -687,7 +687,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services-cnt{line-height:1.3;padding:15px 20px;overflow:hidden;}
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
 #enable_issn{text-decoration:underline;}
-#issn_steps{line-height:1.3;}
+#issn_steps{line-height:1.3;min-height:435px;}
 #issn_steps #issnstep_1{height:400px;}
 #issnstep_1 img.right{margin:0 0 7px 10px;border:1px solid #ccc;}
 #issnstep_1 blockquote{margin-bottom:15px;font-size:80%;}
@@ -860,11 +860,12 @@ img.right{margin:0 0 10px 10px;}
 .compare_listing .val{}
 /* cities */
 #map_nav{position:relative;height:423px;}
+#map_nav .items{position:absolute;width:2000px;}
 #map_nav_img{opacity:0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
 #map_nav .map_overlay{position:absolute;top:0;}
 #map_nav #state_name{color:#666;font-size:20px;font-weight:bold;margin-right:20px;position:absolute;right:0;top:385px;}
-#map_nav .map_flow_step{height:395px;position:relative;overflow:visible;}
-#map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;margin:10px 0 20px 20px;}
+#map_nav .map_flow_step{height:395px;position:relative;overflow:visible;float:left;}
+#map_nav #map_step1{background:url(/images/ui/storagelocator/us_map/us-map.png) no-repeat;margin:10px 0 20px 20px;padding-left:0;}
 #map_nav #map_step2{overflow:hidden;}
 #map_step2 #city_nav{width:102%;height:30px;}
 #map_step2 #city_nav a{display:block;padding:3px 0;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 0 #666;;background:url(/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #999;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;text-align:center;width:26px;}
@@ -1005,13 +1006,14 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_page .i{height:40px;position:relative;}
 #login_page input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:300px;}
 #user_session_submit{cursor:pointer;}
+#remember_me{font-size:80%;color:#666;}
 #login_page #user_session_remember_me{width:auto;margin:0 5px;float:left;}
-#login_page #user_session_submit{background:#4c4bcc;color:#fff;float:right;font-size:18px;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;}
+#login_page #user_session_submit{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;}
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:63px;top:10px;}
 #pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
-#forgot_pass_link{color:#666;}
+#forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}
 .fieldWithErrors{background:none;padding:0;}
@@ -1046,8 +1048,9 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
-#workflow_steps{overflow:hidden;position:relative;width:785px;}
+#workflow_steps,#issn_steps{overflow:hidden;position:relative;width:785px;}
 #workflow_nav,#map_flow_nav{bottom:45px;position:absolute;right:20px;width:95%;}
+#workflow_steps .items,#issn_steps .items{position:absolute;width:2000px;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button{font-weight:bold;font-size:14px;position:absolute;right:0;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0 #666;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 #map_flow_nav .button{bottom:-27px;}
@@ -1055,7 +1058,7 @@ form .error p{margin:0 0 7px 0;}
 #workflow_nav .skip{right:122px;}
 #workflow_nav .back,#map_flow_nav .back{right:auto;left:0;}
 #workflow_nav .ajax_loader,#map_flow_nav .ajax_loader{position:absolute;top:15px;right:121px;}
-.workflow_step,.map_flow_step{position:relative;top:0;width:755px;overflow:hidden;}
+.workflow_step,.map_flow_step{position:relative;float:left;;width:755px;overflow:hidden;padding-left:15px;}
 .map_flow_step{height:395px;}
 .workflow_step h3,.map_flow_step h3{font-size:28px;margin-bottom:15px;}
 #signupstep_2 h3{float:right;}
@@ -1102,9 +1105,9 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_4 .listing_div{margin:0 0 7px 0;cursor:default;}
 #signupstep_4 div#review_contact{line-height:1.3;padding:0 10px 10px 10px;}
 #review_contact .name{font-size:100%;}
-#review_contact .listing_title{margin-bottom:0;padding:6px 0 4px 32px;background:url(/images/ui/storagelocator/opt_in.png) no-repeat left center;}
+#review_contact .listing_title{margin-bottom:0;}
 #review_contact .listing_address{font-size:70%;}
-#signupstep_4 .left .opt_in{font-size:80%;}
+#signupstep_4 .left .opt_in{font-size:80%;padding:6px 0 4px 32px;background:url(/images/ui/storagelocator/opt_in.png) no-repeat left center;}
 #quote_done{padding:10px;float:left;}
 
 #body{width:872px;margin:0 auto;text-align:left;}
@@ -1310,12 +1313,17 @@ form .error p{margin:0 0 7px 0;}
 
 
 #fac-features{margin-top:20px;}
-#top_fac_page h3{font-size:22px;line-height:28px;}
+#fac-features em{color:#4c4bcc;}
+#add-fac-form-extra #fac-features ul li{font-size:14px;list-style:disc;}
+#add-fac-form-extra #fac-features ul li em{color:#4c4bcc;}
+ul.desclist li p{}
+#top_fac_page h3{font-size:22px;line-height:28px;margin-bottom:20px;}
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
 #add-fac-form-extra ul{margin-left:30px;}
 #add-fac-form-extra ul li{list-style:none;}
 #add-fac-form-extra ul li a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
 #add-fac-form-extra ul li a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
+#add-fac-form-extra ul.desclist a{}
 #top_fac_page #fac-features h4{margin-bottom:20px;margin-left:0;}
 #top_fac_page #fac-features strong{font-size:12px;}
 #text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
@@ -1323,7 +1331,7 @@ form .error p{margin:0 0 7px 0;}
 #top_fac_page #text-box strong{font-size:18px;}
 #text-box p{font-size:16px;line-height:26px;margin:0;}
 #feat-desc strong{color:#4c4bcc;font-size:16px;}
-#text-box2{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0 10px;padding:25px;}
+#text-box2{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float:left;margin-top:13px;width:326px;}
@@ -1395,5 +1403,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #login_page input#send_btn{padding:5px 0;width:322px;}
 
-#fac-results ul{}
-#fac-results ul li{}
+#fac-results ul{margin-top:;}
+#fac-results ul li{list-style:disc;margin-top:24px;}
+
+#g-res{margin-top:40px;}

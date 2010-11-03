@@ -26,7 +26,7 @@ class ListingsController < ApplicationController
       @last_search = Search.find session[:search_id] # get the last search so we don't have to geocode again
       @prev_search = Search.create @last_search.attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
     
-    elsif session[:search_id] # reloaded the page?
+    elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
     
     else # clicked on a link
@@ -98,7 +98,7 @@ class ListingsController < ApplicationController
     
     case params[:from]
     when 'quick_create'
-      @listing.update_attribute :enabled => true
+      @listing.update_attribute :enabled, true
       @map = @listing.map
       
       if @map.update_attributes params[:listing][:map_attributes]
@@ -113,7 +113,7 @@ class ListingsController < ApplicationController
         render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
       elsif params[:listing]
         @listing.update_attributes params[:listing]
-        render :text => render_to_string(:partial => 'edit_detail')
+        render :json => { :success => false, :data => model_errors(@listing) }
       end
       
     else
@@ -123,10 +123,10 @@ class ListingsController < ApplicationController
   
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
-    @listing = current_user.listings.build :title => params[:title]
+    @listing = params[:id] ? Listing.find(params[:id]) : current_user.listings.build(:title => params[:title])
     @listing.default_logo = rand(@listing_logos.size)
     
-    if @listing.save
+    if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map
       @map.save(false)
       render :json => { :success => true, :data => { :listing_id => @listing.id } }

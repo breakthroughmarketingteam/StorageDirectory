@@ -299,7 +299,7 @@ module Geokit
         xml = res.body
         doc = REXML::Document.new(xml)
         logger.debug "Yahoo geocoding. Address: #{address}. Result: #{xml}"
-
+        
         if doc.elements['//ResultSet']
           res=GeoLoc.new
 
@@ -625,8 +625,8 @@ module Geokit
             klass = Geokit::Geocoders.const_get "#{Geokit::Inflector::camelize(provider.to_s)}Geocoder"
             res = klass.send :geocode, address, options
             return res if res.success?
-          rescue
-            logger.error("Something has gone very wrong during geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. Address: #{address}. Provider: #{provider}")
+          rescue => e
+            logger.error("Something has gone very wrong during geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. Address: #{address}. Provider: #{provider}\nError: #{e.message}")
           end
         end
         # If we get here, we failed completely.

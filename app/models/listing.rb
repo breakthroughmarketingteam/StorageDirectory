@@ -154,15 +154,16 @@ class Listing < ActiveRecord::Base
       :within  => (search.within.blank? ? $_listing_search_distance : search.within),
       :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
     }
+    base_conditions = "enabled IS TRUE"
     
     @location = search.location
     
     unless search.query.blank?
       if search.is_zip?
-        options.merge! :conditions => ['maps.zip = ?', search.extrapolate(:zip)]
+        options.merge! :conditions => ['maps.zip = ? AND' + base_conditions, search.extrapolate(:zip)]
         
       elsif !search.is_address_query? # try query by name? 
-        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?)', "%#{search.query}%", search.query.split(/\s|,\s?/)] }
+        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?) AND ' + base_conditions, "%#{search.query}%", search.query.split(/\s|,\s?/)] }
         options.merge! conditions
         
         # they didnt query by address so lets base it on where the geocoder thinks they are
@@ -178,7 +179,7 @@ class Listing < ActiveRecord::Base
       end
     else # blank search, guess the location (geocoded ip address) or fall back on a test location
       @location = geo_location.nil? ? Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126') : [geo_location[:lat].to_f, geo_location[:lng].to_f]
-      options.merge! :origin => @location
+      options.merge! :origin => @location, :conditions => base_conditions
     end
     
     # TODO: storage_type

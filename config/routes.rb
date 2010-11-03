@@ -136,6 +136,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
   map.resources :us_cities
   map.resources :searches
+  map.resources :ad_partners
   
   map.resources :admin
   map.resource :site_setting
