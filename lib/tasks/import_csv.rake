@@ -18,16 +18,20 @@ namespace :import do
     filter_records_and_build_listings records
     puts "Done Filtering. Listings in Queue: #{@filtered[:wanted].size}; Rejected: #{@filtered[:rejected].size}"
     
-    puts "Begin geocoding #{@filtered[:wanted].size} listings..."
-    @geocoded = []
-    @failed = []
-    @geocode_count = 0
-    @retry_count = 0
-    @max_retry = 3
-    process_with_retry @filtered[:wanted]
-    puts "Done Processing. Did #{@geocoded.size} listings. Failed #{@failed.size}"
+    @failed = @failed_rows = []
     
-    save_failed_to_file(@geocoded) and exit # whoopie!
+    puts "Begin saving #{@listings.size} listings..."
+    @filtered[:wanted].each_with_index do |listing, i|
+      if listing.save
+        puts "Saved (#{listing.facility_features.map(&:title) * ', '}) #{listing.title} in #{listing.city}, #{listing.state}, [#{listing.lat}, @#{listing.lng}]"
+      else
+        puts "Error: #{listing.errors.full_messages.map * '; '}"
+        @failed << listing
+        @failed_rows << @filtered[:wanted_rows][i]
+      end
+    end
+    
+    save_failed_to_file(@failed_rows) and exit # whoopie!
   end
 end
 
@@ -54,19 +58,20 @@ def filter_records_and_build_listings(records)
       web_address        = row[1]
       sic_description    = row[10]
     
-      if sic_description =~ @storage_regex || title =~ @storage_regex
-        @category = 'Storage'
-        @listing = Listing.new :title => title, :enabled => true, :default_logo => rand(6), :category => @category
-        build_listing_features! title, sic_description
-      
-      elsif sic_description =~ @truck_regex || title =~ @truck_regex
-        @category = 'Trucking'
-        @listing = Listing.new :title => title, :enabled => true, :category => @category
-      
-      elsif sic_description =~ @moving_regex || title =~ @moving_regex
-        @category = 'Moving'
-        @listing = Listing.new :title => title, :enabled => true, :category => @category
-      
+      if Listing.find(:first, :include => :map, :conditions => { :title => title, :address => address, :city => city, :state => state, :zip => zip, :phone => phone }).nil?
+        if sic_description =~ @storage_regex || title =~ @storage_regex
+          @category = 'Storage'
+          @listing = Listing.new :title => title, :enabled => true, :default_logo => rand(6), :category => @category
+          build_listing_features! title, sic_description
+
+        elsif sic_description =~ @truck_regex || title =~ @truck_regex
+          @category = 'Trucking'
+          @listing = Listing.new :title => title, :enabled => true, :category => @category
+
+        elsif sic_description =~ @moving_regex || title =~ @moving_regex
+          @category = 'Moving'
+          @listing = Listing.new :title => title, :enabled => true, :category => @category
+        end
       else
         @rejected << row
         puts "Skipped: #{title}, Description: #{sic_description}"
@@ -136,14 +141,13 @@ def geocode_and_save(listings)
   end
 end
 
-def save_failed_to_file(listings)
-  if listings.size > 0
+def save_failed_to_file(records)
+  if records.size > 0
     path = "#{RAILS_ROOT}/lib/tasks/csv_data/failed_records.csv"
-    puts "Saving #{listings.size} failed records to file (#{path})"
+    puts "Saving #{records.size} failed records to file (#{path})"
     
     FasterCSV.open(path, 'w') do |csv|
-      csv << listings.first.attributes.keys.map(&:to_s)
-      listings.each { |listing| csv << listing.attributes.values.map }
+      records.each { |record| csv << record }
     end
   end
 end

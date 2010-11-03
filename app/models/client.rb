@@ -1,6 +1,7 @@
 class Client < User
   
   has_many :listings, :foreign_key => 'user_id'
+  has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy

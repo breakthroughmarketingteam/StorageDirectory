@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
   map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
+  map.admin_to_client '/clients/:id/account', :controller => 'clients', :action => 'edit'
   
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'

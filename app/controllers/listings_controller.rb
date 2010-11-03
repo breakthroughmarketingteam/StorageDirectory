@@ -104,7 +104,7 @@ class ListingsController < ApplicationController
       if @map.update_attributes params[:listing][:map_attributes]
         render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
       else
-        render :json => { :success => true, :data => model_errors(@map) }
+        render :json => { :success => false, :data => model_errors(@map) }
       end
       
     when 'uplogo'

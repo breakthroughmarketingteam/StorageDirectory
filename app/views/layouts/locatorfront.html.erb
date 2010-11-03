@@ -42,33 +42,31 @@
 	
 	<div id="body">
 		<div id="logo">
-			<a href="/">
-				
-				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="182" height="213" id="FlashID" title="USSelfStorageLocator.com">
-				  <param name="movie" value="/images/ui/storagelocator/usselfstoragelocator-lglogo.swf" />
-				  <param name="quality" value="high" />
-				  <param name="wmode" value="transparent" />
-				  <param name="swfversion" value="6.0.65.0" />
-				  <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-				  <param name="expressinstall" value="Scripts/expressInstall.swf" />
-				  <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
-				  <!--[if !IE]>-->
-				  <object type="application/x-shockwave-flash" data="/images/ui/storagelocator/usselfstoragelocator-lglogo.swf" width="182" height="213">
-				    <!--<![endif]-->
-				    <param name="quality" value="high" />
-				    <param name="wmode" value="opaque" />
-				    <param name="swfversion" value="6.0.65.0" />
-				    <param name="expressinstall" value="Scripts/expressInstall.swf" />
-				    <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
-				    <img src="/images/ui/storagelocator/usselfstoragelocator-lglogo.png" alt="USSelfStorageLocator.com"/>
-				    <!--[if !IE]>-->
-				  </object>
-				  <!--<![endif]-->
-				</object>
-				
-			</a>
-			<img src="/images/ui/storagelocator/us-self-storage-locator-heading.png" alt="US Self Storage Locator" />
-			<h1><%= @slogan %></h1>
+			<object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="182" height="213">
+			  <param name="movie" value="/images/ui/storagelocator/usselfstoragelocator-lglogo.swf" />
+			  <param name="quality" value="high" />
+			  <param name="wmode" value="transparent" />
+			  <param name="swfversion" value="6.0.65.0" />
+			  <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
+			  <param name="expressinstall" value="/files/expressInstall.swf" />
+			  <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
+			  <!--[if !IE]>-->
+			  <object type="application/x-shockwave-flash" data="/images/ui/storagelocator/usselfstoragelocator-lglogo.swf" width="182" height="213">
+			    <!--<![endif]-->
+			    <param name="quality" value="high" />
+			    <param name="wmode" value="opaque" />
+			    <param name="swfversion" value="6.0.65.0" />
+			    <param name="expressinstall" value="/files/expressInstall.swf" />
+			    <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
+				<a href="http://usselfstoragelocator.com"><img src="/images/ui/storagelocator/usselfstoragelocator-lglogo.png" alt="US Self Storage Locator" /></a>
+			    <!--[if !IE]>-->
+			  </object>
+			  <!--<![endif]-->
+			</object>
+			<img id="logoshadow" src="/images/ui/storagelocator/globe-shadow-sm.png" alt="US Self Storage Locator" />
+			<div id="title">
+				<h1><%= @slogan %></h1>
+			</div>
 		</div>
 		
 		<%= render :partial => 'pages/front_search' if params[:title] == 'home' %>

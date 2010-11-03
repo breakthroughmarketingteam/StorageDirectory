@@ -913,6 +913,28 @@ $.fn.state_changed = function() {
 	return prev_state != this.serialize();
 }
 
+// replacement for the browser's confirm box
+$.greyConfirm = function(msg, action, cancel) {
+	var pop_up = $('<div id="pop_up" class="confirm_box"><p>' + msg +'</p><a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>').dialog({ 
+		title: 'Confirm',
+		width: 400,
+		height: 150,
+		modal: true,
+		resizable: false,
+		close: function() { $(this).dialog('destroy').remove() }
+	});
+	
+	var btns = $('.btn', pop_up);
+	btns.click(function() {
+		var confirm = $(this).text() == 'Yes' ? true : false;
+		if (confirm && typeof(action) == 'function') action.call(this);
+		else if (typeof cancel == 'function') cancel.call(this);
+		pop_up.dialog('close');
+		
+		return false;
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {
@@ -969,17 +991,7 @@ function titleize(string) {
 }
 
 function default_pop_up_options(options) {
-	return {
-		title: 	   options.title,
-		width: 	   options.width || 785,
-		height:    options.height,
-		resizable: false,
-		modal: 	   options.modal,
-		close: 	   function() {
-			$('.ajax_loader').hide();
-			$(this).dialog('destroy').remove();
-		}
-	};
+	return ;
 }
 
 // pulls the pop_up template and runs the callback
@@ -989,8 +1001,17 @@ function get_pop_up_and_do(options, params, callback) {
 	params.partial = params.partial || '/shared/pop_up';
 	
 	$.get('/ajax/get_multipartial', params, function(response) {
-		var pop_up = $(response).dialog(default_pop_up_options(options));
-		
+		var pop_up = $(response).dialog({
+			title: 	   options.title,
+			width: 	   options.width || 785,
+			height:    options.height,
+			resizable: false,
+			modal: 	   options.modal,
+			close: 	   function() {
+				$('.ajax_loader').hide();
+				$(this).dialog('destroy').remove();
+			}
+		});
 		if (typeof callback == 'function') callback.call(this, pop_up);
 	});
 }

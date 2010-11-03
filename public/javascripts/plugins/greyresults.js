@@ -32,11 +32,16 @@ $(function(){
 			y = sizes_orig.split(/\W?x\W?/)[1],
 			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
 			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
-			ti = '<input type="text" class="small_text_field i" name="size[title]" value="'+ type_orig +'" />',
+			ti = '<select class="i" name="size[title]">';
+				$.each($('#unit_type_labels').text().split(','), function() {
+					ti += '<option value="'+ this +'"'+ (type_orig == this ? ' selected="selected"' : '') +'>'+ this +'</option>';
+				})
+				ti +='</select>',
+			
 			di = '<input type="text" class="small_text_field i" name="size[description]" value="'+ desc_orig +'" />',
 			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
 			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
-
+		
 		// replace the content in the unit size row
 		sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
 		type_li.html(ti);
@@ -73,7 +78,7 @@ $(function(){
 				var listing_id = $('input[name=listing_id]').val(),
 					size_id = $('input[name=size_id]', container).val();
 
-				if (confirm('Are you sure you want to delete this unit size?')) {
+				$.greyConfirm('Are you sure you want to delete this unit size?', function() {
 					$.post('/listings/'+ listing_id +'/sizes/'+ size_id, { _method: 'delete' }, function(response) {
 						$.with_json(response, function(data) {
 							container.fadeOut(300, function() {
@@ -84,7 +89,7 @@ $(function(){
 						
 						delete_btn.data('deleting', false);
 					}, 'json');
-				}
+				}, function() { cancel_btn.click() });
 			}
 			
 			return false;
@@ -101,7 +106,7 @@ $(function(){
 			price_li 	= $('.st-pric', container),
 			specials_li = $('.st-spec', container);
 
-		$.clone_and_attach_inputs('input.i', container, hidden_form);
+		$.clone_and_attach_inputs('.i', container, hidden_form);
 		cancel_btn.hide();
 		delete_btn.hide();
 		
@@ -111,7 +116,7 @@ $(function(){
 				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
 				sizes_li.css(sizes_li_revertment).html(sizes_html);
 
-				var type_html = $('input[name="size[title]"]', container).val();
+				var type_html = $('select[name="size[title]"]', container).val();
 				type_li.html(type_html);
 
 				var price_html = $('input[name="size[price]"]', container).val();
@@ -181,7 +186,7 @@ $(function(){
 		
 		update_info_tab_count('Unit_Sizes', 1);
 	}
-
+	
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
 		var $this 		= $(this),
