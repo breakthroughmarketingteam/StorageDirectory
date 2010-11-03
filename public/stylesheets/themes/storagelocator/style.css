@@ -132,9 +132,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #listings_controller.edit_action #narrow-box{overflow:hidden;}
 #sb-title{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;height:49px;margin:0 0 0 4px;padding-top:1px;}
 #narrow-box h2{background:url(/images/ui/storagelocator/loupe-icon.png) no-repeat;color:#fff;height:42px;text-shadow:1px 1px 0 #666;margin:4px 0 0 7px;padding:2px 0 0 54px;}
-#add-fac-box h2{background:url(/images/ui/storagelocator/money.png) no-repeat scroll 0 6px transparent;color:#fff;font-size:100%;height:44px;line-height:16px;padding:9px 0 0 62px;position:relative;text-shadow:1px 1px 0 #666;width:90px;}
 #narrow-box p,#add-fac-box p{text-align:left;}
-#add-fac-box p{margin:10px;}
 #narrow-box a.search-opt{background:url(/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
 #new_client a.search-button,#narrow-box a.search-btn,#compare-btn{background:url(/images/ui/storagelocator/search-btn.png) no-repeat top left;width:161px;margin:10px auto;height:38px;line-height:33px;display:block;color:#fff;text-decoration:none;font-size:18px;text-align:center;text-shadow:1px 1px 2px #000;position:relative;left:-10px;}
 input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;width:130px;padding:2px 14px;font-weight:bold;height:20px;line-height:20px;color:#333;margin-bottom:10px;-moz-box-shadow:1px 1px 2px #999 inset;box-shadow:1px 1px 2px #999 inset;-webkit-box-shadow:1px 1px 2px #999 inset;}
@@ -341,11 +339,11 @@ li.map-plus a{width:22px;}
 #city-box ul{text-align:left;}
 #city-box ul li{clear:both;list-style:none;margin-top:5px;}
 #city-box ul li a{color:#000;}
-#city-box ul li a span{float:right;color:#3333CB;}
-#media-box h2{width:110px;color:#fff;text-shadow:1px 1px 0px #333;height:47px;border-radius-topleft:10px;-moz-border-radius-topleft:10px;-webkit-border-top-left-radius:10px;text-align:left;position:relative;left:55px;top:18px;}
-#media-box p{font-style:italic;color:#555;line-height:1;width:145px;position:relative;left:10px;margin-top:10px;overflow:hidden;}
-#media-box p span{font-size:25px;position:relative;top:4px;left:-2px;font-family:arial;font-weight:bold;}
-#media-box p span.quote{font-style:normal;color:#3333CB;line-height:2.5em;font-size:80%;float:right;margin-bottom:30px;}
+#city-box ul li a span{float:right;color:#3333cb;}
+#media-box h2{background:url(/images/ui/storagelocator/news.png) no-repeat 9px 8px;color:#fff;height:31px;padding-left:65px;padding-top:18px;text-shadow:1px 1px 0 #333;}
+#media-box p{color:#666;font-size:12px;font-style:italic;line-height:20px;margin-top:15px;padding:0 5px;position:relative;}
+#media-box p span{font-family:arial;font-size:25px;line-height:12px;padding:0 7px 0 0;}
+#media-box p span.quote{color:#339933;float:right;font-size:12px;font-style:normal;margin-top:15px;}
 #type-two-top-bar{position:relative;left:2px;}
 #tips-wrap{margin:0 2px 10px 3px;}
 .blog-lock,.review{background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #ccc;margin:15px 20px 20px;clear:both;padding:0 20px 15px 40px;}
@@ -414,7 +412,14 @@ p#foot-text-r{float:right;margin-right:20px}
 #foot-box-cnt-in{float:left;width:940px;}
 p.foot-text{margin:40px;font-weight:bold;}
 #type-two-l-col,#type-one-l-col{position:relative;}
-#add-fac-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;margin:-1px 0 30px;}
+#add-fac-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;margin:-1px 0 40px;}
+#add-fac-box ul{}
+#add-fac-box li{border-bottom:1px solid #ddd;}
+#add-fac-box li a{display:block;font-size:14px;padding:10px 0 10px 15px;}
+#add-fac-box li a:hover,#add-fac-box li a.active{text-decoration:underline;}
+#add-fac-box p{margin:10px;}
+#add-fac-box h2{background:url(/images/ui/storagelocator/money.png) no-repeat scroll 1px 7px transparent;height:44px;padding:9px 0 0 64px;position:relative;width:90px;}
+#add-fac-box h2 a{color:#fff;font-size:16px;line-height:16px;text-shadow:1px 1px 0 #666;}
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
 #admin-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;text-align:left;margin:0 0 20px 5px;}
 #tips-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat left top;color:#555;margin:5px 0 0 5px;min-height:220px;padding-bottom:25px;position:relative;text-align:center;}
@@ -435,7 +440,7 @@ ul#specials_list {margin:15px 10px;}
 #city-box-in{width:165px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
-#media-box{width:167px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
+#media-box{width:175px;background:url(/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
@@ -1407,3 +1412,11 @@ form .note{clear:both;display:block;font-size:80%;}
 #fac-results ul li{list-style:disc;margin-top:24px;}
 
 #g-res{margin-top:40px;}
+
+#terms{margin-bottom:60px;}
+#terms h2{background:url(/images/ui/storagelocator/page-head-bg.png) no-repeat;color:#fff;font-size:28px;height:39px;margin:11px 0 20px 5px;padding:10px 0 0 20px;text-shadow:1px 1px 0 #666;}
+#terms h3{color:#4c4bcc;font-size:22px;margin:0 0 15px 20px;padding-top:15px;padding-top:15px;}
+#terms p{font-size:12px;line-height:18px;margin:0 20px 20px;}
+#terms a{font-size:12px;}
+#terms ul{margin:20px;}
+#terms li{font-size:12px;list-style:disc;margin:10px 0 0 30px;}
