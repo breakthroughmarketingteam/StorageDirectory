@@ -1135,11 +1135,14 @@ form .error p{margin:0 0 7px 0;}
 #self_storage_li{width:120px;margin-left:15px;}
 
 .wrapper{width:1026px;margin:0 auto;text-align:left;}
-#logo{width:100%;margin-top:60px;overflow:hidden;}
-#logo a{float:left;margin-right:35px;}
+#logo{width:100%;margin-top:10px;position:relative;height:210px;}
+#logo #title{left:200px;}
+#logo object{position:absolute;float:left;left:0;}
+#logo #logoshadow{left:30px;bottom:-25px;}
+#logo a,#logo object{float:left;margin-right:35px;}
 #logo img{float:left;margin-top:38px;}
 #logo a img{float:none;margin:0;}
-#logo h1{float:left;font-size:130%;font-weight:normal;margin-top:10px;}
+#logo h1{float:left;font-size:130%;font-weight:normal;margin-top:45px;}
 
 #new_search{width:872px;margin:0 auto;}
 #new_search #search_field{width:621px;;overflow:hidden;margin-left:218px;margin-top:-15px;}
