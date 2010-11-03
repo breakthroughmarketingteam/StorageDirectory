@@ -1,4 +1,4 @@
-class Listing < ActiveRecord::Base
+\class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
@@ -154,13 +154,13 @@ class Listing < ActiveRecord::Base
       :within  => (search.within.blank? ? $_listing_search_distance : search.within),
       :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
     }
-    base_conditions = "enabled IS TRUE"
+    base_conditions = 'enabled IS TRUE'
     
     @location = search.location
     
     unless search.query.blank?
       if search.is_zip?
-        options.merge! :conditions => ['maps.zip = ? AND' + base_conditions, search.extrapolate(:zip)]
+        options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
         
       elsif !search.is_address_query? # try query by name? 
         conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?) AND ' + base_conditions, "%#{search.query}%", search.query.split(/\s|,\s?/)] }
