@@ -8,14 +8,14 @@
 				<% BusinessHour.days.each_with_index do |day, i| %>
 					<li>
 						<%= label_tag "office_hours_closed", day, :class => 'day_field' %>
-						<%= check_box_tag 'business_hours[][closed]', 0, (get_hour_by(day, 'office') && !get_hour_by(day, 'office').try(:closed?)), :id => 'office_hours_closed', :class => 'day_closed', :title => 'Open or closed on this day?' %>
+						<%= check_box_tag 'business_hours[][closed]', 0, (get_hour_by(day, 'office') && !get_hour_by(day, 'office').try(:closed?)), :id => "#{day}_office_hours_closed", :class => 'day_closed', :title => 'Open or closed on this day?' %>
 						
 						<div class="hour_range">
 							<%= hidden_field_tag "business_hours[][day]", day %>
 							<%= hidden_field_tag "business_hours[][hours_type]", 'office' %>
 							
-							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:opening_time) || '9:00 am')), :rel => 'opening' %>&nbsp;-
-							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:closing_time) || '5:00 pm')), :rel => 'closing' %>
+							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:opening_time) || '9:00 am')), :id => "#{day}_business_hours_opening_time_office", :rel => 'opening' %>&nbsp;-
+							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:closing_time) || '5:00 pm')), :id => "#{day}_business_hours_closing_time_office", :rel => 'closing' %>
 							
 							<%= link_to 'Copy all', '#', :class => 'copy_all_hours icon16' if i == 0 %>
 						</div>
@@ -32,14 +32,14 @@
 				<% BusinessHour.days.each_with_index do |day, i| %>
 					<li>
 						<%= label_tag 'access_hours_closed', day, :class => 'day_field' %>
-						<%= check_box_tag 'business_hours[][closed]', 0, (get_hour_by(day, 'access') && !get_hour_by(day, 'access').try(:closed?)), :id => 'access_hours_closed', :class => 'day_closed', :title => 'Open or closed on this day?' %>
+						<%= check_box_tag 'business_hours[][closed]', 0, (get_hour_by(day, 'access') && !get_hour_by(day, 'access').try(:closed?)), :id => "#{day}_access_hours_closed", :class => 'day_closed', :title => 'Open or closed on this day?' %>
 						
 						<div class="hour_range">
 							<%= hidden_field_tag "business_hours[][day]", day %>
 							<%= hidden_field_tag "business_hours[][hours_type]", 'access' %>
 							
-							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:opening_time) || '9:00 am')), :rel => 'opening' %>&nbsp;-
-							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:closing_time) || '5:00 pm')), :rel => 'closing' %>
+							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:opening_time) || '9:00 am')), :id => "#{day}_business_hours_opening_time_access", :rel => 'opening' %>&nbsp;-
+							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:closing_time) || '5:00 pm')), :id => "#{day}_business_hours_closing_time_access", :rel => 'closing' %>
 							
 							<%= link_to 'Copy all', '#', :class => 'copy_all_hours icon16' if i == 0 %>
 						</div>

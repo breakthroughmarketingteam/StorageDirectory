@@ -2,7 +2,7 @@
 <div id="Size_<%= size.id %>" class="sl-table-wrap" rel="listing_<%= @listing.id %>" has-res="<%= @listing.accepts_reservations? %>">
 	<ul class="sl-table<%= ' open_reserve_form' unless is_facility_owner? %>">
 		<li class="st-size"><%= size.display_dimensions %></li>
-		<li class="st-type"><%= size.title %></li>
+		<li class="st-type" input-type="select"><%= size.title %></li>
 		<li class="st-desc" title="<%= size.description %>"><%= size.description %></li>
 		<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
 		
@@ -22,11 +22,11 @@
 			<% end %>
 		</li>
 		
-		<% if in_edit_mode? && !@listing.issn_enabled? %>
-		<li class="st-sele">
-			<%= link_to 'Delete', '#', :class => 'hidden delete_link iconOnly16 right', :title => 'Delete' unless size.new_record? %>
-			<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel', :rel => (size.new_record? ? 'close' : 'cancel') %>
-		</li>
+		<% if (in_edit_mode? || in_mode?('get_partial', 'update')) && !@listing.issn_enabled? %>
+			<li class="st-sele">
+				<%= link_to 'Delete', '#', :class => 'hidden delete_link iconOnly16 right', :title => 'Delete' %>
+				<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel', :rel => (size.new_record? ? 'close' : 'cancel') %>
+			</li>
 		<% end %>
 	</ul>
 

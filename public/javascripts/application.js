@@ -789,7 +789,7 @@ $(document).ready(function() {
 		});
 		
 		function delete_client_listing(listing_id) {
-			if (confirm('Are you sure you want to delete this facility and all information associated with it?')) {
+			$.greyConfirm('Are you sure you want to delete this facility and all information associated with it?', function() {
 				var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
 				
 				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
@@ -799,7 +799,7 @@ $(document).ready(function() {
 					
 					ajax_loader.hide();
 				});
-			}
+			});
 		}
 	
 		// 2). bind events to the inputs in the new partial: 
@@ -887,7 +887,6 @@ $(document).ready(function() {
 
 					// SAVE ADDRESS WHEN USER CLICKS SAVE
 					$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
-						console.log(response)
 						$.with_json(response, function(data){
 							button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 							
@@ -1086,13 +1085,14 @@ $(document).ready(function() {
 	});
 	
 	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
-		if (!$(this).data('deleting') && confirm('Are you sure you want to delete this picture?')) {
-			$(this).data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
+		var self = $(this);
+		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
+			self.data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
 			
-			var img = $(this).prev('img'),
+			var img = self.prev('img'),
 				id = img.attr('id').replace('Picture_', '');
 
-			$.post($(this).attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
+			$.post(self.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
 				$.with_json(response, function(data){
 					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
@@ -1102,9 +1102,9 @@ $(document).ready(function() {
 					update_info_tab_count('Pictures', -1);
 				});
 				
-				$(this).data('deleting', false);
+				self.data('deleting', false);
 			}, 'json');
-		}
+		});
 		
 		return false;
 	});
@@ -1247,7 +1247,9 @@ $(document).ready(function() {
 	// trying to refactor functionality for links that open a pop up, eaither a partial, or a post
 	$('.open_small_partial').live('click', function() {
 		var $this = $(this);
-		get_pop_up_and_do({ title: $this.attr('title'), width: 400, height: 275 }, { sub_partial: $this.attr('href') });
+		get_pop_up_and_do({ title: $this.attr('title'), width: 400, height: 248 }, { sub_partial: $this.attr('href') }, function(pop_up) {
+			pop_up.css('width', '400px')
+		});
 		return false;
 	});
 	

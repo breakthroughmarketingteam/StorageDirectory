@@ -9,6 +9,10 @@ class Size < ActiveRecord::Base
 
   attr_accessor :special
   
+  def self.unit_type_labels
+    ['Upper', 'Lower', 'Indoor', 'Outdoor']
+  end
+  
   def display_dimensions
     "#{width} x #{length}"
   end
