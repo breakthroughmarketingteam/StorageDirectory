@@ -1,4 +1,4 @@
-\class Listing < ActiveRecord::Base
+class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id'
   
