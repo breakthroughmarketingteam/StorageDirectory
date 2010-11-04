@@ -1265,6 +1265,7 @@ form .error p{margin:0 0 7px 0;}
 #footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:20px;width:975px;}
 #footer_btm .usssl_adp{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 #footer_btm .usssl_adp:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #66c;-moz-box-shadow:2px 2px 2px #66c;-webkit-box-shadow:2px 2px 2px #66c;}
+#footer_btm .usssl_adp img{width:120px;height:90px;}
 #footer_btm .next_ad{background:url(/images/ui/storagelocator/next.png) no-repeat;cursor:pointer;height:35px;width:7px;float:right;margin:46px 4px 0 0;}
 #footer_btm .previous_ad{background:url(/images/ui/storagelocator/previous.png) no-repeat;cursor:pointer;height:35px;width:7px;float:left;margin:46px 0 0 4px;}
 #footer_btm .next_ad:hover{background:url(/images/ui/storagelocator/next-hover.png) no-repeat;margin:46px 4px 0 0;}

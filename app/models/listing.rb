@@ -154,7 +154,7 @@ class Listing < ActiveRecord::Base
       :within  => (search.within.blank? ? $_listing_search_distance : search.within),
       :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
     }
-    base_conditions = 'enabled IS TRUE'
+    base_conditions = 'listings.enabled IS TRUE'
     
     @location = search.location
     

@@ -26,10 +26,7 @@ class AdPartner < ActiveRecord::Base
   end
   
   def to_hash(str)
-    str.gsub! /(\{\s?)|(\s?\})/
-    str.split(/\s?,\s?/).each do |keyval|
-      raise keyval.pretty_inspect
-    end
+    s= eval "#{str}"
   end
   
 end
