@@ -1423,10 +1423,15 @@ form .note{clear:both;display:block;font-size:80%;}
 #g-res ul{float:left;width:260px;}
 #g-res h4{color:#4c4bcc;font-size:22px;margin:0 0 35px;text-decoration:underline;width:240px;}
 
-#terms{margin-bottom:60px;}
+#terms{margin-bottom:60px;min-height:600px;}
 #terms h2{background:url(/images/ui/storagelocator/page-head-bg.png) no-repeat;color:#fff;font-size:28px;height:39px;margin:11px 0 20px 5px;padding:10px 0 0 20px;text-shadow:1px 1px 0 #666;}
 #terms h3{color:#4c4bcc;font-size:22px;margin:0 0 15px 20px;padding-top:15px;padding-top:15px;}
 #terms p{font-size:12px;line-height:18px;margin:0 20px 20px;}
 #terms a{font-size:12px;}
 #terms ul{margin:20px;}
 #terms li{font-size:12px;list-style:disc;margin:10px 0 0 30px;}
+
+#media-entry a{margin-right:20px;}
+#terms ul#media-entry{margin:0;}
+#terms ul#media-entry li{border-bottom:1px solid #ccc;border-top:1px solid #ccc;list-style:none outside none;margin:0 6px;padding:0 0 10px;}
+#terms ul#media-entry img{margin-left:20px;}
