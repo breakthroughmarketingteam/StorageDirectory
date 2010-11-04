@@ -1,28 +1,31 @@
 <% declare_content_for %>
 <% content_for :scripts, "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}' type='text/javascript'></script><script type='text/javascript'>Gmaps_data = #{@maps_data.to_json};</script>\n" + javascript_include_tag('plugins/jquery.jmap') %>
-<%= display_message flash %>
 
-<div id="type-one-r-col-in">
-  <div id="results_header">
-    <h2>
-		We found <span class="hlght-text"><%= @listings.total_entries %></span> facilities
-		<% if @prev_search.is_zip? %>
-			in <span class='hlght-text'><%= @location.city %>, <%= @location.state %> <%= @location.zip %></span>
-		<% elsif @prev_search.is_city? %>
-			within <span class="hlght-text"><%= "#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}" %></span> miles 
-			<%= "of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank? %>
-		<% else %>	
-			matching <span class="hlght-text"><%= @prev_search.extrapolate :title %></span>
-		<% end %>
-	</h2>
-	<%= link_to '<span>Hide Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#hide_open-map', :id => 'top_map_btn', :rel => "#{@location.lat},#{@location.lng}" %>
-  </div>
-</div>
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
 
-<div id="main_map">
-</div>
+	<div id="type-one-r-col-in">
+	  <div id="results_header">
+	    <h2>
+			We found <span class="hlght-text"><%= @listings.total_entries %></span> facilities
+			<% if @prev_search.is_zip? %>
+				in <span class='hlght-text'><%= @location.city %>, <%= @location.state %> <%= @location.zip %></span>
+			<% elsif @prev_search.is_city? %>
+				within <span class="hlght-text"><%= "#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}" %></span> miles 
+				<%= "of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank? %>
+			<% else %>	
+				matching <span class="hlght-text"><%= @prev_search.extrapolate :title %></span>
+			<% end %>
+		</h2>
+		<%= link_to '<span>Hide Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#hide_open-map', :id => 'top_map_btn', :rel => "#{@location.lat},#{@location.lng}" %>
+	  </div>
+	</div>
 
-<div class="rslt-head-txt">
-	<p>Your <span>nearest</span> self storage is being displayed first</p>
-	<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
+	<div id="main_map">
+	</div>
+
+	<div class="rslt-head-txt">
+		<p>Your <span>nearest</span> self storage is being displayed first</p>
+		<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
+	</div>
 </div>

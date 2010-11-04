@@ -1263,17 +1263,20 @@ form .error p{margin:0 0 7px 0;}
 #more_info .inner p{margin-bottom:20px;}
 
 #footer_btm{color:#ccccff;font-size:90%;min-height:350px;border-top:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
-#footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:20px;width:975px;}
+#footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:20px;width:961px;height:129px;padding:0 7px;}
 #footer_btm .usssl_adp{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 #footer_btm .usssl_adp:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #66c;-moz-box-shadow:2px 2px 2px #66c;-webkit-box-shadow:2px 2px 2px #66c;}
 #footer_btm .usssl_adp img{width:120px;height:90px;}
-#footer_btm .next_ad{background:url(/images/ui/storagelocator/next.png) no-repeat;cursor:pointer;height:35px;width:7px;float:right;margin:46px 4px 0 0;}
-#footer_btm .previous_ad{background:url(/images/ui/storagelocator/previous.png) no-repeat;cursor:pointer;height:35px;width:7px;float:left;margin:46px 0 0 4px;}
-#footer_btm .next_ad:hover{background:url(/images/ui/storagelocator/next-hover.png) no-repeat;margin:46px 4px 0 0;}
-#footer_btm .previous_ad:hover{background:url(/images/ui/storagelocator/previous-hover.png) no-repeat;float:left;margin:46px 0 0 4px;}
+#footer_btm .next{background:url(/images/ui/storagelocator/next.png) no-repeat;cursor:pointer;height:35px;width:7px;float:right;margin:46px -7px 0 0;position:relative;left:-5px;}
+#footer_btm .prev{background:url(/images/ui/storagelocator/previous.png) no-repeat;cursor:pointer;height:35px;width:7px;float:left;margin:46px 0 0 -7px;right:-5px;position:relative;}
+#footer_btm .next:hover{background:url(/images/ui/storagelocator/next-hover.png) no-repeat;}
+#footer_btm .prev:hover{background:url(/images/ui/storagelocator/previous-hover.png) no-repeat;float:left;}
 #footer_btm strong{color:#fff;font-size:120%;}
 #footer_btm a{color:#ccf;}
 #footer_btm a:hover{color:#fff;}
+#aff_scroll .in{position:relative;width:950px;height:129px;overflow:hidden;float:left;margin-left:5px;}
+#aff_scroll .items{position:absolute;width:2000px;}
+
 
 #h-divider{background:url(/images/ui/storagelocator/dotted-line.png) repeat-x;margin:20px auto;height:2px;width:900px;}
 #aff-box{margin:40px auto 0;width:975px;}
@@ -1289,7 +1292,6 @@ form .error p{margin:0 0 7px 0;}
 #top_cities ul li{}
 #top_cities ul li a{display:block;margin-bottom:3px;padding:3px 5px;text-align:left;}
 
-#footer_btm #wrapper1{min-height:574px;}
 #footer_btm #wrapper2{background:url(/images/ui/storagelocator/footer-bg.png) repeat-x;color:#4C4BCC;margin:0 auto;height:57px;}
 #footer_btm #wrapper2 .inner{width:975px;margin:0 auto;padding-top:25px;}
 #footer_btm #wrapper2 #footer-menu{float:right;font-size:110%;margin-right:20px;margin-top:-1px;}

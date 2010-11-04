@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       @nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
-      @ad_partners       = AdPartner.all
+      @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
@@ -181,7 +181,7 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'blog_roll'
     elsif controller_name == 'posts' || controller_name == 'user_hints'
       session[:view_type] = 'list'
-    elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)/
+    elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)|(ad_partners)/
       session[:view_type] = 'gallery'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
@@ -324,7 +324,7 @@ class ApplicationController < ActionController::Base
     case params[:filter_by] when 'tag'
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
     else
-      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
     end
   end
   
@@ -441,7 +441,7 @@ class ApplicationController < ActionController::Base
   
   # get the relative path of the first page of the website
   def home_page
-    @home_page ||= "/#{(Page.find_by_title('Home') || Page.first(:order => 'position')).title.downcase.parameterize}"
+    @home_page ||= "/#{(Page.find_by_title('Self Storage') || Page.first(:order => 'position')).title.downcase.parameterize}"
   end
   
   # output a theme css path for the stylesheet_link helper

@@ -315,7 +315,7 @@ $(document).ready(function() {
 		});
 	}
 	
-	// more info button
+	/*/ more info button
 	var more_info_tab = $('#red_tab'),
 		orig_info_txt = more_info_tab.text(),
 		more_info_div = $('#'+ more_info_tab.attr('rel')).hide();
@@ -332,7 +332,7 @@ $(document).ready(function() {
 	
 	$('#handle').click(function(){
 		if (more_info_tab) more_info_tab.click();
-	});
+	});*/
 	
 	$('#advanced_opts', '#pages_controller.home').hide();
 	
@@ -340,7 +340,12 @@ $(document).ready(function() {
 	$('.storage_in_city', '#cities_list').css('width', '23%');
 	$('.storage_in_city span', '#cities_list').hide();
 	
-	
+	// affiliate ads 
+	var aff_scroll = $('#aff_scroll');
+	if (aff_scroll.length) {
+		$('.items', aff_scroll).width($('.usssl_adp', aff_scroll).length * 160);
+		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
+	}
 	
 	// storage tips page
 	var tips_head = $('#tips-head'); 

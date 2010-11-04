@@ -54,13 +54,14 @@ end
 
 # get only the storage, moving and truck companies
 def filter_records_and_build_listings(records)
-  @category = ''; @wanted = []; @rejected = []; @wanted_rows = []
+  @category = ''; @wanted = []; @rejected = []; @wanted_rows = []; count = 0; total = records.size
   
   @storage_regex = /(storage)|(stge)|(strge)|(container)|(warehouse)/i
   @truck_regex = /(truck)/i
   @moving_regex = /(moving)|(mover)|(van line)/i
   
   records.each_with_index do |row, i|
+    @listing = nil
     # column mappings
     begin
       title   = row[0].titleize
@@ -75,7 +76,7 @@ def filter_records_and_build_listings(records)
       web_address        = row[1]
       sic_description    = row[10]
     
-      if Listing.find(:first, :include => :map, :conditions => ['LOWER(listings.title) = ? AND LOWER(maps.address) = ? AND LOWER(maps.city) = ? AND LOWER(maps.state) = ? AND LOWER(maps.zip) = ? AND maps.phone = ?', title.downcase, address.downcase, city.downcase, state.downcase, zip.downcase, phone]).nil?
+      unless Listing.find(:first, :include => :map, :conditions => ['LOWER(listings.title) = ? AND LOWER(maps.address) = ? AND LOWER(maps.city) = ? AND LOWER(maps.state) = ? AND LOWER(maps.zip) = ? AND maps.phone = ?', title.downcase, address.downcase, city.downcase, state.downcase, zip.downcase, phone])
         if sic_description =~ @storage_regex || title =~ @storage_regex
           @category = 'Storage'
           @listing = Listing.new :title => title, :enabled => true, :default_logo => rand(6), :category => @category
@@ -89,19 +90,24 @@ def filter_records_and_build_listings(records)
           @category = 'Moving'
           @listing = Listing.new :title => title, :enabled => true, :category => @category
         end
+        
+        if @listing
+          @listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
+          @listing.build_contact :title => contact_title, :first_name => contact_first_name, :last_name => contact_last_name, :phone => phone, :sic_description => sic_description
+      
+          @wanted << @listing
+          @wanted_rows << row
+          puts "Added (#{percent_of(count, total)} done) (#{@category}) #{@listing.title} [#{sic_description}] - #{@listing.city}, #{@listing.state}"
+        else
+          @rejected << row
+          puts "Rejected (#{percent_of(count, total)} done): #{title}, Description: #{sic_description}"
+        end
       else
         @rejected << row
-        puts "Skipped: #{title}, Description: #{sic_description}"
+        puts "Already have (#{percent_of(count, total)} done): #{title}, Description: #{sic_description}"
       end
-    
-      if @listing
-        @listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
-        @listing.build_contact :title => contact_title, :first_name => contact_first_name, :last_name => contact_last_name, :phone => phone, :sic_description => sic_description
       
-        @wanted << @listing
-        @wanted_rows << row
-        puts "Added (#{@category}) #{@listing.title} [#{sic_description}] - #{@listing.city}, #{@listing.state}"
-      end
+      count += 1
     rescue => e
       puts "Row #{i} had bad data. Row: #{row.inspect}\nError: #{e.message}\nDetails: #{e.inspect}"
     end
@@ -155,7 +161,7 @@ def build_listing_features!(title, sic_description)
 end
 
 def percent_of(is, of)
-  "#{is.to_f / of.to_f * 100}%"
+  "#{sprintf("%.2f", (is.to_f / of.to_f * 100))}%"
 end
 
 def do_the_waiting_thing

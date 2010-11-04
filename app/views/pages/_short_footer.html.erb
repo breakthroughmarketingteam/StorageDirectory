@@ -8,34 +8,20 @@
 				<strong>Affiliate Progams</strong> - Get great deals and save on your next Self Storage rental with one of our affiliate partners.
 			</p>
 			
-			<div class="wrapper">
-				<div class="previous_ad"></div>
-				
-				<%= render @ad_partners %>
-				
-				<!--
-				<div class="ad">
-					<a href="http://www.dpbolvw.net/te105uoxuowBGDHKIGCBDCHLHIKL" target="_blank" onmouseover="window.status='http://www.angieslist.com/AngiesList/default.asp?af=102961';return true;" onmouseout="window.status=' ';return true;">
-					<img src="http://www.tqlkg.com/1g81uuymsqBGDHKIGCBDCHLHIKL" alt="Save Ten With Angie's List!" border="0"/></a>
+			<div id="aff_scroll" class="wrapper">
+				<div class="prev"></div>
+				<div class="in">
+					<div class="items">
+						<% @ad_partners.in_groups_of 6, false do |group| %>
+							<div class="left">
+								<% group.each do |ad_partner| %>
+									<%= render ad_partner %>
+								<% end %>
+							</div>
+						<% end %>
+					</div>
 				</div>
-				<div class="ad">
-					<a href="http://www.get-a-cow.net" target="_blank"><img src="/files/content/affiliates/cows.jpg" alt="Cows Portable Storage Containers"></a>
-				</div>
-				<div class="ad">
-					<a href="http://www.extraspace.com" target="_blank"><img src="/files/content/affiliates/extraspace.jpg" alt="Extra Space Self Storage"></a>
-				</div>
-				<div class="ad">
-					<a href="http://www.ustoreit.com" target="_blank"><img src="/files/content/affiliates/ustoreit.jpg" alt="U-Store-It Self Storage"></a>
-				</div>
-				<div class="ad">
-					<a href="http://www.unclebobs.com" target="_blank"><img src="/files/content/affiliates/unclebobs.jpg" alt="Uncle Bob's Self Storage"></a>
-				</div>
-				<div class="ad">
-					<a href="http://www.anrdoezrs.net/6d103ft1zt0GLIMPNLHGIHOMLOKO" target="_blank" onmouseover="window.status='http://www.24-7pressrelease.com';return true;" onmouseout="window.status=' ';return true;">
-					<img src="http://www.awltovhc.com/3c100ax0pvtEJGKNLJFEGFMKJMIM" alt="Have a Big Announcement? Get the Word Out! | 24-7P" border="0"/></a>
-				</div>
-				-->
-				<div class="next_ad"></div>
+				<div class="next"></div>
 			</div>
 		</div>
 		

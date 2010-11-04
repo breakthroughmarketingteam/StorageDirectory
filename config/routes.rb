@@ -152,7 +152,8 @@ ActionController::Routing::Routes.draw do |map|
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => 'pages', :action => 'show', :title => 'home'
+  map.root :controller => 'listings', :action => 'locator'
+  #map.root :controller => 'pages', :action => 'show', :title => 'home'
   
   # See how all your routes lay out with "rake routes"
   
