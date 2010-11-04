@@ -94,6 +94,7 @@ class ImagesController < ApplicationController
       
       format.js do
         if @image.destroy
+          @image.image.destroy
           flash.now[:notice] = @image.title + ' has been DESTROYED!'
           get_models
           render :action => 'index', :layout => false

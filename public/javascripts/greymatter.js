@@ -276,6 +276,10 @@ $(function(){
 		return false;
 	});
 	
+	$('.select_on_focus').live('focus', function() {
+		$(this).select();
+	})
+	
 	// Views/Forms/Links Edit
 	if ($.on_page([['edit, new', 'views, forms, links']])) {
 		var scope_down = ''; 

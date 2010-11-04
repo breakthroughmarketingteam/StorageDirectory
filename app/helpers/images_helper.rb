@@ -27,4 +27,15 @@ Stack trace:
   	end	
   end
   
+  # display all urls
+  def display_image_urls
+    if @image.image_file_size.blank?
+      @image.image_url
+    else
+      [:thumb, :medium, :large].map do |size|
+        "<p><span class='block left w80'>#{size.to_s.titleize}:</span> #{text_field_tag "image_#{size}", @image.image_url(size), :class => 'select_on_focus stack'}</p>"
+      end
+    end
+  end
+  
 end
