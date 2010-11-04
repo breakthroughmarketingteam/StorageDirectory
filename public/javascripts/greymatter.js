@@ -227,6 +227,14 @@ $(function(){
 		return false;
 	});
 	
+	$('.greyConfirm').live('click', function() {
+		$.greyConfirm('Are you sure?', function() {
+			return true;
+		}, function() {
+			return false;
+		});
+	});
+	
 	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
 	$('.add_link', '.partial_addable').live('click', function(){
 		var $this 			= $(this),

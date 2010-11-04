@@ -19,12 +19,6 @@ class Image < ActiveRecord::Base
   acts_as_taggable_on :tags, :locations
   access_shared_methods
   
-  # Class Methods
-  
-  def self.all_for_index_view
-    all :select => 'title, description, image_file_name, id'
-  end
-  
   # Instance Methods
   
   def to_param
@@ -33,6 +27,14 @@ class Image < ActiveRecord::Base
   
   def add_to_gallery(params)
     self.gallery_images.build(:gallery_id => params[:gallery_id]) # join table
+  end
+  
+  def image_url(size = nil)
+    if self.image_file_size.blank?
+      self.image_file_name
+    else
+      self.image.url(size)
+    end
   end
   
 end

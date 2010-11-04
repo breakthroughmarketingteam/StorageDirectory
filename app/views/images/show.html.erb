@@ -1,6 +1,13 @@
 <% declare_content_for %>
 
-<%= display_message flash %>
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
 
-<h2><%= @image.title %></h2>
-<%= image_tag @image.image.url %>
+	<h2><%= @image.title %></h2>
+	
+	<div class="stack">
+		<%= image_tag @image.image_url %>
+	</div>
+	
+	<%= @image.image_url %>
+</div>

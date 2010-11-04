@@ -1,18 +1,21 @@
 <div id="<%= model_name(data.first) %>_model_index" class="gallery_view <%= model_name(data.first) %> index">
 	<% data.each do |model| %>
-	
 		<div id="<%= model_id(model) %>" class="round box">
 			<div class="inner">
-        
-				<h5 class="title"><%= link_to model.name_or_title, model %></h5>
+				
+				<%= display_image_link model.name_or_title, model %>
         
 				<% if model.respond_to?('image') %>
-					<% thumb = model.image.url(:thumb) %>
 					<div class="gallery_image image">
-						<% if File.exists? thumb %>
-							<%= link_to image_tag(thumb), model %>
+						<% if model.respond_to? :image_url %>
+							<%= link_to image_tag(model.image_url), (model.is_a?(Image) ? "/images/#{model.id}" : model) %>
 						<% else %>
-							<%= link_to image_tag(model.image.url), model %>
+							<% thumb = model.image.url(:thumb) %>
+							<% if File.exists? thumb %>
+								<%= display_image_link image_tag(thumb), model %>
+							<% else %>
+								<%= display_image_link image_tag(model.image.url), model %>
+							<% end %>
 						<% end %>
 					</div>
 				<% end %>
