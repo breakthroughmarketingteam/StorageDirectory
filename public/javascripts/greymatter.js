@@ -398,7 +398,7 @@ $.log = function(msg) {
 }
 
 $.ajax_error = function(response) {
-	if (typeof console == 'undefined') alert((typeof(response.data) == 'undefined' ? response : response.data));
+	if (typeof console == 'undefined') $.greyAlert((typeof(response.data) == 'undefined' ? response : response.data));
 	else console.log(response);
 	//$('#body').prepend('<div class="flash error hide">'+ response.data +'</div>').slideDown();
 }
@@ -926,8 +926,8 @@ $.fn.state_changed = function() {
 }
 
 // replacement for the browser's confirm box
-$.greyConfirm = function(msg, action, cancel) {
-	var pop_up = $('<div id="pop_up" class="confirm_box"><p>' + msg +'</p><a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>').dialog({ 
+$.greyConfirm = function(msg, action, cancel, do_alert_instead) {
+	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) != 'undefined' ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
 		title: 'Confirm',
 		width: 400,
 		height: 150,
@@ -936,15 +936,23 @@ $.greyConfirm = function(msg, action, cancel) {
 		close: function() { $(this).dialog('destroy').remove() }
 	});
 	
-	var btns = $('.btn', pop_up);
-	btns.click(function() {
-		var confirm = $(this).text() == 'Yes' ? true : false;
-		if (confirm && typeof(action) == 'function') action.call(this);
-		else if (typeof cancel == 'function') cancel.call(this);
+	if (typeof do_alert_instead != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
+	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
+	pop_up.append(btns);
+	
+	$(btns).click(function() {
+		if (typeof do_alert_instead == 'undefined') {
+			var confirm = $(this).text() == 'Yes' ? true : false;
+			if (confirm && typeof(action) == 'function') action.call(this);
+			else if (typeof cancel == 'function') cancel.call(this);
+		}
 		pop_up.dialog('close');
-		
 		return false;
 	});
+}
+
+$.greyAlert = function(msg) {
+	$.greyConfirm(msg, null, null, true);
 }
 
 /******************************************* SUCCESS CALLBACKS *******************************************/
