@@ -1437,3 +1437,11 @@ form .note{clear:both;display:block;font-size:80%;}
 #terms ul#media-entry{margin:0;}
 #terms ul#media-entry li{border-bottom:1px solid #ccc;border-top:1px solid #ccc;list-style:none outside none;margin:0 6px;padding:0 0 10px;}
 #terms ul#media-entry img{margin-left:20px;}
+
+#storage-info-content .tip-box{-moz-border-radius:8px;background:#ffffcc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
+#storage-info-content .tip-box:hover{border:1px solid #666;}
+#storage-info-content .tip-box img{}
+#storage-info-content .tip-box h3{}
+#storage-info-content .tip-box a{float:right;}
+#storage-info-content .tip-box p{margin:5px 0 0;}
+#storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
