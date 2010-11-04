@@ -12,5 +12,21 @@ class AdPartner < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
   
   access_shared_methods
+
+  def html_attributes
+    to_hash(read_attribute :html_attributes)
+  end
+  
+  def image_url
+    if self.image_file_size
+      self.image.url :thumb
+    else
+      self.image_file_name
+    end
+  end
+  
+  def to_hash(str)
+    s= eval "#{str}"
+  end
   
 end

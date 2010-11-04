@@ -18,15 +18,32 @@ namespace :import do
     filter_records_and_build_listings records
     puts "Done Filtering. Listings in Queue: #{@filtered[:wanted].size}; Rejected: #{@filtered[:rejected].size}"
     
-    @failed = @failed_rows = []
+    @total = @filtered[:wanted].size; @failed_rows = []; @saved = @count = 0
+    puts "Begin saving #{@total} listings..."
     
-    puts "Begin saving #{@listings.size} listings..."
     @filtered[:wanted].each_with_index do |listing, i|
+      @count += 1
+      
       if listing.save
-        puts "Saved (#{listing.facility_features.map(&:title) * ', '}) #{listing.title} in #{listing.city}, #{listing.state}, [#{listing.lat}, @#{listing.lng}]"
+        @saved += 1
+        puts "Saved #{@saved} of #{@total}, #{percent_of(@count, @total)} done. (#{listing.facility_features.empty? ? listing.category : listing.facility_features.map(&:title) * ', '}) #{listing.title} in #{listing.city}, #{listing.state}"
+        
+        if listing.map.auto_geocode_address && listing.map.save
+          puts "Geocoded listing #{listing.title}: [#{listing.lat}, #{listing.lng}]"
+        else
+          puts "Failed to Geocode #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
+          @failed_rows << @filtered[:wanted_rows][i]
+          puts "Waiting 30 secs and continuing..."
+          do_the_waiting_thing
+        end
+        
+        if @saved % 50 == 0
+          puts "HIT #{@saved} requests, waiting for 30 secs"
+          do_the_waiting_thing
+        end
+        
       else
         puts "Error: #{listing.errors.full_messages.map * '; '}"
-        @failed << listing
         @failed_rows << @filtered[:wanted_rows][i]
       end
     end
@@ -58,7 +75,7 @@ def filter_records_and_build_listings(records)
       web_address        = row[1]
       sic_description    = row[10]
     
-      if Listing.find(:first, :include => :map, :conditions => { :title => title, :address => address, :city => city, :state => state, :zip => zip, :phone => phone }).nil?
+      if Listing.find(:first, :include => :map, :conditions => ['LOWER(listings.title) = ? AND LOWER(maps.address) = ? AND LOWER(maps.city) = ? AND LOWER(maps.state) = ? AND LOWER(maps.zip) = ? AND maps.phone = ?', title.downcase, address.downcase, city.downcase, state.downcase, zip.downcase, phone]).nil?
         if sic_description =~ @storage_regex || title =~ @storage_regex
           @category = 'Storage'
           @listing = Listing.new :title => title, :enabled => true, :default_logo => rand(6), :category => @category
@@ -78,7 +95,7 @@ def filter_records_and_build_listings(records)
       end
     
       if @listing
-        @listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone   => phone
+        @listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
         @listing.build_contact :title => contact_title, :first_name => contact_first_name, :last_name => contact_last_name, :phone => phone, :sic_description => sic_description
       
         @wanted << @listing
@@ -91,54 +108,6 @@ def filter_records_and_build_listings(records)
   end
   
   @filtered = { :wanted => @wanted, :rejected => @rejected, :wanted_rows => @wanted_rows }
-end
-
-def process_with_retry(listings)
-  geocode_and_save listings
-  
-  if @failed.size > 0
-    retries = @failed; @failed = []
-    @retry_count += 1
-    
-    if @retry_count <= @max_retry
-      puts "Retry Geocoding #{retries.size} listings; Retry count: #{@retry_count}"
-      process_with_retry retries
-    else
-      puts "Done retrying. #{retries.size} listings were not geocoded."
-    end
-  else
-    puts "Successfuly geocoded #{@geocode_count} listings #{@geocoded.size}"
-  end
-  
-  @failed = retries || []
-  @geocoded
-end
-
-def geocode_and_save(listings)
-  listings.each do |listing|
-    if listing.map.auto_geocode_address
-      @geocoded << listing
-      puts "Successfully geocoded #{listing.title}: [#{listing.map.lat}, #{listing.map.lng}]"
-      puts "Saving..."
-      if listing.save
-        puts "Saved listing #{listing.title}, #{listing.city}, #{listing.state}"
-      else
-        @failed << listing
-        puts "Error saving listing #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
-      end
-    else
-      @failed << listing
-      puts "Failed to geocode #{listing.title}"
-    end
-    
-    @geocode_count += 1
-    
-    if @geocode_count % 50 == 0
-      puts "geocode count: #{@geocode_count}, waiting for 15 secs..."
-      sleep(30)
-      puts 'Proceeding...'
-    end
-  end
 end
 
 def save_failed_to_file(records)
@@ -182,5 +151,17 @@ def build_listing_features!(title, sic_description)
       feature.title = 'Self Storage' if feature.title.downcase == 'mini storage'
   else
     @listing.facility_features.build :title => 'Self Storage', :description => sic_description
+  end
+end
+
+def percent_of(is, of)
+  "#{is.to_f / of.to_f * 100}%"
+end
+
+def do_the_waiting_thing
+  30.times do |i|
+    sleep 1
+    $stdout.flush
+    print "\r#{i}"
   end
 end
