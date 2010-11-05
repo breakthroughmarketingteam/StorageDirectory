@@ -79,11 +79,13 @@ class States
   end
   
   def self.abbrev_of(name)
+    return '' if name.nil?
     return name if name.size == 2
     state_abbrev_hash[name]
   end
   
   def self.name_of(abbrev)
+    return '' if abbrev.nil?
     return abbrev if abbrev.size > 2
     state_name_hash[abbrev]
   end
