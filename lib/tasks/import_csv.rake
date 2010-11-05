@@ -21,6 +21,8 @@ namespace :import do
     @total = @filtered[:wanted].size; @failed_rows = []; @saved = @count = 0
     puts "Begin saving #{@total} listings..."
     
+    save_to_csv @filtered[:wanted_rows], 'wanted_records'
+    
     @filtered[:wanted].each_with_index do |listing, i|
       @count += 1
       
@@ -31,7 +33,7 @@ namespace :import do
         if listing.map.auto_geocode_address && listing.map.save
           puts "Geocoded listing #{listing.title}: [#{listing.lat}, #{listing.lng}]"
         else
-          puts "Failed to Geocode #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
+          puts "Failed to Geocode #{listing.title}. Error: #{listing.map.errors.full_messages.map * '; '}"
           @failed_rows << @filtered[:wanted_rows][i]
           puts "Waiting 30 secs and continuing..."
           do_the_waiting_thing
@@ -48,7 +50,7 @@ namespace :import do
       end
     end
     
-    save_failed_to_file(@failed_rows) and exit # whoopie!
+    save_to_csv(@failed_rows, 'failed_records') and exit # whoopie!
   end
 end
 
@@ -116,17 +118,6 @@ def filter_records_and_build_listings(records)
   @filtered = { :wanted => @wanted, :rejected => @rejected, :wanted_rows => @wanted_rows }
 end
 
-def save_failed_to_file(records)
-  if records.size > 0
-    path = "#{RAILS_ROOT}/lib/tasks/csv_data/failed_records.csv"
-    puts "Saving #{records.size} failed records to file (#{path})"
-    
-    FasterCSV.open(path, 'w') do |csv|
-      records.each { |record| csv << record }
-    end
-  end
-end
-
 def build_listing_features!(title, sic_description)
   if title =~ /(boat & rv)/i || title =~ /(rv & boat)/i || title =~ /(boat & rv self)/i
     @listing.facility_features.build [{ :title => 'Boat Storage', :description => sic_description }, { :title => 'RV Storage', :description => sic_description }]
@@ -157,6 +148,17 @@ def build_listing_features!(title, sic_description)
       feature.title = 'Self Storage' if feature.title.downcase == 'mini storage'
   else
     @listing.facility_features.build :title => 'Self Storage', :description => sic_description
+  end
+end
+
+def save_to_csv(records, filename)
+  if records.size > 0
+    path = "#{RAILS_ROOT}/lib/tasks/csv_data/#{filename}.csv"
+    puts "Saving #{records.size} failed records to file (#{path})"
+    
+    FasterCSV.open(path, 'w') do |csv|
+      records.each { |record| csv << record }
+    end
   end
 end
 

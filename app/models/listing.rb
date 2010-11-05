@@ -101,13 +101,13 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def full_address; self.map.full_address end
-  def address; self.map.address end
-  def city;    self.map.city end
-  def state;   self.map.state end
-  def zip;     self.map.zip end
-  def lat;     self.map.lat end
-  def lng;     self.map.lng end
+  def full_address; self.map.full_address if self.map end
+  def address; self.map.address if self.map end
+  def city;    self.map.city if self.map end
+  def state;   self.map.state if self.map end
+  def zip;     self.map.zip if self.map end
+  def lat;     self.map.lat if self.map end
+  def lng;     self.map.lng if self.map end
   
   def map_data
     { :id      => self.id,

@@ -774,13 +774,13 @@ $(function(){
 	});
 	
 	// autoreload the results
-	$('#Xsearch_unit_size').change(function() {
+	$('#search_unit_size').change(function() {
 		var form = $(this).parents('form').runValidation();
 		
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
 			
-			$.getJSON(form.attr('action'), form.serialize()+'&auto_search=1', function(response) {
+			$.getJSON('/listings/locate', form.serialize() +'&auto_search=1', function(response) {
 				$.with_json(response, function(data) {
 					console.log(data)
 				});

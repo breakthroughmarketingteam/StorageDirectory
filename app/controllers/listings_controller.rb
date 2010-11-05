@@ -35,7 +35,7 @@ class ListingsController < ApplicationController
     
     if session[:search_id] && !flash[:search_back] && !params[:search]
       @old_search = @last_search.nil? ? Search.find(session[:search_id]) : @last_search
-      #@old_search.add_child @prev_search
+      @old_search.add_child @prev_search
     end
     
     session[:search_id] = @prev_search.id
@@ -173,7 +173,7 @@ class ListingsController < ApplicationController
   end
   
   def get_map
-    unless (@listing.map.nil? || @listing.map.lat.nil? rescue false) && @location.nil?
+    unless (@listing && @listing.lat.nil?) || @location.nil?
       @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
