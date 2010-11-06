@@ -1156,7 +1156,7 @@ form .error p{margin:0 0 7px 0;}
 #new_search #search_field #ab a{padding-right:15px;color:#333;background:url(/images/ui/storagelocator/green-arrow-btn.png) no-repeat right center;}
 #new_search .grn_btn{margin-left:30px;}
 
-#advanced_opts{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;margin:0 0 -130px 0;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
+#advanced_opts{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;margin:0;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
 #advanced_opts #ao_top{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;height:14px;padding:13px 16px;color:#fff;text-shadow:1px 1px 0px #666;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #advanced_opts .inner{padding:0;overflow:hidden;}
 #advanced_opts .left{width:19%;height:100%;padding:25px 30px;border-right:1px solid #e6e6e6;}
@@ -1447,3 +1447,17 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box a{float:right;}
 #storage-info-content .tip-box p{margin:5px 0 0;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
+
+#feat-list{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;background:#EDF8FF;float:left;font-size:12px;padding:10px;}
+#feat-list h4{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#4C4BCC;color:#fff;font-size:16px;margin-bottom:5px;padding:5px;}
+#feat-list div{margin-bottom:10px;}
+#feat-list img{margin-bottom:10px;}
+#feat-list #name{color:#006600;font-size:14px;font-weight:bold;}
+#feat-list #address{}
+#feat-list #phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
+#feat-list #spec{background:#FFFFCC;border:1px dotted #666;color:red;padding:5px;}
+#feat-list #size{color:#4C4BCC;float:left;font-size:14px;font-weight:bold;width:50%;}
+#feat-list #price{color:#339933;float:right;font-size:14px;width:50%;}
+#feat-list #more-info{float:right;margin-top:10px;}
+#feat-list #more-info a{background:#339933;border:1px solid #666;color:#fff;font-size:14px;padding:6px 20px;text-shadow:1px 1px 0 #666;}
+#feat-list p{color:#000;font-size:10px;font-weight:normal;margin-bottom:5px;}
