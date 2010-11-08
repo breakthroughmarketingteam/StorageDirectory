@@ -1262,6 +1262,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;position:relative;}
 #footer_btm .usssl_adp{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#ad_partner_model_index .box{height:230px;}
 #footer_mid #wrapper{background:#fff;-moz-border-radius:10px;border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 1px 10px #666;box-shadow:1px 1px 10px #666;-webkit-box-shadow:1px 1px 10px #666;border:3px solid #ccc;margin:0 auto;width:976px;}
 
 #steps{height:188px;width:949px;padding:20px 0 10px 25px;overflow:hidden;text-align:left;position:relative;z-index:2;}
