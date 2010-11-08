@@ -29,8 +29,10 @@ class ListingsController < ApplicationController
     elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
     
-    else # clicked on a link
+    elsif params[:city] # clicked on a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
+    else
+      @prev_search = Search.create_from_geoloc session[:geo_location]
     end
     
     if session[:search_id] && !flash[:search_back] && !params[:search]
