@@ -42,8 +42,8 @@
 </div>
 
 <% unless request_type == 'reservation' %>
-	<p class="right clear">
+
 		<%= ajax_loader %>
 		<%= submit_tag 'Done', :id => 'submit-btn' %>
-	</p>
+
 <% end %>

@@ -1,7 +1,6 @@
 <div class="sl-table-exp">
 	<div class="uncollapse">
-		<%= image_tag(size.icon(:medium).icon.url, :class => 'left size_icon') if defined?(size) && size.icon(:medium) %>
-		<p class="blue-text">Tell us what you're looking for and <strong>we'll get you the best deals</strong>. <a href="#request_info" class="blue-search-button">More info</a></p>
+		<p>Request a <strong>Hold</strong> for this unit to make sure it's available when you need it. This will also expedite the rental process. <br /><span class="blue"><%= @model.title %></span> will contact you to complete the unit rental with details about their <strong>Move-In Discount</strong>.</p>
 	</div>
 	
 	<% form_tag @model.info_requests.new, :class => 'new_listing_request less_verbose' do %>

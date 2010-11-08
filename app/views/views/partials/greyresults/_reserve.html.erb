@@ -1,9 +1,6 @@
 <div id="reserve_steps" class="sl-table-exp">
 	<div id="reserve_step1" class="workflow_step">
-		<div class="uncollapse">
-			<%= image_tag(size.icon(:thumb).icon.url, :class => 'left size_icon') if defined?(size) && size.icon(:thumb) %>
-			<p class="blue-text">Make a reservation and <strong>we'll hold the unit for you</strong>. <a href="#reserve" class="blue-search-button">More info</a></p>
-		</div>
+
 	
 		<% form_for Reservation.new, :html => { :id => 'reservation_form1', :class => 'less_verbose' } do |f| %>
 			<%= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => listing, :request_type => 'reservation', :size => (defined?(size) && size) } %>
