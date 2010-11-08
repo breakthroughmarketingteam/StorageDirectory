@@ -109,6 +109,17 @@ $(function(){
 		});
 	});
 	
+	var radios = $('.radio_wrap').each(function() {
+		var $this = $(this);
+		if ($this.children('.radio_select').children(':radio').is(':checked'))
+			$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
+	});
+	radios.live('click', function() {
+		var $this = $(this);
+		$this.siblings().removeClass('selected').find('.radio_select').find(':radio').attr('checked', false);
+		$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
+	});
+	
 	// Admin index page menu
 	if ($.on_page([['index', 'admin']])) {
 		var admin_links = $('a', '#controller_list'), 
@@ -225,14 +236,6 @@ $(function(){
 		} else $this.removeClass('loading');
 		
 		return false;
-	});
-	
-	$('.greyConfirm').live('click', function() {
-		$.greyConfirm('Are you sure?', function() {
-			return true;
-		}, function() {
-			return false;
-		});
 	});
 	
 	// Partial addables, grab html from a div and add it to the form, used on forms and permissions create and edit
@@ -927,7 +930,7 @@ $.fn.state_changed = function() {
 
 // replacement for the browser's confirm box
 $.greyConfirm = function(msg, action, cancel, do_alert_instead) {
-	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) != 'undefined' ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
+	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
 		title: 'Confirm',
 		width: 400,
 		height: 150,
@@ -936,12 +939,12 @@ $.greyConfirm = function(msg, action, cancel, do_alert_instead) {
 		close: function() { $(this).dialog('destroy').remove() }
 	});
 	
-	if (typeof do_alert_instead != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
+	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
 	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
 	pop_up.append(btns);
 	
-	$(btns).click(function() {
-		if (typeof do_alert_instead == 'undefined') {
+	$('.btn', pop_up).click(function() {
+		if (typeof(do_alert_instead) == 'undefined' || !do_alert_instead) {
 			var confirm = $(this).text() == 'Yes' ? true : false;
 			if (confirm && typeof(action) == 'function') action.call(this);
 			else if (typeof cancel == 'function') cancel.call(this);
@@ -950,6 +953,14 @@ $.greyConfirm = function(msg, action, cancel, do_alert_instead) {
 		return false;
 	});
 }
+
+$('.greyConfirm').live('click', function() {
+	$.greyConfirm('Are you sure?', function() {
+		return true;
+	}, function() {
+		return false;
+	});
+});
 
 $.greyAlert = function(msg) {
 	$.greyConfirm(msg, null, null, true);

@@ -46,7 +46,7 @@ class SizesController < ApplicationController
   private
   
   def get_listing
-    @listing = current_user.listings.find(params[:listing_id])
+    @listing = is_admin? ? Listing.find(params[:listing_id]) : current_user.listings.find(params[:listing_id])
   end
   
   def get_size

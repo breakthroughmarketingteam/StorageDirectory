@@ -25,21 +25,23 @@
 				</div>
 			</div>
 			
-			<div id="distance_slider">
+			<div id="distance_btns">
 				<%= f.label :within %>
-				<div id="slide_wrap">
-					<img class="arrow" src="/images/ui/storagelocator/less-arrow.png" alt="less">
-					<div class="advanced_slider">
-						<div id="slide_bg"></div>
-					</div>
-					<img class="arrow" src="/images/ui/storagelocator/more-arrow.png" alt="more"> 
-					<%= f.hidden_field :within, :value => @prev_search.try(:within), :class => 'slider_val', :disabled => true %>
+				<div class="uncollapse">
+					<% @distance_options.each do |distance| %>
+						<div class="radio_wrap">
+							<div class="radio_select">
+								<%= radio_button_tag 'search[within]', distance, (@prev_search.try(:within) || $_listing_search_distance).to_i == distance.to_i %>
+							</div>
+							<%= f.label "within_#{distance}", "#{distance}" %>
+						</div>
+					<% end %>
 				</div>
 				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>
 			
 			<div id="unit_features" class="unitfeatures">
-				<p><%= link_to 'Select Features', { :anchor => 'show_.collapseable_%23unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+				<p><%= link_to 'Select Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
 				
 				<ul class="collapseable hide">
 					<% @unit_features.each do |feature| %>

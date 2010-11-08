@@ -29,10 +29,8 @@ class ListingsController < ApplicationController
     elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
     
-    elsif params[:city] # clicked on a link
+    else # clicked on a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
-    else
-      @prev_search = Search.create_from_geoloc session[:geo_location]
     end
     
     if session[:search_id] && !flash[:search_back] && !params[:search]
@@ -51,10 +49,10 @@ class ListingsController < ApplicationController
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
     respond_to do |format|
-      format.html
+      format.html {}
       format.js do
         if params[:auto_search]
-          render :json => { :success => true, :data => render(:action => 'locator') }
+          render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @maps_data } }
         else
           # implementing this ajax response for the search results 'Show More Results' button
           render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @maps_data }
@@ -175,7 +173,7 @@ class ListingsController < ApplicationController
   end
   
   def get_map
-    unless (@listing && @listing.lat.nil?) || @location.nil?
+    unless (@listing && @listing.lat.nil?) && @location.nil?
       @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)

@@ -6,8 +6,12 @@ class Search < ActiveRecord::Base
   access_shared_methods
   acts_as_nested_set
   
+  def self.distance_options
+    %w(5 10 15 20)
+  end
+  
   def self.build_from_path(city, state, zip = nil, request = nil)
-    @search = self.new :query => "#{city && city.gsub!('-', ' ')}, #{state}#{zip && ' '+zip}".titleize, :city => city, :state => state, :zip => zip
+    @search = self.new :query => "#{city.gsub!('-', ' ')}, #{state}#{zip && ' '+zip}".titleize, :city => city, :state => state, :zip => zip
     @search.remote_ip, @search.referrer = request.remote_ip, request.referrer if request
     @search.set_location!
   end

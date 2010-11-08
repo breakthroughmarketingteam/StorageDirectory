@@ -35,13 +35,14 @@ class ApplicationController < ActionController::Base
                 :reject_forms_enabled_on_this,  # for the blocks_fields
                 :use_scripts,
                 :get_coords,
-                :is_admin?
+                :is_admin?,
+                :home_page
   
   include UtilityMethods
   
   # for the SharedModelMethod module
   # TODO: move this into a theme config or something since not all layouts have all regions
-  $regions    = [:header, :sidebar, :content_bottom, :column_5, :column_6, :column_7, :footer]
+  $regions    = [:header, :content_bottom, :column_5, :footer]
   
   # for the virtual forms, build forms
   $_actions     = [:index, :show, :create, :update]
@@ -159,6 +160,7 @@ class ApplicationController < ActionController::Base
     @per_page = 15
     @listings_per_page = 10        
     @app_name = 'USSelfStorageLocator.com'                                                  
+    @distance_options = Search.distance_options
     
     # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
     unless controller_name == 'user_sessions' && request.xhr?
