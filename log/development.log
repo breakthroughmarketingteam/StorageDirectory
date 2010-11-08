@@ -13690,3 +13690,1061 @@ ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line 
 Rendered rescues/_trace (163.9ms)
 Rendered rescues/_request_and_response (0.4ms)
 Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#show (for 127.0.0.1 at 2010-11-07 19:39:27) [GET]
+  Parameters: {"title"=>"a-a-storage-of-highlands-cnty", "action"=>"show", "id"=>"51112", "controller"=>"listings"}
+  [4;35;1mUser Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPage Load (0.4ms)[0m   [0;1mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;35;1mAdPartner Load (0.3ms)[0m   [0mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;36;1mSizeIcon Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.4ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mListing Load (0.3ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mMap Load (0.4ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mMap Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mSpecial Load (0.4ms)[0m   [0;1mSELECT * FROM `specials` WHERE (`specials`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mSpecial Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `specials`[0m
+  [4;36;1mWebSpecial Load (0.4ms)[0m   [0;1mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 51112) ORDER BY web_specials.id DESC LIMIT 1[0m
+  [4;35;1mFacilityFeature Load (2.0ms)[0m   [0mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 51112) [0m
+  [4;36;1mFacilityFeature Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `facility_features`[0m
+  [4;35;1mClick Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `clicks`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClick Create (0.2ms)[0m   [0mINSERT INTO `clicks` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('http://localhost:3000/self-storage/fl/miami', '2010-11-08 00:39:27', '2010-11-08 00:39:27', 51112, '/self-storage/a-a-storage-of-highlands-cnty/51112')[0m
+  [4;36;1mListing Load (0.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `clicks_count` = COALESCE(`clicks_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSearch Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `searches`[0m
+  [4;36;1mSearch Load (0.4ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Update (0.3ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 00:39:27', `listing_id` = 51112 WHERE `id` = 290[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/show
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (0.5ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.3ms)
+  [4;35;1mView Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `views`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (10.2ms)
+  [4;35;1mBlock Load (0.1ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.9ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 42)) [0m
+Rendered shared/_model_options (1.5ms)
+Rendered listings/_business_info (12.8ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 42)) [0m
+Rendered blocks/_block (67.2ms)
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (2.1ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;36;1mMap Load (8.1ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (60.1ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (112.0ms)
+
+ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line #2 of app/views/listings/show.html.erb:
+1: <% declare_content_for %>
+2: <% content_for :scripts, @Gmap.to_html %>
+3: <%= display_message flash %>
+4: 
+5: <div class="staticContent">
+
+    app/views/listings/show.html.erb:2
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (160.0ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#show (for 127.0.0.1 at 2010-11-07 19:39:56) [GET]
+  Parameters: {"title"=>"a-a-storage-of-highlands-cnty", "action"=>"show", "id"=>"51112", "controller"=>"listings"}
+  [4;36;1mUser Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPage Load (0.4ms)[0m   [0mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;36;1mAdPartner Load (0.4ms)[0m   [0;1mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;35;1mSizeIcon Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.3ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mListing Load (0.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;35;1mMap Load (0.3ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 51112) LIMIT 1[0m
+  [4;36;1mMap Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+  [4;35;1mSpecial Load (0.3ms)[0m   [0mSELECT * FROM `specials` WHERE (`specials`.listing_id = 51112) LIMIT 1[0m
+  [4;36;1mSpecial Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `specials`[0m
+  [4;35;1mWebSpecial Load (0.3ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 51112) ORDER BY web_specials.id DESC LIMIT 1[0m
+  [4;36;1mFacilityFeature Load (2.1ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 51112) [0m
+  [4;35;1mFacilityFeature Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `facility_features`[0m
+  [4;36;1mClick Columns (0.8ms)[0m   [0;1mSHOW FIELDS FROM `clicks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mClick Create (0.1ms)[0m   [0;1mINSERT INTO `clicks` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('http://localhost:3000/self-storage/fl/miami', '2010-11-08 00:39:56', '2010-11-08 00:39:56', 51112, '/self-storage/a-a-storage-of-highlands-cnty/51112')[0m
+  [4;35;1mListing Load (0.2ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mListing Update (0.2ms)[0m   [0;1mUPDATE `listings` SET `clicks_count` = COALESCE(`clicks_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSearch Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `searches`[0m
+  [4;35;1mSearch Load (0.2ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/show
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (0.6ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.2ms)
+  [4;35;1mView Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `views`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (9.9ms)
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (2.0ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 42)) [0m
+Rendered shared/_model_options (1.5ms)
+Rendered listings/_business_info (13.2ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 42)) [0m
+Rendered blocks/_block (166.1ms)
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.8ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;36;1mMap Load (8.3ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (56.4ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (111.1ms)
+
+ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line #2 of app/views/listings/show.html.erb:
+1: <% declare_content_for %>
+2: <% content_for :scripts, @Gmap.to_html %>
+3: <%= display_message flash %>
+4: 
+5: <div class="staticContent">
+
+    app/views/listings/show.html.erb:2
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (165.2ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#show (for 127.0.0.1 at 2010-11-07 19:40:01) [GET]
+  Parameters: {"title"=>"highlands-self-storage-inc", "action"=>"show", "id"=>"57928", "controller"=>"listings"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPage Load (0.4ms)[0m   [0mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;36;1mAdPartner Load (0.4ms)[0m   [0;1mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;35;1mSizeIcon Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.4ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;35;1mMap Load (0.2ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 57928) LIMIT 1[0m
+  [4;36;1mMap Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+  [4;35;1mSpecial Load (0.3ms)[0m   [0mSELECT * FROM `specials` WHERE (`specials`.listing_id = 57928) LIMIT 1[0m
+  [4;36;1mSpecial Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `specials`[0m
+  [4;35;1mWebSpecial Load (0.3ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 57928) ORDER BY web_specials.id DESC LIMIT 1[0m
+  [4;36;1mFacilityFeature Load (2.1ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 57928) [0m
+  [4;35;1mFacilityFeature Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `facility_features`[0m
+  [4;36;1mClick Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `clicks`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mClick Create (0.3ms)[0m   [0;1mINSERT INTO `clicks` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('http://localhost:3000/self-storage/fl/miami', '2010-11-08 00:40:01', '2010-11-08 00:40:01', 57928, '/self-storage/highlands-self-storage-inc/57928')[0m
+  [4;35;1mListing Load (0.4ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;36;1mListing Update (0.4ms)[0m   [0;1mUPDATE `listings` SET `clicks_count` = COALESCE(`clicks_count`, 0) + 1 WHERE (`id` = 57928) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSearch Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `searches`[0m
+  [4;35;1mSearch Load (0.2ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSearch Update (0.2ms)[0m   [0mUPDATE `searches` SET `updated_at` = '2010-11-08 00:40:01', `listing_id` = 57928 WHERE `id` = 290[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/show
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (0.5ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.2ms)
+  [4;36;1mView Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `views`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (9.6ms)
+  [4;36;1mBlock Load (0.1ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (1.5ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 42)) [0m
+Rendered shared/_model_options (1.3ms)
+Rendered listings/_business_info (12.9ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 42)) [0m
+Rendered blocks/_block (167.2ms)
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.1ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (1.8ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;35;1mMap Load (7.8ms)[0m   [0mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (56.4ms)
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (109.4ms)
+
+ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line #2 of app/views/listings/show.html.erb:
+1: <% declare_content_for %>
+2: <% content_for :scripts, @Gmap.to_html %>
+3: <%= display_message flash %>
+4: 
+5: <div class="staticContent">
+
+    app/views/listings/show.html.erb:2
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (162.4ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#show (for 127.0.0.1 at 2010-11-07 19:40:05) [GET]
+  Parameters: {"title"=>"moore-s-storage", "action"=>"show", "id"=>"52993", "controller"=>"listings"}
+  [4;35;1mUser Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;35;1mAdPartner Load (0.3ms)[0m   [0mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;36;1mSizeIcon Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.4ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mListing Load (0.4ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 52993) [0m
+  [4;36;1mMap Load (0.4ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 52993) LIMIT 1[0m
+  [4;35;1mMap Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `specials` WHERE (`specials`.listing_id = 52993) LIMIT 1[0m
+  [4;35;1mSpecial Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `specials`[0m
+  [4;36;1mWebSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 52993) ORDER BY web_specials.id DESC LIMIT 1[0m
+  [4;35;1mFacilityFeature Load (2.2ms)[0m   [0mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 52993) [0m
+  [4;36;1mFacilityFeature Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `facility_features`[0m
+  [4;35;1mClick Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `clicks`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClick Create (0.2ms)[0m   [0mINSERT INTO `clicks` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('http://localhost:3000/self-storage/fl/miami', '2010-11-08 00:40:05', '2010-11-08 00:40:05', 52993, '/self-storage/moore-s-storage/52993')[0m
+  [4;36;1mListing Load (0.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 52993) [0m
+  [4;35;1mListing Update (0.3ms)[0m   [0mUPDATE `listings` SET `clicks_count` = COALESCE(`clicks_count`, 0) + 1 WHERE (`id` = 52993) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSearch Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `searches`[0m
+  [4;36;1mSearch Load (0.1ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Update (0.2ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 00:40:05', `listing_id` = 52993 WHERE `id` = 290[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/show
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (0.5ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.2ms)
+  [4;35;1mView Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `views`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (10.3ms)
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.6ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 42)) [0m
+Rendered shared/_model_options (1.6ms)
+Rendered listings/_business_info (14.3ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 42)) [0m
+Rendered blocks/_block (178.0ms)
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.9ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.6ms)
+  [4;36;1mMap Load (7.6ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (56.7ms)
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (112.7ms)
+
+ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line #2 of app/views/listings/show.html.erb:
+1: <% declare_content_for %>
+2: <% content_for :scripts, @Gmap.to_html %>
+3: <%= display_message flash %>
+4: 
+5: <div class="staticContent">
+
+    app/views/listings/show.html.erb:2
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (49.4ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing AjaxController#get_partial (for 127.0.0.1 at 2010-11-07 19:42:02) [GET]
+  Parameters: {"model"=>"Listing", "partial"=>"views/partials/greyresults/map", "action"=>"get_partial", "id"=>"51112", "controller"=>"ajax"}
+  [4;36;1mSizeIcon Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.3ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mListing Load (0.4ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mBusinessHour Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `business_hours`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT count(*) AS count_all FROM `business_hours` WHERE (`business_hours`.listing_id = 51112 AND (LOWER(hours_type) = 'access')) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `business_hours` WHERE (`business_hours`.listing_id = 51112 AND (LOWER(hours_type) = 'office')) [0m
+  [4;35;1mMap Load (0.3ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 51112) LIMIT 1[0m
+  [4;36;1mMap Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+Rendered views/partials/greyresults/_map (20.5ms)
+Completed in 175ms (View: 1, DB: 0) | 200 OK [http://localhost/ajax/get_partial?model=Listing&id=51112&partial=views/partials/greyresults/map]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing AjaxController#get_map_frame (for 127.0.0.1 at 2010-11-07 19:42:02) [GET]
+  Parameters: {"model"=>"Listing", "action"=>"get_map_frame", "id"=>"51112", "controller"=>"ajax"}
+  [4;35;1mPage Load (0.3ms)[0m   [0mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;36;1mAdPartner Load (0.3ms)[0m   [0;1mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;35;1mSizeIcon Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.3ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Load (0.3ms)[0m   [0mSELECT `listings`.id FROM `listings` WHERE (`listings`.`id` = '51112') LIMIT 1[0m
+  [4;36;1mListing Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mListing Load (0.2ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mMap Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mListing Load Including Associations (0.6ms)[0m   [0;1mSELECT `listings`.`id` AS t0_r0, `listings`.`title` AS t0_r1, `listings`.`description` AS t0_r2, `listings`.`enabled` AS t0_r3, `listings`.`user_id` AS t0_r4, `listings`.`created_at` AS t0_r5, `listings`.`updated_at` AS t0_r6, `listings`.`status` AS t0_r7, `listings`.`clicks_count` AS t0_r8, `listings`.`impressions_count` AS t0_r9, `listings`.`reservations_count` AS t0_r10, `listings`.`office_24_hours` AS t0_r11, `listings`.`access_24_hours` AS t0_r12, `listings`.`info_requests_count` AS t0_r13, `listings`.`logo_file_name` AS t0_r14, `listings`.`logo_file_size` AS t0_r15, `listings`.`logo_content_type` AS t0_r16, `listings`.`default_logo` AS t0_r17, `listings`.`category` AS t0_r18, `maps`.`id` AS t1_r0, `maps`.`listing_id` AS t1_r1, `maps`.`address` AS t1_r2, `maps`.`city` AS t1_r3, `maps`.`state` AS t1_r4, `maps`.`zip` AS t1_r5, `maps`.`created_at` AS t1_r6, `maps`.`updated_at` AS t1_r7, `maps`.`phone` AS t1_r8, `maps`.`lat` AS t1_r9, `maps`.`lng` AS t1_r10 FROM `listings` LEFT OUTER JOIN `maps` ON maps.listing_id = listings.id WHERE (((maps.lat>27.4384070441439 AND maps.lat<27.5251489558561 AND maps.lng>-81.4829155388746 AND maps.lng<-81.3851404611254)) AND (
+ (ACOS(least(1,COS(0.479647510402142)*COS(-1.42129191176125)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.479647510402142)*SIN(-1.42129191176125)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.479647510402142)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 3)) LIMIT 1[0m
+Rendering template within layouts/map_frame
+Rendering ajax/get_map_frame
+Completed in 189ms (View: 2, DB: 14) | 200 OK [http://localhost/ajax/get_map_frame?model=Listing&id=51112]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing AjaxController#get_partial (for 127.0.0.1 at 2010-11-07 19:42:27) [GET]
+  Parameters: {"model"=>"Listing", "partial"=>"views/partials/greyresults/map", "action"=>"get_partial", "id"=>"57928", "controller"=>"ajax"}
+  [4;35;1mSizeIcon Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.3ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mListing Load (0.4ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;35;1mBusinessHour Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `business_hours`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `business_hours` WHERE (`business_hours`.listing_id = 57928 AND (LOWER(hours_type) = 'access')) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT count(*) AS count_all FROM `business_hours` WHERE (`business_hours`.listing_id = 57928 AND (LOWER(hours_type) = 'office')) [0m
+  [4;36;1mMap Load (0.4ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 57928) LIMIT 1[0m
+  [4;35;1mMap Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+Rendered views/partials/greyresults/_map (21.1ms)
+Completed in 78ms (View: 1, DB: 0) | 200 OK [http://localhost/ajax/get_partial?model=Listing&id=57928&partial=views/partials/greyresults/map]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing AjaxController#get_map_frame (for 127.0.0.1 at 2010-11-07 19:42:28) [GET]
+  Parameters: {"model"=>"Listing", "action"=>"get_map_frame", "id"=>"57928", "controller"=>"ajax"}
+  [4;36;1mPage Load (0.4ms)[0m   [0;1mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;35;1mAdPartner Load (0.3ms)[0m   [0mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;36;1mSizeIcon Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.3ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Load (0.3ms)[0m   [0;1mSELECT `listings`.id FROM `listings` WHERE (`listings`.`id` = '57928') LIMIT 1[0m
+  [4;35;1mListing Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;35;1mMap Load (0.2ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 57928) LIMIT 1[0m
+  [4;36;1mMap Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+  [4;35;1mListing Load Including Associations (2.8ms)[0m   [0mSELECT `listings`.`id` AS t0_r0, `listings`.`title` AS t0_r1, `listings`.`description` AS t0_r2, `listings`.`enabled` AS t0_r3, `listings`.`user_id` AS t0_r4, `listings`.`created_at` AS t0_r5, `listings`.`updated_at` AS t0_r6, `listings`.`status` AS t0_r7, `listings`.`clicks_count` AS t0_r8, `listings`.`impressions_count` AS t0_r9, `listings`.`reservations_count` AS t0_r10, `listings`.`office_24_hours` AS t0_r11, `listings`.`access_24_hours` AS t0_r12, `listings`.`info_requests_count` AS t0_r13, `listings`.`logo_file_name` AS t0_r14, `listings`.`logo_file_size` AS t0_r15, `listings`.`logo_content_type` AS t0_r16, `listings`.`default_logo` AS t0_r17, `listings`.`category` AS t0_r18, `maps`.`id` AS t1_r0, `maps`.`listing_id` AS t1_r1, `maps`.`address` AS t1_r2, `maps`.`city` AS t1_r3, `maps`.`state` AS t1_r4, `maps`.`zip` AS t1_r5, `maps`.`created_at` AS t1_r6, `maps`.`updated_at` AS t1_r7, `maps`.`phone` AS t1_r8, `maps`.`lat` AS t1_r9, `maps`.`lng` AS t1_r10 FROM `listings` LEFT OUTER JOIN `maps` ON maps.listing_id = listings.id WHERE (((maps.lat>27.3873500441439 AND maps.lat<27.4740919558561 AND maps.lng>-81.4736099082422 AND maps.lng<-81.3758800917578)) AND (
+ (ACOS(least(1,COS(0.478756397645951)*COS(-1.42112989284679)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.478756397645951)*SIN(-1.42112989284679)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.478756397645951)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 3)) LIMIT 1[0m
+Rendering template within layouts/map_frame
+Rendering ajax/get_map_frame
+Completed in 89ms (View: 2, DB: 16) | 200 OK [http://localhost/ajax/get_map_frame?model=Listing&id=57928]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (19.7ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (10.4ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#locator (for 127.0.0.1 at 2010-11-07 20:15:23) [GET]
+  Parameters: {"city"=>"miami", "action"=>"locator", "controller"=>"listings", "state"=>"fl"}
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPage Load (0.5ms)[0m   [0mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;36;1mAdPartner Load (0.3ms)[0m   [0;1mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;35;1mSizeIcon Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.2ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Columns (39.4ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mPage Load (0.2ms)[0m   [0;1mSELECT * FROM `pages` WHERE (`pages`.`title` = 'Self Storage') LIMIT 1[0m
+  [4;35;1mSizeIcon Load (0.2ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'thumb') ORDER BY width, length[0m
+  [4;36;1mSearch Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `searches`[0m
+  [4;35;1mUsCity Load (15.2ms)[0m   [0mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;36;1mUsCity Columns (15.1ms)[0m   [0;1mSHOW FIELDS FROM `us_cities`[0m
+Google geocoding. Address: , Fl. Result: <?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://earth.google.com/kml/2.0"><Response>
+  <name>, Fl</name>
+  <Status>
+    <code>200</code>
+    <request>geocode</request>
+  </Status>
+  <Placemark id="p1">
+    <address>Florida, USA</address>
+    <AddressDetails Accuracy="2" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>US</CountryNameCode><CountryName>USA</CountryName><AdministrativeArea><AdministrativeAreaName>FL</AdministrativeAreaName></AdministrativeArea></Country></AddressDetails>
+    <ExtendedData>
+      <LatLonBox north="30.1648667" south="25.1062728" east="-77.4178530" west="-85.6136540" />
+    </ExtendedData>
+    <Point><coordinates>-81.5157535,27.6648274,0</coordinates></Point>
+  </Placemark>
+</Response></kml>
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Create (0.4ms)[0m   [0;1mINSERT INTO `searches` (`referrer`, `city`, `zip`, `created_at`, `within`, `remote_ip`, `storage_type`, `updated_at`, `listing_id`, `lft`, `lng`, `features`, `parent_id`, `unit_size`, `lat`, `rgt`, `query`, `state`) VALUES('/', NULL, NULL, '2010-11-08 01:15:24', NULL, '127.0.0.1', NULL, '2010-11-08 01:15:24', NULL, NULL, -81.5157535, NULL, NULL, NULL, 27.6648274, NULL, ', Fl', 'FL')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSearch Load (0.4ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 290) [0m
+  [4;36;1mSearch Load (0.2ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Update (1.0ms)[0m   [0;1mUPDATE `searches` SET lft = (lft + 2) WHERE (1 = 1 AND lft >= 6) [0m
+  [4;35;1mSearch Update (1.2ms)[0m   [0mUPDATE `searches` SET rgt = (rgt + 2) WHERE (1 = 1 AND rgt >= 6) [0m
+  [4;36;1mSearch Update (0.3ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 01:15:24', `rgt` = 8 WHERE `id` = 290[0m
+  [4;35;1mSearch Update (0.3ms)[0m   [0mUPDATE `searches` SET `updated_at` = '2010-11-08 01:15:24', `rgt` = 7, `lft` = 6, `parent_id` = 290 WHERE `id` = 291[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUsCity Load (20.6ms)[0m   [0mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;36;1mMap Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+  [4;35;1mSpecial Columns (20.3ms)[0m   [0mSHOW FIELDS FROM `specials`[0m
+  [4;36;1mSize Columns (14.9ms)[0m   [0;1mSHOW FIELDS FROM `sizes`[0m
+  [4;35;1mPicture Columns (4.4ms)[0m   [0mSHOW FIELDS FROM `pictures`[0m
+  [4;36;1mComment Columns (0.8ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mListing Load Including Associations (18.5ms)[0m   [0mSELECT `listings`.`id` AS t0_r0, `listings`.`title` AS t0_r1, `listings`.`description` AS t0_r2, `listings`.`enabled` AS t0_r3, `listings`.`user_id` AS t0_r4, `listings`.`created_at` AS t0_r5, `listings`.`updated_at` AS t0_r6, `listings`.`status` AS t0_r7, `listings`.`clicks_count` AS t0_r8, `listings`.`impressions_count` AS t0_r9, `listings`.`reservations_count` AS t0_r10, `listings`.`office_24_hours` AS t0_r11, `listings`.`access_24_hours` AS t0_r12, `listings`.`info_requests_count` AS t0_r13, `listings`.`logo_file_name` AS t0_r14, `listings`.`logo_file_size` AS t0_r15, `listings`.`logo_content_type` AS t0_r16, `listings`.`default_logo` AS t0_r17, `listings`.`category` AS t0_r18, `maps`.`id` AS t1_r0, `maps`.`listing_id` AS t1_r1, `maps`.`address` AS t1_r2, `maps`.`city` AS t1_r3, `maps`.`state` AS t1_r4, `maps`.`zip` AS t1_r5, `maps`.`created_at` AS t1_r6, `maps`.`updated_at` AS t1_r7, `maps`.`phone` AS t1_r8, `maps`.`lat` AS t1_r9, `maps`.`lng` AS t1_r10, `specials`.`id` AS t2_r0, `specials`.`listing_id` AS t2_r1, `specials`.`title` AS t2_r2, `specials`.`description` AS t2_r3, `specials`.`content` AS t2_r4, `specials`.`code` AS t2_r5, `specials`.`enabled` AS t2_r6, `specials`.`position` AS t2_r7, `specials`.`created_at` AS t2_r8, `specials`.`updated_at` AS t2_r9, `sizes`.`id` AS t3_r0, `sizes`.`title` AS t3_r1, `sizes`.`width` AS t3_r2, `sizes`.`length` AS t3_r3, `sizes`.`unit` AS t3_r4, `sizes`.`created_at` AS t3_r5, `sizes`.`updated_at` AS t3_r6, `sizes`.`description` AS t3_r7, `sizes`.`price` AS t3_r8, `sizes`.`listing_id` AS t3_r9, `pictures`.`id` AS t4_r0, `pictures`.`listing_id` AS t4_r1, `pictures`.`title` AS t4_r2, `pictures`.`description` AS t4_r3, `pictures`.`position` AS t4_r4, `pictures`.`created_at` AS t4_r5, `pictures`.`updated_at` AS t4_r6, `pictures`.`facility_image_file_name` AS t4_r7, `pictures`.`facility_image_content_type` AS t4_r8, `pictures`.`facility_image_file_size` AS t4_r9, `comments`.`id` AS t5_r0, `comments`.`title` AS t5_r1, `comments`.`comment` AS t5_r2, `comments`.`created_at` AS t5_r3, `comments`.`commentable_id` AS t5_r4, `comments`.`commentable_type` AS t5_r5, `comments`.`user_id` AS t5_r6, `comments`.`email` AS t5_r7 FROM `listings` LEFT OUTER JOIN `maps` ON maps.listing_id = listings.id LEFT OUTER JOIN `specials` ON specials.listing_id = listings.id LEFT OUTER JOIN `sizes` ON sizes.listing_id = listings.id LEFT OUTER JOIN `pictures` ON pictures.listing_id = listings.id LEFT OUTER JOIN `comments` ON `comments`.commentable_id = `listings`.id AND `comments`.commentable_type = 'Listing'WHERE (((maps.lat>27.3756876942928 AND maps.lat<27.9539671057072 AND maps.lng>-81.842213867201 AND maps.lng<-81.1892931327991)) AND (
+ (ACOS(least(1,COS(0.482842325125942)*COS(-1.42271829081909)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.482842325125942)*SIN(-1.42271829081909)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.482842325125942)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 20)) [0m
+  [4;36;1mImpression Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `impressions`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mImpression Create (7.7ms)[0m   [0;1mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:15:25', '2010-11-08 01:15:25', 51112, '/self-storage/fl/miami')[0m
+  [4;35;1mListing Load (0.3ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mListing Update (0.2ms)[0m   [0;1mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mImpression Create (0.2ms)[0m   [0mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:15:25', '2010-11-08 01:15:25', 57928, '/self-storage/fl/miami')[0m
+  [4;36;1mListing Load (0.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 57928) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mImpression Create (0.3ms)[0m   [0;1mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:15:25', '2010-11-08 01:15:25', 52993, '/self-storage/fl/miami')[0m
+  [4;35;1mListing Load (0.3ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 52993) [0m
+  [4;36;1mListing Update (0.2ms)[0m   [0;1mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 52993) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/locator
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.5ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'header' AND enabled IS TRUE)) [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (0.6ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.5ms)
+  [4;36;1mView Columns (11.0ms)[0m   [0;1mSHOW FIELDS FROM `views`[0m
+  [4;35;1mSQL (11.2ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (58.1ms)
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'sidebar' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'content_bottom' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (1.8ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 24)) [0m
+Rendered shared/_model_options (1.6ms)
+Rendered listings/_narrow_search (64.0ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 24)) [0m
+Rendered blocks/_block (133.5ms)
+  [4;36;1mBlocksModel Load (0.4ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 43)) [0m
+Rendered shared/_model_options (1.3ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 43)) [0m
+Rendered blocks/_block (7.5ms)
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_5' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (2.1ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 30)) [0m
+Rendered shared/_model_options (1.5ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;35;1mView Load (0.2ms)[0m   [0mSELECT `views`.* FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;36;1mModelsView Load (10.5ms)[0m   [0;1mSELECT * FROM `models_views` WHERE (`models_views`.`model_id` = 30) AND (`models_views`.view_id = 12) LIMIT 1[0m
+  [4;35;1mListing Load (5.0ms)[0m   [0mSELECT id, id FROM `listings` [0m
+  [4;36;1mFacilityInfo Load (0.3ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mSize Load (0.2ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 51112) [0m
+Rendered listings/_result (149.8ms)
+  [4;36;1mFacilityInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 57928) LIMIT 1[0m
+  [4;35;1mSize Load (0.2ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 57928) [0m
+Rendered listings/_result (15.3ms)
+  [4;36;1mFacilityInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 52993) LIMIT 1[0m
+  [4;35;1mSize Load (0.3ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 52993) [0m
+Rendered listings/_result (15.6ms)
+Rendered listings/_paginator (0.3ms)
+Rendered views/partials/_greylisting (182.8ms)
+Rendered blocks/_block (446.7ms)
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;35;1mBlock Load (0.5ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_6' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_7' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'footer' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.8ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.6ms)
+  [4;36;1mMap Load (3.5ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps WHERE maps.state = 'FL' GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (61.2ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (122.8ms)
+  [4;36;1mUsCity Load (17.3ms)[0m   [0;1mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+Rendered listings/_paginator (0.2ms)
+Rendered menus/_topnav (4.0ms)
+Rendered pages/_home (0.2ms)
+Rendered user_sessions/_form (7.0ms)
+Completed in 3499ms (View: 1453, DB: 284) | 200 OK [http://localhost/self-storage/fl/miami]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (21.2ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#show (for 127.0.0.1 at 2010-11-07 20:16:51) [GET]
+  Parameters: {"title"=>"a-a-storage-of-highlands-cnty", "action"=>"show", "id"=>"51112", "controller"=>"listings"}
+  [4;35;1mUser Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;35;1mAdPartner Load (0.3ms)[0m   [0mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;36;1mSizeIcon Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.3ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mListing Load (0.2ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mMap Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `specials` WHERE (`specials`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mSpecial Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `specials`[0m
+  [4;36;1mWebSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 51112) ORDER BY web_specials.id DESC LIMIT 1[0m
+  [4;35;1mFacilityFeature Load (2.3ms)[0m   [0mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 51112) [0m
+  [4;36;1mFacilityFeature Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `facility_features`[0m
+  [4;35;1mClick Columns (0.8ms)[0m   [0mSHOW FIELDS FROM `clicks`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClick Create (13.1ms)[0m   [0mINSERT INTO `clicks` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('http://localhost:3000/self-storage/fl/miami', '2010-11-08 01:16:51', '2010-11-08 01:16:51', 51112, '/self-storage/a-a-storage-of-highlands-cnty/51112')[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `clicks_count` = COALESCE(`clicks_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSearch Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `searches`[0m
+  [4;36;1mSearch Load (0.3ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Update (0.2ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 01:16:51', `listing_id` = 51112 WHERE `id` = 291[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/show
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (0.4ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.3ms)
+  [4;35;1mView Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `views`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (27.2ms)
+  [4;35;1mBlock Load (0.1ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.6ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 42)) [0m
+Rendered shared/_model_options (1.4ms)
+Rendered listings/_business_info (13.7ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 42)) [0m
+Rendered blocks/_block (72.0ms)
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.8ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;36;1mMap Load (8.6ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (60.9ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (231.2ms)
+
+ActionView::TemplateError (undefined method `to_html' for nil:NilClass) on line #2 of app/views/listings/show.html.erb:
+1: <% declare_content_for %>
+2: <% content_for :scripts, @Gmap.to_html %>
+3: <%= display_message flash %>
+4: 
+5: <div class="staticContent">
+
+    app/views/listings/show.html.erb:2
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (52.1ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (0.8ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (11.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (21.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (3.3ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#locator (for 127.0.0.1 at 2010-11-07 20:18:07) [GET]
+  Parameters: {"city"=>"miami", "action"=>"locator", "controller"=>"listings", "state"=>"fl"}
+  [4;36;1mUser Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPage Load (0.3ms)[0m   [0mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;36;1mAdPartner Load (0.2ms)[0m   [0;1mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;35;1mSizeIcon Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `size_icons`[0m
+  [4;36;1mSizeIcon Load (0.2ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;35;1mListing Columns (6.3ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mPage Load (0.4ms)[0m   [0;1mSELECT * FROM `pages` WHERE (`pages`.`title` = 'Self Storage') LIMIT 1[0m
+  [4;35;1mSizeIcon Load (0.3ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'thumb') ORDER BY width, length[0m
+  [4;36;1mSearch Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `searches`[0m
+  [4;35;1mUsCity Load (19.7ms)[0m   [0mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;36;1mUsCity Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `us_cities`[0m
+Google geocoding. Address: , Fl. Result: <?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://earth.google.com/kml/2.0"><Response>
+  <name>, Fl</name>
+  <Status>
+    <code>200</code>
+    <request>geocode</request>
+  </Status>
+  <Placemark id="p1">
+    <address>Florida, USA</address>
+    <AddressDetails Accuracy="2" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>US</CountryNameCode><CountryName>USA</CountryName><AdministrativeArea><AdministrativeAreaName>FL</AdministrativeAreaName></AdministrativeArea></Country></AddressDetails>
+    <ExtendedData>
+      <LatLonBox north="30.1648667" south="25.1062728" east="-77.4178530" west="-85.6136540" />
+    </ExtendedData>
+    <Point><coordinates>-81.5157535,27.6648274,0</coordinates></Point>
+  </Placemark>
+</Response></kml>
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Create (0.3ms)[0m   [0;1mINSERT INTO `searches` (`referrer`, `city`, `zip`, `created_at`, `within`, `remote_ip`, `storage_type`, `updated_at`, `listing_id`, `lft`, `lng`, `features`, `parent_id`, `unit_size`, `lat`, `rgt`, `query`, `state`) VALUES('/', NULL, NULL, '2010-11-08 01:18:08', NULL, '127.0.0.1', NULL, '2010-11-08 01:18:08', NULL, NULL, -81.5157535, NULL, NULL, NULL, 27.6648274, NULL, ', Fl', 'FL')[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSearch Load (0.2ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;36;1mSearch Load (0.1ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 292) [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mSearch Update (0.8ms)[0m   [0;1mUPDATE `searches` SET lft = (lft + 2) WHERE (1 = 1 AND lft >= 7) [0m
+  [4;35;1mSearch Update (1.1ms)[0m   [0mUPDATE `searches` SET rgt = (rgt + 2) WHERE (1 = 1 AND rgt >= 7) [0m
+  [4;36;1mSearch Update (0.1ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 01:18:08', `rgt` = 9 WHERE `id` = 291[0m
+  [4;35;1mSearch Update (0.2ms)[0m   [0mUPDATE `searches` SET `updated_at` = '2010-11-08 01:18:08', `rgt` = 8, `lft` = 7, `parent_id` = 291 WHERE `id` = 292[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUsCity Load (15.4ms)[0m   [0mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;36;1mMap Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `maps`[0m
+  [4;35;1mSpecial Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `specials`[0m
+  [4;36;1mSize Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `sizes`[0m
+  [4;35;1mPicture Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `pictures`[0m
+  [4;36;1mComment Columns (0.8ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mListing Load Including Associations (3.2ms)[0m   [0mSELECT `listings`.`id` AS t0_r0, `listings`.`title` AS t0_r1, `listings`.`description` AS t0_r2, `listings`.`enabled` AS t0_r3, `listings`.`user_id` AS t0_r4, `listings`.`created_at` AS t0_r5, `listings`.`updated_at` AS t0_r6, `listings`.`status` AS t0_r7, `listings`.`clicks_count` AS t0_r8, `listings`.`impressions_count` AS t0_r9, `listings`.`reservations_count` AS t0_r10, `listings`.`office_24_hours` AS t0_r11, `listings`.`access_24_hours` AS t0_r12, `listings`.`info_requests_count` AS t0_r13, `listings`.`logo_file_name` AS t0_r14, `listings`.`logo_file_size` AS t0_r15, `listings`.`logo_content_type` AS t0_r16, `listings`.`default_logo` AS t0_r17, `listings`.`category` AS t0_r18, `maps`.`id` AS t1_r0, `maps`.`listing_id` AS t1_r1, `maps`.`address` AS t1_r2, `maps`.`city` AS t1_r3, `maps`.`state` AS t1_r4, `maps`.`zip` AS t1_r5, `maps`.`created_at` AS t1_r6, `maps`.`updated_at` AS t1_r7, `maps`.`phone` AS t1_r8, `maps`.`lat` AS t1_r9, `maps`.`lng` AS t1_r10, `specials`.`id` AS t2_r0, `specials`.`listing_id` AS t2_r1, `specials`.`title` AS t2_r2, `specials`.`description` AS t2_r3, `specials`.`content` AS t2_r4, `specials`.`code` AS t2_r5, `specials`.`enabled` AS t2_r6, `specials`.`position` AS t2_r7, `specials`.`created_at` AS t2_r8, `specials`.`updated_at` AS t2_r9, `sizes`.`id` AS t3_r0, `sizes`.`title` AS t3_r1, `sizes`.`width` AS t3_r2, `sizes`.`length` AS t3_r3, `sizes`.`unit` AS t3_r4, `sizes`.`created_at` AS t3_r5, `sizes`.`updated_at` AS t3_r6, `sizes`.`description` AS t3_r7, `sizes`.`price` AS t3_r8, `sizes`.`listing_id` AS t3_r9, `pictures`.`id` AS t4_r0, `pictures`.`listing_id` AS t4_r1, `pictures`.`title` AS t4_r2, `pictures`.`description` AS t4_r3, `pictures`.`position` AS t4_r4, `pictures`.`created_at` AS t4_r5, `pictures`.`updated_at` AS t4_r6, `pictures`.`facility_image_file_name` AS t4_r7, `pictures`.`facility_image_content_type` AS t4_r8, `pictures`.`facility_image_file_size` AS t4_r9, `comments`.`id` AS t5_r0, `comments`.`title` AS t5_r1, `comments`.`comment` AS t5_r2, `comments`.`created_at` AS t5_r3, `comments`.`commentable_id` AS t5_r4, `comments`.`commentable_type` AS t5_r5, `comments`.`user_id` AS t5_r6, `comments`.`email` AS t5_r7 FROM `listings` LEFT OUTER JOIN `maps` ON maps.listing_id = listings.id LEFT OUTER JOIN `specials` ON specials.listing_id = listings.id LEFT OUTER JOIN `sizes` ON sizes.listing_id = listings.id LEFT OUTER JOIN `pictures` ON pictures.listing_id = listings.id LEFT OUTER JOIN `comments` ON `comments`.commentable_id = `listings`.id AND `comments`.commentable_type = 'Listing'WHERE (((maps.lat>27.3756876942928 AND maps.lat<27.9539671057072 AND maps.lng>-81.842213867201 AND maps.lng<-81.1892931327991)) AND (
+ (ACOS(least(1,COS(0.482842325125942)*COS(-1.42271829081909)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.482842325125942)*SIN(-1.42271829081909)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.482842325125942)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 20)) [0m
+  [4;36;1mImpression Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `impressions`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mImpression Create (0.1ms)[0m   [0;1mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:09', '2010-11-08 01:18:09', 51112, '/self-storage/fl/miami')[0m
+  [4;35;1mListing Load (0.2ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;36;1mListing Update (0.2ms)[0m   [0;1mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mImpression Create (0.1ms)[0m   [0mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:09', '2010-11-08 01:18:09', 57928, '/self-storage/fl/miami')[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 57928) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mImpression Create (0.2ms)[0m   [0;1mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:09', '2010-11-08 01:18:09', 52993, '/self-storage/fl/miami')[0m
+  [4;35;1mListing Load (0.1ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 52993) [0m
+  [4;36;1mListing Update (0.1ms)[0m   [0;1mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 52993) [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/locator
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'header' AND enabled IS TRUE)) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (0.5ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.2ms)
+  [4;36;1mView Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `views`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (10.8ms)
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'sidebar' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'content_bottom' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (2.0ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 24)) [0m
+Rendered shared/_model_options (1.5ms)
+Rendered listings/_narrow_search (59.1ms)
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 24)) [0m
+Rendered blocks/_block (124.4ms)
+  [4;36;1mBlocksModel Load (0.3ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 43)) [0m
+Rendered shared/_model_options (1.3ms)
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 43)) [0m
+Rendered blocks/_block (7.8ms)
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_5' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.9ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 30)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;35;1mView Load (0.4ms)[0m   [0mSELECT `views`.* FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;36;1mModelsView Load (0.2ms)[0m   [0;1mSELECT * FROM `models_views` WHERE (`models_views`.`model_id` = 30) AND (`models_views`.view_id = 12) LIMIT 1[0m
+  [4;35;1mListing Load (4.1ms)[0m   [0mSELECT id, id FROM `listings` [0m
+  [4;36;1mFacilityInfo Load (0.3ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 51112) LIMIT 1[0m
+  [4;35;1mSize Load (0.3ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 51112) [0m
+Rendered listings/_result (21.7ms)
+  [4;36;1mFacilityInfo Load (0.3ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 57928) LIMIT 1[0m
+  [4;35;1mSize Load (0.3ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 57928) [0m
+Rendered listings/_result (126.7ms)
+  [4;36;1mFacilityInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 52993) LIMIT 1[0m
+  [4;35;1mSize Load (0.2ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 52993) [0m
+Rendered listings/_result (13.9ms)
+Rendered listings/_paginator (0.2ms)
+Rendered views/partials/_greylisting (163.9ms)
+Rendered blocks/_block (516.6ms)
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_6' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.1ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_7' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'footer' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.7ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.5ms)
+  [4;36;1mMap Load (2.9ms)[0m   [0;1mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps WHERE maps.state = 'FL' GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (45.7ms)
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (101.5ms)
+  [4;36;1mUsCity Load (15.4ms)[0m   [0;1mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+Rendered listings/_paginator (0.2ms)
+Rendered menus/_topnav (3.6ms)
+Rendered pages/_home (0.1ms)
+Rendered user_sessions/_form (7.3ms)
+Completed in 3061ms (View: 1292, DB: 141) | 200 OK [http://localhost/self-storage/fl/miami]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mBlocksModel Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mPage Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mPost Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mBlock Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `blocks`[0m
+  [4;36;1mModelsView Columns (17.5ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+
+
+Processing ListingsController#locator (for 127.0.0.1 at 2010-11-07 20:18:11) [GET]
+  Parameters: {"city"=>"miami", "action"=>"locator", "controller"=>"listings", "state"=>"fl"}
+  [4;35;1mUser Columns (21.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` WHERE (show_in_nav IS TRUE) ORDER BY position, id[0m
+  [4;35;1mAdPartner Load (0.2ms)[0m   [0mSELECT * FROM `ad_partners` WHERE (enabled IS TRUE) [0m
+  [4;36;1mSizeIcon Columns (19.0ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSizeIcon Load (0.2ms)[0m   [0mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'medium') ORDER BY width, length[0m
+  [4;36;1mListing Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mPage Load (0.2ms)[0m   [0mSELECT * FROM `pages` WHERE (`pages`.`title` = 'Self Storage') LIMIT 1[0m
+  [4;36;1mSizeIcon Load (0.2ms)[0m   [0;1mSELECT * FROM `size_icons` WHERE (`size_icons`.`icon_size` = 'thumb') ORDER BY width, length[0m
+  [4;35;1mSearch Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `searches`[0m
+  [4;36;1mUsCity Load (15.9ms)[0m   [0;1mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;35;1mUsCity Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `us_cities`[0m
+Google geocoding. Address: , Fl. Result: <?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://earth.google.com/kml/2.0"><Response>
+  <name>, Fl</name>
+  <Status>
+    <code>200</code>
+    <request>geocode</request>
+  </Status>
+  <Placemark id="p1">
+    <address>Florida, USA</address>
+    <AddressDetails Accuracy="2" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>US</CountryNameCode><CountryName>USA</CountryName><AdministrativeArea><AdministrativeAreaName>FL</AdministrativeAreaName></AdministrativeArea></Country></AddressDetails>
+    <ExtendedData>
+      <LatLonBox north="30.1648667" south="25.1062728" east="-77.4178530" west="-85.6136540" />
+    </ExtendedData>
+    <Point><coordinates>-81.5157535,27.6648274,0</coordinates></Point>
+  </Placemark>
+</Response></kml>
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSearch Create (0.2ms)[0m   [0mINSERT INTO `searches` (`referrer`, `city`, `zip`, `created_at`, `within`, `remote_ip`, `storage_type`, `updated_at`, `listing_id`, `lft`, `lng`, `features`, `parent_id`, `unit_size`, `lat`, `rgt`, `query`, `state`) VALUES('/', NULL, NULL, '2010-11-08 01:18:12', NULL, '127.0.0.1', NULL, '2010-11-08 01:18:12', NULL, NULL, -81.5157535, NULL, NULL, NULL, 27.6648274, NULL, ', Fl', 'FL')[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSearch Load (0.3ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `searches` WHERE (`searches`.`id` = 291) [0m
+  [4;35;1mSearch Load (0.2ms)[0m   [0mSELECT * FROM `searches` WHERE (`searches`.`id` = 293) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSearch Update (0.9ms)[0m   [0mUPDATE `searches` SET lft = (lft + 2) WHERE (1 = 1 AND lft >= 9) [0m
+  [4;36;1mSearch Update (1.1ms)[0m   [0;1mUPDATE `searches` SET rgt = (rgt + 2) WHERE (1 = 1 AND rgt >= 9) [0m
+  [4;35;1mSearch Update (0.1ms)[0m   [0mUPDATE `searches` SET `updated_at` = '2010-11-08 01:18:12', `rgt` = 11 WHERE `id` = 291[0m
+  [4;36;1mSearch Update (0.1ms)[0m   [0;1mUPDATE `searches` SET `updated_at` = '2010-11-08 01:18:12', `rgt` = 10, `lft` = 9, `parent_id` = 291 WHERE `id` = 293[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mUsCity Load (15.4ms)[0m   [0;1mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+  [4;35;1mMap Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mSpecial Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `specials`[0m
+  [4;35;1mSize Columns (0.8ms)[0m   [0mSHOW FIELDS FROM `sizes`[0m
+  [4;36;1mPicture Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `pictures`[0m
+  [4;35;1mComment Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mListing Load Including Associations (2.9ms)[0m   [0;1mSELECT `listings`.`id` AS t0_r0, `listings`.`title` AS t0_r1, `listings`.`description` AS t0_r2, `listings`.`enabled` AS t0_r3, `listings`.`user_id` AS t0_r4, `listings`.`created_at` AS t0_r5, `listings`.`updated_at` AS t0_r6, `listings`.`status` AS t0_r7, `listings`.`clicks_count` AS t0_r8, `listings`.`impressions_count` AS t0_r9, `listings`.`reservations_count` AS t0_r10, `listings`.`office_24_hours` AS t0_r11, `listings`.`access_24_hours` AS t0_r12, `listings`.`info_requests_count` AS t0_r13, `listings`.`logo_file_name` AS t0_r14, `listings`.`logo_file_size` AS t0_r15, `listings`.`logo_content_type` AS t0_r16, `listings`.`default_logo` AS t0_r17, `listings`.`category` AS t0_r18, `maps`.`id` AS t1_r0, `maps`.`listing_id` AS t1_r1, `maps`.`address` AS t1_r2, `maps`.`city` AS t1_r3, `maps`.`state` AS t1_r4, `maps`.`zip` AS t1_r5, `maps`.`created_at` AS t1_r6, `maps`.`updated_at` AS t1_r7, `maps`.`phone` AS t1_r8, `maps`.`lat` AS t1_r9, `maps`.`lng` AS t1_r10, `specials`.`id` AS t2_r0, `specials`.`listing_id` AS t2_r1, `specials`.`title` AS t2_r2, `specials`.`description` AS t2_r3, `specials`.`content` AS t2_r4, `specials`.`code` AS t2_r5, `specials`.`enabled` AS t2_r6, `specials`.`position` AS t2_r7, `specials`.`created_at` AS t2_r8, `specials`.`updated_at` AS t2_r9, `sizes`.`id` AS t3_r0, `sizes`.`title` AS t3_r1, `sizes`.`width` AS t3_r2, `sizes`.`length` AS t3_r3, `sizes`.`unit` AS t3_r4, `sizes`.`created_at` AS t3_r5, `sizes`.`updated_at` AS t3_r6, `sizes`.`description` AS t3_r7, `sizes`.`price` AS t3_r8, `sizes`.`listing_id` AS t3_r9, `pictures`.`id` AS t4_r0, `pictures`.`listing_id` AS t4_r1, `pictures`.`title` AS t4_r2, `pictures`.`description` AS t4_r3, `pictures`.`position` AS t4_r4, `pictures`.`created_at` AS t4_r5, `pictures`.`updated_at` AS t4_r6, `pictures`.`facility_image_file_name` AS t4_r7, `pictures`.`facility_image_content_type` AS t4_r8, `pictures`.`facility_image_file_size` AS t4_r9, `comments`.`id` AS t5_r0, `comments`.`title` AS t5_r1, `comments`.`comment` AS t5_r2, `comments`.`created_at` AS t5_r3, `comments`.`commentable_id` AS t5_r4, `comments`.`commentable_type` AS t5_r5, `comments`.`user_id` AS t5_r6, `comments`.`email` AS t5_r7 FROM `listings` LEFT OUTER JOIN `maps` ON maps.listing_id = listings.id LEFT OUTER JOIN `specials` ON specials.listing_id = listings.id LEFT OUTER JOIN `sizes` ON sizes.listing_id = listings.id LEFT OUTER JOIN `pictures` ON pictures.listing_id = listings.id LEFT OUTER JOIN `comments` ON `comments`.commentable_id = `listings`.id AND `comments`.commentable_type = 'Listing'WHERE (((maps.lat>27.3756876942928 AND maps.lat<27.9539671057072 AND maps.lng>-81.842213867201 AND maps.lng<-81.1892931327991)) AND (
+ (ACOS(least(1,COS(0.482842325125942)*COS(-1.42271829081909)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.482842325125942)*SIN(-1.42271829081909)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.482842325125942)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 20)) [0m
+  [4;35;1mImpression Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `impressions`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mImpression Create (12.0ms)[0m   [0mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:13', '2010-11-08 01:18:13', 51112, '/self-storage/fl/miami')[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 51112) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 51112) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mImpression Create (0.1ms)[0m   [0;1mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:13', '2010-11-08 01:18:13', 57928, '/self-storage/fl/miami')[0m
+  [4;35;1mListing Load (0.2ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 57928) [0m
+  [4;36;1mListing Update (0.2ms)[0m   [0;1mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 57928) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mImpression Create (0.2ms)[0m   [0mINSERT INTO `impressions` (`referrer`, `created_at`, `updated_at`, `listing_id`, `request_uri`) VALUES('/', '2010-11-08 01:18:13', '2010-11-08 01:18:13', 52993, '/self-storage/fl/miami')[0m
+  [4;36;1mListing Load (0.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 52993) [0m
+  [4;35;1mListing Update (0.2ms)[0m   [0mUPDATE `listings` SET `impressions_count` = COALESCE(`impressions_count`, 0) + 1 WHERE (`id` = 52993) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/storagelocator
+Rendering listings/locator
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'header') [0m
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'header' AND enabled IS TRUE)) [0m
+  [4;35;1mBlock Load (0.1ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (0.5ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 16)) [0m
+Rendered shared/_model_options (1.3ms)
+  [4;35;1mView Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `views`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 16)) [0m
+Rendered blocks/_block (9.9ms)
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'sidebar') [0m
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'sidebar' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'content_bottom') [0m
+  [4;35;1mBlock Load (0.3ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'content_bottom' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlocksModel Load (1.8ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 24)) [0m
+Rendered shared/_model_options (1.5ms)
+Rendered listings/_narrow_search (188.7ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 24)) [0m
+Rendered blocks/_block (253.3ms)
+  [4;35;1mBlocksModel Load (0.5ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 43)) [0m
+Rendered shared/_model_options (1.4ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 43)) [0m
+Rendered blocks/_block (8.5ms)
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_5') [0m
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_5' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (1.8ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 30)) [0m
+Rendered shared/_model_options (1.6ms)
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;36;1mView Load (0.5ms)[0m   [0;1mSELECT `views`.* FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 30)) [0m
+  [4;35;1mModelsView Load (0.4ms)[0m   [0mSELECT * FROM `models_views` WHERE (`models_views`.`model_id` = 30) AND (`models_views`.view_id = 12) LIMIT 1[0m
+  [4;36;1mListing Load (4.0ms)[0m   [0;1mSELECT id, id FROM `listings` [0m
+  [4;35;1mFacilityInfo Load (0.3ms)[0m   [0mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 51112) LIMIT 1[0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 51112) [0m
+Rendered listings/_result (22.6ms)
+  [4;35;1mFacilityInfo Load (0.2ms)[0m   [0mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 57928) LIMIT 1[0m
+  [4;36;1mSize Load (0.2ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 57928) [0m
+Rendered listings/_result (15.9ms)
+  [4;35;1mFacilityInfo Load (0.3ms)[0m   [0mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 52993) LIMIT 1[0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 52993) [0m
+Rendered listings/_result (16.4ms)
+Rendered listings/_paginator (0.2ms)
+Rendered views/partials/_greylisting (56.8ms)
+Rendered blocks/_block (402.3ms)
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_6') [0m
+  [4;36;1mBlock Load (0.4ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_6' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlock Load (0.2ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'column_7') [0m
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'column_7' AND enabled IS TRUE)) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;35;1mBlock Load (0.2ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`show_in_all` = 'footer') [0m
+  [4;36;1mBlock Load (0.3ms)[0m   [0;1mSELECT `blocks`.* FROM `blocks` INNER JOIN `blocks_models` ON `blocks`.id = `blocks_models`.block_id WHERE ((`blocks_models`.model_type = 'Page') AND (`blocks_models`.model_id = 2) AND (place = 'footer' AND enabled IS TRUE)) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `blocks` WHERE (`blocks`.`restful` = 1) [0m
+  [4;36;1mBlocksModel Load (1.8ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.title AS t3_r1, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM `blocks_models` JOIN `blocks` AS polymorphic_parent ON `blocks_models`.block_id = polymorphic_parent.id LEFT JOIN `pages` ON `blocks_models`.model_id = `pages`.id AND `blocks_models`.model_type = 'Page' LEFT JOIN `posts` ON `blocks_models`.model_id = `posts`.id AND `blocks_models`.model_type = 'Post' LEFT JOIN `links` ON `blocks_models`.model_id = `links`.id AND `blocks_models`.model_type = 'Link' WHERE ((`blocks_models`.block_id = 39)) [0m
+Rendered shared/_model_options (1.6ms)
+  [4;35;1mMap Load (3.0ms)[0m   [0mSELECT city AS name, state, COUNT(maps.id) AS map_count FROM maps WHERE maps.state = 'FL' GROUP BY name, state ORDER BY map_count DESC LIMIT 50[0m
+Rendered pages/_short_footer (49.6ms)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM `views` INNER JOIN `models_views` ON `views`.id = `models_views`.view_id WHERE ((`models_views`.model_type = 'Block') AND (`models_views`.model_id = 39)) [0m
+Rendered blocks/_block (108.0ms)
+  [4;35;1mUsCity Load (16.8ms)[0m   [0mSELECT DISTINCT name FROM `us_cities` ORDER BY name[0m
+Rendered listings/_paginator (0.2ms)
+Rendered menus/_topnav (3.5ms)
+Rendered pages/_home (0.2ms)
+Rendered user_sessions/_form (6.6ms)
+Completed in 3172ms (View: 1410, DB: 167) | 200 OK [http://localhost/self-storage/fl/miami]
