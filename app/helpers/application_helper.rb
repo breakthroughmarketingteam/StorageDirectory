@@ -28,39 +28,41 @@ module ApplicationHelper
     
     regions(false).each do |region|
       content_for region do
-        @html = "<div class='region_#{region} region'>"
+        html = "<div class='region_#{region} region'>"
         
-          render_region_top(region)
-          render_all_blocks_in(region)
+          html << render_region_top(region)
+          html << render_all_blocks_in(region)
         
-        @html << '</div>'
+        html << '</div>' 
+        
+        html if html.match(/(class="block")/)
       end
     end
-    
-    @html
   end
   
   def render_region_top(region)
     case [controller_name, action_name]
     when ['pages', 'edit'], ['blocks', 'edit'] # show region labels when editing a page or block
-      @html << label_tag(region, nil, :id => "#{region}_region_label", :class => 'region_label')
+      label_tag(region, nil, :id => "#{region}_region_label", :class => 'region_label')
+    else
+      ''
     end
   end
   
   def render_all_blocks_in(region)
-    @html << '<ul class="block_sortable">'
+    html = '<ul class="block_sortable">'
     
     combine_global_and_local_blocks_for(region).each do |block|
-      if block.is_local? # local block
+      if block.is_local?
         sortable_id = "BlocksModel_#{block.blocks_models.detect { |bm| bm.place == region.to_s }.id}"
       else
         sortable_id = "Block_#{block.id}"
       end
         
-      @html << render(:partial => block, :locals => { :region => region.to_s, :sortable_id => sortable_id, :global => true })
+      html << render(:partial => block, :locals => { :region => region.to_s, :sortable_id => sortable_id, :global => true })
     end
     
-    @html << '</ul>'
+    html << '</ul>'
   end
   
   def combine_global_and_local_blocks_for(region)

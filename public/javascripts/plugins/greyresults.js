@@ -7,185 +7,7 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-	// we needed to adjust the style of the sizes li to stop the inputs within from breaking to a new line, we save the original css here to revert later
-	var sizes_li_adjustment = { 'margin-left': '13px', 'width': '84px' },
-		sizes_li_revertment = { 'margin-left': '25px', 'width': '72px' };
-	
-	$.convert_unit_size_row_values_to_inputs = function(container, cancel_btn, delete_btn) {
-		// values and such
-		container.addClass('active');
-		
-		var sizes_li	= $('.st-size', container),
-			type_li 	= $('.st-type', container),
-			desc_li 	= $('.st-desc', container),
-			price_li 	= $('.st-pric', container),
-			specials_li = $('.st-spec', container),
-			load_li		= $('.st-sele', container),
-			// to revert the content on cancel
-			sizes_orig		= sizes_li.text(),
-			type_orig		= type_li.text(),
-			desc_orig		= desc_li.text(),
-			price_orig		= price_li.html(),
-			specials_orig  	= specials_li.html(),
-			// build the input fields with the original values preset
-			x = sizes_orig.split(/\W?x\W?/)[0],
-			y = sizes_orig.split(/\W?x\W?/)[1],
-			xi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[width]" value="'+ x +'" />',
-			yi = '<input type="text" size="3" maxlength="3" class="small_num i" name="size[length]" value="'+ y +'" />',
-			ti = '<select class="i" name="size[title]">';
-				$.each($('#unit_type_labels').text().split(','), function() {
-					ti += '<option value="'+ this +'"'+ (type_orig == this ? ' selected="selected"' : '') +'>'+ this +'</option>';
-				})
-				ti +='</select>',
-			
-			di = '<input type="text" class="small_text_field i" name="size[description]" value="'+ desc_orig +'" />',
-			pi = '<input type="text" size="8" maxlength="8" class="small_text_field i" name="size[price]" value="'+ price_orig.replace('$', '') +'" />',
-			si = '<input type="text" class="small_text_field i" name="size[special]" value="'+ (specials_orig == 'NONE' ? '' : specials_orig) +'" />';
-		
-		// replace the content in the unit size row
-		sizes_li.css(sizes_li_adjustment).html(xi +' x '+ yi);
-		type_li.html(ti);
-		desc_li.html(di);
-		price_li.html('<span class="left">$ </span>'+ pi);
-		specials_li.html(si);
-		
-		cancel_btn.show().click(function(){
-			switch (cancel_btn.attr('rel')) {
-				case 'close':
-					container.fadeOut(300, function() { $(this).remove(); update_info_tab_count('Unit_Sizes', -1); });
-				break;
-				case 'cancel':
-					// revert to original content
-					sizes_li.html(sizes_orig).css(sizes_li_revertment);
-					type_li.html(type_orig);
-					price_li.html(price_orig);
-					specials_li.html(specials_orig);
 
-					$('.edit-btn', container).text('Edit');
-					cancel_btn.hide();
-					delete_btn.hide();
-				break;
-			}
-			
-			container.removeClass('active');
-			return false;
-		});
-		
-		delete_btn.show().click(function(){
-			if (!delete_btn.data('deleting')) {
-				delete_btn.data('deleting', true);
-				
-				var listing_id = $('input[name=listing_id]').val(),
-					size_id = $('input[name=size_id]', container).val();
-
-				$.greyConfirm('Are you sure you want to delete this unit size?', function() {
-					$.post('/listings/'+ listing_id +'/sizes/'+ size_id, { _method: 'delete' }, function(response) {
-						$.with_json(response, function(data) {
-							container.fadeOut(300, function() {
-								$(this).remove();
-								update_info_tab_count('Unit_Sizes', -1);
-							});
-						});
-						
-						delete_btn.data('deleting', false);
-					}, 'json');
-				}, function() { cancel_btn.click() });
-			}
-			
-			return false;
-		});
-	}
-
-	$.clone_and_attach_inputs = function(inputs, context, form) {
-		$(inputs, context).each(function(){ form.append($(this).clone()); });
-	}
-
-	$.post_new_unit_size_values_and_revert = function(container, hidden_form, cancel_btn, delete_btn) {
-		var sizes_li	= $('.st-size', container),
-			type_li 	= $('.st-type', container),
-			price_li 	= $('.st-pric', container),
-			specials_li = $('.st-spec', container);
-
-		$.clone_and_attach_inputs('.i', container, hidden_form);
-		cancel_btn.hide();
-		delete_btn.hide();
-		
-		$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-			$.with_json(response, function(data){
-				// update the row with the new values
-				var sizes_html = $('input[name="size[width]"]', container).val() +' x '+ $('input[name="size[length]"]', container).val();
-				sizes_li.css(sizes_li_revertment).html(sizes_html);
-
-				var type_html = $('select[name="size[title]"]', container).val();
-				type_li.html(type_html);
-
-				var price_html = $('input[name="size[price]"]', container).val();
-				price_li.html('$'+ parseFloat(price_html).toFixed(2));
-
-				var specials_html = $('input[name="size[special]"]', container).val();
-				specials_li.html(specials_html);
-
-				$('.edit-btn', container).text('Edit');
-				cancel_btn.attr('rel', 'cancel');
-				
-				container.replaceWith($(data));
-				
-			}, function(data) { // error
-				cancel_btn.show();
-				delete_btn.show();
-				
-				$.ajax_error(data); 
-			});
-			
-			$('.st-sele', container).removeClass('active_load');
-			container.removeClass('active');
-			
-		}, 'json');
-	}
-	
-	$('#new_unit', '#sl-tabs-sizes').live('click', function(){
-		var unit_clone = $('.sl-table-wrap:not(.active)', '#sl-tabs-sizes-in').eq(0).clone().hide(),
-			ajax_loader = $('.ajax_loader', $(this).parent()).show();
-		
-		if (!unit_clone.length) {
-			$.getJSON('/ajax/get_partial?partial=sizes/size&pretend_action=new&model=Size&sub_model=Listing&sub_id='+ $('input[name=listing_id]').val(), function(response) {
-				$.with_json(response, function(data) {
-					unit_clone = $(data).appendTo('#sl-tabs-sizes-in');
-					prep_unit_size_edit(unit_clone, ajax_loader);
-				});
-			});
-			
-		} else {
-			$('.sl-table-head', '#sl-tabs-sizes-in').eq(0).after(unit_clone);
-			prep_unit_size_edit(unit_clone, ajax_loader);
-		}
-		
-		return false;
-	});
-	
-	function prep_unit_size_edit(unit_size, ajax_loader) {
-		var hidden_form = $('form:hidden', unit_size),
-			cancel_btn = $('.cancel_link', unit_size);
-		
-		hidden_form.find('input[name=_method]').val('post').end();
-		unit_size.fadeIn();
-		
-		$.convert_unit_size_row_values_to_inputs(unit_size, cancel_btn, $('.delete_link', unit_size));
-		
-		$('.edit-btn', unit_size).text('Save');
-		cancel_btn.attr('rel', 'close');
-		$('.delete_link', unit_size).remove();
-		$('input[name=size_id]', unit_size).val('').attr('id', '');
-		
-		// change form attr to reroute the ajax call to the create action
-		hidden_form.attr('action', hidden_form.attr('action').replace(/(sizes\/\d+)/, 'sizes'));
-		hidden_form.find('input[name=_method]').val('post');
-		
-		$('input', unit_size).eq(0).focus();
-		ajax_loader.hide();
-		
-		update_info_tab_count('Unit_Sizes', 1);
-	}
 	
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
@@ -309,19 +131,6 @@ $(function(){
 	/*
 	 * FRONT END, results page
 	*/
-	
-	$('#XXXnarrow_results_form').submit(function(){
-		var form = $(this),
-			results = $('#rslt-list-bg').addClass('loading').children().hide();
-		
-		$.getJSON(form.attr('action'), form.serialize(), function(response) {
-			$.with_json(response, function(data) {
-				results.replaceWith(data);
-			});
-		});
-		
-		return false;
-	});
 	
 	// narrow search form sliders
 	$('.slider').each(function(){
@@ -775,15 +584,20 @@ $(function(){
 	
 	// autoreload the results
 	$('#search_unit_size').change(function() {
-		var form = $(this).parents('form').runValidation();
+		var form = $(this).parents('form').runValidation(),
+			results_wrap = $('#ajax_wrap_inner').fadeTo(.5);
 		
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
 			
-			$.getJSON('/listings/locate', form.serialize() +'&auto_search=1', function(response) {
+			$.getJSON('/self-storage', form.serialize() +'&auto_search=1', function(response) {
 				$.with_json(response, function(data) {
-					console.log(data)
+					Gmaps_data = data['maps_data'];
+					results_wrap.after(data['results']).remove();
+					$.setGmap(Gmaps_data);
 				});
+				
+				form.data('loading', false);
 			});
 		}
 	});

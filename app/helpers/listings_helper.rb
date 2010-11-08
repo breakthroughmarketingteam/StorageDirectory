@@ -87,6 +87,20 @@ module ListingsHelper
 		end
   end
   
+  def locator_header
+    html = "We found <span class=\"hlght-text\">#{@listings.total_entries}</span> facilities"
+		
+		if @prev_search.is_zip?
+			html << "in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
+		elsif @prev_search.is_city?
+			html << " within <span class=\"hlght-text\">#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}</span> miles "
+			html << "of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank?
+		else
+			html << "matching <span class=\"hlght-text\">#{@prev_search.extrapolate :title}</span>"
+		end
+		html
+  end
+  
   def display_logo(listing, options = {})
     @min_title_len = 21
     
