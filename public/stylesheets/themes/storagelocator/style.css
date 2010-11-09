@@ -265,7 +265,7 @@ li.rslt-size span.size{color:#666;display:block;font-weight:bold;text-align:cent
 li.rslt-size img{margin-left:1px;}
 li.rslt-price{font-size:12px;padding:10px 20px 0 0;width:125px;}
 .listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
-li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top left;color:#333;height:88px;}
+li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;color:#333;height:88px;}
 .radio_wrap{height:16px;position:relative;background:url(/images/ui/storagelocator/checkbox.png) no-repeat 123px 0;}
 .radio_wrap .radio_select{height:16px;width:16px;}
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
@@ -468,10 +468,10 @@ ul#specials_list {margin:15px 10px;}
 #ov-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat top left;width:172px;height:33px;line-height:2.3;float:right;position:relative;top:6px;right:17px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px #000;}
 #sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 2px #000;position:relative;left:15px;display:block;width:160px;height:33px;}
 #sl-fac-detail-in-edit{border:1px solid #ccc;}
-#sl-fac-detail-in .dlogo_wrap{margin-bottom:10px;}
+#sl-fac-detail-in .dlogo_wrap{margin-bottom:25px;}
 #sl-fac-detail-in-edit p a,#sl-fac-detail-in p a{font-weight:bold;color:#33c;text-decoration:none;}
 #sl-fac-detail-in-edit,#sl-fac-detail-in{padding:10px;}
-#narrow-box #sl-fac-detail-in{padding:10px 13px 20px 10px;}
+#narrow-box #sl-fac-detail-in{padding:10px 13px 20px 4px;}
 #sl-fac-detail-in-edit p.address_label,#sl-fac-detail-in p.address_label{margin-bottom:10px;}
 #narrow-box #sl-fac-detail-in-edit div.address,#narrow-box #sl-fac-detail-in div.address{line-height:1.5em;margin:10px 0;font-size:80%;}
 .info_heading{padding-bottom:5px;margin-bottom:10px;border-bottom:1px dashed #ccc;font-weight:bold;}
@@ -495,14 +495,14 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in-edit{height:152px;padding:10px 12px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
-.dlogo_wrap{width:164px;height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;}
+.dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;}
 .dlogo_wrap .default_logo{position:absolute;z-index:1;top:0;left:0;}
 .dlogo_wrap span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;}
 .dlogo_wrap span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .dlogo_wrap span.short{padding:0 5px 0;display:block;}
 #sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;text-decoration:none;}
-.listing .dlogo_wrap span{display:inline-block;font-size:12px;line-height:16px;margin:0 10px;text-align:center;top:17px;}
+.listing .dlogo_wrap span{display:inline-block;font-size:12px;line-height:16px;margin:0 10px;text-align:center;top:9px;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist,#ls_top .sl-dist{color:#33c;font-size:120%;}
 #sl-fac-detail-in-edit #listing_img{width:100%;height:100%;}
@@ -785,7 +785,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #rslt-head h2{font-size:20px;}
 #list-name{background-position:99% 50%;}
 #list-miles{background-position:97% 50%;}
-.listing{overflow:hidden;margin-bottom:20px;}
+.listing{overflow:hidden;margin-bottom:10px;}
 .listing .inner{padding:0;background:#fff;position:relative;border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
 .listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{position:relative;}
@@ -927,7 +927,7 @@ img.right{margin:0 0 10px 10px;}
 #email_reports_settings .submit_btn:hover{text-decoration:underline;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
-body#listings_controller form.new_listing_request{margin-top:10px;}
+body.locator_action form.new_listing_request{margin-top:10px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
 #new_client #email_check{overflow:hidden;position:relative;margin-bottom:7px;}
 #new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
@@ -1166,7 +1166,7 @@ form .error p{margin:0 0 7px 0;}
 #new_search #search_field #ab a{padding-right:15px;color:#333;background:url(/images/ui/storagelocator/green-arrow-btn.png) no-repeat right center;}
 #new_search .grn_btn{margin-left:30px;}
 
-#advanced_opts{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;margin:0 0 -130px 0;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
+#advanced_opts{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:2px solid #ccc;background:#f2f2f2;position:relative;overflow:hidden;}
 #advanced_opts #ao_top{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;height:14px;padding:13px 16px;color:#fff;text-shadow:1px 1px 0px #666;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #advanced_opts .inner{padding:0;overflow:hidden;}
 #advanced_opts .left{width:19%;height:100%;padding:25px 30px;border-right:1px solid #e6e6e6;}
@@ -1248,7 +1248,8 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #unit_features .collapseable{margin:10px 0 5px 0;width:105%;}
 #unit_features a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 4px 4px;}
 #unit_features a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
-#sub_submit{text-align:center;margin:20px 0;}
+#sub_submit{text-align:center;}
+#advanced_opts #sub_submit input{margin:20px 0 20px 5px;text-align:center;width:173px;}
 
 #dock,#dock_nav{width:545px;height:60px;margin:160px auto 20px;visibility:hidden;}
 #dock a,#dock_nav a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}
@@ -1501,3 +1502,12 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list #more-info a:hover{}
 #feat-list #spec p,#feat-list #size p, #feat-list #price p{color:#000;font-size:10px;font-weight:normal;margin-bottom:5px;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
+
+
+.show_action img#listing_img{width:175px;}
+.show_action a.dlogo_wrap span{line-height:24px;top:20px;}
+
+.show_action #sb-title{}
+.show_action #sb-title h2{background:none;margin:16px 0 0 20px;padding:0;}
+.show_action #sl-header h2{font-size:20px;margin:8px 0 0 15px;}
+.show_action #sl-header span{font-size:20px;}
