@@ -33,7 +33,7 @@ class ListingsController < ApplicationController
         attributes = @last_search.attributes
         attributes.delete :id
         @prev_search = Search.create attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
-      end
+      end if @last_search
     elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
 
