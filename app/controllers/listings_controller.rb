@@ -34,7 +34,7 @@ class ListingsController < ApplicationController
         attributes.delete :id
         @prev_search = Search.create attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
       end
-    elsif session[:search_id] && params[:city].blank? # reloaded the page?
+    elsif session[:search_id] && params[:city].blank? # home page
       @prev_search = Search.find session[:search_id]
 
     elsif params[:city] # clicked on a link
@@ -55,8 +55,8 @@ class ListingsController < ApplicationController
     get_map
     @listings = Listing.find_by_location @prev_search
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-    
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
+    
     # updates the impressions only for listings on current page
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     

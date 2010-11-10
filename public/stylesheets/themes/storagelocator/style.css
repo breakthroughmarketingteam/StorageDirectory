@@ -141,7 +141,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
-.rslt-head-txt > p{color:#aaa;font-size:18px;float:left;font-weight:bold;margin:6px 0;}
+.rslt-head-txt > p{color:#aaa;font-size:16px;float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
 .green-head{width:745px;margin:15px 0;float:left;position:relative;left:15px;}
@@ -1503,3 +1503,4 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list #more-info a:hover{}
 #feat-list #spec p,#feat-list #size p, #feat-list #price p{color:#000;font-size:10px;font-weight:normal;margin-bottom:5px;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
+.tooltip{display:none;background:#ccc;font-size:12px;height:70px;width:160px;padding:25px;color:#fff;}
