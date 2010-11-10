@@ -142,7 +142,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
 .rslt-head-txt > p{color:#aaa;font-size:18px;float:left;font-weight:bold;margin:6px 0;}
-.rslt-head-txt .pagination{}
+.rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
 .green-head{width:745px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
@@ -200,7 +200,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;padding-bottom:15px;min-height:660px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
-#rslt-list-bg.loading{height:40px;background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
+#rslt-head-txt .ajax_loader{margin:3px;display:block;}
 .listing > .inner{border-top:1px solid #ccc;}
 
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}

@@ -5,14 +5,14 @@
 	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
 	<% form_for @search, :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
-			<%= f.text_field :query, :value => @prev_search.try(:full_location_if_zip), :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= f.text_field :query, :value => default_search_query, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
 			<%= reverse_captcha %>
 			<%= f.submit 'Locate', :class => 'grn_btn' %>
 		</div>
 		<div id="advanced_opts">
 			<div id="type_select">
 				<%= f.label :storage_type, 'Type:' %>
-				<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type) %>
+				<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type), :class => 'auto' %>
 			</div>
 			
 			<div id="size_option">
@@ -21,7 +21,7 @@
 				</div>
 				<div>
 					<%= f.label :unit_size, 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]', (@prev_search.try(:unit_size) || $_listing_search_distance) %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', (@prev_search.try(:unit_size) || $_listing_search_distance), :class => 'auto' %>
 				</div>
 			</div>
 			
@@ -29,7 +29,7 @@
 				<%= f.label :within %>
 				<div class="uncollapse">
 					<% @distance_options.each do |distance| %>
-						<div class="radio_wrap">
+						<div class="radio_wrap auto">
 							<div class="radio_select">
 								<%= radio_button_tag 'search[within]', distance, (@prev_search.try(:within) || $_listing_search_distance).to_i == distance.to_i %>
 							</div>
@@ -45,7 +45,7 @@
 				
 				<ul class="collapseable hide">
 					<% @unit_features.each do |feature| %>
-					<li class="selectable_wrap">
+					<li class="selectable_wrap auto">
 						<div class="selectable">
 							<%= check_box_tag 'search[features]', feature %>
 						</div>

@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
                 :home_page
   
   include UtilityMethods
+  include Geokit
   
   # for the SharedModelMethod module
   # TODO: move this into a theme config or something since not all layouts have all regions

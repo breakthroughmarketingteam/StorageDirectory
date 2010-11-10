@@ -68,10 +68,7 @@ module UtilityMethods
   end
 
   Hash.class_eval do
-    def title_sort!
-      #raise [self.sort { |a,b| a[0][0] <=> 't' }].inspect
-      self
-    end
+    
   end
   
   Array.class_eval do

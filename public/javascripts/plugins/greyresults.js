@@ -583,9 +583,28 @@ $(function(){
 	});
 	
 	// autoreload the results
-	$('#search_unit_size').change(function() {
-		var form = $(this).parents('form').runValidation(),
-			results_wrap = $('#ajax_wrap_inner').fadeTo(.5);
+	$('select.auto', '#narrow_results_form').change(function() {
+		delayed_submit(this);
+	});
+	
+	$('.auto', '#narrow_results_form').click(function() {
+		delayed_submit(this);
+	});
+	
+	function delayed_submit(input) {
+		setTimeout(function() {
+			$(input).parents('form').submit();
+		}, 100);
+	}
+	
+	$('#narrow_results_form').submit(function() {
+		var form = $(this).runValidation(), 
+			results_page = $('#ajax_wrap_inner'); 
+			results_wrap = $('#results_wrap', results_page).fadeTo(500, .5),
+			results_head = $('#rslt-head-txt', results_wrap),
+			ajax_loader = $('<img src="/images/ui/ajax-loader-long-green.gif" class="ajax_loader" />');
+		
+			results_head.replaceWith(ajax_loader);
 		
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
@@ -593,13 +612,15 @@ $(function(){
 			$.getJSON('/self-storage', form.serialize() +'&auto_search=1', function(response) {
 				$.with_json(response, function(data) {
 					Gmaps_data = data['maps_data'];
-					results_wrap.after(data['results']).remove();
+					results_page.replaceWith(data['results']);
 					$.setGmap(Gmaps_data);
 				});
 				
 				form.data('loading', false);
 			});
 		}
+		
+		return false;
 	});
 	
 	/*

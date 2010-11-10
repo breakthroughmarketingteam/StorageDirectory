@@ -34,3 +34,7 @@ GOOGLE_APPLICATION_ID = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BTE80FJOyH0zSjklzaO53DwmhI
 
 # for heroku
 #config.cache_store = :mem_cache_store, Memcached::Rails.new
+
+# Object cache
+require 'active_support/cache/dalli_store23'
+config.cache_store = :dalli_store, ENV['MEMCACHE_SERVERS']

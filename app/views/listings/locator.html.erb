@@ -13,11 +13,6 @@
 
 	<div id="main_map">
 	</div>
-
-	<div class="rslt-head-txt">
-		<p>Your <span>nearest</span> self storage is being displayed first</p>
-		<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
-	</div>
 	
 	<%= render :partial => 'listings/results' %>
 	
