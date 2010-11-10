@@ -27,13 +27,13 @@ class ListingsController < ApplicationController
     elsif params[:search] # ajax call from the 'show more' button
       @last_search = Search.find_by_id session[:search_id] # get the last search so we don't have to geocode again
       
-      if params[:auto_search] && params[:search][:query] != @last_search.query
+      if params[:auto_search] && params[:search][:query] != @last_search.try(:query)
         @prev_search = Search.create_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
       else
         attributes = @last_search.attributes
         attributes.delete :id
         @prev_search = Search.create attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
-      end if @last_search
+      end
     elsif session[:search_id] && params[:city].blank? # reloaded the page?
       @prev_search = Search.find session[:search_id]
 
