@@ -6,6 +6,8 @@ class ListingsController < ApplicationController
   before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
+  geocode_ip_address :only => :locator
+  
   def index 
     render :layout => false if request.xhr?
   end
@@ -23,16 +25,24 @@ class ListingsController < ApplicationController
       @prev_search = Search.find flash[:search_id]
      
     elsif params[:search] # ajax call from the 'show more' button
-      @last_search = Search.find session[:search_id] # get the last search so we don't have to geocode again
-      @prev_search = Search.create @last_search.attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
-    
-    elsif session[:search_id] && params[:city].blank? # reloaded the page?
+      @last_search = Search.find_by_id session[:search_id] # get the last search so we don't have to geocode again
+      
+      if params[:auto_search] && params[:search][:query] != @last_search.try(:query)
+        @prev_search = Search.create_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
+      else
+        attributes = @last_search.attributes
+        attributes.delete :id
+        @prev_search = Search.create attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
+      end
+    elsif session[:search_id] && params[:city].blank? # home page
       @prev_search = Search.find session[:search_id]
-    
+
     elsif params[:city] # clicked on a link
       @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
+
     else
-      @prev_search = Search.create_from_geoloc session[:geo_location]
+      loc = _location_with_fallback
+      redirect_to search_listings_path(loc.state, loc.city.parameterize) and return
     end
     
     if session[:search_id] && !flash[:search_back] && !params[:search]
@@ -45,8 +55,8 @@ class ListingsController < ApplicationController
     get_map
     @listings = Listing.find_by_location @prev_search
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-    
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
+    
     # updates the impressions only for listings on current page
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
@@ -131,7 +141,6 @@ class ListingsController < ApplicationController
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
     @listing = params[:id] ? Listing.find(params[:id]) : current_user.listings.build(:title => params[:title])
-    @listing.default_logo = rand(@listing_logos.size)
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map
@@ -190,6 +199,11 @@ class ListingsController < ApplicationController
   
   def _get_listing_partials(listings)
     listings.map { |listing| render_to_string :partial => 'listings/result', :locals => { :result => listing } }
+  end
+  
+  def _location_with_fallback
+    return session[:geo_location] if session[:geo_location]
+    session[:geo_location] = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip == '127.0.0.1' ? '65.83.183.146' : request.remote_ip)
   end
   
 end

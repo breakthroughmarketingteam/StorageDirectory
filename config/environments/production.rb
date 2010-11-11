@@ -6,7 +6,7 @@ config.cache_classes = true
 
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
-config.action_controller.perform_caching             = true
+config.action_controller.perform_caching             = false
 config.action_view.cache_template_loading            = true
 
 # See everything in the log (default is :info)
@@ -34,3 +34,7 @@ GOOGLE_APPLICATION_ID = 'ABQIAAAALpG_-PAeF4LXKTM6JqFu2BTE80FJOyH0zSjklzaO53DwmhI
 
 # for heroku
 #config.cache_store = :mem_cache_store, Memcached::Rails.new
+
+# Object cache
+require 'active_support/cache/dalli_store23'
+config.cache_store = :dalli_store, ENV['MEMCACHE_SERVERS']

@@ -22,7 +22,7 @@ class Search < ActiveRecord::Base
     @search
   end
   
-  def self.create_from_params(search, geo_location)
+  def self.create_from_params(search, geo_location = nil)
     @search = self.build_from_params search, geo_location
     @search.save
     @search

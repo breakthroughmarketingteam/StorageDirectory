@@ -88,15 +88,15 @@ module ListingsHelper
   end
   
   def locator_header
-    html = "We found <span class=\"hlght-text\">#{@listings.total_entries}</span> facilities"
+    html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@prev_search.storage_type.try(:pluralize) || 'self storages'}"
 		
 		if @prev_search.is_zip?
-			html << "in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
+			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
 		elsif @prev_search.is_city?
-			html << " within <span class=\"hlght-text\">#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}</span> miles "
-			html << "of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank?
+			html << " within <span class=\"hlght-text\">#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}</span> miles"
+			html << " of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank?
 		else
-			html << "matching <span class=\"hlght-text\">#{@prev_search.extrapolate :title}</span>"
+			html << " matching <span class=\"hlght-text\">#{@prev_search.extrapolate :title}</span>"
 		end
 		html
   end
@@ -107,7 +107,7 @@ module ListingsHelper
     if listing.logo.exists?
       "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id))}</div>"
     else
-      img_hash = @listing_logos[listing.default_logo || 0]
+      img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
       link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end

@@ -1,17 +1,106 @@
-namespace :import do
-  
-  desc "Import Listings from a CSV file."
-  task :listings => :environment do
-    require 'fastercsv'
+namespace :scrubber do
+  desc 'Clean duplicates out'
+  task :remove_dups, :class_name do |t, args|
     require 'PP'
     
-    file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{ARGV.slice!(1)}" # remove and return the second arg, in this case the csv filename
+    # monkey patch AR just for now.
+    class ActiveRecord::Base
+      def non_id_attributes
+        atts = self.attributes
+        atts.delete 'id'
+        atts.delete 'listing_id'
+        atts.delete 'created_at'
+        atts.delete 'updated_at'
+        atts
+      end
+    end
     
-    puts "Loading and Parsing CSV file"
-    records = FasterCSV.read file
-    records.shift # discard the header row
+    begin
+      class_name = args.class_name.camelcase.constantize
+    rescue NameError
+      puts "Not a valid class name, tryed: #{args.class_name.camelcase}"
+      exit
+    end
     
-    puts "Ready to import #{records.size-1} records." # dont count the the header row
+    records = class_name.find(:all)
+    total = records.size
+    puts  "Finding duplicates for #{class_name} in #{total} records"
+    
+    group_count = select_count = redun_count = 0;
+    
+    duplicate_groups = records.group_by do |element|
+      puts "Group by (#{percent_of(group_count, total)} done) Processing: #{element.inspect}"
+      group_count += 1
+      element.non_id_attributes
+    end.select do |gr|
+      if gr.last.size > 1
+        puts "Selecting (#{percent_of(select_count, total)} done) #{gr.inspect}"
+      else
+        puts "Not selected (#{percent_of(select_count, total)} done) #{gr.inspect}"
+      end
+      
+      select_count += 1
+      gr.last.size > 1
+    end
+    
+    redundant_elements = duplicate_groups.map do |group|
+      puts "Getting Redundant (#{percent_of(redun_count, total)} done): #{(group.last - [group.last.first]).inspect}"
+      redun_count += 1
+      group.last - [group.last.first]
+    end.flatten
+    
+    redun_total = redundant_elements.size; destroy_count = 0
+    puts "Found #{redun_total} redundant records, Detroying..."
+    
+    redundant_elements.map do |r|
+      puts "Destroying (#{percent_of(destroy_count, redun_total)} done): #{r.inspect}"
+      destroy_count += 1
+      r.listing.destroy
+      r.destroy
+    end
+    
+  end
+end
+
+namespace :geocode do
+  desc 'Geocode listings with nil lat or lng'
+  task :listings => :environment do
+    require 'fastercsv'
+    puts 'Finding listings to regeocode'
+    
+    @listings = Listing.all :include => :map, :conditions => 'maps.lat IS NULL'
+    @total = @listings.size; @geocoded = []; @failed = []
+    
+    puts "Geocoding #{@total} listings"
+    
+    @listings.each_with_index do |listing, i|
+      map = listing.map
+      
+      if map.auto_geocode_address
+        map.save
+        @geocoded << listing
+        puts "Geocoded (#{percent_of i, @total} done) listing #{listing.title} in #{listing.city}, #{listing.state} [#{listing.lat}, #{listing.lng}]"
+        
+        if i+1 % 50 == 0
+          puts "HIT 50 records, waiting for 30 secs"  
+          do_the_waiting_thing
+        end
+      else
+        puts "Failed to geocode listing #{listing.title} in #{listing.city}, #{listing.state}"
+        @failed << listing
+      end
+    end
+    
+    puts "Done! Geocoded: #{@geocoded.size} listings; Failed: #{@failed.size}"
+    save_to_csv @failed, 'failed_to_geocode'
+  end
+end
+
+namespace :import do
+  
+  desc 'Import Listings from a CSV file.'
+  task :listings, :file_name do |t, args|
+    records = load_from_csv args.file_name
     
     puts "Begin filtering records and adding listings to queue..."
     @filtered = {}
@@ -52,6 +141,76 @@ namespace :import do
     
     save_to_csv(@failed_rows, 'failed_records') and exit # whoopie!
   end
+  
+  desc 'Import moving companies from a csv file'
+  task :moving_companies, :file_name do |t, args|
+    records = load_from_csv args.file_name
+    filtered = []; total = records.size
+    
+    records.each_with_index do |row, i|
+      begin
+        title   = row[0].titleize
+        address = row[1].titleize
+        city    = row[2].titleize
+        state   = row[3]
+        zip     = row[4].split('-')[0].to_s
+        phone   = row[5]
+        website = row[6]
+        
+        zip = zip.size < 5 ? "0#{zip}" : zip unless zip.blank?
+      rescue
+        puts "Row #{i} had bad or insufficient data"
+      end
+      
+      unless address.blank? || address.match(/(po box)/i) || zip.blank?
+        listing = Listing.new :title => title, :category => 'Moving'
+        listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
+        listing.build_contact :web_address => website, :phone => phone
+        
+        puts "Added to queue (#{percent_of(i, total)} done): #{listing.title}"
+        filtered << listing
+      else
+        puts "Skipped row #{i}: #{title} Address:#{address} #{city}, #{state} #{zip}"
+      end
+    end
+    
+    queued = filtered.size
+    puts "Queued up #{queued} listings; #{percent_of(queued, total)} of fil Saving to db and geocoding..."
+    saved = 0; failed = 0; geocoded = 0; not_geocoded = 0
+    
+    filtered.each_with_index do |listing, i|
+      if listing.save
+        saved += 1
+        puts "Saved (#{saved} of #{queued}; #{percent_of(i, queued)}): #{listing.title}"
+        
+        if listing.map.auto_geocode_address
+          geocoded += 1
+          puts "Geocoded (#{geocoded} of #{queued}; #{percent_of(i, queued)}) #{listing.city}, #{listing.state} [#{listing.lat}, #{listing.lng}]"
+        else
+          not_geocoded += 1
+          puts "Failed to Geocode (#{not_geocoded}) #{listing.title} #{listing.city}, #{listing.state} #{listing.zip}"
+        end
+      else
+        failed += 1
+        puts "Error saving #{listing.title} Error: #{listing.errors.full_messages.map * '; '}"
+      end
+    end
+    
+    puts "DONE! #{percent_of(geocoded, queued)} Success; Saved: #{saved}; Geocoded: #{geocoded}; Failed: #{failed}; Not Geocoded: #{not_geocoded}"
+  end
+  
+end
+
+def load_from_csv(file_name)
+  require 'fastercsv'
+  file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{file_name}"
+  
+  puts "Loading and Parsing CSV file"
+  records = FasterCSV.read file
+  records.shift # discard the header row
+  
+  puts "Ready to import #{records.size} records." # dont count the the header row
+  records
 end
 
 # get only the storage, moving and truck companies
@@ -151,13 +310,21 @@ def build_listing_features!(title, sic_description)
   end
 end
 
+# helper methods
 def save_to_csv(records, filename)
+  require 'fastercsv'
   if records.size > 0
     path = "#{RAILS_ROOT}/lib/tasks/csv_data/#{filename}.csv"
     puts "Saving #{records.size} failed records to file (#{path})"
     
     FasterCSV.open(path, 'w') do |csv|
-      records.each { |record| csv << record }
+      records.each do |record|
+        if record.respond_to? :map
+          csv << record.attributes.values + record.map.attributes.values
+        else
+          csv << record
+        end
+      end
     end
   end
 end

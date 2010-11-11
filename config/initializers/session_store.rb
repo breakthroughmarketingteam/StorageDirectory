@@ -13,3 +13,15 @@ ActionController::Base.session = {
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rake db:sessions:create")
 # ActionController::Base.session_store = :active_record_store
+
+# Session cache
+ActionController::Base.session = {
+  :namespace   => 'sessions',
+  :expire_after => 20.minutes.to_i,
+  :memcache_server => ['localhost:11211', 'server-2:11211'],
+  :key         => '',
+  :secret      => ''
+}
+
+require 'action_controller/session/dalli_store'
+ActionController::Base.session_store = :dalli_store

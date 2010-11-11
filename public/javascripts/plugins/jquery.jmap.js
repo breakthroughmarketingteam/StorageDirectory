@@ -1,9 +1,14 @@
 /**
- * @classDescription The Mapifies variable is the main class object for jMaps
+ * The main Mapifies object
+ * @method
+ * @namespace Mapifies
+ * @id Mapifies
+ * @author Tane Piper <tane@digitalspaghetti.me.uk>
+ * 
  */
 var Mapifies;
 
-if (!Mapifies) Mapifies = {};
+if (!Mapifies) Mapifies = function(){};
 
 /**
  * The main object that holds the maps
@@ -75,7 +80,7 @@ Mapifies.Initialise = function ( element, options, callback ) {
 	 * @id Mapifies.Initialise.defaults
 	 * @alias Mapifies.Initialise.defaults
 	 * @param {String} language The locale language for the map
-	 * @param {String} mapType The type of map to create.  Options are 'map' (default), 'sat' and 'hybrid'.
+	 * @param {String} mapType The type of map to create.  Takes a map type constant such as G_NORMAL_MAP (default). (Changed r74).
 	 * @param {Object} mapCenter An array that contains the Lat/Lng coordinates of the map center.
 	 * @param {Number} mapZoom The initial zoom level of the map.
 	 * @param {String} mapControl The option for the map control.  The options are 'small' (default), 'large' or 'none'
@@ -95,8 +100,8 @@ Mapifies.Initialise = function ( element, options, callback ) {
 		return {
 			// Initial type of map to display
 			'language': 'en',
-			// Options: "map", "sat", "hybrid"
-			'mapType': 'map',
+			// The constant of the map type to pass
+			'mapType': G_NORMAL_MAP,
 			// Initial map center
 			'mapCenter': [55.958858,-3.162302],
 			// Initial zoom level
@@ -133,8 +138,7 @@ Mapifies.Initialise = function ( element, options, callback ) {
 	if (GBrowserIsCompatible()) {
 			
 		var thisMap = Mapifies.MapObjects.Set(element, options);
-		var mapType = Mapifies.GetMapType(options.mapType);
-		thisMap.setCenter(new GLatLng(options.mapCenter[0], options.mapCenter[1]), options.mapZoom, mapType);
+		thisMap.setCenter(new GLatLng(options.mapCenter[0], options.mapCenter[1]), options.mapZoom, options.mapType);
 		
 		if (options.mapShowjMapsIcon) {
 			Mapifies.AddScreenOverlay(element,
@@ -217,10 +221,9 @@ Mapifies.MoveTo = function ( element, options, callback ) {
    * @id Mapifies.MoveTo
    * @alias Mapifies.MoveTo
    * @param {String} centerMethod The element to initialise the map on.
-   * @param {String} mapType The type of map to create.  Options are 'map' (default), 'sat' and 'hybrid'.
+   * @param {String} mapType The type of map to create.  Takes a map type constant such as G_NORMAL_MAP or null(default). (Changed r74).
    * @param {Object} mapCenter An array that contains the Lat/Lng coordinates of the map center.
    * @param {Number} mapZoom The initial zoom level of the map.
-   * @return {Function} callback The callback option with the point object and options or true.
    */	
 	function defaults() {
 		return {
@@ -232,12 +235,10 @@ Mapifies.MoveTo = function ( element, options, callback ) {
 	};
 	var thisMap = Mapifies.MapObjects.Get(element);
 	options = jQuery.extend(defaults(), options);	
-	if (options.mapType)
-		var mapType = Mapifies.GetMapType(options.mapType);
 	var point = new GLatLng(options.mapCenter[0], options.mapCenter[1]);
 	switch (options.centerMethod) {
 		case 'normal':
-			thisMap.setCenter(point, options.mapZoom, mapType);
+			thisMap.setCenter(point, options.mapZoom, options.mapType);
 		break;
 		case 'pan':
 			thisMap.panTo(point);
@@ -294,8 +295,59 @@ Mapifies.GotoSavedPosition = function ( element, options, callback) {
 Mapifies.CreateKeyboardHandler = function( element, options, callback ) {
 	var thisMap = Mapifies.MapObjects.Get(element);
 	var keyboardHandler = new GKeyboardHandler(thisMap);
-	if (typeof callback == 'function') return callback(keyboardHandler);
+	if (typeof callback == 'function') return callback(keyboardHandler, thisMap);
 };
+
+/**
+ * Check if a map container element has been resized or toggled from show/hide (Added r68)
+ * @method
+ * @namespace Mapifies
+ * @id Mapifies.CheckResize
+ * @alias Mapifies.CheckResize
+ * @param {jQuery} element The element to initialise the map on.
+ * @param {Object} options The object that contains the options.
+ * @param {Object} callback The callback function to pass out after initialising the map.
+ * @return {Function} callback The callback option with the map object handler.
+ */
+Mapifies.CheckResize = function( element, options, callback ) {
+	var thisMap = Mapifies.MapObjects.Get(element);
+	thisMap.checkResize();
+	if (typeof callback == 'function') return callback(thisMap);
+};
+
+/**
+ * Allows you to pass a google maptype constant and update the map type (added r75)
+ * @method
+ * @namespace Mapifies
+ * @id Mapifies.SetMapType
+ * @alias Mapifies.SetMapType
+ * @param {jQuery} element The element to initialise the map on.
+ * @param {String} options The option of the maptype.
+ * @param {Object} callback The callback function to pass out after initialising the map.
+ * @return {Function} callback The callback option with the map object handler.
+ */
+Mapifies.SetMapType = function (element, options, callback) {
+	var thisMap = Mapifies.MapObjects.Get(element);
+	thisMap.setMapType(window[options]);
+	if (typeof callback == 'function') return callback(thisMap);
+}
+
+/**
+ * A function to clear the map of all overlays including markers, polygons and images
+ * @method
+ * @namespace Mapifies
+ * @id Mapifies.ClearMap
+ * @alias Mapifies.ClearMap
+ * @param {jQuery} element The element to initialise the map on.
+ * @param {String} options The option of the maptype.
+ * @param {Object} callback The callback function to pass out after initialising the map.
+ * @return {Function} callback The callback option with the map object handler.
+ */
+Mapifies.ClearMap = function (element, options, callback) {
+	var thisMap = Mapifies.MapObjects.Get(element);
+	thisMap.clearOverlays();
+	if (typeof callback == 'function') return callback(thisMap);
+}
 
 /**
  * The SearchAddress function takes a map, options and callback function.  The options can contain either an address string, to which a point is returned - or reverse geocoding a GLatLng, where an address is returned
@@ -343,7 +395,6 @@ Mapifies.SearchAddress = function( element, options, callback) {
 		} else {
 			var geoCoder = new GClientGeocoder(cache);
 		}
-		
 		Mapifies.MapObjects.Append(element, 'Geocoder', geoCoder);
 		// We need to get the map object again, now we have attached the geocoder
 		thisMap = Mapifies.MapObjects.Get(element);
@@ -391,9 +442,9 @@ Mapifies.SearchDirections = function( element, options, callback) {
 			// Optional panel to show text directions
 			'panel': null,
 			//The locale to use for the directions result.
-			'locale': 'en_GB',
+			'locale': 'en_US',
 			//The mode of travel, such as driving (default) or walking
-			'travelMode': 'driving',
+			'travelMode': G_TRAVEL_MODE_DRIVING,
 			// Option to avoid highways
 			'avoidHighways': false,
 			// Get polyline
@@ -421,11 +472,11 @@ Mapifies.SearchDirections = function( element, options, callback) {
 	var panel = $(options.panel).get(0);
 	
 	if (typeof thisMap.Directions === 'undefined') {
-  	Mapifies.MapObjects.Append(element, 'Directions', new GDirections(thisMap, panel));
-  }	
+  		Mapifies.MapObjects.Append(element, 'Directions', new GDirections(thisMap, panel));
+  	}	
 	
 	GEvent.addListener(thisMap.Directions, "load", onLoad);
-  GEvent.addListener(thisMap.Directions, "error", onError);
+  	GEvent.addListener(thisMap.Directions, "error", onError);
 	
 	if (options.clearLastSearch) {
 		thisMap.Directions.clear();
@@ -646,7 +697,7 @@ Mapifies.AddMarker = function ( element, options, callback ) {
 	 * @param {Number} pointMaxZoom The maximum zoom level to display the marker if using a marker manager.
 	 * @param {GIcon} pointIcon A GIcon to display instead of the standard marker graphic.
 	 * @param {Boolean} centerMap Automatically center the map on the new marker.  Default false.
-	 * @param {String} centerMoveMethod The method in which to move to the marker.  Options are 'normal' (default) and 'pan'
+	 * @param {String} centerMoveMethod The method in which to move to the marker.  Options are 'normal' (default) and 'pan'.  Added r64
 	 * @return {Object} The options for AddGroundOverlay
 	 */
 	function defaults() {
@@ -752,6 +803,7 @@ Mapifies.CreateMarkerManager = function(element, options, callback) {
 	 * @namespace Mapifies.CreateMarkerManager
 	 * @id Mapifies.CreateMarkerManager.defaults
 	 * @alias Mapifies.CreateMarkerManager.defaults
+	 * @param {String} markerManager The type of marker manager to use.  Options are 'GMarkerManager' (default) and 'MarkerManager'.  (Added r72)
 	 * @param {Number} borderPadding Specifies, in pixels, the extra padding outside the map's current viewport monitored by a manager. Markers that fall within this padding are added to the map, even if they are not fully visible.
 	 * @param {Number} maxZoom The maximum zoom level to show markers at
 	 * @param {Boolean} trackMarkers Indicates whether or not a marker manager should track markers' movements.
@@ -759,6 +811,7 @@ Mapifies.CreateMarkerManager = function(element, options, callback) {
 	 */
 	function defaults() {
 		return {
+			'markerManager': 'GMarkerManager',
 			// Border Padding in pixels
 			'borderPadding': 100,
 			// Max zoom level 
@@ -769,7 +822,14 @@ Mapifies.CreateMarkerManager = function(element, options, callback) {
 	}
 	var thisMap = Mapifies.MapObjects.Get(element);
 	options = jQuery.extend(defaults(), options);
-	var markerManager = new GMarkerManager(thisMap, options);
+	
+	var markerManagerOptions = {
+		'borderPadding': options.borderPadding,
+		'maxZoom': options.maxZoom,
+		'trackMarkers': options.trackMarkers
+	}
+	
+	var markerManager = new window[options.markerManager](thisMap, options);
 	Mapifies.MapObjects.Append(element, 'MarkerManager',markerManager);
 
 	// Return the callback
@@ -1177,31 +1237,6 @@ Mapifies.SearchCode = function ( code ) {
 }
 
 /**
- * An internal function to get the google maptype constant
- * @method
- * @namespace Mapifies
- * @id Mapifies.GetMapType
- * @alias Mapifies.GetMapType
- * @param {String} mapType The string of the map type.
- * @return {String} mapType The Google constant for a maptype.
- */
-Mapifies.GetMapType = function ( mapType ) {
-	// Lets set our map type based on the options
-	switch(mapType) {
-		case 'map':	// Normal Map
-			mapType = G_NORMAL_MAP;
-		break;
-		case 'sat':	// Satallite Imagery
-			mapType = G_SATELLITE_MAP;
-		break;
-		case 'hybrid':	//Hybrid Map
-			mapType = G_HYBRID_MAP;
-		break;
-	};
-	return mapType;
-};
-
-/**
  * An internal function to get the google travel mode constant
  * @method
  * @namespace Mapifies
@@ -1309,23 +1344,21 @@ Mapifies.getCenter = function ( element ) {
 Mapifies.getBounds = function (element){
 	var thisMap = Mapifies.MapObjects.Get(element);
 	return thisMap.getBounds();
-};
+};var Mapifies;
+
+if (!Mapifies) Mapifies = {};
 
 (function($){
 	$.fn.jmap = function(method, options, callback) {
 		return this.each(function(){
 			if (method == 'init' && typeof options == 'undefined') {
 				new Mapifies.Initialise(this, {}, null);
-				
 			} else if (method == 'init' && typeof options == 'object') {
 				new Mapifies.Initialise(this, options, callback);
-				
 			} else if (method == 'init' && typeof options == 'function') {
 				new Mapifies.Initialise(this, {}, options);
-				
 			} else if (typeof method == 'object' || method == null) {
 				new Mapifies.Initialise(this, method, options);
-				
 			} else {
 				try {
 					new Mapifies[method](this, options, callback);

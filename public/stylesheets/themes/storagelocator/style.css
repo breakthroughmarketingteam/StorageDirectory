@@ -141,8 +141,8 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
-.rslt-head-txt > p{color:#aaa;font-size:18px;float:left;font-weight:bold;margin:6px 0;}
-.rslt-head-txt .pagination{}
+.rslt-head-txt > p{color:#aaa;font-size:16px;float:left;font-weight:bold;margin:6px 0;}
+.rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
 .green-head{width:745px;margin:15px 0;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
@@ -200,7 +200,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;border:1px solid #ccc;margin-bottom:2px;padding-bottom:15px;min-height:660px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
-#rslt-list-bg.loading{height:40px;background:url(/images/ui/ajax-loader-long-green.gif) no-repeat top center;}
+#rslt-head-txt .ajax_loader{margin:3px;display:block;}
 .listing > .inner{border-top:1px solid #ccc;}
 
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
@@ -213,9 +213,9 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > .premium > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
 #rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > .premium > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
 */
-.listing .inner .in{overflow:hidden;position:relative;padding:0 0 10px 0;}
+.listing .inner .in{height:145px;position:relative;padding:0 0 10px 0;}
 .listing ul li{float:left;}
-.listing .rslt-features {float:right;margin:6px 7px 0 0;overflow:hidden;}
+.listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a {display:block;float:left;height:25px;margin-left:5px;width:25px;}
 .listing a.hours{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
 .listing a.security{background:url(/images/ui/storagelocator/security.png) no-repeat;}
@@ -252,7 +252,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;color:#555;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;width:159px;}
-.rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;border-bottom:1px solid #ccc;height:38px;margin:0 0 7px;overflow:hidden;}
+.rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;border-bottom:1px solid #ccc;height:38px;margin:0 0 7px;}
 .rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
 .rslt-title h3 a{color:#060;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
@@ -797,7 +797,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel{width:auto;overflow:hidden;display:none;cursor:default;background:#fff;position:relative;z-index:600;border-top:0 none;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;z-index:550;background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x 0 bottom;}
 .panel .inner_box{padding:13px 16px;}
-.panel #map_partial{height:250px;overflow:visible;}
+.panel #map_partial{height:auto;overflow:hidden;background:url("/images/ui/storagelocator/blue-strip.gif") repeat-x top #F2F5FE;}
 .panel .inner_box .office_hours{float:left;font-size:80%;margin:10px 0 10px 10px;width:45%;}
 .panel .inner_box .access_hours{float:left;font-size:80%;margin:10px 0 10px 10px;width:45%;}
 .panel .inner_box .office_hours p,.panel .inner_box .access_hours p{height:auto;}
@@ -823,6 +823,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
 .panel h5 a{text-decoration:none;}
 .panel .dir-head h5{width:320px;}
+.panel #map_partial h5{height:75px;width:43%;padding:2px 0 0 19px;}
 .panel .head h5{font-size:18px;}
 .panel .inner_box h6{font-size:120%;}
 .panel .inner_box h6,.panel .inner_box p{margin-bottom:14px;font-size:14px;}
@@ -830,9 +831,10 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .inner_box p.framed{height:30px;}
 .panel .inner_box p.framed a{color:#fff;}
 .panel .inner_box .left{width:44%;}
-.google_map{background:url("/images/ui/storagelocator/gmap-bg.png") no-repeat center bottom;height:300px;padding:10px;position:absolute;right:20px;top:22px;width:361px;z-index:1000;}
+.google_map{background:#fff;padding:10px 10px 13px;margin:-71px 0 3px 0;float:right;width:361px;z-index:1000;box-shadow:2px 2px 4px #555;-moz-box-shadow:0 1px 4px #555;-webkit-box-shadow:2px 2px 4px #555;}
+#map_partial #dirs{padding:10px;float:left;background:#fff;margin:10px 0 0 -2px;width:99%;}
+#map_partial .ps{clear:both;display:block;float:right;margin-top:10px;}
 .map_wrap{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;width:360px;}
-.map_wrap iframe{height:260px;width:360px;}
 #storage-info-content{padding:25px 30px 0;}
 #storage-info-content h2{color:#4c4bcc;font-size:32px;line-height:36px;margin-bottom:20px;}
 #storage-info-content h3{color:#333;font-size:22px;margin-bottom:15px;padding-top:15px;}
@@ -1514,3 +1516,6 @@ form .note{clear:both;display:block;font-size:80%;}
 .show_action #sb-title h2{background:none;margin:16px 0 0 20px;padding:0;}
 .show_action #sl-header h2{font-size:20px;margin:8px 0 0 15px;}
 .show_action #sl-header span{font-size:20px;}
+
+.tooltip{display:none;background:url(http://static.flowplayer.org/tools/img/tooltip/black_arrow.png);height:122px;padding:40px 30px 10px 30px;width:209px;font-size:11px;color:#fff;z-index:999;}
+

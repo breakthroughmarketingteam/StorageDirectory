@@ -3,7 +3,6 @@ class PagesController < ApplicationController
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
   
-  include Geokit
   geocode_ip_address :only => :show
   
   def index

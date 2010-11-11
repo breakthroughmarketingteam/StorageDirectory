@@ -6,3 +6,4 @@ memcached
 aws-s3
 httparty
 cobravsmongoose
+dalli
