@@ -141,6 +141,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;border-radius-topleft:22px;-moz-border-radius-topleft:22px;-webkit-border-top-left-radius:22px;border-radius-topright:22px;-moz-border-radius-topright:22px;-webkit-border-top-right-radius:20px;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x top left #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
+.rslt-head-txt .ajax_loader{margin:4px auto;}
 .rslt-head-txt > p{color:#aaa;font-size:16px;float:left;font-weight:bold;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
@@ -459,7 +460,7 @@ ul#specials_list {margin:15px 10px;}
 #results_header #top_map_btn{display:block;float:right;margin:13px 12px 0 0;color:#fff;text-shadow:.5px .5px 0 #333;}
 #results_header #top_map_btn:hover, #results_header #top_map_btn:active{color:#ebebeb;;}
 #results_header #top_map_btn img{vertical-align:middle;margin-left:7px;right:0;}
-#main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;}
+#main_map{width:97.7%;margin:0 0 0 1px;height:300px;border:1px solid #ccc;background:url("/images/ui/ajax-loader-long-green.gif") no-repeat 50% 50%;}
 #sl-header h2, #ov-header h2{float:left;text-shadow:1px 1px 0px #666;margin-left:20px;font-size:28px;}
 #results_header h2{float:left;font-size:18px;margin:10px 0 0 20px;text-shadow:1px 1px 0 #666;}
 #sl-header h2 span{font-size:1.4em;}
@@ -1028,7 +1029,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_page #user_session_submit{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;}
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
-#new_user_session .ajax_loader{position:absolute;right:63px;top:10px;}
+#new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
 #pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
@@ -1433,7 +1434,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #footer hr{background:#fff;border:none;height:10px;margin:0;}
 #footer_mid hr{background:#fff;border:none;height:15px;margin:0;}
 
-#green{}
+#green{padding:0 20px 20px;}
 #green img{float:right;}
 #green p{font-size:12px;line-height:18px;margin-bottom:20px;}
 #green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#339933;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}

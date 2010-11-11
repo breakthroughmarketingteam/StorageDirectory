@@ -603,7 +603,7 @@ $(function(){
 		delayed_submit(this);
 	});
 	
-	$('.auto', '#narrow_results_form').click(function() {
+	$('.auto:not(select)', '#narrow_results_form').click(function() {
 		delayed_submit(this);
 	});
 	
@@ -615,12 +615,13 @@ $(function(){
 	
 	$('#narrow_results_form').submit(function() {
 		var form = $(this).runValidation(), 
-			results_page = $('#ajax_wrap_inner'); 
-			results_wrap = $('#results_wrap', results_page).fadeTo(500, .5),
-			results_head = $('#rslt-head-txt', results_wrap),
-			ajax_loader = $('<img src="/images/ui/ajax-loader-long-green.gif" class="ajax_loader" />');
+			results_page = $('#ajax_wrap_inner'),
+			results_wrap = $('#results_wrap', results_page),
+			results_head = $('.rslt-head-txt', results_wrap),
+			ajax_loader = '<img src="/images/ui/ajax-loader-long-green.gif" class="ajax_loader" style="display:block;" />';
 		
-			results_head.replaceWith(ajax_loader);
+		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
+		results_head.html(ajax_loader);
 		
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);

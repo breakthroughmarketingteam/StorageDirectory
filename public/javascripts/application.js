@@ -1259,10 +1259,12 @@ $(document).ready(function() {
 	});
 	
 	$('.popup-post').live('click', function() {
+		var $this = $(this);
+		
 		$.getJSON(this.href, function(response) {
 			$.with_json(response, function(data) {
 				var pop_up = $('<div id="pop_up"></div>');
-				pop_up.html(data).dialog(default_pop_up_options({ title: 'Post', width: '400px' }));
+				pop_up.html(data).dialog(default_pop_up_options({ title: $this.attr('title'), width: '400px' }));
 				$('')
 			});
 		});

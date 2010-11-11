@@ -43,12 +43,11 @@ class Listing < ActiveRecord::Base
     :url => ":s3_domain_url",
     :path => ":attachment/:id/:style_:basename.:extension"
   
-  validates_attachment_content_type :logo, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
+  validates_attachment_content_type :logo, :content_type => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
   
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
-  acts_as_taggable_on :tags
   acts_as_mappable :through => :map
   sitemap :order => 'updated_at DESC'
   
@@ -56,6 +55,70 @@ class Listing < ActiveRecord::Base
   @@upper_types = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
   @@interior_types = %w(interior indoor standard)
+  
+  #
+  # Search methods
+  #
+  
+  def self.find_by_location(search, geo_location = nil)
+    # build the options for the model find method
+    options = {
+      :include => [:map, :specials, :sizes, :pictures, :reviews],
+      :within  => (search.within.blank? ? $_listing_search_distance : search.within),
+      :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
+    }
+    base_conditions = 'listings.enabled IS TRUE'
+    
+    @location = search.location
+    
+    unless search.query.blank?
+      if search.is_zip?
+        options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
+        
+      elsif !search.is_address_query? # try query by name? 
+        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?) AND ' + base_conditions, "%#{search.query}%", search.query.split(/\s|,\s?/)] }
+        options.merge! conditions
+        
+        # they didnt query by address so lets base it on where the geocoder thinks they are
+        unless search.lat.nil?
+          options.merge! :origin => search.lat_lng
+          
+        # we don't know where they are so lets set the origin to the location of the first result
+        else
+          guessed = Listing.first(conditions).map.zip
+          @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
+          options.merge! :origin => @location
+        end
+      end
+    else # blank search, guess the location (geocoded ip address) or fall back on a test location
+      @location = geo_location.nil? ? Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126') : [geo_location[:lat].to_f, geo_location[:lng].to_f]
+      options.merge! :origin => @location, :conditions => base_conditions
+    end
+    
+    # TODO: storage_type
+    
+    @listings = Listing.all options
+    
+    # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
+    unless search.unit_size.blank?
+      all_premium = @listings.select(&:premium?)
+      
+      kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
+      
+      # TODO: refine this part in case the seracher also chose
+      very_specific = kinda_specific.select do |p|
+        p.sizes.any? { |s| s.dims == search.unit_size }
+      end.sort_by_distance_from @location
+
+      remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from @location
+      # ordering the results
+      @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(@location)
+    else
+      @listings.sort_by_distance_from @location
+    end
+    
+    @listings
+  end
   
   # Instance Methods
   
@@ -141,70 +204,6 @@ class Listing < ActiveRecord::Base
   
   def root_search
     self.searches.detect &:root?
-  end
-  
-  #
-  # Search methods
-  #
-  
-  def self.find_by_location(search, geo_location = nil)
-    # build the options for the model find method
-    options = {
-      :include => [:map, :specials, :sizes, :pictures, :reviews],
-      :within  => (search.within.blank? ? $_listing_search_distance : search.within),
-      :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
-    }
-    base_conditions = 'listings.enabled IS TRUE'
-    
-    @location = search.location
-    
-    unless search.query.blank?
-      if search.is_zip?
-        options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
-        
-      elsif !search.is_address_query? # try query by name? 
-        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?) AND ' + base_conditions, "%#{search.query}%", search.query.split(/\s|,\s?/)] }
-        options.merge! conditions
-        
-        # they didnt query by address so lets base it on where the geocoder thinks they are
-        unless search.lat.nil?
-          options.merge! :origin => search.lat_lng
-          
-        # we don't know where they are so lets set the origin to the location of the first result
-        else
-          guessed = Listing.first(conditions).map.zip
-          @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
-          options.merge! :origin => @location
-        end
-      end
-    else # blank search, guess the location (geocoded ip address) or fall back on a test location
-      @location = geo_location.nil? ? Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126') : [geo_location[:lat].to_f, geo_location[:lng].to_f]
-      options.merge! :origin => @location, :conditions => base_conditions
-    end
-    
-    # TODO: storage_type
-    
-    @listings = Listing.all options
-    
-    # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
-    unless search.unit_size.blank?
-      all_premium = @listings.select(&:premium?)
-      
-      kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
-      
-      # TODO: refine this part in case the seracher also chose
-      very_specific = kinda_specific.select do |p|
-        p.sizes.any? { |s| s.dims == search.unit_size }
-      end.sort_by_distance_from @location
-
-      remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from @location
-      # ordering the results
-      @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(@location)
-    else
-      @listings.sort_by_distance_from @location
-    end
-    
-    @listings
   end
   
   def premium?

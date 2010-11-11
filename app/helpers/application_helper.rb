@@ -369,7 +369,11 @@ module ApplicationHelper
   end
   
   def extract_tags(data_class)
-    data_class.all.map(&:tag_list).flatten.uniq.sort
+    if data_class.name == 'Listing'
+      []
+    else
+      data_class.all.map(&:tag_list).flatten.uniq.sort
+    end
   end
   
   # link title for resource crud action
