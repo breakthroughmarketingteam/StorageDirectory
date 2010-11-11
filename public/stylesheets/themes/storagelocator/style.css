@@ -266,7 +266,7 @@ li.rslt-size img{margin-left:1px;}
 li.rslt-price{font-size:12px;padding:10px 20px 0 0;width:125px;}
 .listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
 li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;color:#333;height:88px;}
-.radio_wrap{height:16px;position:relative;background:url(/images/ui/storagelocator/checkbox.png) no-repeat 123px 0;}
+.radio_wrap{height:16px;position:relative;background:url(/images/ui/storagelocator/checkbox.png) no-repeat;}
 .radio_wrap .radio_select{height:16px;width:16px;}
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:123px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
@@ -1183,7 +1183,7 @@ form .error p{margin:0 0 7px 0;}
 #advanced_opts #features .selectable_wrap label{font-weight:normal;}
 #advanced_opts .selectable_wrap input{display:none;}
 #advanced_opts #features .selectable{width:22px;height:22px;float:left;margin-right:5px;}
-#advanced_opts .selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat bottom right;}
+#advanced_opts .selected{background:url(/images/ui/storagelocator/select.png) no-repeat 3px 1px;}
 #advanced_opts #slide_wrap,#advanced_opts #loc_btn{float:left;}
 #advanced_opts #slide_wrap{width:70%;line-height:3.8;}
 #advanced_opts #slide_wrap label,#advanced_opts #slide_wrap .advanced_slider{display:block;float:left;}
@@ -1219,10 +1219,12 @@ transform: rotate(-45deg);
 filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0.7071067811865476, M12=0.7071067811865475, M21=-0.7071067811865475, M22=0.7071067811865476); 
 -ms-filter:"progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=0.7071067811865475, M21=-0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand')";zoom:1;}
 #distance_btns .radio_wrap:first-child{margin-left:0;}
-#distance_btns .radio_select{float:left;}
+#distance_btns .radio_select{float:left;width:20px;height:20px;position:absolute;}
 #distance_btns .radio_wrap label{float:right;margin:1px 3px 0 0;}
+#distance_btns .selected .radio_wrap{background:url(/images/ui/storagelocator/checkbox.png) no-repeat 123px 0;}
 #distance_btns .radio_select input{visibility:hidden;}
-#distance_btns .selected{}
+#distance_btns .selected{background:url(/images/ui/storagelocator/checkbox.png) no-repeat 4px 5px;}
+#distance_btns .selected .radio_select{background:url(/images/ui/storagelocator/radio-select.png) no-repeat -1px 0;}
 /*#distance_btns #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}
 #distance_btns #slide_wrap .arrow{margin:6px 0;}
 */
@@ -1264,6 +1266,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
 #footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;position:relative;}
 #footer_btm .usssl_adp{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#ad_partner_model_index .box{height:230px;}
 #footer_mid #wrapper{background:#fff;-moz-border-radius:10px;border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 1px 10px #666;box-shadow:1px 1px 10px #666;-webkit-box-shadow:1px 1px 10px #666;border:3px solid #ccc;margin:0 auto;width:976px;}
 
 #steps{height:188px;width:949px;padding:20px 0 10px 25px;overflow:hidden;text-align:left;position:relative;z-index:2;}
@@ -1485,7 +1488,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
 
 #feat-list{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;background:#f2f5fe;float:left;font-size:12px;margin-top:20px;padding:10px;}
-#feat-list h4{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;color:#fff;font-size:16px;margin-bottom:5px;padding:5px;}
+#feat-list h4{color:#fff;font-size:16px;margin-bottom:9px;padding:8px;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list img{float:left;margin-bottom:10px;}
 #feat-list ul#preview {background:#fff;border-color:#ccc #ccc #ccc -moz-use-text-color;border-style:solid solid solid none;border-width:1px 1px 1px medium;float:left;height:72px;width:68px;}
