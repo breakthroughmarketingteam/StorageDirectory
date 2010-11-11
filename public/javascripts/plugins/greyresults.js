@@ -349,10 +349,19 @@ $(function(){
 
 					// load the google map into an iframe
 					if ($this.attr('rel') == 'map') {
-						var $map_wrap = $('.map_wrap', $panel);
-						$map_wrap.append('<iframe />');
-						$('iframe', $map_wrap).src('/ajax/get_map_frame?model=Listing&id='+ $listing.attr('id').split('_')[1]);
 						$('.hintable', $panel).hinty();
+						var $map_wrap = $('.map_wrap', $panel), latlng = $map_wrap.attr('rel').split(',').map(function(i) { return parseFloat(i) });
+						
+						$map_wrap.jmap('init', { 'mapCenter': latlng }, function(map, el, ops) {
+							$map_wrap.jmap('AddMarker', {
+								'pointLatLng': ops.mapCenter,
+								'pointHTML': $('.rslt-title', $listing).html() + $('.rslt-contact', $listing).html()
+							});
+						});
+						
+						setTimeout(function() {
+							$map_wrap.jmap('CheckResize');
+						}, 1000);
 
 					} else if ($this.attr('rel') == 'reserve') {
 						$.activate_datepicker($panel);
@@ -368,6 +377,26 @@ $(function(){
 			$('li', '.tabs').removeClass('active');
 		}
 
+		return false;
+	});
+	
+	$('#get_dirs').live('submit', function() {
+		var form = $(this),
+			map_container = form.parents('.google_map'),
+			map_wrap = $('.map_wrap', map_container),
+			from = $('#from_address', form).val(), 
+			to = $('.rslt-contact', form.parents('.listing')).text().replace(new RegExp("\\n\\t+", 'g'), ' ').trim(),//map_wrap.attr('rel'),
+			dirs = $('<div id="dirs" />');
+		
+		map_container.after(dirs);
+		map_container.parent().prepend('<img src="/images/ui/storagelocator/usselfstoragelocator-sml.png" class="dp" />');
+		
+		map_wrap.jmap('SearchDirections', {
+			'query': from + ' to '+ to,
+			'panel': $('#dirs', map_container.parent()),
+			'locale': 'en_US'
+		});
+		
 		return false;
 	});
 	
@@ -569,19 +598,6 @@ $(function(){
 		return false;
 	});
 	
-	$('#get_dirs', '#map_partial').live('click', function(){
-		var $this = $(this),
-			from_address = $('#gmap_dirs', $this.parent().parent()).val();
-		
-		if (from_address != '') {
-			var src = build_gmap_src({ from: from_address, to: $this.attr('rel'), title: $this.attr('title') });
-			$map_wrap.append('<iframe />');
-			$('iframe', $map_wrap).src('/ajax/get_dir_frame?script_src='+ src);
-		}
-		
-		return false;
-	});
-	
 	// autoreload the results
 	$('select.auto', '#narrow_results_form').change(function() {
 		delayed_submit(this);
@@ -614,6 +630,7 @@ $(function(){
 					Gmaps_data = data['maps_data'];
 					results_page.replaceWith(data['results']);
 					$.setGmap(Gmaps_data);
+					$('a', '.rslt-features').tooltip();
 				});
 				
 				form.data('loading', false);

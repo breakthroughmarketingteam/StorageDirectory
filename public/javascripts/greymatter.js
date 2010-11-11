@@ -24,7 +24,7 @@ $(function(){
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
-	$('a[title], img[title]').tooltip();
+	$('.tip_trigger').tooltip();
 	$('.focus_onload').eq(0).focus();
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
