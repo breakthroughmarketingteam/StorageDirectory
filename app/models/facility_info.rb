@@ -1,7 +1,7 @@
 class FacilityInfo < ActiveRecord::Base
   
   belongs_to :listing
-  validates_presence_of :sFacilityId
+  validates_presence_of :O_FacilityId
   
   after_create :update_from_issn
   
