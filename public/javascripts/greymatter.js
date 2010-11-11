@@ -1022,7 +1022,17 @@ function titleize(string) {
 }
 
 function default_pop_up_options(options) {
-	return ;
+	return {
+		title: 	   options.title,
+		width: 	   options.width || 785,
+		height:    options.height,
+		resizable: false,
+		modal: 	   options.modal,
+		close: 	   function() {
+			$('.ajax_loader').hide();
+			$(this).dialog('destroy').remove();
+		}
+	};
 }
 
 // pulls the pop_up template and runs the callback

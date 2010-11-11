@@ -14,8 +14,8 @@
 							<%= hidden_field_tag "business_hours[][day]", day %>
 							<%= hidden_field_tag "business_hours[][hours_type]", 'office' %>
 							
-							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:opening_time) || '9:00 am')), :id => "#{day}_business_hours_opening_time_office", :rel => 'opening' %>&nbsp;-
-							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:closing_time) || '5:00 pm')), :id => "#{day}_business_hours_closing_time_office", :rel => 'closing' %>
+							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:opening_time) || '9:00 Am')), :id => "#{day}_business_hours_opening_time_office", :rel => 'opening' %>&nbsp;-
+							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'office').try(:closing_time) || '5:00 Pm')), :id => "#{day}_business_hours_closing_time_office", :rel => 'closing' %>
 							
 							<%= link_to 'Copy all', '#', :class => 'copy_all_hours icon16' if i == 0 %>
 						</div>
@@ -38,8 +38,8 @@
 							<%= hidden_field_tag "business_hours[][day]", day %>
 							<%= hidden_field_tag "business_hours[][hours_type]", 'access' %>
 							
-							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:opening_time) || '9:00 am')), :id => "#{day}_business_hours_opening_time_access", :rel => 'opening' %>&nbsp;-
-							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:closing_time) || '5:00 pm')), :id => "#{day}_business_hours_closing_time_access", :rel => 'closing' %>
+							<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:opening_time) || '9:00 Am')), :id => "#{day}_business_hours_opening_time_access", :rel => 'opening' %>&nbsp;-
+							<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, 'access').try(:closing_time) || '5:00 Pm')), :id => "#{day}_business_hours_closing_time_access", :rel => 'closing' %>
 							
 							<%= link_to 'Copy all', '#', :class => 'copy_all_hours icon16' if i == 0 %>
 						</div>

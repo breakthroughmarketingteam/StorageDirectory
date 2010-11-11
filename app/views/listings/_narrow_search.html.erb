@@ -2,6 +2,7 @@
 	<div id="sb-title">
 		<h2>Narrow Your Search</h2>
 	</div>
+	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
 	<% form_for @search, :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
 			<%= f.text_field :query, :value => default_search_query, :class => 'hintable autocomplete required', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
@@ -28,7 +29,8 @@
 				<%= f.label :within,"Distance:" %>
 				<div class="uncollapse">
 					<% @distance_options.each do |distance| %>
-						<div class="radio_wrap auto">
+						<div class="radio_wrap">
+							<%= f.label "within_#{distance}", "#{distance}" %>							
 							<div class="radio_select">
 								<%= radio_button_tag 'search[within]', distance, (@prev_search.try(:within) || $_listing_search_distance).to_i == distance.to_i %>
 							</div>
