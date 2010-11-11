@@ -29,7 +29,7 @@
 				<%= f.label :within,"Distance:" %>
 				<div class="uncollapse">
 					<% @distance_options.each do |distance| %>
-						<div class="radio_wrap">
+						<div class="radio_wrap auto">
 							<%= f.label "within_#{distance}", "#{distance}" %>							
 							<div class="radio_select">
 								<%= radio_button_tag 'search[within]', distance, (@prev_search.try(:within) || $_listing_search_distance).to_i == distance.to_i %>
