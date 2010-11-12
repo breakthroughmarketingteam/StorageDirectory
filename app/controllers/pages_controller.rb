@@ -13,7 +13,7 @@ class PagesController < ApplicationController
   def show
     @search = Search.find session[:search_id]
     
-searchms[:title] == 'home' || params[:id].to_i == 1
+    if params[:title] == 'home' || params[:id].to_i == 1
       render :layout => 'locatorfront'
     end
   end

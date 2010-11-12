@@ -1183,7 +1183,6 @@ $(document).ready(function() {
 	
 	if (client_tip_boxes.length > 0) {
 		$('a', '#tips-box-bottom').click(function() {
-			console.log(this, client_tip_boxes)
 			if (client_tip_boxes.length > 1) {
 				var $this = $(this),
 					direction = $this.attr('id') == 'next_tip' ? 1 : -1,
@@ -1208,7 +1207,6 @@ $(document).ready(function() {
 		var $this = $(this),
 			form = $('form', $this.attr('context')).runValidation(), // the context the form is in
 			ajax_loader = $($this.attr('loader')); // the context the ajax_loader is in
-			console.log($this.attr('loader'), ajax_loader)
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
 			$this.text('Updating');

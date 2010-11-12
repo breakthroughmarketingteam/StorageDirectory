@@ -1025,7 +1025,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_page input{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:300px;}
 #user_session_submit{cursor:pointer;}
 #remember_me{font-size:80%;color:#666;}
-#login_page #user_session_remember_me{width:auto;margin:0 5px;float:left;}
+#login_page #user_session_remember_me{width:auto;margin:2px 5px;float:left;}
 #login_page #user_session_submit{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;}
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
