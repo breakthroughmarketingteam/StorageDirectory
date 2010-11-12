@@ -12,10 +12,12 @@ class ListingsController < ApplicationController
     render :layout => false if request.xhr?
   end
   
+  # when a user navigates to the home page we shall redirect them back to them same page but with their city and state in the path (geocode by IP)
   def cleaner
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     session[:search_id] = @search.id
-    redirect_to params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : search_listings_path(@search.state, @search.city)
+    localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : search_listings_path(@search.state, @search.city)
+    redirect_to localized_path
   end
   
   def locator
@@ -174,10 +176,10 @@ class ListingsController < ApplicationController
       @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
-  		@Gmap.zoom = (@location.nil? ? 16 : 12) # 2 miles
+  		@Gmap.zoom = (@location.nil? ? 16 : 12)
   		@Gmap.markers << GoogleMap::Marker.new(
   		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
-        :html => @listing.nil? ? '<p><strong>Searc distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
+        :html => @listing.nil? ? '<p><strong>Search distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
         :marker_hover_text => @listing.try(:title), :marker_icon_path => '/images/ui/map_marker.png'
       )
     end
@@ -197,7 +199,7 @@ class ListingsController < ApplicationController
   end
   
   def _build_search_attributes(params)
-    { :city => params[:city], :state => params[:state], :zip => params[:zip] }
+    { :city => params[:city], :state => params[:state], :zip => params[:zip], :unit_size => nil, :storage_type => nil, :within => nil }
   end
   
 end

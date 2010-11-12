@@ -60,42 +60,32 @@ class Listing < ActiveRecord::Base
   # Search methods
   #
   
-  def self.find_by_location(search, geo_location = nil)
+  def self.find_by_location(search)
     # build the options for the model find method
     options = {
       :include => [:map, :specials, :sizes, :pictures, :reviews],
-      :within  => (search.within.blank? ? $_listing_search_distance : search.within),
-      :origin => search.lat_lng || (search.is_zip? && search.zip) || search.city_and_state
+      :within  => search.within,
+      :origin  => search.lat_lng
     }
-    base_conditions = 'listings.enabled IS TRUE'
     
+    base_conditions = 'listings.enabled IS TRUE'
+    unless search.storage_type.downcase == 'self storage'
+      options[:include] << :facility_features
+      base_conditions += " AND LOWER(facility_features.title) = #{search.storage_type.downcase} OR LOWER(facility_features.description) LIKE '%#{search.storage_type.downcase}%'"
+    end    
+
     @location = search.location
     
-    unless search.query.blank?
-      if search.is_zip?
-        options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
-        
-      elsif !search.is_address_query? # try query by name? 
-        conditions = { :conditions => ['listings.title LIKE ? OR listings.title IN (?) AND ' + base_conditions, "%#{search.query}%", search.query.split(/\s|,\s?/)] }
-        options.merge! conditions
-        
-        # they didnt query by address so lets base it on where the geocoder thinks they are
-        unless search.lat.nil?
-          options.merge! :origin => search.lat_lng
-          
-        # we don't know where they are so lets set the origin to the location of the first result
-        else
-          guessed = Listing.first(conditions).map.zip
-          @location = Geokit::Geocoders::MultiGeocoder.geocode guessed
-          options.merge! :origin => @location
-        end
-      end
-    else # blank search, guess the location (geocoded ip address) or fall back on a test location
-      @location = geo_location.nil? ? Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126') : [geo_location[:lat].to_f, geo_location[:lng].to_f]
-      options.merge! :origin => @location, :conditions => base_conditions
+    if search.is_zip?
+      options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
+      
+    elsif !search.is_address_query? # try query by name? 
+      conditions = { :conditions => ["listings.title LIKE ? OR listings.title IN (?) AND #{base_conditions}", "%#{search.query}%", search.query.split(/\s|,\s?/)] }
+      options.merge! conditions
+      
+      @location = Geokit::GeoLoc.new Listing.first(conditions)
+      options.merge! :origin => @location
     end
-    
-    # TODO: storage_type
     
     @listings = Listing.all options
     
@@ -105,7 +95,7 @@ class Listing < ActiveRecord::Base
       
       kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
       
-      # TODO: refine this part in case the seracher also chose
+      # TODO: match unit features
       very_specific = kinda_specific.select do |p|
         p.sizes.any? { |s| s.dims == search.unit_size }
       end.sort_by_distance_from @location

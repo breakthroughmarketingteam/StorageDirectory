@@ -22,7 +22,7 @@ class Search < ActiveRecord::Base
     super attributes
     self.set_request! request
     self.set_query! if self.query.blank?
-    self.set_location! (old_search && (old_search.query == self.query) ? old_search.location : nil)
+    self.set_location! (old_search && (old_search.query == self.query) ? old_search.location : nil) # geocode when nil
   end
   
   def self.create_from_geoloc(request, loc, storage_type)
@@ -52,7 +52,7 @@ class Search < ActiveRecord::Base
   end
   
   def storage_type=(val)
-    write_attribute :storage_type, val.try(:titleize) || 'Self Storage'
+    write_attribute :storage_type, (val.try(:titleize) || 'Self Storage')
   end
   
   def location
