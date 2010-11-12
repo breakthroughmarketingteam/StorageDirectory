@@ -1259,7 +1259,6 @@ var GreyWizard = function(container, settings) {
 	
 	this.move = function(step) {
 		if (self.may_move(step)) {
-			console.log(self.may_move(step))
 			//self.set_slides(); // this prevents the animation from knocking the positions off track if a user clicks nav buttons erratically
 			if (step > 0) $('#tab_step_'+ self.current, self.workflow.parent()).addClass('done');
 			self.current += step;
@@ -1269,7 +1268,6 @@ var GreyWizard = function(container, settings) {
 				$(this).stop().animate({ left: left + 'px' }, self.slide_speed);
 			});*/
 			
-			console.log(self.current, step)
 			self.workflow.data('scrollable').seekTo(self.current);
 			
 			self.set_nav();

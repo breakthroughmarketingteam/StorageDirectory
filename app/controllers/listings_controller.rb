@@ -12,48 +12,36 @@ class ListingsController < ApplicationController
     render :layout => false if request.xhr?
   end
   
+  # when a user navigates to the home page we shall redirect them back to them same page but with their city and state in the path (geocode by IP)
+  def cleaner
+    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+    session[:search_id] = @search.id
+    localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : search_listings_path(@search.state, @search.city)
+    redirect_to localized_path
+  end
+  
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage'
-    @unit_size_thumbs = SizeIcon.thumb_icons
-    @search = Search.new
+    @search = Search.find_by_id session[:search_id]
     
-    if params[:storage_type] # clicked on one of the storage types links
-      @prev_search = Search.create_from_geoloc session[:geo_location], params[:storage_type]
+    if @search
+      # we want to create a new search everytime to keep track of the progression of a user's habits
+      @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
       
-    elsif flash[:search_id] # redirected from the search controller
-      @prev_search = Search.find flash[:search_id]
-     
-    elsif params[:search] # ajax call from the 'show more' button
-      @last_search = Search.find_by_id session[:search_id] # get the last search so we don't have to geocode again
-      
-      if params[:auto_search] && params[:search][:query] != @last_search.try(:query)
-        @prev_search = Search.create_from_params params[:search].merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
-      else
-        attributes = @last_search.attributes
-        attributes.delete :id
-        @prev_search = Search.create attributes.merge(:remote_ip => request.remote_ip, :referrer => request.referrer)
+      if Search.diff? @search, @new_search
+        @new_search.save
+        @search.add_child @new_search
+        @search = @new_search
       end
-    elsif session[:search_id] && params[:city].blank? # home page
-      @prev_search = Search.find session[:search_id]
-
-    elsif params[:city] # clicked on a link
-      @prev_search = Search.create_from_path params[:city], params[:state], params[:zip], request
-
     else
-      loc = _location_with_fallback
-      redirect_to search_listings_path(loc.state, loc.city.parameterize) and return
+      @search = Search.create({ :city => params[:city], :state => params[:state], :zip => params[:zip], :storage_type => params[:storage_type] }, request)
     end
     
-    if session[:search_id] && !flash[:search_back] && !params[:search]
-      @old_search = @last_search.nil? ? Search.find(session[:search_id]) : @last_search
-      @old_search.add_child @prev_search
-    end
-    
-    session[:search_id] = @prev_search.id
-    @location = @prev_search.location
+    session[:search_id] = @search.id
+    @location = @search.location
     get_map
-    @listings = Listing.find_by_location @prev_search
+    @listings = Listing.find_by_location @search
     @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     
@@ -88,8 +76,8 @@ class ListingsController < ApplicationController
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
     
     if session[:search_id]
-      @prev_search = Search.find session[:search_id]
-      @prev_search.update_attribute :listing_id, @listing.id
+      @search = Search.find session[:search_id]
+      @search.update_attribute :listing_id, @listing.id
     end
     
     render :layout => false if request.xhr?
@@ -188,10 +176,10 @@ class ListingsController < ApplicationController
       @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
-  		@Gmap.zoom = (@location.nil? ? 16 : 12) # 2 miles
+  		@Gmap.zoom = (@location.nil? ? 16 : 12)
   		@Gmap.markers << GoogleMap::Marker.new(
   		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
-        :html => @listing.nil? ? '<p><strong>Searc distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
+        :html => @listing.nil? ? '<p><strong>Search distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
         :marker_hover_text => @listing.try(:title), :marker_icon_path => '/images/ui/map_marker.png'
       )
     end
@@ -204,6 +192,14 @@ class ListingsController < ApplicationController
   def _location_with_fallback
     return session[:geo_location] if session[:geo_location]
     session[:geo_location] = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip == '127.0.0.1' ? '65.83.183.146' : request.remote_ip)
+  end
+  
+  def _storage_type_path(type, search)
+    "/#{type}/#{search.state}/#{search.city}"
+  end
+  
+  def _build_search_attributes(params)
+    { :city => params[:city], :state => params[:state], :zip => params[:zip], :unit_size => nil, :storage_type => nil, :within => nil }
   end
   
 end

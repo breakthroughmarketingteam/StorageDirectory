@@ -21,13 +21,14 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean paths for searches
-  map.connect '/self-storage/search/:search_id/:state/:city/:zip', :controller => 'searches', :action => 'show', :zip => nil
+  map.url_cleaner_path '/self-storage', :controller => 'listings', :action => 'cleaner'
+  map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :state => nil, :city => nil, :zip => nil, :requirements => { :state => /#{States::NAMES.map { |s| "(washington-dc){0}|(#{s[0]})|(#{s[1]})|(#{s[0].parameterize})" } * '|'}/i }
-  map.storage_state '/self-storage/:state', :controller => 'us_states', :action => 'show', :requirements => { :state => /(washington-dc){0}/ } # accept paths to all states except washington dc
+  map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil
   
   $_storage_types.each do |type|
-    map.connect "/#{type.parameterize}", :controller => 'listings', :action => 'locator', :storage_type => type
+    map.connect "/#{type.parameterize}", :controller => 'listings', :action => 'cleaner', :storage_type => type
+    map.connect "/#{type.parameterize}/:state/:city/:zip", :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => type
   end
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'

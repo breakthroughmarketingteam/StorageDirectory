@@ -46,7 +46,7 @@ module ListingsHelper
   end
   
   def listing_distance_from
-    number_with_precision(@listing.distance_from(@prev_search.lat_lng), 2) rescue nil
+    number_with_precision(@listing.distance_from(@search.lat_lng), 2) rescue nil
   end
   
   def listing_action_btn_class(listing)
@@ -88,15 +88,15 @@ module ListingsHelper
   end
   
   def locator_header
-    html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@prev_search.storage_type.try(:pluralize) || 'self storages'}"
+    html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type.try(:pluralize) || 'self storages'}"
 		
-		if @prev_search.is_zip?
+		if @search.is_zip?
 			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
-		elsif @prev_search.is_city?
-			html << " within <span class=\"hlght-text\">#{@prev_search.try(:within) ? @prev_search.within : $_listing_search_distance}</span> miles"
+		elsif @search.is_city?
+			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
 			html << " of <span class='hlght-text'>#{@location.city}, #{@location.state}</span>" unless @location.lat.blank?
 		else
-			html << " matching <span class=\"hlght-text\">#{@prev_search.extrapolate :title}</span>"
+			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
 		end
 		html
   end
@@ -130,13 +130,13 @@ module ListingsHelper
     if range_start < data.total_entries - per_page + 1
       html << "<form action='/#{@page.title.parameterize}' method='get' class='more_results_form'>" + 
         link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
-        "<input class='hidden' name='search[query]' value='#{@prev_search.query}' />" + 
+        "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
         "<input class='hidden' name='page' value='#{page + 1}' />" + 
         (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
-        (@prev_search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@prev_search.unit_size}' />" : '') +
-        (@prev_search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@prev_search.storage_type}' />" : '') +
-        (@prev_search.features ? "<input class='hidden' name='search[features]' value='#{@prev_search.features}' />" : '') +
-        "<input class='hidden' name='search[within]' value='#{@prev_search.within || $_listing_search_distance}' />" +
+        (@search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@search.unit_size}' />" : '') +
+        (@search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@search.storage_type}' />" : '') +
+        (@search.features ? "<input class='hidden' name='search[features]' value='#{@search.features}' />" : '') +
+        "<input class='hidden' name='search[within]' value='#{@search.within}' />" +
       '</form>'
     end
     

@@ -9,4 +9,8 @@ class FacilityFeature < ActiveRecord::Base
     self.issn_facility_feature.try :ShortDescription rescue 'Standard Storage'
   end
   
+  def like?(type)
+    self.title.downcase == type.downcase || self.description =~ /(#{type})/i
+  end
+  
 end

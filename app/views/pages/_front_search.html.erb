@@ -12,7 +12,7 @@
 			<div class="left">
 				<div>
 					<%= f.label :storage_type, 'Type:' %>
-					<%= f.select :storage_type, @facility_features, :selected => @prev_search.try(:storage_type) %>
+					<%= f.select :storage_type, @facility_features, :selected => @search.storage_type %>
 				</div>
 
 				<div id="size_picker">
@@ -21,7 +21,7 @@
 
 				<div>
 					<%= f.label :unit_size %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]', @prev_search.try(:unit_size) %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size %>
 				</div>
 			</div>
 
@@ -34,7 +34,7 @@
 							<% @distance_options.each do |distance| %>
 								<div class="radio_wrap">
 									<div class="radio_select">
-										<%= radio_button_tag 'search[within]', distance, (@prev_search.try(:within) || $_listing_search_distance).to_i == distance.to_i %>
+										<%= radio_button_tag 'search[within]', distance, (@search.within == distance.to_i) %>
 									</div>
 									<%= f.label "within_#{distance}", "#{distance}" %>
 								</div>

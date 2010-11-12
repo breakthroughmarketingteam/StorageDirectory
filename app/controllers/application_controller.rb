@@ -76,9 +76,6 @@ class ApplicationController < ActionController::Base
   
   layout lambda { app_config[:theme] }
   
-  # storage locator
-  rescue_from Geokit::Geocoders::GeocodeError, :with => :refresh_without_params
-  
   protected # -----------------------------------------------
   
   # display full error message when logged in as an Admin
@@ -153,7 +150,7 @@ class ApplicationController < ActionController::Base
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       @nav_pages         = Page.nav_pages
-      @slogan            = 'Locate, Select and Reserve Self Storage Anywhere, Anytime.'
+      @slogan            = 'Locate, Select and Rent Self Storage Anywhere, Anytime.'
       @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
     

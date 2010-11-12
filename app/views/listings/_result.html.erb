@@ -74,7 +74,7 @@
 					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
 				</li>
 			
-				<% if (unit_size = result.get_closest_unit_size(@prev_search.unit_size)) %>
+				<% if (unit_size = result.get_closest_unit_size(@search.unit_size)) %>
 					<li class="rslt-size">
 						<%= image_tag unit_size.icon(:thumb).icon.url %>
 						<span class="size"><%= unit_size.display_dimensions %></span>

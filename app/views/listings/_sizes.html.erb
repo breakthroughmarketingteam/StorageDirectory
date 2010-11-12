@@ -17,6 +17,8 @@
 		<% end %>
     </ul>
 	
-	<%= render :partial => 'sizes/size', :collection => (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes) %>
+	<div class="uncollapse">
+		<%= render :partial => 'sizes/size', :collection => (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes) %>
+	</div>
   </div>
 </div>

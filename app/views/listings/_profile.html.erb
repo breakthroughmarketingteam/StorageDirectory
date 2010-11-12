@@ -10,11 +10,11 @@
 		<% if in_edit_mode? %>
 			<p class="editing-btn">
 			  Facility edit mode
-			  <%= hidden_field_tag 'client_id', @client.id %>
+			  <%= hidden_field_tag 'client_id', @listing.client.id %>
 			  <%= hidden_field_tag 'listing_id', @listing.id %>
 			</p>
 		<% else %>
-			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@prev_search) %></p>
+			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@search) %></p>
 		<% end %>
 		
       <div class="clear"></div>

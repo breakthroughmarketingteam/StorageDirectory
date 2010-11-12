@@ -20,7 +20,7 @@ module ApplicationHelper
     elsif controller_name == 'listings' && [].include?(action_name) == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
-      title = "Self Storage in #{@prev_search.city}, #{@prev_search.state}"
+      title = "Self Storage in #{@search.city}, #{@search.state}"
     else
       title = (@page ? @page.title  : controller_name.titleize).to_s
     end
@@ -369,7 +369,11 @@ module ApplicationHelper
   end
   
   def extract_tags(data_class)
-    data_class.all.map(&:tag_list).flatten.uniq.sort
+    if data_class.name == 'Listing'
+      []
+    else
+      data_class.all.map(&:tag_list).flatten.uniq.sort
+    end
   end
   
   # link title for resource crud action
