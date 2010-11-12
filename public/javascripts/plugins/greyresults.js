@@ -626,7 +626,7 @@ $(function(){
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
 			
-			$.getJSON('/self-storage', form.serialize() +'&auto_search=1', function(response) {
+			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					Gmaps_data = data['maps_data'];
 					results_page.replaceWith(data['results']);

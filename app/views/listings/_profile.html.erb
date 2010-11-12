@@ -14,7 +14,7 @@
 			  <%= hidden_field_tag 'listing_id', @listing.id %>
 			</p>
 		<% else %>
-			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@prev_search) %></p>
+			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@search) %></p>
 		<% end %>
 		
       <div class="clear"></div>

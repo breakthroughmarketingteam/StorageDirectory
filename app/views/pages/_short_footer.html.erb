@@ -40,8 +40,8 @@
 		</div>
 		
 		<div id="top_cities">
-			<p><strong>Most Popular Self Storage Cities <%= "in #{States.name_of @prev_search.state}" if in_mode? 'locator' %></strong></p>
-			<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@prev_search.state) : Map.top_cities %>
+			<p><strong>Most Popular Self Storage Cities <%= "in #{States.name_of @search.state}" if in_mode? 'locator' %></strong></p>
+			<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@search.state) : Map.top_cities %>
 		</div>
 		
 		<div id="wrapper2">

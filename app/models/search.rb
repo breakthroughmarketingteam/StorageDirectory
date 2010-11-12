@@ -10,60 +10,57 @@ class Search < ActiveRecord::Base
     %w(5 10 15 20)
   end
   
-  def self.build_from_path(city, state, zip = nil, request = nil)
-    @search = self.new :query => "#{city.gsub!('-', ' ')}, #{state}#{zip && ' '+zip}".titleize, :city => city, :state => state, :zip => zip
-    @search.remote_ip, @search.referrer = request.remote_ip, request.referrer if request
-    @search.set_location!
+  alias_method :old_create, :create
+  def self.create(attributes, request, old_search = nil)
+    search = self.new attributes, request, old_search
+    search.save
+    search
   end
   
-  def self.create_from_path(city, state, zip = nil, request = nil)
-    @search = self.build_from_path city, state, zip, request
-    @search.save
-    @search
+  # always start with a fat healthy search model, only geocode if query different from last search
+  def initialize(attributes, request, old_search = nil)
+    super attributes
+    self.set_request! request
+    self.set_query! if self.query.blank?
+    self.set_location! (old_search && (old_search.query == self.query) ? old_search.location : nil)
   end
   
-  def self.create_from_params(search, geo_location = nil)
-    @search = self.build_from_params search, geo_location
-    @search.save
-    @search
+  def self.create_from_geoloc(request, loc, storage_type)
+    search = self.new({ :storage_type => storage_type }, request)
+    search.set_location! loc
   end
   
-  def self.create_from_geoloc(geoloc, storage_type = nil)
-    @search = self.build_from_geoloc geoloc, storage_type
-    @search.save
-    @search
+  # check to see if an attribute has changed since last request
+  def self.diff?(old_search, new_search)
+    old_search.comparable_attributes != new_search.comparable_attributes
   end
   
-  def self.build_from_geoloc(geoloc, storage_type = nil)
-    @search = self.new
-    # TODO: remove test ip address
-    @search.set_location! geoloc || Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146')
-    @search.storage_type = storage_type
-    @search.query = "#{@search.city}, #{@search.state}"
-    @search
+  def comparable_attributes
+    self.attributes.select { | k, v| !['id', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
   end
   
-  def self.build_from_params(search, geo_location)
-    @search = self.new search.merge :zip => (is_zip?(search[:query]) && search[:query].gsub(/\D/, ''))
-    
-    # geocode the query and set the origin for the find options
-    unless @search.query.blank?
-      if @search.is_address_query? # has one of zip, city or state
-        @search.set_location!
-        
-      # must be a facility name query, find a listing and set the query location to the listing's location
-      elsif (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{@search.query}%"]))
-        @search.set_location! Geokit::Geocoders::MultiGeocoder.geocode(named_listing.map)
-      end
-    else # blank search, save the guessed location from the geocoder (ip address)
-      @search.set_location! geo_location
-    end
-    
-    @search
+  def within=(val)
+    write_attribute :within, (val || $_listing_search_distance)
+  end
+  
+  def within
+    read_attribute(:within) ? read_attribute(:within) : $_listing_search_distance
+  end
+  
+  def unit_size=(val)
+    write_attribute :unit_size, (val.blank? ? '5x5' : val)
+  end
+  
+  def storage_type=(val)
+    write_attribute :storage_type, val.try(:titleize) || 'Self Storage'
   end
   
   def location
     @location ||= GeoKit::GeoLoc.new(self)
+  end
+  
+  def set_query!
+    self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size > 2 ? self.state.upcase : self.state)}" if self.city
   end
   
   def set_location!(location = nil)
@@ -73,10 +70,22 @@ class Search < ActiveRecord::Base
       self.city  = location.respond_to?(:city)  ? location.city  : location[:city]
       self.state = location.respond_to?(:state) ? location.state : location[:state]
       self.zip   = location.respond_to?(:zip)   ? location.zip   : location[:zip] if self.zip.nil?
+      
     elsif self.is_address_query?
       self.set_location! Geokit::Geocoders::MultiGeocoder.geocode(self.query)
+      
+    elsif self.query && (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
+      self.set_location! GeoKit::GeoLoc.new named_listing
+      
+    else # test ip, we should only be getting here when session[:geo_location] is nil, this happens in localhost
+      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
     end
     self
+  end
+  
+  def set_request!(request)
+    self.remote_ip = request.remote_ip
+    self.referrer = request.referrer
   end
   
   def is_address_query?
@@ -118,14 +127,13 @@ class Search < ActiveRecord::Base
   end
   
   # TODO: the default location should be geocoded from the request.remote_ip and stored in the session. Using a test IP right now.
-  def self.geocode_query(query)
-    if query.blank?
+  def geocode_query(query)
+    if self.query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
-    elsif is_address_query? query
+    elsif iself.s_address_query? query
       Geokit::Geocoders::MultiGeocoder.geocode query
-    else
-      guessed = Listing.first(:conditions => ['listings.title LIKE ?', "%#{query}%"]).map.full_address rescue nil
-      Geokit::Geocoders::MultiGeocoder.geocode guessed
+    elsif (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
+      GeoKit::GeoLoc.new(named_listing.map)
     end
   end
   
@@ -137,7 +145,7 @@ class Search < ActiveRecord::Base
     self.lat ? [self.lat, self.lng] : nil
   end
   
-  def full_location_if_zip
+  def full_location
     self.zip? ? self.city_state_and_zip : self.city_and_state
   end
   

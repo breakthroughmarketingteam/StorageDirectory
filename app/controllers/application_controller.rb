@@ -76,9 +76,6 @@ class ApplicationController < ActionController::Base
   
   layout lambda { app_config[:theme] }
   
-  # storage locator
-  rescue_from Geokit::Geocoders::GeocodeError, :with => :refresh_without_params
-  
   protected # -----------------------------------------------
   
   # display full error message when logged in as an Admin

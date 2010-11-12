@@ -20,7 +20,7 @@ module ApplicationHelper
     elsif controller_name == 'listings' && [].include?(action_name) == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
-      title = "Self Storage in #{@prev_search.city}, #{@prev_search.state}"
+      title = "Self Storage in #{@search.city}, #{@search.state}"
     else
       title = (@page ? @page.title  : controller_name.titleize).to_s
     end
