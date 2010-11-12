@@ -807,8 +807,8 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel #map_partial .map_wrap{}
 .panel .get_dir{float:left;width:360px;-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;background-color:#ccc;color:#fff;margin:0;padding:5px 0 3px;}
 .panel .get_dir li{padding:0 0 3px 10px;;color:#fff;background-color:#ccc;border-radius-bottomright:4px;-moz-border-radius-bottomright:4px;-webkit-border-bottom-right-radius:4px;border-radius-bottomleft:4px;-moz-border-radius-bottomleft:4px;-webkit-border-bottom-left-radius:4px;}
-.panel .get_dir li a{border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;background:#bbb;color:#fff;float:right;height:17px;margin:0 0 0 5px;padding:5px 0 0 11px;text-decoration:none;width:32px;}
-.panel .get_dir li a:hover{background:#393}
+.panel .get_dir li a{border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;background:#4c4bcc;color:#fff;float:right;height:17px;margin:0 0 0 5px;padding:5px 0 0 11px;text-decoration:none;width:32px;}
+.panel .get_dir li a:hover{background:#4cca4c}
 .panel input.directions{width:290px;}
 .panel .sl-table-exp p.blue-text{text-align:right;}
 .panel .sl-table-exp p.blue-text .blue-search-button{float:right;margin:0 0 0 10px;}

@@ -15,6 +15,7 @@ ActionController::Base.session = {
 # ActionController::Base.session_store = :active_record_store
 
 # Session cache
+=begin
 ActionController::Base.session = {
   :namespace   => 'sessions',
   :expire_after => 20.minutes.to_i,
@@ -25,3 +26,4 @@ ActionController::Base.session = {
 
 require 'action_controller/session/dalli_store'
 ActionController::Base.session_store = :dalli_store
+=end
