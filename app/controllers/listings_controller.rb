@@ -195,7 +195,7 @@ class ListingsController < ApplicationController
   end
   
   def _storage_type_path(type, search)
-    "/#{type}/#{search.state}/#{search.city}"
+    "/#{type.parameterize}/#{search.state.parameterize}/#{search.city.parameterize}"
   end
   
   def _build_search_attributes(params)

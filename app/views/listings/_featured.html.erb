@@ -1,51 +1,63 @@
+<% @featured_listing = Listing.get_featured_listing @listings %>
 <div id="feat-list">
-	<h4>
-		Featured Listing
-	</h4>
+	<h4>Featured Listing</h4>
 	
-	<a href=""><img src="/images/ui/storagelocator/uncle-bobs.png"></a>
+	<%= display_logo(@featured_listing, { :class => @featured_listing.pictures.empty? ? 'full' : 'short' }) %>
 	
-	<ul id="preview">
-		<li>
-			<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
-		</li>
-		<li>
-			<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
-		</li>
-		<li>
-			<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
-		</li>
-		<li>
-			<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
-		</li>
-	</ul>
+	<% unless false#@featured_listing.pictures.empty? %>
+		<ul id="preview">
+			<li>
+				<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
+			</li>
+			<li>
+				<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
+			</li>
+			<li>
+				<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
+			</li>
+			<li>
+				<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
+			</li>
+		</ul>
+	<% end %>
 	
 	<div id="name">
-		<a href="">Uncle Bob's Self Storage</a>
+		<%= link_to @featured_listing.title, facility_path(@featured_listing.title, @featured_listing.id) %>
 	</div>
+	
 	<div id="address">
-		2343 NW 113th Ave.<br>
-		Pompano Beach, FL 33056
+		<%= @featured_listing.full_address %>
 	</div>
-	<div id="phone">
-		954-234-5678
-	</div>
+	
+	<% if @featured_listing.call_tracking_enabled? %>
+		<div id="phone">
+			<%= @featured_listing.call_tracking_num %>
+		</div>
+	<% end %>
+	
 	<div id="spec">
 		<p>
 			Special
-		</p>Get the 1st Month Free! With immediate move in!
+		</p>
+		Get the 1st Month Free! With immediate move in!
 	</div>
-	<div id="size">
-		<p>
-			Size
-		</p>10 x 10
-	</div>
-	<div id="price">
-		<p>
-			Price
-		</p>$99.00/month
-	</div>
+	
+	<% if (@unit_size = @featured_listing.get_closest_unit_size(@search.unit_size)) %>
+		<div id="size">
+			<p>
+				Size
+			</p>
+			<%= @unit_size.dollar_price %>
+		</div>
+		<div id="price">
+			<p>
+				Price
+			</p>
+			<%= number_to_currency @unit_size.dollar_price %>/month
+		</div>
+	<% end %>
+	
 	<div id="more-info">
-		<a href="">More Info</a>
+		<%= link_to 'More Info', facility_path(@featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
 	</div>
 </div>
