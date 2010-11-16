@@ -1,7 +1,7 @@
 class Map < ActiveRecord::Base
   
   belongs_to :listing
-  acts_as_mappable #:auto_geocode => { :field => :full_address, :error_message => 'could not be geocoded' }
+  acts_as_mappable :auto_geocode => { :field => :full_address, :error_message => 'could not be geocoded' }
   
   validates_presence_of :address, :city, :state, :zip
   validates_numericality_of :zip
@@ -25,16 +25,12 @@ class Map < ActiveRecord::Base
     #auto_geocode_address if self.zip || self.city
   end
   
-  def auto_geocode_field
-    :full_address
-  end
-  
-  def auto_geocode_error_message
-    'could not be geocoded'
-  end
-  
   def full_address
-    "#{address} #{city}, #{state} #{zip}"
+    "#{address}, #{city}, #{state} #{zip}"
+  end
+  
+  def city_state_zip
+    "#{self.city}, #{self.state} #{self.zip}"
   end
   
 end

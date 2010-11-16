@@ -110,6 +110,11 @@ class Listing < ActiveRecord::Base
     @listings
   end
   
+  def self.get_featured_listing(listings)
+    min = (listings.size/2).ceil
+    listings[min..listings.size][rand min]
+  end
+  
   # Instance Methods
   
   def display_special
@@ -154,24 +159,16 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def full_address; self.map.full_address if self.map end
-  def address; self.map.address if self.map end
-  def city;    self.map.city if self.map end
-  def state;   self.map.state if self.map end
-  def zip;     self.map.zip if self.map end
-  def lat;     self.map.lat if self.map end
-  def lng;     self.map.lng if self.map end
+  def method_missing(method)
+    self.map.send(method) if [:address, :city, :state, :zip, :lat, :lng, :full_address, :city_state_zip].include? method
+  end
   
   def map_data
-    { :id      => self.id,
-      :title   => self.title,
-      :thumb   => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb)),
-      :address => self.address,
-      :city    => self.city,
-      :state   => self.state,
-      :zip     => self.zip,
-      :lat     => self.lat,
-      :lng     => self.lng }
+    hash = {}
+    %w(id title address city state zip lat lng).each do |attribute|
+      hash.store attribute.to_sym, self.respond_to?(attribute) ? self.send(attribute) : self.map.send(attribute)
+    end
+    hash.merge :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb))
   end
   
   # create a stat record => clicks, impressions
@@ -228,6 +225,14 @@ class Listing < ActiveRecord::Base
   
   def issn_enabled?
     !self.facility_id.blank?
+  end
+  
+  def call_tracking_enabled?
+    true
+  end
+  
+  def call_tracking_num
+    '954-234-5678'
   end
   
   def has_feature?(*features)
