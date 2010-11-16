@@ -155,7 +155,8 @@ namespace :import do
         state   = row[3]
         zip     = row[4].split('-')[0].to_s
         phone   = row[5]
-        website = row[6]
+        type    = row[6]
+        category = row[7]
         
         zip = zip.size < 5 ? "0#{zip}" : zip unless zip.blank?
       rescue
@@ -163,9 +164,9 @@ namespace :import do
       end
       
       unless address.blank? || address.match(/(po box)/i) || zip.blank?
-        listing = Listing.new :title => title, :category => 'Moving'
+        listing = Listing.new :title => title, :category => category
         listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
-        listing.build_contact :web_address => website, :phone => phone
+        listing.build_contact :phone => phone
         
         puts "Added to queue (#{percent_of(i, total)} done): #{listing.title}"
         filtered << listing
@@ -175,7 +176,7 @@ namespace :import do
     end
     
     queued = filtered.size
-    puts "Queued up #{queued} listings; #{percent_of(queued, total)} of fil Saving to db and geocoding..."
+    puts "Queued up #{queued} listings; #{percent_of(queued, total)} of file. Saving to db and geocoding..."
     saved = 0; failed = 0; geocoded = 0; not_geocoded = 0
     
     filtered.each_with_index do |listing, i|
@@ -198,7 +199,6 @@ namespace :import do
     
     puts "DONE! #{percent_of(geocoded, queued)} Success; Saved: #{saved}; Geocoded: #{geocoded}; Failed: #{failed}; Not Geocoded: #{not_geocoded}"
   end
-  
 end
 
 def load_from_csv(file_name)

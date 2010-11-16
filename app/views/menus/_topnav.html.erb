@@ -1,17 +1,17 @@
 <ul id="storage_types" class="dropdown">
 	<li id="self_storage_li">
-		<%= link_to 'Self Storage', '/self-storage', :class => "toplink#{' '+ active_page('/self-storage') if active_page('/self-storage')}" %>
+		<%= link_to 'Self Storage', self_storage_cleaner_path, :class => "toplink#{' '+ active_page('/self-storage') if active_page('/self-storage')}" %>
 		<ul>
-			<li><%= link_to 'Mobile Storage', '/mobile-storage', :class => active_page('/mobile-storage') %></li>
-			<li><%= link_to 'Cold Storage', '/cold-storage', :class => active_page('/cold-storage') %></li>
+			<li><%= link_to 'Mobile Storage', mobile_storage_cleaner_path, :class => active_page('/mobile-storage') %></li>
+			<li><%= link_to 'Cold Storage', cold_storage_cleaner_path, :class => active_page('/cold-storage') %></li>
 		</ul>
 	</li>
 	<li id="vehicle_storage_li">
-		<%= link_to 'Vehicle Storage', '/vehicle-storage', :class => "toplink#{' '+ active_page('/vehicle-storage') if active_page('/vehicle-storage')}" %>
+		<%= link_to 'Vehicle Storage', vehicle_storage_cleaner_path, :class => "toplink#{' '+ active_page('/vehicle-storage') if active_page('/vehicle-storage')}" %>
 		<ul>
-			<li><%= link_to 'Car Storage', '/car-storage', :class => active_page('/car-storage') %></li>
-			<li><%= link_to 'RV Storage', '/rv-storage', :class => active_page('/rv-storage') %></li>
-			<li><%= link_to 'Boat Storage', '/boat-storage', :class => active_page('/boat-storage') %></li>
+			<li><%= link_to 'Car Storage', car_storage_cleaner_path, :class => active_page('/car-storage') %></li>
+			<li><%= link_to 'RV Storage', rv_storage_cleaner_path, :class => active_page('/rv-storage') %></li>
+			<li><%= link_to 'Boat Storage', boat_storage_cleaner_path, :class => active_page('/boat-storage') %></li>
 		</ul>
 	</li>
 </ul>

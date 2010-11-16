@@ -35,6 +35,10 @@ class Search < ActiveRecord::Base
     old_search.comparable_attributes != new_search.comparable_attributes
   end
   
+  def results
+    @listings ||= Listing.find_by_location(self)
+  end
+  
   def comparable_attributes
     self.attributes.select { | k, v| !['id', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
   end

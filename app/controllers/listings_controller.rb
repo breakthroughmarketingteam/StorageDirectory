@@ -16,13 +16,13 @@ class ListingsController < ApplicationController
   def cleaner
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     session[:search_id] = @search.id
-    localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : search_listings_path(@search.state, @search.city)
+    localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : search_listings_path(@search.state, @search.city.parameterize)
     redirect_to localized_path
   end
   
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
-    @page = Page.find_by_title 'Self Storage'
+    @page = Page.find_by_title 'Self Storage' unless request.xhr?
     @search = Search.find_by_id session[:search_id]
     
     if @search
@@ -41,8 +41,8 @@ class ListingsController < ApplicationController
     session[:search_id] = @search.id
     @location = @search.location
     get_map
-    @listings = Listing.find_by_location @search
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+    @listings = @search.results # this calls the Listing model
+    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     
     # updates the impressions only for listings on current page
@@ -62,14 +62,20 @@ class ListingsController < ApplicationController
   end
   
   def compare
+    #if params[:ids] && params[:ids].match(/\d+/)
+    #  session[:compare_listing_ids] = params[:ids].split(',').reject(&:blank?)
+    #  redirect_to compare_listings_path(:ids => '')
+    #end
     if params[:ids] && params[:ids].match(/\d+/)
-      session[:compare_listing_ids] = params[:ids].split(',').reject(&:blank?)
-      redirect_to compare_listings_path(:ids => '')
+      @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
+      @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
+      @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+      @comparables = { :online_rentals => :self, :monthly_rates => Listing.top_types, :specials => :self, :features => :self }
+      
+      render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @maps_data } }
+    else
+      
     end
-    
-    @listings = Listing.find(session[:compare_listing_ids])
-    @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
   end
 
   def show
@@ -176,7 +182,7 @@ class ListingsController < ApplicationController
       @map = (@listing.try(:map) || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
-  		@Gmap.zoom = (@location.nil? ? 16 : 12)
+  		@Gmap.zoom = (@location.nil? ? 16 : 14)
   		@Gmap.markers << GoogleMap::Marker.new(
   		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
         :html => @listing.nil? ? '<p><strong>Search distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
@@ -199,7 +205,7 @@ class ListingsController < ApplicationController
   end
   
   def _build_search_attributes(params)
-    { :city => params[:city], :state => params[:state], :zip => params[:zip], :unit_size => nil, :storage_type => nil, :within => nil }
+    { :city => params[:city], :state => params[:state], :zip => params[:zip], :unit_size => nil, :storage_type => params[:storage_type], :within => nil }
   end
   
 end
