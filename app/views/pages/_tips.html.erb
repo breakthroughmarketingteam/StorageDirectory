@@ -17,7 +17,11 @@
 	<div id="type-two-top-bar-head">
 		<form action="" method="" class="tips">
 			<ul>
-				<li id="sort">Sort by: <a href="#ratings_count">Rating</a> / <a href="#impressions_count">Views</a></li>
+				<li id="tips_sort">
+					Sort by: <a href="#newest" class="down">Newest</a>&nbsp;|&nbsp;
+							 <a href="#ratings_count">Rating</a>&nbsp;|&nbsp;
+							 <a href="#tip_title">Title</a>
+				</li>
 				<li id="search_tips"><input type="text" class="hintable" title="Search by keyword " /> <a href="">Go</a></li>
 				<li><a href="/tips/new" class="search-options openDiv" rel="add_new_tip">Add your tips</a></li>
 			</ul>
@@ -27,18 +31,18 @@
 	<hr />
     
 	<div id="add_new_tip" class="hidden">
-		<% form_tag create_tip_path do %>
+		<% form_tag create_tip_path, :id => 'create_tip' do %>
         <fieldset>
           <legend>Share Your Self Storage Tips</legend>
           
           <p>
             <%= label_tag 'Title', nil, :class => 'hide_if_js' %>
-            <%= text_field_tag 'post[title]', nil, :id => 'tip_title', :class => 'hintable', :title => 'Title' %>
+            <%= text_field_tag 'post[title]', nil, :id => 'tip_title', :class => 'hintable required', :title => 'Title' %>
           </p>
           
           <p>
             <%= label_tag 'Content', nil, :class => 'hide_if_js' %>
-            <%= text_area_tag 'post[content]', nil, :id => 'tip_content', :class => 'hintable', :title => 'Content' %>
+            <%= text_area_tag 'post[content]', nil, :id => 'tip_content', :class => 'hintable required', :title => 'Content' %>
           </p>
           
           <p>
@@ -47,6 +51,7 @@
           </p>
           
           <div class="submit">
+			<%= reverse_captcha %>
             <%= submit_tag 'Submit' %>
           </div>
           

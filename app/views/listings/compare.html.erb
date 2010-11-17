@@ -7,11 +7,11 @@
 			<tbody>
 				<% @comparables.each_with_index do |comparable, i| %>
 					<% compare = comparable[0]; subcomps = comparable[1] %>
-					<tr>
+					<tr class="<%= cycle 'odd', 'even' %>">
 						<% if i == 0 %>
-							<th><%= i %></th>
+							<th></th>
 						<% else %>
-							<th><%= i %>
+							<th>
 								<% if subcomps == :self %>
 									<span class="comp_label"><%= compare.to_s.titleize %></span>
 								<% elsif subcomps.is_a? Array %>
@@ -26,18 +26,18 @@
 							</th>
 						<% end %>
 						
-						<% @listings.size.times do |j| %>
-							<% if j == 0 %>
-								<td><%= j %><%= link_to selective_abbrev(@listings[j].title).titleize, facility_path(@listings[j].title.parameterize, @listings[j].id) %></td>
+						<% @listings.each do |listing| %>
+							<% if i == 0 %>
+								<th><%= link_to selective_abbrev(listing.title).titleize, facility_path(listing.title.parameterize, listing.id) %></th>
 							<% else %>
-								<td><%= j %>
+								<td>
 									<% if subcomps == :self %>
-										<span class="compared"><%= @listings[j].display_compared compare %></span>
+										<span class="compared"><%= display_compared listing, compare %></span>
 										
 									<% elsif subcomps.is_a? Array %>
 										<ul>
 										<% subcomps.each do |subcomp| %>
-											<li><%= @listings[j].display_compared subcomp %></li>
+											<li><%= display_compared listing, subcomp %></li>
 										<% end %>
 										</ul>
 									<% end %>

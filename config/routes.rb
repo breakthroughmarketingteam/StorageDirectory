@@ -21,10 +21,8 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
   
   # clean paths for searches
-  map.url_cleaner_path '/self-storage', :controller => 'listings', :action => 'cleaner'
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
-  map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil
   
   # for building routes
   $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
@@ -39,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.map_dirs '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
+  map.tip '/tips/:id', :controller => 'posts', :action => 'show'
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }

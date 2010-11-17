@@ -180,18 +180,6 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def display_compared(compare)
-    if compare == :online_rentals
-      compare
-    elsif @@top_types.include? compare.to_s
-      compare
-    elsif compare == :specials
-      compare
-    elsif compare == :features
-      compare
-    end
-  end
-  
   # TODO: figure this shit out
   def address; self.map.address end
   def city; self.map.city end

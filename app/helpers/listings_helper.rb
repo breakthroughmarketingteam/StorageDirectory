@@ -117,6 +117,26 @@ module ListingsHelper
     @listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
   end
   
+  def display_compared(listing, compare)
+    if compare == :online_rentals
+      listing.premium? ? 'Yes' : '•'
+      
+    elsif Listing.top_types.include? compare.to_s
+      size = listing.sizes.first :conditions => ['LOWER(title) = ?', compare.to_s.downcase]
+      size ? "$#{size.dollar_price}" : '•'
+      
+    elsif compare == :specials
+      listing.specials.size > 0 ? listing.specials.size : '•'
+      
+    elsif compare == :features
+      display_features listing
+    end
+  end
+  
+  def display_features(listing)
+    listing.facility_features.map(&:title).reject(&:blank?).join ', '
+  end
+  
   def more_results_link(data)
     per_page = @listings_per_page
     page = params[:page] ? params[:page].to_i : 1

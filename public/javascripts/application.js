@@ -160,7 +160,7 @@ $(document).ready(function() {
 	// map pop up
 	var map_nav_btn = $('#map_nav_btn');
 	if (map_nav_btn.length > 0) {
-		preload_us_map_imgs();
+		$.preload_us_map_imgs();
 		
 		map_nav_btn.click(function(){
 			var partial = 'menus/map_nav', title = 'Choose A State', height = '486';
@@ -315,25 +315,6 @@ $(document).ready(function() {
 		});
 	}
 	
-	/*/ more info button
-	var more_info_tab = $('#red_tab'),
-		orig_info_txt = more_info_tab.text(),
-		more_info_div = $('#'+ more_info_tab.attr('rel')).hide();
-		
-	more_info_tab.click(function(){
-		if (!more_info_tab.data('open')) {
-			more_info_div.slideDown(1000);
-			more_info_tab.data('open', true).text('Click to close');
-		} else {
-			more_info_div.slideUp(1000);
-			more_info_tab.data('open', false).text(orig_info_txt);
-		}
-	});
-	
-	$('#handle').click(function(){
-		if (more_info_tab) more_info_tab.click();
-	});*/
-	
 	$('#advanced_opts', '#pages_controller.home').hide();
 	
 	// Cities pages
@@ -371,14 +352,14 @@ $(document).ready(function() {
 				{
 					objects : [
 						{ id : 'bg1', action: 'fadeIn', speed: 500, delay: 500 },
-						{ id : 'bub2', action: 'fadeIn', speed: 1000, delay: 6000, callback: function(o, s){ o.html('<blockquote>Online reservations are so convenient</blockquote>').children().hide().fadeIn('slow') } }
+						{ id : 'bub2', action: 'fadeIn', speed: 1000, delay: 6000, callback: function(o, s){ o.html('<blockquote>Online rentals are so convenient</blockquote>').children().hide().fadeIn('slow') } }
 					],
 					end : function(s) { s.gotoSlide(2); }
 				},
 				{
 					objects : [
 						{ id : 'bg2', action: 'fadeIn', speed: 500, delay: 500 },
-						{ id : 'bub3', action: 'fadeIn', speed: 1000, delay: 8000, callback: function(o, s){ o.html('<blockquote>They helped me get a really great deal!</blockquote>').children().hide().fadeIn('slow') } }
+						{ id : 'bub3', action: 'fadeIn', speed: 1000, delay: 8000, callback: function(o, s){ o.html('<blockquote>I was able to find a really great deal!</blockquote>').children().hide().fadeIn('slow') } }
 					],
 					end : function(s) { s.gotoSlide(0); }
 				}
@@ -469,17 +450,86 @@ $(document).ready(function() {
 	} // END New Permissions
 	
 	// user tips page
-	$('a', '#sort').live('click', function() {
+	$('a', '#tips_sort').live('click', function() {
+		$('a', '#tips_sort').removeClass('up').removeClass('down')
+		var $this = $(this),
+			sort_what = $this.text(),
+			tips = $('.blog-lock', '#tips-wrap');
+		
+		switch (sort_what) {
+			case 'Newest' : $.sort_tips($this, tips, function(a, b) {
+					var a1 = parseInt($('.updated_at', a).text()),
+						b1 = parseInt($('.updated_at', b).text());
+					
+					return a1 > b1 ? (tip_sort_inverse ? 1 : -1) : (tip_sort_inverse ? -1 : 1);
+				});
+			break;
+			case 'Rating' : $.sort_tips($this, tips, function(a, b) {
+					var a1 = $('.show-value', a).width(),
+						b1 = $('.show-value', b).width();
+					
+					// this one should sort down when the values are equal since most of the ratings are the same number
+					return a1 == b1 ? -1 : a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+				});
+			break;
+			case 'Title' : $.sort_tips($this, tips, function(a, b) {
+					var a1 = $('h3 a', a).text(),
+						b1 = $('h3 a', b).text();
+						
+					return a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+				});
+			break;
+		}
+		
+		tip_sort_inverse = !tip_sort_inverse;
+		return false;
+		
+		/* TODO: do serverside sorting when we have more tips
 		get_partial_and_do({ partial: 'views/partials/tips', sort_by: this.href.replace('#', ' ') }, function(response) {
 			$.with_json(response, function(partial) {
 				$('#tips_view').replaceWith(partial);
 			});
-		});
+		});*/
 	});
 	
 	$('input', '#search_tips').keyup(function() {
 		var parent = function() { return $(this).parents('.blog-lock') };
-		$('h3 a, div', '.blog-lock').search(this.value, 'by substring', { remove: parent });
+		$('.tip_in > h3 a, .tip_in > div', '.blog-lock').search(this.value, 'by substring', { remove: parent });
+	});
+	
+	$('#create_tip').submit(function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $.new_ajax_loader('after', $('input[type=submit]', form)).show();
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					$('<div id="pop_up"><div id="tip_created">' + data +'</div></div>').dialog(default_pop_up_options({
+						title: 'Your Tip Was Submitted',
+						height: 'auto',
+						width: '300px',
+						modal: true
+					}));
+					
+					form.parent().hide();
+				});
+				
+				ajax_loader.hide();
+				form.data('saving', false);
+			}, 'json');
+		}
+		
+		return false;
+	});
+	
+	$('.facebook_share', '#tips-wrap').live('click', function() {
+		var tip = $(this).parents('.tip_in'),
+			link = $('h3 a', tip), u = encodeURIComponent(link.attr('href')), t = encodeURIComponent(link.text());
+		
+		window.open('http://www.facebook.com/sharer.php?u='+ u, 'sharer', 'toolbar=0,status=0,width=626,height=436');
+		return false;
 	});
 	
 	// add your facility
@@ -1439,10 +1489,10 @@ function workflow_step2(wizard) {
 
 function workflow_step3() {
 	var wizard    = arguments[0],
-		addresses = get_checked_listings_addresses(wizard),
+		addresses = $.get_checked_listings_addresses(wizard),
 		city 	  = $('#listing_city', '#new_client').val(),
 		state 	  = $('#listing_state', '#new_client').val(),
-		zips	  = get_checked_listings_addresses(wizard, 'zip');
+		zips	  = $.get_checked_listings_addresses(wizard, 'zip');
 	
 	$.setup_autocomplete('#listing_city', wizard.workflow);
 	
@@ -1551,7 +1601,9 @@ function finish_workflow() {
 	return false;
 }
 
-function get_checked_listings_addresses(wizard, address_part) {
+// HELPERS
+
+$.get_checked_listings_addresses = function(wizard, address_part) {
 	if (typeof address_part == 'undefined') var address_part = 'street_address';
 	var checked = $('#signupstep_2 :checkbox:checked', wizard.workflow),
 		addresses = [];
@@ -1565,10 +1617,23 @@ function get_checked_listings_addresses(wizard, address_part) {
 }
 
 
-function preload_us_map_imgs() {
+$.preload_us_map_imgs = function() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
 		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
+	});
+}
+
+// uses a jquery plugin sortElement
+var tip_sort_inverse = false;
+$.sort_tips = function(sort_link, tips, sortFunc) {
+	sort_link.addClass(tip_sort_inverse ? 'down' : 'up');
+	
+	tips.sortElements(function(a, b) {
+		return sortFunc(a, b);
+
+	}, function() {
+		return $(this).children('.tip_in')[0];
 	});
 }

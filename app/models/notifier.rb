@@ -18,6 +18,11 @@ class Notifier < ActionMailer::Base
     @body[:user] = user
   end
   
+  def new_tip_alert(tip)
+    setup_email 'moderator@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New tip created in USSSL!'
+    @body[:tip] = tip
+  end
+  
   def tenant_confirmation(reserver, reservation)
     setup_email reserver.email, 'notifier@usselfstoragelocator.com', 'Self Storage Reservation'
     @body[:user]        = reserver

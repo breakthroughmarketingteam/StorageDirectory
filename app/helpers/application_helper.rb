@@ -20,7 +20,7 @@ module ApplicationHelper
     elsif controller_name == 'listings' && [].include?(action_name) == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
-      title = "Self Storage in #{@search.city}, #{@search.state}"
+      title = "#{@search ? @search.storage_type : 'Self Storage'} in #{@search.city}, #{@search.state}"
     else
       title = (@page ? @page.title  : controller_name.titleize).to_s
     end
@@ -535,7 +535,7 @@ module ApplicationHelper
     columns.times do |i|
       lists << '<ul>'
       cities[i*rows, rows].each do |city|
-        lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", search_listings_path(city.state, city.name)) +'</li>'
+        lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", self_storage_path(city.state, city.name)) +'</li>'
       end if cities[i*rows, rows]
       lists << '</ul>'
     end
