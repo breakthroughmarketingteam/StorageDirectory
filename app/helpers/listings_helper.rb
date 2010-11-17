@@ -88,11 +88,7 @@ module ListingsHelper
   end
   
   def locator_header
-<<<<<<< HEAD
-    html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type.try(:pluralize) || 'self storage facilities'}"
-=======
     html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1}"
->>>>>>> 113310a3cb4c15fcb1a405b87d6a88cd374aaab3
 		
 		if @search.is_zip?
 			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
