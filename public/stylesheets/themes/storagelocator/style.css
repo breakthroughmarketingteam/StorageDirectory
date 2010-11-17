@@ -23,6 +23,8 @@ span.blue{color:#4c4bcc;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
 #page-cnt{background-color:#fff;position:relative;z-index:1;top:60px;border-radius-topleft:24px;-moz-border-radius-bottomleft:24px;-webkit-border-radius-bottomleft:24px;border-radius-bottomright:24px;-moz-border-radius-bottomright:24px;-webkit-border-radius-bottomright:24px;}
+.storage_info #page-cnt, .add_your_facility #page-cnt{top:70px;}
+.add_your_facility #bluebar{top:-101px;}
 #page-cnt-top-bg{/*background:url(/images/ui/storagelocator/world-shadow.png) no-repeat top left;background-position:42px 0px;*/text-align:left;/*float:left;*/width:975px;}
 #page-cnt-in{margin:12px 5px;}
 #type-two-cnt-in{margin:2px 0px;}
@@ -215,7 +217,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > .premium > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;}
 #rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > .premium > .inner:hover .unit_detail_in{background:url(/images/ui/storagelocator/specials-bg-hover.png) repeat-x;border-top:1px solid #666;}
 */
-.listing .inner .in{height:145px;position:relative;padding:0 0 10px 0;}
+.listing .inner .in{height:140px;position:relative;padding:0;}
 .listing ul li{float:left;}
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a {display:block;float:left;height:25px;margin-left:5px;width:25px;}
@@ -254,7 +256,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;color:#555;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;width:159px;}
-.rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;border-bottom:1px solid #ccc;height:38px;margin:0 0 7px;}
+.rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;border-bottom:1px solid #ccc;height:38px;margin:0;}
 .rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
 .rslt-title h3 a{color:#060;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
@@ -264,7 +266,7 @@ li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;padding:0 17px;margin-left:-1px;}
 li.rslt-size{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat right top;font-size:12px;width:99px;}
 li.rslt-size span.size{color:#666;display:block;font-weight:bold;text-align:center;}
-li.rslt-size img{margin-left:1px;}
+li.rslt-size img{margin:4px 0 0 1px;}
 li.rslt-price{font-size:12px;padding:10px 20px 0 0;width:125px;}
 .listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
 li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;color:#333;height:88px;}
@@ -273,7 +275,7 @@ li.rslt-miles,li.rslt-size,li.rslt-price{background:url(/images/ui/storagelocato
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:123px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
 .listing ul li.rslt-price ul li.radio_wrap .radio_select{float:right;height:16px;position:absolute;right:6px;top:0;width:16px;}
-.listing ul li.rslt-price ul li input{display:none;}
+.listing ul li.rslt-price ul li input{}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .listing ul li.action_btn{float:right;font-size:120%;height:50px;line-height:3.1;margin:27px 10px 0 0;position:relative;text-shadow:1px 1px 0 #666;width:91px;}
 .listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
