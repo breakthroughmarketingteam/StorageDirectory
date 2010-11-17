@@ -22,7 +22,7 @@ span.blue{color:#4c4bcc;}
 #page-ctr-in{padding-bottom:30px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
-#page-cnt{background-color:#fff;position:relative;z-index:1;top:60px;border-radius-topleft:24px;-moz-border-radius-bottomleft:24px;-webkit-border-radius-bottomleft:24px;border-radius-bottomright:24px;-moz-border-radius-bottomright:24px;-webkit-border-radius-bottomright:24px;box-shadow:0 4px 10px #666;-webkit-box-shadow:0 4px 10px #666;-moz-box-shadow:0 4px 10px #666;}
+#page-cnt{background-color:#fff;position:relative;z-index:1;top:60px;border-radius-topleft:24px;-moz-border-radius-bottomleft:24px;-webkit-border-radius-bottomleft:24px;border-radius-bottomright:24px;-moz-border-radius-bottomright:24px;-webkit-border-radius-bottomright:24px;}
 #page-cnt-top-bg{/*background:url(/images/ui/storagelocator/world-shadow.png) no-repeat top left;background-position:42px 0px;*/text-align:left;/*float:left;*/width:975px;}
 #page-cnt-in{margin:12px 5px;}
 #type-two-cnt-in{margin:2px 0px;}
@@ -123,7 +123,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{width:500px;position:absolute;top:-71px;left:16px;z-index:500;}
-#offset_search_box #search_query{border:1px solid #999;font-size:16px;height:24px;margin-right:10px;padding:2px 10px;width:62%;}
+#offset_search_box #search_query{border:3px solid #9999ff;font-size:16px;height:25px;margin-right:10px;padding:2px 10px;width:62%;}
 #offset_search_box .grn_btn{position:relative;}
 .storage_info #offset_search_box{top:-67px;}
 #oldlogo{float:left;margin-left:40px;margin-top:10px;position:relative;height:163px;}
@@ -1344,7 +1344,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 0px #666;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;}
-.grn_btn:hover{background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
+.grn_btn:hover{}
 .ui-menu .ui-menu-item a{padding:2px 11px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:12px;margin-bottom:10px;}
