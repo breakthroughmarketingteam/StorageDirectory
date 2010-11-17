@@ -23,7 +23,7 @@
 			</div>
 			
 			<div id="distance_btns">
-				<%= f.label :within,"Distance:" %>
+				<%= f.label :within,"Distance in miles:" %>
 				<div class="uncollapse">
 					<% @distance_options.each do |distance| %>
 						<div class="radio_wrap auto">
@@ -34,11 +34,21 @@
 						</div>
 					<% end %>
 				</div>
-				<%= label_tag 'miles.', nil, :class => 'right' %>
 			</div>
 			
 			<div id="unit_features" class="unitfeatures">
-				<p><%= link_to 'Select Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+				<ul id="top_features">
+				<% @top_features.each do |top_feature| %>
+					<li class="selectable_wrap auto">
+						<div class="selectable">
+							<%= check_box_tag 'search[features]', top_feature %>
+						</div>
+						<%= label_tag top_feature %>
+					</li>
+				<% end %>
+				</ul>
+				
+				<p><%= link_to 'More Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
 				
 				<ul class="collapseable hide">
 					<% @unit_features.each do |feature| %>
@@ -50,10 +60,6 @@
 					</li>
 					<% end %>
 				</ul>
-			</div>
-			
-			<div id="sub_submit">
-				<%= f.submit 'Locate', :id => 'search_submit2', :class => 'grn_btn' %>
 			</div>
 			
 		</div>

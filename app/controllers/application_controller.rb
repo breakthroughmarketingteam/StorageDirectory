@@ -164,6 +164,8 @@ class ApplicationController < ActionController::Base
     unless controller_name == 'user_sessions' && request.xhr?
       @facility_features = $_storage_types #IssnFacilityFeature.labels
       @unit_features     = IssnUnitTypeFeature.labels
+      @top_features      = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
+      @unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
       @unit_size_icons   = SizeIcon.medium_icons
       @listing_logos = get_listing_logos
     end

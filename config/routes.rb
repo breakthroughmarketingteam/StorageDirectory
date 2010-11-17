@@ -26,9 +26,12 @@ ActionController::Routing::Routes.draw do |map|
   map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   map.search_listings '/self-storage/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil
   
+  # for building routes
+  $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
+  
   $_storage_types.each do |type|
-    map.connect "/#{type.parameterize}", :controller => 'listings', :action => 'cleaner', :storage_type => type
-    map.connect "/#{type.parameterize}/:state/:city/:zip", :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => type
+    eval "map.#{type.gsub(' ', '_').downcase}_cleaner '/#{type.parameterize}', :controller => 'listings', :action => 'cleaner', :storage_type => '#{type}'"
+    eval "map.#{type.gsub(' ', '_').downcase} '/#{type.parameterize}/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => '#{type}'"
   end
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'

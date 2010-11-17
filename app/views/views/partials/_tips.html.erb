@@ -1,14 +1,13 @@
-<div id="type-one-top-bar">
-  
-	 <div id="type-two-top-bar-head">
-	   	<form action="" method="" class="tips">
-		   <ul>
-			 	<li id="sort">Sort by: <a href="#ratings_count">Rating</a> / <a href="#impressions_count">Views</a></li>
+<div id="type-one-top-bar">  
+	<div id="type-two-top-bar-head">
+		<form action="" method="" class="tips">
+			<ul>
+				<li id="sort">Sort by: <a href="#ratings_count">Rating</a> / <a href="#impressions_count">Views</a></li>
 				<li id="search_tips"><input type="text" class="hintable" title="Search by keyword " /> <a href="">Go</a></li>
 				<li><a href="/tips/new" class="search-options openDiv" rel="add_new_tip">Add your tips</a></li>
-			 </ul>
+			</ul>
 		</form>
-	 </div>
+	</div>
 	
 	<hr />
     
@@ -47,7 +46,5 @@
 		<% end %>
 	</div>
 
-  <%= render :partial => 'views/paginate', :locals => { :data => data } %>
-		
-  <div class="clear"></div>	 
+  	<%= render :partial => 'views/paginate', :locals => { :data => data } %>
 </div>

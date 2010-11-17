@@ -16,6 +16,7 @@ class Listing < ActiveRecord::Base
   has_many :impressions    , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
   has_many :web_specials   , :dependent => :destroy
+  has_one :listing_description, :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
   has_many :access_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
@@ -52,9 +53,11 @@ class Listing < ActiveRecord::Base
   sitemap :order => 'updated_at DESC'
   
   # the most common unit sizes, to display on a premium listing's result partial
+  @@top_types = %w(upper lower drive_up)
   @@upper_types = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
-  @@interior_types = %w(interior indoor standard)
+  @@lower_types = %w(interior indoor standard)
+  cattr_accessor :top_types
   
   #
   # Search methods
@@ -71,13 +74,13 @@ class Listing < ActiveRecord::Base
     base_conditions = 'listings.enabled IS TRUE'
     unless search.storage_type.downcase == 'self storage'
       options[:include] << :facility_features
-      base_conditions += " AND LOWER(facility_features.title) = #{search.storage_type.downcase} OR LOWER(facility_features.description) LIKE '%#{search.storage_type.downcase}%'"
+      base_conditions += " AND LOWER(facility_features.title) = '#{search.storage_type.downcase}' OR LOWER(facility_features.description) LIKE '%#{search.storage_type.downcase}%'"
     end    
 
     @location = search.location
     
     if search.is_zip?
-      options.merge! :conditions => ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
+      options[:conditions] = ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
       
     elsif !search.is_address_query? # try query by name? 
       conditions = { :conditions => ["listings.title LIKE ? OR listings.title IN (?) AND #{base_conditions}", "%#{search.query}%", search.query.split(/\s|,\s?/)] }
@@ -85,6 +88,8 @@ class Listing < ActiveRecord::Base
       
       @location = Geokit::GeoLoc.new Listing.first(conditions)
       options.merge! :origin => @location
+    else
+      options[:conditions] = base_conditions
     end
     
     @listings = Listing.all options
@@ -116,6 +121,22 @@ class Listing < ActiveRecord::Base
   end
   
   # Instance Methods
+  
+  def display_description
+    global_desc = self.client.listing_description
+    listing_desc = self.listing_description
+    desc = nil
+    
+    case global_desc.show_in when 'none'
+      desc = listing_desc
+    when 'only' # listings without description
+      desc = global_desc unless listing_desc
+    when 'all'
+      desc = global_desc
+    end if global_desc
+    
+    desc || listing_desc
+  end
   
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
@@ -155,13 +176,31 @@ class Listing < ActiveRecord::Base
   
   def get_interior_type_size(size)
     @interior_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
-      @@interior_types.any? { |type| s.title =~ /(#{type})/i }
+      @@lower_types.any? { |type| s.title =~ /(#{type})/i }
     end
   end
   
-  def method_missing(method)
-    self.map.send(method) if [:address, :city, :state, :zip, :lat, :lng, :full_address, :city_state_zip].include? method
+  def display_compared(compare)
+    if compare == :online_rentals
+      compare
+    elsif @@top_types.include? compare.to_s
+      compare
+    elsif compare == :specials
+      compare
+    elsif compare == :features
+      compare
+    end
   end
+  
+  # TODO: figure this shit out
+  def address; self.map.address end
+  def city; self.map.city end
+  def state; self.map.state end
+  def zip; self.map.zip end
+  def lat; self.map.lat end
+  def lng; self.map.lng end
+  def full_address; self.map.full_address end
+  def city_state_zip; self.map.city_state_zip end
   
   def map_data
     hash = {}

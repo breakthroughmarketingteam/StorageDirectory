@@ -197,15 +197,35 @@ $(function(){
 		}
 	});
 	
+	$('input[name=compare]', '.compare').each(function() {
+		var $this = $(this);
+		if ($this.is(':checked')) $this.attr('checked', false);
+	})
+	
 	$('a', '.compare').live('click', function() {
-		var compares = $('input:checked', '.compare'), compare_href = '';
+		var $this = $(this), compares = $('input:checked', '.compare');
+		
 		if (compares.length) {
-			compares.each(function(){
-				compare_href += this.value + ',';
+			compares.each(function(){ 
+				$this[0].href += this.value +',';
 			});
 			
-			this.href += compare_href;
-		} else return false;
+			$.getJSON(this.href, function(response) {
+				$.with_json(response, function(data) {
+					console.log(data, Gmaps_data)
+					var pop_up = $('<div id="pop_up">'+ data['html'] +'</div>').dialog(default_pop_up_options({ 
+						title: 'Comparing '+ compares.length +' Facilities',
+						width: 'auto',
+						height: 'auto',
+						modal: false
+					}));
+					
+					$.setGmap(data['maps_data'], 'compare_map');
+				});
+			});
+		}  
+		
+		return false;
 	});
 
 	/* AJAX pagination, load next page results in the same page */
@@ -630,10 +650,11 @@ $(function(){
 				$.with_json(response, function(data) {
 					Gmaps_data = data['maps_data'];
 					results_page.replaceWith(data['results']);
-					$.setGmap(Gmaps_data);
+					$.setGmap(Gmaps_data, 'main_map');
 					$('a', '.rslt-features').tooltip();
 				});
 				
+				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
 				form.data('loading', false);
 			});
 		}
@@ -766,12 +787,14 @@ $(function(){
 	}
 
 	GmapMarkers = [];
-	$.setGmap = function(data) {
-		Gmap = new GMap2(document.getElementById('main_map'));
+	$.setGmap = function(data, el) {
+		if (typeof el == 'undefined') el = 'main_map';
+		
+		Gmap = new GMap2(document.getElementById(el));
 		Gmap.addControl(new GLargeMapControl());
 		Gmap.addControl(new GScaleControl());
 		Gmap.addControl(new GMapTypeControl());
-		Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 10));
+		Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 16));
 		Gmap.enableDoubleClickZoom();
 		Gmap.disableContinuousZoom();
 		Gmap.disableScrollWheelZoom();

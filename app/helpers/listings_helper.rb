@@ -88,7 +88,11 @@ module ListingsHelper
   end
   
   def locator_header
+<<<<<<< HEAD
     html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type.try(:pluralize) || 'self storage facilities'}"
+=======
+    html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1}"
+>>>>>>> 113310a3cb4c15fcb1a405b87d6a88cd374aaab3
 		
 		if @search.is_zip?
 			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
@@ -128,7 +132,7 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page + 1
-      html << "<form action='/#{@page.title.parameterize}' method='get' class='more_results_form'>" + 
+      html << "<form action='/#{@search.storage_type.parameterize}' method='get' class='more_results_form'>" + 
         link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
         "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
         "<input class='hidden' name='page' value='#{page + 1}' />" + 
