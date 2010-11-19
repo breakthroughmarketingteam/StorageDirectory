@@ -123,6 +123,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #listings_controller.compare_action #content #type-one-r-col-in #results_header{width:98.5%;}
 #listings_controller.compare_action #content #type-one-r-col-in #compare_map{width:100%;}
 #compare_wrap{padding:3px 20px 15px;}
+#compare_wrap table td,#compare_wrap table th{padding:12px 15px;}
+#compare_wrap table td.odd,#compare_wrap table th.odd{background:#ebebeb;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{width:500px;position:absolute;top:-71px;left:16px;z-index:500;}
@@ -333,8 +335,10 @@ li.map-plus a{width:22px;}
 #add-fac-head-in{background:url("/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
-#type-two-top-bar-head ul li#sort{position:relative;left:30px;width:253px;}
-#type-two-top-bar-head ul li#sort a{margin:0px 3px;color:#393;font-size:100%;}
+#type-two-top-bar-head ul li#tips_sort{position:relative;left:22px;width:253px;}
+#type-two-top-bar-head ul li#tips_sort a{margin:0px 3px;color:#393;font-size:100%;}
+#tips_sort .up{padding-right:10px;background:url("/images/ui/storagelocator/up-grn.png") no-repeat right center;}
+#tips_sort .down{padding-right:10px;background:url("/images/ui/storagelocator/down-grn.png") no-repeat right center;}
 #type-two-top-bar-head ul li#search_tips{float:left;margin-top:11px;width:345px;}
 #type-two-top-bar-head ul li#search_tips a{background:url("/images/ui/storagelocator/go-button.png") no-repeat left center;color:#fff;display:block;float:left;font-size:14px;height:24px;line-height:23px;margin-left:10px;position:relative;text-align:center;text-shadow:1px 1px 0 #666;width:32px;display:none;}
 #type-two-top-bar-head ul input{border:1px solid #CCCCCC;color:#777;float:left;font-size:100%;height:19px;padding:2px 10px;position:relative;width:120px;}
@@ -367,11 +371,12 @@ li.map-plus a{width:22px;}
 .blog-lock h3 a{color:#000;text-decoration:none;font-size:130%;}
 .blog-lock ul{overflow:hidden;}
 .blog-lock li{list-style:none;display:block;float:left;color:#999;font-size:70%;}
-.blog-lock li.share{margin-left:30px;width:167px;}
+.blog-lock li.share_label{margin-left:30px;}
+.blog-lock li.share{width:140px;padding-left:5px;}
 .blog-lock li.five-star{/*background:url(/images/ui/storagelocator/5-stars.png) no-repeat top left;background-position:4em 0px;*/}
-li.share a{width:19px;height:16px;display:block;float:right;position:relative;top:-2px;}
+li.share a{width:19px;height:16px;display:block;float:left;}
 li.share a.delicious{background:url(/images/ui/storagelocator/delicious.png) no-repeat top left;}
-li.share a.facebook{background:url(/images/ui/storagelocator/facebook.png) no-repeat top left;}
+li.share a.facebook_share{background:url(/images/ui/storagelocator/facebook.png) no-repeat top left;}
 li.share a.twitter{background:url(/images/ui/storagelocator/twitter.png) no-repeat top left;}
 li.share a.socialmediaone{background:url(/images/ui/storagelocator/socialmedia1.png) no-repeat top left;}
 li.share a.socialmediatwo{background:url(/images/ui/storagelocator/socialmedia2.png) no-repeat top left;}
@@ -906,6 +911,7 @@ img.right{margin:0 0 10px 10px;}
 #add_new_tip p{margin-bottom:10px;}
 #add_new_tip .submit input{width:auto;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
+#tip_created{padding:0 15px 20px;text-align:center;}
 /* add size */
 #sl-tabs-sizes .btn{float:right;margin:0 0 10px 10px;}
 /* state page */
@@ -1499,7 +1505,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list img{float:left;margin-bottom:10px;}
 #feat-list .dlogo_wrap{height:135px;}
 #feat-list .dlogo_wrap span{font-size:140%;padding-top:10px;}
-#feat-list .dlogo_wrap span.short{padding-top:30px;}
+#feat-list .dlogo_wrap span.short{padding-top:10px;}
 #feat-list .full{width:100%;}
 #feat-list ul#preview {background:#fff;border-color:#ccc #ccc #ccc -moz-use-text-color;border-style:solid solid solid none;border-width:1px 1px 1px medium;float:left;height:72px;width:68px;}
 #feat-list ul#preview li{float:left;height:27px;margin:4px 1px 3px 4px;width:27px;}

@@ -58,7 +58,7 @@ module SitemapGenerator
     
     # monkey patches by d.s. for usssl
     def us_city_url(city)
-      search_listings_path :state => city.state.parameterize.to_s, :city => city.name.parameterize.to_s
+      self_storage_path :state => city.state.parameterize.to_s, :city => city.name.parameterize.to_s
     end
     
     def page_title(page)

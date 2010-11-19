@@ -616,6 +616,62 @@ $.get_param_value = function(key) {
 	}
 }
 
+// replacement for the browser's confirm box
+$.greyConfirm = function(msg, action, cancel, do_alert_instead) {
+	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
+		title: 'Confirm',
+		width: 400,
+		height: 150,
+		modal: true,
+		resizable: false,
+		close: function() { $(this).dialog('destroy').remove() }
+	});
+	
+	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
+	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
+	pop_up.append(btns);
+	
+	$('.btn', pop_up).click(function() {
+		if (typeof(do_alert_instead) == 'undefined' || !do_alert_instead) {
+			var confirm = $(this).text() == 'Yes' ? true : false;
+			if (confirm && typeof(action) == 'function') action.call(this);
+			else if (typeof cancel == 'function') cancel.call(this);
+		}
+		pop_up.dialog('close');
+		return false;
+	});
+}
+
+$('.greyConfirm').live('click', function() {
+	$.greyConfirm('Are you sure?', function() {
+		return true;
+	}, function() {
+		return false;
+	});
+});
+
+$.greyAlert = function(msg) {
+	$.greyConfirm(msg, null, null, true);
+}
+
+$.ajax_loaders = [];
+// put a new ajax loader somewhere by calling a jquery method on the el
+$.new_ajax_loader = function(where, el, img) {
+	el = $(el);
+	if (typeof img == 'undefined') img = 'ajax-loader-facebook.gif';
+	var a = $('<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="al_'+ el.attr('id') +'" />');
+	
+	try {
+		el[where](a);
+		$.ajax_loaders.push(a);
+		return a;
+		
+	} catch(e) {
+		$.log('new ajax loader failed: '+ e);
+	}
+}
+
+
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
 	var disablees = d || 'input, textarea, select, checkbox, radio';
@@ -928,44 +984,6 @@ $.fn.state_changed = function() {
 	var prev_state = this.data('state');
 	if (!prev_state) return false;
 	return prev_state != this.serialize();
-}
-
-// replacement for the browser's confirm box
-$.greyConfirm = function(msg, action, cancel, do_alert_instead) {
-	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
-		title: 'Confirm',
-		width: 400,
-		height: 150,
-		modal: true,
-		resizable: false,
-		close: function() { $(this).dialog('destroy').remove() }
-	});
-	
-	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
-	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
-	pop_up.append(btns);
-	
-	$('.btn', pop_up).click(function() {
-		if (typeof(do_alert_instead) == 'undefined' || !do_alert_instead) {
-			var confirm = $(this).text() == 'Yes' ? true : false;
-			if (confirm && typeof(action) == 'function') action.call(this);
-			else if (typeof cancel == 'function') cancel.call(this);
-		}
-		pop_up.dialog('close');
-		return false;
-	});
-}
-
-$('.greyConfirm').live('click', function() {
-	$.greyConfirm('Are you sure?', function() {
-		return true;
-	}, function() {
-		return false;
-	});
-});
-
-$.greyAlert = function(msg) {
-	$.greyConfirm(msg, null, null, true);
 }
 
 $.fn.shimmy = function() {

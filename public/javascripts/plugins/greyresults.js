@@ -200,10 +200,13 @@ $(function(){
 	$('input[name=compare]', '.compare').each(function() {
 		var $this = $(this);
 		if ($this.is(':checked')) $this.attr('checked', false);
-	})
+	});
 	
 	$('a', '.compare').live('click', function() {
-		var $this = $(this), compares = $('input:checked', '.compare');
+		var $this = $(this).hide(),
+			orig_href = $this.attr('href'),
+			compares = $('input:checked', '.compare'),
+			ajax_loader = $.new_ajax_loader('after', $this).show();
 		
 		if (compares.length) {
 			compares.each(function(){ 
@@ -212,7 +215,6 @@ $(function(){
 			
 			$.getJSON(this.href, function(response) {
 				$.with_json(response, function(data) {
-					console.log(data, Gmaps_data)
 					var pop_up = $('<div id="pop_up">'+ data['html'] +'</div>').dialog(default_pop_up_options({ 
 						title: 'Comparing '+ compares.length +' Facilities',
 						width: 'auto',
@@ -222,6 +224,10 @@ $(function(){
 					
 					$.setGmap(data['maps_data'], 'compare_map');
 				});
+				
+				$this.show();
+				ajax_loader.remove();
+				$this.attr('href', orig_href);
 			});
 		}  
 		

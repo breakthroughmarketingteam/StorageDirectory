@@ -30,6 +30,7 @@ class PostsController < ApplicationController
     when 'tip'
       @post = Post.new(params[:post])
       @post.tag_list << 'tip'
+      Notifier.deliver_new_tip_alert(@post) if @post.valid?
     end
     
     respond_to do |format|
@@ -49,10 +50,14 @@ class PostsController < ApplicationController
       end
       
       format.js do 
-        if @post.save
-          flash.now[:notice] = @post.title + ' has been created.'
-          get_models_paginated
-          render :action => 'index', :layout => false
+        if @post.save          
+          if params[:for] == 'tip'
+            render :json => { :success => true, :data => "Thanks for sharing your tip! We'll put it up as soon as we can." }
+          else
+            flash.now[:notice] = @post.title + ' has been created.'
+            get_models_paginated
+            render :action => 'index', :layout => false
+          end
         else
           flash.now[:error] = model_errors(@post)
           render :action => 'edit', :layout => false

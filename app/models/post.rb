@@ -23,14 +23,13 @@ class Post < ActiveRecord::Base
   end
   
   def self.published_tips
-    self.tagged_with(:tip).select(&:published)
+    self.tagged_with(:tip).select(&:published).sort_by(&:updated_at)
   end
   
   # Instance Methods
   
-  def Xto_param
-    #raise self.pretty_inspect
-    #"#{id}-#{title.parameterize}"
+  def to_param
+    "#{id}-#{self.title.parameterize}"
   end
   
 end
