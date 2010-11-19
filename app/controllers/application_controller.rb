@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   
   # for the SharedModelMethod module
   # TODO: move this into a theme config or something since not all layouts have all regions
-  $regions    = [:header, :content_bottom, :column_5, :footer]
+  $regions    = [:header, :content_bottom, :column_5, :footer, :head_bar]
   
   # for the virtual forms, build forms
   $_actions     = [:index, :show, :create, :update]

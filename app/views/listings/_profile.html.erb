@@ -2,35 +2,108 @@
 <a name="top" id="top"></a>
 
 <div id="type-one-r-col">
+	
   <div id="type-three-r-col-in">
     
-    <div id="<%= in_mode?('edit') ? 'ov-header' : 'sl-header' %>">
-      <h2><%= selective_abbrev(@listing.title).titleize %> <%= ' in <span class="city-name-heading">'+ (@listing.city_and_state * ', ') + '</span>' unless @listing.map.lat.nil? %></h2>
-      
-		<% if in_edit_mode? %>
-			<p class="editing-btn">
-			  Facility edit mode
-			  <%= hidden_field_tag 'client_id', @listing.client.id %>
-			  <%= hidden_field_tag 'listing_id', @listing.id %>
-			</p>
-		<% else %>
-			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@search) %></p>
-		<% end %>
+      <%= render_hints_for :info_tabs %>
+		<% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
+		    <div id="sl-tabs">
+		      <div id="sl-tabs-in" class="tabular_content">
+		        <ul id="sl-tabs-nav" class="tabular">
+					<%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
+					<%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
+					<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
+					<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
+		          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+					<% if @listing.premium? %><div id="sl-phone">Call (561) 342-1984</div><% end %>
+		        </ul>
+		        <!-- tab content -->
+				<div id="sl-tabs-overview" class="tab_content">
+					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+					<div id="ratings">Rating: <img src="/images/ui/storagelocator/rating-stars.png" /></div>
+					<div id="sl-intro">
+						<div id="inner">
+							<div id="sl-special">
+								<h3>Thanksgiving Day Special <br /><span>25% Off</span><br /> on all Packing Supplies</h3><p><a href="">Print</a> coupon and bring it in, or select it if you <a href="">Rent Online</a>.</p>
+							</div>
+							<div id="sl-descript">
+								<p>Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up latter for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</p>
+							</div>
+						</div>
+						<div id="sl-photos">
+							<img src="/images/ui/storagelocator/temp-images/facility-picture.png" />
+							<div id="previews">
+								<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png" /></a>
+								<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png" /></a>
+								<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png" /></a>
+								<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png" /></a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+				<%= render :partial => 'hours' if in_edit_mode? %>
+				<%= render :partial => 'big_map' if in_edit_mode? %>
+		        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+		      </div>
+		    </div>
+		<% end %>	
 		
-      <div class="clear"></div>
-    </div>
-   
-	<% if in_mode? 'show' %>
-		<div id="ls_top">
-			<% if listing_distance_from %>
-				<p class="sl-dist left">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
-			<% end %>
-			
-			<% if @listing.premium? %>
-				<p class="sl-phone right">Call: 1 (800) 180-0180</p>
-			<% end %>
+		<div id="rent-form">
+			<h2>Rent a Unit</h2>
+			<div id="realtime">Real-Time Storage Unit Rentals</div>
+			<div id="inner">
+				<div id="head">Use this form to rent a unit from <span><%= @listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
+				<div id="col1">
+						<div>Type: 
+							<select class="" name="unitType" id="unitType">
+								<option value="INTERIOR">Interior</option>
+								<option value="UPPER">Upper</option>
+								<option value="DRIVEUP">Drive-up</option>
+							</select>
+						</div>
+						<div>Size: 
+							<select class="" id="unitsize" name="unitsize">
+								<option value="1">Choose a size</option>
+								<option value="2">5 x 5</option>
+								<option value="3">5 x 10</option>
+								<option value="4">5 x 15</option>
+								<option value="5">10 x 10</option>
+								<option value="6">10 x 15</option>
+								<option value="7">10 x 20</option>
+								<option value="8">10 x 30</option>
+							</select>
+						</div>
+						<div>Rate: <span>$51.50/month</span></div>
+						<div>Specials:
+							<ul>
+								<li><input type="radio" value="" name="specialOffer"> First Month Free</li>
+								<li><input type="radio" value="" name="specialOffer"> 50% Off first 3 months</li>
+								<li><input type="radio" value="" name="specialOffer"> 33% Off first 6 months</li>
+								<li><input type="radio" value="" name="specialOffer"> Free Moving Truck w/unit rental*</li>
+								<li><input type="radio" value="" name="specialOffer"> 10% Off Packing Supplies</li>
+							</ul>
+						</div>
+						<div>Move in Date: <span>12/05/10</span>&nbsp;&nbsp;&nbsp;&nbsp;Through: <span>02/28/11</span></div>
+				</div>
+				<div id="col2"><img src="/images/ui/storagelocator/10x10.png" /></div>
+				<div id="col3">
+					<ul>
+						<li>Rent: <span class="grey">(2.87 x $51.50)</span> <span>$147.85</span></li>
+						<li>Special Offer: <span>-$73.93</span></li>
+						<li>Admin Fees: <span>$20.00</span></li>
+						<li>Tax: <span>$4.75</span></li>
+						<hr />
+						<li id="total">Move-In Total: <span>$92.56</span></li>
+					</ul>
+					<a href="" id="rent-btn">Rent it!</a>
+				</div>
+			</div>
 		</div>
-	<% end %>
+	
+
+   
 	
   <%= render_hints_for :listing_detail %>
 	<% unless in_mode?('show') && @web_special.nil? %>
@@ -47,49 +120,18 @@
 
 	<% if in_mode? 'show' %>
 		<div id="outer_map">
+			<div id="street-view"></div>
 			<%= render :partial => 'big_map' %>
 		</div>
-	<% end %>
-    
-  <%= render_hints_for :info_tabs %>
-	<% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
-	    <div id="sl-tabs">
-	      <div id="sl-tabs-in" class="tabular_content">
-	        <ul id="sl-tabs-nav" class="tabular">
-				<%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
-				<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
-				<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
-	          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-	          	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})"}", '#pictures', :id => 'tab_Pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
-	        </ul>
-	        <!-- tab content -->
-			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
-			<%= render :partial => 'hours' if in_edit_mode? %>
-			<%= render :partial => 'big_map' if in_edit_mode? %>
-	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-	        <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
-	      </div>
-	    </div>
 	<% end %>
      
   <%= render_hints_for :extras %>
 	<div id="listing_extras">
 	    <div id="sl-extra">
-	      <h3>Lorem ipsum heading here</h3>
-	      <p>
-	        Lorem ipsum text can go here, Lorem ipsum text can go here, Lorem ipsum text can go here...
-	      </p>
-	    </div>
-    
-	    <div id="sl-logos">
-	      <img src="/images/ui/storagelocator/test-logos.png" alt="recognitions">
+	    
 	    </div>
 	</div>
-    <div id="sl-footer">
-    	<div class="hide">
-			<span id="unit_type_labels"><%= Size.unit_type_labels * ',' %></span>
-		</div>
-    </div>
+
     
   </div>
   

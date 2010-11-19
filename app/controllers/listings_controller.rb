@@ -162,7 +162,7 @@ class ListingsController < ApplicationController
     @pictures = @listing.pictures
     @special = @listing.specials.first || @listing.specials.new
     @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
-    @facility_features = @listing.facility_features.map(&:label)
+    @facility_features = @listing.facility_features.map(&:label).reject(&:blank?)
     
     if action_name == 'edit'
       @showing = false

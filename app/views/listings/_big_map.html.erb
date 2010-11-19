@@ -1,5 +1,10 @@
-<div id="sl-tabs-map" class="tab_content">
+<div id="sl-tabs-map">
   <div id="sl-tabs-map-in">
     <%= @Gmap.div :width => '700px', :height => '360px' if @Gmap %>
+		<div class="get_dir">
+			<% form_tag '/ajax/directions', :id => 'get_dirs' do %>
+				<input type="text" value="" title="For directions enter your starting address and... " name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white submit_btn', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
+			<% end %>
+		</div>
   </div>
 </div>
