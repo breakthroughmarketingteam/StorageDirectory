@@ -51,7 +51,7 @@
 		<% end %>	
 		
 		<div id="rent-form">
-			<h2>Rent a Unit</h2>
+			<h3>Rent a Unit</h3>
 			<div id="realtime">Real-Time Storage Unit Rentals</div>
 			<div id="inner">
 				<div id="head">Use this form to rent a unit from <span><%= @listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
@@ -120,8 +120,14 @@
 
 	<% if in_mode? 'show' %>
 		<div id="outer_map">
-			<div id="street-view"></div>
-			<%= render :partial => 'big_map' %>
+			<div class="wrap1">
+				<h3>Street View</h3>
+				<div id="street-view"></div>
+			</div>
+			<div class="wrap2">
+				<h3>Location Map</h3>
+				<%= render :partial => 'big_map' %>
+			</div>
 		</div>
 	<% end %>
      
