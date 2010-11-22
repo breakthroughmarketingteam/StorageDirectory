@@ -30,7 +30,7 @@
 			<div>Specials:
 				<ul>
 					<% listing.specials.each do |special| %>
-						<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "10|percent#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
+						<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.amount}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
 					<% end %>
 				</ul>
 			</div>
@@ -42,11 +42,11 @@
 		<div class="col3">
 			<ul>
 				<li>Rent: <span class="grey">(<span class="dur">2.87</span> x <span>$</span><span class="rental_rate"></span>)</span> <span class="subtotal right">$<span></span></span></li>
-				<li>Special Offer: <span class="right">-$73.93</span></li>
-				<li>Admin Fees: <span class="right">$20.00</span></li>
-				<li>Tax: <span class="right">$4.75</span></li>
+				<li class="discount">Special Offer: <span class="right">-$<span></span></span></li>
+				<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
+				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span>4.75</span></span></li>
 				<hr />
-				<li class="total">Move-In Total: <span class="right">$92.56</span></li>
+				<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
 			</ul>
 	
 			<a href="#" class="submit_btn">Rent it!</a>

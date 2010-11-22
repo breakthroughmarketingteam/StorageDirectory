@@ -879,22 +879,35 @@ $.fn.rental_form = function() {
 			unit_type = type_select.val().toLowerCase(),
 			sizes_select = $('select[name="rental[size_id]"]', form),
 			duration = $('input[name="rental[duration]"]', form),
-			month_rate = $('.rental_rate', form);
-		
+			month_rate = $('.rental_rate', form),
+			admin_fee = parseFloat($('.admin_fee span span', form).text()),
+			tax_rate = parseFloat($('.tax', form).attr('data-tax'));
+			
 		form.bind('recalc', function() {
-			var rate = parseFloat(month_rate.text()),
+			var rate = parseFloat(month_rate.eq(0).text()),
 				dur = parseFloat($('input[name="rental[duration]"]', form).val()) || 1.0,
-				total = rate * dur,
-				special = $('input[name="rental[special_id]"]:checked', form);
+				subtotal = rate * dur,
+				total = subtotal,
+				special = $('input[name="rental[special_id]"]:checked', form),
+				tax = $('.tax span span', form);
 			
 			$('.dur', form).text(dur);
-			$('.subtotal span', form).text(total);
+			$('.subtotal span', form).text(subtotal);
 			
 			if (special.length) {
-				var calc = special.attr('data-special-calc').split('|');
-				total = special_calc(calc, total)
+				var calc = special.attr('data-special-calc').split('|'),
+					discount = special_calc(calc, subtotal, parseFloat(duration.val()), parseFloat(month_rate.eq(0).text()));
+				
+				$('.discount span span', form).text(discount);
+				total -= discount;
 			}
-			//console.log(rate, dur);
+			
+			if (!isNaN(admin_fee)) total += admin_fee;
+			if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
+			
+			total += tax_amt;
+			tax.text(tax_amt.toFixed(2));
+			$('.total span span', form).text(total.toFixed(2));
 		});
 		
 		sizes_select.change(function() {
@@ -918,8 +931,26 @@ $.fn.rental_form = function() {
 	});
 }
 
-function special_calc(calc, total) {
-	return total;
+function special_calc(calc, total, duration, month_rate) {
+	var discount = 0;
+	
+	switch (calc[1]) {
+		case 'month' :
+			discount = month_rate * parseFloat(calc[0]);
+		break;
+		case 'percent' :
+			// limit percent off to this number of months if the duration is greater than the limit
+			if (calc[2] && duration > parseInt(calc[2])) {
+				var temp_total = parseInt(calc[2]) * month_rate;
+				discount = temp_total * parseFloat(calc[0]);
+				
+			} else discount = total * parseFloat(calc[0]);
+		break;
+		default : // fixed dollar amount off total
+			discount = parseFloat(calc[0]);
+	}
+	
+	return discount.toFixed(2);
 }
 
 function set_size_select(select, unit_type) {

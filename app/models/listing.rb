@@ -152,6 +152,14 @@ class Listing < ActiveRecord::Base
     self.specials.last
   end
   
+  def admin_fee
+    20.00
+  end
+  
+  def tax_rate
+    0.06
+  end
+  
   def get_searched_size(search)
     dims = search.unit_size.split('x')
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
