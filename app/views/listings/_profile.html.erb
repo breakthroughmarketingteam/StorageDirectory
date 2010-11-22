@@ -2,37 +2,38 @@
 <a name="top" id="top"></a>
 
 <div id="type-one-r-col">
-  <div id="type-three-r-col-in">
-    
-    <div id="<%= in_mode?('edit') ? 'ov-header' : 'sl-header' %>">
-      <h2><%= selective_abbrev(@listing.title).titleize %> <%= ' in <span class="city-name-heading">'+ (@listing.city_and_state * ', ') + '</span>' unless @listing.map.lat.nil? %></h2>
-      
-		<% if in_edit_mode? %>
-			<p class="editing-btn">
-			  Facility edit mode
-			  <%= hidden_field_tag 'client_id', @listing.client.id %>
-			  <%= hidden_field_tag 'listing_id', @listing.id %>
-			</p>
-		<% else %>
-			<p class="back-btn"><%= link_to 'Back to Results', search_back_path(@search) %></p>
-		<% end %>
-		
-      <div class="clear"></div>
-    </div>
-   
-	<% if in_mode? 'show' %>
-		<div id="ls_top">
-			<% if listing_distance_from %>
-				<p class="sl-dist left">We are just <span id="rslt-number"><span><%= listing_distance_from %></span></span> miles from you!</p>
-			<% end %>
-			
-			<% if @listing.premium? %>
-				<p class="sl-phone right">Call: 1 (800) 180-0180</p>
-			<% end %>
-		</div>
-	<% end %>
 	
-  <%= render_hints_for :listing_detail %>
+  <div id="type-three-r-col-in">
+	<div id="hed">
+    	<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+		<div id="ratings">Rating: <%= ratings_for @listing %></div>
+	</div>
+	
+    <%= render_hints_for :info_tabs %>
+	<% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
+	    <div id="sl-tabs">
+	      <div id="sl-tabs-in" class="tabular_content">
+	        <ul id="sl-tabs-nav" class="tabular">
+				<%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
+				<%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
+				<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
+				<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
+	          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+				<% if @listing.premium? %><div id="sl-phone">Call (561) 342-1984</div><% end %>
+	        </ul>
+	        <!-- tab content -->
+			<%= render :partial => 'overview' %>
+			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+			<%= render :partial => 'hours' if in_edit_mode? %>
+			<%= render :partial => 'big_map' if in_edit_mode? %>
+	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+	      </div>
+	    </div>
+	<% end %>	
+		
+	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => (@listing.get_searched_size(@search) || @listing.sizes.first) } %>
+	
+  	<%= render_hints_for :listing_detail %>
 	<% unless in_mode?('show') && @web_special.nil? %>
 		<div id="listing_detail">
 			<%= render :partial => 'web_specials/web_special' %>
@@ -47,50 +48,17 @@
 
 	<% if in_mode? 'show' %>
 		<div id="outer_map">
+			<div id="street-view"></div>
 			<%= render :partial => 'big_map' %>
 		</div>
 	<% end %>
-    
-  <%= render_hints_for :info_tabs %>
-	<% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
-	    <div id="sl-tabs">
-	      <div id="sl-tabs-in" class="tabular_content">
-	        <ul id="sl-tabs-nav" class="tabular">
-				<%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
-				<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
-				<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
-	          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-	          	<%= content_tag :li, link_to("Pictures#{" (#{@pictures.size})"}", '#pictures', :id => 'tab_Pictures', :rel => 'sl-tabs-pict') unless @pictures.empty? && @showing %>
-	        </ul>
-	        <!-- tab content -->
-			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
-			<%= render :partial => 'hours' if in_edit_mode? %>
-			<%= render :partial => 'big_map' if in_edit_mode? %>
-	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-	        <%= render :partial => 'pictures' unless @pictures.empty? && @showing %>
-	      </div>
-	    </div>
-	<% end %>
      
-  <%= render_hints_for :extras %>
+  	<%= render_hints_for :extras %>
 	<div id="listing_extras">
 	    <div id="sl-extra">
-	      <h3>Lorem ipsum heading here</h3>
-	      <p>
-	        Lorem ipsum text can go here, Lorem ipsum text can go here, Lorem ipsum text can go here...
-	      </p>
-	    </div>
-    
-	    <div id="sl-logos">
-	      <img src="/images/ui/storagelocator/test-logos.png" alt="recognitions">
+	    
 	    </div>
 	</div>
-    <div id="sl-footer">
-    	<div class="hide">
-			<span id="unit_type_labels"><%= Size.unit_type_labels * ',' %></span>
-		</div>
-    </div>
-    
+	
   </div>
-  
 </div>

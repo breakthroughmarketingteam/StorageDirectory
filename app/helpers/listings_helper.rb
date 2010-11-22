@@ -65,7 +65,7 @@ module ListingsHelper
 		  html += '<div class="access_hours">'
 		  html += '<p class="info_heading">Access Hours</p>'
 			if listing.access_24_hours
-				html += '<p class="grey">Every day, 24 hours</p>'
+				html += '<p>Every day, 24 hours</p>'
 			else
 				html += '<ul class="greylist">'
 					html += render(:partial => listing.access_hours)
@@ -77,7 +77,7 @@ module ListingsHelper
 		  html += '<div class="office_hours">'
 		  html += '<p class="info_heading">Office Hours</p>'
 			if listing.office_24_hours
-				html += '<p class="grey">Every day, 24 hours</p>'
+				html += '<p>Every day, 24 hours</p>'
 			else
 				html += '<ul class="greylist">'
 					html += render(:partial => listing.office_hours)

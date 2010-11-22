@@ -1,4 +1,4 @@
-<% form_for virtual_form_path(form), :url => form.get_url_hash do |f| %>
+<% form_for virtual_form_path(form), :url => form.get_url_hash, :html => { :id => "form_#{form.controller}" } do |f| %>
 	<fieldset id="<%= form.field_set_id %>" class="virtual_form">
 		<% if form.show_title? %>
 		  <legend><%= form.name %></legend>

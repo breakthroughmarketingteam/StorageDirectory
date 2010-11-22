@@ -132,6 +132,8 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('.rental_form').rental_form();
+	
 	// narrow search form sliders
 	$('.slider').each(function(){
 		var $this = $(this),
@@ -867,4 +869,73 @@ function build_gmap_src(options) {
 					 '&amp;country=US'+
 					 '&amp;output=js';
 	return script_src;
+}
+
+// make an auto updating form, when values change, update the total
+$.fn.rental_form = function() {
+	return this.each(function() {
+		var form = $(this),
+			type_select = $('select[name=unit_type]', form),
+			unit_type = type_select.val().toLowerCase(),
+			sizes_select = $('select[name="rental[size_id]"]', form),
+			duration = $('input[name="rental[duration]"]', form),
+			month_rate = $('.rental_rate', form);
+		
+		form.bind('recalc', function() {
+			var rate = parseFloat(month_rate.text()),
+				dur = parseFloat($('input[name="rental[duration]"]', form).val()) || 1.0,
+				total = rate * dur,
+				special = $('input[name="rental[special_id]"]:checked', form);
+			
+			$('.dur', form).text(dur);
+			$('.subtotal span', form).text(total);
+			
+			if (special.length) {
+				var calc = special.attr('data-special-calc').split('|');
+				total = special_calc(calc, total)
+			}
+			//console.log(rate, dur);
+		});
+		
+		sizes_select.change(function() {
+			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
+			form.trigger('recalc');
+		});
+		
+		set_size_select(sizes_select, unit_type);
+		type_select.change(function() {
+			set_size_select(sizes_select, $(this).val().toLowerCase());
+		});
+		
+		$('input[name="rental[special_id]"]', form).click(function() {
+			form.trigger('recalc');
+		});
+		
+		duration.keyup(function() {
+			if (this.value != '' && !isNaN(this.value))
+				form.trigger('recalc');
+		});
+	});
+}
+
+function special_calc(calc, total) {
+	return total;
+}
+
+function set_size_select(select, unit_type) {
+	var show_count = 0;
+	
+	select.children().each(function() {
+		var $this = $(this);
+		
+		if (unit_type != $this.attr('data-unit-type').toLowerCase()) 
+			$this.hide();
+		else {
+			$this.show();
+			if (show_count == 0) select.val($this.val());
+			show_count++;
+		}
+	});
+	
+	select.change();
 }

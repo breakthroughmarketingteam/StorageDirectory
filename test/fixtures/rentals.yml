@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tenant_id: 1
+  listing_id: 1
+  size_id: 1
+  special_id: 1
+  move_in_date: 2010-11-22 13:52:33
+  duration: MyString
+
+two:
+  tenant_id: 1
+  listing_id: 1
+  size_id: 1
+  special_id: 1
+  move_in_date: 2010-11-22 13:52:33
+  duration: MyString

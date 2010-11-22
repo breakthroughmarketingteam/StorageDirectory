@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_filter :get_comment, :except => [:index, :new, :create]
+  before_filter :get_comment, :except => [:index, :new, :create, :contact]
   
   def index
     @comments = Comment.all
@@ -49,6 +49,18 @@ class CommentsController < ApplicationController
       redirect_back_or_default(comments_path)
     else
       render :action => 'edit'
+    end
+  end
+  
+  def contact
+    @page = Page.find_by_title 'Contact Us'
+    @comment = @page.comments.build params[:comment]
+    
+    if @comment.save
+      Notifier.deliver_new_contact_alert @comment, @page
+      render :json => { :success => true, :data => render_to_string(:partial => '/comments/contacted') }
+    else
+      render :json => { :success => false, :data => model_errors(@comment) }
     end
   end
 

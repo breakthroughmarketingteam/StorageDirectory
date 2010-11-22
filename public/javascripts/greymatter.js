@@ -28,6 +28,8 @@ $(function(){
 	$('.shimmy').shimmy();
 	
 	$('.focus_onload').eq(0).focus();
+	// highlight text within a text field or area when focused
+	$('.click_sel').live('focus', function() { $(this).select() });
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
@@ -140,7 +142,10 @@ $(function(){
 			
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
-				if (status == 'success') $.bindPlugins();
+				if (status == 'success') {
+					$.bindPlugins();
+					fillInFormFieldSelectLists($('#form_controller', '#FormsForm').val());
+				}
 				else $('#ajax_wrap_inner').html(response);
 				
 				$(this).removeClass('loading').children().hide().fadeIn('fast');
@@ -304,7 +309,7 @@ $(function(){
 		} else scoping_fields.hide();
 		
 		// grab model instances that are of the selected class
-		$('.scope_dropdown', '#scope_fields').change(function(){
+		$('.scope_dropdown', '#scope_fields').live('change', function(){
 			var $this = $(this);
 			
 			if ($this.val() != '') { // retrieve all models of this class
@@ -326,13 +331,13 @@ $(function(){
 		}); // END .scope_dropdown.change()
 		
 		// get the attributes of the resource selected from #form_controller in the form new/edit page
-		$('#form_controller', '#FormsForm').change(function(){
+		$('#form_controller', '#FormsForm').live('change', function(){
 			fillInFormFieldSelectLists($(this).val()); 
 		});
 		
 		// create a custom event on the select lists so that when they finish loading the options, we can select the
 		// field's field_name that matches in the list
-		$('.field_attr_name', '#form_builder').bind('filled', function(){
+		$('.field_attr_name', '#form_builder').live('filled', function(){
 			$('.field_attr_name', '#form_builder').each(function(){
 				var $this = $(this),
 						name = $this.prev('span.field_name').text(); // we stored the field_name value in a hidden span
@@ -1013,18 +1018,20 @@ $.bindPlugins = function() {
 // fill up the field_name select tag in the forms new/edit page
 function fillInFormFieldSelectLists(resource) {
 	var $field_name_selects = $('.field_attr_name', '#form_builder');
-			
-	// show progress indicator in field name select lists
-	$.injectOptionsInSelectLists($field_name_selects, '<option>Loading..</option>');
 	
-	// get the options and then inject them as option tags into all the select lists
-	$.getModelAttributes(resource, function(attributes){
-		$.injectOptionsInSelectLists($field_name_selects, $.option_tags_from_array(attributes));
-		
-		// in the form edit page, triggering this custom event invokes the function that selects the correct field name
-		// in each of the fields field_name select list
-		$field_name_selects.trigger('filled');
-	});
+	if ($field_name_selects.length) {
+		// show progress indicator in field name select lists
+		$.injectOptionsInSelectLists($field_name_selects, '<option>Loading..</option>');
+
+		// get the options and then inject them as option tags into all the select lists
+		$.getModelAttributes(resource, function(attributes){
+			$.injectOptionsInSelectLists($field_name_selects, $.option_tags_from_array(attributes));
+
+			// in the form edit page, triggering this custom event invokes the function that selects the correct field name
+			// in each of the fields field_name select list
+			$field_name_selects.trigger('filled');
+		});
+	}
 }
 
 function capitalize(string) {

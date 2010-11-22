@@ -9,14 +9,7 @@
 			<li>Rating&nbsp;&nbsp;&nbsp;</li>
 			<li class="five-star"><%= ratings_for tip, :dimension => :usefulness, :small => true %></li>
 			<li class="share_label">Share: </li>
-			<li class="share">
-				<a rel="nofollow" href="#"class="facebook_share"><span class="hide">Facebook</span></a>
-				<a rel="nofollow" href="#" target="_blank" class="twitter"><span class="hide">Twitter</span></a>
-				<a rel="nofollow" href="#" target="_blank" class="delicious"><span class="hide">Delicious</span></a>
-				<a rel="nofollow" href="#" target="_blank" class="socialmediaone"><span class="hide">Another</span></a>
-				<a rel="nofollow" href="#" target="_blank" class="socialmediatwo"><span class="hide">Another</span></a>
-				<a rel="nofollow" href="#" target="_blank" class="socialmediathree"><span class="hide">Another</span></a>
-			</li>
+			<li class="share addthis_toolbox addthis_default_style"></li>
 			<% if tip.respond_to? :display_tag_list_with_links %>
 				<li class="tags">Tags: <%= tip.display_tag_list_with_links %></li>
 			<% end %>

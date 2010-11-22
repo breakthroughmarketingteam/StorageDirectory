@@ -524,11 +524,50 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	// build the addThis sharing buttons for each tip
+	var sharing_buttons = ['email', 'facebook', 'twitter', 'digg', 'print'],
+		addthis_main_btn = '<a href="http://www.addthis.com/bookmark.php?v=250&username=mastermindxs" class="addthis_button_compact">Share</a><span class="addthis_separator">|</span>';
+	$('.tip_in', '#tips-wrap').each(function() {
+		if (typeof addthis == 'object') {
+			var share_wrap = $('.addthis_toolbox', this).append(addthis_main_btn),
+				tip_link = $('h3 a', this),
+				share_url = tip_link.attr('href'),
+				share_title = tip_link.text();
+			
+			$.each(sharing_buttons, function() {
+				share_wrap.append('<a class="addthis_button_'+ this +'"></a>');
+			});
+			
+			addthis.toolbox(share_wrap[0], { 'data_track_clickback': true }, { url: share_url, title: share_title });
+		}
+	});
+	
 	$('.facebook_share', '#tips-wrap').live('click', function() {
 		var tip = $(this).parents('.tip_in'),
 			link = $('h3 a', tip), u = encodeURIComponent(link.attr('href')), t = encodeURIComponent(link.text());
 		
 		window.open('http://www.facebook.com/sharer.php?u='+ u, 'sharer', 'toolbar=0,status=0,width=626,height=436');
+		return false;
+	});
+	
+	$('#form_comments', '#column_5').submit(function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $.new_ajax_loader('before', $('input[type=submit]', form));
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			ajax_loader.show();
+			
+			$.post('/comments/contact', form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					form.html(data);
+				});
+				
+				ajax_loader.hide();
+				form.data('saving', false);
+			});
+		}
+		
 		return false;
 	});
 	

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116201422) do
+ActiveRecord::Schema.define(:version => 20101122210541) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -562,6 +562,17 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
   add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
   add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
 
+  create_table "rentals", :force => true do |t|
+    t.integer  "tenant_id"
+    t.integer  "listing_id"
+    t.integer  "size_id"
+    t.integer  "special_id"
+    t.datetime "move_in_date"
+    t.string   "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reservations", :force => true do |t|
     t.integer  "listing_id"
     t.integer  "reserver_id"
@@ -662,6 +673,9 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.integer  "position",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "amount"
+    t.string   "function"
+    t.integer  "month_limit"
   end
 
   add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"

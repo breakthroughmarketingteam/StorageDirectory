@@ -1,46 +1,44 @@
 <div id="narrow-box">
-  	<div id="sb-title">
-		<h2>Storage Facility</h2>
-	</div>
-
 	<div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
 
 	<%= display_logo @listing, :id => 'listing_img' %>
 	
 	<ul>
-		<li id="location_display" class="stack">
+		<li id="location_display" >
 			<p class="info_heading">Location</p>
 			
-			<div class="address grey">
+			<div class="address">
 				<span rel="address" class="block value"><%= edit_listing_address @listing %></span>
 				<% unless @listing.map.nil? %>
 					<span rel="city" class="value"><%= @listing.map.city %></span>, <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
 				<% else %>
 					<%= edit_listing_city_state_zip @listing %>
 				<% end %>
+				<% if @listing.premium? %><div id="sl-phone">(561) 342-1984</div><% end %>
 			</div>
 		</li>
 		<% if @listing.premium? %>
-			<li id="display_features" class="stack">
+			<li id="display_hours" >
+				<%= display_listing_hours(@listing) %>
+			</li>
+			<li id="display_features" >
 				<% unless @facility_features.empty? %>
 				<div class="facility_features">
 					<p class="info_heading">Features</p>
 					<ul class="greylist">
 						<% @facility_features.each do |feature| %>
-							<li><%= feature %></li>
+							<li class="feature_<%= feature.parameterize %>"><%= feature %></li>
 						<% end %>
 					</ul>
 				</div>
 				<% end %>
-			</li>
-			<li id="display_hours" class="stack">
-				<%= display_listing_hours(@listing) %>
 			</li>
 		<% else %>
 			<li>
 				<%= claim_listing_link(@listing) %>
 			</li>
 		<% end %>
+		
 	</ul>
 	
 	<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>

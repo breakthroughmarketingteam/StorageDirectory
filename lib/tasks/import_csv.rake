@@ -142,8 +142,8 @@ namespace :import do
     save_to_csv(@failed_rows, 'failed_records') and exit # whoopie!
   end
   
-  desc 'Import moving companies from a csv file'
-  task :moving_companies, :file_name do |t, args|
+  desc 'Import from a csv file'
+  task :custom, :file_name do |t, args|
     records = load_from_csv args.file_name
     filtered = []; total = records.size
     
