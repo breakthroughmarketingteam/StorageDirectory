@@ -31,7 +31,7 @@
 	    </div>
 	<% end %>	
 		
-	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => (@listing.get_searched_size(@search) || @listing.sizes.first) } %>
+	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => (@listing.get_searched_size(@search) || @listing.sizes.first) } unless @listing.sizes.empty? %>
 	
   	<%= render_hints_for :listing_detail %>
 	<% unless in_mode?('show') && @web_special.nil? %>
