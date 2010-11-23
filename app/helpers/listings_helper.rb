@@ -148,7 +148,7 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page + 1
-      html << "<form action='/#{@search.storage_type.parameterize}' method='get' class='more_results_form'>" + 
+      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state}/#{@search.city}' method='get' class='more_results_form'>" + 
         link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
         "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
         "<input class='hidden' name='page' value='#{page + 1}' />" + 

@@ -8,4 +8,9 @@ module ClientsHelper
     end
   end
   
+  def disabled_and_predef_specials
+    predef = PredefinedSpecial.all :conditions => ['id NOT IN (?)', @client.predef_special_assigns.map(&:predefined_special_id)]
+    @client.disabled_specials | predef
+  end
+  
 end

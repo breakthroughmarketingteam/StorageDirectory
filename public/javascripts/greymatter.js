@@ -517,10 +517,10 @@ $.toggleAction = function(href, scroll_to_it) {
 }
 
 // first implemented for the sortable nav bar to update position via ajax
-$.updateModels = function(e, ui) {
+$.updateModels = function(e, ui, callback) {
 	var list_items  = ui.item.parent().children(),
-		$this		= $(ui.item),
-		data 		= '';
+		$this		= ui.item,
+		query 		= '';
 			
 	// build query string
 	$(list_items).each(function(i){ // html element id is <ModelClass>_<int ID>
@@ -528,13 +528,14 @@ $.updateModels = function(e, ui) {
 			model_id 	= this.id.split('_')[1],
 			model_attr 	= $this.attr('rel'); // attribute to update
 				
-		data += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
-				'&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
+		query += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
+			     '&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
 	});
 	
-	$.post('/ajax/update_many', data, function(response){
-		$.with_json(response, function(data){
-			$this.effect('bounce', {}, 200);
+	$.post('/ajax/update_many', query, function(response){
+		$.with_json(response, function(data) {
+			if (typeof callback == 'function') callback.call(this, data);
+			else $this.effect('bounce', {}, 200);
 		});
 	}, 'json');
 }

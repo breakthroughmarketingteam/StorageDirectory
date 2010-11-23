@@ -135,6 +135,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :suggestions
   map.resources :reservations
   map.resources :rentals
+  map.resources :specials
+  map.resources :predefined_specials
+  map.resources :predef_special_assigns
   map.resources :info_requests
   map.resources :payments
   map.resources :facility_features

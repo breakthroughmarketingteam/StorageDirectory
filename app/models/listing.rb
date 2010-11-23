@@ -8,7 +8,6 @@ class Listing < ActiveRecord::Base
   has_one  :map, :dependent => :destroy
   accepts_nested_attributes_for :map
   
-  has_many :specials       , :dependent => :destroy, :order => 'position'
   has_many :pictures       , :dependent => :destroy
   has_many :reservations   , :dependent => :destroy
   has_many :rentals        , :dependent => :destroy
@@ -68,7 +67,7 @@ class Listing < ActiveRecord::Base
   def self.find_by_location(search)
     # build the options for the model find method
     options = {
-      :include => [:map, :specials, :sizes, :pictures, :reviews],
+      :include => [:map, :sizes, :pictures, :reviews],
       :within  => search.within,
       :origin  => search.lat_lng
     }
@@ -125,8 +124,8 @@ class Listing < ActiveRecord::Base
   # Instance Methods
   
   def display_description
-    global_desc = self.client.listing_description
-    listing_desc = self.listing_description
+    global_desc = self.client.listing_description if self.client
+    listing_desc = self.listing_description if self.listing_description
     desc = nil
     
     case global_desc.show_in when 'none'
@@ -140,16 +139,13 @@ class Listing < ActiveRecord::Base
     (desc || listing_desc).try :description
   end
   
-  def display_special
-    self.special && self.special.title ? self.special.title : 'No Specials'
-  end
-  
   def web_special
     self.web_specials.last
   end
   
-  def special
-    self.specials.last
+  def specials
+    return [] if self.client.nil?
+    self.client.specials
   end
   
   def admin_fee
@@ -161,6 +157,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_searched_size(search)
+    return self.sizes.first if search.nil?
     dims = search.unit_size.split('x')
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
   end

@@ -1,0 +1,17 @@
+<fieldset class="specials_fields">
+	<div>
+		<%= f.text_field :title, :class => 'required hintable small', :title => 'Your Special' %>
+	</div>
+	<div class="right_space">
+		<%= f.label :value %>
+		<%= f.text_field :value, :class => 'required tiny', :maxlength => 3 %>
+	</div>
+	<div class="right_space">
+		<%= f.label :function, 'Type' %>
+		<%= f.select :function, PredefinedSpecial.function_types, :class => 'required' %>
+	</div>
+	<div>
+		<%= f.label :month_limit, 'Limit' %>
+		<%= f.text_field :month_limit, :class => 'required tiny', :maxlength => 2 %>
+	</div>
+</fieldset>

@@ -1289,7 +1289,33 @@ $(document).ready(function() {
 		});
 	}
 	
-	
+	$( "#predef_specials, #active_specials" ).sortable({
+		connectWith: '.con',
+		placeholder: 'ui-state-highlight',
+		helper: 'clone',
+		update: function(e, ui) {
+			if (ui.sender) {
+				if (e.target.id == 'active_specials') {
+					var predef_id = ui.item.attr('id').replace('PredefinedSpecial_', ''),
+						form = $('#new_predef_special_assign', '#ov-specials').append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
+					
+					$.post(form.attr('action'), form.serialize(), function(response) {
+						$.with_json(response, function(data) {
+							ui.item.effect('highlight', 1000);
+						});
+					}, 'json');
+					
+				} else {
+					
+				}
+			} else if (e.target.id == 'active_specials') {
+				$.updateModels(e, ui, function() {
+					ui.item.effect('highlight', 1000);
+				});
+			}
+		}
+	}).disableSelection();
+
 		
 	// TODO: refactor all button events that do ajax calls
 	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content

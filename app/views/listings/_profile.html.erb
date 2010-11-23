@@ -25,31 +25,28 @@
 			<%= render :partial => 'overview' %>
 			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
 			<%= render :partial => 'hours' if in_edit_mode? %>
-			<%= render :partial => 'big_map' if in_edit_mode? %>
+			<%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} if in_edit_mode? %>
 	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
 	      </div>
 	    </div>
 	<% end %>	
-		
-	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => (@listing.get_searched_size(@search) || @listing.sizes.first) } unless @listing.sizes.empty? %>
+	
+	<% if in_mode? 'show' %>
+		<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
+	<% end %>
 	
   	<%= render_hints_for :listing_detail %>
 	<% unless in_mode?('show') && @web_special.nil? %>
 		<div id="listing_detail">
 			<%= render :partial => 'web_specials/web_special' %>
-		
-			<% if in_edit_mode? %>
-				<%= render :partial => 'edit_detail' %>
-			<% else %>
-				<%# render :partial => 'pictures/thumb_gallery', :locals => { :images => @listing.pictures.map(&:facility_image) } %>
-			<% end %>
+			<%= render :partial => 'edit_detail' if in_edit_mode? %>
 	    </div>
 	<% end %>
 
 	<% if in_mode? 'show' %>
 		<div id="outer_map">
-			<div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
 			<%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} %>
+			<div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
 		</div>
 		<%= print_link '#outer_map', '#', :id => 'single_print' %>
 	<% end %>

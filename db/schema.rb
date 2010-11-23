@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101122210541) do
+ActiveRecord::Schema.define(:version => 20101123203618) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -534,6 +534,24 @@ ActiveRecord::Schema.define(:version => 20101122210541) do
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
+  create_table "predef_special_assigns", :force => true do |t|
+    t.integer  "predefined_special_id"
+    t.integer  "client_id"
+    t.integer  "position",              :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "predefined_specials", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "value"
+    t.string   "function"
+    t.integer  "month_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "promos", :force => true do |t|
     t.integer  "special_id"
     t.text     "Description"
@@ -664,21 +682,19 @@ ActiveRecord::Schema.define(:version => 20101122210541) do
   add_index "sizes", ["listing_id", "price"], :name => "index_sizes_on_listing_id_and_price"
 
   create_table "specials", :force => true do |t|
-    t.integer  "listing_id"
+    t.integer  "client_id"
     t.string   "title"
     t.string   "description"
-    t.string   "content"
-    t.string   "code"
     t.boolean  "enabled"
     t.integer  "position",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "amount"
+    t.float    "value"
     t.string   "function"
     t.integer  "month_limit"
   end
 
-  add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"
+  add_index "specials", ["client_id", "title"], :name => "index_specials_on_listing_id_and_title"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -786,6 +802,7 @@ ActiveRecord::Schema.define(:version => 20101122210541) do
     t.string   "last_name"
     t.string   "perishable_token",                :null => false
     t.text     "report_recipients"
+    t.boolean  "pro_rated"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
