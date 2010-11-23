@@ -9,10 +9,10 @@
 			</div>
 		</div>
 		<div id="sl-photos">
-			<%= image_tag @listing.pictures.first.image.url(:medium), :id => 'main_pic' %>
+			<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' %>
 			<div id="previews">
 				<% @listing.pictures.each do |picture| %>
-					<%= link_to image_tag(picture.image.url(:thumb)) %>
+					<%= link_to image_tag(picture.image.url(:thumb), :id => "Picture_#{picture.id}") %>
 				<% end %>
 			</div>
 		</div>

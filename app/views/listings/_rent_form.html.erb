@@ -27,14 +27,15 @@
 				<%= f.label :duration, 'Duration (months): ' %><%= f.text_field :duration, :value => 1, :class => 'required tiny click_sel', :maxlength => 2 %>
 			</div>
 			
-			<div>Specials:
-				<ul>
-					<% listing.specials.each do |special| %>
-						<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.amount}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
-					<% end %>
-				</ul>
-			</div>
-			
+			<% unless listing.specials.empty? %>
+				<div>Specials:
+					<ul>
+						<% listing.specials.each do |special| %>
+							<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.amount}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
 		</div>
 	
 		<div class="col2"><img src="/images/ui/storagelocator/10x10.png" /></div>

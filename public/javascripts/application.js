@@ -1044,8 +1044,6 @@ $(document).ready(function() {
 		else fields.attr('disabled', false);
 	});
 	
-	
-	
 	$('.day_closed', '#business_hours_form').live('change', function(){
 		var check = $(this),
 			all_day_check = $('.all_day_check', check.parents('.hours_display'));
@@ -1164,21 +1162,22 @@ $(document).ready(function() {
 	});
 	
 	// change big-pic when thumb is hovered
-	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
+	$('img', '#sl-photos #previews').live('mouseover', function(){
 		if ($(this).hasClass('loading')) return false;
-		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
-		if (big_pic.length == 0) return false;
 		
+		var main_pic = $('.main_pic', '#sl-photos');
+		console.log(main_pic)
+		if (main_pic.length == 0) return false;
 		
-		$('img', '#sl-tabs-pict-gall').removeClass('active')
+		$('img', '#sl-photos #previews').removeClass('active');
 		var thumb = $(this),
 			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
 		
 		thumb.addClass('active');
-		big_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
+		main_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
 	});
 	
-	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
+	$('.delete_link', '#sl-photos #previews').live('click', function(){
 		var self = $(this);
 		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
 			self.data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
@@ -1188,10 +1187,10 @@ $(document).ready(function() {
 
 			$.post(self.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
 				$.with_json(response, function(data){
-					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
+					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-photos #previews').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
-					if ($('img', '#sl-tabs-pict-gall').length == 1) $('.big-pic', '#sl-tabs-pict-in').eq(0).fadeOut(900, function(){ $(this).remove() });
+					if ($('img', '#sl-photos #previews').length == 1) $('.main_pic', '#sl-photos').eq(0).fadeOut(900, function(){ $(this).remove() });
 					
 					update_info_tab_count('Pictures', -1);
 				});
@@ -1289,6 +1288,8 @@ $(document).ready(function() {
 			return false;
 		});
 	}
+	
+	
 		
 	// TODO: refactor all button events that do ajax calls
 	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content

@@ -167,12 +167,12 @@ class Listing < ActiveRecord::Base
   
   def sizes_for_select_tag(size = nil)
     options = []
-    self.sizes.each { |s| options << "<option value='#{s.id}' data-unit-type='#{s.title.downcase}' data-unit-price='#{s.dollar_price}'#{ ' selected="selected"' if size.id == s.id }>#{s.display_dimensions}</option>" }
+    self.sizes.sort_by{ |s| s.width * s.length }.each { |s| options << "<option value='#{s.id}' data-unit-type='#{s.title.downcase}' data-unit-price='#{s.dollar_price}'#{ ' selected="selected"' if size.id == s.id }>#{s.display_dimensions}</option>" }
     options
   end
   
   def unit_types_for_select
-    self.sizes.all(:select => 'DISTINCT title').map { |s| [s.title, s.title] }
+    self.sizes.all(:select => 'DISTINCT title', :order => 'title').map { |s| [s.title, s.title] }
   end
   
   def get_partial_link(name)

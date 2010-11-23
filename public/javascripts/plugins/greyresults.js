@@ -410,10 +410,10 @@ $(function(){
 	
 	$('#get_dirs').live('submit', function() {
 		var form = $(this),
-			map_container = form.parents('.google_map'),
-			map_wrap = $('.map_wrap', map_container),
+			map_container = form.parents('#'+ form.attr('data-container')),
+			map_wrap = $('#'+ form.attr('data-wrap'), map_container),
 			from = $('#from_address', form).val(), 
-			to = $('.rslt-contact', form.parents('.listing')).text().replace(new RegExp("\\n\\t+", 'g'), ' ').trim(),//map_wrap.attr('rel'),
+			to = form.attr('data-to-addr'),
 			dirs = $('<div id="dirs" />');
 		
 		map_container.after(dirs);
@@ -423,6 +423,8 @@ $(function(){
 			'query': from + ' to '+ to,
 			'panel': $('#dirs', map_container.parent()),
 			'locale': 'en_US'
+		}, function() {
+			$('.ps', map_container.parent()).show();
 		});
 		
 		return false;
@@ -669,6 +671,27 @@ $(function(){
 		
 		return false;
 	});
+	
+	var google_map = $('#google_map');
+	if (google_map.length) {
+		var coords = $.map(google_map.attr('data-coords').split(','), function(el, i) { return parseFloat(el) });
+		
+		google_map.jmap('init', { 'mapCenter': coords }, function(map, el, ops) {
+			google_map.jmap('AddMarker', {
+				'pointLatLng': coords,
+				'pointHTML': $('#fac_name span').text()
+			});
+		});
+	}
+	
+	var street_view = $('#street_view');
+	if (street_view.length) {
+		var coords = $.map(google_map.attr('data-coords').split(','), function(el, i) { return parseFloat(el) });
+		
+		street_view.jmap('init', { 'mapType': G_HYBRID_MAP, 'mapCenter': coords }, function(map, el, ops) {
+			street_view.jmap('CreateStreetviewPanorama', { 'latlng': coords });
+		});
+	}
 	
 	/*
 	 * Google Map methods

@@ -504,8 +504,9 @@ module ApplicationHelper
     data.respond_to? :total_pages || defined? @paginated && @paginated
   end
   
-  def print_link(div_to_print, href = '#')
-    link_to 'Print', href, :class => 'ps', :rel => div_to_print
+  def print_link(div_to_print, href = '#', options = {})
+    ops = { :class => 'ps', :rel => div_to_print }
+    link_to 'Print', href, ops.merge(options)
   end
   
   def conditional_account_path(options = {})

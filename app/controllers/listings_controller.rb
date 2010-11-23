@@ -3,7 +3,6 @@ class ListingsController < ApplicationController
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit, :disable]
   before_filter :get_client, :only => [:edit, :disable]
-  before_filter :get_map, :only => [:show, :edit]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   geocode_ip_address :only => :locator
