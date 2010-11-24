@@ -132,6 +132,8 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
+	$('.rental_form').rental_form();
+	
 	// narrow search form sliders
 	$('.slider').each(function(){
 		var $this = $(this),
@@ -408,10 +410,10 @@ $(function(){
 	
 	$('#get_dirs').live('submit', function() {
 		var form = $(this),
-			map_container = form.parents('.google_map'),
-			map_wrap = $('.map_wrap', map_container),
+			map_container = form.parents('#'+ form.attr('data-container')),
+			map_wrap = $('#'+ form.attr('data-wrap'), map_container),
 			from = $('#from_address', form).val(), 
-			to = $('.rslt-contact', form.parents('.listing')).text().replace(new RegExp("\\n\\t+", 'g'), ' ').trim(),//map_wrap.attr('rel'),
+			to = form.attr('data-to-addr'),
 			dirs = $('<div id="dirs" />');
 		
 		map_container.after(dirs);
@@ -421,6 +423,8 @@ $(function(){
 			'query': from + ' to '+ to,
 			'panel': $('#dirs', map_container.parent()),
 			'locale': 'en_US'
+		}, function() {
+			$('.ps', map_container.parent()).show();
 		});
 		
 		return false;
@@ -668,6 +672,27 @@ $(function(){
 		return false;
 	});
 	
+	var google_map = $('#google_map');
+	if (google_map.length) {
+		var coords = $.map(google_map.attr('data-coords').split(','), function(el, i) { return parseFloat(el) });
+		
+		google_map.jmap('init', { 'mapCenter': coords }, function(map, el, ops) {
+			google_map.jmap('AddMarker', {
+				'pointLatLng': coords,
+				'pointHTML': $('#fac_name span').text()
+			});
+		});
+	}
+	
+	var street_view = $('#street_view');
+	if (street_view.length) {
+		var coords = $.map(google_map.attr('data-coords').split(','), function(el, i) { return parseFloat(el) });
+		
+		street_view.jmap('init', { 'mapType': G_HYBRID_MAP, 'mapCenter': coords }, function(map, el, ops) {
+			street_view.jmap('CreateStreetviewPanorama', { 'latlng': coords });
+		});
+	}
+	
 	/*
 	 * Google Map methods
 	 */
@@ -867,4 +892,104 @@ function build_gmap_src(options) {
 					 '&amp;country=US'+
 					 '&amp;output=js';
 	return script_src;
+}
+
+// make an auto updating form, when values change, update the total
+$.fn.rental_form = function() {
+	return this.each(function() {
+		var form = $(this),
+			type_select = $('select[name=unit_type]', form),
+			unit_type = type_select.val().toLowerCase(),
+			sizes_select = $('select[name="rental[size_id]"]', form),
+			duration = $('input[name="rental[duration]"]', form),
+			month_rate = $('.rental_rate', form),
+			admin_fee = parseFloat($('.admin_fee span span', form).text()),
+			tax_rate = parseFloat($('.tax', form).attr('data-tax'));
+			
+		form.bind('recalc', function() {
+			var rate = parseFloat(month_rate.eq(0).text()),
+				dur = parseFloat($('input[name="rental[duration]"]', form).val()) || 1.0,
+				subtotal = rate * dur,
+				total = subtotal,
+				special = $('input[name="rental[special_id]"]:checked', form),
+				tax = $('.tax span span', form);
+			
+			$('.dur', form).text(dur);
+			$('.subtotal span', form).text(subtotal);
+			
+			if (special.length) {
+				var calc = special.attr('data-special-calc').split('|'),
+					discount = special_calc(calc, subtotal, parseFloat(duration.val()), parseFloat(month_rate.eq(0).text()));
+				
+				$('.discount span span', form).text(discount);
+				total -= discount;
+			}
+			
+			if (!isNaN(admin_fee)) total += admin_fee;
+			if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
+			
+			total += tax_amt;
+			tax.text(tax_amt.toFixed(2));
+			$('.total span span', form).text(total.toFixed(2));
+		});
+		
+		sizes_select.change(function() {
+			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
+			form.trigger('recalc');
+		});
+		
+		set_size_select(sizes_select, unit_type);
+		type_select.change(function() {
+			set_size_select(sizes_select, $(this).val().toLowerCase());
+		});
+		
+		$('input[name="rental[special_id]"]', form).click(function() {
+			form.trigger('recalc');
+		});
+		
+		duration.keyup(function() {
+			if (this.value != '' && !isNaN(this.value))
+				form.trigger('recalc');
+		});
+	});
+}
+
+function special_calc(calc, total, duration, month_rate) {
+	var discount = 0;
+	
+	switch (calc[1]) {
+		case 'month' :
+			discount = month_rate * parseFloat(calc[0]);
+		break;
+		case 'percent' :
+			// limit percent off to this number of months if the duration is greater than the limit
+			if (calc[2] && duration > parseInt(calc[2])) {
+				var temp_total = parseInt(calc[2]) * month_rate;
+				discount = temp_total * parseFloat(calc[0]);
+				
+			} else discount = total * parseFloat(calc[0]);
+		break;
+		default : // fixed dollar amount off total
+			discount = parseFloat(calc[0]);
+	}
+	
+	return discount.toFixed(2);
+}
+
+function set_size_select(select, unit_type) {
+	var show_count = 0;
+	
+	select.children().each(function() {
+		var $this = $(this);
+		
+		if (unit_type != $this.attr('data-unit-type').toLowerCase()) 
+			$this.hide();
+		else {
+			$this.show();
+			if (show_count == 0) select.val($this.val());
+			show_count++;
+		}
+	});
+	
+	select.change();
 }

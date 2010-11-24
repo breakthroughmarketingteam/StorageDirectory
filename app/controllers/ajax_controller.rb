@@ -108,8 +108,8 @@ class AjaxController < ApplicationController
   def get_partial
     _get_model_and_locals
     render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => @locals) }
-  #rescue => e
-  #  render :json => { :success => false, :data => e.message }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
   end
   
   def get_multipartial
@@ -156,10 +156,7 @@ class AjaxController < ApplicationController
       end
     end
     
-    response = "#{errors * ', '}"
-    render :json => { :success => errors.empty?, :data => response }
-  rescue => e
-    render :json => { :success => false, :data => "Error: #{e.message}" }
+    render :json => { :success => errors.empty?, :data => "#{errors * ', '}" }
   end
   
   def destroy

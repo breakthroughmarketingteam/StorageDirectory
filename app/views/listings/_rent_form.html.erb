@@ -1,0 +1,59 @@
+<% form_for [listing, Rental.new], :html => { :class => 'rental_form' } do |f| %>
+	<h2>Rent a Unit</h2>
+
+	<div class="realtime">Real-Time Storage Unit Rentals</div>
+
+	<div class="inner">
+		<div class="head">Use this form to rent a unit from <span><%= @listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
+
+		<div class="col1">
+			<div>
+				<%= label_tag :unit_type, 'Type: ' %>
+				<%= select_tag :unit_type, option_tags(listing.unit_types_for_select, (size && size.title)), :class => 'required' %>
+			</div>
+			
+			<div>
+				<%= f.label :size_id, 'Size: ' %>
+				<%= select_tag 'rental[size_id]', listing.sizes_for_select_tag(size), :class => 'required' %>
+			</div>
+			
+			<div>Rate: <span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
+			
+			<div>
+				<%= f.label :move_in_date, 'Move in Date: ' %><%= f.text_field :move_in_date, :class => 'required mini_calendar', :maxlength => 10 %>
+			</div>
+			
+			<div>
+				<%= f.label :duration, 'Duration (months): ' %><%= f.text_field :duration, :value => 1, :class => 'required tiny click_sel', :maxlength => 2 %>
+			</div>
+			
+			<% unless listing.specials.empty? %>
+				<div>Specials:
+					<ul>
+						<% listing.specials.each do |special| %>
+							<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.amount}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
+		</div>
+	
+		<div class="col2"><img src="/images/ui/storagelocator/10x10.png" /></div>
+	
+		<div class="col3">
+			<ul>
+				<li>Rent: <span class="grey">(<span class="dur">2.87</span> x <span>$</span><span class="rental_rate"></span>)</span> <span class="subtotal right">$<span></span></span></li>
+				<% unless listing.specials.empty? %>
+					<li class="discount">Special Offer: <span class="right">-$<span></span></span></li>
+				<% end %>
+				<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
+				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span>4.75</span></span></li>
+				<hr />
+				<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
+			</ul>
+	
+			<a href="#" class="submit_btn">Rent it!</a>
+			<%= f.submit 'Rent it!', :class => 'hide' %>
+		</div>
+	</div>
+<% end %>

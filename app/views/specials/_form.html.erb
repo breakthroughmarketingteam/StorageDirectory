@@ -1,0 +1,19 @@
+<% form_for Special.new do |f| %>
+	<div class="specials_fields">
+		<div>
+			<%= text_field_tag 'special[title]', nil, :class => 'required hintable small', :title => 'Your Special' %>
+		</div>
+		<div>
+			<%= label_tag 'special[value]', 'Value' %>
+			<%= text_field_tag 'special[value]', nil, :class => 'required tiny', :maxlength => 3 %>
+		</div>
+		<div>
+			<%= label_tag 'special[function]', 'Type' %>
+			<%= select_tag 'special[function]', option_tags(Special.function_types), :class => 'required' %>
+		</div>
+		<div>
+			<%= label_tag 'special[month_limit]', 'Limit' %>
+			<%= text_field_tag 'special[month_limit]', nil, :class => 'required tiny', :maxlength => 2 %>
+		</div>
+	</div>
+<% end %>

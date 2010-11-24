@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116201422) do
+ActiveRecord::Schema.define(:version => 20101123203618) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -61,6 +61,13 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
   end
 
   add_index "block_forms", ["block_id", "form_id"], :name => "index_block_forms_on_block_id_and_form_id"
+
+  create_table "block_widgets", :force => true do |t|
+    t.integer  "block_id"
+    t.integer  "widget_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "blocks", :force => true do |t|
     t.datetime "created_at"
@@ -329,6 +336,15 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.datetime "updated_at"
   end
 
+  create_table "issn_ids", :force => true do |t|
+    t.string   "model_type"
+    t.integer  "model_id"
+    t.string   "name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "issn_unit_type_features", :force => true do |t|
     t.string   "MappingCodes"
     t.string   "sID"
@@ -380,6 +396,16 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "listing_sizes", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "size_id"
+    t.integer  "position",   :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_sizes", ["listing_id", "size_id"], :name => "index_listing_sizes_on_listing_id_and_size_id"
 
   create_table "listings", :force => true do |t|
     t.string   "title"
@@ -434,6 +460,14 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
   end
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
+
+  create_table "models_modules", :force => true do |t|
+    t.string   "name"
+    t.integer  "model_id"
+    t.string   "model_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -534,6 +568,24 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
+  create_table "predef_special_assigns", :force => true do |t|
+    t.integer  "predefined_special_id"
+    t.integer  "client_id"
+    t.integer  "position",              :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "predefined_specials", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "value"
+    t.string   "function"
+    t.integer  "month_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "promos", :force => true do |t|
     t.integer  "special_id"
     t.text     "Description"
@@ -561,6 +613,17 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
 
   add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
   add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
+
+  create_table "rentals", :force => true do |t|
+    t.integer  "tenant_id"
+    t.integer  "listing_id"
+    t.integer  "size_id"
+    t.integer  "special_id"
+    t.datetime "move_in_date"
+    t.string   "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reservations", :force => true do |t|
     t.integer  "listing_id"
@@ -653,18 +716,28 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
   add_index "sizes", ["listing_id", "price"], :name => "index_sizes_on_listing_id_and_price"
 
   create_table "specials", :force => true do |t|
-    t.integer  "listing_id"
+    t.integer  "client_id"
     t.string   "title"
     t.string   "description"
-    t.string   "content"
-    t.string   "code"
     t.boolean  "enabled"
     t.integer  "position",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "value"
+    t.string   "function"
+    t.integer  "month_limit"
   end
 
-  add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"
+  add_index "specials", ["client_id", "title"], :name => "index_specials_on_listing_id_and_title"
+
+  create_table "suggestions", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "controller"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -772,6 +845,7 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.string   "last_name"
     t.string   "perishable_token",                :null => false
     t.text     "report_recipients"
+    t.boolean  "pro_rated"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
@@ -794,6 +868,13 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.integer  "owner_id"
   end
 
+  create_table "virtual_models", :force => true do |t|
+    t.text     "model"
+    t.text     "schema"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "web_specials", :force => true do |t|
     t.string   "label"
     t.string   "title"
@@ -804,6 +885,20 @@ ActiveRecord::Schema.define(:version => 20101116201422) do
     t.integer  "listing_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "widget_galleries", :force => true do |t|
+    t.integer  "widget_id"
+    t.integer  "gallery_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "widgets", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "content"
   end
 
 end

@@ -1,0 +1,2 @@
+module PredefSpecialAssignsHelper
+end

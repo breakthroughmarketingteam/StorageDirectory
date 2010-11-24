@@ -14,8 +14,12 @@ module ListingsHelper
     html << "</div>\n"
   end
   
-  def google_directions_link(address)
-    "http://maps.google.com/maps?f=d&amp;hl=en&amp;daddr=#{address}"
+  def breadcrumb(listing = nil)
+    return '' if params[:storage_type].blank?
+    separator = ' ❯ '
+    b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
+    b << "#{separator}#{link_to listing.title, facility_path(@search.storage_type.parameterize, listing.title, listing.id)}" if listing
+    b
   end
   
   def listing_distance(listing)
@@ -73,6 +77,7 @@ module ListingsHelper
 			end
 		  html += '</div>'
 		end
+		
 		unless listing.office_24_hours.nil? && listing.office_hours.empty?
 		  html += '<div class="office_hours">'
 		  html += '<p class="info_heading">Office Hours</p>'
@@ -105,11 +110,11 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id))}</div>"
+      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id))}</div>"
     else
       img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
-      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
   end
   
@@ -148,7 +153,7 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page + 1
-      html << "<form action='/#{@search.storage_type.parameterize}' method='get' class='more_results_form'>" + 
+      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state}/#{@search.city}' method='get' class='more_results_form'>" + 
         link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
         "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
         "<input class='hidden' name='page' value='#{page + 1}' />" + 

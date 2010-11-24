@@ -2,6 +2,7 @@ class Size < ActiveRecord::Base
   
   belongs_to :listing
   has_one :unit_type
+  has_many :rentals
   
   # TODO: this breaks the syncing methods in listing, can we do it differently?
   #validates_presence_of :title, :only => :update

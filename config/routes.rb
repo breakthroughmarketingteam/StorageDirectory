@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
-  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.facility '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   
   # for building routes
   $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
@@ -53,12 +53,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
-  map.resources :listings, :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
+  map.resources :listings, :member => { :rate => :post }, :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
     listing.resources :maps
     listing.resources :pictures
     listing.resources :reservations
+    listing.resources :rentals
     listing.resources :reviews
     listing.resources :web_specials
     listing.resources :facility_features
@@ -133,6 +134,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :forms
   map.resources :suggestions
   map.resources :reservations
+  map.resources :rentals
+  map.resources :specials
+  map.resources :predefined_specials
+  map.resources :predef_special_assigns
   map.resources :info_requests
   map.resources :payments
   map.resources :facility_features

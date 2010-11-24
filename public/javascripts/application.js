@@ -524,11 +524,50 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	// build the addThis sharing buttons for each tip
+	var sharing_buttons = ['email', 'facebook', 'twitter', 'digg', 'print'],
+		addthis_main_btn = '<a href="http://www.addthis.com/bookmark.php?v=250&username=mastermindxs" class="addthis_button_compact">Share</a><span class="addthis_separator">|</span>';
+	$('.tip_in', '#tips-wrap').each(function() {
+		if (typeof addthis == 'object') {
+			var share_wrap = $('.addthis_toolbox', this).append(addthis_main_btn),
+				tip_link = $('h3 a', this),
+				share_url = tip_link.attr('href'),
+				share_title = tip_link.text();
+			
+			$.each(sharing_buttons, function() {
+				share_wrap.append('<a class="addthis_button_'+ this +'"></a>');
+			});
+			
+			addthis.toolbox(share_wrap[0], { 'data_track_clickback': true }, { url: share_url, title: share_title });
+		}
+	});
+	
 	$('.facebook_share', '#tips-wrap').live('click', function() {
 		var tip = $(this).parents('.tip_in'),
 			link = $('h3 a', tip), u = encodeURIComponent(link.attr('href')), t = encodeURIComponent(link.text());
 		
 		window.open('http://www.facebook.com/sharer.php?u='+ u, 'sharer', 'toolbar=0,status=0,width=626,height=436');
+		return false;
+	});
+	
+	$('#form_comments', '#column_5').submit(function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $.new_ajax_loader('before', $('input[type=submit]', form));
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			ajax_loader.show();
+			
+			$.post('/comments/contact', form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					form.html(data);
+				});
+				
+				ajax_loader.hide();
+				form.data('saving', false);
+			});
+		}
+		
 		return false;
 	});
 	
@@ -1005,8 +1044,6 @@ $(document).ready(function() {
 		else fields.attr('disabled', false);
 	});
 	
-	
-	
 	$('.day_closed', '#business_hours_form').live('change', function(){
 		var check = $(this),
 			all_day_check = $('.all_day_check', check.parents('.hours_display'));
@@ -1125,21 +1162,22 @@ $(document).ready(function() {
 	});
 	
 	// change big-pic when thumb is hovered
-	$('img', '#sl-tabs-pict-gall').live('mouseover', function(){
+	$('img', '#sl-photos #previews').live('mouseover', function(){
 		if ($(this).hasClass('loading')) return false;
-		var big_pic = $('.big-pic', '#sl-tabs-pict-in');
-		if (big_pic.length == 0) return false;
 		
+		var main_pic = $('.main_pic', '#sl-photos');
+		console.log(main_pic)
+		if (main_pic.length == 0) return false;
 		
-		$('img', '#sl-tabs-pict-gall').removeClass('active')
+		$('img', '#sl-photos #previews').removeClass('active');
 		var thumb = $(this),
 			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
 		
 		thumb.addClass('active');
-		big_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
+		main_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
 	});
 	
-	$('.delete_link', '#sl-tabs-pict-gall').live('click', function(){
+	$('.delete_link', '#sl-photos #previews').live('click', function(){
 		var self = $(this);
 		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
 			self.data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
@@ -1149,10 +1187,10 @@ $(document).ready(function() {
 
 			$.post(self.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
 				$.with_json(response, function(data){
-					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict-gall').trigger('mouseover');
+					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-photos #previews').trigger('mouseover');
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
-					if ($('img', '#sl-tabs-pict-gall').length == 1) $('.big-pic', '#sl-tabs-pict-in').eq(0).fadeOut(900, function(){ $(this).remove() });
+					if ($('img', '#sl-photos #previews').length == 1) $('.main_pic', '#sl-photos').eq(0).fadeOut(900, function(){ $(this).remove() });
 					
 					update_info_tab_count('Pictures', -1);
 				});
@@ -1250,6 +1288,36 @@ $(document).ready(function() {
 			return false;
 		});
 	}
+	
+	$( "#predef_specials, #active_specials" ).sortable({
+		connectWith: '.con',
+		placeholder: 'ui-state-highlight',
+		helper: 'clone',
+		update: function(e, ui) {
+			if (ui.sender) {
+				var predef_id = ui.item.attr('id').replace('PredefinedSpecial_', ''),
+					form = $('#new_predef_special_assign', '#ov-specials');
+					
+				if (e.target.id == 'active_specials') {
+					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
+				} else {
+					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
+				}
+				
+				$.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						ui.item.effect('highlight', 1000);
+					});
+				}, 'json');
+				
+			} else if (e.target.id == 'active_specials') {
+				$.updateModels(e, ui, function() {
+					ui.item.effect('highlight', 1000);
+				});
+			}
+		}
+	}).disableSelection();
+
 		
 	// TODO: refactor all button events that do ajax calls
 	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content

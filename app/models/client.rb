@@ -2,6 +2,10 @@ class Client < User
   
   has_many :listings, :foreign_key => 'user_id'
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
+  has_many :specials, :dependent => :destroy
+  has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
+  has_many :predef_special_assigns, :dependent => :destroy
+  has_many :predefined_specials, :through => :predef_special_assigns
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
@@ -21,16 +25,25 @@ class Client < User
     self.billing_infos.last
   end
   
-  #def listing_description
-    #self.listing_descriptions.find :last, :conditions => { :listing_id => nil }
-  #end
-  
   def has_mailing_address?
     !active_mailing_address.nil?
   end
   
   def has_billing_info?
     !active_billing_info.nil?
+  end
+  
+  def display_special
+    self.special && self.special.title ? self.special.title : 'No Specials'
+  end
+  
+  def special
+    self.specials.last
+  end
+  
+  def active_specials
+    a = self.specials | self.predefined_specials
+    a.sort_by { |s| s.respond_to?(:position) ? s.position : s.get_assign(self.id).position }
   end
   
   def update_info(info) 

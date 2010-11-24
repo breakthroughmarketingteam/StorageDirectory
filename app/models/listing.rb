@@ -8,9 +8,9 @@ class Listing < ActiveRecord::Base
   has_one  :map, :dependent => :destroy
   accepts_nested_attributes_for :map
   
-  has_many :specials       , :dependent => :destroy
   has_many :pictures       , :dependent => :destroy
   has_many :reservations   , :dependent => :destroy
+  has_many :rentals        , :dependent => :destroy
   has_many :info_requests  , :dependent => :destroy
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
@@ -50,14 +50,15 @@ class Listing < ActiveRecord::Base
   
   access_shared_methods
   acts_as_mappable :through => :map
+  ajaxful_rateable
   sitemap :order => 'updated_at DESC'
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types = %w(upper lower drive_up)
+  cattr_accessor :top_types
   @@upper_types = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
   @@lower_types = %w(interior indoor standard)
-  cattr_accessor :top_types
   
   #
   # Search methods
@@ -66,7 +67,7 @@ class Listing < ActiveRecord::Base
   def self.find_by_location(search)
     # build the options for the model find method
     options = {
-      :include => [:map, :specials, :sizes, :pictures, :reviews],
+      :include => [:map, :sizes, :pictures, :reviews],
       :within  => search.within,
       :origin  => search.lat_lng
     }
@@ -123,8 +124,8 @@ class Listing < ActiveRecord::Base
   # Instance Methods
   
   def display_description
-    global_desc = self.client.listing_description
-    listing_desc = self.listing_description
+    global_desc = self.client.listing_description if self.client
+    listing_desc = self.listing_description if self.listing_description
     desc = nil
     
     case global_desc.show_in when 'none'
@@ -135,19 +136,44 @@ class Listing < ActiveRecord::Base
       desc = global_desc
     end if global_desc
     
-    desc || listing_desc
-  end
-  
-  def display_special
-    self.special && self.special.title ? self.special.title : 'No Specials'
+    (desc || listing_desc).try :description
   end
   
   def web_special
     self.web_specials.last
   end
   
-  def special
-    self.specials.last
+  def specials
+    return [] if self.client.nil?
+    self.client.specials
+  end
+  
+  def admin_fee
+    20.00
+  end
+  
+  def tax_rate
+    0.06
+  end
+  
+  def storage_type
+    self.facility_features.empty? ? 'self-storage' : self.facility_features.first.title.parameterize
+  end
+  
+  def get_searched_size(search)
+    return self.sizes.first if search.nil?
+    dims = search.unit_size.split('x')
+    self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
+  end
+  
+  def sizes_for_select_tag(size = nil)
+    options = []
+    self.sizes.sort_by{ |s| s.width * s.length }.each { |s| options << "<option value='#{s.id}' data-unit-type='#{s.title.downcase}' data-unit-price='#{s.dollar_price}'#{ ' selected="selected"' if size.id == s.id }>#{s.display_dimensions}</option>" }
+    options
+  end
+  
+  def unit_types_for_select
+    self.sizes.all(:select => 'DISTINCT title', :order => 'title').map { |s| [s.title, s.title] }
   end
   
   def get_partial_link(name)

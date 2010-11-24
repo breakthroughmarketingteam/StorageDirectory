@@ -28,7 +28,7 @@
 						
 						<% @listings.each do |listing| %>
 							<% if i == 0 %>
-								<th><%= link_to selective_abbrev(listing.title).titleize, facility_path(listing.title.parameterize, listing.id) %></th>
+								<th><%= link_to selective_abbrev(listing.title).titleize, facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id) %></th>
 							<% else %>
 								<td>
 									<% if subcomps == :self %>
