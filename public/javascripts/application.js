@@ -1295,19 +1295,21 @@ $(document).ready(function() {
 		helper: 'clone',
 		update: function(e, ui) {
 			if (ui.sender) {
+				var predef_id = ui.item.attr('id').replace('PredefinedSpecial_', ''),
+					form = $('#new_predef_special_assign', '#ov-specials');
+					
 				if (e.target.id == 'active_specials') {
-					var predef_id = ui.item.attr('id').replace('PredefinedSpecial_', ''),
-						form = $('#new_predef_special_assign', '#ov-specials').append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
-					
-					$.post(form.attr('action'), form.serialize(), function(response) {
-						$.with_json(response, function(data) {
-							ui.item.effect('highlight', 1000);
-						});
-					}, 'json');
-					
+					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
 				} else {
-					
+					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
 				}
+				
+				$.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						ui.item.effect('highlight', 1000);
+					});
+				}, 'json');
+				
 			} else if (e.target.id == 'active_specials') {
 				$.updateModels(e, ui, function() {
 					ui.item.effect('highlight', 1000);

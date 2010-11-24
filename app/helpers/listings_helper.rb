@@ -14,8 +14,12 @@ module ListingsHelper
     html << "</div>\n"
   end
   
-  def google_directions_link(address)
-    "http://maps.google.com/maps?f=d&amp;hl=en&amp;daddr=#{address}"
+  def breadcrumb(listing = nil)
+    return '' if params[:storage_type].blank?
+    separator = ' • '
+    b = "<p class='breadcrumb'><span>#{params[:storage_type]}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
+    b << "#{separator}#{link_to listing.title, facility_path(listing.title, listing.id)}" if listing
+    b
   end
   
   def listing_distance(listing)
@@ -73,6 +77,7 @@ module ListingsHelper
 			end
 		  html += '</div>'
 		end
+		
 		unless listing.office_24_hours.nil? && listing.office_hours.empty?
 		  html += '<div class="office_hours">'
 		  html += '<p class="info_heading">Office Hours</p>'

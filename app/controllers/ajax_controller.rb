@@ -156,9 +156,7 @@ class AjaxController < ApplicationController
       end
     end
     
-      response = "#{errors * ', '}"
-      render :json => { :success => errors.empty?, :data => response }
-   
+    render :json => { :success => errors.empty?, :data => "#{errors * ', '}" }
   end
   
   def destroy
