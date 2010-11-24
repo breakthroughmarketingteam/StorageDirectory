@@ -41,68 +41,70 @@
 			<%= render :partial => 'menus/topnav' %>
 		</div>
 		<div id="page-ctr">
-			<div id="head-ctr">
-				<div id="head-ctr-in">
-					<div id="oldlogo">
-						<object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="124" height="146">
-						  <param name="movie" value="/images/ui/storagelocator/usselfstoragelocator-slogo.swf" />
-						  <param name="quality" value="high" />
-						  <param name="wmode" value="transparent" />
-						  <param name="swfversion" value="6.0.65.0" />
-						  <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-						  <param name="expressinstall" value="/files/expressInstall.swf" />
-						  <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
-						  <!--[if !IE]>-->
-						  <object type="application/x-shockwave-flash" data="/images/ui/storagelocator/usselfstoragelocator-slogo.swf" width="124" height="146">
-						    <!--<![endif]-->
-						    <param name="quality" value="high" />
-						    <param name="wmode" value="opaque" />
-						    <param name="swfversion" value="6.0.65.0" />
-						    <param name="expressinstall" value="/files/expressInstall.swf" />
-						    <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
-							<a href="/"><img src="/images/ui/storagelocator/usselfstoragelocator-slogo.png" alt="US Self Storage Locator" /></a>
-						    <!--[if !IE]>-->
-						  </object>
-						  <!--<![endif]-->
-						</object>
-						<img id="logoshadow" src="/images/ui/storagelocator/globe-shadow-sm.png" alt="US Self Storage Locator" />
-					</div>
-					<div id="title">
-						<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
-						<h2><%= @slogan %></h2>
-					</div>
-					
-					<%= render :partial => 'pages/home' %>
-					
-				</div>
-			</div><!-- END header container -->
-			<div id="bluebar"><%= yield :head_bar %></div>
-				
-				<div id="page-ctr-in">
-
-				<div id="page-cnt">
-					<div id="page-cnt-top-bg">
-						<div id="type-one-cnt-in">
-							<!-- Start the editable area -->
-							<a name="top" id="top"></a>
-							<div id="content">
-								<%= yield %>
-								<div id="column_5" class="region">
-									<%= yield :column_5 %>
-								</div>
-							</div><!-- /the stuff -->
-							<div id="content_bottom" class="region">
-								<%= yield :content_bottom %>
-							</div>
-							<div class="clear"></div><!-- End the editable area -->
+			<div id="page-ctr-wrap">
+				<div id="head-ctr">
+					<div id="head-ctr-in">
+						<div id="oldlogo">
+							<object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="124" height="146">
+							  <param name="movie" value="/images/ui/storagelocator/usselfstoragelocator-slogo.swf" />
+							  <param name="quality" value="high" />
+							  <param name="wmode" value="transparent" />
+							  <param name="swfversion" value="6.0.65.0" />
+							  <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
+							  <param name="expressinstall" value="/files/expressInstall.swf" />
+							  <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
+							  <!--[if !IE]>-->
+							  <object type="application/x-shockwave-flash" data="/images/ui/storagelocator/usselfstoragelocator-slogo.swf" width="124" height="146">
+							    <!--<![endif]-->
+							    <param name="quality" value="high" />
+							    <param name="wmode" value="opaque" />
+							    <param name="swfversion" value="6.0.65.0" />
+							    <param name="expressinstall" value="/files/expressInstall.swf" />
+							    <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
+								<a href="/"><img src="/images/ui/storagelocator/usselfstoragelocator-slogo.png" alt="US Self Storage Locator" /></a>
+							    <!--[if !IE]>-->
+							  </object>
+							  <!--<![endif]-->
+							</object>
+							<img id="logoshadow" src="/images/ui/storagelocator/globe-shadow-sm.png" alt="US Self Storage Locator" />
 						</div>
+						<div id="title">
+							<p class="hidden">USSelfStorageLocator.com - Find self storage anywhere</p>
+							<h2><%= @slogan %></h2>
+						</div>
+					
+						<%= render :partial => 'pages/home' %>
+					
 					</div>
-					<div class="clear"></div>
-				</div><!-- END main content area -->
-			</div><!-- END page-container-inner -->
+				</div><!-- END header container -->
+				<div id="bluebar"><%= yield :head_bar %></div>
+				
+					<div id="page-ctr-in">
 
-			<div id="latch-img"></div>
-			<div id="handle"></div>
+						<div id="page-cnt">
+						<div id="page-cnt-top-bg">
+							<div id="type-one-cnt-in">
+								<!-- Start the editable area -->
+								<a name="top" id="top"></a>
+								<div id="content">
+									<%= yield %>
+									<div id="column_5" class="region">
+										<%= yield :column_5 %>
+									</div>
+								</div><!-- /the stuff -->
+								<div id="content_bottom" class="region">
+									<%= yield :content_bottom %>
+								</div>
+								<div class="clear"></div><!-- End the editable area -->
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div><!-- END main content area -->
+					</div><!-- END page-container-inner -->
+
+				<div id="latch-img"></div>
+				<div id="handle"></div>
+			</div>
 		</div><!-- END page-container-outer -->
 		<div id="footer">
 			<div id="footer_top">

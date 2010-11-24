@@ -3,21 +3,14 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 
-	<div id="type-one-r-col-in">
-	  <div id="results_header">
-	    <h2><%= locator_header %></h2>
-		<%= link_to '<span>Hide Map</span>'+ image_tag('/images/ui/storagelocator/map-option-btn.png'), '#hide_open-map', :id => 'top_map_btn', :rel => "#{@location.lat},#{@location.lng}" %>
-	  </div>
-	</div>
-
 	<div id="main_map">
 	</div>
 	
 	
 		<div id="results_wrap">
 			<div class="rslt-head-txt">
-				<p>Your <span>nearest</span> <%= @search.storage_type %> is being displayed first</p>
-				<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
+				<h2><%= locator_header %></h2>
+				<p>Your nearest <%= @search.storage_type %> is being displayed first</p>
 			</div>
 
 			<div id="type-one-top-bar">
