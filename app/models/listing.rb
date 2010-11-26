@@ -148,6 +148,10 @@ class Listing < ActiveRecord::Base
     self.client.predefined_specials
   end
   
+  def special
+    self.specials.first
+  end
+  
   def pro_rated?
     self.client ? self.client.pro_rated? : false
   end
@@ -168,12 +172,6 @@ class Listing < ActiveRecord::Base
     return self.sizes.first if search.nil?
     dims = search.unit_size.split('x')
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
-  end
-  
-  def sizes_for_select_tag(size = nil)
-    options = []
-    self.sizes.sort_by{ |s| s.width * s.length }.each { |s| options << "<option value='#{s.id}' data-unit-type='#{s.title.downcase}' data-unit-price='#{s.dollar_price}'#{ ' selected="selected"' if size.id == s.id }>#{s.display_dimensions}</option>" }
-    options
   end
   
   def unit_types_for_select

@@ -877,58 +877,41 @@ function update_info_tab_count(label, i) {
 	tab.text(label.replace('_', ' ') + ' ('+ count +')');
 }
 
-// build a query string for the google directions gadget: http://maps.google.com/help/maps/gadgets/directions/
-function build_gmap_src(options) {
-	var script_src = 'http://www.gmodules.com/ig/ifr?url=http://hosting.gmodules.com/ig/gadgets/file/114281111391296844949/driving-directions.xml'+
-					 '&amp;up_fromLocation='+ escape(options.from) +
-					 '&amp;up_myLocations='+ escape(options.to) +
-					 '&amp;up_defaultDirectionsType='+ 
-					 '&amp;synd=open'+
-					 '&amp;w='+ (options.w || 320) +
-					 '&amp;h='+ (options.h || 55) +
-					 '&amp;title='+ escape(options.title) || 'Directions+by+Google+Maps'+
-					 '&amp;brand=light'+
-					 '&amp;lang='+ (options.lang || 'en') +
-					 '&amp;country=US'+
-					 '&amp;output=js';
-	return script_src;
-}
-
 // make an auto updating form, when values change, update the total
 $.fn.rental_form = function() {
-	function update_end_date(limit, form) {
-		if (typeof limit == 'undefined') limit = 1;
+	function update_end_date(limit, calendar, multiplier, prorated, form) {
+		if (typeof limit == 'undefined') var limit = 1;
 		
 		// adjust the paid through date, the specials dictate how many months to pay
-		var move_in 	  = $('.cal', form).val(),
-			paid_through  = $('.paid_through', form),
-			limit 		  = parseInt(limit),
-			move_date 	  = new Date(move_in),
+		var paid_through  = $('.paid_through', form),
+			move_date 	  = new Date(calendar.val()),
+			limit		  = parseInt(limit),
 			days_in_month = 32 - new Date(move_date.getFullYear(), move_date.getMonth(), 32).getDate(),
 			half_month 	  = Math.floor(days_in_month / 2),
-			days_left = days_in_month - move_date.getDate();;
+			end_date 	  = new Date(move_date.getFullYear(), move_date.getMonth() + limit, move_date.getDate() - 1);
 		
-		// add another month to the move date
-		var end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, move_date.getDate() - 1);
+		if (prorated) {
+			if (move_date.getDate() > half_month) {
+				multiplier += 1.00;
+				end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, days_in_month - 1);
+				
+			} else end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit - 1, days_in_month);
+		}
 		
 		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear());
+		return multiplier;
 	}
 	
-	function special_calc(calc, total, month_rate) {
+	function special_calc(calc, subtotal, month_rate, multiplier) {
 		var discount = 0;
-
+		console.log(calc, subtotal, month_rate, multiplier)
 		switch (calc[1]) {
-			case 'm' :
-				discount = month_rate * parseFloat(calc[0]);
-			break;
-			case '%' :
-			console.log(total, (parseFloat(calc[0]) / 100.00))
-				discount = total * (parseFloat(calc[0]) / 100.00);
-			break;
-			default : // fixed dollar amount off total
-				discount = parseFloat(calc[0]);
+			case 'm': discount = month_rate * parseFloat(calc[0]); break;
+			case '%': discount = subtotal * (parseFloat(calc[0]) / 100.00); break;
+			default : discount = parseFloat(calc[0]);
 		}
-
+		
+		if (multiplier > 0.5 && multiplier <= 1) discount *= multiplier;
 		return discount.toFixed(2);
 	}
 
@@ -950,54 +933,63 @@ $.fn.rental_form = function() {
 		select.change();
 	}
 	
+	function update_totals(multiplier, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, prorated, form) {
+		var subtotal = rate,
+			total 	 = subtotal,
+			discount = 0,
+			tax_amt	 = 0;
+			
+		if (special.length) {
+			var calc  = special.attr('data-special-calc').split('|'),
+			discount = special_calc(calc, rate * (calc[2] || 1), parseFloat(month_rate.eq(0).text()), multiplier);
+		}
+		
+		multiplier = update_end_date((calc ? (calc[2] || 1) : 1), calendar, multiplier, prorated, form);
+		subtotal *= multiplier;
+		
+		$('.dur', form).text(multiplier);
+		$('.subtotal span', form).text(subtotal.toFixed(2));
+		$('.discount span span', form).text(discount);
+
+		total = subtotal;
+		total -= discount;
+
+		if (!isNaN(admin_fee)) total += admin_fee;
+		if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
+
+		total += tax_amt;
+		tax_text.text(tax_amt.toFixed(2));
+		total_text.text(total.toFixed(2));
+	}
+	
 	return this.each(function() {
 		var form 		 = $(this),
+			prorated	 = (form.attr('data-pr') == '1' ? true : false),
 			type_select  = $('select[name=unit_type]', form),
 			unit_type 	 = type_select.val().toLowerCase(),
 			sizes_select = $('select[name="rental[size_id]"]', form),
 			month_rate   = $('.rental_rate', form),
 			admin_fee 	 = parseFloat($('.admin_fee span span', form).text()),
 			tax_rate 	 = parseFloat($('.tax', form).attr('data-tax')),
-			cal 		 = $('.cal', form).datepicker({
+			tax_text	 = $('.tax span span', form),
+			total_text	 = $('.total span span', form),
+			calendar	 = $('.cal', form).datepicker({
 				onSelect: function(date, ui) {
 					form.trigger('recalc');
 				}
 			});
 			
 		form.bind('recalc', function() {
-			var rate 	 = parseFloat(month_rate.eq(0).text()),
-				dur 	 = parseFloat($('input[name=duration]', form).val()) || 1.0,
-				subtotal = rate,
-				total 	 = subtotal,
-				special  = $('input[name="rental[special_id]"]:checked', form),
-				discount = 0,
-				tax 	 = $('.tax span span', form),
-				limit 	 = 1;
+			var rate = parseFloat(month_rate.eq(0).text()),
+				special = $('input[name="rental[special_id]"]:checked', form);
 			
-			if (special.length) {
-				var calc  = special.attr('data-special-calc').split('|'),
-					limit = calc[2];
-				
-				subtotal *= limit;
-				total = subtotal;
-				discount = special_calc(calc, subtotal, parseFloat(month_rate.eq(0).text()));
-				$('.discount span span', form).text(discount);
+			if (prorated) {
+				$.getJSON('/prorater', { rate: rate, move_date: calendar.val(), multiplier: (special.length ? special.attr('data-special-calc').split('|')[2] : 1) }, function(data) {
+					update_totals(parseFloat(data.multiplier), rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, prorated, form);
+				});
+			} else { // fixed rate
+				update_totals(1, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_amt, tax_text, total_text, prorated, form);
 			}
-			
-			update_end_date(limit, form);
-			
-			$('.subtotal span', form).text(subtotal);
-			$('.dur', form).text(limit);
-			
-			total -= discount;
-			
-			if (!isNaN(admin_fee)) total += admin_fee;
-			if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
-			
-			total += tax_amt;
-			tax.text(tax_amt.toFixed(2));
-			console.log(total.toFixed(2))
-			$('.total span span', form).text(total.toFixed(2));
 		});
 		
 		sizes_select.change(function() {
@@ -1013,5 +1005,7 @@ $.fn.rental_form = function() {
 		$('input[name="rental[special_id]"]', form).click(function() {
 			form.trigger('recalc');
 		});
+		
+		$('.calendar_wrap', form).click(function() { $(this).find('input').focus(); });
 	});
 }

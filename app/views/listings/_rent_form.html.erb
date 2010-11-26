@@ -1,4 +1,4 @@
-<% form_for [listing, Rental.new], :html => { :class => "rental_form#{ ' pro_rated' if @listing.pro_rated? }" } do |f| %>
+<% form_for [listing, Rental.new], :html => { :class => 'rental_form', 'data-pr' => ('1') } do |f| %>
 	<h2>Rent a Unit</h2>
 
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
@@ -14,12 +14,12 @@
 			
 			<div>
 				<%= f.label :size_id, 'Size: ', :class => 'block left' %>
-				<%= select_tag 'rental[size_id]', @listing.sizes_for_select_tag(size), :class => 'required' %>
+				<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.available_sizes, @search.unit_size, :class => 'required sizes_select' %>
 			</div>
 			
 			<div><%= label_tag 'Rate: ', nil, :class => 'block left' %><span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
 			
-			<div>
+			<div class="calendar_wrap">
 				<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %><%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
 			</div>
 			
@@ -38,7 +38,11 @@
 			<% end %>
 		</div>
 	
-		<div class="col2"><img src="/images/ui/storagelocator/10x10.png" /></div>
+		<div class="col2">
+			<div id="size_picker">
+				<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+			</div>
+		</div>
 	
 		<div class="col3">
 			<ul>
@@ -47,7 +51,7 @@
 					<li class="discount">Special Offer: <span class="right">-$<span></span></span></li>
 				<% end %>
 				<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
-				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">-$<span></span></span></li>
+				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span></span></span></li>
 				<hr />
 				<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
 			</ul>

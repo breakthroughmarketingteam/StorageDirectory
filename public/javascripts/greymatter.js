@@ -588,6 +588,17 @@ $.revertSettingsTextFieldToLabel = function(text_field, old_val) {
 	});
 }
 
+$.any = function(arr, callback) {
+	var has = false;
+	$.each(arr, function(i) {
+		if (callback.call(this, i)) {
+			has = true;
+			return;
+		}
+	});
+	return has;
+}
+
 $.mayContinue = function(link, callback, else_callback) {
 	if (!link.hasClass('before_confirm') || (link.hasClass('before_confirm') && $.greyConfirm(link.attr('title'), callback))) {
 		return true;

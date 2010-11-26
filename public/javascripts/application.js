@@ -93,14 +93,20 @@ $(document).ready(function() {
 	});
 	
 	// advanced search options
-	var $size_picker = $('#size_picker'),
+	var $size_picker = $('.size_picker'),
 		$size_img = $('img', $size_picker),
-		$size_select = $('#search_unit_size');
+		$size_select = $('.sizes_select');
 	
 	// preload
+	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){
-		var img = new Image();
-		img.src = $(this).attr('rel');
+		var $this = $(this);
+		
+		if ($this.attr('rel') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('rel')) return true; })) {
+			var img = new Image();
+			img.src = $this.attr('rel');
+			pre_loaded_size_icons.push(img);
+		}
 	});
 	
 	if ($size_select.length) {
