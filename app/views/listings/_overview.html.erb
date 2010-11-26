@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div id="sl-photos">
-			<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' %>
+			<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' unless @listing.pictures.empty? %>
 			<div id="previews">
 				<% @listing.pictures.each do |picture| %>
 					<%= link_to image_tag(picture.image.url(:thumb), :id => "Picture_#{picture.id}") %>

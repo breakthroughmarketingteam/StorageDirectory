@@ -145,7 +145,11 @@ class Listing < ActiveRecord::Base
   
   def specials
     return [] if self.client.nil?
-    self.client.specials
+    self.client.predefined_specials
+  end
+  
+  def pro_rated?
+    self.client ? self.client.pro_rated? : false
   end
   
   def admin_fee
@@ -154,6 +158,10 @@ class Listing < ActiveRecord::Base
   
   def tax_rate
     0.06
+  end
+  
+  def storage_type
+    self.facility_features.empty? ? 'self-storage' : self.facility_features.first.title.parameterize
   end
   
   def get_searched_size(search)

@@ -16,10 +16,10 @@ module ListingsHelper
   
   def breadcrumb(listing = nil)
     return '' if params[:storage_type].blank?
-    separator = ' • '
-    b = "<p class='breadcrumb'><span>#{params[:storage_type]}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
-    b << "#{separator}#{link_to listing.title, facility_path(listing.title, listing.id)}" if listing
-    b
+    separator = ' ❯ '
+    b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
+    b << "#{separator}#{link_to listing.title, facility_path(@search.storage_type.parameterize, listing.title, listing.id)}" if listing
+    b << '</p>'
   end
   
   def listing_distance(listing)
@@ -110,11 +110,11 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(listing.title.parameterize, listing.id))}</div>"
+      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id))}</div>"
     else
       img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
-      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
   end
   

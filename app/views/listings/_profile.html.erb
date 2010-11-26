@@ -2,61 +2,61 @@
 <a name="top" id="top"></a>
 
 <div id="type-one-r-col">
-	
+    
   <div id="type-three-r-col-in">
-	<div id="hed">
-    	<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
-		<div id="ratings">Rating: <%= ratings_for @listing %></div>
-	</div>
-	
+    <div id="hed">
+        <h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+        <div id="ratings">Rating: <%#= ratings_for @listing %></div>
+    </div>
+    
     <%= render_hints_for :info_tabs %>
-	<% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
-	    <div id="sl-tabs">
-	      <div id="sl-tabs-in" class="tabular_content">
-	        <ul id="sl-tabs-nav" class="tabular">
-				<%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
-				<%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
-				<%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
-				<%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
-	          	<%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-				<% if @listing.premium? %><div id="sl-phone">Call (561) 342-1984</div><% end %>
-	        </ul>
-	        <!-- tab content -->
-			<%= render :partial => 'overview' %>
-			<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
-			<%= render :partial => 'hours' if in_edit_mode? %>
-			<%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} if in_edit_mode? %>
-	        <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
-	      </div>
-	    </div>
-	<% end %>	
-	
-	<% if in_mode? 'show' %>
-		<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
-	<% end %>
-	
-  	<%= render_hints_for :listing_detail %>
-	<% unless in_mode?('show') && @web_special.nil? %>
-		<div id="listing_detail">
-			<%= render :partial => 'web_specials/web_special' %>
-			<%= render :partial => 'edit_detail' if in_edit_mode? %>
-	    </div>
-	<% end %>
+    <% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
+        <div id="sl-tabs">
+          <div id="sl-tabs-in" class="tabular_content">
+            <ul id="sl-tabs-nav" class="tabular">
+                <%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
+                <%= content_tag :li, link_to("Unit Sizes#{" (#{in_mode?('edit') ? @listing.sizes.size : @listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless in_mode?('show') && @listing.available_sizes.empty? %>
+                <%= content_tag :li, link_to('Hours', '#hours', :rel => 'sl-tabs-hours') if in_edit_mode? %>
+                <%= content_tag :li, link_to('Map', '#map', :rel => 'sl-tabs-map') if in_edit_mode? %>
+                  <%= content_tag :li, link_to("Features#{" (#{@listing.facility_features.size})"}", '#features', :id => 'tab_Features', :rel => 'sl-tabs-feat') unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+                <% if @listing.premium? %><div id="sl-phone">Call (561) 342-1984</div><% end %>
+            </ul>
+            <!-- tab content -->
+            <%= render :partial => 'overview' %>
+            <%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+            <%= render :partial => 'hours' if in_edit_mode? %>
+            <%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} if in_edit_mode? %>
+            <%= render :partial => 'features' unless (@facility_features.empty? && @showing) || in_mode?('show') %>
+          </div>
+        </div>
+    <% end %>    
+    
+    <% if in_mode? 'show' %>
+        <%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
+    <% end %>
+    
+      <%= render_hints_for :listing_detail %>
+    <% unless in_mode?('show') && @web_special.nil? %>
+        <div id="listing_detail">
+            <%= render :partial => 'web_specials/web_special' %>
+            <%= render :partial => 'edit_detail' if in_edit_mode? %>
+        </div>
+    <% end %>
 
-	<% if in_mode? 'show' %>
-		<div id="outer_map">
-			<%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} %>
-			<div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
-		</div>
-		<%= print_link '#outer_map', '#', :id => 'single_print' %>
-	<% end %>
+    <% if in_mode? 'show' %>
+        <div id="outer_map">
+            <%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} %>
+            <div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
+        </div>
+        <%= print_link '#outer_map', '#', :id => 'single_print' %>
+    <% end %>
      
-  	<%= render_hints_for :extras %>
-	<div id="listing_extras">
-	    <div id="sl-extra">
-	    
-	    </div>
-	</div>
-	
+      <%= render_hints_for :extras %>
+    <div id="listing_extras">
+        <div id="sl-extra">
+        
+        </div>
+    </div>
+    
   </div>
 </div>

@@ -85,9 +85,4 @@ class PredefinedSpecialsController < ApplicationController
     end
   end
   
-  def rate
-    @predefined_special = PredefinedSpecial.find(params[:id])
-    render :json => { :success => @predefined_special.rate(params[:stars], current_user, params[:dimension]) }
-  end
-  
 end

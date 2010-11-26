@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
-  map.facility '/self-storage/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.facility '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   
   # for building routes
   $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
@@ -74,7 +74,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :permissions
   end
   
-  map.resources :clients, :member => { :test_issn => :post } do |clients|
+  map.resources :clients, :member => { :toggle_specials => :post } do |clients|
     clients.resources :listings, :member => { :disable => :post }
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'

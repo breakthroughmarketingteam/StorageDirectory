@@ -23,7 +23,7 @@
 		<% end %>
 	
 		<div id="name">
-			<%= link_to @featured_listing.title, facility_path(@featured_listing.title, @featured_listing.id) %>
+			<%= link_to @featured_listing.title, facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id) %>
 		</div>
 	
 		<div id="address">
@@ -59,7 +59,7 @@
 		<% end %>
 	
 		<div id="more-info">
-			<%= link_to 'More Info', facility_path(@featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
+			<%= link_to 'More Info', facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
 		</div>
 	</div>
 <% end %>

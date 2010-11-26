@@ -162,6 +162,7 @@ class ListingsController < ApplicationController
     @special = @listing.specials.first || @listing.specials.new
     @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
     @facility_features = @listing.facility_features.map(&:label).reject(&:blank?)
+    @search = Search.find_by_id session[:search_id]
     
     if action_name == 'edit'
       @showing = false

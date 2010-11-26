@@ -32,7 +32,7 @@ module SitemapGenerator
         if model_instance.is_a? UsCity
           @xml.loc "http://#{Options.domain}#{us_city_url(model_instance)}"
         elsif model_instance.is_a? Listing
-          @xml.loc "http://#{Options.domain}#{facility_path(model_instance.title, model_instance.id)}"
+          @xml.loc "http://#{Options.domain}#{facility_path(model_instance.storage_type.parameterize, model_instance.title, model_instance.id)}"
         elsif model_instance.is_a? Page
           @xml.loc "http://#{Options.domain}#{page_title(model_instance)}"
         elsif model_instance.is_a? Post

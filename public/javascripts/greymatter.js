@@ -220,8 +220,8 @@ $(function(){
 		var $this = $(this);
 		$this.addClass('loading');
 		
-		if ($.mayContinue($this)) {
-			$.getJSON(this.href + '&authenticity_token=' + $.get_auth_token(), {},
+		$.mayContinue($this, function() {
+			$.getJSON($this.attr('href') + '&authenticity_token=' + $.get_auth_token(), {},
 				function(response) {
 					$this.removeClass('loading');
 					
@@ -240,7 +240,9 @@ $(function(){
 					}
 				}
 			);
-		} else $this.removeClass('loading');
+		}, function() { // else
+			$this.removeClass('loading'); 
+		});
 		
 		return false;
 	});
@@ -278,10 +280,10 @@ $(function(){
 	$('.inline_delete_link').live('click', function(){
 		var $this = $(this);
 		
-		if ($.mayContinue($this)) {
-			if (this.rel.split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
+		$.mayContinue($this, function() {
+			if ($this.attr('rel').split('_')[1] == '0') $this.parent().parent().slideUpAndRemove();
 			else $('#'+ $this.attr('rel')).slideUpAndRemove();
-		}
+		});
 		
 		return false;
 	});
@@ -586,8 +588,12 @@ $.revertSettingsTextFieldToLabel = function(text_field, old_val) {
 	});
 }
 
-$.mayContinue = function(link) {
-	return !link.hasClass('before_confirm') || (link.hasClass('before_confirm') && confirm(link.attr('title')))
+$.mayContinue = function(link, callback, else_callback) {
+	if (!link.hasClass('before_confirm') || (link.hasClass('before_confirm') && $.greyConfirm(link.attr('title'), callback))) {
+		return true;
+	} else {
+		else_callback.call(this, link);
+	}
 }
 
 $.open_map = function(map) {

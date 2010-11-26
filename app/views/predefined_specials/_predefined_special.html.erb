@@ -1,0 +1,4 @@
+<li class="predef_special<%= ' checked' if @client.has_special? predefined_special %>">
+	<%= predefined_special.title %>
+	<%= hidden_field_tag 'specials[]', predefined_special.id %>
+</li>

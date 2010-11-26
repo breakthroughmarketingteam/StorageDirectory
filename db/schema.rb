@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
 
   add_index "block_forms", ["block_id", "form_id"], :name => "index_block_forms_on_block_id_and_form_id"
 
+  create_table "block_widgets", :force => true do |t|
+    t.integer  "block_id"
+    t.integer  "widget_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "blocks", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -329,6 +336,15 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
     t.datetime "updated_at"
   end
 
+  create_table "issn_ids", :force => true do |t|
+    t.string   "model_type"
+    t.integer  "model_id"
+    t.string   "name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "issn_unit_type_features", :force => true do |t|
     t.string   "MappingCodes"
     t.string   "sID"
@@ -380,6 +396,16 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "listing_sizes", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "size_id"
+    t.integer  "position",   :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_sizes", ["listing_id", "size_id"], :name => "index_listing_sizes_on_listing_id_and_size_id"
 
   create_table "listings", :force => true do |t|
     t.string   "title"
@@ -434,6 +460,14 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
   end
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
+
+  create_table "models_modules", :force => true do |t|
+    t.string   "name"
+    t.integer  "model_id"
+    t.string   "model_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -696,6 +730,15 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
 
   add_index "specials", ["client_id", "title"], :name => "index_specials_on_listing_id_and_title"
 
+  create_table "suggestions", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "controller"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -825,6 +868,13 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
     t.integer  "owner_id"
   end
 
+  create_table "virtual_models", :force => true do |t|
+    t.text     "model"
+    t.text     "schema"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "web_specials", :force => true do |t|
     t.string   "label"
     t.string   "title"
@@ -835,6 +885,20 @@ ActiveRecord::Schema.define(:version => 20101123203618) do
     t.integer  "listing_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "widget_galleries", :force => true do |t|
+    t.integer  "widget_id"
+    t.integer  "gallery_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "widgets", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "content"
   end
 
 end

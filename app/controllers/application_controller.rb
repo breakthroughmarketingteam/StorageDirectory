@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
-    @per_page = 15
+    @per_page = 20
     @listings_per_page = 10        
     @app_name = 'USSelfStorageLocator.com'                                                  
     @distance_options = Search.distance_options
