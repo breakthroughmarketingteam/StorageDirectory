@@ -449,7 +449,7 @@ p.foot-text{margin:40px;font-weight:bold;}
 #add-fac-box h2{background:url(/images/ui/storagelocator/money.png) no-repeat scroll 1px 7px transparent;height:44px;padding:9px 0 0 64px;position:relative;width:90px;}
 #add-fac-box h2 a{color:#fff;font-size:16px;line-height:16px;text-shadow:1px 1px 0 #666;}
 #welcome-box{background:url(/images/ui/storagelocator/welcome-header.png) no-repeat top left;width:164px;position:relative;left:18px;color:#555;text-align:center;height:400px;margin-top:20px;}
-#admin-box{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat top left;width:175px;position:relative;color:#555;text-align:left;margin:0 0 20px 5px;}
+#admin-box{width:175px;position:relative;color:#555;text-align:left;margin:0 0 20px 5px;}
 #tips-box{background:url(/images/ui/storagelocator/red-box-t.png) no-repeat left top;color:#555;margin:5px 0 0 5px;min-height:220px;padding-bottom:25px;position:relative;text-align:center;}
 #tips-box-bottom{background:url(/images/ui/storagelocator/red-box-b.png) no-repeat left top ;bottom:0;height:22px;position:absolute;width:175px;}
 #tips-box-bottom p a{width:21px;height:20px;display:block;float:left;position:relative;left:98px;top:8px;margin-right:5px;}
@@ -618,17 +618,15 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #info_request_sent{padding:10px 10px;}
 .panel div.sl-table-exp-form-l{width:50%;}
 .panel div.sl-table-exp-form-r{width:53%;margin:0 -44px 19px 0;}
-#sl-tabs-hours{padding:10px 12px 17px;}
-#sl-tabs-hours-in{overflow:hidden;padding:0 17px;}
-#sl-tabs-hours .day_field{width:9%;font-size:80%;display:block;float:left;line-height:1.4;}
+#sl-tabs-hours .day_field{width:9%;display:block;float:left;line-height:1.9;}
 #business_hours_form .left,#business_hours_form .right{width:48%;}
 #business_hours_form ul{margin-left:13px;}
 #business_hours_form ul li{padding:0 0 15px;overflow:hidden;}
-#business_hours_form h4{margin:0 0 20px 0;background:#ebebeb;padding:7px 12px 7px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
-#business_hours_form h4 span{float:right;color:#333;font-size:60%;font-weight:normal;}
+#business_hours_form h4{margin:0 0 20px 20px;}
+#business_hours_form h4 span{color:#333;font-size:12px;font-weight:normal;margin-left:10px;}
 #business_hours_form h4 span label,#business_hours_form h4 span input{cursor:pointer;}
 #business_hours_form .hour_range{display:inline;margin-left:5px;}
-#business_hours_form .hour_range select{background:#fff;border:1px solid #ccc;padding:2px 4px;font-size:70%;}
+#business_hours_form .hour_range select{background:#fff;border:1px solid #ccc;padding:2px 4px;}
 #business_hours_form .hour_range .copy_all_hours{font-size:70%;color:#006400;background-image:url(/images/ui/storagelocator/green-arrow-btn.png);padding-left:16px;margin-left:5px;}
 #business_hours_form .submit{float:left;position:relative;}
 #business_hours_form .submit #save_hours{float:left;margin-right:10px;}
@@ -663,13 +661,13 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-tabs-map ul li.sl-map-dir a{display:block;width:141px;height:22px;line-height:22px;color:#fff;font-weight:bold;text-decoration:none;text-align:center;}
 #sl-tabs-map ul li.sl-map-pri{background:url(/images/ui/storagelocator/sl-map-print-tab.png) no-repeat left top;float:left;width:105px;height:22px;text-transform:uppercase;list-style:none;margin:0px 5px 10px 5px;}
 #sl-tabs-map ul li.sl-map-pri a{display:block;width:105px;line-height:22px;height:22px;color:#fff;font-weight:bold;text-decoration:none;text-align:center;}
-#sl-tabs-feat{width:723px;margin-top:-10px;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;border:1px solid #ccc;padding:15px;margin-bottom:10px;overflow:hidden;}
+#sl-tabs-feat{width:723px;margin-top:-10px;padding:15px;margin-bottom:10px;overflow:hidden;}
 #sl-tabs-feat-in {float:left;padding:0 0 8px 10px;}
-#sl-tabs-feat-in li{width:33%;height:25px;float:left;line-height:25px;margin:7px 0 0 0;list-style:none;color:#666;background:url(/images/ui/storagelocator/sl-feature-blank-icon.png) no-repeat left top;}
+#sl-tabs-feat-in li{background:url(/images/ui/storagelocator/checkbox.png) no-repeat 5px 1px transparent;color:#666;float:left;list-style:none;padding:2px 0;width:33%;}
 #sl-tabs-feat-in li.add_feature{background:none;}
 #sl-tabs-feat-in li.add_feature input.hintable{width:66%;font-size:90%;float:left;margin-right:5px;padding:3px 5px;border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #sl-tabs-feat-in li.add_feature #facility_feature_submit{float:left;display:none;}
-#sl-tabs-feat-in li .facility_feature{display:block;width:25px;height:25px;float:left;margin-right:5px;}
+#sl-tabs-feat-in li .facility_feature{display:block;float:left;height:25px;margin-right:5px;position:relative;right:-2px;top:-10px;width:25px;}
 .edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/checkmark.png) no-repeat center;}
 #sl-tabs-pict{overflow:hidden;}
@@ -1570,8 +1568,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
 
 
-.show_action img#listing_img{border:4px solid #fff;height:129px;width:174px;}
-#narrow-box .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
+.edit_action img#listing_img, .show_action img#listing_img{border:4px solid #fff;height:129px;width:174px;}
+.edit_action .clogo, .show_action .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
 .show_action a.dlogo_wrap span{line-height:24px;top:20px;}
 
 .show_action #sb-title{}
@@ -1657,3 +1655,33 @@ form .note{clear:both;display:block;font-size:80%;}
 
 p.breadcrumb {background:#6666cc;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
 p.breadcrumb a{color:#fff;}
+
+#sl-edit-tabs #fac_details{margin-top:20px;}
+#sl-edit-tabs .left{margin-bottom:20px;font-size:12px;float:left;}
+#sl-edit-tabs tr{display:block;margin-bottom:10px;}
+#sl-edit-tabs p{font-size:12px;margin-bottom:10px;}
+#sl-edit-tabs input{margin-top:5px;}
+#sl-edit-tabs p.label{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;padding:7px 20px;}
+#sl-edit-tabs p.label2{}
+#sl-edit-tabs #name{width:100%;}
+#sl-edit-tabs #facility_name{width:500px;}
+#sl-edit-tabs #address{width:100%;}
+#sl-edit-tabs #address span{float:left;margin:0 50px 0 0;}
+#sl-edit-tabs #address input{margin-bottom:10px;}
+#sl-edit-tabs #address #facility_city{width:230px;}
+#sl-edit-tabs #address #facility_zip{width:40px;}
+#sl-edit-tabs #email{width:100%;}
+#sl-edit-tabs #email p span{color:#000;font-size:12px;font-weight:normal;margin-left:24px;}
+#sl-edit-tabs #email #facility_email{width:300px;}
+#sl-edit-tabs #phone{}
+#sl-edit-tabs #phone span{display:block;margin-top:10px;}
+#sl-edit-tabs #facility_phone{width:200px;}
+#sl-edit-tabs #admin_fee{width:100%;}
+#sl-edit-tabs #admin_fee #facility_admin_fee{width:50px;}
+#sl-edit-tabs #flogo{width:100%;}
+#sl-edit-tabs #descript textarea{padding:5px;}
+#sl-edit-tabs #hours{width:100%;}
+#sl-edit-tabs #features{}
+#sl-edit-tabs #specials{width:100%;}
+#sl-edit-tabs #unit_sizes{}
+#sl-edit-tabs #fac_pictures{}

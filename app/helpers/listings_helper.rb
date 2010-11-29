@@ -110,7 +110,7 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id))}</div>"
+      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title.parameterize, listing.id))}</div>"
     else
       img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
