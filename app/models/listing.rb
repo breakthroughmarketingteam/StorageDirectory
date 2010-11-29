@@ -152,6 +152,10 @@ class Listing < ActiveRecord::Base
     self.specials.first
   end
   
+  def display_special
+    self.client.display_special if self.client
+  end
+  
   def pro_rated?
     self.client ? self.client.pro_rated? : false
   end
