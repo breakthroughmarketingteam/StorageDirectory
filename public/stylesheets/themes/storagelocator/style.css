@@ -727,7 +727,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
-#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:20px;}
+#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-6px;}
 #ov-services ul li{list-style:none;display:inline;}
 #ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
