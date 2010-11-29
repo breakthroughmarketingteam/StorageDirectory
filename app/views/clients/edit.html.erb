@@ -72,31 +72,14 @@
 	<%= render_hints_for :specials %>
       <div id="ov-specials" class="hideable">
         <div class="ov-item-head">
-          <h3><span>Specials</span></h3>
+          <h3>Specials</h3>
         </div>
         <div id="ov-specials-cnt">
-			<div class="left">
-				<p>Predefined Specials</p>
-				<ul id="predef_specials" class="con">
-					<% disabled_and_predef_specials.each do |special| %>
-						<li id="PredefinedSpecial_<%= special.id %>"><%= special.title %></li>
-					<% end %>
-					<!--<li>
-						<%#= render :partial => 'specials/form', :locals => { :special => Special.new } %>
-					</li>-->
+			<% form_tag toggle_specials_client_path(@client) do %>
+				<ul id="toggle_specials">
+					<%= render :partial => PredefinedSpecial.all %>
 				</ul>
-			</div>
-			
-			<div class="right">
-				<p>Your Active Specials</p>
-				<ul id="active_specials" class="con">
-					<% @client.active_specials.each do |special| %>
-						<li id="<%= "#{special.sort_class}_#{special.id}" %>" rel="position"><%= special.title %></li>
-					<% end %>
-				</ul>
-			</div>
-			
-			<%= render :partial => 'predef_special_form' %>
+			<% end %>
         </div>
       </div>
 	

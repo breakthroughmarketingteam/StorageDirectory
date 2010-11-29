@@ -11,11 +11,11 @@
 					<!-- tab content -->
 					<div id="fac_details">
 						<div id="name" class="left">
-							<p class="label">Facility Name:</p>
+							<p class="label">Name:</p>
 							<input type="text" name="facility_name" id="facility_name" value="American International Self Storage - 164nd Street" size="40">
 						</div>
 						<div id="address" class="left">
-							<p class="label">Facility Location:</p>
+							<p class="label">Location:</p>
 							<span>
 								Address 1:<input type="text" name="facility_address1" id="facility_address1" value="1961 NE 164th St" size="30"><br />
 								Address 2: <input type="text" name="facility_address2" id="facility_address2" value="" size="30"><br />
@@ -195,7 +195,7 @@
 						<div id="phone" class="left">
 							<p class="label">Contact Phone Number:</p>
 							Ph: <input type="text" name="facility_phone" id="facility_phone" value="3059494556" size="12">
-							<span><p>This facility contact phone number will only be used to notify you of any customer leads. It will not be displayed on your facility's profile. A trackable local phone number we provide you with will be used in your facility's profile instead.</p></span>
+							<p>This facility contact phone number will only be used to notify you of any customer leads. It will not be displayed on your facility's profile. A trackable local phone number we provide you with will be used in your facility's profile instead.</p>
 						</div>
 						<div id="admin_fee" class="left">
 							<p class="label">Administrative Fee:</p>
@@ -224,7 +224,7 @@ Your North Miami Beach Self Storage location, one block of 163rd Street and 5 mi
 							<p class="label">Specials:</p>
 						</div>
 					</div>
-					<!-->
+
 					<div id="unit_sizes">
 						<p class="label">Unit Sizes:</p>
 						<%#= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
@@ -233,7 +233,7 @@ Your North Miami Beach Self Storage location, one block of 163rd Street and 5 mi
 						<p class="label">Facility Pictures:</p>
 						<%#= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
 					</div>
-					-->
+
 				</div>
 			</div>
 		</div>

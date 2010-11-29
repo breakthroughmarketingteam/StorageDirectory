@@ -149,24 +149,27 @@ namespace :import do
     
     records.each_with_index do |row, i|
       begin
-        title   = row[0].titleize
-        address = row[1].titleize
-        city    = row[2].titleize
+        title   = row[0].try :titleize
+        address = row[1].try :titleize
+        city    = row[2].try :titleize
         state   = row[3]
-        zip     = row[4].split('-')[0].to_s
-        phone   = row[5]
-        type    = row[6]
-        category = row[7]
+        zip     = row[4].blank? ? nil : row[4].split('-')[0].to_s
+        phone2  = row[5]
+        phone   = row[6]
+        email   = row[7]
+        category = row[8]
+        type    = row[9]
         
         zip = zip.size < 5 ? "0#{zip}" : zip unless zip.blank?
-      rescue
-        puts "Row #{i} had bad or insufficient data"
+      rescue => e
+        puts "Row #{i} had bad or insufficient data. Error: #{e.message}"
       end
       
-      unless address.blank? || address.match(/(po box)/i) || zip.blank?
+      unless city.blank? #address.blank? || address.match(/(po box)/i) || zip.blank?
         listing = Listing.new :title => title, :category => category
-        listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => phone
-        listing.build_contact :phone => phone
+        listing.facility_features.build :title => type
+        listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => (phone.match(/(N\/A)/i) ? nil : phone)
+        listing.build_contact :phone => phone2, :email => email
         
         puts "Added to queue (#{percent_of(i, total)} done): #{listing.title}"
         filtered << listing
@@ -180,7 +183,7 @@ namespace :import do
     saved = 0; failed = 0; geocoded = 0; not_geocoded = 0
     
     filtered.each_with_index do |listing, i|
-      if listing.save
+      if listing.save false
         saved += 1
         puts "Saved (#{saved} of #{queued}; #{percent_of(i, queued)}): #{listing.title}"
         
@@ -201,15 +204,15 @@ namespace :import do
   end
 end
 
-def load_from_csv(file_name)
+def load_from_csv(file_name, has_header = true)
   require 'fastercsv'
   file = "#{RAILS_ROOT}/lib/tasks/csv_data/#{file_name}"
   
   puts "Loading and Parsing CSV file"
   records = FasterCSV.read file
-  records.shift # discard the header row
+  records.shift if has_header
   
-  puts "Ready to import #{records.size} records." # dont count the the header row
+  puts "Ready to import #{records.size} records."
   records
 end
 

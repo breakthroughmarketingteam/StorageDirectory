@@ -30,8 +30,8 @@ class Size < ActiveRecord::Base
     width * length unless width.blank?
   end
   
-  def icon(size)
-    @size_icon ||= SizeIcon.first :conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]
+  def icon(size = 'thumb')
+    @size_icon ||= SizeIcon.first(:conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]).try :icon
   end
   
   # ISSN methods

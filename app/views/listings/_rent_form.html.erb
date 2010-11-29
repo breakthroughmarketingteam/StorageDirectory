@@ -1,4 +1,4 @@
-<% form_for [listing, Rental.new], :html => { :class => 'rental_form' } do |f| %>
+<% form_for [listing, Rental.new], :html => { :class => 'rental_form', 'data-pr' => ('1') } do |f| %>
 	<h2>Rent a Unit</h2>
 
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
@@ -8,37 +8,41 @@
 
 		<div class="col1">
 			<div>
-				<%= label_tag :unit_type, 'Type: ' %>
-				<%= select_tag :unit_type, option_tags(listing.unit_types_for_select, (size && size.title)), :class => 'required' %>
+				<%= label_tag :unit_type, 'Type: ', :class => 'block left' %>
+				<%= select_tag :unit_type, option_tags(@listing.unit_types_for_select, (size && size.title)), :class => 'required' %>
 			</div>
 			
 			<div>
-				<%= f.label :size_id, 'Size: ' %>
-				<%= select_tag 'rental[size_id]', listing.sizes_for_select_tag(size), :class => 'required' %>
+				<%= f.label :size_id, 'Size: ', :class => 'block left' %>
+				<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.available_sizes, @search.unit_size, :class => 'required sizes_select' %>
 			</div>
 			
-			<div>Rate: <span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
+			<div><%= label_tag 'Rate: ', nil, :class => 'block left' %><span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
+			
+			<div class="calendar_wrap">
+				<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %><%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
+			</div>
 			
 			<div>
-				<%= f.label :move_in_date, 'Move in Date: ' %><%= f.text_field :move_in_date, :class => 'required mini_calendar', :maxlength => 10 %>
+				<%= label_tag 'Paid until: ', nil, :class => 'block left' %><span class="paid_through"></span>
 			</div>
 			
-			<div>
-				<%= f.label :duration, 'Duration (months): ' %><%= f.text_field :duration, :value => 1, :class => 'required tiny click_sel', :maxlength => 2 %>
-			</div>
-			
-			<% unless listing.specials.empty? %>
-				<div>Specials:
+			<% unless @listing.specials.empty? %>
+				<div><%= label_tag 'Specials: ', nil, :class => 'block left' %>
 					<ul>
-						<% listing.specials.each do |special| %>
-							<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.amount}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
+						<% @listing.specials.each do |special| %>
+							<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
 						<% end %>
 					</ul>
 				</div>
 			<% end %>
 		</div>
 	
-		<div class="col2"><img src="/images/ui/storagelocator/10x10.png" /></div>
+		<div class="col2">
+			<div id="size_picker">
+				<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+			</div>
+		</div>
 	
 		<div class="col3">
 			<ul>
@@ -47,7 +51,7 @@
 					<li class="discount">Special Offer: <span class="right">-$<span></span></span></li>
 				<% end %>
 				<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
-				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span>4.75</span></span></li>
+				<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span></span></span></li>
 				<hr />
 				<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
 			</ul>

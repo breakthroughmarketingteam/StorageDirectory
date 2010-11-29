@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :update, :destroy, :test_issn]
+  before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   
   def index
     render :layout => false if request.xhr?
@@ -100,6 +100,16 @@ class ClientsController < ApplicationController
       flash[:error] = 'Your account is suspended'
       redirect_to root_path
     end
+  end
+  
+  def toggle_specials
+    if params[:toggle] == 'true'
+      @client.predef_special_assigns.create :predefined_special_id => params[:predefined_special_id]
+    else
+      @client.predef_special_assigns.find_by_predefined_special_id(params[:predefined_special_id]).destroy
+    end
+    
+    render :json => { :success => true }
   end
   
   def test_issn

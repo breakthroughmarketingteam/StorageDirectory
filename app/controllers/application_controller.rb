@@ -149,13 +149,13 @@ class ApplicationController < ActionController::Base
       @meta_description  = @@app_config[:description] || @meta_keywords
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
-      @nav_pages         = Page.nav_pages
+      #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Select and Rent Self Storage Anywhere, Anytime.'
       @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
     
     @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
-    @per_page = 15
+    @per_page = 20
     @listings_per_page = 10        
     @app_name = 'USSelfStorageLocator.com'                                                  
     @distance_options = Search.distance_options

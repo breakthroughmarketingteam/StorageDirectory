@@ -93,14 +93,20 @@ $(document).ready(function() {
 	});
 	
 	// advanced search options
-	var $size_picker = $('#size_picker'),
+	var $size_picker = $('.size_picker'),
 		$size_img = $('img', $size_picker),
-		$size_select = $('#search_unit_size');
+		$size_select = $('.sizes_select');
 	
 	// preload
+	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){
-		var img = new Image();
-		img.src = $(this).attr('rel');
+		var $this = $(this);
+		
+		if ($this.attr('rel') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('rel')) return true; })) {
+			var img = new Image();
+			img.src = $this.attr('rel');
+			pre_loaded_size_icons.push(img);
+		}
 	});
 	
 	if ($size_select.length) {
@@ -1166,7 +1172,6 @@ $(document).ready(function() {
 		if ($(this).hasClass('loading')) return false;
 		
 		var main_pic = $('.main_pic', '#sl-photos');
-		console.log(main_pic)
 		if (main_pic.length == 0) return false;
 		
 		$('img', '#sl-photos #previews').removeClass('active');
@@ -1288,36 +1293,16 @@ $(document).ready(function() {
 			return false;
 		});
 	}
-	
-	$( "#predef_specials, #active_specials" ).sortable({
-		connectWith: '.con',
-		placeholder: 'ui-state-highlight',
-		helper: 'clone',
-		update: function(e, ui) {
-			if (ui.sender) {
-				var predef_id = ui.item.attr('id').replace('PredefinedSpecial_', ''),
-					form = $('#new_predef_special_assign', '#ov-specials');
-					
-				if (e.target.id == 'active_specials') {
-					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
-				} else {
-					form.append('<input type="hidden" name="predef_special_assign[predefined_special_id]" value="'+ predef_id +'" />');
-				}
-				
-				$.post(form.attr('action'), form.serialize(), function(response) {
-					$.with_json(response, function(data) {
-						ui.item.effect('highlight', 1000);
-					});
-				}, 'json');
-				
-			} else if (e.target.id == 'active_specials') {
-				$.updateModels(e, ui, function() {
-					ui.item.effect('highlight', 1000);
-				});
-			}
-		}
-	}).disableSelection();
 
+	$('.predef_special', '#toggle_specials').click(function() {
+		var $this = $(this).toggleClass('checked'), form = $this.parents('form'), id = $this.children('input:hidden').val();
+		
+		$.post(form.attr('action'), { 'predefined_special_id': id, 'toggle': $this.hasClass('checked') }, function(response) {
+			$.with_json(response, function(data) {
+				
+			});
+		});
+	});
 		
 	// TODO: refactor all button events that do ajax calls
 	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content
