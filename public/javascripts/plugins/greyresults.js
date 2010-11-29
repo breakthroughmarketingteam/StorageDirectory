@@ -659,6 +659,7 @@ $(function(){
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					Gmaps_data = data['maps_data'];
+					console.log(data)
 					results_page.replaceWith(data['results']);
 					$.setGmap(Gmaps_data, 'main_map');
 					$('a', '.rslt-features').tooltip();
@@ -671,6 +672,11 @@ $(function(){
 		
 		return false;
 	});
+	
+	var search_page = $('#page-cnt', '#listings_controller.home_action');
+	if (search_page.length) {
+		$('#narrow_results_form').submit();
+	}
 	
 	var google_map = $('#google_map');
 	if (google_map.length) {
@@ -904,7 +910,7 @@ $.fn.rental_form = function() {
 	
 	function special_calc(calc, subtotal, month_rate, multiplier) {
 		var discount = 0;
-		console.log(calc, subtotal, month_rate, multiplier)
+		
 		switch (calc[1]) {
 			case 'm': discount = month_rate * parseFloat(calc[0]); break;
 			case '%': discount = subtotal * (parseFloat(calc[0]) / 100.00); break;

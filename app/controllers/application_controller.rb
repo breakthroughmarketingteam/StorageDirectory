@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
       @meta_description  = @@app_config[:description] || @meta_keywords
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
-      @nav_pages         = Page.nav_pages
+      #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Select and Rent Self Storage Anywhere, Anytime.'
       @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end

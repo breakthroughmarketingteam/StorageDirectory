@@ -83,7 +83,7 @@ class Listing < ActiveRecord::Base
     if search.is_zip?
       options[:conditions] = ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
       
-    elsif !search.is_address_query? # try query by name? 
+    elsif !search.is_address_query? && !search.query.blank? # try query by name? 
       conditions = { :conditions => ["listings.title LIKE ? OR listings.title IN (?) AND #{base_conditions}", "%#{search.query}%", search.query.split(/\s|,\s?/)] }
       options.merge! conditions
       

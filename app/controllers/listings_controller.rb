@@ -12,11 +12,14 @@ class ListingsController < ApplicationController
   end
   
   # when a user navigates to the home page we shall redirect them back to them same page but with their city and state in the path (geocode by IP)
-  def cleaner
+  def home
+    @page = Page.find_by_title 'Self Storage' unless request.xhr?
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     session[:search_id] = @search.id
-    localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : self_storage_path(@search.state, @search.city.parameterize)
-    redirect_to localized_path
+    #localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : self_storage_path(@search.state, @search.city.parameterize)
+    #redirect_to localized_path
+    
+    render :action => 'locator'
   end
   
   def locator

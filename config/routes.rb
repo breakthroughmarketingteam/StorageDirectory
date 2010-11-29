@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
   
   $_storage_types.each do |type|
-    eval "map.#{type.gsub(' ', '_').downcase}_cleaner '/#{type.parameterize}', :controller => 'listings', :action => 'cleaner', :storage_type => '#{type}'"
+    eval "map.#{type.gsub(' ', '_').downcase}_home '/#{type.parameterize}', :controller => 'listings', :action => 'home', :storage_type => '#{type}'"
     eval "map.#{type.gsub(' ', '_').downcase} '/#{type.parameterize}/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => '#{type}'"
   end
   

@@ -6,11 +6,11 @@ class Prorater
     if env['PATH_INFO'] =~ /^\/prorater/
       require 'cgi'
       
-      prorate       = 0.03333
-      hash          = Hash[*env['QUERY_STRING'].split(/&|=/)]
+      prorate       = 0.03333 # secret sauce
+      hash          = Hash[*env['QUERY_STRING'].split(/&|=/)] # query string to hash
       multiplier    = hash['multiplier'].to_i
       move_date     = Time.parse(CGI.unescape(hash['move_date']))
-      days_in_month = Date.civil(move_date.year, move_date.month, -1).day 
+      days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
       
       if multiplier > 1 

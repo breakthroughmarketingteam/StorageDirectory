@@ -114,13 +114,13 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 .my_account #content_bottom{margin:15px 0 25px 9px;}
 #posts_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
-#pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,
+#pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content,#clients_controller.new_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
 #clients_controller.add_your_facility #content{top:0;}
 #pages_controller.storage_tips #content{top:2px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
-#listings_controller.locator_action #content{border-left:1px dashed #ccc;left:3px;top:0;padding-left:10px;width:760px;}
+#listings_controller.locator_action #content,#listings_controller.home_action #content{border-left:1px dashed #ccc;left:3px;top:0;padding-left:10px;width:760px;}
 #type-one-r-col{left:0;margin-top:-10px;}
 #listings_controller.compare_action #content{width:auto;margin-left:15px;float:none;}
 #listings_controller.compare_action #content #type-one-r-col-in{width:auto;}
@@ -475,7 +475,7 @@ ul#specials_list {margin:15px 10px;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
-.locator_action #results_header{width:96.3%;}
+.locator_action #results_header,.home_action #results_header{width:96.3%;}
 #top_map_btn{display:block;float:right;margin:17px 25px 0 0;color:#fff;text-decoration:none;}
 #top_map_btn:hover, #results_header #top_map_btn:active{}
 #top_map_btn img{}
@@ -829,7 +829,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in,#reservations_controller #type-one-cnt-in,
 #us_states_controller #type-one-cnt-in,#listings_controller.index_action #type-one-cnt-in{margin:15px 20px 10px 20px;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
-#listings_controller.locator_action #type-one-cnt-in{margin:0;position:relative;}
+#listings_controller.locator_action #type-one-cnt-in,#listings_controller.home_action #type-one-cnt-in{margin:0;position:relative;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
 /*#pages_controller #type-one-cnt-in #content{width:auto;float:none;position:static;}*/
 #listings_controller.show_action #type-one-cnt-in{padding:0;}
@@ -975,7 +975,7 @@ img.right{margin:0 0 10px 10px;}
 #email_reports_settings .submit_btn:hover{text-decoration:underline;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
-body.locator_action form.new_listing_request{margin-top:10px;}
+body.locator_action form.new_listing_request,body.home_action form.new_listing_request{margin-top:10px;}
 .datepicker_wrap{background:url(/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
 #new_client #email_check{overflow:hidden;position:relative;margin-bottom:7px;}
 #new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
