@@ -659,7 +659,6 @@ $(function(){
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					Gmaps_data = data['maps_data'];
-					console.log(data)
 					results_page.replaceWith(data['results']);
 					$.setGmap(Gmaps_data, 'main_map');
 					$('a', '.rslt-features').tooltip();
