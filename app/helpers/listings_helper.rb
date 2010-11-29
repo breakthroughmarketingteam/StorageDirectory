@@ -99,11 +99,9 @@ module ListingsHelper
       html = "Loading local results for #{@search.storage_type}..."
     end
 		
-		if @search.is_zip?
-			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
-		elsif @search.is_city?
+		if @search.is_city?
 			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
-			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}</span>" unless @search.lat.blank?
+			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}#{" #{@search.zip}" if @search.is_zip? }</span>" unless @search.lat.blank?
 		else
 			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
 		end

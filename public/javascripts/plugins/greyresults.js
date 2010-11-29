@@ -132,8 +132,6 @@ $(function(){
 	 * FRONT END, results page
 	*/
 	
-	$('.rental_form').rental_form();
-	
 	// narrow search form sliders
 	$('.slider').each(function(){
 		var $this = $(this),
@@ -481,72 +479,6 @@ $(function(){
 		return false;
 	});
 	
-	var reservation_workflow = {
-		slides : [
-			{
-				div_id  : 'reserve_step1',
-				nav_vis : [
-					['next', 'fadeIn'],
-					['back', 'fadeOut'] 
-				],
-				action : function(wizard) {
-					wizard.workflow.animate({'height': '380px'}, 'fast');
-				},
-				validate : function(wizard) {
-					var form = $('#reservation_form1', wizard.workflow);
-
-					return bool_submit_once_and_do(form, wizard, 2, function(response_data, next_slide) {
-						next_slide.html(response_data).children().hide().fadeIn();
-						$('.hintable', next_slide).hinty();
-						if (wizard.workflow.height() != 610) wizard.workflow.animate({'height': '610px'}, 'fast');
-					});
-				} // END validate
-			}, // END slide 1
-			{ 
-				div_id  : 'reserve_step2',
-				nav_vis : [
-					['next', function(btn, wizard){ btn.text('Next').data('done', false); }],
-					['back', 'fadeIn']
-				],
-				action : function(wizard) {
-					// expand slide 2 automatically if it's already filled (the user went back), otherwise this is handled in slide 1's validate method
-					if ($('#reservation_form2', wizard.workflow).length) wizard.workflow.animate({'height': '610px'}, 'fast');
-				},
-				validate : function(wizard) {
-					var form = $('#reservation_form2', wizard.workflow);
-					
-					return bool_submit_once_and_do(form, wizard, 3, function(response_data, next_slide) {
-						next_slide.html(response_data).children().hide().fadeIn();
-					});
-				} // END validate
-			}, // END slide 2
-			{ 
-				div_id  : 'reserve_step3',
-				nav_vis : [
-					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
-					['back', 'fadeIn']
-				],
-				action : function(wizard) {
-					wizard.workflow.animate({'height': '440px'}, 'fast');
-					
-					var map_dirs  = $('#gmap_dirs');
-					if (!map_dirs.children().length) {
-						map_dirs.jmap({ 
-							mapCenter: [Gmaps_data.center.lat, Gmaps_data.center.lng] 
-						}, function(map, el) { 
-							$(el).jmap('SearchAddress', {
-								query: ''
-							}); 
-						});
-					}
-				}
-			} // END slide 3
-		],
-		finish_action : function(wizard) {
-			wizard.workflow.parent().slideUp().removeClass('active').parent().find('.sl-table').removeClass('active');
-		}
-	};
-	
 	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
 	// returns true so the workflow can go to the next slide
 	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
@@ -637,6 +569,23 @@ $(function(){
 		delayed_submit(this);
 	});
 	
+	var feature_toggle = $('.toggle_action', '#unit_features');
+	if (feature_toggle.length) {
+		feature_toggle.data('orig', feature_toggle.text());
+		
+		feature_toggle.click(function() {
+			var $this = $(this);
+
+			if (!$this.data('open')) {
+				$this.data('open', true);
+				$this.text('Less Features');
+			} else {
+				$this.data('open', false);
+				$this.text($this.data('orig'));
+			}
+		});
+	}
+	
 	function delayed_submit(input) {
 		setTimeout(function() {
 			$(input).parents('form').submit();
@@ -677,6 +626,15 @@ $(function(){
 		$('#narrow_results_form').submit();
 	}
 	
+	var featured_listing = $('#feat_wrap');
+	if (!featured_listing.children().length) {
+		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
+			$.with_json(response, function(partial) {
+				featured_listing.replaceWith(partial);
+			});
+		});
+	}
+	
 	var google_map = $('#google_map');
 	if (google_map.length) {
 		var coords = $.map(google_map.attr('data-coords').split(','), function(el, i) { return parseFloat(el) });
@@ -697,6 +655,8 @@ $(function(){
 			street_view.jmap('CreateStreetviewPanorama', { 'latlng': coords });
 		});
 	}
+	
+	$('form', '#rent_step1').rental_form();
 	
 	/*
 	 * Google Map methods
@@ -896,7 +856,7 @@ $.fn.rental_form = function() {
 			end_date 	  = new Date(move_date.getFullYear(), move_date.getMonth() + limit, move_date.getDate() - 1);
 		
 		if (prorated) {
-			if (move_date.getDate() > half_month) {
+			if (limit == 1 && move_date.getDate() > half_month) {
 				multiplier += 1.00;
 				end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, days_in_month - 1);
 				
@@ -967,6 +927,64 @@ $.fn.rental_form = function() {
 		total_text.text(total.toFixed(2));
 	}
 	
+	var rent_workflow = {
+		slides : [
+			{
+				div_id  : 'rent_step1',
+				nav_vis : [
+					['next', 'hide'],
+					['back', 'fadeOut'] 
+				],
+				action : function(wizard) {
+					$('.submit_btn', wizard.workflow).unbind('click').bind('click', function() {
+						wizard.next();
+						return false;
+					});
+				},
+				validate : function(wizard) {
+					
+				} // END validate
+			}, // END slide 1
+			{ 
+				div_id  : 'rent_step2',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					
+				},
+				validate : function(wizard) {
+					
+				} // END validate
+			}/*, // END slide 2
+			{ 
+				div_id  : 'reserve_step3',
+				nav_vis : [
+					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					wizard.workflow.animate({'height': '440px'}, 'fast');
+					
+					var map_dirs  = $('#gmap_dirs');
+					if (!map_dirs.children().length) {
+						map_dirs.jmap({ 
+							mapCenter: [Gmaps_data.center.lat, Gmaps_data.center.lng] 
+						}, function(map, el) { 
+							$(el).jmap('SearchAddress', {
+								query: ''
+							}); 
+						});
+					}
+				}
+			} // END slide 3*/
+		],
+		finish_action : function(wizard) {
+			console.log('done')
+		}
+	};
+	
 	return this.each(function() {
 		var form 		 = $(this),
 			prorated	 = (form.attr('data-pr') == '1' ? true : false),
@@ -983,7 +1001,7 @@ $.fn.rental_form = function() {
 					form.trigger('recalc');
 				}
 			});
-			
+		
 		form.bind('recalc', function() {
 			var rate = parseFloat(month_rate.eq(0).text()),
 				special = $('input[name="rental[special_id]"]:checked', form);
@@ -993,9 +1011,11 @@ $.fn.rental_form = function() {
 					update_totals(parseFloat(data.multiplier), rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, prorated, form);
 				});
 			} else { // fixed rate
-				update_totals(1, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_amt, tax_text, total_text, prorated, form);
+				update_totals(1, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, prorated, form);
 			}
 		});
+		
+		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		
 		sizes_select.change(function() {
 			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
