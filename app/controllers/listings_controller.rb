@@ -13,11 +13,9 @@ class ListingsController < ApplicationController
   
   # when a user navigates to the home page we shall redirect them back to them same page but with their city and state in the path (geocode by IP)
   def home
-    @page = Page.find_by_title 'Self Storage' unless request.xhr?
+    @page = Page.find_by_title 'Self Storage'
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     session[:search_id] = @search.id
-    #localized_path = params[:storage_type] ? _storage_type_path(params[:storage_type], @search) : self_storage_path(@search.state, @search.city.parameterize)
-    #redirect_to localized_path
     
     render :action => 'locator'
   end
@@ -27,24 +25,24 @@ class ListingsController < ApplicationController
     @page = Page.find_by_title 'Self Storage' unless request.xhr?
     @search = Search.find_by_id session[:search_id]
     
-    if @search
-      # we want to create a new search everytime to keep track of the progression of a user's habits
-      @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
-      
-      if Search.diff? @search, @new_search
-        @new_search.save
-        @search.add_child @new_search
-        @search = @new_search
-      end
-    else
-      @search = Search.create({ :city => params[:city], :state => params[:state], :zip => params[:zip], :storage_type => params[:storage_type] }, request)
+    # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
+    @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
+    
+    if Search.diff? @search, @new_search
+      @new_search.save
+      @search.add_child @new_search
+      @search = @new_search
+    end
+    
+    if params[:search] && params[:search][:sorted_by]
+      raise (@search.sorted_by == params[:search][:sorted_by]).pretty_inspect
+      @search.update_attribute :sort_num, @search.sort_num + 1 if @search.sorted_by == params[:search][:sorted_by]
     end
     
     session[:search_id] = @search.id
     @location = @search.location
-    get_map
     @listings = @search.results # this calls the Listing model
-    @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
+    @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
     
     # updates the impressions only for listings on current page
@@ -54,10 +52,10 @@ class ListingsController < ApplicationController
       format.html {}
       format.js do
         if params[:auto_search]
-          render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @maps_data } }
+          render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
         else
           # implementing this ajax response for the search results 'Show More Results' button
-          render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @maps_data }
+          render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @map_data }
         end
       end
     end
@@ -69,10 +67,10 @@ class ListingsController < ApplicationController
     if params[:ids] && params[:ids].match(/\d+/)
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-      @maps_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
       @comparables = { :online_rentals => :self, :monthly_rates => Listing.top_types, :specials => :self, :features => :self }
       
-      render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @maps_data } }
+      render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
     else
       
     end
@@ -206,7 +204,16 @@ class ListingsController < ApplicationController
   end
   
   def _build_search_attributes(params)
-    { :city => params[:city], :state => params[:state], :zip => params[:zip], :unit_size => nil, :storage_type => params[:storage_type], :within => nil }
+    { 
+      :storage_type => params[:storage_type],
+      :city         => params[:city],
+      :state        => params[:state],
+      :zip          => params[:zip],
+      :sorted_by    => params[:sort],
+      :sort_num     => params[:sort_num] ? params[:sort_num].to_i + 1 : 1,
+      :unit_size    => nil,
+      :within       => nil
+    }
   end
   
 end

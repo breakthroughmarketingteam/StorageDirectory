@@ -150,7 +150,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x left -11px  #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 30px 13px 20px;overflow:hidden;}
-.rslt-head-txt .ajax_loader{margin:4px auto;}
+.rslt-head-txt .ajax_loader{margin:11px auto;}
 .rslt-head-txt > p{color:#999;float:left;font-size:12px;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}

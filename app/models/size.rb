@@ -14,6 +14,10 @@ class Size < ActiveRecord::Base
     ['Upper', 'Lower', 'Indoor', 'Outdoor']
   end
   
+  def self.get_from_unit_size(unit_size)
+    self.first :conditions => ['width = ? AND length = ?', unit_size.split('x')[0], unit_size.split('x')[1]]
+  end
+  
   def display_dimensions
     "#{width} x #{length}"
   end
