@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
                 :use_scripts,
                 :get_coords,
                 :is_admin?,
-                :home_page
+                :home_page,
+                :get_list_of_file_names
   
   include UtilityMethods
   include Geokit

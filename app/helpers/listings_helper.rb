@@ -43,7 +43,7 @@ module ListingsHelper
   def results_main_button(listing)
     partial = listing.available_sizes.empty? ? :reserve : :sizes
     if listing.accepts_reservations?
-      link_to 'Reserve', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
+      link_to 'Rent', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => 'reserve'
     end
@@ -108,16 +108,33 @@ module ListingsHelper
 		html
   end
   
+  @@standard_logo_root = 'public/images'
+  @@standard_logo_path = 'ui/storagelocator/facility_logos'
+  @@standard_logo_ext = '.png'
+  def standard_logos
+    @standard_logo ||= get_list_of_file_names "#{@@standard_logo_root}/#{@@standard_logo_path}", @@standard_logo_ext
+  end
+  
+  def standard_logo_path(logo)
+    "#{@@standard_logo_path}/#{logo}#{@@standard_logo_ext}"
+  end
+  
   def display_logo(listing, options = {})
     @min_title_len = 21
     
     if listing.logo.exists?
       "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id))}</div>"
+    elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
+      link_to image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
     else
       img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
-      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
     end
+  end
+  
+  def get_storage_type
+    @search ? @search.storage_type.parameterize : 'self-storage'
   end
   
   def display_default_logo_choices

@@ -64,10 +64,8 @@ class ListingsController < ApplicationController
   end
   
   def compare
-    #if params[:ids] && params[:ids].match(/\d+/)
-    #  session[:compare_listing_ids] = params[:ids].split(',').reject(&:blank?)
-    #  redirect_to compare_listings_path(:ids => '')
-    #end
+    @search = Search.find_by_id session[:search_id]
+    
     if params[:ids] && params[:ids].match(/\d+/)
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)

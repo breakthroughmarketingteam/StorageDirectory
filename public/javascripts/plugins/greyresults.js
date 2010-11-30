@@ -390,9 +390,10 @@ $(function(){
 						}, 1000);
 
 					} else if ($this.attr('rel') == 'reserve') {
-						$.activate_datepicker($panel);
-						$('.numeric_phone', $panel).formatPhoneNum();
-						new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
+						//$.activate_datepicker($panel);
+						//$('.numeric_phone', $panel).formatPhoneNum();
+						//new GreyWizard($('#reserve_steps', $panel), reservation_workflow).begin_workflow_on(0);
+						$('#rent_step1 form', $panel).rental_form();
 					}
 				});
 			});
@@ -905,8 +906,8 @@ $.fn.rental_form = function() {
 			tax_amt	 = 0;
 			
 		if (special.length) {
-			var calc  = special.attr('data-special-calc').split('|'),
-			discount = special_calc(calc, rate * (calc[2] || 1), parseFloat(month_rate.eq(0).text()), multiplier);
+			var calc = special.attr('data-special-calc').split('|'),
+				discount = special_calc(calc, rate * (calc[2] || 1), parseFloat(month_rate.eq(0).text()), multiplier);
 		}
 		
 		multiplier = update_end_date((calc ? (calc[2] || 1) : 1), calendar, multiplier, prorated, form);
@@ -915,7 +916,7 @@ $.fn.rental_form = function() {
 		$('.dur', form).text(multiplier);
 		$('.subtotal span', form).text(subtotal.toFixed(2));
 		$('.discount span span', form).text(discount);
-
+		
 		total = subtotal;
 		total -= discount;
 
@@ -957,28 +958,7 @@ $.fn.rental_form = function() {
 				validate : function(wizard) {
 					
 				} // END validate
-			}/*, // END slide 2
-			{ 
-				div_id  : 'reserve_step3',
-				nav_vis : [
-					['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
-					['back', 'fadeIn']
-				],
-				action : function(wizard) {
-					wizard.workflow.animate({'height': '440px'}, 'fast');
-					
-					var map_dirs  = $('#gmap_dirs');
-					if (!map_dirs.children().length) {
-						map_dirs.jmap({ 
-							mapCenter: [Gmaps_data.center.lat, Gmaps_data.center.lng] 
-						}, function(map, el) { 
-							$(el).jmap('SearchAddress', {
-								query: ''
-							}); 
-						});
-					}
-				}
-			} // END slide 3*/
+			}
 		],
 		finish_action : function(wizard) {
 			console.log('done')

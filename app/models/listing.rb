@@ -173,7 +173,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_searched_size(search)
-    return self.sizes.first if search.nil?
+    return self.sizes.first if search.nil? || search.unit_size.nil?
     dims = search.unit_size.split('x')
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
   end

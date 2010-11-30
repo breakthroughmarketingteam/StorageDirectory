@@ -118,7 +118,7 @@
 		</li>
 		
 		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
-			<%= link_to "Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
+			<%= link_to "More Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
 		</li>
 		
 		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">

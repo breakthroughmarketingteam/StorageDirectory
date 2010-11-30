@@ -1,7 +1,7 @@
 <div class="rental_form">
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
-	<div class="head">Use this form to rent a unit from <span><%= @listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
+	<div class="head">Use this form to rent a unit from <span><%= listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
 	
 	<div id="rent_steps">
 		<div class="items">
@@ -12,12 +12,12 @@
 						<div class="col1">
 							<div>
 								<%= label_tag :unit_type, 'Type: ', :class => 'block left' %>
-								<%= select_tag :unit_type, option_tags(@listing.unit_types_for_select, (size && size.title)), :class => 'required' %>
+								<%= select_tag :unit_type, option_tags(listing.unit_types_for_select, (size && size.title)), :class => 'required' %>
 							</div>
 			
 							<div>
 								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
-								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.available_sizes, @search.unit_size, :class => 'required sizes_select' %>
+								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', listing.available_sizes, get_search.unit_size, :class => 'required sizes_select' %>
 							</div>
 			
 							<div><%= label_tag 'Rate: ', nil, :class => 'block left' %><span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
@@ -30,10 +30,10 @@
 								<%= label_tag 'Paid until: ', nil, :class => 'block left' %><span class="paid_through"></span>
 							</div>
 			
-							<% unless @listing.specials.empty? %>
+							<% unless listing.specials.empty? %>
 								<div><%= label_tag 'Specials: ', nil, :class => 'block left' %>
 									<ul>
-										<% @listing.specials.each do |special| %>
+										<% listing.specials.each do |special| %>
 											<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
 										<% end %>
 									</ul>
