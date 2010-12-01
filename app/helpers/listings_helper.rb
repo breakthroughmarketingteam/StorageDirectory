@@ -100,7 +100,7 @@ module ListingsHelper
     end
 		
 		if @search.is_zip?
-			html << " in <span class=\"hlght-text\">#{@location.city}, #{@location.state} #{@location.zip}</span>"
+			html << " in <span class=\"hlght-text\">#{@search.city}, #{@search.state} #{@search.zip}</span>"
 		elsif @search.is_city?
 			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
 			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}</span>" unless @search.lat.blank?
