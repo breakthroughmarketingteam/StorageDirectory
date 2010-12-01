@@ -65,6 +65,8 @@ class Listing < ActiveRecord::Base
   #
   
   def self.find_by_location(search)
+    @location = search.location
+    
     # build the options for the model find method
     options = {
       :include => [:map, :sizes, :pictures, :reviews],
@@ -76,14 +78,9 @@ class Listing < ActiveRecord::Base
     unless search.storage_type.downcase == 'self storage'
       options[:include] << :facility_features
       base_conditions += " AND LOWER(facility_features.title) = '#{search.storage_type.downcase}' OR LOWER(facility_features.description) LIKE '%#{search.storage_type.downcase}%'"
-    end    
-
-    @location = search.location
+    end
     
-    if search.is_zip?
-      options[:conditions] = ['maps.zip = ? AND ' + base_conditions, search.extrapolate(:zip)]
-      
-    elsif !search.is_address_query? && !search.query.blank? # try query by name? 
+    if !search.is_address_query? && !search.query.blank? # try query by name? 
       conditions = { :conditions => ["listings.title LIKE ? OR listings.title IN (?) AND #{base_conditions}", "%#{search.query}%", search.query.split(/\s|,\s?/)] }
       options.merge! conditions
       
@@ -110,10 +107,24 @@ class Listing < ActiveRecord::Base
       # ordering the results
       @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(@location)
     else
-      @listings.sort_by_distance_from @location
+      @listings = @listings.sort_by_distance_from @location
     end
     
+    @listings = sort_listings(@listings, search) unless search.sorted_by.blank?
     @listings
+  end
+  
+  def self.sort_listings(listings, search)
+    case search.sorted_by when 'distance'
+      listings = listings.sort_by_distance_from search.location
+    when 'name'
+      listings = listings.sort_by &:title
+    when 'price'
+      listings.sort_by { |listing| listing.sizes.empty? ? -1 : listing.sizes.first.price }
+    end
+    
+    listings.reverse! if search.sort_num % 2 != 0
+    listings
   end
   
   def self.get_featured_listing(listings)
@@ -152,6 +163,10 @@ class Listing < ActiveRecord::Base
     self.specials.first
   end
   
+  def display_special
+    self.client.display_special if self.client
+  end
+  
   def pro_rated?
     self.client ? self.client.pro_rated? : false
   end
@@ -169,7 +184,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_searched_size(search)
-    return self.sizes.first if search.nil?
+    return self.sizes.first if search.nil? || search.unit_size.nil?
     dims = search.unit_size.split('x')
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
   end

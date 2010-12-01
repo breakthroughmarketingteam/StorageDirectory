@@ -3,23 +3,29 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 
-	<div id="main_map">
+	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>">
 	</div>
 
 	<div id="results_wrap">
 		<div class="rslt-head-txt">
 			<h2><%= locator_header %></h2>
-			<p>Your nearest <%= @search.storage_type %> is being displayed first</p>
+			<p>Your <span id="sorted_by">most relevant</span> <%= @search.storage_type %> is being displayed first</p>
 		</div>
 
 		<div id="type-one-top-bar">
 			<div id="search-head">
 				<ul>
-				 	<li id="list-name"><a href=""><span class="hidden">List by </span>Facility Name</a></li>
-				 	<li id="list-miles"><a href=""><span class="hidden">List by </span>Miles</a></li>
-				 	<li id="list-size"><span class="hidden">List by </span>Size</li>
-				 	<li id="list-price"><a href=""><span class="hidden">List by </span>Price</a></li>
-					<li id="list-amenities"><span class="hidden">List by </span>Amenities</li>
+				 	<li id="list-name">
+						<%= link_to '<span class="hide">List by </span>Facility Name', "/#{@search.storage_type.parameterize}/sort/name/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'name', 'data-sort_num' => @search.sort_num %>
+					</li>
+				 	<li id="list-miles">
+						<%= link_to '<span class="hide">List by </span>Miles', "/#{@search.storage_type.parameterize}/sort/distance/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'distance', 'data-sort_num' => @search.sort_num %>
+					</li>
+				 	<li id="list-size"><span class="hide">List by </span>Size</li>
+				 	<li id="list-price">
+						<%= link_to '<span class="hide">List by </span>Price', "/#{@search.storage_type.parameterize}/sort/price/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'price', 'data-sort_num' => @search.sort_num %>
+					</li>
+					<li id="list-amenities"><span class="hide">List by </span>Amenities</li>
 				</ul>
 			</div>
 

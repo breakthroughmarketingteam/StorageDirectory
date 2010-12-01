@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101129161558) do
+ActiveRecord::Schema.define(:version => 20101130201057) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -687,6 +687,8 @@ ActiveRecord::Schema.define(:version => 20101129161558) do
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
+    t.string   "sorted_by"
+    t.integer  "sort_num",     :default => 0
   end
 
   create_table "size_icons", :force => true do |t|

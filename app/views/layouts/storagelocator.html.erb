@@ -10,17 +10,6 @@
         <%= site_meta_tags %>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <title><%= yield :title %></title>
-
-        <%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
-        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
-        <%= javascript_include_tag 'jquery.all' %>
-        <script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= GOOGLE_APPLICATION_ID %>'></script><% unless @maps_data.nil? %><script type="text/javascript">Gmaps_data = <%= @maps_data.to_json %>;</script><% end %>
-        <%= if params[:title] == 'storage-tips' then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end %>
-        <%= javascript_include_tag @plugins %>
-        <%= yield :scripts %>
-          <%= javascript_include_tag 'greymatter', 'application' %>
-          <%= @widgets_js.map { |js| javascript_include_tag js } %>
-        <script src="/javascripts/swfobject_modified.js" type="text/javascript"></script>
         
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -115,6 +104,16 @@
         </div>
         <div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
         
+		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
+        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
+        <%= javascript_include_tag 'jquery.all' %>
+        <script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= GOOGLE_APPLICATION_ID %>'></script><% unless @maps_data.nil? %><script type="text/javascript">Gmaps_data = <%= @maps_data.to_json %>;</script><% end %>
+        <%= if params[:title] == 'storage-tips' then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end %>
+        <%= javascript_include_tag @plugins %>
+        <%= yield :scripts %>
+          <%= javascript_include_tag 'greymatter', 'application' %>
+          <%= @widgets_js.map { |js| javascript_include_tag js } %>
+        <script src="/javascripts/swfobject_modified.js" type="text/javascript"></script>
         <script type="text/javascript">
             swfobject.registerObject("FlashID");
             ussslgid = '<%= GOOGLE_APPLICATION_ID %>';

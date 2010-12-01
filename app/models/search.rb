@@ -35,6 +35,12 @@ class Search < ActiveRecord::Base
     old_search.comparable_attributes != new_search.comparable_attributes
   end
   
+  def self.set_sort(search)
+    return if search.sorted_by.blank?
+    p = self.parent
+    return if p.nil?
+  end
+  
   def results
     @listings ||= Listing.find_by_location(self)
   end

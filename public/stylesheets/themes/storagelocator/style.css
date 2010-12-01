@@ -149,8 +149,8 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .slider{margin-bottom:15px;}
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x left -11px  #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
-.rslt-head-txt{margin:15px 15px 13px 20px;overflow:hidden;}
-.rslt-head-txt .ajax_loader{margin:4px auto;}
+.rslt-head-txt{margin:15px 30px 13px 20px;overflow:hidden;}
+.rslt-head-txt .ajax_loader{margin:11px auto;}
 .rslt-head-txt > p{color:#999;float:left;font-size:12px;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
@@ -723,7 +723,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .rslt-offer{height:86px;padding:15px 0 0 15px;position:relative;width:200px;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
-#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:20px;}
+#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-6px;}
 #ov-services ul li{list-style:none;display:inline;}
 #ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
@@ -1107,7 +1107,8 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 .error{width:auto;margin:0;padding:0;background:none;color:#a00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
-#workflow_steps,#issn_steps{overflow:hidden;position:relative;width:785px;}
+#workflow_steps,#issn_steps,#rent_steps{overflow:hidden;position:relative;}
+#workflow_steps,#issn_steps{width:785px;}
 #workflow_nav,#map_flow_nav{bottom:45px;position:absolute;right:20px;width:95%;}
 #workflow_steps .items,#issn_steps .items{position:absolute;width:2000px;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
@@ -1118,6 +1119,7 @@ form .error p{margin:0 0 7px 0;}
 #workflow_nav .back,#map_flow_nav .back{right:auto;left:0;}
 #workflow_nav .ajax_loader,#map_flow_nav .ajax_loader{position:absolute;top:15px;right:121px;}
 .workflow_step,.map_flow_step{position:relative;float:left;;width:755px;overflow:hidden;padding-left:15px;}
+#rent_steps .workflow_step{padding:0;width:753px;}
 .map_flow_step{height:395px;}
 .workflow_step h3,.map_flow_step h3{font-size:28px;margin-bottom:15px;}
 #signupstep_2 h3{float:right;}
@@ -1479,7 +1481,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #green{padding:0 20px 20px;}
 #green img{float:right;}
 #green p{font-size:12px;line-height:18px;margin-bottom:20px;}
-#green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#339933;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}
+#green a{-moz-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;-webkit-border-radius:6px 6px 6px 6px;background:#393;border:1px solid #999;color:#fff;display:block;font-size:24px;padding:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #green a:hover{text-decoration:underline;}
 #green-popup > h2 {font-size:28px;margin-bottom:20px;}
 #green-popup{border:20px solid #ccc;padding:30px;}
@@ -1500,7 +1502,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
 .confirm_box p{font-size:100%;text-align:center;}
-.confirm_box .btn{position:absolute;bottom:6px;color:#fff;}
+.confirm_box .btn,.alert_box .btn{position:absolute;bottom:6px;right:12px;color:#fff;}
 .confirm_box #confirm_yes{right:10px;}
 .confirm_box #confirm_cancel{left:10px;}
 
@@ -1524,7 +1526,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #terms ul#media-entry li{border-bottom:1px solid #ccc;border-top:1px solid #ccc;list-style:none outside none;margin:0 6px;padding:0 0 10px;}
 #terms ul#media-entry img{margin-left:20px;}
 
-#storage-info-content .tip-box{-moz-border-radius:8px;background:#ffffcc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
+#storage-info-content .tip-box{-moz-border-radius:8px;background:#ffc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
 #storage-info-content .tip-box:hover{border:1px solid #666;}
 #storage-info-content .tip-box img{}
 #storage-info-content .tip-box h3{}
@@ -1539,7 +1541,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form input.hintable{margin:0 0 10px;padding:5px 7px;font-size:100%;border:1px solid #ccc;}
 .virtual_form textarea{margin:0 0 10px;height:150px;padding:5px 7px;font-size:100%;border:1px solid #ccc;}
 .virtual_form div .left{float:right;}
-.virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666666;width:150px;cursor:pointer;border:1px solid #CCCCCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
+.virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
 #feat-list{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;background:#f2f5fe;float:left;font-size:12px;margin:20px 12px 20px 5px;padding:10px;}
 #feat-list h4{color:#fff;font-size:16px;margin-bottom:9px;padding:8px;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;}
@@ -1553,11 +1555,11 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list ul#preview li{float:left;height:27px;margin:4px 1px 3px 4px;width:27px;}
 #feat-list ul#preview img{}
 #feat-list #name,#feat-list #address{width:100%;}
-#feat-list #name a{color:#006600;font-size:14px;font-weight:bold;}
+#feat-list #name a{color:#060;font-size:14px;font-weight:bold;}
 #feat-list #phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
-#feat-list #spec{background:#ffffcc;border:1px dotted #666;color:red;padding:5px;}
+#feat-list #spec{background:#ffc;border:1px dotted #666;color:red;padding:5px;}
 #feat-list #size{color:#4c4bcc;float:left;font-size:14px;font-weight:bold;width:50%;}
-#feat-list #price{color:#339933;float:right;font-size:14px;width:50%;}
+#feat-list #price{color:#393;float:right;font-size:14px;width:50%;}
 #feat-list #more-info{float:right;margin:3px 0 0;}
 #feat-list #more-info a{font-size:100%;line-height:2.2;}
 #feat-list #more-info a:hover{}
@@ -1580,11 +1582,12 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #fac_name{font-size:12px;font-weight:normal;}
 #fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
-#sl-tabs #sl-phone{color:#339933;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
+#sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{height:300px;margin-top:25px;}
 #sl-intro #inner{float:left;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
-#sl-intro #sl-special h3{color:#663300;line-height:24px;padding-top:25px;}
+#sl-intro #sl-special{background:url(/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;text-align:center;width:327px;}
+#sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;}
 #sl-intro #sl-special p{}
 #sl-intro #sl-special a{text-decoration:underline;}
 #sl-intro #sl-special span{font-size:24px;line-height:30px;}
@@ -1595,7 +1598,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .get_dir{margin-top:10px;}
 .get_dir input#from_address{margin-left:3px;width:277px;}
 .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
-.get_dir a#get_dirs:hover{background:#339933}
+.get_dir a#get_dirs:hover{background:#393}
 
 
 #sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;}
@@ -1604,8 +1607,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-intro{height:300px;margin-top:25px;}
 #sl-intro #inner{float:left;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
-#sl-intro #sl-special{background:url(/images/ui/storagelocator/web-special-bg.png) no-repeat;height:150px;margin-top:-3px;position:relative;text-align:center;width:327px;}
-#sl-intro #sl-special h3{color:#663300;line-height:24px;padding-top:25px;width:80%;margin:0 auto;text-align:center;font-size:140%;}
+#sl-intro #sl-special{background:url(/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;width:327px;position:relative;}
+#sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;width:80%;margin:0 auto;text-align:center;font-size:140%;}
 #sl-intro #sl-special p{text-align:left;margin:0;position:absolute;bottom:10px;left:10px;}
 #sl-intro #sl-special a{text-decoration:underline;}
 #sl-intro #sl-special span{font-size:24px;line-height:30px;}
@@ -1615,17 +1618,18 @@ form .note{clear:both;display:block;font-size:80%;}
 .get_dir{margin-top:10px;}
 #sl-tabs-map .get_dir input#from_address{margin-left:3px;width:81%;}
 #sl-tabs-map .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
-#sl-tabs-map .get_dir a#get_dirs:hover{background:#339933}
+#sl-tabs-map .get_dir a#get_dirs:hover{background:#393}
 #sl-tabs-in ul.tabular{border-bottom:5px solid #ccc;height:39px;}
 #sl-tabs-in ul.tabular li{display:block;float:left;margin-right:5px;position:relative;text-align:center;}
 #sl-tabs-in ul.tabular li a{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f5f5f5;border:1px solid #ccc;color:#333;display:block;font-size:16px;font-weight:bold;height:14px;padding:12px 20px;position:relative;text-decoration:none;}
 #sl-tabs-in ul.tabular li.active a{background:#fff;}
 #sl-tabs #ratings{color:#666;float:right;font-size:12px;position:relative;top:11px;}
 
-.rental_form{font-size:12px;position:relative;}
+.rental_form{margin-top:50px;font-size:12px;position:relative;border:1px solid #CCC;-moz-border-radius-bottomleft:4px;border-radius-bottomleft:4px;-webkit-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;border-radius-bottomright:4px;-webkit-border-radius-bottomright:4px;-moz-border-radius-topright:4px;border-radius-topright:4px;-webkit-border-radius-topright:4px;-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;}
 .rental_form h2{background:url(/images/ui/storagelocator/rent-form-tab-bg.png) no-repeat;color:#fff;font-size:28px;height:37px;padding:8px 0 0 20px;text-shadow:1px 1px 0 #333;width:323px;}
 .rental_form .realtime{background:url(/images/ui/storagelocator/greencheck.png) no-repeat;font-size:14px;font-weight:bold;height:30px;padding:12px 0 0 42px;position:absolute;right:0;top:0;width:215px;}
-.rental_form .inner{padding:0;border:1px solid #ccc;height:338px;-moz-border-radius-bottomleft:4px;border-radius-bottomleft:4px;-webkit-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;border-radius-bottomright:4px;-webkit-border-radius-bottomright:4px;-moz-border-radius-topright:4px;border-radius-topright:4px;-webkit-border-radius-topright:4px;-moz-box-shadow:1px 1px 2px #ccc;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;}
+.rental_form h2,.rental_form .realtime{margin-top:-44px;}
+.rental_form .inner{padding:0;}
 .rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;border-bottom:1px solid #ccc;font-size:12px;height:13px;padding:10px 20px;}
 .rental_form .head span{color:#4c4bcc;font-weight:bold;}
 .rental_form label{width:70px;}
@@ -1643,7 +1647,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .col2 img{margin-left:-25px;}
 .rental_form .col3{float:left;padding:20px;width:26%;}
 .rental_form .col3 ul{display:block;float:right;margin:55px 0 0 0;width:100%;}
-.rental_form .col3 li{font-weight:bold;margin:0 0 10px;}
+.rental_form .col3 li{font-weight:bold;margin:0 0 10px;float:none;}
 .rental_form .col3 li.total{font-size:16px;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
@@ -1651,8 +1655,6 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .col3 hr{background:url(/images/ui/storagelocator/price-hr.png) repeat-x;border:none;height:11px;margin:0 0 5px;}
 .rental_form .col3 a.submit_btn{width:130px;color:#fff;float:right;font-size:20px;height:21px;margin-top:20px;padding:6px;position:absolute;bottom:20px;right:20px;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat-x;}
 
-p.breadcrumb {background:#6666cc;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
-p.breadcrumb a{color:#fff;}
 
 #sl-edit-tabs{border-bottom:28px solid #eee;margin-bottom:18px;margin-top:4px;overflow:auto;}
 #sl-edit-tabs #hint{display:block;font-size:12px;margin:20px 0;}
@@ -1712,3 +1714,6 @@ p.breadcrumb a{color:#fff;}
 #sl-edit-tabs #fac_pictures{}
 
 #admin-l-col{margin-top:15px;}
+p.breadcrumb {background:#66c;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
+p.breadcrumb a{color:#fff;}
+

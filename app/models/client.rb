@@ -38,7 +38,7 @@ class Client < User
   end
   
   def special
-    self.specials.last
+    self.predefined_specials.last
   end
   
   def active_specials

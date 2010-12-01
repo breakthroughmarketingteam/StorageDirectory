@@ -1,4 +1,5 @@
-<% @featured_listing = Listing.get_featured_listing @search.results unless in_mode?('home') %>
+<% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') %>
+<div id="feat_wrap">
 <% unless @featured_listing.nil? %>
 	<div id="feat-list" class="shimmy">
 		<h4>Featured Listing</h4>
@@ -21,7 +22,7 @@
 				</li>
 			</ul>
 		<% end %>
-	
+		
 		<div id="name">
 			<%= link_to @featured_listing.title, facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id) %>
 		</div>
@@ -35,7 +36,7 @@
 				<%= @featured_listing.call_tracking_num %>
 			</div>
 		<% end %>
-	
+		
 		<div id="spec">
 			<p>
 				Special
@@ -63,3 +64,4 @@
 		</div>
 	</div>
 <% end %>
+</div>
