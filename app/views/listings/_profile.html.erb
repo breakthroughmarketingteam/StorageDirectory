@@ -4,10 +4,6 @@
 <div id="type-one-r-col">
     
   <div id="type-three-r-col-in">
-    <div id="hed">
-        <h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
-        <div id="ratings">Rating: <%#= ratings_for @listing %></div>
-    </div>
     
     <%= render_hints_for :info_tabs %>
     <% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>

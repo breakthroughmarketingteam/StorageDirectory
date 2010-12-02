@@ -42,8 +42,8 @@ class ListingsController < ApplicationController
     session[:search_id] = @search.id
     @location = @search.location
     @listings = @search.results # this calls the Listing model
-    @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
+    @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     
     # updates the impressions only for listings on current page
     @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
@@ -158,7 +158,7 @@ class ListingsController < ApplicationController
     @showing = true
     @map = @listing.map
     @pictures = @listing.pictures
-    @special = @listing.specials.first || @listing.specials.new
+    @special = @listing.specials.first || (@listing.client && @listing.specials.new)
     @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
     @facility_features = @listing.facility_features.map(&:label).reject(&:blank?)
     @search = Search.find_by_id session[:search_id]
@@ -209,8 +209,6 @@ class ListingsController < ApplicationController
       :city         => params[:city],
       :state        => params[:state],
       :zip          => params[:zip],
-      :sorted_by    => params[:sort],
-      :sort_num     => params[:sort_num] ? params[:sort_num].to_i + 1 : 1,
       :unit_size    => nil,
       :within       => nil
     }

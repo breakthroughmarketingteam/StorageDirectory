@@ -1,8 +1,281 @@
 <% declare_content_for %>
-<% content_for :scripts, @Gmap.to_html rescue nil %>
-<%= content_for :stylesheets, ajaxful_rating_style %>
-<%= display_message flash %>
 
 <div class="staticContent">
-	<%= render :partial => 'profile' %>
+	<div id="type-one-r-col">
+		<div id="type-three-r-col-in">
+			<div id="sl-edit-tabs">
+				<div id="sl-tabs-in" class="tabular_content">
+					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+					<ul id="sl-tabs-nav" class="tabular">
+						<%= content_tag :li, link_to("Facility Details", '#fac_details', :id => 'tab_Details', :rel => 'step1') %>
+						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'step2') %>
+						<%= content_tag :li, link_to("Unit Sizes", '#unit-sizes', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
+						<%= content_tag :li, link_to("Pictures", '#fac_pictures', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
+						<%= content_tag :li, link_to("Reservations", '#reservations', :id => 'reservations', :rel => 'reservations') %>
+						<%= content_tag :li, link_to("Reviews", '#reviews', :id => 'reviews', :rel => 'reviews') %>
+					</ul>
+					<!-- tab content -->
+					<span id="hint">Here you can change all the details for this facility.</span>
+					<div id="step1" class="tab_content">
+						<div id="name" class="left">
+							<p class="label">Name:</p>
+							<div class="inner">
+									<input type="text" name="facility_name" id="facility_name" value="American International Self Storage - 164nd Street" size="40">
+								</div>
+						</div>
+						<div id="address" class="left">
+							<p class="label">Location:</p>
+							<div class="inner">	
+								<span>
+									Address 1:<input type="text" name="facility_address1" id="facility_address1" value="1961 NE 164th St" size="30"><br />
+									Address 2: <input type="text" name="facility_address2" id="facility_address2" value="" size="30"><br />
+								</span>
+								<span>
+									City/State: <br /><input type="text" value="North Miami Beach" name="facility_city" id="facility_city" size="15"> , 
+									<select id="facility_state" name="facility_state" size="1">
+										<option value="AK">
+											AK
+										</option>
+										<option value="AL">
+											AL
+										</option>
+										<option value="AR">
+											AR
+										</option>
+										<option value="AZ">
+											AZ
+										</option>
+										<option value="CA">
+											CA
+										</option>
+										<option value="CO">
+											CO
+										</option>
+										<option value="CT">
+											CT
+										</option>
+										<option value="DC">
+											DC
+										</option>
+										<option value="DE">
+											DE
+										</option>
+										<option value="FL">
+											FL
+										</option>
+										<option value="GA">
+											GA
+										</option>
+										<option value="HI">
+											HI
+										</option>
+										<option value="IA">
+											IA
+										</option>
+										<option value="ID">
+											ID
+										</option>
+										<option value="IL">
+											IL
+										</option>
+										<option value="IN">
+											IN
+										</option>
+										<option value="KS">
+											KS
+										</option>
+										<option value="KY">
+											KY
+										</option>
+										<option value="LA">
+											LA
+										</option>
+										<option value="MA">
+											MA
+										</option>
+										<option value="MD">
+											MD
+										</option>
+										<option value="ME">
+											ME
+										</option>
+										<option value="MI">
+											MI
+										</option>
+										<option value="MN">
+											MN
+										</option>
+										<option value="MO">
+											MO
+										</option>
+										<option value="MS">
+											MS
+										</option>
+										<option value="MT">
+											MT
+										</option>
+										<option value="NC">
+											NC
+										</option>
+										<option value="ND">
+											ND
+										</option>
+										<option value="NE">
+											NE
+										</option>
+										<option value="NH">
+											NH
+										</option>
+										<option value="NJ">
+											NJ
+										</option>
+										<option value="NM">
+											NM
+										</option>
+										<option value="NV">
+											NV
+										</option>
+										<option value="NY">
+											NY
+										</option>
+										<option value="OH">
+											OH
+										</option>
+										<option value="OK">
+											OK
+										</option>
+										<option value="OR">
+											OR
+										</option>
+										<option value="PA">
+											PA
+										</option>
+										<option value="RI">
+											RI
+										</option>
+										<option value="SC">
+											SC
+										</option>
+										<option value="SD">
+											SD
+										</option>
+										<option value="TN">
+											TN
+										</option>
+										<option value="TX">
+											TX
+										</option>
+										<option value="UT">
+											UT
+										</option>
+										<option value="VA">
+											VA
+										</option>
+										<option value="VT">
+											VT
+										</option>
+										<option value="WA">
+											WA
+										</option>
+										<option value="WI">
+											WI
+										</option>
+										<option value="WV">
+											WV
+										</option>
+										<option value="WY">
+											WY
+										</option>
+									</select> 
+									<br />Zip: <br /><input type="text" name="facility_zip" id="facility_zip" value="33162" size="15">
+								</span>
+							</div>
+						</div>
+						<div id="email" class="left">
+							<p class="label">Email: <span>(Account Email: tonyprada@bellsouth.net)</span></p>
+							<div class="inner">
+								<table>
+									<tr>
+										<td>Facility Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td>
+											<span id="contact1">vdante@aol.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
+											<span id="contact2">americaninternationalstorage@gmail.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
+											<input type="text" name="facility_email" id="facility_email" value="" size="40"> &nbsp; [<a onclick="return addContact(64746);" href="#">add</a>]
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div id="phone" class="left">
+							<p class="label">Phone Number:</p>
+							<div class="inner">
+								Contact Number: <input type="text" name="contact_phone" id="f-phone" value="305-949-4556" size="12"><br />
+								Tracked Number: <input type="text" name="tracked_phone" id="f-phone" value="305-123-4567" size="12"><div id="request">Request</div> This special tracked phone number will be used on your facility's profile.
+							</div>
+						</div>
+						<div id="rental_fee" class="left">
+							<p class="label">Rental Settings:</p>
+							<div class="inner">
+								Administrative Fee:<br /> $ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+								<hr />
+								<ul>
+									<li>Billing Method:</li>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
+								</ul>
+								<hr />
+								State Tax:<br /> $ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
+							</div>
+						</div>
+						<div id="flogo" class="left">
+							<p class="label">Logo:</p>
+							<div class="inner">
+								<%= display_logo @listing, :id => 'listing_img' %>
+							</div>
+						</div>
+						<div id="descript" class="left">
+							<p class="label">Description:</p>
+							<div class="inner">
+								<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
+								<textarea id="facility_description" name="facility_description" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
+							</div>
+						</div>
+						<div id="hours" class="left">
+								<p class="label">Hours:</p>
+								<div class="inner">
+									<%= render :partial => 'hours' if in_edit_mode? %>
+								</div>
+							</div>
+					</div>
+					<div id="step2" class="tab_content">
+						<div id="features" class="left">
+							<p class="label">Facility Amenities:</p>
+							<div class="inner">
+								<%= render :partial => 'features' %>
+							</div>
+						</div>
+						<div id="specials" class="left hideable">
+							<p class="label">Specials:</p>
+							<div class="inner">
+								<%= render_hints_for :specials %>
+								<p>Select one or more preset specials to make it available for this facility.</p>
+								<% form_tag toggle_specials_client_path(@client) do %>
+									<ul id="toggle_specials">
+										<%= render :partial => PredefinedSpecial.all %>
+									</ul>
+								<% end %>
+							</div>
+						</div>
+					</div>
+					<div id="unit_sizes" class="tab_content">
+						<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+					</div>
+					<div id="fac_pictures" class="tab_content">
+						<p class="label">Facility Pictures:</p>
+						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

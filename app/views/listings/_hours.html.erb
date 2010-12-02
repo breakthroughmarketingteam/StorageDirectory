@@ -1,4 +1,4 @@
-<div id="sl-tabs-hours" class="tab_content">
+<div id="sl-tabs-hours">
   <div id="sl-tabs-hours-in">
 	<% form_tag "/listings/#{@listing.id}/business_hours", :id => 'business_hours_form' do %>
 		<div class="hours_display left">
@@ -49,12 +49,13 @@
 			
 		</div>
 		
+		<!--
 		<div class="submit">
-			<%= link_to 'Save', '#', :id => 'save_hours', :class => 'btn' %>
-			<%= ajax_loader %>
-			<%= submit_tag 'Save', :class => 'hide' %>
+			<%#= link_to 'Save', '#', :id => 'save_hours', :class => 'btn' %>
+			<%#= ajax_loader %>
+			<%#= submit_tag 'Save', :class => 'hide' %>
 		</div>
-		
+		-->
 	<% end %>
   </div>
 </div>

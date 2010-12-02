@@ -450,16 +450,14 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						$('#rent_step1 form', rform).rental_form();
+						$('#rent_step1 form').rental_form();
 					});
 				} else {
 					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
-						
 						ajax_loader.hide();
-						$.activate_datepicker(rform);
-						$('.numeric_phone', rform).formatPhoneNum();
+						$('#rent_step1 form').rental_form();
 					});
 				}
 			}
@@ -621,32 +619,34 @@ $(function(){
 			sort_fields = $('.sort_field', form);
 		
 		if (!sort_fields.length) {
-			sort_fields = '<input type="hidden" name="search[sorted_by]" class="sort_field" value="'+ $this.attr('data-sort') +'" />' +
-						  '<input type="hidden" name="search[sort_num]" class="sort_field" value="'+ $this.attr('data-sort_num') +'" />';
+			sort_fields = '<input type="hidden" name="search[sorted_by]" class="sort_field" value="'+ $this.attr('data-sorted_by') +'" />' +
+						  '<input type="hidden" name="search[sort_reverse]" class="sort_field" value="'+ $this.attr('data-sort_reverse') +'" />';
 			console.log(sort_fields)
 			form.append(sort_fields);
 		} else {
-			var sort_num = sort_fields.find('input[name="search[sort_num]"]'),
-				sorted_by = sort_fields.find('input[name="search[sorted_by]"]');
+			var sort_reverse = sort_fields.find('input[name="search[sort_num]"]'),
+				sorted_by = sort_fields.find('input[name="search[sort_reverse]"]');
+			
 			console.log(sort_num, sorted_by)
-			sort_num.val(parseInt(sort_num.attr('data-sort_num')) + 1);
-			sorted_by.val($this.attr('data-sort'));
+			
+			sort_reverse.val($this.attr('data-sort_reverse'));
+			sorted_by.val($this.attr('data-sorted_by'));
 		}
 		
 		form.submit();
-		
 		return false;
 	});
 	
 	
 	
-	var search_page = $('#page-cnt', '#listings_controller.home_action');
-	if (search_page.length) {
-		var main_map = $('#main_map', '#content'),
-			latlng = main_map.attr('data-latlng').split(',');
-		
-		$.setGmap({ center: { lat: parseFloat(latlng[0]), lng: parseFloat(latlng[1]), zoom: 14 }, maps: [] });
-		$('#narrow_results_form').submit();
+	var main_map = $('#main_map', '#content');
+	if (main_map.length) {
+		if (typeof Gmaps_data == 'undefined') {
+			var latlng = main_map.attr('data-latlng').split(',');
+			$.setGmap({ center: { lat: parseFloat(latlng[0]), lng: parseFloat(latlng[1]), zoom: 14 }, maps: [] });
+			$('#narrow_results_form').submit();
+			
+		} else $.setGmap({ center: Gmaps_data.center, maps: Gmaps_data.maps });
 	}
 	
 	var featured_listing = $('#feat_wrap');

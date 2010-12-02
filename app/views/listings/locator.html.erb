@@ -2,9 +2,14 @@
 
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
-
-	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>">
-	</div>
+	
+	<p class="hhh">
+		You're looking at a revolution in getting things done quickly and easily. The ease of online shopping and comparison has finally made it to the self storage business. Now finding and getting the best deals 
+		in self storage units and features is easier than ever. Search from hundreds of facilities ranging from self storage to car storage to wine storage - in the size and price you want. We do all the work for you
+		and offer you a discount for any unit you rent through USSelfStorageLocator.com. 
+	</p>
+	
+	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>"></div>
 	
 	<div id="results_wrap">
 		<div class="rslt-head-txt">
@@ -16,14 +21,14 @@
 			<div id="search-head">
 				<ul>
 				 	<li id="list-name">
-						<%= link_to '<span class="hide">List by </span>Facility Name', "/#{@search.storage_type.parameterize}/sort/name/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'name', 'data-sort_num' => @search.sort_num %>
+						<%= link_to '<span class="hide">List by </span>Facility Name', '#sort-name', :class => 'list_sort', 'data-sorted_by' => 'name', 'data-sort_reverse' => @search.sort_reverse %>
 					</li>
 				 	<li id="list-miles">
-						<%= link_to '<span class="hide">List by </span>Miles', "/#{@search.storage_type.parameterize}/sort/distance/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'distance', 'data-sort_num' => @search.sort_num %>
+						<%= link_to '<span class="hide">List by </span>Miles', '#sort-distance', :class => 'list_sort', 'data-sorted_by' => 'distance', 'data-sort_reverse' => @search.sort_reverse %>
 					</li>
 				 	<li id="list-size"><span class="hide">List by </span>Size</li>
 				 	<li id="list-price">
-						<%= link_to '<span class="hide">List by </span>Price', "/#{@search.storage_type.parameterize}/sort/price/#{@search.sort_num}", :class => 'list_sort', 'data-sort' => 'price', 'data-sort_num' => @search.sort_num %>
+						<%= link_to '<span class="hide">List by </span>Price', '#sort-price', :class => 'list_sort', 'data-sorted_by' => 'price', 'data-sort_reverse' => @search.sort_reverse %>
 					</li>
 					<li id="list-amenities"><span class="hide">List by </span>Amenities</li>
 				</ul>

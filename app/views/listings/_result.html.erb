@@ -2,7 +2,7 @@
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
-				<h3><%= link_to result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id) %></h3>
+				<h3><%= link_to_if result.premium?, result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id) %></h3>
 				
 				<% if result.premium? %>
 					<div class="rslt-features">
@@ -131,12 +131,12 @@
 			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
 		
-		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
-			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
-		</li>
-		
 		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
 			<%= link_to "More Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
+		</li>
+		
+		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
+			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
 		</li>
 		
 		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">

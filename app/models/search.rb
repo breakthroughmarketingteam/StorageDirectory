@@ -98,6 +98,10 @@ class Search < ActiveRecord::Base
     self.referrer = request.referrer
   end
   
+  def sort_reversal
+    self.sort_reverse == '+' ? '-' : '+'
+  end
+  
   def is_address_query?
     self.is_zip? || self.is_city? || self.is_state?
   end
