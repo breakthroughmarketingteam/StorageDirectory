@@ -660,13 +660,22 @@ $(document).ready(function() {
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
 		$('.selective_hider').live('click', function(){
-			var dont_hide = $(this).attr('rel'), hide_these = $('.hideable');
+			var dont_hide = $(this).attr('rel'), 
+				hide_these = $('.hideable'),
+				user_hints = $('.user_hint.open');
 			
-			if (dont_hide) hide_these.each(function(){
-				if (this.id != dont_hide) $(this).slideUp();
-				else $(this).slideDown();
-			});
-			else hide_these.slideDown();
+			user_hints.filter('.user_hint[data-rel!='+ dont_hide +']').slideUp();
+			user_hints.filter('.user_hint[data-rel='+ dont_hide +']:hidden').slideDown();
+			
+			if (dont_hide) {
+				hide_these.each(function(){
+					if (this.id != dont_hide) $(this).slideUp();
+					else $(this).slideDown();
+				});
+			} else {
+				hide_these.slideDown();
+				user_hints.slideDown();
+			}
 
 			return false;
 		});
@@ -808,9 +817,15 @@ $(document).ready(function() {
 			placement_id = btn.parent('p').attr('id').replace('UserHintPlacement_', ''),
 			ajax_loader = $('.ajax_loader', hint).show();
 
-		$.updateModel('/user_hints/'+ btn.attr('rel') +'/'+ placement_id, { model: 'UserHintPlacement' }, function(data){
-			hint[btn.attr('rel') == 'hide' ? 'slideUp' : 'slideDown'](900);
-			hint.children()[btn.attr('rel') == 'hide' ? 'fadeOut' : 'fadeIn'](600);
+		$.updateModel('/user_hints/'+ placement_id +'/'+ btn.attr('rel'), { model: 'UserHintPlacement' }, function(data) {
+			if (btn.attr('rel') == 'hide') {
+				hint.slideUp(900).removeClass('open').addClass('hide');
+				hint.children().fadeOut(600);
+			} else {
+				hint.slideDown(900).removeClass('hide').addClass('open');
+				hint.children().fadeIn(1200);
+			}
+				
 			ajax_loader.hide();
 		});
 		

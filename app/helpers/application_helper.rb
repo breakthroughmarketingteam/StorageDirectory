@@ -531,6 +531,10 @@ module ApplicationHelper
     session[:geolocation][:city] rescue 'Zip Code, City, or Street Address'
   end
   
+  def current_path
+    request.env['REQUEST_URI']
+  end
+  
   def display_top_cities(cities, columns = 5, rows = 10)
     lists = ''
     columns.times do |i|
