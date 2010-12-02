@@ -32,7 +32,7 @@ class ListingsController < ApplicationController
       @new_search.save
       @search.add_child @new_search
       @search = @new_search
-    end
+    end unless @search.nil?
     
     if params[:search] && params[:search][:sorted_by]
       raise (@search.sorted_by == params[:search][:sorted_by]).pretty_inspect
