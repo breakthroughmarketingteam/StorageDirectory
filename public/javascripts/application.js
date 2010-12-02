@@ -337,7 +337,7 @@ $(document).ready(function() {
 	// storage tips page
 	var tips_head = $('#tips-head'); 
 	if (tips_head.length > 0) {
-		var tips_show = {
+		new GreyShow({
 			delay : 5000,
 			context : tips_head,
 			slides : [
@@ -370,10 +370,7 @@ $(document).ready(function() {
 					end : function(s) { s.gotoSlide(0); }
 				}
 			]
-		};
-		
-		var slideshow = new GreyShow(tips_show);
-		slideshow.start();
+		}).start();
 	}
 	
 	// listings show page
@@ -441,13 +438,6 @@ $(document).ready(function() {
 			$.cookie('main_map_open', true);
 			$.open_map(main_map);
 		}
-		
-		/*/ move the sidebar with the page
-		var move_me = $('#content_bottom .region_content_bottom');
-		$(window).scroll(function(e){
-			if (e.currentTarget.scrollY >= 176) move_me.css({ position: 'fixed', top: '15px' });
-			else move_me.css({ position: 'static'  });
-		});*/
 	}
 	
 	// New Permissions
@@ -696,17 +686,56 @@ $(document).ready(function() {
 					new GreyWizard($('#issn_steps', pop_up), {
 						title  : title,
 						slides : [
-							{	
+							{ 
 								pop_up_title : title,
 								div_id  : 'issnstep_1',
-								action  : issnstep1,
-								nav_vis : [['back', 'hide'], ['next', function(btn, wizard) { btn.text('Next').data('done', false).fadeOut(); }]]
+								nav_vis : [['back', 'hide'], ['next', function(btn, wizard) { btn.text('Next').data('done', false).fadeOut(); }]],
+								action	: function(wizard) {
+									$('#issn_status_option a', '#issnstep_1').unbind('click').click(function(){
+										wizard.next();
+										return false;
+									});
+									$('#slide_nav').remove();
+								}
 							},
 							{ 
 								pop_up_title : 'Grant Access',
 								div_id  : 'issnstep_2',
-								action  : issnstep2,
-								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Done').data('done', true).fadeIn(); }]]
+								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Done').data('done', true).fadeIn(); }]],
+								action	: function(wizard) {
+									if (typeof wizard.slide_data[1].client_info == 'undefined') {
+										$.getJSON('/ajax/get_partial?partial=clients/issn_agreement&model=Client&id='+ $('#client_id').text(), function(response){
+											$.with_json(response, function(data){
+												wizard.slide_data[1].client_info = data;
+												$('#client_info_preview', wizard.workflow).append(data);
+
+												wizard.workflow.animate({ height: '900px' });
+
+												// printing the page doesn't show the select's value so put it in a hidden span which is visible in the print css
+												var pm_select = $('select[name=pm_software]', wizard.workflow);
+												pm_select.change(function(){ 
+													pm_select.removeClass('invalid'); 
+
+													var span = pm_select.siblings('.val');
+													if (!span.length) 
+														span = pm_select.after('<span class="val dp"></span>').siblings('.val');
+
+													span.text(pm_select.val());
+												});
+
+												// make sure they select a pm software before printing
+												$('.ps', wizard.workflow).click(function(){
+													if (pm_select.val() == '') {
+														pm_select.addClass('invalid');
+														return false;
+													}
+												});
+											});
+										});
+
+									} else $('#client_info_preview', wizard.workflow).html(wizard.slide_data[1].client_info);
+
+								}
 							}
 						],
 						finish_action: 'close'
@@ -716,49 +745,6 @@ $(document).ready(function() {
 			
 			return false;
 		});
-		
-		function issnstep1(wizard) {
-			$('#issn_status_option a', '#issnstep_1').unbind('click').click(function(){
-				wizard.next();
-				return false;
-			});
-			$('#slide_nav').remove();
-		}
-		
-		function issnstep2(wizard) {
-			if (typeof wizard.slide_data[1].client_info == 'undefined') {
-				$.getJSON('/ajax/get_partial?partial=clients/issn_agreement&model=Client&id='+ $('#client_id').text(), function(response){
-					$.with_json(response, function(data){
-						wizard.slide_data[1].client_info = data;
-						$('#client_info_preview', wizard.workflow).append(data);
-						
-						wizard.workflow.animate({ height: '900px' });
-						
-						// printing the page doesn't show the select's value so put it in a hidden span which is visible in the print css
-						var pm_select = $('select[name=pm_software]', wizard.workflow);
-						pm_select.change(function(){ 
-							pm_select.removeClass('invalid'); 
-							
-							var span = pm_select.siblings('.val');
-							if (!span.length) 
-								span = pm_select.after('<span class="val dp"></span>').siblings('.val');
-							
-							span.text(pm_select.val());
-						});
-						
-						// make sure they select a pm software before printing
-						$('.ps', wizard.workflow).click(function(){
-							if (pm_select.val() == '') {
-								pm_select.addClass('invalid');
-								return false;
-							}
-						});
-					});
-				});
-				
-			} else $('#client_info_preview', wizard.workflow).html(wizard.slide_data[1].client_info);
-			
-		}
 		
 		$('.pagination a, .table_sorter', '#pop_up').live('click', function() {
 			$('#pop_up').load(this.href + ' #pop_up > div');
@@ -778,7 +764,7 @@ $(document).ready(function() {
 			} else {
 				$.getJSON(this.href, {}, function(response) {
 					$.with_json(response, function(data){
-						var box = $(data).append('<a class="close_btn" href="#">X</a>');
+						var box = $(data).append('<a class="close_new_unit" href="#">X</a>');
 
 						$('.reservation_wrap', 'td.region').hide();
 						box.appendTo($this.parent());
@@ -873,8 +859,8 @@ $(document).ready(function() {
 		$('.cancel_link', '#client_listing_box').live('click', function() {
 			var $this = $(this),
 				listing = $this.parents('.listing'),
-				listing_id = listing.attr('id');
-				
+				listing_id = listing.attr('id').replace('Listing_', '');
+			
 			if (listing_id.length) delete_client_listing(listing_id);
 			else listing.slideUp('fast', function(){ $(this).remove() });
 			
@@ -894,7 +880,7 @@ $(document).ready(function() {
 				
 				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
 					$.with_json(response, function(data) {
-						$('#'+ listing_id).slideUp('fast', function(){ $(this).remove() });
+						$('#Listing'+ listing_id, '#ov-units').slideUp('fast', function(){ $(this).remove() });
 					});
 					
 					ajax_loader.hide();
@@ -1168,7 +1154,7 @@ $(document).ready(function() {
 	});
 	
 	// change big-pic when thumb is hovered
-	$('img', '#sl-photos #previews').live('mouseover', function(){
+	$('img', '#sl-tabs-pict').live('mouseover', function(){
 		if ($(this).hasClass('loading')) return false;
 		
 		var main_pic = $('.main_pic', '#sl-photos');
@@ -1182,8 +1168,9 @@ $(document).ready(function() {
 		main_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
 	});
 	
-	$('.delete_link', '#sl-photos #previews').live('click', function(){
+	$('.delete_link', '#sl-tabs-pict').live('click', function(){
 		var self = $(this);
+		
 		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
 			self.data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
 			
@@ -1192,10 +1179,12 @@ $(document).ready(function() {
 
 			$.post(self.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
 				$.with_json(response, function(data){
-					if (img.hasClass('active')) $('img:not(#'+ img.attr('id') +')', '#sl-photos #previews').trigger('mouseover');
+					if (img.hasClass('active'))
+						$('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict').trigger('mouseover');
+					
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
-					if ($('img', '#sl-photos #previews').length == 1) $('.main_pic', '#sl-photos').eq(0).fadeOut(900, function(){ $(this).remove() });
+					if ($('img', '#sl-photos #previews').length == 1) $('.big-pic', '#sl-tabs-pict').eq(0).fadeOut(900, function(){ $(this).remove() });
 					
 					update_info_tab_count('Pictures', -1);
 				});
@@ -1214,29 +1203,33 @@ $(document).ready(function() {
 	});
 	
 	$('.auto_change', '#ov-reports-cnt').change(function(){
-		$('#stats_graph').children().fadeOut('slow', function() { $(this).remove() });
+		$('#stats_graph').children().fadeTo('slow', .5);
 		init_stats_graph({ months_ago : this.value, force: true });
 	});
 	
 	function init_stats_graph(options) {
 		if (typeof options == 'undefined') var options = {}
 		var stats_graph = $('#stats_graph'),
-			days_ago = options.days_ago || 0,
-			months_ago = options.months_ago || 1,
-			years_ago = options.years_ago || 0,
-			force = options.force || false;
+			days_ago 	= options.days_ago 	 || 0,
+			months_ago 	= options.months_ago || 1,
+			years_ago 	= options.years_ago  || 0,
+			force 		= options.force 	 || false;
 		
 		if (stats_graph.length > 0) {
 			stats_graph.addClass('loading');
 
 			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
-				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'reservations' : 'info_requests'),
+				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'rentals' : 'info_requests'),
 				d = new Date(), // getMonth returns 0-11
 				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
 			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
 				$.with_json(response, function(data){
+					$.jqplot.preInitHooks.push(function() {
+						stats_graph.children().remove();
+					});
+					
 					var plot_data = [],
 						stats_arr = stats_models.split(/,\W?/);
 
@@ -1256,7 +1249,7 @@ $(document).ready(function() {
 						series: [ 
 					        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
 					        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
-					        { label: '&nbsp;'+ (issn_enabled ? 'Reservations' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
+					        { label: '&nbsp;'+ (issn_enabled ? 'Rentals' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
 					    ],
 						highlighter: { sizeAdjust: 7.5 },
 						cursor: { show: true, zoom: true, followMouse: true, tooltipLocation: 'ne' },

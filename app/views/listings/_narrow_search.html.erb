@@ -12,15 +12,17 @@
 				<%= f.select :storage_type, @facility_features, :selected => @search.storage_type, :class => 'auto' %>
 			</div>
 			
-			<div id="size_option">
-				<div id="size_picker">
-					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+			<% if is_self_storage_search? %>
+				<div id="size_option">
+					<div id="size_picker">
+						<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+					</div>
+					<div>
+						<%= f.label :unit_size, 'Unit Size:' %>
+						<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size, :class => 'auto sizes_select' %>
+					</div>
 				</div>
-				<div>
-					<%= f.label :unit_size, 'Unit Size:' %>
-					<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size, :class => 'auto sizes_select' %>
-				</div>
-			</div>
+			<% end %>
 			
 			<div id="distance_btns">
 				<%= f.label :within,"Distance in miles:" %>

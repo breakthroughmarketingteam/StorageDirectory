@@ -123,13 +123,18 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to(image_tag(listing.logo.url(:thumb), options), facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title.parameterize, listing.id))}</div>"
+      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb), options), facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title.parameterize, listing.id))}</div>"
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
-      link_to image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
+      link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
     else
       img_hash = @listing_logos[listing.default_logo || 5]
       img_hash[:alt] = listing.title
-      link_to "#{image_tag(img_hash[:src], img_hash.merge(options))}<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap'
+      img = image_tag img_hash[:src], img_hash.merge(options)
+      span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"
+      
+      link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap' do |name|
+        "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>"
+      end
     end
   end
   
