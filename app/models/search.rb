@@ -28,17 +28,13 @@ class Search < ActiveRecord::Base
   def self.create_from_geoloc(request, loc, storage_type)
     search = self.new({ :storage_type => storage_type }, request)
     search.set_location! loc
+    search.save
+    search
   end
   
   # check to see if an attribute has changed since last request
   def self.diff?(old_search, new_search)
     old_search.comparable_attributes != new_search.comparable_attributes
-  end
-  
-  def self.set_sort(search)
-    return if search.sorted_by.blank?
-    p = self.parent
-    return if p.nil?
   end
   
   def results

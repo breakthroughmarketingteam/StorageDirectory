@@ -12,7 +12,7 @@
 						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'step3') %>
 						<%= content_tag :li, link_to("Unit Sizes", '#unit-sizes', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
 						<%= content_tag :li, link_to("Pictures", '#fac_pictures', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
-						<%= content_tag :li, link_to("Reports", '#reports', :id => 'reports', :rel => 'reports') %>
+						<%= content_tag :li, link_to("Reports", '#reports', :id => 'reports', :rel => 'fac_reports') %>
 						<%= content_tag :li, link_to("Reviews", '#reviews', :id => 'reviews', :rel => 'reviews') %>
 					</ul>
 					<!-- tab content -->
@@ -283,6 +283,126 @@
 					<div id="fac_pictures" class="tab_content">
 						<p class="label">Facility Pictures:</p>
 						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
+					</div>
+					<div id="fac_reports" class="tab_content">
+						<div id="leads" class="left">
+							<form class="">Show:
+							<select name="type">
+								<option value="0">Lead Type</option>
+								<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
+							  <option value="5">Banner Clicks</option>	<option value="9">Directions</option>
+							</select> for:
+
+							<select name="range">
+								<option value="180">2 Years</option>
+								<option value="180">1 Year</option>
+								<option selected="" value="180">6 Months</option>
+								<option value="90">3 Months</option>
+								<option value="31">1 Month</option>
+								<option value="14">2 Weeks</option>
+								<option value="0">Today</option>
+							</select>
+							<input type="submit" value="Refine" class="button2">
+							</form>
+							<table id="" class="">
+								<thead>
+								    <tr>
+							            <th class="col1" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Leads”">Type</a></th>
+							            <th class="col2" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Time”">Time</a></th>
+							            <th class="col3" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Name”">Name</a></th>
+							            <th class="col4" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Phone”">Phone</a></th>
+							            <th class="col5" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Email”">Email</a></th>
+							            <th class="col6" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “More Info”">More Info</a></th>
+							        </tr>
+								</thead>
+								<tbody>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
