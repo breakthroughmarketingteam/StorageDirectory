@@ -7,8 +7,9 @@
 				<div id="sl-tabs-in" class="tabular_content">
 					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
 					<ul id="sl-tabs-nav" class="tabular">
-						<%= content_tag :li, link_to("Facility Details", '#fac_details', :id => 'tab_Details', :rel => 'step1') %>
-						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'step2') %>
+						<%= content_tag :li, link_to("Details", '#fac_details', :id => 'tab_Details', :rel => 'step1') %>
+						<%= content_tag :li, link_to("Rental Settings", '#settings', :id => 'settings', :rel => 'step2') %>
+						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'step3') %>
 						<%= content_tag :li, link_to("Unit Sizes", '#unit-sizes', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
 						<%= content_tag :li, link_to("Pictures", '#fac_pictures', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
 						<%= content_tag :li, link_to("Reservations", '#reservations', :id => 'reservations', :rel => 'reservations') %>
@@ -213,20 +214,6 @@
 								Tracked Number: <input type="text" name="tracked_phone" id="f-phone" value="305-123-4567" size="12"><div id="request">Request</div> This special tracked phone number will be used on your facility's profile.
 							</div>
 						</div>
-						<div id="rental_fee" class="left">
-							<p class="label">Rental Settings:</p>
-							<div class="inner">
-								Administrative Fee:<br /> $ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
-								<hr />
-								<ul>
-									<li>Billing Method:</li>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
-								</ul>
-								<hr />
-								State Tax:<br /> $ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
-							</div>
-						</div>
 						<div id="flogo" class="left">
 							<p class="label">Logo:</p>
 							<div class="inner">
@@ -248,6 +235,29 @@
 							</div>
 					</div>
 					<div id="step2" class="tab_content">
+						<div id="admin_fee" class="left">
+							<p class="label">Administrative Fee:</p>
+							<div class="inner">
+								$ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+							</div>
+						</div>
+						<div id="billing" class="left">
+							<p class="label">Billing Method:</p>
+							<div class="inner">
+								<ul>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
+								</ul>
+							</div>
+						</div>
+						<div id="tax" class="left">
+							<p class="label">State Tax:</p>
+							<div class="inner">
+								$ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
+							</div>
+						</div>
+					</div>
+					<div id="step3" class="tab_content">
 						<div id="features" class="left">
 							<p class="label">Facility Amenities:</p>
 							<div class="inner">
