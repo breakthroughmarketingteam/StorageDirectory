@@ -11,7 +11,7 @@ $(document).ready(function() {
 		// the live submit handler in formbouncer doesn't seem to work on the search form
 		// temporary workaround...
 		return $(this).parents('form').runValidation().data('valid');
-	})
+	});
 	
 	// ajaxify the login form and forgot password link
 	$('#login_link').click(function() {

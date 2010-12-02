@@ -57,7 +57,7 @@
 							<% @upper_type_size = result.get_upper_type_size(unit_size) %>
 							<li class="radio_wrap">
 								<label title="<%= @upper_type_size.description || @upper_type_size.title if @upper_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									Upper:
+									<span class="type">Upper:</span>
 									<% if @upper_type_size %>
 										<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
 									<% else %>
@@ -74,7 +74,7 @@
 							<% @drive_up_type_size = result.get_drive_up_type_size(unit_size) %>
 							<li class="radio_wrap">	
 								<label title="<%= @drive_up_type_size.description || @drive_up_type_size.title if @drive_up_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									Drive Up:
+									<span class="type">Drive Up:</span>
 									<% if @drive_up_type_size %>
 										<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
 									<% else %>
@@ -91,7 +91,7 @@
 							<% @interior_type_size = result.get_interior_type_size(unit_size) %>
 							<li class="radio_wrap">	
 								<label title="<%= @interior_type_size.description || @interior_type_size.title if @interior_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									Interior:
+									<span class="type">Indoor:</span>
 									<% if @interior_type_size %>
 										<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
 									<% else %>

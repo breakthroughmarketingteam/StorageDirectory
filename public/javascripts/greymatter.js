@@ -25,6 +25,7 @@ $(function(){
 	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	$('.tip_trigger').tooltip();
+	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
 	
 	$('.focus_onload').eq(0).focus();
@@ -1007,6 +1008,40 @@ $.fn.state_changed = function() {
 	var prev_state = this.data('state');
 	if (!prev_state) return false;
 	return prev_state != this.serialize();
+}
+
+// a textual loading animation
+$.fn.txt_loader = function(options) {
+	function increment_txt(el, txt) {
+		var t = el.text();
+		el.text(t + txt);
+	}
+	
+	return this.each(function() {
+		var $this = $(this).text(''),
+			count = 0,
+			settings = {
+				txt : '.',
+				interval : 1000,
+				limit : 3
+			};
+		
+		if (typeof options == 'undefined')
+			var options = {}
+		
+		$.extend(settings, options);
+		
+		setInterval(function() {
+			if (count < settings.limit) {
+				increment_txt($this, settings.txt);
+			} else {
+				$this.text('');
+				count = -1;
+			}
+			
+			count++;
+		}, settings.interval);
+	});
 }
 
 $.fn.shimmy = function() {

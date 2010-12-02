@@ -150,7 +150,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x left -11px  #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 30px 13px 20px;overflow:hidden;}
-.rslt-head-txt .ajax_loader{margin:11px auto;}
+.rslt-head-txt .ajax_loader{margin:10px auto;}
 .rslt-head-txt > p{color:#999;float:left;font-size:12px;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
@@ -199,14 +199,15 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head ul{-moz-border-radius-topleft:4px;border-radius-topleft:4px;-webkit-border-radius-topleft:4px;-moz-border-radius-topright:4px;border-radius-topright:4px;-webkit-border-radius-topright:4px;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;overflow:hidden;width:745px;}
 #search-head li{color:#fff;float:left;font-size:11px;height:21px;}
 #search-head li a{color:#fff;display:block;float:left;font-size:11px;height:21px;padding:10px 0 0 0;text-decoration:none;}
-#search-head li a:hover{}
+#search-head .sorter a{margin-right:15px;padding:5px 15px 0;}
+#search-head .sorter a:hover{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;}
 #search-head li#list-name{background:url(/images/ui/storagelocator/sort-bg-clear.png) repeat-x ;margin:5px;}
-#search-head li#list-name a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:15px;padding:5px 15px 0;width:267px;}
+#search-head li#list-name a{width:267px;}
 #search-head li#list-miles{background:url("/images/ui/storagelocator/sort-bg-clear.png") repeat-x;margin:5px;}
-#search-head li#list-miles a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:7px;padding:5px 15px 0;width:25px;}
+#search-head li#list-miles a{margin-right:7px;width:25px;}
 #search-head li#list-size{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;padding:10px 0 0;text-align:center;width:95px;}
 #search-head li#list-price{background:url("/images/ui/storagelocator/sort-bg-clear.png") repeat-x;margin:5px;}
-#search-head li#list-price a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:15px;padding:5px 15px 0;width:92px;}
+#search-head li#list-price a{width:92px;}
 #search-head li#list-amenities{padding:10px 20px 0 0;text-align:right;width:88px;}
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;margin-bottom:2px;padding-bottom:15px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
@@ -258,6 +259,8 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:11px;}
 .facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat 0 bottom;float:left;height:88px;margin:11px 0 0 33px;padding-left:3px;width:108px;font-size:80%;position:relative;}
+#feat-list .facility-logo{margin:0;padding:0;width:100%;height:auto;background:none;height:120px;}
+#feat-list .facility-logo img{position:absolute;top:0;left:0;}
 .listing img.logo{margin-left:3px;}
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
@@ -274,16 +277,17 @@ li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-rep
 li.rslt-size{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat right top;font-size:12px;width:99px;}
 li.rslt-size span.size{color:#666;display:block;font-weight:bold;text-align:center;}
 li.rslt-size img{margin:4px 0 0 1px;}
-li.rslt-price{font-size:12px;padding:10px 20px 0 0;width:125px;}
-.listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
+li.rslt-price{font-size:12px;padding:10px 12px 0;width:125px;}
+.listing li.rslt-price .price{color:#3333cc;margin-left:5px;font-weight:bold;}
 li.rslt-miles,li.rslt-size{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;color:#333;height:88px;}
 .radio_wrap{height:16px;position:relative;background:url(/images/ui/storagelocator/checkbox.png) no-repeat;}
 .radio_wrap .radio_select{height:16px;width:16px;}
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:125px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
-.listing ul li.rslt-price ul li.radio_wrap .radio_select{float:right;height:16px;position:absolute;right:6px;top:0;width:16px;}
-.listing ul li.rslt-price ul li input{}
+.listing ul li.rslt-price ul li.radio_wrap .radio_select{height:16px;position:absolute;right:6px;top:0;width:16px;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
+.rslt-price .radio_wrap label{float:left;overflow:hidden;}
+.rslt-price .radio_wrap label .type{display:block;float:left;padding:0 0 1px;text-align:left;width:59px;}
 .listing ul li.action_btn{float:right;font-size:120%;height:50px;line-height:3.1;margin:27px 10px 0 0;position:relative;text-shadow:1px 1px 0 #666;width:91px;}
 .listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 .listing ul li.action_btn a.cancel_link,.listing ul li.action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:-14px;top:17px;}

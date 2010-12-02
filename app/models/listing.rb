@@ -123,7 +123,7 @@ class Listing < ActiveRecord::Base
       listings.sort_by { |listing| listing.sizes.empty? ? -1 : listing.sizes.first.price }
     end
     
-    listings.reverse! if search.sort_num % 2 != 0
+    listings.reverse! if search.sort_reverse == '-'
     listings
   end
   

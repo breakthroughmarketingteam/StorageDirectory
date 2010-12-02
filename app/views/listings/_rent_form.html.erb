@@ -1,7 +1,7 @@
 <div class="rental_form">
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
-	<div class="head">Use this form to rent a unit from <span><%= listing.title %></span> and take advantage of their <span>Online Specials</span>.</div>
+	<div class="head">Use this form to rent a unit from <span><%= link_to listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title, listing.id) %></span> and take advantage of their <span>Online Specials</span>.</div>
 	
 	<div id="rent_steps">
 		<div class="items">
