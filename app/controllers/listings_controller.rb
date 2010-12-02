@@ -11,7 +11,7 @@ class ListingsController < ApplicationController
     render :layout => false if request.xhr?
   end
   
-  # when a user navigates to the home page we shall redirect them back to them same page but with their city and state in the path (geocode by IP)
+  # action is used as the home page of the site (the user navigates to it with a blank url) so we load the page first and then get the results via ajax
   def home
     @page = Page.find_by_title 'Self Storage'
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
@@ -23,7 +23,7 @@ class ListingsController < ApplicationController
   def locator
     # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
     @page = Page.find_by_title 'Self Storage' unless request.xhr?
-    @search = Search.find_by_id session[:search_id]
+    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     
     # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
     @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
@@ -32,11 +32,6 @@ class ListingsController < ApplicationController
       @new_search.save
       @search.add_child @new_search
       @search = @new_search
-    end unless @search.nil?
-    
-    if params[:search] && params[:search][:sorted_by]
-      raise (@search.sorted_by == params[:search][:sorted_by]).pretty_inspect
-      @search.update_attribute :sort_num, @search.sort_num + 1 if @search.sorted_by == params[:search][:sorted_by]
     end
     
     session[:search_id] = @search.id
