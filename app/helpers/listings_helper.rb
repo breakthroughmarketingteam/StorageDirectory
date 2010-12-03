@@ -43,7 +43,7 @@ module ListingsHelper
   def results_main_button(listing)
     partial = listing.available_sizes.empty? ? :reserve : :sizes
     if listing.accepts_reservations?
-      link_to 'Rent', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
+      link_to 'Rent It!', listing.get_partial_link(partial), :class => 'tab_link reserve_btn', :rel => partial
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => 'reserve'
     end
@@ -95,16 +95,17 @@ module ListingsHelper
   def locator_header
     unless @listings.blank?
       html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1}"
+      
+      if @search.is_city?
+  			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
+  			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}#{" #{@search.zip}" if @search.is_zip? }</span>" unless @search.lat.blank?
+  		else
+  			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
+  		end
     else
-      html = "Loading local results for #{@search.storage_type}..."
+      html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> <span class='txt_ldr'>...</span>"
     end
-		
-		if @search.is_city?
-			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
-			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}#{" #{@search.zip}" if @search.is_zip? }</span>" unless @search.lat.blank?
-		else
-			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
-		end
+	  
 		html
   end
   
@@ -127,7 +128,7 @@ module ListingsHelper
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
       link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
     else
-      img_hash = @listing_logos[listing.default_logo || 5]
+      img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
       img_hash[:alt] = listing.title
       img = image_tag img_hash[:src], img_hash.merge(options)
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"

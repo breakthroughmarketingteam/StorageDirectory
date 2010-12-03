@@ -28,7 +28,7 @@
     
     <div id="ov-page-cnt">
 	
-	<%= render_hints_for :reports %>
+	<%= render_hints_for :reports, 'ov-reports' %>
       <div id="ov-reports" class="hideable">
         <div class="ov-item-head">
           	<h3><span>Activity Tracker</span></h3>
@@ -44,7 +44,7 @@
         </div>
       </div>
 		
-	<%= render_hints_for :facilities %>
+	<%= render_hints_for :facilities, 'ov-units' %>
       <div id="ov-units" class="hideable">
 		<div class="ov-item-head">
 			<h3><span>Facilities</span></h3>
@@ -63,7 +63,7 @@
         </div>
       </div>
 	
-	<%= render_hints_for :specials %>
+	<%= render_hints_for :specials, 'ov-specials' %>
       <div id="ov-specials" class="hideable">
         <div class="ov-item-head">
           <h3>Specials</h3>
@@ -77,7 +77,7 @@
         </div>
       </div>
 	
-	<%= render_hints_for :services %>
+	<%= render_hints_for :services, 'ov-services' %>
       <div id="ov-services" class="hideable">
         <div class="ov-item-head">
           <h3><span>Services</span></h3>
@@ -85,7 +85,7 @@
         <div id="ov-services-cnt">
 			<div>
 				<ul>
-					<li><%= link_to "<span>#{@client.issn_enabled? ? 'Reservations Log' : 'Activate Reservations'}</span>", '#reservations', :id => 'reservations' %></li>
+					<li><%= link_to "<span>#{@client.issn_enabled? ? 'Manage Sync' : 'Enable Sync'}</span>", '#reservations', :id => 'reservations' %></li>
 					<li><%= link_to "<span>#{@client.call_tracking_enabled? ? 'Call Log' : 'Activate Call Tracking'}</span>", '#calls', :id => 'calls' %></li>
 					<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'calls' %></li>
 				</ul>
@@ -93,7 +93,7 @@
         </div>
       </div>
 
-	<%= render_hints_for :owner_info %>
+	<%= render_hints_for :owner_info, 'ov-info' %>
  	  <div id="ov-info" class="instant_form hideable">
         <div class="ov-item-head">
           <h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
@@ -105,7 +105,7 @@
 		<%= render :partial => 'owner_info' %>
       </div>
  
-	<%= render_hints_for :settings %>
+	<%= render_hints_for :settings, 'ov-settings' %>
       <div id="ov-settings" class="hideable">
         <div class="ov-item-head">
         	<h3><span>Settings</span></h3>

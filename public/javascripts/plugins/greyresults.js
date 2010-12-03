@@ -585,10 +585,13 @@ $(function(){
 			results_page = $('#ajax_wrap_inner'),
 			results_wrap = $('#results_wrap', results_page),
 			results_head = $('.rslt-head-txt', results_wrap),
-			ajax_loader = '<img src="/images/ui/ajax-loader-long-green.gif" class="ajax_loader" style="display:block;" />';
+			loading_txt  = 'Looking for '+ $('#search_storage_type', form).val() +' within <span class="hlght-text">'+ 
+						   $('input[name="search[within]"]:checked', form).val() +'</span> miles of <span class="hlght-text">'+ 
+						   $('#search_query', form).val() +'</span> <span class="txt_ldr">...</span>';
 		
 		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
-		results_head.html(ajax_loader);
+		$('h2', results_head).html(loading_txt);
+		$('.txt_ldr', results_head).txt_loader();
 		
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
@@ -613,24 +616,18 @@ $(function(){
 		return false;
 	});
 	
-	$('.list_sort').live('click', function() {
-		var $this = $(this),
-			form = $('#narrow_results_form'),
-			sort_fields = $('.sort_field', form);
+	$('.list_sort').live('click', function() {console.log(this)
+		var $this = $(this), form = $('#narrow_results_form', '#content_bottom'),
+			sort_fields = $('input.sort_field', form);
 		
 		if (!sort_fields.length) {
-			sort_fields = '<input type="hidden" name="search[sorted_by]" class="sort_field" value="'+ $this.attr('data-sorted_by') +'" />' +
-						  '<input type="hidden" name="search[sort_reverse]" class="sort_field" value="'+ $this.attr('data-sort_reverse') +'" />';
-			console.log(sort_fields)
+			sort_fields = '<div><input type="hidden" name="search[sorted_by]" class="sort_field" value="'+ $this.attr('data-sorted_by') +'" />' +
+						  '<input type="hidden" name="search[sort_reverse]" class="sort_field" value="'+ $this.attr('data-sort_reverse') +'" /></div>';
+			
 			form.append(sort_fields);
 		} else {
-			var sort_reverse = sort_fields.find('input[name="search[sort_num]"]'),
-				sorted_by = sort_fields.find('input[name="search[sort_reverse]"]');
-			
-			console.log(sort_num, sorted_by)
-			
-			sort_reverse.val($this.attr('data-sort_reverse'));
-			sorted_by.val($this.attr('data-sorted_by'));
+			sort_fields.filter('input[name="search[sort_reverse]"]').val($this.attr('data-sort_reverse'));
+			sort_fields.filter('input[name="search[sorted_by]"]').val($this.attr('data-sorted_by'));
 		}
 		
 		form.submit();
@@ -961,7 +958,7 @@ $.fn.rental_form = function() {
 					});
 				},
 				validate : function(wizard) {
-					
+					return true; // for now
 				} // END validate
 			}, // END slide 1
 			{ 
@@ -974,7 +971,7 @@ $.fn.rental_form = function() {
 					
 				},
 				validate : function(wizard) {
-					
+					return true; // for now
 				} // END validate
 			}
 		],

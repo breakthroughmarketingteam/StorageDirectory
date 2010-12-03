@@ -483,7 +483,7 @@ class ApplicationController < ActionController::Base
   
   def get_listing_logos
     logos = []
-    %w(y w r o g b).each_with_index do |color, i|
+    %w(w r o g b).each_with_index do |color, i|
       logos << { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :ci => i }
     end
     logos

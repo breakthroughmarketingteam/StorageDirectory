@@ -111,7 +111,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
-  map.resources :user_hints
+  map.resources :user_hints, :member => { :hide => :post, :open => :post }
   map.resources :pictures
   map.resources :user_sessions
   map.resources :permissions

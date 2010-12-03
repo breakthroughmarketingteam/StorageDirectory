@@ -34,6 +34,8 @@ class ListingsController < ApplicationController
       @search = @new_search
     end
     
+    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search][:sort_reverse]
+    
     session[:search_id] = @search.id
     @location = @search.location
     @listings = @search.results # this calls the Listing model

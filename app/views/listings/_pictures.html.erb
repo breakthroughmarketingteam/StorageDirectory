@@ -14,7 +14,7 @@
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>
 				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
-				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'delete_link right', :title => 'Delete this picture' if action_name == 'edit' %>
+				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'right', :title => 'Delete this picture' if action_name == 'edit' %>
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>

@@ -150,7 +150,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;background:url(/images/ui/storagelocator/results-header-bg.png) repeat-x left -11px  #42A238;}
 #listings_controller #type-one-r-col-in{background:none;}
 .rslt-head-txt{margin:15px 30px 13px 20px;overflow:hidden;}
-.rslt-head-txt .ajax_loader{margin:11px auto;}
+.rslt-head-txt .ajax_loader{margin:10px auto;}
 .rslt-head-txt > p{color:#999;float:left;font-size:12px;margin:6px 0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
@@ -199,14 +199,15 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head ul{-moz-border-radius-topleft:4px;border-radius-topleft:4px;-webkit-border-radius-topleft:4px;-moz-border-radius-topright:4px;border-radius-topright:4px;-webkit-border-radius-topright:4px;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;overflow:hidden;width:745px;}
 #search-head li{color:#fff;float:left;font-size:11px;height:21px;}
 #search-head li a{color:#fff;display:block;float:left;font-size:11px;height:21px;padding:10px 0 0 0;text-decoration:none;}
-#search-head li a:hover{}
+#search-head .sorter a{margin-right:15px;padding:5px 15px 0;}
+#search-head .sorter a:hover{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;}
 #search-head li#list-name{background:url(/images/ui/storagelocator/sort-bg-clear.png) repeat-x ;margin:5px;}
-#search-head li#list-name a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:15px;padding:5px 15px 0;width:267px;}
+#search-head li#list-name a{width:267px;}
 #search-head li#list-miles{background:url("/images/ui/storagelocator/sort-bg-clear.png") repeat-x;margin:5px;}
-#search-head li#list-miles a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:7px;padding:5px 15px 0;width:25px;}
+#search-head li#list-miles a{margin-right:7px;width:25px;}
 #search-head li#list-size{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;padding:10px 0 0;text-align:center;width:95px;}
 #search-head li#list-price{background:url("/images/ui/storagelocator/sort-bg-clear.png") repeat-x;margin:5px;}
-#search-head li#list-price a{background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right 8px;margin-right:15px;padding:5px 15px 0;width:92px;}
+#search-head li#list-price a{width:92px;}
 #search-head li#list-amenities{padding:10px 20px 0 0;text-align:right;width:88px;}
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;margin-bottom:2px;padding-bottom:15px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
@@ -258,6 +259,8 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:11px;}
 .facility-logo{background:url("/images/ui/storagelocator/facility-logo-reflection.png") no-repeat 0 bottom;float:left;height:88px;margin:11px 0 0 33px;padding-left:3px;width:108px;font-size:80%;position:relative;}
+#feat-list .facility-logo{margin:0;padding:0;width:100%;height:auto;background:none;height:120px;}
+#feat-list .facility-logo img{position:absolute;top:0;left:0;}
 .listing img.logo{margin-left:3px;}
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
@@ -274,16 +277,17 @@ li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-rep
 li.rslt-size{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat right top;font-size:12px;width:99px;}
 li.rslt-size span.size{color:#666;display:block;font-weight:bold;text-align:center;}
 li.rslt-size img{margin:4px 0 0 1px;}
-li.rslt-price{font-size:12px;padding:10px 20px 0 0;width:125px;}
-.listing li.rslt-price .price{color:#3333cc;margin-left:5px;}
+li.rslt-price{font-size:12px;padding:10px 12px 0;width:125px;}
+.listing li.rslt-price .price{color:#3333cc;margin-left:5px;font-weight:bold;}
 li.rslt-miles,li.rslt-size{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;color:#333;height:88px;}
 .radio_wrap{height:16px;position:relative;background:url(/images/ui/storagelocator/checkbox.png) no-repeat;}
 .radio_wrap .radio_select{height:16px;width:16px;}
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:125px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
-.listing ul li.rslt-price ul li.radio_wrap .radio_select{float:right;height:16px;position:absolute;right:6px;top:0;width:16px;}
-.listing ul li.rslt-price ul li input{}
+.listing ul li.rslt-price ul li.radio_wrap .radio_select{height:16px;position:absolute;right:6px;top:0;width:16px;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
+.rslt-price .radio_wrap label{float:left;overflow:hidden;}
+.rslt-price .radio_wrap label .type{display:block;float:left;padding:0 0 1px;text-align:left;width:59px;}
 .listing ul li.action_btn{float:right;font-size:120%;height:50px;line-height:3.1;margin:27px 10px 0 0;position:relative;text-shadow:1px 1px 0 #666;width:91px;}
 .listing ul li.action_btn a{color:#fff;text-decoration:none;display:block;padding-left:2px;}
 .listing ul li.action_btn a.cancel_link,.listing ul li.action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:-14px;top:17px;}
@@ -472,7 +476,7 @@ ul#specials_list {margin:15px 10px;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
-#listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
+#listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;min-height:800px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
 .locator_action #results_header{width:96.3%;}
@@ -529,7 +533,6 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
-.default_logo{position:absolute;z-index:1;top:0;left:0;}
 .facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .facility-logo span.short{padding:0 5px 0;display:block;}
@@ -549,8 +552,7 @@ ul#specials_list {margin:15px 10px;}
 #logo_picker{margin-top:10px;color:#33c;}
 #logo_picker:hover,#logo_picker:active{color:#393;}
 #listing_logo_form label,#logo_picker label{font-size:80%;color:#555;}
-#logo_choices{width:97%;padding-left:10px;margin-top:-9px;}
-#logo_choices .default_logo{border:1px solid #FFF;margin:0 6px 6px 0;vertical-align:middle;width:31%;cursor:pointer;}
+#logo_choices .default_logo{border:1px solid #FFF;margin:0 6px 6px 0;vertical-align:middle;width:60px;cursor:pointer;}
 #logo_choices .default_logo:hover,#logo_choices .default_logo:active{border-color:#555;}
 p.blue-edit{background:url(/images/ui/storagelocator/blue-edit.png) no-repeat top left;width:68px;height:22px;line-height:22px;text-align:center;font-weight:bold;position:relative;left:20px;}
 p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22px;}
@@ -669,13 +671,12 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .edit_action #sl-tabs-feat-in li .facility_feature{cursor:pointer;}
 #sl-tabs-feat-in li span.selected{background:url(/images/ui/storagelocator/select.png) no-repeat 7px 7px;}
 #sl-tabs-pict{overflow:hidden;}
-#sl-tabs-pict-in{width:721px;position:relative;left:15px;float:left;margin-bottom:17px;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall{width:230px;float:left;overflow:visible;}
+.home_action #sl-tabs-pict-in{width:721px;position:relative;left:15px;float:left;margin-bottom:17px;}
+.home_action #sl-tabs-pict-in ul#sl-tabs-pict-gall{width:230px;float:left;overflow:visible;}
 .panel #sl-tabs-pict-gall{}
 .panel ul#sl-tabs-pict-gall{overflow:auto;max-height:320px;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;position:relative;}
-#sl-tabs-pict-in ul#sl-tabs-pict-gall .delete_link{background:none;position:absolute;right:0;bottom:-16px;}
-#sl-tabs-pict-in img.big-pic{background:#eee;float:right;height:320px;width:480px;}
+.home_action #sl-tabs-pict-in ul#sl-tabs-pict-gall li {float:left;list-style:none outside none;margin:16px 0 16px 20px;text-align:center;position:relative;}
+.home_action #sl-tabs-pict-in img.big-pic{background:#eee;float:right;height:320px;width:480px;}
 .panel #sl-tabs-pict-in{left:0;width:100%;margin:0;}
 .panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li{border:2px solid #fff;margin:0 7px 7px 0;}
 .panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li:hover, .panel #sl-tabs-pict-in ul#sl-tabs-pict-gall li.active{box-shadow:0px 0px 3px #666;-moz-box-shadow:0px 0px 3px #666;-webkit-box-shadow:0px 0px 3px #666;}
@@ -725,7 +726,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
 #ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-6px;}
 #ov-services ul li{list-style:none;display:inline;}
-#ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;}
+#ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;text-decoration:none;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
 #ov-services ul li a:hover,#ov-reports ul li a:active{color:#393;}
 #ov-services ul li span{position:relative;top:145px;}
@@ -740,8 +741,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-settings-cnt textarea,#ov-settings-cnt input.text{font-family:Arial, sans-serif;padding:5px 7px;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
 #ov-services-cnt,#ov-specials-cnt{line-height:1.3;padding:15px 20px;overflow:hidden;posiiton:relative;}
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
-#toggle_specials{width:101%;font-size:12px;}
-#toggle_specials .predef_special{color:#999;border:1px solid #CCC;float:left;cursor:pointer;margin:0 7px 7px 0;padding:5px 11px;width:29%;}
+#toggle_specials{width:101%;font-size:80;}
+#toggle_specials .predef_special{color:#999;border:1px solid #CCC;float:left;cursor:pointer;margin:0 7px 7px 0;padding:5px 11px;width:29%;font-size:80%;}
+#toggle_specials .predef_special:hover{background-color:#ebebeb;}
 #toggle_specials .checked{color:#333;background:url(/images/ui/storagelocator/checkmark.png) no-repeat 99% 50%;}
 .specials_fields{overflow:hidden;border:1px solid #ccc;padding:5px 10px;}
 .specials_fields div{float:left;}
@@ -1071,7 +1073,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
-#pop_up_box .flash{margin:0 0 10px;width:auto;font-size:120%;}
+#pop_up_box .flash{margin:0 0 10px;width:auto;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}
@@ -1660,13 +1662,14 @@ form .note{clear:both;display:block;font-size:80%;}
 .listing .panel .rental_form .col1 ul{height:auto;line-height:1.3;border:0 none;}
 .listing .panel .rental_form .col3 li{float:none;}
 
-#sl-edit-tabs{border-bottom:28px solid #eee;margin-bottom:18px;margin-top:4px;overflow:hidden;}
+#sl-edit-tabs{margin-bottom:18px;margin-top:4px;overflow:hidden;}
+#sl-edit-tabs #save{-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;-webkit-border-radius:4px 4px 4px 4px;background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:1px outset #666;color:#fff;float:right;font-size:12px;margin-right:10px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #hint{display:block;font-size:12px;margin:20px 0;}
 #sl-edit-tabs #sl-tabs-in ul.tabular{border-bottom:1px solid #ccc;padding-left:2px;height:29px;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
 #sl-edit-tabs #fac_name{margin:4px 0 30px;}
-#sl-edit-tabs #request{-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;-webkit-border-radius:4px 4px 4px 4px;background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;height:16px;margin:0 10px 10px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;}
+#sl-edit-tabs #request{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;margin:0 10px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;width:100%;}
@@ -1675,21 +1678,23 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #address input, #sl-edit-tabs #email input{margin-top:10px;}
 #sl-edit-tabs p.label{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:7px 20px;}
 #sl-edit-tabs p.label2{}
-#sl-edit-tabs #name{width:100%;}
+#sl-edit-tabs #name input{}
 #sl-edit-tabs #facility_name{width:500px;}
-#sl-edit-tabs #address{padding-bottom:10px;width:100%;}
-#sl-edit-tabs #address span{float:left;margin:0 50px 0 0;}
-#sl-edit-tabs #address input{margin-bottom:10px;}
+#sl-edit-tabs #address{float:left;padding-bottom:10px;width:100%;}
+#sl-edit-tabs #basic-info ul{float:left;padding-top:5px;width:82px;}
+#sl-edit-tabs #address span{margin:0 50px 0 0;}
+#sl-edit-tabs #address input{margin-bottom:10px;width:400px;}
 #sl-edit-tabs #address #facility_city{width:230px;}
 #sl-edit-tabs #address #facility_zip{width:40px;}
-#sl-edit-tabs #email{padding-bottom:20px;width:100%;}
+#sl-edit-tabs #email{float:left;padding-bottom:20px;width:100%;}
 #sl-edit-tabs #email p span{color:#000;font-size:12px;font-weight:normal;margin-left:24px;}
 #sl-edit-tabs #email #inner span{display:block;margin-bottom:3px;}
 #sl-edit-tabs #email #facility_email{width:300px;}
-#sl-edit-tabs #phone{padding-bottom:10px;width:100%;}
+#sl-edit-tabs #phone{float:left;padding-bottom:10px;width:100%;}
 #sl-edit-tabs #phone p{display:block;margin:10px 0 0;}
 #sl-edit-tabs #phone p.label{margin:0 0 20px;}
 #sl-edit-tabs #phone #f-phone{margin:0 10px 10px;width:90px;}
+#sl-edit-tabs #phone .inner span{color:#4c4bcc;font-weight:bold;}
 #sl-edit-tabs #rental_fee{width:100%;}
 #sl-edit-tabs #rental_fee hr{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;margin-bottom:15px;margin-top:15px;}
 #sl-edit-tabs #billing ul{height:18px;}
@@ -1699,15 +1704,15 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #rental_fee input{margin-top:10px;}
 #sl-edit-tabs #rental_fee #facility_admin_fee{width:50px;}
 #sl-edit-tabs #rental_fee #state_tax{width:50px;}
-#sl-edit-tabs #step2 #admin_fee{width:100%;}
-#sl-edit-tabs #step2 #billing{width:100%;}
-#sl-edit-tabs #step2 #tax{width:100%;}
-#sl-edit-tabs #step2 #admin_fee input#facility_admin_fee{width:40px;}
-#sl-edit-tabs #step2 #tax input#state_tax{width:40px;}
+#sl-edit-tabs #tab2 #admin_fee{width:100%;}
+#sl-edit-tabs #tab2 #billing{width:100%;}
+#sl-edit-tabs #tab2 #tax{width:100%;}
+#sl-edit-tabs #tab2 #admin_fee input#facility_admin_fee{width:40px;}
+#sl-edit-tabs #tab2 #tax input#state_tax{width:40px;}
 #sl-edit-tabs #flogo{width:100%;}
 #sl-edit-tabs #flogo .dlogo_wrap{-moz-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;display:block;font-size:100%;height:137px;position:relative;text-align:center;text-decoration:none;vertical-align:middle;width:182px;}
 #sl-edit-tabs #flogo .dlogo_wrap span{color:#fff;display:block;position:absolute;text-align:center;text-shadow:1px 1px 1px #333;top:20px;width:100%;z-index:2;}
-#sl-edit-tabs #descript textarea{padding:5px;width:100%;}
+#sl-edit-tabs #descript textarea{margin-bottom:10px;padding:5px;width:100%;}
 #sl-edit-tabs #descript p{margin-bottom:20px;}
 #sl-edit-tabs #hours{padding-bottom:15px;width:100%;}
 #sl-edit-tabs #hours .hours_display{margin:0px;padding:0px;width:48%;}
@@ -1725,10 +1730,10 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_pictures #sl-tabs-pict-in{font-size:12px;float:left;margin-bottom:17px;position:relative;width:100%;}
 #sl-edit-tabs #fac_pictures #picture_facility_image{margin-left:10px;}
 #sl-edit-tabs #fac_pictures #picture_listing_id{}
-#sl-edit-tabs #fac_pictures .gallery 
-#sl-edit-tabs #fac_pictures .gallery ul{}
-#sl-edit-tabs #fac_pictures .gallery li{}
-#sl-edit-tabs #fac_pictures .gallery img{}
+#sl-edit-tabs #fac_pictures #sl-tabs-pict-in{}
+#sl-edit-tabs #fac_pictures ul#sl-tabs-pict-gall{width:270px;float:left;overflow:visible;}
+#sl-edit-tabs #sl-tabs-pict-in li{background:#eee;float:left;height:80px;margin:0 10px 20px 0;width:80px;}
+#sl-edit-tabs #sl-tabs-pict-in img.big-pic{background:#eee;border:1px solid #ccc;float:right;}
 #sl-edit-tabs #fac_pictures #sl-tabs-pict{padding:0;}
 #sl-edit-tabs #fac_reports #leads .inner{padding:0;}
 #sl-edit-tabs #fac_reports #leads #labels{}
@@ -1742,14 +1747,33 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_reports #leads table th.col4{background:url(/images/ui/storagelocator/sorting-bg-dwn.png) no-repeat;width:70px;}
 #sl-edit-tabs #fac_reports #leads table th.col5{background:url(/images/ui/storagelocator/sorting-bg-dwn.png) no-repeat;width:125px;}
 #sl-edit-tabs #fac_reports #leads table th.col6{background:url(/images/ui/storagelocator/sorting-bg-dwn.png) no-repeat;width:125px;}
-#sl-edit-tabs #fac_reports #leads table tbody tr.alt{background:#fafafa;}
-#sl-edit-tabs #fac_reports #leads table tbody tr:hover{background:#f5fff3;}
+#sl-edit-tabs #fac_reports #leads table tbody tr.alt{background:#f7f7f7;}
+#sl-edit-tabs #fac_reports #leads table tbody tr:hover{background:#e8f6ff;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td:first-child {font-weight:bold;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td{border-bottom:1px solid #DEE8F2;border-right:1px solid #DEE8F2;color:#4D4D4D;font:11px "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;padding:6px 12px;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td.miscinfo{width:125px;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td.miscinfo a{font-size:11px;}
 #sl-edit-tabs #fac_reports #leads form{margin-bottom:10px;float:right;}
 #admin-l-col{margin-top:15px;}
+
+#tab1{margin-bottom:20px;}
+#sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
+#sl-edit-tabs h2{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 10px;padding:7px 20px;}
+#sl-edit-tabs #details{width:100%;}
+#sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}
+#sl-edit-tabs .fac-details td{padding:6px 12px;}
+#sl-edit-tabs .fac-details input{}
+#sl-edit-tabs .fac-details input#state{width:150px;}
+#sl-edit-tabs .fac-details input#zip{width:150px;}
+#sl-edit-tabs .fac-details input#phone1{width:150px;}
+#sl-edit-tabs .fac-details span{font-size:12px;}
+#sl-edit-tabs .fac-details #facility_email{margin-top:10px;width:300px;}
+#sl-edit-tabs .fac-details td.save{}
+#sl-edit-tabs #flogo #col1{float:left;width:30%;}
+#sl-edit-tabs #flogo #col2{float:left;width:70%;}
+#sl-edit-tabs #flogo #col2 p{margin:0 0 5px;}
+#sl-edit-tabs #flogo #col2 #upload{margin-bottom:20px;}
+
 
 p.breadcrumb {background:#66c;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
 p.breadcrumb a{color:#fff;}

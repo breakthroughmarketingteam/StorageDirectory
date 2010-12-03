@@ -1,4 +1,4 @@
-<div id="UserHint_<%= user_hint.id %>" class="user_hint<%= ' hide' if @hint.placement(current_user).hide? %>">
+<div id="UserHint_<%= user_hint.id %>" class="user_hint <%= @hint.placement(current_user).hide? ? 'hide' : 'open' %>" data-rel="<%= rel %>">
 	<div class="hint_title_bar uncollapse">
 		<p class="left hint_title"><%= user_hint.title %></p>
 		<p id="UserHintPlacement_<%= user_hint.placement(current_user).id %>" class="right">

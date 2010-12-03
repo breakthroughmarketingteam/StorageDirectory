@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101201212436) do
+ActiveRecord::Schema.define(:version => 20101202201039) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -688,7 +688,7 @@ ActiveRecord::Schema.define(:version => 20101201212436) do
     t.integer  "lft"
     t.integer  "rgt"
     t.string   "sorted_by"
-    t.string   "sort_reverse", :default => "+"
+    t.string   "sort_reverse", :default => "-"
   end
 
   create_table "size_icons", :force => true do |t|
