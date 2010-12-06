@@ -217,6 +217,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
 #rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > div > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
+#rslt-list-bg > div.active > .inner .rslt-title h3,#rslt-list-bg > div > .inner:hover .rslt-title h3{color:#fff;text-shadow:1px 1px #333;text-decoration:none;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 a,#rslt-list-bg > div > .inner:hover .rslt-title h3 a{color:#fff;text-shadow:1px 1px #333;text-decoration:none;}
 #rslt-list-bg > div.active > .inner .unit_detail_in,#rslt-list-bg > .div > .inner:hover .unit_detail_in{}
 /* highlight premium listings only */
@@ -267,8 +268,8 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;color:#555;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;width:159px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0;}
-.rslt-title h3{float:left;height:30px;font-size:19px;padding:8px 0 0 20px;}
-.rslt-title h3,.rslt-title h3 a{color:#060;}
+.rslt-title h3{float:left;font-size:19px;height:28px;padding:10px 0 0 20px;}
+.rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
 .rslt-phone{color:#33c;font-size:18px;font-weight:bold;}
 #clients_controller .rslt-contact #listing_title{width:93%;}
@@ -533,10 +534,10 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
-.facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;}
+.facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .facility-logo span.short{padding:0 5px 0;display:block;}
-.dlogo_wrap img{position:absolute;left:0;top:0;}
+.facility-logo img.default_logo, .dlogo_wrap img{position:absolute;left:0;top:0;}
 #sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;text-decoration:none;}
 .listing .dlogo_wrap span{display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
@@ -841,6 +842,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{position:relative;}
 .unit_detail_in{cursor:default;padding:10px 12px;font-size:80%;overflow:hidden;}
+.unit_detail_in .left{margin-left:5px;}
 .unit_detail span{color:#4c51a3;}
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
