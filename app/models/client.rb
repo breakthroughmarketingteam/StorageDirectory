@@ -12,6 +12,8 @@ class Client < User
   has_one :listing_description, :dependent => :destroy
   accepts_nested_attributes_for :settings, :listing_description
   
+  has_many :staff_emails, :through => :listings
+  
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'

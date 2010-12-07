@@ -69,7 +69,7 @@ jQuery.fn.runValidation = function() {
 					error = '<p>pick one</p>';
 					markInvalid(input, form);
 					
-				} else if (input.attr('type') == 'text' && input.val() == '' || input.val() == input.attr('title')) {
+				} else if (input.val() == '' || input.val() == input.attr('title')) {
 					error = error_html(input, 'is required');
 					markInvalid(input, form);
 				}

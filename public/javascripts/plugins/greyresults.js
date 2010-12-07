@@ -7,7 +7,12 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-
+	
+	$('#new_unit', '#unit_sizes').live('click', function() {
+		
+		
+		return false;
+	});
 	
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
@@ -627,7 +632,7 @@ $(function(){
 	}
 	
 	var featured_listing = $('#feat_wrap');
-	if (!featured_listing.children().length) {
+	if (featured_listing.children().length > 0) {
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);

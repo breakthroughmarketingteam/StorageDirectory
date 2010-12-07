@@ -222,27 +222,47 @@ $(function(){
 		$this.addClass('loading');
 		
 		$.mayContinue($this, function() {
-			$.getJSON($this.attr('href') + '&authenticity_token=' + $.get_auth_token(), {},
-				function(response) {
-					$this.removeClass('loading');
-					
-					if (response.success) {
-						// need better conditional logic for these links
-						if ($this.attr('rel') == 'helptext') {
-							$.toggleHelptext($this);
-							
-						} else if ($this.hasClass('delete_link')) {
-							$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
-						}
+			$.getJSON($this.attr('href') + '&authenticity_token=' + $.get_auth_token(), function(response) {
+				$this.removeClass('loading');
+				
+				if (response.success) {
+					// need better conditional logic for these links
+					if ($this.attr('rel') == 'helptext') {
+						$.toggleHelptext($this);
 						
-					} else {
-						$.ajax_error(response);
-						$this.removeClass('loading');
+					} else if ($this.hasClass('delete_link')) {
+						$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
+						
+					} else if ($this.hasClass('rm_field')) { // first used for the estaff emails in the listing edit page
+						$this.parent().fadeOut(600, function() { $(this).remove(); });
 					}
+					
+				} else {
+					$.ajax_error(response);
+					$this.removeClass('loading');
 				}
-			);
+			});
 		}, function() { // else
 			$this.removeClass('loading'); 
+		});
+		
+		return false;
+	});
+	
+	$('.post_link').live('click', function() {
+		var $this = $(this);
+		
+		$.mayContinue($this, function() {
+			$this.addClass('loading');
+			
+			$.post($this.attr('href') + '&authenticity_token=' + $.get_auth_token(), function(response) {
+				$.with_json(response, function(data) {
+					$this.parent().fadeOut(600, function() { $(this).remove(); });
+				});
+				
+				$this.removeClass('loading');
+				
+			}, 'json');
 		});
 		
 		return false;
@@ -600,10 +620,23 @@ $.any = function(arr, callback) {
 	return has;
 }
 
+$.disable_submit_btn = function(btn) {
+	return $.toggle_submit_btn(btn, true, .5);
+}
+
+$.activate_submit_btn = function(btn) {
+	return $.toggle_submit_btn(btn, false, 1);
+}
+
+$.toggle_submit_btn = function(btn, toggle, fade) {
+	return $(btn).attr('disabled', toggle).fadeTo(300, fade);
+}
+
+
 $.mayContinue = function(link, callback, else_callback) {
 	if (!link.hasClass('before_confirm') || (link.hasClass('before_confirm') && $.greyConfirm(link.attr('title'), callback))) {
 		return true;
-	} else {
+	} else if (typeof else_callback == 'function') {
 		else_callback.call(this, link);
 	}
 }
@@ -643,7 +676,7 @@ $.get_param_value = function(key) {
 // replacement for the browser's confirm box
 $.greyConfirm = function(msg, action, cancel, do_alert_instead) {
 	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
-		title: 'Confirm',
+		title: do_alert_instead ? 'Alert' : 'Confirm',
 		width: 400,
 		height: 150,
 		modal: true,

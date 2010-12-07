@@ -70,7 +70,11 @@
 												<div>
 												<% @listing.staff_emails.each do |staff_email| %>
 													<% unless staff_email.new_record? %>
-														<span><%= staff_email.email %> &nbsp; [<a class="rm_field" data-email-id="<%= staff_email.id %>" href="#">remove</a>]<br /></span>
+														<span>
+															<%= staff_email.email %> &nbsp; 
+															[<%= link_to 'remove', "/ajax/destroy?model=StaffEmail&id=#{staff_email.id}", :class => 'rm_field post_link before_confirm', :title => "Delete #{staff_email.email}?" %>]
+															<br />
+														</span>
 													<% else %>
 														<% f.fields_for :staff_emails, staff_email do |sf| %>
 															<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
@@ -83,35 +87,25 @@
 						            </tbody>
 						        </table>
 							
-								<div><%= f.submit 'Save Changes', :class => 'save' %></div>
+								<div>
+									<%= f.submit 'Save Changes', :id => 'listing_detail_submit', :class => 'save' %>
+									<%= ajax_loader %>
+								</div>
 							<% end %>
 						</div>
 						<div id="flogo" class="left">
-							<% form_for @listing, :html => { :id => 'logo_form', :multipart => true } do |f| %>
-								<p class="label">Logo:</p>
-								<div id="col1">
-									<%= display_logo @listing, :id => 'listing_img' %>
-								</div>
-								<div id="col2">
-									<p>Upload a logo image from your computer...</p>
-									<%= f.file_field :logo %>
-									
-									<p>Or choose from one of our default images below.</p>
-									<%= render :partial => 'listings/logo_choices' %>
-									
-									<%= f.submit 'Upload', :class => 'save' %>
-								<% end %>
-							</div>
+							<%= render :partial => 'logo_form' %>
 						</div>
 						<div id="descript" class="left">
 							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
 								<p class="label">Description:</p>
 								<div class="inner">
-									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
-									<textarea id="facility_description" name="lisitng[facility_description]" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
+									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
+									<%= f.text_area :description, :class => 'required', :rows => 6 %>
 								</div>
 								
-								<%= f.submit 'Save Changes', :class => 'save' %>
+								<%= f.submit 'Save Changes', :id => 'listing_desc_submit', :class => 'save' %>
+								<%= ajax_loader %>
 							<% end %>
 						</div>
 						<div id="hours" class="left">
@@ -119,32 +113,38 @@
 							<div class="inner">
 								<%= render :partial => 'hours' if in_edit_mode? %>
 							</div>
-							<%= submit_tag 'Save Changes', :class => 'save' %>
+							
+							<%= submit_tag 'Save Changes', :class => 'save', :id => 'save_hours' %>
+							<%= ajax_loader %>
 						</div>
 					</div>
 					<div id="tab2" class="tab_content">
-						<div id="admin_fee" class="left">
-							<p class="label">Administrative Fee:</p>
-							<div class="inner">
-								$ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
+							<div id="admin_fee" class="left">
+								<p class="label">Administrative Fee:</p>
+								<div class="inner">
+									$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+								</div>
 							</div>
-						</div>
-						<div id="billing" class="left">
-							<p class="label">Billing Method:</p>
-							<div class="inner">
-								<ul>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
-								</ul>
+							<div id="billing" class="left">
+								<p class="label">Billing Method:</p>
+								<div class="inner">
+									<ul>
+										<li class="radio_wrap"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
+										<li class="radio_wrap"><span class="radio_select"><%= f.radio_button :prorated, 0, :class => 'hide' %></span> <%= f.label :prorated, 'Fixed' %></li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div id="tax" class="left">
-							<p class="label">State Tax:</p>
-							<div class="inner">
-								$ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
+							<div id="tax" class="left">
+								<p class="label">State Tax:</p>
+								<div class="inner">
+									<%= f.text_field :tax_rate, :size => 8, :maxlength => 5 %> % &nbsp; Set your State Tax here so it is added to every unit rental.
+								</div>
 							</div>
-						</div>
-						<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+						
+							<%= f.submit 'Save Changes', :class => 'save' %>
+							<%= ajax_loader %>
+						<% end %>
 					</div>
 					<div id="tab3" class="tab_content">
 						<div id="features" class="left">

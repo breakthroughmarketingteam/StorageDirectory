@@ -169,7 +169,6 @@ class ApplicationController < ActionController::Base
       @top_features      = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
       @unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
       @unit_size_icons   = SizeIcon.medium_icons
-      @listing_logos = get_listing_logos
     end
   end
   
@@ -490,14 +489,6 @@ class ApplicationController < ActionController::Base
     puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n#{hr}" rescue puts ""
     $last_benchmark = cur
     result
-  end
-  
-  def get_listing_logos
-    logos = []
-    %w(w r o g b).each_with_index do |color, i|
-      logos << { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :ci => i }
-    end
-    logos
   end
   
 end

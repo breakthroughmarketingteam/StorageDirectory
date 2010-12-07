@@ -119,14 +119,16 @@ class ListingsController < ApplicationController
       
     when 'uplogo'
       if params[:default_logo]
-        @listing.update_attribute :default_logo, params[:default_logo]
-        render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
+        @listing.update_attribute(:default_logo, params[:default_logo]) && @listing.logo && @listing.logo.destroy
       elsif params[:listing]
         @listing.update_attributes params[:listing]
-        render :json => { :success => false, :data => model_errors(@listing) }
       end
       
+      render :text => render_to_string(:partial => 'logo_form')
+      
     else # regular update
+      _scrub_params
+      
       if @listing.update_attributes params[:listing]
         render :json => { :success => true }
       else
@@ -217,6 +219,12 @@ class ListingsController < ApplicationController
       :unit_size    => nil,
       :within       => nil
     }
+  end
+  
+  def _scrub_params
+    if params[:listing] && params[:listing][:staff_emails_attributes]
+      params[:listing][:staff_emails_attributes].delete_if { |p| p[1][:email].blank? }
+    end
   end
   
 end

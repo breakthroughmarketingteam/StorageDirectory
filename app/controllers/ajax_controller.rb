@@ -15,7 +15,7 @@ class AjaxController < ApplicationController
     end
     
     authorize_and_perform_restful_action_on_model @models.first.class.to_controller_str, 'index' do
-      render :json => { :success => true, :data => @models }
+      json_response true, @models
     end
     
   rescue => e
@@ -24,7 +24,7 @@ class AjaxController < ApplicationController
   
   def get_model
     authorize_and_perform_restful_action_on_model @model.class.to_controller_str, 'show' do
-      render :json => { :success => true, :data => @model.attributes }
+      json_response true, @model.attributes
     end
     
   rescue => e
@@ -33,7 +33,7 @@ class AjaxController < ApplicationController
   
   def find
     @found = eval "@model_class.find_all_by_#{params[:by]}('#{params[:value]}')" rescue nil
-    render :json => { :success => true, :data => @found }
+    json_response true, @found
   end
   
   # find listings in a city or state which don't have an owner
@@ -41,14 +41,14 @@ class AjaxController < ApplicationController
     company, city, state = *[params[:company], params[:city], params[:state]].map { |p| p.downcase.gsub(/\\|'/) { |c| "\\#{c}" } }
     @listings = Listing.find_listings_by_company_city_and_state company, city, state
     
-    render :json => { :success => true, :data => @listings }
+    json_response true, @listings
   end
   
   def get_listing
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
       coords = [@model.lat, @model.lng]
       data = { :listing => @model.attributes, :map => @model.map.attributes, :lat => coords.lat, :lng => coords.lng  }
-      render :json => { :success => true, :data => data }
+      json_response true, data
     end
     
   rescue => e
@@ -57,8 +57,8 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    @data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
-    render :json => { :success => true, :data =>  @data }
+    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    json_response true, @data
   end
   
   # this is called by js to load an iframed map into the map partial in greyresults
@@ -88,7 +88,7 @@ class AjaxController < ApplicationController
   
   def get_attributes
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
-      render :json => { :success => true, :data => @model_class.column_names }
+      json_response true, @model_class.column_names
     end
     
   rescue => e
@@ -98,7 +98,7 @@ class AjaxController < ApplicationController
   def model_method
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
       data = (@model || @model_class).send(params[:model_method])
-      render :json => { :success => true }
+      json_response
     end
 
   rescue => e
@@ -107,9 +107,9 @@ class AjaxController < ApplicationController
   
   def get_partial
     _get_model_and_locals
-    render :json => { :success => true, :data => render_to_string(:partial => params[:partial], :locals => @locals) }
+    json_response true, render_to_string(:partial => params[:partial], :locals => @locals)
   rescue => e
-    render :json => { :success => false, :data => e.message }
+    render_error e
   end
   
   def get_multipartial
@@ -120,7 +120,7 @@ class AjaxController < ApplicationController
   end
   
   def get_cities # state
-    render :json => { :success => true, :data => UsCity.tabbed_cities_of(params[:state]) }
+    json_response true, UsCity.tabbed_cities_of(params[:state])
   rescue => e
     render_error e
   end
@@ -128,7 +128,7 @@ class AjaxController < ApplicationController
   def get_autocomplete
     model_class = params[:model].camelize.constantize
     data = eval "model_class.try :#{params[:method]}"
-    render :json => { :success => true, :data => data }
+    json_response true, data
     
   rescue => e
     render_error e
@@ -136,7 +136,7 @@ class AjaxController < ApplicationController
   
   def update
     authorize_and_perform_restful_action_on_model @model.class.to_controller_str, 'update' do
-      render :json => { :success => @model.update_attribute(params[:attribute], params[:value]) }
+      json_response @model.update_attribute(params[:attribute], params[:value])
     end
     
   rescue => e
@@ -156,7 +156,7 @@ class AjaxController < ApplicationController
       end
     end
     
-    render :json => { :success => errors.empty?, :data => "#{errors * ', '}" }
+    json_response errors.empty?, "#{errors * ', '}"
   end
   
   def destroy
@@ -164,24 +164,20 @@ class AjaxController < ApplicationController
       @model.destroy
       @model.image = nil if @model.respond_to?('image')
     
-      render :json => { :success => _get_model.nil? }
+      json_response
     end
     
   rescue => e
     render_error e
   end
   
-  def dirs
-    render :layout => false
-  end
-  
   private
   
   def authorize_and_perform_restful_action_on_model(resource, action, &block)
-    if current_user && current_user.has_permission?(resource, action, params)
+    if current_user && current_user.has_permission?(resource, action, params, (@model || _get_model))
       yield
     else
-      render :json => { :success => false, :data => "You don't have permission to #{action_name} this #{object_in_question}" }
+      json_response false, "You don't have permission to #{action_name} this #{object_in_question}"
     end
   end
   
@@ -218,6 +214,10 @@ class AjaxController < ApplicationController
     end
   rescue
     nil
+  end
+  
+  def json_response(status = true, data = nil)
+    render :json => { :success => status, :data => data }
   end
   
   def render_error(e)

@@ -147,6 +147,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :us_cities
   map.resources :searches
   map.resources :ad_partners
+  map.resources :predefined_sizes
   
   map.resources :admin
   map.resource :site_setting

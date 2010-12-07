@@ -27,6 +27,8 @@ class Listing < ActiveRecord::Base
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
   end
+  has_many :predef_size_assigns, :dependent => :destroy
+  has_many :predefined_sizes, :through => :predef_size_assigns
   
   has_many :searches # user searches are associated to listings to gather search behavior data
   
@@ -174,12 +176,22 @@ class Listing < ActiveRecord::Base
   end
   
   def admin_fee
-    20.00
+    val = read_attribute(:admin_fee) || 20
+    val / 100 if val > 100
+  end
+  
+  def admin_fee=(val)
+    if val.is_a?(String) && val.match(/\.{1}/)
+      write_attribute :admin_fee, (val.to_f * 100)
+    else
+      super
+    end
   end
   
   def tax_rate
-    0.06
+    read_attribute(:tax_rate) || 6
   end
+  
   
   def storage_type
     self.facility_features.empty? ? 'self-storage' : self.facility_features.first.title.parameterize

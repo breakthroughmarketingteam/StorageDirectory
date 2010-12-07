@@ -31,10 +31,10 @@ class Permission < ActiveRecord::Base
   end
   
   # map REST action to CRUD action
-  def allows?(action)
+  def allows?(action, controller)
     return true if self.action == 'all'
     
-    case action.to_sym when :new, :create
+    controller == self.resource && case action.to_sym when :new, :create
       self.action == 'create'
     when :index, :show
       self.action == 'read'
@@ -45,6 +45,12 @@ class Permission < ActiveRecord::Base
     else # fallback: if @param action is already a CRUD action
       self.action == action
     end
+  end
+  
+  def on?(user, model)
+    return true unless self.scoped?
+    model_class = model.class.name.underscore.pluralize
+    user.respond_to?(model_class) && user.send(model_class).include?(model)
   end
   
 end

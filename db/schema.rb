@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101206191739) do
+ActiveRecord::Schema.define(:version => 20101207224034) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -402,6 +402,9 @@ ActiveRecord::Schema.define(:version => 20101206191739) do
     t.integer  "default_logo"
     t.string   "category"
     t.string   "phone"
+    t.integer  "admin_fee"
+    t.boolean  "prorated"
+    t.integer  "tax_rate"
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
@@ -537,10 +540,28 @@ ActiveRecord::Schema.define(:version => 20101206191739) do
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
 
+  create_table "predef_size_assigns", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "predefined_size_id"
+    t.integer  "price"
+    t.integer  "position",           :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "predef_special_assigns", :force => true do |t|
     t.integer  "predefined_special_id"
     t.integer  "client_id"
     t.integer  "position",              :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "predefined_sizes", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "width"
+    t.integer  "length"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
