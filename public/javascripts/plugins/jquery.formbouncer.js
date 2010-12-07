@@ -77,7 +77,7 @@ jQuery.fn.runValidation = function() {
 				errors += error;
 			}
 
-			if (input.hasClass('email') && valid_email.test(input.val()) == false) {
+			if (input.hasClass('email') && (input.val() != '' && valid_email.test(input.val()) == false)) {
 				error = error_html(input, 'is not valid');
 				errors += error;
 				markInvalid(input, form);

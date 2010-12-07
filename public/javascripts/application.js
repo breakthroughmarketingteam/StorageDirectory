@@ -92,77 +92,6 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	// advanced search options
-	var $size_picker = $('.size_picker'),
-		$size_img = $('img', $size_picker),
-		$size_select = $('.sizes_select');
-	
-	// preload
-	var pre_loaded_size_icons = [];
-	$('option', $size_select).each(function(){
-		var $this = $(this);
-		
-		if ($this.attr('rel') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('rel')) return true; })) {
-			var img = new Image();
-			img.src = $this.attr('rel');
-			pre_loaded_size_icons.push(img);
-		}
-	});
-	
-	if ($size_select.length) {
-		size_icon_change($size_select); // update on page load
-		$size_select.live('change', size_icon_change);
-		$('option', $size_select).live('mouseover', size_icon_change);
-	}
-	
-	function size_icon_change(input) {
-		var self = input[0] || this,
-			$this = $(self),
-			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
-			new_img = $('<img src="'+ selected +'" alt="" />');
-		
-		if ($size_img.attr('src') != selected) {
-			$size_img.fadeOut(100, function(){
-				$size_picker.html(new_img)
-				new_img.hide().fadeIn(120);
-				$size_img = $('img', $size_picker);
-				
-				if (new_img.width() > 183) new_img.width(183);
-			});
-		}
-	}
-	
-	var advanced_slider = $('.advanced_slider', '#advanced_opts'),
-		advanced_slider_value = $('.slider_val', advanced_slider.parent()).val();
-
-	advanced_slider.slider({
-		max: 50,
-		min: 5,
-		step: 5,
-		value: advanced_slider_value,
-		animate: true,
-		start: function(e, ui) {
-			var slider = $('.slider_val', $(e.target).parent());
-			if (slider.attr('disabled')) slider.attr('disabled', false);
-		},
-		slide: function(e, ui) {
-			$('.slider_val', $(this).parent()).val(ui.value);
-			$slider_handle.html('<span>'+ ui.value +'</span>');
-		}
-		
-	});
-	var $slider_handle = $('.ui-slider-handle', '.advanced_slider').html('<span>'+ advanced_slider_value +'</span>');
-	
-	$('.arrow', '#advanced_opts').click(function(){
-		var value = parseInt(advanced_slider.slider('value')),
-			new_val = $(this).attr('alt') == 'less' ? value - 5 : value + 5;
-		
-		if (new_val >= 50) new_val = 50;
-		
-		advanced_slider.slider('value', new_val);
-		$slider_handle.html('<span>'+ new_val +'</span>');
-	});
-	
 	// map pop up
 	var map_nav_btn = $('#map_nav_btn');
 	if (map_nav_btn.length > 0) {
@@ -1017,6 +946,30 @@ $(document).ready(function() {
 		
 	// END new listing workflow
 	
+	$('.edit_listing').submit(function() {
+		var form = $(this).runValidation();
+		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				console.log(response);
+				$.with_json(response, function(data) {
+					var success_msg = $('<span class="success_msg">Saved!</span>');
+					$('input[type=submit]').before(success_msg);
+					
+					setTimeout(function() {
+						success_msg.fadeOut(1000, function() { $(this).remove(); })
+					}, 2000);
+				});
+				
+				form.data('saving', false);
+			}, 'json');
+		}
+		
+		return false;
+	});
+	
 	// business hours edit form, listing page
 	$('.all_day_check').change(function(){
 		var day_check = $(this), context = day_check.parent().parent().parent();
@@ -1157,7 +1110,7 @@ $(document).ready(function() {
 				$.with_json(response, function(data){
 					var thumb_img = $('img', thumb);
 					thumb_img.attr({ src: data.thumb, id: 'Picture_'+ data.id }).removeClass('loading');
-					thumb_img.next('a').attr('href', '/listings/'+ data.listing_id +'/pictures/'+ data.id);
+					thumb_img.after('<a href="/listings/'+ data.listing_id +'/pictures/'+ data.id +'" class="delete_link right">Delete</a>');
 					
 					if (image) image.attr('src', data.image);
 					
@@ -1187,7 +1140,7 @@ $(document).ready(function() {
 		var self = $(this);
 		
 		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
-			self.data('deleting', true).css('background-image', 'url('+ $('.ajax_loader').attr('src') +')');
+			self.data('deleting', true).before()
 			
 			var img = self.prev('img'),
 				id = img.attr('id').replace('Picture_', '');
@@ -1199,7 +1152,8 @@ $(document).ready(function() {
 					
 					img.parent().fadeOut(600, function(){ $(this).remove() });
 					
-					if ($('img', '#sl-photos #previews').length == 1) $('.big-pic', '#sl-tabs-pict').eq(0).fadeOut(900, function(){ $(this).remove() });
+					if ($('img', '#sl-tabs-pict-gall').length == 1)
+						$('.big-pic', '#sl-tabs-pict').eq(0).fadeOut(900, function(){ $(this).remove() });
 					
 					update_info_tab_count('Pictures', -1);
 				});

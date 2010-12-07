@@ -103,7 +103,7 @@ module ListingsHelper
   			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
   		end
     else
-      html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> <span class='txt_ldr'>...</span>"
+      html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> #{ajax_loader}"
     end
 	  
 		html
@@ -128,7 +128,7 @@ module ListingsHelper
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
       link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
     else
-      img_hash = @listing_logos[listing.default_logo || 5]
+      img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
       img_hash[:alt] = listing.title
       img = image_tag img_hash[:src], img_hash.merge(options)
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"

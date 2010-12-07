@@ -43,7 +43,11 @@
 			<p>
 				Special
 			</p>
-			Get the 1st Month Free! With immediate move in!
+			<% if @featured_listing.premium? && @featured_listing.special %>
+				<%= @featured_listing.special.title %>
+			<% else %>
+				10% off
+			<% end %>
 		</div>
 	
 		<% if (@unit_size = @featured_listing.get_closest_unit_size(@search.unit_size)) %>

@@ -7,247 +7,146 @@
 				<div id="sl-tabs-in" class="tabular_content">
 					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
 					<ul id="sl-tabs-nav" class="tabular">
-						<%= content_tag :li, link_to("Facility Details", '#fac_details', :id => 'tab_Details', :rel => 'step1') %>
-						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'step2') %>
+						<%= content_tag :li, link_to("Details", '#fac_details', :id => 'tab_Details', :rel => 'tab1') %>
+						<%= content_tag :li, link_to("Rental Settings", '#settings', :id => 'settings', :rel => 'tab2') %>
+						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'tab3') %>
 						<%= content_tag :li, link_to("Unit Sizes", '#unit-sizes', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
 						<%= content_tag :li, link_to("Pictures", '#fac_pictures', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
-						<%= content_tag :li, link_to("Reservations", '#reservations', :id => 'reservations', :rel => 'reservations') %>
+						<%= content_tag :li, link_to("Reports", '#reports', :id => 'reports', :rel => 'fac_reports') %>
 						<%= content_tag :li, link_to("Reviews", '#reviews', :id => 'reviews', :rel => 'reviews') %>
 					</ul>
 					<!-- tab content -->
 					<span id="hint">Here you can change all the details for this facility.</span>
-					<div id="step1" class="tab_content">
-						<div id="name" class="left">
-							<p class="label">Name:</p>
-							<div class="inner">
-									<input type="text" name="facility_name" id="facility_name" value="American International Self Storage - 164nd Street" size="40">
-								</div>
-						</div>
-						<div id="address" class="left">
-							<p class="label">Location:</p>
-							<div class="inner">	
-								<span>
-									Address 1:<input type="text" name="facility_address1" id="facility_address1" value="1961 NE 164th St" size="30"><br />
-									Address 2: <input type="text" name="facility_address2" id="facility_address2" value="" size="30"><br />
-								</span>
-								<span>
-									City/State: <br /><input type="text" value="North Miami Beach" name="facility_city" id="facility_city" size="15"> , 
-									<select id="facility_state" name="facility_state" size="1">
-										<option value="AK">
-											AK
-										</option>
-										<option value="AL">
-											AL
-										</option>
-										<option value="AR">
-											AR
-										</option>
-										<option value="AZ">
-											AZ
-										</option>
-										<option value="CA">
-											CA
-										</option>
-										<option value="CO">
-											CO
-										</option>
-										<option value="CT">
-											CT
-										</option>
-										<option value="DC">
-											DC
-										</option>
-										<option value="DE">
-											DE
-										</option>
-										<option value="FL">
-											FL
-										</option>
-										<option value="GA">
-											GA
-										</option>
-										<option value="HI">
-											HI
-										</option>
-										<option value="IA">
-											IA
-										</option>
-										<option value="ID">
-											ID
-										</option>
-										<option value="IL">
-											IL
-										</option>
-										<option value="IN">
-											IN
-										</option>
-										<option value="KS">
-											KS
-										</option>
-										<option value="KY">
-											KY
-										</option>
-										<option value="LA">
-											LA
-										</option>
-										<option value="MA">
-											MA
-										</option>
-										<option value="MD">
-											MD
-										</option>
-										<option value="ME">
-											ME
-										</option>
-										<option value="MI">
-											MI
-										</option>
-										<option value="MN">
-											MN
-										</option>
-										<option value="MO">
-											MO
-										</option>
-										<option value="MS">
-											MS
-										</option>
-										<option value="MT">
-											MT
-										</option>
-										<option value="NC">
-											NC
-										</option>
-										<option value="ND">
-											ND
-										</option>
-										<option value="NE">
-											NE
-										</option>
-										<option value="NH">
-											NH
-										</option>
-										<option value="NJ">
-											NJ
-										</option>
-										<option value="NM">
-											NM
-										</option>
-										<option value="NV">
-											NV
-										</option>
-										<option value="NY">
-											NY
-										</option>
-										<option value="OH">
-											OH
-										</option>
-										<option value="OK">
-											OK
-										</option>
-										<option value="OR">
-											OR
-										</option>
-										<option value="PA">
-											PA
-										</option>
-										<option value="RI">
-											RI
-										</option>
-										<option value="SC">
-											SC
-										</option>
-										<option value="SD">
-											SD
-										</option>
-										<option value="TN">
-											TN
-										</option>
-										<option value="TX">
-											TX
-										</option>
-										<option value="UT">
-											UT
-										</option>
-										<option value="VA">
-											VA
-										</option>
-										<option value="VT">
-											VT
-										</option>
-										<option value="WA">
-											WA
-										</option>
-										<option value="WI">
-											WI
-										</option>
-										<option value="WV">
-											WV
-										</option>
-										<option value="WY">
-											WY
-										</option>
-									</select> 
-									<br />Zip: <br /><input type="text" name="facility_zip" id="facility_zip" value="33162" size="15">
-								</span>
-							</div>
-						</div>
-						<div id="email" class="left">
-							<p class="label">Email: <span>(Account Email: tonyprada@bellsouth.net)</span></p>
-							<div class="inner">
-								<table>
-									<tr>
-										<td>Facility Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td>
-											<span id="contact1">vdante@aol.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
-											<span id="contact2">americaninternationalstorage@gmail.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
-											<input type="text" name="facility_email" id="facility_email" value="" size="40"> &nbsp; [<a onclick="return addContact(64746);" href="#">add</a>]
-										</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<div id="phone" class="left">
-							<p class="label">Phone Number:</p>
-							<div class="inner">
-								Contact Number: <input type="text" name="contact_phone" id="f-phone" value="305-949-4556" size="12"><br />
-								Tracked Number: <input type="text" name="tracked_phone" id="f-phone" value="305-123-4567" size="12"><div id="request">Request</div> This special tracked phone number will be used on your facility's profile.
-							</div>
-						</div>
-						<div id="rental_fee" class="left">
-							<p class="label">Rental Settings:</p>
-							<div class="inner">
-								Administrative Fee:<br /> $ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
-								<hr />
-								<ul>
-									<li>Billing Method:</li>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
-									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
-								</ul>
-								<hr />
-								State Tax:<br /> $ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
-							</div>
+					<div id="tab1" class="tab_content">
+						<div id="details" class="left">
+							<h2>Facility Details:</h2><br />
+							<% form_for @listing, :html => { :id => 'fac_detail_form' } do |f| %>
+								<table cellspacing="0" cellpadding="0" class="fac-details">
+						            <tbody>
+						                <tr>
+											<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
+						                	<td><%= f.text_field :title, :class => 'required', :maxlength => 32 %></td>
+						                </tr>
+										
+										<% f.fields_for :map, @listing.map do |mf| %>
+						                	<tr>
+							                	<td class="col_label"><%= mf.label :address %></td>
+							                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 32 %></td>
+							                </tr>
+										
+							                <tr>
+							                	<td class="col_label"><%= mf.label :address2 %></td>
+							                	<td><%= mf.text_field :address2 %></td>
+							                </tr>
+
+							                <tr>
+							                	<td class="col_label"><%= mf.label :city %></td>
+							                	<td><%= mf.text_field :city, :class => 'required' %></td>
+							                </tr>
+
+							                <tr>
+							                	<td class="col_label"><%= mf.label :state %></td>
+							                	<td><%= mf.text_field :state, :class => 'required' %></td>
+							                </tr>
+
+							                <tr>
+							               		<td class="col_label"><%= mf.label :zip, 'Zip Code' %></td>
+							                	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+							                </tr>
+										<% end %>
+										
+						                <tr>
+						                	<td class="col_label"><%= f.label :phone %></td>
+						                	<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
+						                </tr>
+										<tr>
+											<td class="col_label">Tracked Number</td>
+											<td>(305) 537-6952 &nbsp;<div id="tracking_num_req">Request</div></td>
+										</tr>
+									
+										<tr>
+						                	<td class="col_label"><label for="email">Email</label></td>
+						                	<td>
+												<div>
+												<% @listing.staff_emails.each do |staff_email| %>
+													<% unless staff_email.new_record? %>
+														<span><%= staff_email.email %> &nbsp; [<a class="rm_field" data-email-id="<%= staff_email.id %>" href="#">remove</a>]<br /></span>
+													<% else %>
+														<% f.fields_for :staff_emails, staff_email do |sf| %>
+															<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+														<% end %>
+													<% end %>
+												<% end %>
+												</div>
+						                	</td>
+						                </tr>
+						            </tbody>
+						        </table>
+							
+								<div><%= f.submit 'Save Changes', :class => 'save' %></div>
+							<% end %>
 						</div>
 						<div id="flogo" class="left">
-							<p class="label">Logo:</p>
-							<div class="inner">
-								<%= display_logo @listing, :id => 'listing_img' %>
+							<% form_for @listing, :html => { :id => 'logo_form', :multipart => true } do |f| %>
+								<p class="label">Logo:</p>
+								<div id="col1">
+									<%= display_logo @listing, :id => 'listing_img' %>
+								</div>
+								<div id="col2">
+									<p>Upload a logo image from your computer...</p>
+									<%= f.file_field :logo %>
+									
+									<p>Or choose from one of our default images below.</p>
+									<%= render :partial => 'listings/logo_choices' %>
+									
+									<%= f.submit 'Upload', :class => 'save' %>
+								<% end %>
 							</div>
 						</div>
 						<div id="descript" class="left">
-							<p class="label">Description:</p>
-							<div class="inner">
-								<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
-								<textarea id="facility_description" name="facility_description" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
-							</div>
+							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
+								<p class="label">Description:</p>
+								<div class="inner">
+									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
+									<textarea id="facility_description" name="lisitng[facility_description]" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
+								</div>
+								
+								<%= f.submit 'Save Changes', :class => 'save' %>
+							<% end %>
 						</div>
 						<div id="hours" class="left">
-								<p class="label">Hours:</p>
-								<div class="inner">
-									<%= render :partial => 'hours' if in_edit_mode? %>
-								</div>
+							<p class="label">Hours:</p>
+							<div class="inner">
+								<%= render :partial => 'hours' if in_edit_mode? %>
 							</div>
+							<%= submit_tag 'Save Changes', :class => 'save' %>
+						</div>
 					</div>
-					<div id="step2" class="tab_content">
+					<div id="tab2" class="tab_content">
+						<div id="admin_fee" class="left">
+							<p class="label">Administrative Fee:</p>
+							<div class="inner">
+								$ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+							</div>
+						</div>
+						<div id="billing" class="left">
+							<p class="label">Billing Method:</p>
+							<div class="inner">
+								<ul>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Prorated" name="b_method" id="b_method" class="hidden"></span> Prorated</li>
+									<li class="option"><span class="b_method"><input type="checkbox" value="Fixed" name="b_method" id="b_method" class="hidden"></span> Fixed</li>
+								</ul>
+							</div>
+						</div>
+						<div id="tax" class="left">
+							<p class="label">State Tax:</p>
+							<div class="inner">
+								$ &nbsp;<input type="text" name="state_tax" id="state_tax" value="0" size="8"> &nbsp; Set your State Tax here so it is added to every unit rental.
+							</div>
+						</div>
+						<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+					</div>
+					<div id="tab3" class="tab_content">
 						<div id="features" class="left">
 							<p class="label">Facility Amenities:</p>
 							<div class="inner">
@@ -266,6 +165,7 @@
 								<% end %>
 							</div>
 						</div>
+						<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
 					</div>
 					<div id="unit_sizes" class="tab_content">
 						<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
@@ -273,6 +173,130 @@
 					<div id="fac_pictures" class="tab_content">
 						<p class="label">Facility Pictures:</p>
 						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
+					</div>
+					<div id="fac_reports" class="tab_content">
+						<div id="leads" class="left">
+							<form class="">Show:
+							<select name="type">
+								<option value="0">Lead Type</option>
+								<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
+							  <option value="5">Banner Clicks</option>	<option value="9">Directions</option>
+							</select> for:
+
+							<select name="range">
+								<option value="180">2 Years</option>
+								<option value="180">1 Year</option>
+								<option selected="" value="180">6 Months</option>
+								<option value="90">3 Months</option>
+								<option value="31">1 Month</option>
+								<option value="14">2 Weeks</option>
+								<option value="0">Today</option>
+							</select>
+							<input type="submit" value="Refine" class="button2">
+							</form>
+							<table id="" class="">
+								<thead>
+								    <tr>
+							            <th class="col1" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Leads”">Type</a></th>
+							            <th class="col2" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Time”">Time</a></th>
+							            <th class="col3" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Name”">Name</a></th>
+							            <th class="col4" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Phone”">Phone</a></th>
+							            <th class="col5" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Email”">Email</a></th>
+							            <th class="col6" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “More Info”">More Info</a></th>
+							        </tr>
+								</thead>
+								<tbody>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+									<tr class="">
+														<!-- Leads Type -->
+								            <td>Phone Call</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+								    </tr>
+									<tr class="alt">
+														<!-- Leads Type -->
+								            <td>Rental</td>
+														<!-- Time -->
+								            <td>12/02/2010 at 1:24 pm</td>
+														<!-- Name -->
+								            <td>John Smith</td>
+														<!-- Phone -->
+								            <td>(954) 630-6731</td>
+														<!-- Email -->
+								            <td>myemail@web.com</td>
+														<!-- More Info -->
+									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+								    </tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="hide">
+						<%= hidden_field_tag :client_id, @listing.client.id %>
+						<%= hidden_field_tag :listing_id, @listing.id %>
 					</div>
 				</div>
 			</div>

@@ -15,6 +15,7 @@ class Size < ActiveRecord::Base
   end
   
   def self.get_from_unit_size(unit_size)
+    return if unit_size.nil?
     self.first :conditions => ['width = ? AND length = ?', unit_size.split('x')[0], unit_size.split('x')[1]]
   end
   

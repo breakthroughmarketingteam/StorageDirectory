@@ -21,38 +21,40 @@ class ListingsController < ApplicationController
   end
   
   def locator
-    # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
-    @page = Page.find_by_title 'Self Storage' unless request.xhr?
-    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+    benchmark do
+      # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
+      @page = Page.find_by_title 'Self Storage' unless request.xhr?
+      @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     
-    # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
-    @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
+      # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
+      @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
     
-    if Search.diff? @search, @new_search
-      @new_search.save
-      @search.add_child @new_search
-      @search = @new_search
-    end
+      if Search.diff? @search, @new_search
+        @new_search.save
+        @search.add_child @new_search
+        @search = @new_search
+      end
     
-    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search][:sort_reverse]
+      @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
     
-    session[:search_id] = @search.id
-    @location = @search.location
-    @listings = @search.results # this calls the Listing model
-    @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
-    @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
+      session[:search_id] = @search.id
+      @location = @search.location
+      @listings = @search.results # this calls the Listing model
+      @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     
-    # updates the impressions only for listings on current page
-    @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
+      # updates the impressions only for listings on current page
+      @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
     
-    respond_to do |format|
-      format.html {}
-      format.js do
-        if params[:auto_search]
-          render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
-        else
-          # implementing this ajax response for the search results 'Show More Results' button
-          render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @map_data }
+      respond_to do |format|
+        format.html {}
+        format.js do
+          if params[:auto_search]
+            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
+          else
+            # implementing this ajax response for the search results 'Show More Results' button
+            render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @map_data }
+          end
         end
       end
     end
@@ -96,6 +98,8 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
+    @listing.staff_emails.build
+    
     render :layout => false if request.xhr?
   end
   
@@ -122,8 +126,12 @@ class ListingsController < ApplicationController
         render :json => { :success => false, :data => model_errors(@listing) }
       end
       
-    else
-      raise ['params[:from] is nil or unrecognized', params].pretty_inspect
+    else # regular update
+      if @listing.update_attributes params[:listing]
+        render :json => { :success => true }
+      else
+        render :json => { :success => false, :data => model_errors(@listing) }
+      end
     end
   end
   

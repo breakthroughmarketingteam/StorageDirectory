@@ -60,7 +60,7 @@ class PicturesController < ApplicationController
   def destroy
     return if current_user.nil?
     
-    @listing = current_user.listings.find(params[:listing_id])
+    @listing = (is_admin? ? @listing.client : current_user).listings.find(params[:listing_id])
     @picture = @listing.pictures.find(params[:id])
     
     respond_to do |format|

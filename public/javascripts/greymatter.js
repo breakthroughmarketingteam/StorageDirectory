@@ -678,12 +678,17 @@ $.greyAlert = function(msg) {
 	$.greyConfirm(msg, null, null, true);
 }
 
+$.ajax_loader_tag = function(img, context) {
+	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
+	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
+	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
+}
+
 $.ajax_loaders = [];
 // put a new ajax loader somewhere by calling a jquery method on the el
 $.new_ajax_loader = function(where, el, img) {
 	el = $(el);
-	if (typeof img == 'undefined') img = 'ajax-loader-facebook.gif';
-	var a = $('<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="al_'+ el.attr('id') +'" />');
+	var a = $($.ajax_loader_tag(img, el));
 	
 	try {
 		el[where](a);
@@ -1279,8 +1284,8 @@ var GreyWizard = function(container, settings) {
 		self.slides.css({ 'margin-right': self.spacer +'px' });
 		
 		// jquery tools scrollable
-		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' });
-		self.workflow.children('.items').width(self.num_slides * (self.width + self.spacer + self.pad_left));
+		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' }).data('scrollable').seekTo(self.current, 1);
+		self.workflow.children('.items').width(self.num_slides * (self.width + self.spacer + self.pad_left) + 3);
 		
 		if (self.settings.set_slides) { // build the slide tabbed display
 			var step_display = '',
@@ -1324,22 +1329,20 @@ var GreyWizard = function(container, settings) {
 	
 	this.may_move = function(step) {
 		var validated = true;
-		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) validated = self.slide_data[self.current].validate.call(this, self);
 		
-		return validated && ((self.current + step) >= 0 && (self.current + step) <= self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
+		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) 
+			validated = self.slide_data[self.current].validate.call(this, self);
+		
+		return validated && ((self.current + step) >= 0 && (self.current + step) < self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
 	}
 	
 	this.next = function(step) {
-		if (typeof step != 'number') var step = 1;
-		
-		self.move(step);
+		self.move(typeof(step) == 'number' ? step : 1);
 		return false;
 	}
 	
 	this.prev = function(step) {
-		if (typeof step != 'number') var step = -1;
-		
-		self.move(step);
+		self.move(typeof(step) == 'number' ? step : -1);
 		return false;
 	}
 	
