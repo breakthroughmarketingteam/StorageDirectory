@@ -108,8 +108,7 @@ class AjaxController < ApplicationController
   def get_partial
     _get_model_and_locals
     json_response true, render_to_string(:partial => params[:partial], :locals => @locals)
-  rescue => e
-    render_error e
+  
   end
   
   def get_multipartial

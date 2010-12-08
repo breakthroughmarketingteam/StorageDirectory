@@ -1018,10 +1018,10 @@ $.fn.rental_form = function() {
 					['back', 'fadeOut'] 
 				],
 				action : function(wizard) {
-					console.log('step 1')
+					//console.log('step 1')
 				},
 				validate : function(wizard) {
-					console.log('validate 1')
+					//console.log('validate 1')
 					return true; // for now
 				} // END validate
 			}, // END slide 1
@@ -1032,12 +1032,12 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					console.log('step 2')
+					//console.log('step 2')
 				}
 			}
 		],
 		finish_action : function(wizard) {
-			console.log('done')
+			//console.log('done')
 		}
 	};
 	
