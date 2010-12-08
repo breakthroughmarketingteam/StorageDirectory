@@ -1,13 +1,14 @@
 <div class="rental_form">
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
-	<div class="head">Use this form to rent a unit from <span><%= link_to listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title, listing.id) %></span> and take advantage of their <span>Online Specials</span>.</div>
+	<div class="head">
+		Use this form to rent a unit from <span><%= link_to listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title, listing.id) %></span> and take advantage of their <span>Online Specials</span>.
+	</div>
 	
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
 				<% form_for [listing, Rental.new], :html => { 'data-pr' => '1' } do |f| %>
-
 					<div class="inner">
 						<div class="col1">
 							<div>
@@ -34,8 +35,12 @@
 								<div><%= label_tag 'Specials: ', nil, :class => 'block left' %>
 									<ul>
 										<% listing.specials.each do |special| %>
-											<li><%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> <%= f.label "special_id_#{special.id}", special.title %></li>
+											<li>
+												<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
+												<%= f.label "special_id_#{special.id}", special.title %>
+											</li>
 										<% end %>
+										<li><%= link_to 'Remove Special', '#', :id => 'remove_special', :class => 'note' %>
 									</ul>
 								</div>
 							<% end %>
@@ -49,15 +54,31 @@
 	
 						<div class="col3">
 							<ul>
-								<li>Rent: <span class="grey">(<span class="dur"></span> x <span>$</span><span class="rental_rate"></span>)</span> <span class="subtotal right">$<span></span></span></li>
-								<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
+								<li>
+									Rent: 
+									<span class="grey">(<span class="dur"></span> x <span>$</span><span class="rental_rate"></span>)</span> 
+									<span class="subtotal right">$<span></span></span>
+								</li>
+								<li class="admin_fee">
+									Admin Fees: 
+									<span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span>
+								</li>
 								<% unless listing.specials.empty? %>
 									<li class="discount">Specials: <span class="right">-$<span></span></span></li>
 								<% end %>
-								<li class="special_discount">USSSL Discount: <span class="right">-$<span></span></span></li>
-								<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span></span></span></li>
+								<li class="special_discount">
+									USSSL Discount: 
+									<span class="right">-$<span></span></span>
+								</li>
+								<li class="tax" data-tax="<%= listing.tax_rate %>">
+									Tax: 
+									<span class="right">$<span></span></span>
+								</li>
 								<li><hr /></li>
-								<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
+								<li class="total">
+									Move-In Total: 
+									<span class="right">$<span>92.56</span></span>
+								</li>
 							</ul>
 						</div>
 					</div>

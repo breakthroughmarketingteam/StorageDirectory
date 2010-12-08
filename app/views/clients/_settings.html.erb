@@ -19,24 +19,6 @@
 					<p><%= radio_button_tag 'user_hints', 'hide' %> Hide</p>
 				</td>
 			</tr>
-			<% f.fields_for :listing_description, @listing_description do |lf| %>
-				<tr>
-					<th title="Show this description on all your facilities pages"><p>Global description: </p></th>
-					<td id="listing_description">
-						<%= lf.text_area :description, :class => 'hintable', :title => 'Draw your customers in with a personable introduction to your company. Whatever you write in here will appear on your facilities\' pages. You can also edit this description for each individual facility by going to its Manage page above.' %>
-					</td>
-				</tr>
-				<tr>
-					<th><p>Apply description to:</p></th>
-					<td>
-						<p>
-							<%= lf.radio_button :show_in, 'all' %><%= lf.label :show_in, 'All Listings' %> 
-							<%= lf.radio_button :show_in, 'only' %><%= lf.label :show_in, 'Only listings with no description' %> 
-							<%= lf.radio_button :show_in, 'none' %><%= lf.label :show_in, 'None' %> 
-						</p>
-					</td>
-				</tr>
-			<% end %>
 		</table>
 		<div class="hide">
 			<%= hidden_field_tag :upsets, true %><%= f.submit %>

@@ -42,50 +42,11 @@
 				<% end %>
 			</div>
 			
-			<ul>
-				<li class="rslt-miles">
-					<span class="shifted-text"><span><%= listing_distance(result) %></span>Miles</span>
-				</li>
+			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>
 			
-				<% if (unit_size = result.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size)) %>
-					<li class="rslt-size">
-						<%= image_tag unit_size.icon.url %>
-						<span class="size"><%= unit_size.display_dimensions %></span>
-					</li>
-					<li class="rslt-price">
-					  	<ul>
-							<% @upper_type_size = result.get_upper_type_size(unit_size) %>
-							<% @indoor_type_size = result.get_interior_type_size(unit_size) %>
-							<% @drive_up_type_size = result.get_drive_up_type_size(unit_size) %>
-							
-							<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
-								<% type, size = types %>
-								<li class="radio_wrap">
-									<div class="radio">
-										<% if size %>
-											<div class="radio_select">
-												<%= radio_button_tag "listing[#{result.id}][unit_size]", size.id %>
-											</div>
-										<% end %>
-									</div>
-									<label title="<%= size.description || size.title if size %>" for="listing[<%= result.id %>][unit_size]">
-										<span class="type"><%= type %>:</span>
-										<% if size %>
-											<span class="price"><%= number_to_currency size.dollar_price %></span>
-										<% else %>
-											<span class="price">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										<% end %>
-									</label>
-								</li>
-							<% end %>
-						</ul>		
-					</li>			
-				<% end %>
-				
-				<li class="action_btn<%= listing_action_btn_class(result) %>">
-					<%= results_main_button(result) %>
-				</li>
-			</ul>
+			<div class="action_btn<%= listing_action_btn_class(result) %>">
+				<%= results_main_button(result) %>
+			</div>
 		</div>
 		
 		<% if result.premium? %>

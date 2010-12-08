@@ -9,8 +9,6 @@ class Client < User
   has_many :billing_infos, :dependent => :destroy
   accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
-  has_one :listing_description, :dependent => :destroy
-  accepts_nested_attributes_for :settings, :listing_description
   
   has_many :staff_emails, :through => :listings
   

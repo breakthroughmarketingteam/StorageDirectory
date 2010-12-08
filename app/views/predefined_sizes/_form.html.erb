@@ -1,2 +1,35 @@
-<h1>PredefinedSizes#_form</h1>
-<p>Find me in app/views/predefined_sizes/_form.html.erb</p>
+<fieldset>
+	
+	<div class="uncollapse stack">
+		<div class="left right_space">
+			<%= f.label :title %>
+			<div class="shadow_wrap">
+				<%= f.select :title, Size.unit_type_labels, :class => 'required' %>
+			</div>
+		</div>
+	
+		<div class="left">
+			<%= f.label :description %>
+			<div class="shadow_wrap">
+				<%= f.text_field :description, :size => 40 %>
+			</div>
+		</div>
+	</div>
+	
+	<div class="uncollapse stack">
+		<div class="left right_space">
+			<%= f.label :width %>
+			<div class="shadow_wrap">
+				<%= f.text_field :width, :class => 'required numeric', :size => 5 %>
+			</div>
+		</div>
+		
+		<div class="left">
+			<%= f.label :length %>
+			<div class="shadow_wrap">
+				<%= f.text_field :length, :class => 'required numeric', :size => 5 %>
+			</div>
+		</div>
+	</div>
+	
+</fieldset>

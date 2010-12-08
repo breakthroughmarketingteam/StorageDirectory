@@ -4,7 +4,7 @@ class AjaxController < ApplicationController
   skip_before_filter :init
   
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
-  before_filter :_get_model, :only => [:get_model, :get_map_frame, :get_listing, :update, :destroy, :get_multipartial, :model_method]
+  before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method]
   
   def get_all
@@ -58,32 +58,7 @@ class AjaxController < ApplicationController
   def get_client_stats
     @client = Client.find params[:client_id]
     data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
-    json_response true, @data
-  end
-  
-  # this is called by js to load an iframed map into the map partial in greyresults
-  def get_map_frame
-    @map = @model.map
-    @Gmap = GoogleMap::Map.new
-		@Gmap.center = GoogleMap::Point.new @map.lat, @map.lng
-		@Gmap.zoom = 13 # 2 miles
-		@Gmap.markers << GoogleMap::Marker.new(:map => @Gmap, 
-                                           :lat => @map.lat, 
-                                           :lng => @map.lng,
-                                           :html => "<strong>#{@model.title}</strong><p>#{@model.description}</p>",
-                                           :marker_hover_text => @model.title,
-                                           :marker_icon_path => '/images/ui/map_marker.png')
-    
-    @others = Listing.find(:all, :limit => 1, :origin => @map, :within => '3')
-    @others.each do |listing|
-      @Gmap.markers << GoogleMap::Marker.new(:map => @Gmap, 
-                                             :lat => listing.map.lat, 
-                                             :lng => listing.map.lng,
-                                             :html => "<strong>#{listing.title}</strong><p>#{listing.description}</p>",
-                                             :marker_hover_text => listing.title)
-    end
-    
-    render :layout => 'map_frame'
+    json_response true, data
   end
   
   def get_attributes

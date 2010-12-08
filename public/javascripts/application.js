@@ -949,6 +949,7 @@ $(document).ready(function() {
 	// the forms in the listing detail edit page
 	$('.edit_listing').submit(function() {
 		var form = $(this).runValidation(),
+			context = form.parent(),
 			btn = $('.save', form),
 			ajax_loader = $('.ajax_loader', form);
 		
@@ -959,12 +960,14 @@ $(document).ready(function() {
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
+					if (data) $('#'+ form.attr('data-target')).html(data);
+						
 					var success_msg = $('<span class="success_msg right">Saved!</span>');
-					$('input[type=submit]', form).after(success_msg);
-					
+					$('input[type=submit]', context).after(success_msg);
+
 					setTimeout(function() {
 						success_msg.fadeOut(1000, function() { $(this).remove(); })
-					}, 2000);
+					}, 3000);
 				});
 				
 				$.activate_submit_btn(btn);
@@ -974,6 +977,15 @@ $(document).ready(function() {
 		}
 		
 		return false;
+	});
+	
+	$('#tracking_num_req', '#tab1').live('click', function() {
+		var $this = $(this),
+			ajax_loader = $.new_ajax_loader('after', $this).show();
+		
+		get_pop_up_and_do({ title: 'Request Tracked Number', modal: true }, { sub_partial: '/listings/tracking_request', model: 'Listing', id: $('#listing_id').val() }, function(pop_up) {
+			
+		});
 	});
 	
 	// business hours edit form, listing page
@@ -1004,6 +1016,12 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	
+	$('.all_day_check', '#hours').each(function() {
+		$this = $(this);
+		if ($this.is(':checked'))
+			$this.change()
 	});
 	
 	$('.hour_range', '#business_hours_form').each(function(){
@@ -1213,7 +1231,7 @@ $(document).ready(function() {
 					
 					var plot_data = [],
 						stats_arr = stats_models.split(/,\W?/);
-
+						
 					for (i in stats_arr) 
 						plot_data.push(data['data'][stats_arr[i]]);
 

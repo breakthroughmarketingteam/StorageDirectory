@@ -19,79 +19,7 @@
 					<span id="hint">Here you can change all the details for this facility.</span>
 					<div id="tab1" class="tab_content">
 						<div id="details" class="left">
-							<h2>Facility Details:</h2><br />
-							<% form_for @listing, :html => { :id => 'fac_detail_form' } do |f| %>
-								<table cellspacing="0" cellpadding="0" class="fac-details">
-						            <tbody>
-						                <tr>
-											<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
-						                	<td><%= f.text_field :title, :class => 'required', :maxlength => 32 %></td>
-						                </tr>
-										
-										<% f.fields_for :map, @listing.map do |mf| %>
-						                	<tr>
-							                	<td class="col_label"><%= mf.label :address %></td>
-							                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 32 %></td>
-							                </tr>
-										
-							                <tr>
-							                	<td class="col_label"><%= mf.label :address2 %></td>
-							                	<td><%= mf.text_field :address2 %></td>
-							                </tr>
-
-							                <tr>
-							                	<td class="col_label"><%= mf.label :city %></td>
-							                	<td><%= mf.text_field :city, :class => 'required' %></td>
-							                </tr>
-
-							                <tr>
-							                	<td class="col_label"><%= mf.label :state %></td>
-							                	<td><%= mf.text_field :state, :class => 'required' %></td>
-							                </tr>
-
-							                <tr>
-							               		<td class="col_label"><%= mf.label :zip, 'Zip Code' %></td>
-							                	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
-							                </tr>
-										<% end %>
-										
-						                <tr>
-						                	<td class="col_label"><%= f.label :phone %></td>
-						                	<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
-						                </tr>
-										<tr>
-											<td class="col_label">Tracked Number</td>
-											<td>(305) 537-6952 &nbsp;<div id="tracking_num_req">Request</div></td>
-										</tr>
-									
-										<tr>
-						                	<td class="col_label"><label for="email">Email</label></td>
-						                	<td>
-												<div>
-												<% @listing.staff_emails.each do |staff_email| %>
-													<% unless staff_email.new_record? %>
-														<span>
-															<%= staff_email.email %> &nbsp; 
-															[<%= link_to 'remove', "/ajax/destroy?model=StaffEmail&id=#{staff_email.id}", :class => 'rm_field post_link before_confirm', :title => "Delete #{staff_email.email}?" %>]
-															<br />
-														</span>
-													<% else %>
-														<% f.fields_for :staff_emails, staff_email do |sf| %>
-															<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
-														<% end %>
-													<% end %>
-												<% end %>
-												</div>
-						                	</td>
-						                </tr>
-						            </tbody>
-						        </table>
-							
-								<div>
-									<%= f.submit 'Save Changes', :id => 'listing_detail_submit', :class => 'save' %>
-									<%= ajax_loader %>
-								</div>
-							<% end %>
+							<%= render :partial => 'edit_detail' %>
 						</div>
 						<div id="flogo" class="left">
 							<%= render :partial => 'logo_form' %>
@@ -99,10 +27,15 @@
 						<div id="descript" class="left">
 							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
 								<p class="label">Description:</p>
+								
 								<div class="inner">
 									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
 									<%= f.text_area :description, :class => 'required', :rows => 6 %>
 								</div>
+								
+								<% unless @listing.siblings.empty? %>
+									<span id="copy_all_desc">[<%= link_to 'Copy to all listings', copy_desc_listing_path(@listing), :title => 'Copy this description to all your other listings' %>]</span>
+								<% end %>
 								
 								<%= f.submit 'Save Changes', :id => 'listing_desc_submit', :class => 'save' %>
 								<%= ajax_loader %>
@@ -110,6 +43,7 @@
 						</div>
 						<div id="hours" class="left">
 							<p class="label">Hours:</p>
+							
 							<div class="inner">
 								<%= render :partial => 'hours' if in_edit_mode? %>
 							</div>
@@ -147,13 +81,13 @@
 						<% end %>
 					</div>
 					<div id="tab3" class="tab_content">
-						<div id="features" class="left">
+						<div id="features" class="uncollapse stack">
 							<p class="label">Facility Amenities:</p>
 							<div class="inner">
 								<%= render :partial => 'features' %>
 							</div>
 						</div>
-						<div id="specials" class="left hideable">
+						<div id="specials" class="uncollapse stack">
 							<p class="label">Specials:</p>
 							<div class="inner">
 								<%= render_hints_for :specials %>
@@ -177,119 +111,54 @@
 					<div id="fac_reports" class="tab_content">
 						<div id="leads" class="left">
 							<form class="">Show:
-							<select name="type">
-								<option value="0">Lead Type</option>
-								<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
-							  <option value="5">Banner Clicks</option>	<option value="9">Directions</option>
-							</select> for:
+								<select name="type" class="right_space">
+									<option value="0">Lead Type</option>
+									<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
+								  	<option value="5">Banner Clicks</option>	<option value="9">Directions</option>
+								</select> for:
 
-							<select name="range">
-								<option value="180">2 Years</option>
-								<option value="180">1 Year</option>
-								<option selected="" value="180">6 Months</option>
-								<option value="90">3 Months</option>
-								<option value="31">1 Month</option>
-								<option value="14">2 Weeks</option>
-								<option value="0">Today</option>
-							</select>
-							<input type="submit" value="Refine" class="button2">
+								<select name="range" class="right_space">
+									<option value="180">2 Years</option>
+									<option value="180">1 Year</option>
+									<option selected="" value="180">6 Months</option>
+									<option value="90">3 Months</option>
+									<option value="31">1 Month</option>
+									<option value="14">2 Weeks</option>
+									<option value="0">Today</option>
+								</select>
+							
+								<div class="right"><input type="submit" value="Refine" class="button2"></div>
 							</form>
-							<table id="" class="">
+							<table id="display_reports">
 								<thead>
 								    <tr>
-							            <th class="col1" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Leads”">Type</a></th>
-							            <th class="col2" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Time”">Time</a></th>
-							            <th class="col3" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Name”">Name</a></th>
-							            <th class="col4" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Phone”">Phone</a></th>
-							            <th class="col5" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “Email”">Email</a></th>
-							            <th class="col6" style="-moz-user-select: none;"><a href="#" class="" title="Sort on “More Info”">More Info</a></th>
+							            <th class="col1"><a href="#" class="" title="Sort on Leads">Type</a></th>
+							            <th class="col2"><a href="#" class="" title="Sort on Time">Time</a></th>
+							            <th class="col3"><a href="#" class="" title="Sort on Name">Name</a></th>
+							            <th class="col4"><a href="#" class="" title="Sort on Phone">Phone</a></th>
+							            <th class="col5"><a href="#" class="" title="Sort on Email">Email</a></th>
+							            <th class="col6"><a href="#" class="" title="Sort on More Info">More Info</a></th>
 							        </tr>
 								</thead>
 								<tbody>
-									<tr class="">
-														<!-- Leads Type -->
+									<% 7.times do %>
+										<tr class="">
 								            <td>Phone Call</td>
-														<!-- Time -->
 								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
 								            <td>John Smith</td>
-														<!-- Phone -->
 								            <td>(954) 630-6731</td>
-														<!-- Email -->
 								            <td>myemail@web.com</td>
-														<!-- More Info -->
 								            <td class="miscinfo"><a href="">Voice Recording</a></td>
-								    </tr>
-									<tr class="alt">
-														<!-- Leads Type -->
+									    </tr>
+										<tr class="alt">
 								            <td>Rental</td>
-														<!-- Time -->
 								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
 								            <td>John Smith</td>
-														<!-- Phone -->
 								            <td>(954) 630-6731</td>
-														<!-- Email -->
 								            <td>myemail@web.com</td>
-														<!-- More Info -->
-									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
-								    </tr>
-									<tr class="">
-														<!-- Leads Type -->
-								            <td>Phone Call</td>
-														<!-- Time -->
-								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
-								            <td>John Smith</td>
-														<!-- Phone -->
-								            <td>(954) 630-6731</td>
-														<!-- Email -->
-								            <td>myemail@web.com</td>
-														<!-- More Info -->
-								            <td class="miscinfo"><a href="">Voice Recording</a></td>
-								    </tr>
-									<tr class="alt">
-														<!-- Leads Type -->
-								            <td>Rental</td>
-														<!-- Time -->
-								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
-								            <td>John Smith</td>
-														<!-- Phone -->
-								            <td>(954) 630-6731</td>
-														<!-- Email -->
-								            <td>myemail@web.com</td>
-														<!-- More Info -->
-									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
-								    </tr>
-									<tr class="">
-														<!-- Leads Type -->
-								            <td>Phone Call</td>
-														<!-- Time -->
-								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
-								            <td>John Smith</td>
-														<!-- Phone -->
-								            <td>(954) 630-6731</td>
-														<!-- Email -->
-								            <td>myemail@web.com</td>
-														<!-- More Info -->
-								            <td class="miscinfo"><a href="">Voice Recording</a></td>
-								    </tr>
-									<tr class="alt">
-														<!-- Leads Type -->
-								            <td>Rental</td>
-														<!-- Time -->
-								            <td>12/02/2010 at 1:24 pm</td>
-														<!-- Name -->
-								            <td>John Smith</td>
-														<!-- Phone -->
-								            <td>(954) 630-6731</td>
-														<!-- Email -->
-								            <td>myemail@web.com</td>
-														<!-- More Info -->
-									            <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
-								    </tr>
+									        <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+									    </tr>
+									<% end %>
 								</tbody>
 							</table>
 						</div>

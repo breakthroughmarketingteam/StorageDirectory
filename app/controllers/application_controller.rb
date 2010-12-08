@@ -63,8 +63,7 @@ class ApplicationController < ActionController::Base
   # for the geo_search methods in Listing
   $_listing_search_distance = 20
   
-  # for the enable issn connectivity workflow
-  $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
+  $_usssl_discount = '10% Off'
   
   # loads website title and theme, meta info, widgets and plugins
   before_filter :load_app_config

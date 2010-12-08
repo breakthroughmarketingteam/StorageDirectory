@@ -11,7 +11,7 @@ class Size < ActiveRecord::Base
   attr_accessor :special
   
   def self.unit_type_labels
-    ['Upper', 'Lower', 'Indoor', 'Outdoor']
+    ['Upper', 'Lower', 'Indoor', 'Outdoor', 'Drive-up']
   end
   
   def self.get_from_unit_size(unit_size)
