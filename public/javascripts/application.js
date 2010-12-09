@@ -1476,7 +1476,6 @@ var workflow_settings = {
 		{
 			div_id  : 'signupstep_2',
 			action  : workflow_step2,
-			slide_display : 'Found possible listings',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeIn'],
@@ -1486,7 +1485,6 @@ var workflow_settings = {
 		{ 
 			div_id  : 'signupstep_3',
 			action  : workflow_step3,
-			slide_display : 'Contact information',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
@@ -1497,7 +1495,6 @@ var workflow_settings = {
 		{ 
 			div_id  : 'signupstep_4',
 			action  : workflow_step4,
-			slide_display : 'Review your information',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
 				['skip', 'fadeOut'],
@@ -1540,11 +1537,6 @@ function workflow_step2(wizard) {
 		}, 350);
 	}
 	
-	// animate the height, depending on how many potential listing results there are, max 420px
-	if (wizard.slide_data[0].data.length < 3) var anim_height = 205;
-	else if (wizard.slide_data[0].data.length >= 4)  var anim_height = 420;
-	else var anim_height = wizard.slide_data[0].data.length * 105;
-	wizard.workflow.animate({ 'height': anim_height +'px' }, 'fast');
 }
 
 function workflow_step3() {
@@ -1570,7 +1562,6 @@ function workflow_step3() {
 	$('.numeric_phone', wizard.workflow).formatPhoneNum();
 	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
 	
-	wizard.workflow.animate({ 'height': '300px' });
 	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
 
@@ -1635,7 +1626,6 @@ function workflow_step4() { // form data review
 	}
 	
 	review.append(review_html);
-	wizard.workflow.animate({ 'height': '435px' }, 'fast');
 	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 
