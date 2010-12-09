@@ -946,28 +946,46 @@ $(document).ready(function() {
 		
 	// END new listing workflow
 	
+	// the forms in the listing detail edit page
 	$('.edit_listing').submit(function() {
-		var form = $(this).runValidation();
+		var form = $(this).runValidation(),
+			context = form.parent(),
+			btn = $('.save', form),
+			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
+			ajax_loader.show();
+			$.disable_submit_btn(btn);
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
-				console.log(response);
 				$.with_json(response, function(data) {
-					var success_msg = $('<span class="success_msg">Saved!</span>');
-					$('input[type=submit]').before(success_msg);
-					
+					if (data) $('#'+ form.attr('data-target')).html(data);
+						
+					var success_msg = $('<span class="success_msg right">Saved!</span>');
+					$('input[type=submit]', context).after(success_msg);
+
 					setTimeout(function() {
 						success_msg.fadeOut(1000, function() { $(this).remove(); })
-					}, 2000);
+					}, 3000);
 				});
 				
+				$.activate_submit_btn(btn);
+				ajax_loader.hide();
 				form.data('saving', false);
 			}, 'json');
 		}
 		
 		return false;
+	});
+	
+	$('#tracking_num_req', '#tab1').live('click', function() {
+		var $this = $(this),
+			ajax_loader = $.new_ajax_loader('after', $this).show();
+		
+		get_pop_up_and_do({ title: 'Request Tracked Number', modal: true }, { sub_partial: '/listings/tracking_request', model: 'Listing', id: $('#listing_id').val() }, function(pop_up) {
+			
+		});
 	});
 	
 	// business hours edit form, listing page
@@ -983,10 +1001,14 @@ $(document).ready(function() {
 				check.data('was_checked', check.is(':checked'));
 			});
 			
-			$('.day_closed', context).attr('checked', false);
+			$('.day_closed', context).attr('checked', true);
+			$('select[rel=opening]', context).val('12:00 am');
+			$('select[rel=closing]', context).val('11:30 pm');
 		} else {
 			$('.day_closed', context).each(function(){
 				var check = $(this);
+				
+				$('.day_closed', context).attr('checked', false);
 				
 				if (check.data('was_checked') && !check.is(':checked')) {
 					check.attr('checked', true);
@@ -994,6 +1016,12 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	
+	$('.all_day_check', '#hours').each(function() {
+		$this = $(this);
+		if ($this.is(':checked'))
+			$this.change()
 	});
 	
 	$('.hour_range', '#business_hours_form').each(function(){
@@ -1042,24 +1070,26 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#save_hours', '#business_hours_form').click(function(){
+	$('#save_hours', '#hours').click(function(){
 		var $this = $(this),
-			form = $this.parents('form').runValidation(),
-			ajax_loader = $('.ajax_loader', form);
+			form = $this.parents('#hours').find('form'),
+			ajax_loader = $('.ajax_loader', '#hours');
 		
-		if (form.data('valid') && !form.data('saving')) {
+		if (!form.data('saving')) {
 			form.data('saving', true);
 			ajax_loader.show();
+			$.disable_submit_btn($this);
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data){
-					$this.after('<span id="msg">Saved!</span>');
-					setTimeout(function(){ $('#msg', form).fadeOut(1000, function(){ $(this).remove() }); }, 3000);
+					$this.after('<span class="success_msg">Saved!</span>');
+					setTimeout(function(){ $('.success_msg', '#hours').fadeOut(1000, function(){ $(this).remove() }); }, 3000);
 				});
 				
+				$.activate_submit_btn($this);
 				form.data('saving', false);
 				ajax_loader.hide();
-			});
+			}, 'json');
 		}
 		
 		return false;
@@ -1201,7 +1231,7 @@ $(document).ready(function() {
 					
 					var plot_data = [],
 						stats_arr = stats_models.split(/,\W?/);
-
+						
 					for (i in stats_arr) 
 						plot_data.push(data['data'][stats_arr[i]]);
 
@@ -1291,24 +1321,27 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#listing_logo_form').ajaxForm({
-		beforeSubmit: function() {
-			$('.ajax_loader', '#listing_logo_form').show();
-		},
-		success: function(response) {
-			$('#sl-fac-detail').replaceWith(response);
-		}
+	$('#logo_form').live('submit', function() {
+		var form = $(this),
+			btn = $('.save', form);
+		
+		form.ajaxSubmit({
+			beforeSubmit: function() {
+				$.disable_submit_btn(btn);
+				$('.ajax_loader', '#logo_form').show();
+			},
+			target: '#flogo'
+		});
+		
+		return false;
 	});
 	
 	$('.default_logo', '#logo_choices').live('click', function() {
-		var img = $(this), index = img.attr('ci');
-		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '88px', 'border-color': '#fff' });
+		var img = $(this), index = img.attr('data-ci');
+		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
 		
 		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'uplogo', default_logo: index, _method: 'put' }, function(response) {
-			$.with_json(response, function(data) {
-				$('#sl-fac-detail').replaceWith(data);
-				img.parents('#pop_up').dialog('close').remove();
-			});
+			$('#flogo', '#tab1').html(response);
 		});
 	});
 	

@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :disable]
+  before_filter :get_model, :only => [:show, :edit, :disable, :copy_desc]
   before_filter :get_client, :only => [:edit, :disable]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
@@ -119,16 +119,18 @@ class ListingsController < ApplicationController
       
     when 'uplogo'
       if params[:default_logo]
-        @listing.update_attribute :default_logo, params[:default_logo]
-        render :json => { :success => true, :data => render_to_string(:partial => 'edit_detail') }
+        @listing.update_attribute(:default_logo, params[:default_logo]) && @listing.logo && @listing.logo.destroy
       elsif params[:listing]
         @listing.update_attributes params[:listing]
-        render :json => { :success => false, :data => model_errors(@listing) }
       end
       
+      render :text => render_to_string(:partial => 'logo_form')
+      
     else # regular update
+      _scrub_params
+      
       if @listing.update_attributes params[:listing]
-        render :json => { :success => true }
+        render :json => { :success => true, :data => (params[:listing_detail] ? render_to_string(:partial => 'edit_detail') : nil) }
       else
         render :json => { :success => false, :data => model_errors(@listing) }
       end
@@ -155,6 +157,16 @@ class ListingsController < ApplicationController
     else
       render :json => { :success => false, :data => "Sorry, not allowed." }
     end
+  end
+  
+  def copy_desc
+    @listing.siblings.each do |listing|
+      listing.update_attribute :description, @listing.description
+    end
+    
+    render :json => { :success => true }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
   end
   
   private
@@ -217,6 +229,12 @@ class ListingsController < ApplicationController
       :unit_size    => nil,
       :within       => nil
     }
+  end
+  
+  def _scrub_params
+    if params[:listing] && params[:listing][:staff_emails_attributes]
+      params[:listing][:staff_emails_attributes].delete_if { |p| p[1][:email].blank? }
+    end
   end
   
 end

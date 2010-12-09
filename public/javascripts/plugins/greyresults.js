@@ -7,7 +7,12 @@ $(function(){
 	/*
 	 * BACK END, listing owner page methods
 	 */
-
+	
+	$('#new_unit', '#unit_sizes').live('click', function() {
+		
+		
+		return false;
+	});
 	
 	// edit functionality for the sizes in the facility edit page
 	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
@@ -124,6 +129,31 @@ $(function(){
 				$.log(data);
 			});
 		});
+		
+		return false;
+	});
+	
+	$('#copy_all_desc a', '#descript').click(function() {
+		var $this = $(this).fadeTo(600, .5);
+			
+		if (!$this.data('saving')) {
+			$this.data('saving', true);
+			var ajax_loader = $.new_ajax_loader('after', $this).show().css({ 'float': 'left', 'margin': '0 10px' });
+
+			$.getJSON($this.attr('href'), function(response) {
+				$.with_json(response, function(data) {
+					$this.after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
+
+					setTimeout(function() {
+						$('.success_msg', $this.parent()).fadeOut(1000, function() { $(this).remove(); });
+					}, 2000);
+				});
+
+				$this.data('saving', false)
+				$this.fadeTo(300, 1);
+				ajax_loader.hide();
+			});
+		}
 		
 		return false;
 	});
@@ -627,7 +657,7 @@ $(function(){
 	}
 	
 	var featured_listing = $('#feat_wrap');
-	if (!featured_listing.children().length) {
+	if (featured_listing.children().length == 0) {
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);
@@ -930,7 +960,7 @@ $.fn.rental_form = function() {
 			} else end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit - 1, days_in_month);
 		}
 		
-		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear());
+		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear()).special_txt_anim();
 		return multiplier;
 	}
 	
@@ -1013,10 +1043,10 @@ $.fn.rental_form = function() {
 					['back', 'fadeOut'] 
 				],
 				action : function(wizard) {
-					console.log('step 1')
+					//console.log('step 1')
 				},
 				validate : function(wizard) {
-					console.log('validate 1')
+					//console.log('validate 1')
 					return true; // for now
 				} // END validate
 			}, // END slide 1
@@ -1027,17 +1057,18 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					console.log('step 2')
+					//console.log('step 2')
 				}
 			}
 		],
 		finish_action : function(wizard) {
-			console.log('done')
+			//console.log('done')
 		}
 	};
 	
 	return this.each(function() {
 		var form 		 = $(this),
+			remove_special = $('#remove_special', form).hide(),
 			prorated	 = (form.attr('data-pr') == '1' ? true : false),
 			type_select  = $('select[name=unit_type]', form),
 			unit_type 	 = type_select.val().toLowerCase(),
@@ -1047,7 +1078,7 @@ $.fn.rental_form = function() {
 			tax_rate 	 = parseFloat($('.tax', form).attr('data-tax')),
 			tax_text	 = $('.tax span span', form),
 			total_text	 = $('.total span span', form),
-			calendar	 = $('.cal', form).datepicker({
+			calendar	 = $('#rental_move_in_date', form).datepicker({
 				onSelect: function(date, ui) {
 					form.trigger('recalc');
 				}
@@ -1081,9 +1112,20 @@ $.fn.rental_form = function() {
 		});
 		
 		$('input[name="rental[special_id]"]', form).click(function() {
+			if (remove_special.is(':hidden')) remove_special.fadeIn();
 			form.trigger('recalc');
 		});
 		
-		$('.calendar_wrap', form).click(function() { $(this).find('input').focus(); });
+		$('.calendar_wrap', form).click(function() { 
+			$(this).find('input').focus(); 
+		});
+		
+		remove_special.click(function() {
+			var $this = $(this);
+			$(':radio:checked', $this.parents('ul')).attr('checked', false);
+			$this.fadeOut();
+			form.trigger('recalc');
+			return false;
+		});
 	});
 }

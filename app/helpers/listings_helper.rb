@@ -125,9 +125,12 @@ module ListingsHelper
     
     if listing.logo.exists?
       "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb), options), facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title.parameterize, listing.id))}</div>"
+      
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
       link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
+      
     else
+      get_listing_logos
       img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
       img_hash[:alt] = listing.title
       img = image_tag img_hash[:src], img_hash.merge(options)
@@ -144,7 +147,17 @@ module ListingsHelper
   end
   
   def display_default_logo_choices
-    @listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
+    get_listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
+  end
+  
+  def get_listing_logos
+    @listing_logos ||= begin
+      logos = []
+      %w(w r o g b).each_with_index do |color, i|
+        logos << { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', 'data-ci' => i }
+      end
+      logos
+    end
   end
   
   def display_compared(listing, compare)

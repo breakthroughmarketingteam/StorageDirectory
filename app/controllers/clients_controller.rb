@@ -47,10 +47,8 @@ class ClientsController < ApplicationController
    
     @client = params[:id].blank? ? current_user : Client.find(params[:id])
     @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
-    
-    @settings = @client.settings || @client.build_settings
-    @listing_description = @client.listing_description || @client.build_listing_description
-    
+
+    @settings = @client.settings || @client.build_settings    
     @client_welcome = Post.tagged_with('client welcome').last.try :content
     
     redirect_to new_client_path if @client.nil?

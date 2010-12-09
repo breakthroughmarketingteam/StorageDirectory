@@ -18,7 +18,6 @@ class Listing < ActiveRecord::Base
   has_many :web_specials   , :dependent => :destroy
   has_many :staff_emails   , :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
-  has_one :listing_description, :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy
   has_many :access_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
@@ -27,6 +26,8 @@ class Listing < ActiveRecord::Base
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
   end
+  has_many :predef_size_assigns, :dependent => :destroy
+  has_many :predefined_sizes, :through => :predef_size_assigns
   
   has_many :searches # user searches are associated to listings to gather search behavior data
   
@@ -134,23 +135,11 @@ class Listing < ActiveRecord::Base
     listings[min..listings.size][rand min]
   end
   
-  # Instance Methods
-  
-  def display_description
-    global_desc = self.client.listing_description if self.client
-    listing_desc = self.listing_description if self.listing_description
-    desc = nil
-    
-    case global_desc.show_in when 'none'
-      desc = listing_desc
-    when 'only' # listings without description
-      desc = global_desc unless listing_desc
-    when 'all'
-      desc = global_desc
-    end if global_desc
-    
-    (desc || listing_desc).try :description
+  def self.temp_featured_listing(search)
+    self.find(:all, :conditions => ['listings.id = ?', 85480], :origin => search.location).sort_by_distance_from(search.location).first
   end
+  
+  # Instance Methods
   
   def web_special
     self.web_specials.last
@@ -162,7 +151,7 @@ class Listing < ActiveRecord::Base
   end
   
   def special
-    self.specials.first
+    self.specials.last
   end
   
   def display_special
@@ -174,11 +163,25 @@ class Listing < ActiveRecord::Base
   end
   
   def admin_fee
-    20.00
+    val = read_attribute(:admin_fee) || 20
+    val /= 100 if val > 100
+    val
+  end
+  
+  def admin_fee=(val)
+    if val.is_a?(String) && val.match(/\.{1}/)
+      write_attribute :admin_fee, (val.to_f * 100)
+    else
+      super
+    end
   end
   
   def tax_rate
-    0.06
+    (read_attribute(:tax_rate) || 6) / 100.0
+  end
+  
+  def siblings
+    self.client ? self.client.listings.select { |l| l != self } : []
   end
   
   def storage_type
