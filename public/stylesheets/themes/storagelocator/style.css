@@ -1693,7 +1693,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step2 .inner .right{width:48%;}
 
 .panel .rental_form,.sl-table-wrap .rental_form{margin-top:0;border:0;}
-.panel .rental_form,.sl-table-wrap .rental_form h2,.panel .rental_form,.sl-table-wrap .rental_form .realtime{display:none;}
+.panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
 .panel .rental_form h2,.panel .rental_form .realtime{display:none;}
 .listing .panel .rental_form .col1 ul{height:auto;line-height:1.3;border:0 none;}
 .listing .panel .rental_form .col3 li{float:none;}
