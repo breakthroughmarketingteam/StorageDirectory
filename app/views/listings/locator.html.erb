@@ -3,6 +3,8 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 	
+	<img src="/images/ui/storagelocator/discount.png" alt="Discount" id="disocunt_pic" />
+	
 	<p class="hhh">
 		You're looking at a revolution in getting things done quickly and easily. The ease of online shopping and comparison has finally made it to the <strong>self storage business</strong>. Now finding and getting the best deals 
 		in self storage units and features is easier than ever. Search from hundreds of facilities ranging from self storage to car storage to wine storage - in the size and price you want. We do all the work for you
@@ -10,7 +12,7 @@
 	</p>
 	
 	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>"></div>
-	
+
 	<div id="results_wrap">
 		<div class="rslt-head-txt">
 			<h2><%= locator_header %></h2>

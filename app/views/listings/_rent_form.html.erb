@@ -42,38 +42,96 @@
 						</div>
 	
 						<div class="col2">
-							<div id="size_picker">
+							<div class="size_picker">
 								<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
 							</div>
 						</div>
 	
 						<div class="col3">
 							<ul>
-								<li>Rent: <span class="grey">(<span class="dur">2.87</span> x <span>$</span><span class="rental_rate"></span>)</span> <span class="subtotal right">$<span></span></span></li>
-								<% unless listing.specials.empty? %>
-									<li class="discount">Special Offer: <span class="right">-$<span></span></span></li>
-								<% end %>
+								<li>Rent: <span class="grey">(<span class="dur"></span> x <span>$</span><span class="rental_rate"></span>)</span> <span class="subtotal right">$<span></span></span></li>
 								<li class="admin_fee">Admin Fees: <span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span></li>
+								<% unless listing.specials.empty? %>
+									<li class="discount">Specials: <span class="right">-$<span></span></span></li>
+								<% end %>
+								<li class="special_discount">USSSL Discount: <span class="right">-$<span></span></span></li>
 								<li class="tax" data-tax="<%= listing.tax_rate %>">Tax: <span class="right">$<span></span></span></li>
-								<hr />
+								<li><hr /></li>
 								<li class="total">Move-In Total: <span class="right">$<span>92.56</span></span></li>
 							</ul>
-	
-							<a href="#" class="submit_btn">Rent it!</a>
-							<%= f.submit 'Rent it!', :class => 'hide' %>
 						</div>
 					</div>
 				<% end %>
 			</div>
 
 			<div id="rent_step2" class="workflow_step">
-				<h1>Customer info goes here</h1>
+				<div class="inner">
+					<div class="left">
+						<div>
+					        <%= label_tag 'tenant[name]', 'Your Name', :class => 'block' %> 
+							<%= text_field_tag 'tenant[name]', nil, :class => 'required' %>
+						</div>
+						<div>
+					        <%= label_tag 'mailing_address[phone]', 'Phone', :class => 'block' %> 
+							<%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
+						</div>
+						<div>
+					        <%= label_tag 'tenant[email]', 'Email', :class => 'block' %> 
+							<%= text_field_tag 'tenant[email]', nil, :class => 'email' %>
+							<%= hidden_field_tag "tenant[listing_id]", listing.id %>
+							<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
+						</div>
+						<div>
+					        <%= label_tag 'tenant[billing_infos][address]', 'Address', :class => 'block' %> 
+							<%= text_field_tag 'tenant[billing_infos][address]', nil, :class => 'required' %>
+						</div>
+						<div>
+					        <%= label_tag 'tenant[billing_infos][city]', 'City', :class => 'block' %> 
+							<%= text_field_tag 'tenant[billing_infos][city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+						</div>
+						<div class="uncollapse">
+							<div class="state_field">
+								<%= label_tag 'tenant[billing_infos][state]', 'State', :class => 'block' %> 
+								<%= text_field_tag 'tenant[billing_infos][state]', nil, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+							</div>
+							<div class="zip_field">
+						        <%= label_tag 'tenant[billing_infos][zip]', 'Zip', :class => 'block' %> 
+								<%= text_field_tag 'tenant[billing_infos][zip]', nil, :class => 'required', :maxlength => 5 %>
+							</div>
+						</div>
+					</div>
+					<div class="right">
+						<div>
+					        <%= label_tag 'tenant[billing_infos][card_type]', 'Card Type', :class => 'block' %> 
+							<%= select_tag 'tenant[billing_infos][card_type]', option_tags(BillingInfo.credit_cards), :class => 'required' %>
+						</div>
+						<div>
+					        <%= label_tag 'tenant[billing_infos][card_number]', 'Card Number', :class => 'block' %> 
+							<%= text_field_tag 'tenant[billing_infos][card_number]', nil, :class => 'required' %>
+						</div>
+						<div>
+							<%= label_tag 'tenant[billing_infos][ccv]', 'CCV', :class => 'block' %> 
+							<%= text_field_tag 'tenant[billing_infos][ccv]', nil, :class => 'required', :maxlength => 4 %>
+						</div>
+						<div>
+					        <%= label_tag 'tenant[billing_infos][expires_month]', 'Expires', :class => 'block' %>
+							<%= text_field_tag 'tenant[billing_infos][expires_month]', nil, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
+							<%= text_field_tag 'tenant[billing_infos][expires_year]', nil, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
+						</div>
+						<div>
+							<%= check_box_tag 'agree', 1, false, :class => 'required' %> <%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
+						</div>
+						
+						<div class="verisign"><span class="hidden">Verisign Secure</span></div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 
 		<div id="workflow_nav">
-			<a href="#back" id="back" class="button">Back</a>
-			<a href="#back" id="back" class="button">Next</a>
+			<a href="#back" class="back button">Back</a>
+			<a href="#next" class="next button">Next</a>
 		</div>
 	</div>
 </div>

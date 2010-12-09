@@ -14,15 +14,13 @@
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>
 				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
-				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'right', :title => 'Delete this picture' if action_name == 'edit' %>
+
+				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'right delete_link', :title => 'Delete this picture' if action_name == 'edit' %>
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>
 
-	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt =>"", :class => 'big-pic' unless @listing.pictures.empty? %>
+	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt => '', :class => 'big-pic' unless @listing.pictures.empty? %>
 	</div>
-
-
-	
   </div>
 </div>

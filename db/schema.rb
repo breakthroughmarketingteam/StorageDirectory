@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101202201039) do
+ActiveRecord::Schema.define(:version => 20101206191739) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -427,6 +427,7 @@ ActiveRecord::Schema.define(:version => 20101202201039) do
     t.string   "logo_content_type"
     t.integer  "default_logo"
     t.string   "category"
+    t.string   "phone"
   end
 
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
@@ -458,6 +459,7 @@ ActiveRecord::Schema.define(:version => 20101202201039) do
     t.string   "phone"
     t.float    "lat"
     t.float    "lng"
+    t.string   "address2"
   end
 
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
@@ -733,11 +735,9 @@ ActiveRecord::Schema.define(:version => 20101202201039) do
 
   add_index "specials", ["client_id", "title"], :name => "index_specials_on_listing_id_and_title"
 
-  create_table "suggestions", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.string   "controller"
-    t.string   "action"
+  create_table "staff_emails", :force => true do |t|
+    t.integer  "listing_id"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

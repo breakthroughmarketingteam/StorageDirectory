@@ -74,7 +74,9 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :clients, :member => { :toggle_specials => :post } do |clients|
-    clients.resources :listings, :member => { :disable => :post }
+    clients.resources :listings, :member => { :disable => :post } do |listings|
+      listings.resources :staff_emails
+    end
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'
   end
@@ -131,6 +133,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :link_groups
   map.resources :helptexts
   map.resources :forms
+  map.resources :tenants
   map.resources :suggestions
   map.resources :reservations
   map.resources :rentals

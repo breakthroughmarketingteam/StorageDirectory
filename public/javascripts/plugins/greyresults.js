@@ -279,28 +279,8 @@ $(function(){
 		return false;
 	});
 
-	// utitity method
-	$.clicked_on_different_tab = function($tab_link, $listing) {
-		var $open_panel = $('.panel:not(:hidden)', '.listing');
-		if ($open_panel.length == 0) return true;
-
-		var clicked_listing = $open_panel.parent().attr('id'),
-			active_listing 	= $listing.attr('id');
-		if (active_listing != clicked_listing) return true;
-
-		var clicked_tab  = $tab_link.attr('rel'),
-			active_panel = $open_panel.attr('rel');
-
-		// true when clicking on a different tab in the same result, or the same tab in a different result
-		return (clicked_tab != active_panel && active_listing == clicked_listing) || 
-			   (clicked_tab == active_panel && active_listing != clicked_listing);
-	}
+	$.activateSizeSelect('#narrow_results_form');
 	
-	$.activate_datepicker = function(context) {
-		$('.mini_calendar', context).datepicker();
-		$('.datepicker_wrap', context).click(function(){ $('.hasDatepicker', this).focus(); });
-	}
-
 	// panel openers
 	$('.open_tab', '.tabs').live('click', function(){
 		var $this = $(this),
@@ -587,7 +567,7 @@ $(function(){
 			results_head = $('.rslt-head-txt', results_wrap),
 			loading_txt  = 'Looking for '+ $('#search_storage_type', form).val() +' within <span class="hlght-text">'+ 
 						   $('input[name="search[within]"]:checked', form).val() +'</span> miles of <span class="hlght-text">'+ 
-						   $('#search_query', form).val() +'</span> <span class="txt_ldr">...</span>';
+						   $('#search_query', form).val() +'</span> '+ $.ajax_loader_tag();
 		
 		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
 		$('h2', results_head).html(loading_txt);
@@ -858,6 +838,77 @@ function update_info_tab_count(label, i) {
 	tab.text(label.replace('_', ' ') + ' ('+ count +')');
 }
 
+// utitity method
+$.clicked_on_different_tab = function($tab_link, $listing) {
+	var $open_panel = $('.panel:not(:hidden)', '.listing');
+	if ($open_panel.length == 0) return true;
+
+	var clicked_listing = $open_panel.parent().attr('id'),
+		active_listing 	= $listing.attr('id');
+	if (active_listing != clicked_listing) return true;
+
+	var clicked_tab  = $tab_link.attr('rel'),
+		active_panel = $open_panel.attr('rel');
+
+	// true when clicking on a different tab in the same result, or the same tab in a different result
+	return (clicked_tab != active_panel && active_listing == clicked_listing) || 
+		   (clicked_tab == active_panel && active_listing != clicked_listing);
+}
+
+$.activate_datepicker = function(context) {
+	$('.mini_calendar', context).datepicker();
+	$('.datepicker_wrap', context).click(function(){ $('.hasDatepicker', this).focus(); });
+}
+
+$.activateSizeSelect = function(context) {
+	var $size_picker = $('.size_picker', context),
+		$size_img = $('img', $size_picker),
+		$size_select = $('.sizes_select');
+
+	// preload
+	var pre_loaded_size_icons = [];
+	$('option', $size_select).each(function(){
+		var $this = $(this);
+
+		if ($this.attr('rel') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('rel')) return true; })) {
+			var img = new Image();
+			img.src = $this.attr('rel');
+			pre_loaded_size_icons.push(img);
+		}
+	});
+
+	if ($size_select.length) {
+		size_icon_change($size_select); // update on page load
+		$size_select.live('change', size_icon_change);
+		$('option', $size_select).live('mouseover', size_icon_change);
+	}
+
+	function size_icon_change(input) {
+		var self = input[0] || this,
+			$this = $(self),
+			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
+			new_img = $('<img src="'+ selected +'" alt="" />');
+
+		if ($size_img.attr('src') != selected) {
+			$size_img.fadeOut(100, function(){
+				$size_picker.html(new_img)
+				new_img.hide().fadeIn(120);
+				$size_img = $('img', $size_picker);
+
+				if (new_img.width() > 183) new_img.width(183);
+			});
+		}
+	}
+}
+
+$.fn.special_txt_anim = function() {
+	return this.each(function() {
+		$(this).animate({ 'font-size': '120%' }, 150, function() { 
+			$(this).animate({ 'font-size': '100%' }, 300);
+		});
+	});
+}
+
 // make an auto updating form, when values change, update the total
 $.fn.rental_form = function() {
 	function update_end_date(limit, calendar, multiplier, has_special, prorated, form) {
@@ -884,6 +935,7 @@ $.fn.rental_form = function() {
 	}
 	
 	function special_calc(calc, subtotal, month_rate, multiplier) {
+		if (typeof calc == 'undefined') return 0;
 		var discount = 0;
 		
 		switch (calc[1]) {
@@ -914,33 +966,42 @@ $.fn.rental_form = function() {
 		select.change();
 	}
 	
+	function calc_special_discount(rate, limit) {
+		var discount = 0.1;
+		return (rate * discount).toFixed(2);
+	}
+	
 	function update_totals(multiplier, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, has_special, prorated, form) {
 		var subtotal = rate,
 			total 	 = subtotal,
+			limit 	 = 1,
 			discount = 0,
 			tax_amt	 = 0;
 			
 		if (special.length) {
-			var calc = special.attr('data-special-calc').split('|'),
-				discount = special_calc(calc, rate * (calc[2] || 1), parseFloat(month_rate.eq(0).text()), multiplier);
+			var calc = special.attr('data-special-calc').split('|');
+			limit = calc[2] || 1;
 		}
 		
-		multiplier = update_end_date((calc ? (calc[2] || 1) : 1), calendar, multiplier, has_special, prorated, form);
-		subtotal *= multiplier;
+		var multi2 = update_end_date(limit, calendar, multiplier, has_special, prorated, form),
+			discount = special_calc(calc, rate * multi2, parseFloat(month_rate.eq(0).text()), multi2),
+			special_discount = calc_special_discount(rate, limit);
 		
-		$('.dur', form).text(multiplier);
-		$('.subtotal span', form).text(subtotal.toFixed(2));
-		$('.discount span span', form).text(discount);
-		
+		subtotal *= multi2;
 		total = subtotal;
-		total -= discount;
 
 		if (!isNaN(admin_fee)) total += admin_fee;
 		if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
-
+		
+		total -= parseFloat(special_discount + discount);
 		total += tax_amt;
+		
+		$('.dur', form).text(multi2.toFixed(2));
+		$('.subtotal span', form).text(subtotal.toFixed(2));
+		$('.discount span span', form).text(discount);
+		$('.special_discount span span', form).text(special_discount);
 		tax_text.text(tax_amt.toFixed(2));
-		total_text.text(total.toFixed(2));
+		total_text.text(total.toFixed(2)).special_txt_anim();
 	}
 	
 	var rent_workflow = {
@@ -948,16 +1009,14 @@ $.fn.rental_form = function() {
 			{
 				div_id  : 'rent_step1',
 				nav_vis : [
-					['next', 'hide'],
+					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
 					['back', 'fadeOut'] 
 				],
 				action : function(wizard) {
-					$('.submit_btn', wizard.workflow).unbind('click').bind('click', function() {
-						wizard.next();
-						return false;
-					});
+					console.log('step 1')
 				},
 				validate : function(wizard) {
+					console.log('validate 1')
 					return true; // for now
 				} // END validate
 			}, // END slide 1
@@ -968,11 +1027,8 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					
-				},
-				validate : function(wizard) {
-					return true; // for now
-				} // END validate
+					console.log('step 2')
+				}
 			}
 		],
 		finish_action : function(wizard) {
@@ -1003,7 +1059,7 @@ $.fn.rental_form = function() {
 				has_special = special.length ? true : false;
 			
 			if (prorated) {
-				$.getJSON('/prorater', { rate: rate, move_date: calendar.val(), multiplier: (has_special ? special.attr('data-special-calc').split('|')[2] : 1) }, function(data) {
+				$.getJSON('/prorater', { 'rate': rate, 'move_date': calendar.val(), 'multiplier': (has_special ? special.attr('data-special-calc').split('|')[2] : 1) }, function(data) {
 					update_totals(parseFloat(data.multiplier), rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, has_special, prorated, form);
 				});
 			} else { // fixed rate
@@ -1012,6 +1068,7 @@ $.fn.rental_form = function() {
 		});
 		
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
+		$.activateSizeSelect(form);
 		
 		sizes_select.change(function() {
 			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));

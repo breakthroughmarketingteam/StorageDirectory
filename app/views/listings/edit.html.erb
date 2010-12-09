@@ -19,97 +19,106 @@
 					<span id="hint">Here you can change all the details for this facility.</span>
 					<div id="tab1" class="tab_content">
 						<div id="details" class="left">
-						        <h2>Facility Details:</h2><br />
+							<h2>Facility Details:</h2><br />
+							<% form_for @listing, :html => { :id => 'fac_detail_form' } do |f| %>
 								<table cellspacing="0" cellpadding="0" class="fac-details">
 						            <tbody>
 						                <tr>
-											<td class="col_label"><label for="name">Facility Name:</label></td>
-						                	<td><input type="text" maxlength="32" value="American International Storage" name="name" id="name" class="text  long"></td>
+											<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
+						                	<td><%= f.text_field :title, :class => 'required', :maxlength => 32 %></td>
 						                </tr>
+										
+										<% f.fields_for :map, @listing.map do |mf| %>
+						                	<tr>
+							                	<td class="col_label"><%= mf.label :address %></td>
+							                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 32 %></td>
+							                </tr>
+										
+							                <tr>
+							                	<td class="col_label"><%= mf.label :address2 %></td>
+							                	<td><%= mf.text_field :address2 %></td>
+							                </tr>
 
+							                <tr>
+							                	<td class="col_label"><%= mf.label :city %></td>
+							                	<td><%= mf.text_field :city, :class => 'required' %></td>
+							                </tr>
+
+							                <tr>
+							                	<td class="col_label"><%= mf.label :state %></td>
+							                	<td><%= mf.text_field :state, :class => 'required' %></td>
+							                </tr>
+
+							                <tr>
+							               		<td class="col_label"><%= mf.label :zip, 'Zip Code' %></td>
+							                	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+							                </tr>
+										<% end %>
+										
 						                <tr>
-						                	<td class="col_label"><label for="address1">Address Line1:</label></td>
-						                	<td><input type="text" maxlength="30" value="2100 NE 162nd St" name="address1" id="address1" class="text  long"></td>
+						                	<td class="col_label"><%= f.label :phone %></td>
+						                	<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
 						                </tr>
-
-						                <tr>
-						                	<td class="col_label"><label for="address2">Line2:</label></td>
-						                	<td><input type="text" maxlength="40" value="" name="address2" id="address2" class="text long"></td>
-						                </tr>
-
-						                <tr>
-						                	<td class="col_label"><label for="city">City:</label></td>
-						                	<td><input type="text" value="North  Miami Beach" name="city" id="city" class="text  long"></td>
-						                </tr>
-
-						                <tr>
-						                	<td class="col_label"><label for="state">State:</label></td>
-						                	<td><div><input type="text" value="FL" size="2" maxlength="2" name="state" id="state" class="text "></div></td>
-						                </tr>
-
-						                <tr>
-						               		<td class="col_label"><label for="zip">Zip Code:</label></td>
-						                	<td><div><input type="text" value="33162" name="zip" id="zip" class="text "></div></td>
-						                </tr>
-
-						                <tr>
-						                	<td class="col_label"><label for="phone">Phone:</label></td>
-						                	<td>
-						                    	<div>
-						                      		<input type="text" value="305-111-1111" size="10" maxlength="10" name="phone1" id="phone1" class="text ">
-						                    	</div>
-						                	</td>
-						                </tr>
-
 										<tr>
 											<td class="col_label">Tracked Number</td>
-											<td>(305) 537-6952 &nbsp;<div id="request">Request</div></td>
+											<td>(305) 537-6952 &nbsp;<div id="tracking_num_req">Request</div></td>
 										</tr>
-										
+									
 										<tr>
-						                	<td class="col_label"><label for="email">Email:</label></td>
+						                	<td class="col_label"><label for="email">Email</label></td>
 						                	<td>
-						                    	<div>
-						                      		<span id="contact1">vdante@aol.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
-													<span id="contact2">americaninternationalstorage@gmail.com &nbsp; [<a onclick="return removeContact(64746,2122);" href="#">remove</a>]<br /></span>
-													<input type="text" name="facility_email" id="facility_email" value="" size="40"> &nbsp; [<a onclick="return addContact(64746);" href="#">add</a>]
-						                    	</div>
+												<div>
+												<% @listing.staff_emails.each do |staff_email| %>
+													<% unless staff_email.new_record? %>
+														<span><%= staff_email.email %> &nbsp; [<a class="rm_field" data-email-id="<%= staff_email.id %>" href="#">remove</a>]<br /></span>
+													<% else %>
+														<% f.fields_for :staff_emails, staff_email do |sf| %>
+															<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+														<% end %>
+													<% end %>
+												<% end %>
+												</div>
 						                	</td>
 						                </tr>
 						            </tbody>
 						        </table>
-						<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+								<div><%= f.submit 'Save Changes', :class => 'save' %></div>
+							<% end %>
 						</div>
 						<div id="flogo" class="left">
-							<p class="label">Logo:</p>
-							<div id="col1">
-								<%= display_logo @listing, :id => 'listing_img' %>
-							</div>
-							<div id="col2">
-								<p>Upload a logo image from your computer...</p>
-								<input type="hidden" value="" name="" id="pictures">
-								<input type="file" id="upload" name="" class="file">
-
-								<p>Or choose from one of our default images below.</p>
-								<%= render :partial => 'listings/logo_choices' %>
-								
-								<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+							<% form_for @listing, :html => { :id => 'logo_form', :multipart => true } do |f| %>
+								<p class="label">Logo:</p>
+								<div id="col1">
+									<%= display_logo @listing, :id => 'listing_img' %>
+								</div>
+								<div id="col2">
+									<p>Upload a logo image from your computer...</p>
+									<%= f.file_field :logo %>
+									
+									<p>Or choose from one of our default images below.</p>
+									<%= render :partial => 'listings/logo_choices' %>
+									
+									<%= f.submit 'Upload', :class => 'save' %>
+								<% end %>
 							</div>
 						</div>
 						<div id="descript" class="left">
-							<p class="label">Description:</p>
-							<div class="inner">
-								<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
-								<textarea id="facility_description" name="facility_description" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
-							</div>
-							<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
+								<p class="label">Description:</p>
+								<div class="inner">
+									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>
+									<textarea id="facility_description" name="lisitng[facility_description]" rows="6" >Your North Miami Beach Self Storage location, one block of 163rd Street and 5 minutes from the 163rd Street Mall and Sunny Isles Beach. Located behind Potamking Honda. All units are ground floor with some accessible via roll up ladder for even bigger savings. We offer the FIRST MONTH FREE and up to 4 months free (call us for details). American International Self Storage serves the cities of North Miami Beach, Miami, North Miami, Miami Gardens, Aventura, Sunny Isles, Miami Beach and many more.</textarea>
+								</div>
+								
+								<%= f.submit 'Save Changes', :class => 'save' %>
+							<% end %>
 						</div>
 						<div id="hours" class="left">
 							<p class="label">Hours:</p>
 							<div class="inner">
 								<%= render :partial => 'hours' if in_edit_mode? %>
 							</div>
-							<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
+							<%= submit_tag 'Save Changes', :class => 'save' %>
 						</div>
 					</div>
 					<div id="tab2" class="tab_content">
@@ -118,6 +127,7 @@
 							<div class="inner">
 								$ &nbsp;<input type="text" name="facility_admin_fee" id="facility_admin_fee" value="20.00" size="8"> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
 							</div>
+							<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
 						</div>
 						<div id="billing" class="left">
 							<p class="label">Billing Method:</p>
@@ -283,6 +293,10 @@
 								</tbody>
 							</table>
 						</div>
+					</div>
+					<div class="hide">
+						<%= hidden_field_tag :client_id, @listing.client.id %>
+						<%= hidden_field_tag :listing_id, @listing.id %>
 					</div>
 				</div>
 			</div>

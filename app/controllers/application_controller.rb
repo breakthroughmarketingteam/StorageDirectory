@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, 
-                :current_user, 
+                :current_user,
+                :benchmark,
                 :_crud,
                 :regions,    # for blocks_model_form
                 :view_types, # for model_view_form
@@ -151,7 +152,7 @@ class ApplicationController < ActionController::Base
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
-      @slogan            = 'Locate, Select and Rent Self Storage Anywhere, Anytime.'
+      @slogan            = 'Locate, Save, <strong>Rent Self Storage</strong> Anywhere, Anytime.'
       @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
     
@@ -479,6 +480,16 @@ class ApplicationController < ActionController::Base
   # returns a boolean if the the current action matches any of the action passed in as a string or an array
   def in_mode?(*modes)
     [modes].flatten.any? { |m| action_name == m }
+  end
+  
+  def benchmark
+    hr = '**********************************************************************************************************************************'
+    cur = Time.now
+    result = yield
+    print "#{hr}\nBENCHMARK: #{cur = Time.now - cur} seconds"
+    puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n#{hr}" rescue puts ""
+    $last_benchmark = cur
+    result
   end
   
   def get_listing_logos

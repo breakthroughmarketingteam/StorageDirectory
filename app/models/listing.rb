@@ -16,6 +16,8 @@ class Listing < ActiveRecord::Base
   has_many :impressions    , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
   has_many :web_specials   , :dependent => :destroy
+  has_many :staff_emails   , :dependent => :destroy
+  accepts_nested_attributes_for :staff_emails
   has_one :listing_description, :dependent => :destroy
   
   has_many :business_hours , :dependent => :destroy

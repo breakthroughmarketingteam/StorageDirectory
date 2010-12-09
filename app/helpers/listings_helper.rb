@@ -103,7 +103,7 @@ module ListingsHelper
   			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
   		end
     else
-      html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> <span class='txt_ldr'>...</span>"
+      html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> #{ajax_loader}"
     end
 	  
 		html

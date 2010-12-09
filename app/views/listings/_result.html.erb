@@ -55,55 +55,29 @@
 					<li class="rslt-price">
 					  	<ul>
 							<% @upper_type_size = result.get_upper_type_size(unit_size) %>
-							<li class="radio_wrap">
-								<label title="<%= @upper_type_size.description || @upper_type_size.title if @upper_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									<span class="type">Upper:</span>
-									<% if @upper_type_size %>
-										<span class="price"><%= number_to_currency @upper_type_size.dollar_price %></span>
-									<% else %>
-										<span>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									<% end %>
-								</label>
-								<% if @upper_type_size %>
-									<div class="radio_select">
-										<%= radio_button_tag "listing[#{result.id}][unit_size]", @upper_type_size.id %>
-									</div>
-								<% end %>
-							</li>
-							
+							<% @indoor_type_size = result.get_interior_type_size(unit_size) %>
 							<% @drive_up_type_size = result.get_drive_up_type_size(unit_size) %>
-							<li class="radio_wrap">	
-								<label title="<%= @drive_up_type_size.description || @drive_up_type_size.title if @drive_up_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									<span class="type">Drive Up:</span>
-									<% if @drive_up_type_size %>
-										<span class="price"><%= number_to_currency @drive_up_type_size.dollar_price %></span>
-									<% else %>
-										<span>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									<% end %>
-								</label>
-								<% if @drive_up_type_size %>
-									<div class="radio_select">
-										<%= radio_button_tag "listing[#{result.id}][unit_size]", @drive_up_type_size.id %>
+							
+							<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
+								<% type, size = types %>
+								<li class="radio_wrap">
+									<div class="radio">
+										<% if size %>
+											<div class="radio_select">
+												<%= radio_button_tag "listing[#{result.id}][unit_size]", size.id %>
+											</div>
+										<% end %>
 									</div>
-								<% end %>
-							</li>
-
-							<% @interior_type_size = result.get_interior_type_size(unit_size) %>
-							<li class="radio_wrap">	
-								<label title="<%= @interior_type_size.description || @interior_type_size.title if @interior_type_size %>" for="listing[<%= result.id %>][unit_size]">
-									<span class="type">Indoor:</span>
-									<% if @interior_type_size %>
-										<span class="price"><%= number_to_currency @interior_type_size.dollar_price %></span>
-									<% else %>
-										<span>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									<% end %>
-								</label>
-								<% if @interior_type_size %>
-									<div class="radio_select">
-										<%= radio_button_tag "listing[#{result.id}][unit_size]", @interior_type_size.id %>
-									</div>
-								<% end %>
-							</li>
+									<label title="<%= size.description || size.title if size %>" for="listing[<%= result.id %>][unit_size]">
+										<span class="type"><%= type %>:</span>
+										<% if size %>
+											<span class="price"><%= number_to_currency size.dollar_price %></span>
+										<% else %>
+											<span class="price">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										<% end %>
+									</label>
+								</li>
+							<% end %>
 						</ul>		
 					</li>			
 				<% end %>
