@@ -1285,7 +1285,7 @@ var GreyWizard = function(container, settings) {
 	self.slide_speed = settings.slide_speed || 1500,
 	self.btn_speed  = settings.btn_speed || 900,
 	self.fade_speed = settings.fade_speed || 1000,
-	console.log(self.workflow, self.workflow.width(), self.workflow.css('width'))
+	
 	this.begin_workflow_on = function(step) {
 		self.workflow.parents('#pop_up').show();
 		self.nav_bar  	   = $('#'+ (self.nav_id || 'workflow_nav'), self.workflow).children().hide().end(); // set initial nav visibility
@@ -1324,7 +1324,6 @@ var GreyWizard = function(container, settings) {
 		
 		// jquery tools scrollable
 		self.workflow.children('.items').width(self.num_slides * (self.width + self.spacer + self.pad_left) + 3);
-		console.log(self.num_slides, self.width, self.spacer, self.pad_left, self.num_slides * (self.width + self.spacer + self.pad_left) + 3)
 		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' }).data('scrollable').seekTo(self.current, 1);
 		
 		if (self.settings.set_slides) { // build the slide tabbed display
