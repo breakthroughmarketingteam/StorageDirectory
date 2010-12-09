@@ -520,7 +520,7 @@ $(document).ready(function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				$.with_json(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (data[0]) { // we found matching listings, start on the first step of the workflow
@@ -1459,12 +1459,11 @@ $.fn.instantForm = function() {
 var workflow_settings = {
 	title		 : 'Add Your Facility',
 	nav_id : 'workflow_nav',
-	set_slides : true,
+	set_slides : false,
 	slides : [
 		{ 
 			div_id  : 'signupstep_2',
 			action  : workflow_step2,
-			slide_display : 'Found possible listings',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeIn'],
@@ -1474,7 +1473,6 @@ var workflow_settings = {
 		{ 
 			div_id  : 'signupstep_3',
 			action  : workflow_step3,
-			slide_display : 'Contact information',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
@@ -1485,7 +1483,6 @@ var workflow_settings = {
 		{ 
 			div_id  : 'signupstep_4',
 			action  : workflow_step4,
-			slide_display : 'Review your information',
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
 				['skip', 'fadeOut'],
