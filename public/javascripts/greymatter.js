@@ -733,6 +733,12 @@ $.new_ajax_loader = function(where, el, img) {
 	}
 }
 
+$.setInterval = function(callback, interval) {
+	setTimeout(function() {
+		callback.call(this);
+		setTimeout(arguments.callee, interval);
+	}, interval)
+}
 
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
@@ -1283,7 +1289,6 @@ var GreyWizard = function(container, settings) {
 		self.workflow.parents('#pop_up').show();
 		self.nav_bar  	   = $('#'+ (self.nav_id || 'workflow_nav'), self.workflow).children().hide().end(); // set initial nav visibility
 		self.current  	   = step || 0;
-		self.slide_steps   = $('<div id="slide_nav" />').appendTo(self.workflow.parent());
 		self.current_slide = $('#'+ self.slide_data[self.current].div_id, self.workflow);
 		self.skipped_first = step > 0 ? true : false;
 		
@@ -1317,14 +1322,15 @@ var GreyWizard = function(container, settings) {
 		self.slides.css({ 'margin-right': self.spacer +'px' });
 		
 		// jquery tools scrollable
-		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' }).data('scrollable').seekTo(self.current, 1);
 		self.workflow.children('.items').width(self.num_slides * (self.width + self.spacer + self.pad_left) + 3);
+		self.workflow.scrollable({ speed: 1000, circular: false, next: '.none', prev: '.none' }).data('scrollable').seekTo(self.current, 1);
 		
 		if (self.settings.set_slides) { // build the slide tabbed display
-			var step_display = '',
-				active_slides 	   = self.num_slides - (self.skipped_first ? 1 : 0),
-				slide_tab_width    = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
-				done_skipping 	   = false;
+			self.slide_steps = $('<div id="slide_nav" />').appendTo(self.workflow.parent())
+			var step_display 	 = '',
+				active_slides 	 = self.num_slides - (self.skipped_first ? 1 : 0),
+				slide_tab_width  = parseInt(100 / active_slides) - (self.skipped_first ? 3 : 2.68), // tested in FF 3.6
+				done_skipping 	 = false;
 			
 			for (var i = 0; i < self.num_slides; i++) {
 				if (self.skipped_first && !done_skipping) {

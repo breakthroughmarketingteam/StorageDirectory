@@ -523,7 +523,7 @@ $(document).ready(function() {
 					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
-						if (data[0]) { // we found matching listings, start on the first step of the workflow
+						if (data.length > 0) { // we found matching listings, start on the first step of the workflow
 							workflow_settings.slides[0].data = data;
 							wizard.begin_workflow_on(0);
 							
@@ -1151,14 +1151,25 @@ $(document).ready(function() {
 		});
 	});
 	
-	// change big-pic when thumb is hovered
-	$('img', '#sl-tabs-pict').live('mouseover', function(){
+	var fac_photo_show = $('#sl-photos');
+	if (fac_photo_show.length > 0) {
+		var imgs = $('img:not(.main_pic)', fac_photo_show), count = 0;
+		
+		$.setInterval(function() {
+			var index = count % imgs.length;
+			$(imgs[index]).trigger('mouseover');
+			count++;
+		}, 7000);
+	}
+	
+	// change main_pic when thumb is hovered
+	$('#sl-tabs-pict-gall img, #sl-photos img').live('mouseover', function(){
 		if ($(this).hasClass('loading')) return false;
 		
-		var main_pic = $('.main_pic', '#sl-photos');
+		var main_pic = $('#sl-tabs-pict .big-pic, #sl-photos .main_pic');
 		if (main_pic.length == 0) return false;
 		
-		$('img', '#sl-photos #previews').removeClass('active');
+		$('img', '#sl-photos #previews, #sl-tabs-pict-gall').removeClass('active');
 		var thumb = $(this),
 			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
 		
@@ -1461,7 +1472,7 @@ var workflow_settings = {
 	nav_id : 'workflow_nav',
 	set_slides : false,
 	slides : [
-		{ 
+		{
 			div_id  : 'signupstep_2',
 			action  : workflow_step2,
 			nav_vis : [

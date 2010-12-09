@@ -1,13 +1,21 @@
 <div id="sl-tabs-overview" class="tab_content">	
 	<div id="hed">
         <h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
-        <div id="ratings">Rating: <%#= ratings_for @listing %></div>
+        <div id="ratings">Rating: <%= ratings_for @listing %></div>
     </div>
 	<div id="sl-intro">
-		<div id="inner">
+		<div class="inner">
 			<% if @listing.special %>
-				<div id="sl-special">
-					<h3><%= @listing.special.title %></h3><p><a href="#" class="ps">Print</a> and bring it, or select it if you <a href="#">Rent Online</a>.</p>
+				<div id="special_wrap">
+					<div class="dp">
+						<img src="/images/ui/storagelocator/usselfstoragelocator-sml.png" />
+						<h3><%= @listing.title.titleize %></h3>
+						<p><%= @listing.full_address %></p>
+					</div>
+					<div id="sl-special">
+						<h3><%= @listing.special.title %></h3>
+						<p class="np"><%= print_link '#special_wrap' %> and bring it, or select it if you <a href="#">Rent Online</a>.</p>
+					</div>
 				</div>
 			<% end %>
 			<div id="sl-descript">
@@ -15,7 +23,9 @@
 			</div>
 		</div>
 		<div id="sl-photos">
-			<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' unless @listing.pictures.empty? %>
+			<div id="main_pic_wrap">
+				<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' unless @listing.pictures.empty? %>
+			</div>
 			<div id="previews">
 				<% @listing.pictures.each do |picture| %>
 					<%= link_to image_tag(picture.image.url(:thumb), :id => "Picture_#{picture.id}") %>
