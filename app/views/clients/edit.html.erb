@@ -63,20 +63,6 @@
         </div>
       </div>
 	
-	<%= render_hints_for :specials, 'ov-specials' %>
-      <div id="ov-specials" class="hideable">
-        <div class="ov-item-head">
-          <h3>Specials</h3>
-        </div>
-        <div id="ov-specials-cnt">
-			<% form_tag toggle_specials_client_path(@client) do %>
-				<ul id="toggle_specials">
-					<%= render :partial => PredefinedSpecial.all %>
-				</ul>
-			<% end %>
-        </div>
-      </div>
-	
 	<%= render_hints_for :services, 'ov-services' %>
       <div id="ov-services" class="hideable">
         <div class="ov-item-head">

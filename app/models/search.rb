@@ -65,6 +65,10 @@ class Search < ActiveRecord::Base
     @location ||= GeoKit::GeoLoc.new(self)
   end
   
+  def full_address
+    "#{city}, #{state} #{zip}"
+  end
+  
   def set_query!
     self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size > 2 ? self.state.upcase : self.state)}" if self.city
   end

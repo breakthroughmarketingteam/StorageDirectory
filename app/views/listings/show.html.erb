@@ -24,11 +24,13 @@
 	        </div>
 	    <% end %>    
 
-	   	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
-
         <div id="outer_map">
+			<div id="pl" class="dp">
+				<h3><%= @listing.title %></h3>
+				<p><%=h @listing.description %></p>
+			</div>
+			<div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
             <%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} %>
-            <div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
         </div>
         <%= print_link '#outer_map', '#', :id => 'single_print' %>
 
