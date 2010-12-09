@@ -26,7 +26,7 @@
 						</div>
 						<div id="descript" class="left">
 							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
-								<p class="label">Description:</p>
+								<h3 class="label">Description:</h3>
 								
 								<div class="inner">
 									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
@@ -42,7 +42,7 @@
 							<% end %>
 						</div>
 						<div id="hours" class="left">
-							<p class="label">Hours:</p>
+							<h3 class="label">Hours:</h3>
 							
 							<div class="inner">
 								<%= render :partial => 'hours' if in_edit_mode? %>
@@ -55,13 +55,13 @@
 					<div id="tab2" class="tab_content">
 						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
 							<div id="admin_fee" class="left">
-								<p class="label">Administrative Fee:</p>
+								<h3 class="label">Administrative Fee:</h3>
 								<div class="inner">
 									$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
 								</div>
 							</div>
 							<div id="billing" class="left">
-								<p class="label">Billing Method:</p>
+								<h3 class="label">Billing Method:</h3>
 								<div class="inner">
 									<ul>
 										<li class="radio_wrap"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
@@ -70,7 +70,7 @@
 								</div>
 							</div>
 							<div id="tax" class="left">
-								<p class="label">State Tax:</p>
+								<h3 class="label">State Tax:</h3>
 								<div class="inner">
 									<%= f.text_field :tax_rate, :size => 8, :maxlength => 5 %> % &nbsp; Set your State Tax here so it is added to every unit rental.
 								</div>
@@ -82,13 +82,13 @@
 					</div>
 					<div id="tab3" class="tab_content">
 						<div id="features" class="uncollapse stack">
-							<p class="label">Facility Amenities:</p>
+							<h3 class="label">Facility Amenities:</h3>
 							<div class="inner">
 								<%= render :partial => 'features' %>
 							</div>
 						</div>
 						<div id="specials" class="uncollapse stack">
-							<p class="label">Specials:</p>
+							<h3 class="label">Specials:</h3>
 							<div class="inner">
 								<%= render_hints_for :specials %>
 								<p>Select one or more preset specials to make it available for this facility.</p>

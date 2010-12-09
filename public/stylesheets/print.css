@@ -46,3 +46,10 @@ ul{margin-left:10px;}
 #dirs{padding:10px;float:left;background:#fff;margin:10px 0 0 -2px;width:99%;}
 .map_wrap,#google_map{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border:3px solid #999;height:260px;width:340px;float:right;}
 #street_view{display:none;}
+
+/* coupon */
+#sl-special{border:2px dashed #ccc;height:151px;margin-top:20px;width:327px;position:relative;}
+#sl-special h3{color:#630;line-height:24px;padding-top:25px;width:80%;margin:0 auto;text-align:center;font-size:140%;}
+#sl-special p{text-align:left;margin:0;position:absolute;bottom:10px;left:10px;}
+#sl-special a{text-decoration:underline;}
+#sl-special span{font-size:24px;line-height:30px;}

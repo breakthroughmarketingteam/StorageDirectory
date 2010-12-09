@@ -172,7 +172,6 @@ class ListingsController < ApplicationController
   private
   
   def get_listing_relations
-    @showing = true
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.first || (@listing.client && @listing.specials.new)
@@ -181,7 +180,6 @@ class ListingsController < ApplicationController
     @search = Search.find_by_id session[:search_id]
     
     if action_name == 'edit'
-      @showing = false
       @facility_feature = FacilityFeature.new
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials

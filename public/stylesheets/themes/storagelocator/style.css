@@ -307,9 +307,10 @@ li.rslt-miles,li.rslt-size{height:88px;}
 #feat-list .dnp{clear:both;}
 #feat-list .dnp li.rslt-price,#feat-list .dnp li.rslt-miles,#feat-list .dnp li.rslt-size{background:none;height:auto;width:auto;float:none;}
 #feat-list .dnp li.rslt-miles{font-weight:bold;font-size:120%;margin:5px 0 10px;float:left;}
-#feat-list .dnp li.rslt-size .size{margin:35px 15px 0 0;float:right;}
+#feat-list .dnp li.rslt-size .size{margin:35px 18px 0 0;float:right;font-size:14px;font-weight:bold;}
 #feat-list .dnp li.rslt-price li div{margin:0;float:none;}
 #feat-list .dnp li.rslt-price .price{font-weight:bold;color:#33C;}
+#feat-list .dnp .rslt-price .radio_wrap label{width:100%;}
 #reserve_steps{min-height:380px;}
 #reserve_steps .workflow_step{width:97%;padding:11px;height:auto;}
 #reserve_steps #workflow_nav{bottom:53px;font-size:80%;left:15px;top:auto;width:96%;}
@@ -564,7 +565,7 @@ ul#specials_list {margin:15px 10px;}
 #logo_picker:hover,#logo_picker:active{color:#393;}
 #listing_logo_form label,#logo_picker label{font-size:80%;color:#555;}
 #logo_choices .default_logo{border:1px solid #FFF;margin:0 6px 6px 0;vertical-align:middle;width:60px;cursor:pointer;}
-#logo_choices .default_logo:hover,#logo_choices .default_logo:active{border-color:#555;}
+#logo_choices .default_logo:hover,#logo_choices .default_logo:active{border-color:#ccc;}
 p.blue-edit{background:url(/images/ui/storagelocator/blue-edit.png) no-repeat top left;width:68px;height:22px;line-height:22px;text-align:center;font-weight:bold;position:relative;left:20px;}
 p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22px;}
 #sl-footer{border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;background-color:#ddd;height:30px;clear:both;margin-bottom:15px;}
@@ -1602,11 +1603,11 @@ form .note{clear:both;display:block;font-size:80%;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
 
-#fac_name{font-size:12px;font-weight:normal;}
-#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
+#fac_name{border-top:1px solid #ccc;}
+#fac_name span{color:#4c4bcc;font-size:18px;font-weight:bold;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{height:300px;margin-top:25px;}
-#sl-intro #inner{float:left;}
+#sl-intro .inner{float:left;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
 #sl-intro #sl-special{background:url(/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;text-align:center;width:327px;}
 #sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;}
@@ -1614,7 +1615,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-intro #sl-special a{text-decoration:underline;}
 #sl-intro #sl-special span{font-size:24px;line-height:30px;}
 #sl-tabs-overview #sl-photos{background:#fff;border:1px solid #ccc;float:right;width:383px;}
-#sl-tabs-overview #sl-photos #previews img{width:28px;border:1px solid #fff;}
+#sl-tabs-overview #sl-photos #previews img{width:44px;border:1px solid #fff;}
 #sl-tabs-overview #sl-photos #previews img.active{display:inline;border-color:#ccc;}
 #sl-tabs-overview #sl-photos #previews{margin:3px;text-align:center;}
 .get_dir{margin-top:10px;}
@@ -1622,12 +1623,10 @@ form .note{clear:both;display:block;font-size:80%;}
 .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
 .get_dir a#get_dirs:hover{background:#393}
 
-
-#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;}
+#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
 #sl-tabs #sl-phone{color:#339933;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{height:300px;margin-top:25px;}
-#sl-intro #inner{float:left;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
 #sl-intro #sl-special{background:url(/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;width:327px;position:relative;}
 #sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;width:80%;margin:0 auto;text-align:center;font-size:140%;}
@@ -1637,6 +1636,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-tabs-overview #sl-photos{background:#fff;border:1px solid #ccc;float:right;height:311px;width:383px;}
 #sl-tabs-overview #sl-photos img{}
 #sl-tabs-overview #sl-photos #previews{margin:3px;text-align:center;}
+#main_pic_wrap{position:relative;height:257px;}
 .get_dir{margin-top:10px;}
 #sl-tabs-map .get_dir input#from_address{margin-left:3px;width:81%;}
 #sl-tabs-map .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
@@ -1744,7 +1744,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #flogo{width:100%;}
 #sl-edit-tabs #flogo .dlogo_wrap{-moz-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;display:block;font-size:100%;height:137px;position:relative;text-align:center;text-decoration:none;vertical-align:middle;width:182px;}
 #sl-edit-tabs #flogo .dlogo_wrap span{color:#fff;display:block;position:absolute;text-align:center;text-shadow:1px 1px 1px #333;top:20px;width:100%;z-index:2;}
-#sl-edit-tabs #descript textarea{margin-bottom:10px;padding:5px;width:100%;}
+#sl-edit-tabs #descript textarea{color:#333333;font:12px "Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;line-height:1.3;margin-bottom:10px;padding:5px;width:100%;}
 #sl-edit-tabs #descript p{margin-bottom:20px;}
 #sl-edit-tabs #hours{padding-bottom:15px;width:100%;}
 #sl-edit-tabs #hours .hours_display{margin:0px;padding:0px;width:48%;}
@@ -1787,7 +1787,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
 #sl-edit-tabs .ajax_loader{float:right;margin:7px 10px 0 0;}
 #sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
-#sl-edit-tabs h2{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 10px;padding:7px 20px;}
+#sl-edit-tabs h2,#sl-edit-tabs h3{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 10px;padding:7px 20px;border-bottom:1px solid #ccc;}
+#flogo h3,#hours h3{margin-bottom:20px;}
 #sl-edit-tabs #details{width:100%;}
 #sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}
 #sl-edit-tabs .fac-details td{padding:6px 12px;}
