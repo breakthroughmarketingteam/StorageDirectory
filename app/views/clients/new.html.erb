@@ -40,21 +40,24 @@
 				<% form_for @client, :html => { :class => 'silent' } do |f| %>
 					<span class="sub_head">Locate Your Facility and Get Started.</span>
 					<div>
-						<%= f.label :company, 'Facility Name', :class => 'hidden' %>
-						<%= f.text_field :company, :class => 'required hintable param_filled focus_me', :rel => 'client[company]', :title => 'Your Facility\'s Name' %>
+						<%= f.label :company, 'Facility Name:', :class => 'label' %>
+						<%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
 					</div>
 
 					<div id="email_check">
-						<%= f.label :email, 'Contact Email', :class => 'hidden' %>
-						<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email' %>
-						<%= ajax_loader %>
-						<%= link_to 'Confirm Availability', '#', :id => 'chk_avail' %>
+						<%= f.label :email, 'Contact Email:', :class => 'email-label' %>
+						<%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
+						<%= f.text_field :email, :class => 'email' %>
+					
 					</div>
 
-					<div>
-						<label class="hidden">Location</label> 
-						<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[city]', :title => 'City', :rel => 'UsCity_names|3' %>
-						<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete hintable param_filled', :param => 'listing[state]', :title => 'State', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+					<div id="city">
+						<label class="label">City:</label>
+						<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
+					</div>
+					<div id="state">
+						<label class="label">State:</label>
+						<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
 					</div>
 
 					<div id="submit_wrap">

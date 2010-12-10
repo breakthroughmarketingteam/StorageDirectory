@@ -1495,6 +1495,14 @@ var workflow_settings = {
 			div_id  : 'signupstep_4',
 			action  : workflow_step4,
 			nav_vis : [
+				['next', function(btn, wizard){ btn.text('Submit').data('done', false); }],
+				['skip', 'fadeOut'],
+				['back', 'fadeIn']
+			]
+		},
+		{ 
+			div_id  : 'signupstep_5',
+			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
 				['skip', 'fadeOut'],
 				['back', 'fadeIn']
@@ -1566,7 +1574,7 @@ function workflow_step3() {
 
 function workflow_step4() { // form data review
 	var wizard    = arguments[0],
-		review	  = $('#signupstep_4 .left', wizard.workflow).html(''), // reset before filling in again if the user clicked back
+		review	  = $('#signupstep_4 .inner', wizard.workflow).html(''), // reset before filling in again if the user clicked back
 		listings  = $('#signupstep_2 .small_listings', wizard.workflow).find('input:checked'),
 		info	  = $('#signupstep_3 #contact_info_form', wizard.workflow).find('input'),
 		company	  = $('#client_company', '#new_client').val(),
@@ -1594,22 +1602,22 @@ function workflow_step4() { // form data review
 	var review_html = '<h4>Contact Information:</h4>';
 		
 	review_html += '<div id="review_contact">';
-		review_html += '<p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
-		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
-		review_html += '<p class="email">'+ email +'</p>';
-		review_html += '<p class="listing_title">'+ titleize(company) +'</p>';
-		review_html += '<p class="listing_address">' + 
+		review_html += '<div class="label">Company Name:</div> <p class="listing_title">'+ titleize(company) +'</p>';
+		review_html += '<div id="address" class="label">Company Address:</div> <p class="listing_address">' + 
 						wizard.form_data.mailing_address['address'] +'<br />'+ 
 						capitalize(wizard.form_data.mailing_address['city']) +', '+ 
 						capitalize(wizard.form_data.mailing_address['state']) +' '+ 
 						wizard.form_data.mailing_address['zip'] +'</p>';
+		review_html += '<div id="name" class="label">Name:</div> <p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
+		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<div class="label">Phone:</div> <p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
+		review_html += '<div class="label">Email:</div> <p class="email">'+ email +'</p>';
 	review_html += '</div>';
 	
 	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newsletter.</p>';
 	
 	if (listings.length > 0) {
 		wizard.form_data.listings = [];
-		review_html += '<h4>My Listings:</h4><div class="small_listings">';
+		review_html += '<h4 id="listings">My Listings:</h4><div class="small_listings">';
 		
 		listings.each(function(i) {
 			var title 	= titleize($('#Listing_'+ this.value +' .listing_title', wizard.workflow).text()),
