@@ -460,13 +460,15 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						$('#rent_step1 form').rental_form();
+						console.log(rform)
+						$('#rent_step1 form', rform).rental_form();
 					});
 				} else {
 					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
+						console.log(rform)
 						$('#rent_step1 form').rental_form();
 					});
 				}
@@ -626,7 +628,7 @@ $(function(){
 		return false;
 	});
 	
-	$('.list_sort').live('click', function() {console.log(this)
+	$('.list_sort').live('click', function() {
 		var $this = $(this), form = $('#narrow_results_form', '#content_bottom'),
 			sort_fields = $('input.sort_field', form);
 		
@@ -1019,11 +1021,11 @@ $.fn.rental_form = function() {
 		
 		subtotal *= multi2;
 		total = subtotal;
-
+		total -= parseFloat(special_discount) + parseFloat(discount);
+		
 		if (!isNaN(admin_fee)) total += admin_fee;
 		if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
 		
-		total -= parseFloat(special_discount + discount);
 		total += tax_amt;
 		
 		$('.dur', form).text(multi2.toFixed(2));
@@ -1044,13 +1046,9 @@ $.fn.rental_form = function() {
 				],
 				action : function(wizard) {
 					//console.log('step 1')
-				},
-				validate : function(wizard) {
-					//console.log('validate 1')
-					return true; // for now
-				} // END validate
+				}
 			}, // END slide 1
-			{ 
+			{
 				div_id  : 'rent_step2',
 				nav_vis : [
 					['next', 'fadeIn'],
@@ -1058,8 +1056,24 @@ $.fn.rental_form = function() {
 				],
 				action : function(wizard) {
 					//console.log('step 2')
+				},
+				validate : function(wizard) {
+					return $('#rent_step2', wizard.workflow).runValidation().data('valid');
 				}
-			}
+			},
+			{
+				div_id  : 'rent_step3',
+				nav_vis : [
+					['next', function(btn, wizard) { btn.text('Done').fadeIn() }],
+					['back', 'show'] 
+				],
+				action : function(wizard) {
+					$('.next', wizard.nav_bar).click(function() {
+						wizard.workflow.parent().dialog('destroy').remove();
+					});
+					return false;
+				}
+			}, // END slide 1
 		],
 		finish_action : function(wizard) {
 			//console.log('done')

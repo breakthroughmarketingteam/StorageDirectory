@@ -1471,6 +1471,7 @@ var workflow_settings = {
 	title		 : 'Add Your Facility',
 	nav_id : 'workflow_nav',
 	set_slides : false,
+	width : 753,
 	slides : [
 		{
 			div_id  : 'signupstep_2',

@@ -46,6 +46,8 @@ ul{margin-left:10px;}
 #dirs{padding:10px;float:left;background:#fff;margin:10px 0 0 -2px;width:99%;}
 .map_wrap,#google_map{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border:3px solid #999;height:260px;width:340px;float:right;}
 #street_view{display:none;}
+#google_map{margin-top:20px;}
+#pl{float:left;width:40%;}
 
 /* coupon */
 #sl-special{border:2px dashed #ccc;height:151px;margin-top:20px;width:327px;position:relative;}
