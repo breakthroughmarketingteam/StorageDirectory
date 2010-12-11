@@ -31,7 +31,7 @@
 						<div class="radio_wrap auto">
 							<%= f.label "within_#{distance}", "#{distance}" %>							
 							<div class="radio_select">
-								<%= radio_button_tag 'search[within]', distance, (@search.within == distance.to_i) %>
+								<%= f.radio_button :within, distance %>
 							</div>
 						</div>
 					<% end %>

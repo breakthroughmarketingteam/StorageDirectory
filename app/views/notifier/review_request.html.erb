@@ -1,0 +1,6 @@
+<%= @client.name %> would like it if you reviewed their facility "<%= @listing.title %>" on USSelfStorageLocator.com
+
+Message:
+<%= @message %>
+
+Click here to go directly to their page: <%= facility_url @listing.storage_type, @listing.title.parameterize, @listing.id, :anchor => 'write_review' %>

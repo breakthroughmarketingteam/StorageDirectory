@@ -1,8 +1,10 @@
 class ListingsController < ApplicationController
-
+  
+  before_filter :require_client, :except => [:home, :locator, :compare]
+  
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :disable, :copy_desc]
-  before_filter :get_client, :only => [:edit, :disable]
+  before_filter :get_model, :only => [:show, :edit, :disable, :copy_desc, :add_predefined_size, :request_review]
+  before_filter :get_client, :only => [:edit, :disable, :request_review]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   geocode_ip_address :only => :locator
@@ -165,6 +167,31 @@ class ListingsController < ApplicationController
     end
     
     render :json => { :success => true }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
+  end
+  
+  def add_predefined_size
+    @predefined_size = PredefinedSize.find params[:predef_id]
+    @size = @listing.sizes.build @predefined_size.attributes
+    
+    if @size.valid?
+      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/form', :locals => { :listing => @listing, :size => @size }) }
+    else
+      render :json => { :success => false, :data => model_errors(@size) }
+    end
+  end
+  
+  def request_review
+    unless params[:review_request].blank?
+      params[:review_request].split(/,|;|^./).reject(&:blank?).map{ |e| e.gsub("\n", '') }.each do |email|
+        Notifier.deliver_review_request(email, params[:message], @listing, @client)
+      end
+      render :json => { :success => true }
+    else
+      
+    end
+    
   rescue => e
     render :json => { :success => false, :data => e.message }
   end

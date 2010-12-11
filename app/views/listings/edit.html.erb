@@ -7,13 +7,13 @@
 				<div id="sl-tabs-in" class="tabular_content">
 					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
 					<ul id="sl-tabs-nav" class="tabular">
-						<%= content_tag :li, link_to("Details", '#fac_details', :id => 'tab_Details', :rel => 'tab1') %>
-						<%= content_tag :li, link_to("Rental Settings", '#settings', :id => 'settings', :rel => 'tab2') %>
-						<%= content_tag :li, link_to("Amenities/Specials", '#fac_details', :id => 'tab_Details', :rel => 'tab3') %>
-						<%= content_tag :li, link_to("Unit Sizes", '#unit-sizes', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
-						<%= content_tag :li, link_to("Pictures", '#fac_pictures', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
-						<%= content_tag :li, link_to("Reports", '#reports', :id => 'reports', :rel => 'fac_reports') %>
-						<%= content_tag :li, link_to("Reviews", '#reviews', :id => 'reviews', :rel => 'reviews') %>
+						<%= content_tag :li, link_to("Details", '#fac_details_tab', :id => 'tab_Details', :rel => 'tab1') %>
+						<%= content_tag :li, link_to("Rental Settings", '#settings_tab', :id => 'settings', :rel => 'tab2') %>
+						<%= content_tag :li, link_to("Amenities/Specials", '#amenities_tab', :id => 'tab_Details', :rel => 'tab3') %>
+						<%= content_tag :li, link_to("Unit Sizes", '#unit_sizes_tab', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
+						<%= content_tag :li, link_to("Pictures", '#fac_pictures_tab', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
+						<%#= content_tag :li, link_to("Reports", '#reports_tab', :id => 'reports', :rel => 'fac_reports') %>
+						<%= content_tag :li, link_to("Reviews", '#reviews_tab', :id => 'reviews', :rel => 'fac_reviews') %>
 					</ul>
 					<!-- tab content -->
 					<span id="hint">Here you can change all the details for this facility.</span>
@@ -64,8 +64,8 @@
 								<h3 class="label">Billing Method:</h3>
 								<div class="inner">
 									<ul>
-										<li class="radio_wrap"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
-										<li class="radio_wrap"><span class="radio_select"><%= f.radio_button :prorated, 0, :class => 'hide' %></span> <%= f.label :prorated, 'Fixed' %></li>
+										<li class="radio_wrap<%= ' selected' if @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
+										<li class="radio_wrap<%= ' selected' unless @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 0, :class => 'hide' %></span> <%= f.label :prorated, 'Fixed' %></li>
 									</ul>
 								</div>
 							</div>
@@ -102,7 +102,17 @@
 						<button id="save" type="submit" value="Upload" name="Upload" id="Upload">Save Changes</button>
 					</div>
 					<div id="unit_sizes" class="tab_content">
-						<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+						<div id="custom_sizes">
+							<h3>My Unit Sizes</h3>
+							<p>Create a custom unit size...</p>
+							<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+						</div>
+						
+						<div id="predefined_sizes">
+							<h3>Standard Sizes</h3>
+							<p>Or choose from these common unit sizes</p>
+							<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
+						</div>
 					</div>
 					<div id="fac_pictures" class="tab_content">
 						<p class="label">Facility Pictures:</p>
@@ -161,6 +171,28 @@
 									<% end %>
 								</tbody>
 							</table>
+						</div>
+					</div>
+					<div id="fac_reviews" class="tab_content">
+						<div id="request_review">
+							<h3>Request a Review</h3>
+							<p>Send people you know a request to review your facility. Put each email on a new line.</p>
+							
+							<% form_tag request_review_listing_path(@listing), :id => 'request_review_form' do %>
+								<div class="stack">
+									<%= text_area_tag 'review_request', nil, :class => 'required hintable', :title => "friend1@email.com\nfriend2@emai.com\n..." %>
+								</div>
+								
+								<div>
+									<%= label_tag 'message', 'Personal Message' %>
+									<%= text_area_tag 'message', nil, :class => 'required hintable', :title => "Optional message" %>
+								</div>
+								
+								<div>
+									<%= submit_tag 'Send', :class => 'save' %>
+									<%= ajax_loader %>
+								</div>
+							<% end %>
 						</div>
 					</div>
 					<div class="hide">

@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @search = Search.find_by_id session[:search_id]
+    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     
     if params[:title] == 'home' || params[:id].to_i == 1
       render :layout => 'locatorfront'

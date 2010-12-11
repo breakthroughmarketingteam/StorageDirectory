@@ -8,33 +8,142 @@ $(function(){
 	 * BACK END, listing owner page methods
 	 */
 	
-	$('#new_unit', '#unit_sizes').live('click', function() {
+	$('form.size_form', '#unit_sizes').live('submit', function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $('.ajax_loader', form);
 		
+		if (form.data('valid') && !form.data('saving')) {
+			form.data('saving', true);
+			ajax_loader.show();
+			$('.cancel_link', form).hide();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					var new_size = $(data);
+					form.after(new_size);
+					$('.sl-table', new_size).effect('highlight', 3000);
+					
+					if (form.attr('data-edit') == '1') form.remove();
+				});
+				
+				form.data('valid', null);
+				form.data('saving', false);
+				ajax_loader.hide();
+			});
+		}
 		
 		return false;
 	});
 	
-	// edit functionality for the sizes in the facility edit page
-	$('.edit-btn', '.authenticated .sl-table').live('click', function(){
-		var $this 		= $(this),
-			container 	= $this.parents('.sl-table-wrap'),
-			hidden_form	= $('form:hidden', container),
-			cancel_btn	= $('.cancel_link', container).attr('rel', $this.attr('rel')), // the cancel btn's rel dictates whether it should remove the size (new size) or revert it (existing size)
-			delete_btn  = $('.delete_link', container),
-			load_li		= $('.st-sele', container);
-
-		if ($this.text() == 'Edit') {
-			hidden_form.find('input[name=_method]').val('put');
-			$.convert_unit_size_row_values_to_inputs(container, cancel_btn, delete_btn);
-			$this.text('Save');
-
-		} else if ($this.text() == 'Save') {
-			load_li.addClass('active_load'); // loading anim
-			$.post_new_unit_size_values_and_revert(container, hidden_form, cancel_btn, delete_btn);
-		}
-
+	$('.edit_size', '.sl-table-wrap').live('click', function() {
+		var $this = $(this),
+			size = $this.parents('.sl-table-wrap'),
+			ajax_loader = $('.ajax_loader', $this.parent().next()).show();
+			delete_link = $('.delete_link', size).hide();
+		
+		get_partial_and_do({ partial: 'sizes/form', model: 'Listing', id: $('#listing_id').val(), sub_model: 'Size', sub_id: $this.attr('data-size-id') }, function(response) {
+			$.with_json(response, function(partial) {
+				var form = $(partial);
+				size.after(form);
+				size.hide();
+				$('#size_price', form).focus();
+				
+				$('.cancel_link', form).click(function() {
+					ajax_loader.hide();
+					delete_link.show();
+					form.hide();
+					size.show();
+					return false;
+				});
+			});
+		});
+		
 		return false;
 	});
+	
+	$('.delete_link', '.sl-table-wrap').live('click', function() {
+		var $this = $(this),
+			ajax_loader = $('.ajax_loader', $this.parent());
+			
+		$.greyConfirm('Are you sure you want to delete this unit size?', function() {
+			$this.hide();
+			ajax_loader.show();
+			
+			$.post($this.attr('href'), { _method: 'delete' }, function(response) {
+				$.with_json(response, function() {
+					$this.parents('.sl-table-wrap').fadeOutRemove();
+				});
+			});
+		});
+		
+		return false;
+	});
+	
+	$('.select_predefined_size', '#sl-tabs-predefined-sizes-in').live('click', function() {
+		$(this).parents('.sl-table').click();
+		return false;
+	});
+	
+	$('.sl-table', '#sl-tabs-predefined-sizes-in').click(function() {
+		var predef = $(this).parent(),
+			predef_id = predef.attr('id').replace('PredefinedSize_', ''),
+			ajax_loader = $('.ajax_loader', predef);
+		
+		if (!predef.data('adding')) {
+			predef.data('adding', true);
+			ajax_loader.show();
+			
+			$.post('/listings/'+ $('#listing_id').val() +'/add_predefined_size', { 'predef_id': predef_id }, function(response) {
+				$.with_json(response, function(data) {
+					var size = $(data);
+					$('.uncollapse', '#sl-tabs-sizes-in').append(size);
+					$('.sl-table', size).addClass('active').effect('highlight', 1500).find('#size_price').focus();
+					
+				});
+				
+				predef.data('adding', false);
+				ajax_loader.hide();
+			});
+		}
+	});
+	
+	$('#request_review_form').live('submit', function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $('.ajax_loader', form);
+		
+		$('.success_msg', form).remove();
+		
+		if (form.data('valid') && !form.data('sending')) {
+			form.data('saving', true);
+			ajax_loader.show();
+			
+			$.post(form.attr('action'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					form[0].reset();
+					// this refills the hint
+					$('textarea', form).each(function() { $(this).focus().blur(); });
+					ajax_loader.before("<p class='success_msg'>Your message was sent!</p>");
+				});
+				
+				form.data('sending', false);
+				ajax_loader.hide();
+			});
+		}
+		
+		return false;
+	});
+	
+	$('a', '#sl-tabs-nav').click(function() {
+		window.location.hash = this.href.split('#')[1];
+	});
+	
+	if ($.on_page([['edit', 'listings']])) {
+		if (window.location.hash != '') {
+			setTimeout(function() { // wait for tabular_content to attach the click handler to the tabs, then trigger it
+				$('a[href="'+ window.location.hash +'"]', '#sl-tabs-nav').click();
+			}, 1);
+		}
+	}
 
 	// address and specials boxes, convert to form and handle ajax post
 	$('.attr_edit', '.authenticated').live('click', function(){
@@ -105,7 +214,7 @@ $(function(){
 		$.post(path, {}, function(response) {
 			$.with_json(response, function(data){
 				$this.toggleClass('selected');
-				update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
+				//update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
 			});
 			
 			$this.siblings('.f').show();
@@ -145,7 +254,7 @@ $(function(){
 					$this.after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
 
 					setTimeout(function() {
-						$('.success_msg', $this.parent()).fadeOut(1000, function() { $(this).remove(); });
+						$('.success_msg', $this.parent()).fadeOutRemove(1000);
 					}, 2000);
 				});
 
@@ -536,7 +645,7 @@ $(function(){
 		
 		if (form.data('valid') && !form.data('saving')) {
 			form.data('saving', true);
-			$('.flash', form).slideUp('slow', function(){ $(this).remove() });
+			$('.flash', form).slideUpRemove('slow');
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				if (response.success) {
@@ -602,7 +711,7 @@ $(function(){
 						   $('#search_query', form).val() +'</span> '+ $.ajax_loader_tag();
 		
 		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
-		$('h2', results_head).html(loading_txt);
+		$('h2', results_head).removeClass('no_results').html(loading_txt);
 		$('.txt_ldr', results_head).txt_loader();
 		
 		if (form.data('valid') && !form.data('loading')) {
@@ -659,7 +768,7 @@ $(function(){
 	}
 	
 	var featured_listing = $('#feat_wrap');
-	if (featured_listing.children().length == 0) {
+	if ($.on_page([['locator, home, show', 'listings, pages']]) && featured_listing.children().length == 0) {
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);

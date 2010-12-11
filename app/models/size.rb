@@ -24,7 +24,11 @@ class Size < ActiveRecord::Base
   end
   
   def dollar_price
-    self.price / 100 rescue 0
+    read_attribute(:price) / 100.0 rescue 0
+  end
+  
+  def price
+    read_attribute(:price) / 100.0 rescue 0
   end
   
   def dims

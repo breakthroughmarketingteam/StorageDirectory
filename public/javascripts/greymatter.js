@@ -168,7 +168,7 @@ $(function(){
 				target: '#ajax_wrap',
 				success: function(response, status) {
 					if (status == 'success') setTimeout(function() {
-						$('.flash', '#ajax_wrap_inner').slideUp('slow', function(){ $(this).remove() }); 
+						$('.flash', '#ajax_wrap_inner').slideUpRemove('slow'); 
 					}, 7000);
 
 					ajax_wrap.removeClass('loading').children().hide().fadeIn('fast');
@@ -232,10 +232,10 @@ $(function(){
 						$.toggleHelptext($this);
 						
 					} else if ($this.hasClass('delete_link')) {
-						$this.parent().parent().slideUp(300, function(){ $(this).remove(); });
+						$this.parent().parent().slideUpRemove();
 						
 					} else if ($this.hasClass('rm_field')) { // first used for the estaff emails in the listing edit page
-						$this.parent().fadeOut(600, function() { $(this).remove(); });
+						$this.parent().fadeOutRemove(600);
 					}
 					
 				} else {
@@ -258,7 +258,7 @@ $(function(){
 			
 			$.post($this.attr('href') + '&authenticity_token=' + $.get_auth_token(), function(response) {
 				$.with_json(response, function(data) {
-					$this.parent().fadeOut(600, function() { $(this).remove(); });
+					$this.parent().fadeOutRemove(600);
 				});
 				
 				$this.removeClass('loading');
@@ -284,7 +284,7 @@ $(function(){
 	});
 	
 	$('.cancel_link', '.partial_addable').live('click', function(){
-		$(this).parent().parent().slideUp(300, function(){ $(this).remove(); }); 
+		$(this).parent().parent().slideUpRemove(); 
 		return false; 
 	});
 	
@@ -1092,6 +1092,20 @@ $.fn.txt_loader = function(options) {
 $.fn.shimmy = function() {
 	return this.each(function() {
 		
+	});
+}
+
+$.fn.slideUpRemove = function(speed) {
+	$.fn.animAndRemove.call(this, 'slideUp', speed);
+}
+
+$.fn.fadeOutRemove = function(speed) {
+	$.fn.animAndRemove.call(this, 'fadeOut', speed);
+}
+
+$.fn.animAndRemove = function(anim, speed) {
+	return this.each(function() {
+		$(this)[anim](speed || 'fast', function() { $(this).remove(); });
 	});
 }
 

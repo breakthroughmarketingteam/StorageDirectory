@@ -5,4 +5,12 @@ class PredefinedSize < ActiveRecord::Base
   
   access_shared_methods
   
+  def title
+    "#{read_attribute :title} #{dims}"
+  end
+  
+  def dims
+    "#{width}x#{length}"
+  end
+  
 end

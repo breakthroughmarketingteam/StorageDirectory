@@ -10,6 +10,13 @@ class Search < ActiveRecord::Base
     %w(5 10 15 20)
   end
   
+  def before_create
+    # because mysql default values don't seem to work for this model
+    if self.storage_type.blank? then self.storage_type = 'self storage' end
+    if self.unit_size.blank? then self.unit_size = '5x5' end
+    if self.within.blank? then self.within = 20 end
+  end
+  
   alias_method :old_create, :create
   def self.create(attributes, request, old_search = nil)
     search = self.new attributes, request, old_search
@@ -43,22 +50,6 @@ class Search < ActiveRecord::Base
   
   def comparable_attributes
     self.attributes.select { | k, v| !['id', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
-  end
-  
-  def within=(val)
-    write_attribute :within, (val || $_listing_search_distance)
-  end
-  
-  def within
-    read_attribute(:within) ? read_attribute(:within) : $_listing_search_distance
-  end
-  
-  def unit_size=(val)
-    write_attribute :unit_size, (val.blank? ? '5x5' : val)
-  end
-  
-  def storage_type=(val)
-    write_attribute :storage_type, (val.try(:titleize) || 'Self Storage')
   end
   
   def location

@@ -480,6 +480,15 @@ class ApplicationController < ActionController::Base
     [modes].flatten.any? { |m| action_name == m }
   end
   
+  def require_client
+    return if current_user && current_user.has_role?('admin')
+
+    if !current_user || !current_user.has_role?('advertiser') && (current_user.id != params[:id] || !current_user.listing_ids.include?(params[:id]))
+      flash[:warning] = 'You must be logged in to do go there.'
+      redirect_to login_path
+    end
+  end
+  
   def benchmark
     hr = '**********************************************************************************************************************************'
     cur = Time.now

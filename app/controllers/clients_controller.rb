@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
   
+  before_filter :require_client, :except => [:index, :create, :activate]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   

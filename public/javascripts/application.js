@@ -5,6 +5,8 @@ $(document).ready(function() {
 	else $('#dock').jqDock({ size: 50, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
+
+	$.translate_with(translations);
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {
@@ -29,7 +31,7 @@ $(document).ready(function() {
 
 			// close login box when user clicks outside of it
 			$(document).click(function(e) {
-				if ($(e.originalTarget).parents('#pop_up_box').length == 0) {
+				if ($(e.target).parents('#pop_up_box').length == 0) {
 					pop_up.fadeOut(300, function() { 
 						$('#login_link').removeClass('active');
 						pop_up.hide();
@@ -55,7 +57,7 @@ $(document).ready(function() {
 						window.location = response.account_path;
 					} else {
 						$('#topbar').html(response.data);
-						$('#pop_up_box').fadeOut(300, function(){ $(this).remove(); });
+						$('#pop_up_box').fadeOutRemove();
 					}
 				} else {
 					$('#pop_up_box').html(response.data);
@@ -204,7 +206,9 @@ $(document).ready(function() {
 				$('#map_step2').tabular_content();
 				
 				var city_click = function() {
-					$('#map_step2', '#map_nav').append('<p id="city_name">Looking for '+ $(this).text() +', '+ wizard.slide_data[1].data.state +'...</p>');
+					var city_name = $('#city_name', '#map_step2');
+					if (city_name.length > 0) city_name.text('Looking for '+ $(this).text() +', '+ wizard.slide_data[1].data.state +'...')
+					else $('#map_step2', '#map_nav').append('<p id="city_name">Looking for '+ $(this).text() +', '+ wizard.slide_data[1].data.state +'...</p>');
 				}
 				$('li a', list).unbind('click', city_click).live('click', city_click);
 			}
@@ -806,7 +810,7 @@ $(document).ready(function() {
 				listing_id = listing.attr('id').replace('Listing_', '');
 			
 			if (listing_id.length) delete_client_listing(listing_id);
-			else listing.slideUp('fast', function(){ $(this).remove() });
+			else listing.slideUpRemove();
 			
 			return false;
 		});
@@ -824,7 +828,7 @@ $(document).ready(function() {
 				
 				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
 					$.with_json(response, function(data) {
-						$('#Listing'+ listing_id, '#ov-units').slideUp('fast', function(){ $(this).remove() });
+						$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
 					});
 					
 					ajax_loader.hide();
@@ -966,7 +970,7 @@ $(document).ready(function() {
 					$('input[type=submit]', context).after(success_msg);
 
 					setTimeout(function() {
-						success_msg.fadeOut(1000, function() { $(this).remove(); })
+						success_msg.fadeOutRemove(1000);
 					}, 3000);
 				});
 				
@@ -1083,7 +1087,7 @@ $(document).ready(function() {
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data){
 					$this.after('<span class="success_msg">Saved!</span>');
-					setTimeout(function(){ $('.success_msg', '#hours').fadeOut(1000, function(){ $(this).remove() }); }, 3000);
+					setTimeout(function(){ $('.success_msg', '#hours').fadeOutRemove(1000); }, 3000);
 				});
 				
 				$.activate_submit_btn($this);
@@ -1145,7 +1149,6 @@ $(document).ready(function() {
 					if (image) image.attr('src', data.image);
 					
 					thumb_img.trigger('mouseover');
-					update_info_tab_count('Pictures', 1);
 				});
 			}
 		});
@@ -1178,28 +1181,24 @@ $(document).ready(function() {
 	});
 	
 	$('.delete_link', '#sl-tabs-pict').live('click', function(){
-		var self = $(this);
+		var $this = $(this);
 		
-		if (!self.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
-			self.data('deleting', true).before()
+		if (!$this.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {
+			$this.data('deleting', true).text('Deleting...');
 			
-			var img = self.prev('img'),
+			var img = $this.prev('img'),
 				id = img.attr('id').replace('Picture_', '');
 
-			$.post(self.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
+			$.post($this.attr('href'), { _method: 'delete', authenticity_token: $.get_auth_token() }, function(response){
 				$.with_json(response, function(data){
 					if (img.hasClass('active'))
 						$('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict').trigger('mouseover');
 					
-					img.parent().fadeOut(600, function(){ $(this).remove() });
-					
 					if ($('img', '#sl-tabs-pict-gall').length == 1)
-						$('.big-pic', '#sl-tabs-pict').eq(0).fadeOut(900, function(){ $(this).remove() });
-					
-					update_info_tab_count('Pictures', -1);
+						$('.big-pic', '#sl-tabs-pict').eq(0).fadeOutRemove(900);
+						
+					$this.parent().fadeOutRemove(600);
 				});
-				
-				self.data('deleting', false);
 			}, 'json');
 		});
 		
@@ -1595,15 +1594,15 @@ function workflow_step4() { // form data review
 	var review_html = '<h4>Contact Information:</h4>';
 		
 	review_html += '<div id="review_contact">';
-		review_html += '<p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
-		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
-		review_html += '<p class="email">'+ email +'</p>';
 		review_html += '<p class="listing_title">'+ titleize(company) +'</p>';
 		review_html += '<p class="listing_address">' + 
 						wizard.form_data.mailing_address['address'] +'<br />'+ 
 						capitalize(wizard.form_data.mailing_address['city']) +', '+ 
 						capitalize(wizard.form_data.mailing_address['state']) +' '+ 
 						wizard.form_data.mailing_address['zip'] +'</p>';
+		review_html += '<p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
+		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
+		review_html += '<p class="email">'+ email +'</p>';
 	review_html += '</div>';
 	
 	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newsletter.</p>';
@@ -1685,5 +1684,51 @@ $.sort_tips = function(sort_link, tips, sortFunc) {
 
 	}, function() {
 		return $(this).children('.tip_in')[0];
+	});
+}
+
+var translations = [ // each curly bracket is a single element to translate
+	{
+		page 		: '.spanish',
+		element 	: '.virtual_form #comment_submit',
+		method 		: 'val', // val, text, or html
+		translation : 'Enviar Mensaje'
+	},
+	{
+		page 		: '.spanish',
+		element 	: '#footer_top .wrapper',
+		method 		: 'text', // val, text, or html
+		translation : 'Encuentre una unidad de almacenamiento en cualquier lugar y en cualquier momento!'
+	},
+	{
+		page 		: '.spanish',
+		element 	: '#title h1',
+		method 		: 'text', // val, text, or html
+		translation : 'Encuentré, ahorré y alquilé almacenamiento en cualquier momento.'
+	},
+	{
+		page 		: '.spanish',
+		element 	: '#aff-box p',
+		method 		: 'html', // val, text, or html
+		translation : '<strong>Socios Afiliados</strong> - Obtener grandes ofertas y ahorre en su próximo alquiler almacenamiento con uno de nuestros socios afiliados.'
+	},
+	{
+		page 		: '.spanish',
+		element 	: '#social-media p',
+		method 		: 'html', // val, text, or html
+		translation : '<strong>Compartir esta pagina</strong> - Tenemos ofertas increíbles a través de nuestras páginas de la red social y empresarial.'
+	},
+	{
+		page 		: '.spanish',
+		element 	: '#top_cities p strong',
+		method 		: 'text', // val, text, or html
+		translation : 'Las Ciudades Mas Populares De Almacenamiento'
+	}
+]
+
+$.translate_with = function(translations) {
+	$.each(translations, function() {
+		var element = $(this.element, this.page);
+		if (element.length > 0) element[this.method](this.translation);
 	});
 }
