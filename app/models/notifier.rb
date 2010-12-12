@@ -52,6 +52,13 @@ class Notifier < ActionMailer::Base
     @body[:url] = edit_password_reset_url(user.perishable_token)
   end
   
+  def review_request(recipient, message, listing, client)
+    setup_email recipient, client.email, 'Please review my facility'
+    @body[:message] = message
+    @body[:listing] = listing
+    @body[:client] = client
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from

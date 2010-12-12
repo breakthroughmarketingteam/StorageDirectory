@@ -12,27 +12,22 @@
 		
 		<li class="st-rese">
 			<% if (in_edit_mode? || (defined?(pretend_action) && pretend_action == 'edit')) && !@listing.issn_enabled? %>
-				<%= link_to 'Edit', listing_size_path(@listing, size), :class => 'edit-btn', :rel => 'cancel' %>
-				<%= hidden_field_tag 'size_id', size.id, :id => "size_#{size.id}" %>
-			<% elsif defined?(pretend_action) && pretend_action == 'new' %>
-				<%= link_to 'Edit', listing_sizes_path(@listing), :class => 'edit-btn', :rel => 'close' %>
+				<%= link_to 'Edit', edit_listing_size_path(@listing, size), :class => 'edit_size', 'data-size-id' => size.id %>
 			<% elsif current_user.nil? || (current_user && current_user.is_a?(Reserver)) %>
-				<%= ajax_loader %>
 				<a href="#" class="rsr-btn">Select</a>
 			<% end %>
 		</li>
 		
-		<% if (in_edit_mode? || in_mode?('get_partial', 'update')) && !@listing.issn_enabled? %>
+		<% if in_mode?('edit', 'create', 'get_partial', 'update') && !@listing.issn_enabled? %>
 			<li class="st-sele">
-				<%= link_to 'Delete', '#', :class => 'hidden delete_link iconOnly16 right', :title => 'Delete' %>
+				<%= ajax_loader %>
+				<%= link_to 'Delete', listing_size_path(@listing, size), :class => 'delete_link iconOnly16 right', :title => 'Delete' %>
 				<%= link_to 'Cancel', '#', :class => 'hidden cancel_link iconOnly16 right', :title => 'Cancel', :rel => (size.new_record? ? 'close' : 'cancel') %>
 			</li>
 		<% end %>
 	</ul>
 
-	<% if is_facility_owner? && !@listing.issn_enabled? %>
-		<% form_for [@listing, size], :html => { :class => 'hidden_form' }, :method => :put do |f| %><% end %>
-	<% elsif in_mode?('locator', 'get_partial', 'show') %>
+	<% if in_mode?('locator', 'home', 'get_partial', 'show') %>
 		<div class="reserve_form hidden"></div>
 	<% end %>
 </div>

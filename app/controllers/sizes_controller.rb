@@ -29,7 +29,7 @@ class SizesController < ApplicationController
     @size = @listing.sizes.build params[:size]
   
     if @size.save
-      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :pretend_action => 'edit' }) }
+      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :pretend_action => 'edit', :size => @size }) }
     else
       render :json => { :success => false, :data => model_errors(@size) }
     end

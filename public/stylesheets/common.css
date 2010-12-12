@@ -236,7 +236,7 @@ input.tiny_text_field{width:30px;}
 .icon16{padding-left:22px;background-position:left;background-repeat:no-repeat;}
 .iconOnly16,a.iconOnly16,
 .block .buttons a.iconOnly16,
-#view_type_link_wrap .iconOnly16{text-indent:-999999px;background-repeat:no-repeat;display:block;padding:1px 9px;}
+#view_type_link_wrap .iconOnly16{text-indent:-999999px;background-repeat:no-repeat;display:block;height:16px;padding:1px 9px;}
 .add_link{background-image:url(/images/ui/plus_sign.png);}
 .delete_link,.inline_delete_link,.block_models_view .buttons a.delete_link,.plain .buttons a.delete_link{background-image:url(/images/ui/delete_icon.png);}
 .cancel_link{background-image:url(/images/ui/cancel_icon.png);}

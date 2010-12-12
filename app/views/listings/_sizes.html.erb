@@ -1,24 +1,29 @@
 <% @listing = @listing || listing %>
-<div id="sl-tabs-sizes" class="<%= 'tab_content' if in_mode?('show') %>">
+<div id="sl-tabs-sizes" class="sizes_list <%= 'tab_content' if in_mode?('show') %>">
 	<% if is_facility_owner? && in_edit_mode? %>
-		<%= link_to 'Add Unit', '#', :id => 'new_unit', :class => 'btn' unless @listing.issn_enabled? %>
-		<%= link_to 'Sync', "/ajax/model_method?model=Listing&id=#{@listing.id}&model_method=update_unit_types_and_sizes", :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
 		<%= ajax_loader %>
+		<%= link_to 'Sync', "/ajax/model_method?model=Listing&id=#{@listing.id}&model_method=update_unit_types_and_sizes", :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
 	<% end %>
-	
-  <div id="sl-tabs-sizes-in">
-    <ul class="sl-table-head">
-      	<li class="st-size">Size</li>
-      	<li class="st-type">Type</li>
-      	<li class="st-desc">Description</li>
-	  	<li class="st-pric">Monthly</li>
-	  	<% if in_edit_mode? && @listing.issn_enabled? %>
-			<li class="st-avail">Available</li>
-		<% end %>
-    </ul>
-	
-	<div class="uncollapse">
-		<%= render :partial => 'sizes/size', :collection => (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes) %>
+
+	<div id="sl-tabs-sizes-in" class="sizes_list_in">
+		<ul class="sl-table-head">
+			<li class="st-size">Size</li>
+			<li class="st-type">Type</li>
+			<li class="st-desc">Description</li>
+			<li class="st-pric">Monthly</li>
+			<% if in_edit_mode? && @listing.issn_enabled? %>
+				<li class="st-avail">Available</li>
+			<% end %>
+		</ul>
+
+		<div class="uncollapse">
+			<% if in_edit_mode? && !@listing.issn_enabled? %>
+				<%= render :partial => 'sizes/form', :locals => { :listing => @listing, :size => Size.new } %>
+			<% end %>
+			<%= render :partial => 'sizes/size', :collection => (in_edit_mode? ? @listing.sizes.sorted : @listing.available_sizes) %>
+		</div>
 	</div>
-  </div>
+	<% if in_edit_mode? %>
+
+	<% end %>
 </div>

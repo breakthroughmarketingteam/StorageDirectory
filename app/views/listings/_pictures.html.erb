@@ -2,7 +2,7 @@
 <div id="sl-tabs-pict" class="inner">
   <div id="sl-tabs-pict-in">
 	<% form_for Picture.new, :html => { :multipart => true } do |f| %>
-		<div class="framed">
+		<div class="stack">
 			<%= f.label :facility_image, 'Upload an image from your computer:' %>
 			<%= f.file_field :facility_image, :size => 30 %>
 			<%= f.hidden_field :listing_id, :value => @listing.id %>
@@ -14,7 +14,6 @@
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>
 				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
-
 				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'right delete_link', :title => 'Delete this picture' if action_name == 'edit' %>
 			</li>
 	      <% end unless @listing.pictures.empty? %>
