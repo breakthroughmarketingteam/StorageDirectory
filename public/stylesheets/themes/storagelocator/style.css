@@ -411,7 +411,7 @@ form#new_client .ajax_loader{bottom:26px;position:absolute;right:156px;}
 #add-fac-form .email-label{color:#99f;display:inline-block;font-size:12px;margin-bottom:4px;}
 #add-fac-form #city{float:left;margin-right:30px;width:210px;}
 #add-fac-form #state{margin-bottom:0;}
-#add-fac-form #submit_wrap{margin-top:10px;}
+#add-fac-form #submit_wrap{margin-top:12px;}
 #new_client span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:8px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
