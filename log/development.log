@@ -969,3 +969,331 @@ Migrating to AddTrackedNumberColumnToListing (20101213015804)
   [4;35;1mListing Load (1.3ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.`id` = 85481) [0m
   [4;36;1mBusinessHour Load (8.4ms)[0m   [0;1mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 85481) [0m
   [4;35;1mBusinessHour Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `business_hours`[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mUser Columns (4.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mClient Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mClient Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 25244) AND ( (`users`.`type` = 'Client' ) ) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mUserHintPlacement Load (5.8ms)[0m   [0;1mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25244) [0m
+  [4;35;1mUserHintPlacement Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `user_hint_placements`[0m
+  [4;36;1mUserHintPlacement Destroy (1.8ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 360[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 361[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 362[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 363[0m
+  [4;36;1mUserHintPlacement Destroy (0.5ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 364[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 365[0m
+  [4;36;1mUserHintPlacement Destroy (0.3ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 366[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 367[0m
+  [4;36;1mComment Load (0.4ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25244 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;35;1mTagging Load (0.3ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25244 AND `taggings`.tagger_type = 'User') [0m
+  [4;36;1mPredefSpecialAssign Load (0.3ms)[0m   [0;1mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25244) [0m
+  [4;35;1mBillingInfo Load (0.6ms)[0m   [0mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25244) [0m
+  [4;36;1mAccountSetting Load (0.3ms)[0m   [0;1mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25244) LIMIT 1[0m
+  [4;35;1mClient Destroy (0.2ms)[0m   [0mDELETE FROM `users` WHERE `id` = 25244[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mListing Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mListing Load (0.5ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.`id` = 82399) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mListing Update (0.4ms)[0m   [0;1mUPDATE `listings` SET `enabled` = NULL, `updated_at` = '2010-12-13 04:07:08', `user_id` = NULL WHERE `id` = 82399[0m
+[paperclip] Saving attachments.
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mUser Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mClient Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mClient Load (1.3ms)[0m   [0;1mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;35;1mListing Load (34.8ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.user_id = 25245) [0m
+  [4;36;1mListing Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mMap Load (0.5ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113004) LIMIT 1[0m
+  [4;35;1mMap Columns (11.4ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mMap Destroy (27.9ms)[0m   [0;1mDELETE FROM `maps` WHERE `id` = 103275[0m
+  [4;35;1mPicture Load (0.4ms)[0m   [0mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113004) [0m
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113004) [0m
+  [4;35;1mRental Load (0.3ms)[0m   [0mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113004) [0m
+  [4;36;1mInfoRequest Load (0.3ms)[0m   [0;1mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113004) [0m
+  [4;35;1mClick Load (0.4ms)[0m   [0mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113004) [0m
+  [4;36;1mImpression Load (1.8ms)[0m   [0;1mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113004) [0m
+  [4;35;1mWebSpecial Load (0.2ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113004) [0m
+  [4;36;1mStaffEmail Load (0.3ms)[0m   [0;1mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113004) [0m
+  [4;35;1mBusinessHour Load (0.3ms)[0m   [0mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113004) [0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113004) [0m
+  [4;35;1mPredefSizeAssign Load (0.3ms)[0m   [0mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113004) [0m
+  [4;36;1mFacilityInfo Load (0.3ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113004) LIMIT 1[0m
+  [4;35;1mUnitType Load (0.3ms)[0m   [0mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113004) [0m
+  [4;36;1mIssnFacilityUnitFeature Load (0.2ms)[0m   [0;1mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113004) [0m
+  [4;35;1mPromo Load (17.6ms)[0m   [0mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113004) [0m
+  [4;36;1mFacilityFeature Load (16.9ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113004) [0m
+  [4;35;1mFacilityInsurance Load (11.9ms)[0m   [0mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113004) [0m
+[paperclip] Deleting attachments.
+  [4;36;1mRate Load (0.5ms)[0m   [0;1mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113004 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;35;1mListing Destroy (0.2ms)[0m   [0mDELETE FROM `listings` WHERE `id` = 113004[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mUserHintPlacement Load (0.3ms)[0m   [0;1mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25245) [0m
+  [4;35;1mUserHintPlacement Columns (5.9ms)[0m   [0mSHOW FIELDS FROM `user_hint_placements`[0m
+  [4;36;1mUserHintPlacement Destroy (0.6ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 375[0m
+  [4;35;1mUserHintPlacement Destroy (2.9ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 374[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 373[0m
+  [4;35;1mUserHintPlacement Destroy (0.3ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 372[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 371[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 370[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 369[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 368[0m
+  [4;36;1mComment Load (0.3ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25245 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;35;1mTagging Load (0.3ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25245 AND `taggings`.tagger_type = 'User') [0m
+  [4;36;1mPredefSpecialAssign Load (0.3ms)[0m   [0;1mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25245) [0m
+  [4;35;1mBillingInfo Load (0.2ms)[0m   [0mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25245) [0m
+  [4;36;1mAccountSetting Load (0.3ms)[0m   [0;1mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25245) LIMIT 1[0m
+  [4;35;1mClient Destroy (0.3ms)[0m   [0mDELETE FROM `users` WHERE `id` = 25245[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mClient Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;36;1mClient Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;35;1mListing Load (30.0ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.user_id = 25246) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mMap Load (0.6ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113005) LIMIT 1[0m
+  [4;36;1mMap Destroy (0.4ms)[0m   [0;1mDELETE FROM `maps` WHERE `id` = 103276[0m
+  [4;35;1mPicture Load (0.3ms)[0m   [0mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113005) [0m
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113005) [0m
+  [4;35;1mRental Load (0.2ms)[0m   [0mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113005) [0m
+  [4;36;1mInfoRequest Load (0.2ms)[0m   [0;1mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113005) [0m
+  [4;35;1mClick Load (0.3ms)[0m   [0mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113005) [0m
+  [4;36;1mImpression Load (4.5ms)[0m   [0;1mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113005) [0m
+  [4;35;1mWebSpecial Load (0.2ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113005) [0m
+  [4;36;1mStaffEmail Load (0.2ms)[0m   [0;1mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113005) [0m
+  [4;35;1mBusinessHour Load (0.3ms)[0m   [0mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113005) [0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113005) [0m
+  [4;35;1mPredefSizeAssign Load (0.2ms)[0m   [0mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113005) [0m
+  [4;36;1mFacilityInfo Load (0.3ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113005) LIMIT 1[0m
+  [4;35;1mUnitType Load (0.3ms)[0m   [0mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113005) [0m
+  [4;36;1mIssnFacilityUnitFeature Load (0.2ms)[0m   [0;1mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113005) [0m
+  [4;35;1mPromo Load (0.2ms)[0m   [0mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113005) [0m
+  [4;36;1mFacilityFeature Load (22.1ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113005) [0m
+  [4;35;1mFacilityInsurance Load (0.3ms)[0m   [0mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113005) [0m
+[paperclip] Deleting attachments.
+  [4;36;1mRate Load (0.3ms)[0m   [0;1mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113005 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;35;1mListing Destroy (0.2ms)[0m   [0mDELETE FROM `listings` WHERE `id` = 113005[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mUserHintPlacement Load (8.5ms)[0m   [0;1mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25246) [0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 383[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 382[0m
+  [4;35;1mUserHintPlacement Destroy (8.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 381[0m
+  [4;36;1mUserHintPlacement Destroy (0.5ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 380[0m
+  [4;35;1mUserHintPlacement Destroy (0.3ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 379[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 378[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 377[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 376[0m
+  [4;35;1mComment Load (0.3ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25246 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;36;1mTagging Load (0.2ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25246 AND `taggings`.tagger_type = 'User') [0m
+  [4;35;1mPredefSpecialAssign Load (1.3ms)[0m   [0mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25246) [0m
+  [4;36;1mBillingInfo Load (0.5ms)[0m   [0;1mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25246) [0m
+  [4;35;1mAccountSetting Load (0.4ms)[0m   [0mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25246) LIMIT 1[0m
+  [4;36;1mClient Destroy (0.3ms)[0m   [0;1mDELETE FROM `users` WHERE `id` = 25246[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mClient Load (16.3ms)[0m   [0;1mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;35;1mListing Load (50.5ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.user_id = 25247) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mMap Load (0.3ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113006) LIMIT 1[0m
+  [4;36;1mMap Destroy (0.2ms)[0m   [0;1mDELETE FROM `maps` WHERE `id` = 103277[0m
+  [4;35;1mPicture Load (0.3ms)[0m   [0mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113006) [0m
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113006) [0m
+  [4;35;1mRental Load (0.2ms)[0m   [0mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113006) [0m
+  [4;36;1mInfoRequest Load (4.7ms)[0m   [0;1mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113006) [0m
+  [4;35;1mClick Load (0.4ms)[0m   [0mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113006) [0m
+  [4;36;1mImpression Load (2.0ms)[0m   [0;1mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113006) [0m
+  [4;35;1mWebSpecial Load (0.3ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113006) [0m
+  [4;36;1mStaffEmail Load (0.3ms)[0m   [0;1mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113006) [0m
+  [4;35;1mBusinessHour Load (0.3ms)[0m   [0mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113006) [0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113006) [0m
+  [4;35;1mPredefSizeAssign Load (0.2ms)[0m   [0mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113006) [0m
+  [4;36;1mFacilityInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113006) LIMIT 1[0m
+  [4;35;1mUnitType Load (0.2ms)[0m   [0mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113006) [0m
+  [4;36;1mIssnFacilityUnitFeature Load (0.2ms)[0m   [0;1mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113006) [0m
+  [4;35;1mPromo Load (0.2ms)[0m   [0mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113006) [0m
+  [4;36;1mFacilityFeature Load (36.2ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113006) [0m
+  [4;35;1mFacilityInsurance Load (0.2ms)[0m   [0mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113006) [0m
+[paperclip] Deleting attachments.
+  [4;36;1mRate Load (0.9ms)[0m   [0;1mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113006 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;35;1mListing Destroy (0.3ms)[0m   [0mDELETE FROM `listings` WHERE `id` = 113006[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (23.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mUserHintPlacement Load (0.3ms)[0m   [0;1mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25247) [0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 391[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 390[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 389[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 388[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 387[0m
+  [4;36;1mUserHintPlacement Destroy (0.3ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 386[0m
+  [4;35;1mUserHintPlacement Destroy (0.3ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 385[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 384[0m
+  [4;35;1mComment Load (0.3ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25247 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;36;1mTagging Load (0.3ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25247 AND `taggings`.tagger_type = 'User') [0m
+  [4;35;1mPredefSpecialAssign Load (0.2ms)[0m   [0mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25247) [0m
+  [4;36;1mBillingInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25247) [0m
+  [4;35;1mAccountSetting Load (0.3ms)[0m   [0mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25247) LIMIT 1[0m
+  [4;36;1mClient Destroy (0.2ms)[0m   [0;1mDELETE FROM `users` WHERE `id` = 25247[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mClient Load (55.6ms)[0m   [0;1mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;35;1mListing Load (37.9ms)[0m   [0mSELECT * FROM `listings` WHERE (`listings`.user_id = 25248) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mMap Load (0.3ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113007) LIMIT 1[0m
+  [4;36;1mMap Destroy (0.2ms)[0m   [0;1mDELETE FROM `maps` WHERE `id` = 103278[0m
+  [4;35;1mPicture Load (0.3ms)[0m   [0mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113007) [0m
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113007) [0m
+  [4;35;1mRental Load (23.8ms)[0m   [0mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113007) [0m
+  [4;36;1mInfoRequest Load (0.2ms)[0m   [0;1mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113007) [0m
+  [4;35;1mClick Load (0.3ms)[0m   [0mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113007) [0m
+  [4;36;1mImpression Load (1.8ms)[0m   [0;1mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113007) [0m
+  [4;35;1mWebSpecial Load (0.2ms)[0m   [0mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113007) [0m
+  [4;36;1mStaffEmail Load (0.2ms)[0m   [0;1mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113007) [0m
+  [4;35;1mBusinessHour Load (0.3ms)[0m   [0mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113007) [0m
+  [4;36;1mSize Load (0.3ms)[0m   [0;1mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113007) [0m
+  [4;35;1mPredefSizeAssign Load (0.2ms)[0m   [0mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113007) [0m
+  [4;36;1mFacilityInfo Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113007) LIMIT 1[0m
+  [4;35;1mUnitType Load (0.3ms)[0m   [0mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113007) [0m
+  [4;36;1mIssnFacilityUnitFeature Load (0.2ms)[0m   [0;1mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113007) [0m
+  [4;35;1mPromo Load (0.2ms)[0m   [0mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113007) [0m
+  [4;36;1mFacilityFeature Load (26.2ms)[0m   [0;1mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113007) [0m
+  [4;35;1mFacilityInsurance Load (0.3ms)[0m   [0mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113007) [0m
+[paperclip] Deleting attachments.
+  [4;36;1mRate Load (0.3ms)[0m   [0;1mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113007 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;35;1mListing Destroy (0.2ms)[0m   [0mDELETE FROM `listings` WHERE `id` = 113007[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mClient Load (0.6ms)[0m   [0mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserHintPlacement Load (0.6ms)[0m   [0mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25248) [0m
+  [4;36;1mUserHintPlacement Destroy (3.3ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 399[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 398[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 397[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 396[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 395[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 394[0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 393[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 392[0m
+  [4;36;1mComment Load (0.3ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25248 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;35;1mTagging Load (0.2ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25248 AND `taggings`.tagger_type = 'User') [0m
+  [4;36;1mPredefSpecialAssign Load (0.2ms)[0m   [0;1mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25248) [0m
+  [4;35;1mBillingInfo Load (0.2ms)[0m   [0mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25248) [0m
+  [4;36;1mAccountSetting Load (0.2ms)[0m   [0;1mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25248) LIMIT 1[0m
+  [4;35;1mClient Destroy (0.3ms)[0m   [0mDELETE FROM `users` WHERE `id` = 25248[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mClient Load (0.7ms)[0m   [0mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;36;1mListing Load (58.2ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.user_id = 25249) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113008) LIMIT 1[0m
+  [4;35;1mMap Destroy (0.2ms)[0m   [0mDELETE FROM `maps` WHERE `id` = 103279[0m
+  [4;36;1mPicture Load (0.2ms)[0m   [0;1mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113008) [0m
+  [4;35;1mReservation Load (0.1ms)[0m   [0mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113008) [0m
+  [4;36;1mRental Load (0.2ms)[0m   [0;1mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113008) [0m
+  [4;35;1mInfoRequest Load (0.1ms)[0m   [0mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113008) [0m
+  [4;36;1mClick Load (0.3ms)[0m   [0;1mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113008) [0m
+  [4;35;1mImpression Load (1.7ms)[0m   [0mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113008) [0m
+  [4;36;1mWebSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113008) [0m
+  [4;35;1mStaffEmail Load (0.2ms)[0m   [0mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113008) [0m
+  [4;36;1mBusinessHour Load (0.3ms)[0m   [0;1mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113008) [0m
+  [4;35;1mSize Load (0.2ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113008) [0m
+  [4;36;1mPredefSizeAssign Load (0.2ms)[0m   [0;1mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113008) [0m
+  [4;35;1mFacilityInfo Load (0.2ms)[0m   [0mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113008) LIMIT 1[0m
+  [4;36;1mUnitType Load (0.2ms)[0m   [0;1mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113008) [0m
+  [4;35;1mIssnFacilityUnitFeature Load (0.1ms)[0m   [0mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113008) [0m
+  [4;36;1mPromo Load (0.1ms)[0m   [0;1mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113008) [0m
+  [4;35;1mFacilityFeature Load (85.9ms)[0m   [0mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113008) [0m
+  [4;36;1mFacilityInsurance Load (0.2ms)[0m   [0;1mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113008) [0m
+[paperclip] Deleting attachments.
+  [4;35;1mRate Load (0.3ms)[0m   [0mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113008 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;36;1mListing Destroy (0.2ms)[0m   [0;1mDELETE FROM `listings` WHERE `id` = 113008[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserHintPlacement Load (1.6ms)[0m   [0mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25249) [0m
+  [4;36;1mUserHintPlacement Destroy (0.2ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 407[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 406[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 405[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 404[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 403[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 402[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 401[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 400[0m
+  [4;36;1mComment Load (0.3ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25249 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;35;1mTagging Load (0.2ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25249 AND `taggings`.tagger_type = 'User') [0m
+  [4;36;1mPredefSpecialAssign Load (0.2ms)[0m   [0;1mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25249) [0m
+  [4;35;1mBillingInfo Load (0.2ms)[0m   [0mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25249) [0m
+  [4;36;1mAccountSetting Load (4.2ms)[0m   [0;1mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25249) LIMIT 1[0m
+  [4;35;1mClient Destroy (0.3ms)[0m   [0mDELETE FROM `users` WHERE `id` = 25249[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mClient Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE ( (`users`.`type` = 'Client' ) ) ORDER BY users.id DESC LIMIT 1[0m
+  [4;36;1mListing Load (33.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (`listings`.user_id = 25250) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 113009) LIMIT 1[0m
+  [4;35;1mMap Destroy (0.2ms)[0m   [0mDELETE FROM `maps` WHERE `id` = 103280[0m
+  [4;36;1mPicture Load (0.2ms)[0m   [0;1mSELECT * FROM `pictures` WHERE (`pictures`.listing_id = 113009) [0m
+  [4;35;1mReservation Load (0.1ms)[0m   [0mSELECT * FROM `reservations` WHERE (`reservations`.listing_id = 113009) [0m
+  [4;36;1mRental Load (0.2ms)[0m   [0;1mSELECT * FROM `rentals` WHERE (`rentals`.listing_id = 113009) [0m
+  [4;35;1mInfoRequest Load (0.2ms)[0m   [0mSELECT * FROM `info_requests` WHERE (`info_requests`.listing_id = 113009) [0m
+  [4;36;1mClick Load (0.2ms)[0m   [0;1mSELECT * FROM `clicks` WHERE (`clicks`.listing_id = 113009) [0m
+  [4;35;1mImpression Load (1.7ms)[0m   [0mSELECT * FROM `impressions` WHERE (`impressions`.listing_id = 113009) [0m
+  [4;36;1mWebSpecial Load (0.2ms)[0m   [0;1mSELECT * FROM `web_specials` WHERE (`web_specials`.listing_id = 113009) [0m
+  [4;35;1mStaffEmail Load (0.3ms)[0m   [0mSELECT * FROM `staff_emails` WHERE (`staff_emails`.listing_id = 113009) [0m
+  [4;36;1mBusinessHour Load (0.2ms)[0m   [0;1mSELECT * FROM `business_hours` WHERE (`business_hours`.listing_id = 113009) [0m
+  [4;35;1mSize Load (0.2ms)[0m   [0mSELECT * FROM `sizes` WHERE (`sizes`.listing_id = 113009) [0m
+  [4;36;1mPredefSizeAssign Load (0.2ms)[0m   [0;1mSELECT * FROM `predef_size_assigns` WHERE (`predef_size_assigns`.listing_id = 113009) [0m
+  [4;35;1mFacilityInfo Load (0.2ms)[0m   [0mSELECT * FROM `facility_infos` WHERE (`facility_infos`.listing_id = 113009) LIMIT 1[0m
+  [4;36;1mUnitType Load (0.2ms)[0m   [0;1mSELECT * FROM `unit_types` WHERE (`unit_types`.listing_id = 113009) [0m
+  [4;35;1mIssnFacilityUnitFeature Load (0.1ms)[0m   [0mSELECT * FROM `issn_facility_unit_features` WHERE (`issn_facility_unit_features`.listing_id = 113009) [0m
+  [4;36;1mPromo Load (0.2ms)[0m   [0;1mSELECT * FROM `promos` WHERE (`promos`.listing_id = 113009) [0m
+  [4;35;1mFacilityFeature Load (20.1ms)[0m   [0mSELECT * FROM `facility_features` WHERE (`facility_features`.listing_id = 113009) [0m
+  [4;36;1mFacilityInsurance Load (0.7ms)[0m   [0;1mSELECT * FROM `facility_insurances` WHERE (`facility_insurances`.listing_id = 113009) [0m
+[paperclip] Deleting attachments.
+  [4;35;1mRate Load (0.3ms)[0m   [0mSELECT * FROM `rates` WHERE (`rates`.rateable_id = 113009 AND `rates`.rateable_type = 'Listing' AND (`rates`.`dimension` IS NULL)) [0m
+  [4;36;1mListing Destroy (0.3ms)[0m   [0;1mDELETE FROM `listings` WHERE `id` = 113009[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserHintPlacement Load (0.6ms)[0m   [0mSELECT * FROM `user_hint_placements` WHERE (`user_hint_placements`.user_id = 25250) [0m
+  [4;36;1mUserHintPlacement Destroy (2.8ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 415[0m
+  [4;35;1mUserHintPlacement Destroy (0.2ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 414[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 413[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 412[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 411[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 410[0m
+  [4;36;1mUserHintPlacement Destroy (0.1ms)[0m   [0;1mDELETE FROM `user_hint_placements` WHERE `id` = 409[0m
+  [4;35;1mUserHintPlacement Destroy (0.1ms)[0m   [0mDELETE FROM `user_hint_placements` WHERE `id` = 408[0m
+  [4;36;1mComment Load (0.2ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.commentable_id = 25250 AND `comments`.commentable_type = 'User') ORDER BY created_at ASC[0m
+  [4;35;1mTagging Load (0.2ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.tagger_id = 25250 AND `taggings`.tagger_type = 'User') [0m
+  [4;36;1mPredefSpecialAssign Load (0.2ms)[0m   [0;1mSELECT * FROM `predef_special_assigns` WHERE (`predef_special_assigns`.client_id = 25250) [0m
+  [4;35;1mBillingInfo Load (0.2ms)[0m   [0mSELECT * FROM `billing_infos` WHERE (`billing_infos`.client_id = 25250) [0m
+  [4;36;1mAccountSetting Load (0.2ms)[0m   [0;1mSELECT * FROM `account_settings` WHERE (`account_settings`.client_id = 25250) LIMIT 1[0m
+  [4;35;1mClient Destroy (0.2ms)[0m   [0mDELETE FROM `users` WHERE `id` = 25250[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m

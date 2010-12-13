@@ -25,7 +25,7 @@
 
 		<div id="signupstep_3" class="workflow_step">
 		
-			<div id="intro">
+			<div class="intro">
 				<h3>Great! Now enter your contact information.</h3> 
 				<p>This name and address will be used on your main Administrator Account, you'll have full access to all the facilities added to this account.</p>
 			</div>
@@ -79,38 +79,50 @@
 		</div> <!-- END step 3 -->
 
 		<div id="signupstep_4" class="workflow_step">
-			<div id="intro">
+			<div class="intro">
 				<h3>Make sure everything's cool before you finish.</h3>
 				<p>This information will be used for your main Administrator Account. You’ll be able to add more facilities later, and assign limited access manager accounts if necessary.</p>
 			</div>
-			<div id="wrap">
+			<div class="wraped">
 				<div class="inner hidden"></div>
 			</div>
 			<img src="/images/ui/storagelocator/step4.png"/>
 			
 			<p id="terms_use">
-				<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" />
+				<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" class="required" />
 				<label for="term_of_use">I have read and agree to the <a href="/terms-of-use" target="_blank">Terms of Use</a>.</label>
 			</p>
 			
 		</div> <!-- END step 4 -->
 		
 		<div id="signupstep_5" class="workflow_step">
-				<div id="intro">
+			<div id="signup_processing">
+				<div class="intro">
+					<h3>Your account is being created.</h3>
+					<p>Please wait while we setup your account. </p>
+				</div>
+				
+				<div class="wraped">
+					<%= ajax_loader 'ajax-loader-long-green.gif', :style => 'margin:90px auto;display:block;' %>
+				</div>
+			</div>
+			
+			<div id="signup_complete" class="hide">
+				<div class="intro">
 					<h3>Your account has been created.</h3>
 					<p>We’ve sent you an email with the log in information. Please check your email and click on the link we’ve provided to activate and log in to your account.</p>
 				</div>
 				
-				<div id="wrap">
+				<div class="wraped">
 					<p><strong>Thank You.</strong></p> 
 					<p>Please check your email and activate your account by clicking on the link provided in the confirmation email.</p>
 					<br />
-					<p>If you do not receive a confirmation email <a href="">click here</a> to have it resent.</p>
+					<p>If you do not receive a confirmation email, <a  id="resend_link" href="">click here</a> to have it resent.</p>
 				</div>
+			</div>
 				
-				<img src="/images/ui/storagelocator/step5.png"/>
-
-			</div> <!-- END step 4 -->
+			<img src="/images/ui/storagelocator/step5.png"/>
+		</div> <!-- END step 4 -->
 
 	</div>
 	<div id="contact">Need Help Signing Up?  Call <strong>1-305-945-7561</strong></div>

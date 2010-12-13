@@ -554,7 +554,7 @@ $(document).ready(function() {
 		
 		if (!chk_avail.data('checking')) {
 			ajax_loader.show();
-			chk_avail.text('Checking').data('checking', true);
+			chk_avail.text('Checking').data('checking', true).show();
 			
 			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
 				$.with_json(response, function(data) {
@@ -1397,6 +1397,27 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	$('#resend_link', '#signupstep_5').live('click', function() {
+		var $this = $(this),
+			ajax_loader = $.new_ajax_loader('after', $this.parent());
+		
+		if (!$this.data('sending')) {
+			$this.data('sending', true);
+			ajax_loader.show();
+			
+			$.getJSON($this.attr('href'), function(response) {
+				$.with_json(response, function() {
+					$this.parent().after('<p class="success_msg">The activation email has been resent.</p>');
+				});
+				
+				ajax_loader.hide();
+				$this.data('sending', false);
+			});
+		}
+		
+		return false;
+	});
+	
 }); // END document ready
 
 // jQuery Plugins
@@ -1496,20 +1517,24 @@ var workflow_settings = {
 			action  : workflow_step4,
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Submit').data('done', false); }],
-				['skip', 'fadeOut'],
+				['skip', 'hide'],
 				['back', 'fadeIn']
-			]
+			],
+			validate : function(wizard) {
+				return $('#terms_use', wizard.workflow).runValidation().data('valid');
+			}
 		},
 		{ 
 			div_id  : 'signupstep_5',
+			action : workflow_step5,
 			nav_vis : [
 				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
-				['skip', 'fadeOut'],
+				['skip', 'hide'],
 				['back', 'fadeIn']
 			]
 		}
 	],
-	finish_action : function(wizard){ finish_workflow(wizard) }
+	finish_action : function(wizard){ wizard.workflow.parent().dialog('destroy').remove(); }
 };
 
 function close_pop_up_and_focus_on_fac_name(event){
@@ -1520,7 +1545,7 @@ function close_pop_up_and_focus_on_fac_name(event){
 function workflow_step2(wizard) {
 	var listings_box = $('.small_listings', arguments[0].workflow);
 	
-	if (!$('#tab_step_0', wizard.workflow.parent()).hasClass('done')) {
+	if (listings_box.children().length == 0) {
 		listings_box.hide();
 		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
@@ -1591,7 +1616,7 @@ function workflow_step4() { // form data review
 			case 'first_name' 		: wizard.form_data.client['first_name'] 	  = capitalize(this.value); break;
 			case 'last_name' 		: wizard.form_data.client['last_name'] 		  = capitalize(this.value); break;
 			case 'listing_address' 	: wizard.form_data.mailing_address['address'] = this.value; 	   		break;               
-			case 'listing_city' 	: wizard.form_data.mailing_address['city'] 	  = this.value; 	   		break;               
+			case 'listing_city' 	: wizard.form_data.mailing_address['city'] 	  = capitalize(this.value);	break;               
 			case 'listing_state' 	: wizard.form_data.mailing_address['state']   = this.value; 	   		break;               
 			case 'listing_zip' 		: wizard.form_data.mailing_address['zip'] 	  = this.value; 	   		break;               
 			case 'listing_phone' 	: wizard.form_data.mailing_address['phone']   = this.value || ''; 		break;
@@ -1600,22 +1625,26 @@ function workflow_step4() { // form data review
 	});
 	
 	var review_html = '<h4>Contact Information:</h4>';
-		
+	
 	review_html += '<div id="review_contact">';
 		review_html += '<div class="label">Company Name:</div> <p class="listing_title">'+ titleize(company) +'</p>';
 		review_html += '<div id="address" class="label">Company Address:</div> <p class="listing_address">' + 
-						wizard.form_data.mailing_address['address'] +'<br />'+ 
-						capitalize(wizard.form_data.mailing_address['city']) +', '+ 
-						capitalize(wizard.form_data.mailing_address['state']) +' '+ 
-						wizard.form_data.mailing_address['zip'] +'</p>';
+							wizard.form_data.mailing_address['address'] +'<br />'+ 
+							capitalize(wizard.form_data.mailing_address['city']) +', '+ 
+							capitalize(wizard.form_data.mailing_address['state']) +' '+ 
+							wizard.form_data.mailing_address['zip'] +'</p>';
 		review_html += '<div id="name" class="label">Name:</div> <p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
-		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') review_html += '<div class="label">Phone:</div> <p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
+		
+		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') 
+			review_html += '<div class="label">Phone:</div> <p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
+			
 		review_html += '<div class="label">Email:</div> <p class="email">'+ email +'</p>';
 	review_html += '</div>';
 	
-	review_html += '<p class="opt_in">'+ (wizard.form_data.client['wants_newsletter'] ? 'Send' : 'Don\'t send') +' me the monthly newsletter.</p>';
+	review_html += (wizard.form_data.client['wants_newsletter'] ? '<p class="opt_in">Send' : '<p class="opt_out">Don\'t send') +' me the monthly newsletter.</p>';
 	
 	if (listings.length > 0) {
+		$('.attribute_fields .listing,.attribute_fields .map', review.next()).remove();
 		wizard.form_data.listings = [];
 		review_html += '<h4 id="listings">My Listings:</h4><div class="small_listings">';
 		
@@ -1633,29 +1662,22 @@ function workflow_step4() { // form data review
 	}
 	
 	review.append(review_html);
+	
 	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
 }
 
-function finish_workflow() {
-	var wizard = arguments[0],
-		next_button = $('.next', arguments[0].workflow);
+function workflow_step5(wizard) {
+	var nav_btns = $('.button', wizard.nav_bar).hide();
+	$('#signup_processing .ajax_loader', wizard.workflow).fadeIn();
 	
-	if (!next_button.data('saving')) {
-		next_button.data('saving', true).before('<img src="/images/ui/ajax-loader-facebook.gif" class="ajax_loader" alt="Loading..." />');
-		next_button.prev('.ajax_loader').show();
-
-		$.post('/clients', wizard.form_data, function(response){
-			$.with_json(response, function(){
-				// redirect to home page to show the flash message
-				window.location = '/';
-			});
-			
-			next_button.prev('.ajax_loader').hide().data('saving', false);
-			$('.ui-autocomplete').remove();
+	$.post('/clients', wizard.form_data, function(response) {
+		$.with_json(response, function(data) {
+			nav_btns.filter('.next').show();
+			$('#signup_processing', wizard.workflow).hide();
+			$('#signup_complete', wizard.workflow).show();
+			$('#resend_link', wizard.workflow).attr('href', '/resend_activation/'+ data.activation_code);
 		});
-	}
-	
-	return false;
+	}, 'json');
 }
 
 // HELPERS

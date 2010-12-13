@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   
-  before_filter :require_client, :except => [:index, :create, :activate]
+  before_filter :require_client, :except => [:index, :new, :create, :activate, :resend_activation]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   
@@ -23,6 +23,7 @@ class ClientsController < ApplicationController
     @mailing_address = @client.mailing_addresses.build params[:mailing_address].merge(:name => @client.name, :company => @client.company, :email => @client.email)
     
     @client.user_hints = UserHint.all
+    @client.report_recipients = @client.email
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
@@ -37,7 +38,7 @@ class ClientsController < ApplicationController
       Notifier.deliver_new_client_alert @client
       
       flash[:new_client_created] = "We've sent you an email to #{@client.email} with your new account details. You'll be able to login by following the link in your email to activate your account."
-      render :json => { :success => true }
+      render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
     else
       render :json => { :success => false, :data => model_errors(@client) }
     end
@@ -99,6 +100,15 @@ class ClientsController < ApplicationController
       flash[:error] = 'Your account is suspended'
       redirect_to root_path
     end
+  end
+  
+  def resend_activation
+    @client = Client.find_by_activation_code params[:code]
+    Notifier.deliver_client_notification @client
+    
+    render :json => { :success => true }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
   end
   
   def toggle_specials
