@@ -89,53 +89,53 @@
 				<div class="inner">
 					<div class="left">
 						<div>
-					        <%= label_tag 'tenant[name]', 'Your Name', :class => 'block' %> 
+					        <%= label_tag 'tenant[name]', 'Your Name:', :class => 'block' %> 
 							<%= text_field_tag 'tenant[name]', nil, :class => 'required' %>
 						</div>
 						<div>
-					        <%= label_tag 'mailing_address[phone]', 'Phone', :class => 'block' %> 
+					        <%= label_tag 'mailing_address[phone]', 'Phone:', :class => 'block' %> 
 							<%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
 						</div>
 						<div>
-					        <%= label_tag 'tenant[email]', 'Email', :class => 'block' %> 
+					        <%= label_tag 'tenant[email]', 'Email:', :class => 'block' %> 
 							<%= text_field_tag 'tenant[email]', nil, :class => 'email' %>
 							<%= hidden_field_tag "tenant[listing_id]", listing.id %>
 							<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
 						</div>
 						<div>
-					        <%= label_tag 'tenant[billing_infos][address]', 'Address', :class => 'block' %> 
+					        <%= label_tag 'tenant[billing_infos][address]', 'Address:', :class => 'block', :id => 'address'  %> 
 							<%= text_field_tag 'tenant[billing_infos][address]', nil, :class => 'required' %>
 						</div>
 						<div>
-					        <%= label_tag 'tenant[billing_infos][city]', 'City', :class => 'block' %> 
+					        <%= label_tag 'tenant[billing_infos][city]', 'City:', :class => 'block' %> 
 							<%= text_field_tag 'tenant[billing_infos][city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
 						</div>
 						<div class="uncollapse">
 							<div class="state_field">
-								<%= label_tag 'tenant[billing_infos][state]', 'State', :class => 'block' %> 
+								<%= label_tag 'tenant[billing_infos][state]', 'State:', :class => 'block' %> 
 								<%= text_field_tag 'tenant[billing_infos][state]', nil, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
 							</div>
 							<div class="zip_field">
-						        <%= label_tag 'tenant[billing_infos][zip]', 'Zip', :class => 'block' %> 
+						        <%= label_tag 'tenant[billing_infos][zip]', 'Zip:', :class => 'block' %> 
 								<%= text_field_tag 'tenant[billing_infos][zip]', nil, :class => 'required', :maxlength => 5 %>
 							</div>
 						</div>
 					</div>
 					<div class="right">
 						<div>
-					        <%= label_tag 'tenant[billing_infos][card_type]', 'Card Type', :class => 'block' %> 
+					        <%= label_tag 'tenant[billing_infos][card_type]', 'Card Type:', :class => 'block' %> 
 							<%= select_tag 'tenant[billing_infos][card_type]', option_tags(BillingInfo.credit_cards), :class => 'required' %>
 						</div>
 						<div>
-					        <%= label_tag 'tenant[billing_infos][card_number]', 'Card Number', :class => 'block' %> 
+					        <%= label_tag 'tenant[billing_infos][card_number]', 'Card Number:', :class => 'block' %> 
 							<%= text_field_tag 'tenant[billing_infos][card_number]', nil, :class => 'required' %>
 						</div>
 						<div>
-							<%= label_tag 'tenant[billing_infos][ccv]', 'CCV', :class => 'block' %> 
+							<%= label_tag 'tenant[billing_infos][ccv]', 'CCV:', :class => 'block' %> 
 							<%= text_field_tag 'tenant[billing_infos][ccv]', nil, :class => 'required', :maxlength => 4 %>
 						</div>
 						<div>
-					        <%= label_tag 'tenant[billing_infos][expires_month]', 'Expires', :class => 'block' %>
+					        <%= label_tag 'tenant[billing_infos][expires_month]', 'Expires:', :class => 'block' %>
 							<%= text_field_tag 'tenant[billing_infos][expires_month]', nil, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
 							<%= text_field_tag 'tenant[billing_infos][expires_year]', nil, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
 						</div>

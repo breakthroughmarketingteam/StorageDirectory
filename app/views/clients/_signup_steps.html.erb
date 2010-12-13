@@ -26,8 +26,8 @@
 		<div id="signupstep_3" class="workflow_step">
 		
 			<div id="intro">
-				<h3>Great! One more step to get you signed up.</h3> 
-				<p>Enter the name and address you’d like to use for the main Administrator Account, you will have full access to all the facilities added to this account.</p>
+				<h3>Great! Now enter your contact information.</h3> 
+				<p>This name and address will be used on your main Administrator Account, you'll have full access to all the facilities added to this account.</p>
 			</div>
 		
 		    <form action="" method="" id="contact_info_form" class="silent">
@@ -46,7 +46,7 @@
 					</p>
 					<p>
 						<label>Facility Address (Line 2):</label><br />
-						<input type="text" id="listing_address" name="listing_address" />
+						<input type="text" id="listing_address2" name="listing_address2" />
 					</p>
 				</div>
 				<div class="left">
@@ -79,18 +79,39 @@
 		</div> <!-- END step 3 -->
 
 		<div id="signupstep_4" class="workflow_step">
-			<h3>Make sure everything's cool before you finish.</h3>
-		
-			<div class="left hidden">
+			<div id="intro">
+				<h3>Make sure everything's cool before you finish.</h3>
+				<p>This information will be used for your main Administrator Account. You’ll be able to add more facilities later, and assign limited access manager accounts if necessary.</p>
+			</div>
+			<div id="wrap">
+				<div class="inner hidden"></div>
+			</div>
+			<img src="/images/ui/storagelocator/step4.png"/>
 			
-			</div>
-		
-			<div class="right">
-				<h4>There are many variations</h4> 
-				<p>of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words which don't look even slightly believable. </p>
-			</div>
-		
+			<p id="terms_use">
+				<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" />
+				<label for="term_of_use">I have read and agree to the <a href="/terms-of-use" target="_blank">Terms of Use</a>.</label>
+			</p>
+			
 		</div> <!-- END step 4 -->
+		
+		<div id="signupstep_5" class="workflow_step">
+				<div id="intro">
+					<h3>Your account has been created.</h3>
+					<p>We’ve sent you an email with the log in information. Please check your email and click on the link we’ve provided to activate and log in to your account.</p>
+				</div>
+				
+				<div id="wrap">
+					<p><strong>Thank You.</strong></p> 
+					<p>Please check your email and activate your account by clicking on the link provided in the confirmation email.</p>
+					<br />
+					<p>If you do not receive a confirmation email <a href="">click here</a> to have it resent.</p>
+				</div>
+				
+				<img src="/images/ui/storagelocator/step5.png"/>
+
+			</div> <!-- END step 4 -->
+
 	</div>
 	<div id="contact">Need Help Signing Up?  Call <strong>1-305-945-7561</strong></div>
 	<div id="workflow_nav">
