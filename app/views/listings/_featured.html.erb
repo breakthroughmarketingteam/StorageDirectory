@@ -3,52 +3,54 @@
 <% unless @featured_listing.nil? %>
 	<div id="feat-list" class="shimmy">
 		<h4>Featured Listing</h4>
-	
-		<div class="facility-logo">
-			<%= display_logo(@featured_listing, { :class => (@featured_listing.pictures.empty? ? 'full' : 'short') }) %>
-		</div>
-		
-		<!--
-		<%# unless @featured_listing.pictures.empty? %>
-			<ul id="preview">
-				<li>
-					<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
-				</li>
-				<li>
-					<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
-				</li>
-				<li>
-					<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
-				</li>
-				<li>
-					<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
-				</li>
-			</ul>
-		<%# end %>
-		-->
-		<div id="name">
-			<%= link_to @featured_listing.title, facility_path(get_search.storage_type.parameterize, @featured_listing.title, @featured_listing.id) %>
-		</div>
-	
-		<div id="address">
-			<%= @featured_listing.full_address %>
-		</div>
-	
-		<% if @featured_listing.call_tracking_enabled? %>
-			<div id="phone">
-				<%= @featured_listing.call_tracking_num %>
+		<div id="wrap">
+			<div class="facility-logo">
+				<%= display_logo(@featured_listing, { :class => (@featured_listing.pictures.empty? ? 'full' : 'short') }) %>
 			</div>
-		<% end %>
 		
-		<div id="spec">
-			<p>Special</p>
-			<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
-		</div>
+			<!--
+			<%# unless @featured_listing.pictures.empty? %>
+				<ul id="preview">
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
+					</li>
+				</ul>
+			<%# end %>
+			-->
+
+			<div id="name">
+				<%= link_to @featured_listing.title, facility_path(get_search.storage_type.parameterize, @featured_listing.title, @featured_listing.id) %>
+			</div>
 	
-		<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true } %>
+			<div id="address">
+				<%= @featured_listing.full_address %>
+			</div>
 	
-		<div id="more-info">
-			<%= link_to 'More Info', facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
+			<% if @featured_listing.call_tracking_enabled? %>
+				<div id="phone">
+					<%= @featured_listing.call_tracking_num %>
+				</div>
+			<% end %>
+		
+			<div id="spec">
+				<p>Special</p>
+				<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
+			</div>
+	
+			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true } %>
+	
+			<div id="more-info">
+				<%= link_to 'More Info', facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
+			</div>
 		</div>
 	</div>
 <% end %>
