@@ -1,4 +1,4 @@
-/* Style sheet. Created by ns-designs 2010 */
+rent_steps/* Style sheet. Created by ns-designs 2010 */
 html{overflow-x:hidden;overflow-y:scroll;margin:0;}
 /* Start by defining the main page layout */
 body{text-align:center;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#333;}
@@ -1142,7 +1142,14 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps,#issn_steps,#rent_steps{overflow:hidden;position:relative;}
-#rent_steps{height:331px;background:url("/images/ui/storagelocator/dir-tab-bg.png") repeat-x bottom;}
+#rent_steps{height:331px;background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;}
+#rent_steps hr{border:none;}
+#rent_steps #rent_step2 input{margin-bottom:10px;width:200px;}
+#rent_steps #rent_step2 input#tenant_email{margin-bottom:0;}
+#rent_steps #rent_step2 input#tenant_billing_infos_address{margin-top:10px;}
+#rent_steps #rent_step2 input#tenant_billing_infos_zip{width:50px;}
+.rental_form #rent_step2 label#address{margin-top:10px;}
+#rent_steps #rent_step2 .note{margin-left:100px;}
 #issn_steps{width:795px;}
 #workflow_steps{height:440px;}
 #workflow_nav,#map_flow_nav{bottom:15px;position:absolute;right:20px;}
@@ -1695,7 +1702,8 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;font-size:12px;height:13px;padding:10px 20px;}
 .rental_form .head span{color:#4c4bcc;font-weight:bold;}
 .rental_form .head a{font-size:100%;}
-.rental_form label{width:70px;}
+.rental_form label{font-size:12px;width:85px;}
+.rental_form #rent_step2 label{float:left;font-size:12px;margin-right:15px;padding-top:4px;text-align:right;width:85px;}
 .rental_form .col1{float:left;padding:20px 0 20px 20px;width:41%;}
 .rental_form .col1 div{float:left;font-weight:bold;margin:0 0 20px;width:100%;}
 .rental_form .cal,.rental_form .tiny{border:1px solid #ccc;padding:1px 3px;}
