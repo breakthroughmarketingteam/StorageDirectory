@@ -161,15 +161,6 @@ class Listing < ActiveRecord::Base
     val
   end
   
-  def get_admin_fee_for(size)
-    if self.issn_enabled? && size && size.unit_type
-      size.unit_type.update_reserve_costs
-      size.unit_type.reserve_cost
-    else
-      self.admin_fee
-    end
-  end
-  
   def admin_fee=(val)
     if val.is_a?(String) && val.match(/\.{1}/)
       write_attribute :admin_fee, (val.to_f * 100)

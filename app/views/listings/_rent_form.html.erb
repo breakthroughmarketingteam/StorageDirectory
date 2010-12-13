@@ -66,28 +66,45 @@
 							<ul>
 								<li>
 									Rent: 
-									<span class="grey">(<span class="dur"></span> x <span>$</span><span class="rental_rate"></span>)</span> 
-									<span class="subtotal right">$<span></span></span>
+									<span class="grey">
+										(<span class="dur"></span> x 
+										$<span class="rental_rate"></span>)
+									</span> 
+									<span class="subtotal right">
+										$<span></span>
+									</span>
 								</li>
 								<li class="admin_fee">
 									Admin Fees: 
-									<span class="right">$<span><%= sprintf "%.2f", listing.get_admin_fee_for(size) %></span></span>
+									<span class="right">
+										$<span><%= sprintf "%.2f", listing.admin_fee %></span>
+									</span>
 								</li>
 								<% unless listing.specials.empty? %>
-									<li class="discount">Specials: <span class="right">-$<span></span></span></li>
+									<li class="discount">Specials: 
+										<span class="right">
+											-$<span></span>
+										</span>
+									</li>
 								<% end %>
 								<li class="special_discount">
 									USSSL Discount: 
-									<span class="right">-$<span></span></span>
+									<span class="right">
+										-$<span></span>
+									</span>
 								</li>
 								<li class="tax" data-tax="<%= listing.tax_rate %>">
 									Tax: 
-									<span class="right">$<span></span></span>
+									<span class="right">
+										$<span></span>
+									</span>
 								</li>
 								<li><hr /></li>
 								<li class="total">
 									Move-In Total: 
-									<span class="right">$<span>92.56</span></span>
+									<span class="right">
+										$<span>0.00</span>
+									</span>
 								</li>
 							</ul>
 						</div>
@@ -154,7 +171,7 @@
 									<%= bf.text_field :expires_month, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
 									<%= bf.text_field :expires_year, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
 								</div>
-								<div>
+								<div class="agree">
 									<%= check_box_tag 'agree', 1, false, :class => 'required' %>
 									<%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
 								</div>
