@@ -19,7 +19,7 @@ class SizesController < ApplicationController
   
   def update
     if @size.update_attributes params[:size]
-      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :pretend_action => 'edit' }) }
+      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :size => @size, :pretend_action => 'edit' }) }
     else
       render :json => { :success => false, :data => model_errors(@size) }
     end
@@ -29,7 +29,7 @@ class SizesController < ApplicationController
     @size = @listing.sizes.build params[:size]
   
     if @size.save
-      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :pretend_action => 'edit', :size => @size }) }
+      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/size', :locals => { :size => @size, :pretend_action => 'edit' }) }
     else
       render :json => { :success => false, :data => model_errors(@size) }
     end
@@ -54,7 +54,7 @@ class SizesController < ApplicationController
   end
   
   def convert_price_to_cents
-    params[:size][:price] = params[:size][:price].to_i * 100
+    params[:size][:price] = params[:size][:price].to_f * 100.0
   end
 
 end

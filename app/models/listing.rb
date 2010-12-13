@@ -26,8 +26,6 @@ class Listing < ActiveRecord::Base
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
   end
-  has_many :predef_size_assigns, :dependent => :destroy
-  has_many :predefined_sizes, :through => :predef_size_assigns
   
   has_many :searches # user searches are associated to listings to gather search behavior data
   

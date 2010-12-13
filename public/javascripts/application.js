@@ -1534,7 +1534,11 @@ var workflow_settings = {
 			]
 		}
 	],
-	finish_action : function(wizard){ wizard.workflow.parent().dialog('destroy').remove(); }
+	finish_action : function(wizard){ 
+		wizard.workflow.parent().dialog('destroy').remove();
+		$('#new_client')[0].reset();
+		$('.ajax_loader', '#new_client').hide();
+	}
 };
 
 function close_pop_up_and_focus_on_fac_name(event){
@@ -1717,48 +1721,52 @@ $.sort_tips = function(sort_link, tips, sortFunc) {
 	});
 }
 
-var translations = [ // each curly bracket is a single element to translate
+var translations = [
 	{
-		page 		: '.spanish',
-		element 	: '.virtual_form #comment_submit',
-		method 		: 'val', // val, text, or html
-		translation : 'Enviar Mensaje'
-	},
-	{
-		page 		: '.spanish',
-		element 	: '#footer_top .wrapper',
-		method 		: 'text', // val, text, or html
-		translation : 'Encuentre una unidad de almacenamiento en cualquier lugar y en cualquier momento!'
-	},
-	{
-		page 		: '.spanish',
-		element 	: '#title h1',
-		method 		: 'text', // val, text, or html
-		translation : 'Encuentré, ahorré y alquilé almacenamiento en cualquier momento.'
-	},
-	{
-		page 		: '.spanish',
-		element 	: '#aff-box p',
-		method 		: 'html', // val, text, or html
-		translation : '<strong>Socios Afiliados</strong> - Obtener grandes ofertas y ahorre en su próximo alquiler almacenamiento con uno de nuestros socios afiliados.'
-	},
-	{
-		page 		: '.spanish',
-		element 	: '#social-media p',
-		method 		: 'html', // val, text, or html
-		translation : '<strong>Compartir esta pagina</strong> - Tenemos ofertas increíbles a través de nuestras páginas de la red social y empresarial.'
-	},
-	{
-		page 		: '.spanish',
-		element 	: '#top_cities p strong',
-		method 		: 'text', // val, text, or html
-		translation : 'Las Ciudades Mas Populares De Almacenamiento'
+		page : '.spanish',
+		elements : [
+			{
+				element 	: '.virtual_form #comment_submit',
+				method 		: 'val', // val, text, or html
+				translation : 'Enviar Mensaje'
+			},
+			{
+				element 	: '#footer_top .wrapper',
+				method 		: 'text',
+				translation : 'Encuentre una unidad de almacenamiento en cualquier lugar y en cualquier momento!'
+			},
+			{
+				element 	: '#title h1',
+				method 		: 'text',
+				translation : 'Encuentré, ahorré y alquilé almacenamiento en cualquier momento.'
+			},
+			{
+				element 	: '#aff-box p',
+				method 		: 'html',
+				translation : '<strong>Socios Afiliados</strong> - Obtener grandes ofertas y ahorre en su próximo alquiler almacenamiento con uno de nuestros socios afiliados.'
+			},
+			{
+				element 	: '#social-media p',
+				method 		: 'html',
+				translation : '<strong>Compartir esta pagina</strong> - Tenemos ofertas increíbles a través de nuestras páginas de la red social y empresarial.'
+			},
+			{
+				element 	: '#top_cities p strong',
+				method 		: 'text',
+				translation : 'Las Ciudades Mas Populares De Almacenamiento'
+			}
+		]
 	}
 ]
 
 $.translate_with = function(translations) {
 	$.each(translations, function() {
-		var element = $(this.element, this.page);
-		if (element.length > 0) element[this.method](this.translation);
+		var page = this.page;
+		
+		$.each(this.elements, function() {
+			var element = $(this.element, page);
+			if (element.length > 0)
+				element[this.method](this.translation);
+		});
 	});
 }

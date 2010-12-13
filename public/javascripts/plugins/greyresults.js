@@ -48,10 +48,14 @@ $(function(){
 		
 		get_partial_and_do({ partial: 'sizes/form', model: 'Listing', id: $('#listing_id').val(), sub_model: 'Size', sub_id: $this.attr('data-size-id') }, function(response) {
 			$.with_json(response, function(partial) {
-				var form = $(partial);
+				var form = $(partial),
+					price = $('#size_price', form);
+				
+				price.val((parseFloat(price.val()) / 100.0).toFixed(2)).focus();
 				size.after(form);
 				size.hide();
-				$('#size_price', form).focus();
+				
+				$('#size_price', form).val(parseInt$('#size_price', form).val())
 				
 				$('.cancel_link', form).click(function() {
 					ajax_loader.hide();
@@ -103,7 +107,6 @@ $(function(){
 					var size = $(data);
 					$('.uncollapse', '#sl-tabs-sizes-in').append(size);
 					$('.sl-table', size).addClass('active').effect('highlight', 1500).find('#size_price').focus();
-					
 				});
 				
 				predef.data('adding', false);

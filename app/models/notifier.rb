@@ -26,7 +26,6 @@ class Notifier < ActionMailer::Base
   def new_contact_alert(comment, page)
     setup_email 'admin@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', "New Message: #{comment.title}"
     @body[:comment] = comment
-    @body[:page] = page
   end
   
   def tenant_confirmation(reserver, reservation)

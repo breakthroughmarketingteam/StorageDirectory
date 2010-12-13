@@ -1,12 +1,9 @@
-Client: <%= @client.attributes.inspect %>
+Client: <%= @client.name %> <<%= @client.email %>
 
-Account Page: <%= edit_client_path @client %>
+Account: <%= edit_client_path @client %>
 
 Listings: 
 <% @client.listings.each do |listing| %>
-	<%= listing.attributes.inspect %>
-	
-	Map:
-	<%= listing.map.attributes.inspect %>
-	
+	(<%= listing.id %>) <%= listing.title %>
+	<%= listing.full_address %>
 <% end %>

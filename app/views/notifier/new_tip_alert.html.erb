@@ -1,5 +1,7 @@
 New tip created:
+<%= @tip.title %>
+<%= @tip.content %>
 
-<%= @tip.inspect %>
+Tags: <%= @tip.tag_list %>
 
-Link: <%= link_to @tip.title, tip_path(@tip) %>
+Link: <%= tip_path @tip %>

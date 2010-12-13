@@ -1,5 +1,5 @@
 <% @listing ||= listing; @size ||= size || model %>
-<% form_for [@listing, @size], :html => { :id => '', :class => 'size_form silent', 'data-edit' => (size.new_record? ? 0 : 1) } do |f| %>
+<% form_for [@listing, @size], :html => { :id => '', :class => 'size_form silent', 'data-edit' => (defined?(predef) && !predef || (!defined?(predef) && size.new_record? ? 0 : 1)) } do |f| %>
 	<div class="sl-table-wrap" rel="listing_<%= @listing.id %>" has-res="<%= @listing.accepts_reservations? %>">
 		<ul class="sl-table">
 			<li class="st-size"><%= f.text_field :width, :class => 'required numeric', :maxlength => 2 %> x <%= f.text_field :length, :class => 'required numeric', :maxlength => 2 %></li>

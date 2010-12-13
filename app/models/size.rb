@@ -11,7 +11,7 @@ class Size < ActiveRecord::Base
   attr_accessor :special
   
   def self.unit_type_labels
-    ['Upper', 'Lower', 'Indoor', 'Outdoor', 'Drive-up']
+    ['Upper', 'Lower', 'Drive-up']
   end
   
   def self.get_from_unit_size(unit_size)
@@ -24,11 +24,7 @@ class Size < ActiveRecord::Base
   end
   
   def dollar_price
-    read_attribute(:price) / 100.0 rescue 0
-  end
-  
-  def price
-    read_attribute(:price) / 100.0 rescue 0
+   self.price / 100.0 rescue 0
   end
   
   def dims

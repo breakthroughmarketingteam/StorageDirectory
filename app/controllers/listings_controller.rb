@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   
-  before_filter :require_client, :except => [:home, :locator, :compare]
+  before_filter :require_client, :except => [:home, :locator, :show, :compare]
   
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
@@ -176,7 +176,7 @@ class ListingsController < ApplicationController
     @size = @listing.sizes.build @predefined_size.attributes
     
     if @size.valid?
-      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/form', :locals => { :listing => @listing, :size => @size }) }
+      render :json => { :success => true, :data => render_to_string(:partial => 'sizes/form', :locals => { :listing => @listing, :size => @size, :predef => true }) }
     else
       render :json => { :success => false, :data => model_errors(@size) }
     end
