@@ -18,10 +18,12 @@ class TenantsController < ApplicationController
   
   def create
     @tenant = Tenant.new params[:tenant]
-    raise [@tenant, params].pretty_inspect
+    @rental = @tenant.rentals.build params[:rental]
+    
+    if @rental.listing
     
     if @tenant.save_without_session_maintenance
-      Notifier.deliver_tenant_notification @tenant
+      Notifier.deliver_tenant_notification @tenant, @rental
       Notifier.deliver_new_tenant_alert @tenant
       
       render :json => { :success => true }
@@ -31,15 +33,7 @@ class TenantsController < ApplicationController
   end
     
   def edit
-    redirect_to tenant_account_path if current_user.has_role?('advertiser') && params[:id]
-   
-    @tenant = params[:id].blank? ? current_user : Tenant.find(params[:id])
-    @listings = @tenant.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
-
-    @settings = @tenant.settings || @tenant.build_settings    
-    @tenant_welcome = Post.tagged_with('tenant welcome').last.try :content
     
-    redirect_to new_tenant_path if @tenant.nil?
   end
   
   def update
@@ -79,42 +73,20 @@ class TenantsController < ApplicationController
       redirect_to login_path
       
     when 'active'
-      flash[:notice] = 'Your account is already active. Go ahead and log in.'
+      flash[:notice] = 'Your account has already been activated. Go ahead and log in.'
       redirect_to login_path
       
     when 'suspended'
-      flash[:error] = 'Your account is suspended'
+      flash[:error] = 'Sorry, your account is suspended. Contact us if you think you\'re receiving this message in error.'
       redirect_to root_path
     end
   end
   
   def resend_activation
     @tenant = Tenant.find_by_activation_code params[:code]
-    Notifier.deliver_tenant_notification @tenant
+    Notifier.deliver_tenant_notification @tenant, @tenant.rentals.last
     
     render :json => { :success => true }
-  rescue => e
-    render :json => { :success => false, :data => e.message }
-  end
-  
-  def toggle_specials
-    if params[:toggle] == 'true'
-      @tenant.predef_special_assigns.create :predefined_special_id => params[:predefined_special_id]
-    else
-      @tenant.predef_special_assigns.find_by_predefined_special_id(params[:predefined_special_id]).destroy
-    end
-    
-    render :json => { :success => true }
-  end
-  
-  def test_issn
-    if @tenant.issn_test params[:facility_id], (params[:enable_test] == 'true' ? true : false)
-      response = 'Data Sync Complete'
-    else
-      response = 'ISSN Test Disabled'
-    end
-    
-    render :json => { :success => true, :data => response }
   rescue => e
     render :json => { :success => false, :data => e.message }
   end

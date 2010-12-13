@@ -8,7 +8,7 @@
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
-				<% form_for [listing, Rental.new], :html => { 'data-pr' => (listing.prorated ? 1 : 0) } do |f| %>
+				<% form_for Rental.new, :html => { 'data-pr' => (listing.prorated ? 1 : 0) } do |f| %>
 					<div class="inner">
 						<div class="col1">
 							<div>
@@ -34,6 +34,8 @@
 							<div id="paid_until">
 								<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
 								<span class="paid_through"></span>
+								<%= f.hidden_field :duration %>
+								<%= f.hidden_field :listing_id, :value => listing.id %>
 							</div>
 			
 							<% unless listing.specials.empty? %>
@@ -117,7 +119,11 @@
 			<div id="rent_step2" class="workflow_step">
 				<div class="inner">
 					<% form_for Tenant.new, :html => { :class => 'silent' } do |f| %>
-						<h4 class="stack">Renter Information</h4>
+						<div class="uncollapse">
+							<h4 class="stack left">Renter Information</h4>
+							<%= link_to 'Already have an account?', login_path, :id => 'already_member', :class => 'right' %>
+						</div>
+						
 						<div class="left">
 							<div>
 						        <%= f.label :name, 'Your Name:', :class => 'block' %> 
@@ -152,10 +158,8 @@
 										<%= bf.text_field :zip, :class => 'required', :maxlength => 5 %>
 									</div>
 								</div>
-							<% end %>
 						</div>
 						<div class="right">
-							<% f.fields_for :billing_infos, BillingInfo.new do |bf| %>
 								<div class="stack">
 							        <%= bf.label :card_type, 'Card Type:', :class => 'block' %> 
 									<%= bf.select :card_type, BillingInfo.credit_cards, :class => 'required' %>

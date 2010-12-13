@@ -16,6 +16,7 @@ class Client < User
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'
+    self.status = 'unverified'
   end
 
   def active_mailing_address

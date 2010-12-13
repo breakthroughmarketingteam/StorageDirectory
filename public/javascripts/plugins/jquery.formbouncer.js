@@ -16,13 +16,14 @@ jQuery.fn.formBouncer = function(){
 	});
 }
 
-jQuery.fn.runValidation = function() {
+jQuery.fn.runValidation = function(silent) {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
 		valid_phone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
 		valid_date = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
 		valid_zip = /\d{5}/,
 		numeric_class_regex = /(numeric_)/,
 		form  = $(this),
+		silent = silent || form.hasClass('silent');
 		errors = '';
 		
 	function valid_credit_card(value) {
@@ -70,7 +71,7 @@ jQuery.fn.runValidation = function() {
 		$('.invalid', form).eq(0).focus();
 
 		$('.invalid', form).blur(function(){
-			$(this).parent().runValidation();
+			$(this).parent().runValidation(form.hasClass('silent'));
 		});
 	}
 	
@@ -137,7 +138,7 @@ jQuery.fn.runValidation = function() {
 			}
 		}
 		
-		if (error != '' && !form.hasClass('silent')) {
+		if (error != '' && !silent) {
 			jQuery('.error', input.parent()).remove();
 			input.before('<div class=\'flash error hidden\'>' + error + '</div>');
 			jQuery('.error', input.parent()).slideDown();

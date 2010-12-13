@@ -1146,6 +1146,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps{height:331px;background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;}
 #rent_steps hr{border:none;}
 #rent_steps #rent_step2 input{margin-bottom:10px;width:200px;}
+#rent_steps #rent_step2 .agree input{margin:0;width:auto;}
 #rent_steps #rent_step2 input#tenant_email{margin-bottom:0;}
 #rent_steps #rent_step2 input#tenant_billing_infos_address{margin-top:10px;}
 #rent_steps #rent_step2 input#tenant_billing_infos_zip{width:50px;}
@@ -1294,6 +1295,7 @@ form .error p{margin:0 0 7px 0;}
 #advanced_opts label{font-weight:bold;margin-right:5px;}
 #advanced_opts p label{font-size:130%;margin-bottom:15px;display:block;}
 #advanced_opts .size_picker{width:184px;height:195px;margin-top:28px;position:relative;}
+#advanced_opts .size_picker .size_details{display:none;}
 #narrow_results_form #advanced_opts .size_picker{height:160px;}
 #advanced_opts .size_picker img{position:absolute;bottom:0;left:0;}
 #advanced_opts #features .selectable_wrap{font-size:80%;width:33.3%;height:100%;float:left;background:url(/images/ui/storagelocator/checkbox.png) no-repeat left 6px;line-height:2;}

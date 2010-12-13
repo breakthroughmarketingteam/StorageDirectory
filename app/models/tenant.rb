@@ -8,6 +8,7 @@ class Tenant < User
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'tenant'
+    self.status = 'unverified'
   end
   
   def billing_info

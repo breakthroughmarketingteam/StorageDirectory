@@ -1098,7 +1098,10 @@ $.fn.rental_form = function() {
 					['back', 'fadeOut']
 				],
 				action : function(wizard) {
-					var form = $('#new_tenant', wizard.workflow);
+					var form = $('#new_tenant', wizard.workflow),
+						ajax_loader = $('#processing_rental', wizard.workflow).show();
+					
+					console.log(ajax_loader)
 					wizard.form_data += '&'+ form.serialize();
 					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
@@ -1133,10 +1136,12 @@ $.fn.rental_form = function() {
 				end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, days_in_month - 1);
 				
 			} else end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit - 1, days_in_month);
+			
 		} else {
 			multiplier = limit;
 		}
 		
+		$('#rental_duration', form).val(multiplier);
 		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear()).special_txt_anim();
 		return multiplier;
 	}

@@ -32,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
+  map.tenant_activate '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
   map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:title/:status', :controller => 'facility_features', :action => 'update'
   map.map_dirs '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
