@@ -3,8 +3,8 @@ class ListingsController < ApplicationController
   before_filter :require_client, :except => [:home, :locator, :compare]
   
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :disable, :copy_desc, :add_predefined_size, :request_review]
-  before_filter :get_client, :only => [:edit, :disable, :request_review]
+  before_filter :get_model, :only => [:show, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
+  before_filter :get_client, :only => [:edit, :disable, :request_review, :tracking_request]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
   geocode_ip_address :only => :locator
@@ -161,10 +161,10 @@ class ListingsController < ApplicationController
     end
   end
   
-  def copy_desc
+  def copy_to_all
     @listing.siblings.each do |listing|
-      listing.update_attribute :description, @listing.description
-    end
+      listing.send "update_#{params[:what]}", @listing
+    end if @listing.respond_to?(params[:what])
     
     render :json => { :success => true }
   rescue => e
@@ -196,13 +196,18 @@ class ListingsController < ApplicationController
     render :json => { :success => false, :data => e.message }
   end
   
+  def tracking_request
+    Notifier.deliver_tracking_request @listing, @client, params[:phone_number]
+    flash[:notice] = "Your request is being processed. Please allow 24 hours for setup. We will email you when it's done."
+    redirect_to client_listing_path(@listing)
+  end
+  
   private
   
   def get_listing_relations
     @map = @listing.map
     @pictures = @listing.pictures
-    @special = @listing.specials.first || (@listing.client && @listing.specials.new)
-    @web_special = in_mode?('show') ? @listing.web_special : (@listing.web_special || @listing.web_specials.build)
+    @special = @listing.specials.last || (@listing.client && @listing.specials.new)
     @facility_features = @listing.facility_features.map(&:label).reject(&:blank?)
     @search = Search.find_by_id session[:search_id]
     

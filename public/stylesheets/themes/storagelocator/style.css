@@ -1716,13 +1716,19 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
 #sl-edit-tabs #fac_name{margin:0 0 30px;}
-#sl-edit-tabs #tracking_num_req{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;margin:0 10px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;cursor:pointer;}
+#sl-edit-tabs #tracking_num_req{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;cursor:pointer;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;}
-#copy_all_desc{margin-left:20px;font-size:12px;float:left;}
+.copy_all{margin-left:20px;font-size:12px;float:left;}
+#tracking_request p{line-height:1.3;}
+#tracking_request label{font-size:80%;}
+#sl-edit-tabs .track_req .ajax_loader{float:none;margin:0 7px;}
+#tracking_request #phone_number{width:30%;}
 #sl-edit-tabs #email tr{display:block;}
 #sl-edit-tabs p{font-size:12px;line-height:15px;}
+#sl-edit-tabs p.note{margin:7px 0;}
+.track_req span{padding-right:7px;}
 #sl-edit-tabs #address input, #sl-edit-tabs #email input{margin-top:10px;}
 #sl-edit-tabs p.label{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:7px 20px;}
 #sl-edit-tabs #facility_name{width:500px;}

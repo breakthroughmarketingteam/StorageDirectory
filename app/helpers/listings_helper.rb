@@ -120,6 +120,10 @@ module ListingsHelper
     "#{@@standard_logo_path}/#{logo}#{@@standard_logo_ext}"
   end
   
+  def copy_all_link(what, listing, options)
+    "<span class='copy_all'>[#{link_to options[:text], copy_to_all_listing_path(listing, :what => what), :title => options[:title]}]</span>" unless listing.siblings.empty?
+  end
+  
   def display_logo(listing, options = {})
     @min_title_len = 21
     

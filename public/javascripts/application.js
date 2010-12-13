@@ -988,7 +988,7 @@ $(document).ready(function() {
 			ajax_loader = $.new_ajax_loader('after', $this).show();
 		
 		get_pop_up_and_do({ title: 'Request Tracked Number', modal: true }, { sub_partial: '/listings/tracking_request', model: 'Listing', id: $('#listing_id').val() }, function(pop_up) {
-			
+			$('.numeric_phone', pop_up).formatPhoneNum();
 		});
 	});
 	

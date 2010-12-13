@@ -59,6 +59,13 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
+  def tracking_request(listing, client, phone)
+    setup_email 'diego@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'Call Tracking Request'
+    @body[:listing] = listing
+    @body[:client] = client
+    @body[:phone] = phone
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from

@@ -1,11 +1,14 @@
 <% form_tag tracking_request_listing_path(model), :method => 'post', :id => 'tracking_request' do %>
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur, elit id ultrices bibendum, orci ipsum sodales nibh, vel mollis lacus urna sit amet turpis. 
-		Phasellus tristique arcu sed velit imperdiet elementum. Nunc tempor ipsum congue dui volutpat nec tincidunt quam pulvinar. Aliquam iaculis convallis quam, eu porta massa accumsan at.
+	<p class="stack">
+		For your benefit, we offer you a basic call tracking campaign in order to record and report on all the calls potential customers make to your facility through your listing on USSelfStorageLocator.com. 
+		This number is simply forwarded to your own existing phone number after the call is entered in the database. You simply provide your number and we do the rest.
+		This service is highly recommend in order to help turn leads into tenants and be able to follow up with any interested customer.
 	</p>
 	
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur, elit id ultrices bibendum, orci ipsum sodales nibh, vel mollis lacus urna sit amet turpis. 
-		Phasellus tristique arcu sed velit imperdiet elementum. Nunc tempor ipsum congue dui volutpat nec tincidunt quam pulvinar. Aliquam iaculis convallis quam, eu porta massa accumsan at.
-	</p>
+	<div class="stack">
+		<%= label_tag 'phone_number', 'Your facility\'s phone number' %>
+		<%= text_field_tag 'phone_number', model.phone, :class => 'numeric_phone required', :maxlength => 12 %>
+	</div>
+	
+	<%= submit_tag 'Submit', :class => 'save' %>
 <% end %>

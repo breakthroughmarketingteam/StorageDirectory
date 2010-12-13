@@ -34,14 +34,18 @@
                 </tr>
 			<% end %>
 			
-               <tr>
-               	<td class="col_label"><%= f.label :phone %></td>
-               	<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
+				<tr>
+               		<td class="col_label"><%= f.label :phone %></td>
+               		<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
                </tr>
 			
 			<tr class="track">
 				<td class="col_label">Tracked Number</td>
-				<td class="track_req">(305) 537-6952 &nbsp;<div id="tracking_num_req">Request</div></td>
+				<td class="track_req">
+					<%= "<span>#{@listing.tracked_number}</span>" unless @listing.tracked_number.blank? %>
+					<div id="tracking_num_req">Request</div>
+					<p class="note">Only your tracked number is visible in your listing.</p>
+				</td>
 			</tr>
 		
 			<tr>

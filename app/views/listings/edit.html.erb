@@ -6,6 +6,9 @@
 			<div id="sl-edit-tabs">
 				<div id="sl-tabs-in" class="tabular_content">
 					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+					
+					<%= display_message flash %>
+					
 					<ul id="sl-tabs-nav" class="tabular">
 						<%= content_tag :li, link_to("Details", '#fac_details_tab', :id => 'tab_Details', :rel => 'tab1') %>
 						<%= content_tag :li, link_to("Rental Settings", '#settings_tab', :id => 'settings', :rel => 'tab2') %>
@@ -33,9 +36,7 @@
 									<%= f.text_area :description, :class => 'required', :rows => 6 %>
 								</div>
 								
-								<% unless @listing.siblings.empty? %>
-									<span id="copy_all_desc">[<%= link_to 'Copy to all listings', copy_desc_listing_path(@listing), :title => 'Copy this description to all your other listings' %>]</span>
-								<% end %>
+								<%= copy_all_link :description, @listing, :text => 'Copy to all listings', :title => 'Copy this description to all your other listings' %>
 								
 								<%= f.submit 'Save Changes', :id => 'listing_desc_submit', :class => 'save' %>
 								<%= ajax_loader %>
@@ -48,6 +49,7 @@
 								<%= render :partial => 'hours' if in_edit_mode? %>
 							</div>
 							
+							<%= copy_all_link :business_hours, @listing, :text => 'Copy to all listings', :title => 'Copy these hours to all your other listings' %>
 							<%= submit_tag 'Save Changes', :class => 'save', :id => 'save_hours' %>
 							<%= ajax_loader %>
 						</div>
@@ -174,7 +176,7 @@
 						</div>
 					</div>
 					<div id="fac_reviews" class="tab_content">
-						<div id="request_review">
+						<div id="request_review" class="stack uncollapse">
 							<h3>Request a Review</h3>
 							<p>Send people you know a request to review your facility. Put each email on a new line.</p>
 							
@@ -192,6 +194,16 @@
 									<%= submit_tag 'Send', :class => 'save' %>
 									<%= ajax_loader %>
 								</div>
+							<% end %>
+						</div>
+						
+						<div id="list_reviews">
+							<h3>Reviews</h3>
+							<% unless @listing.reviews.empty? %>
+								<p>Here's a list of all the reviews you've received for this facility.</p>
+								<%= render @listing.reviews %>
+							<% else %>
+								<p>You have no reviews yet.</p>
 							<% end %>
 						</div>
 					</div>

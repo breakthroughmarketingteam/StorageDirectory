@@ -188,6 +188,24 @@ class Listing < ActiveRecord::Base
     self.facility_features.empty? ? 'self-storage' : self.facility_features.first.title.parameterize
   end
   
+  def update_description(other_listing)
+    self.update_attribute :description, other_listing.description
+  end
+  
+  def update_business_hours(other_listing)
+    if other_listing.access_24_hours?
+      self.update_attribute :access_24_hours, other_listing.access_24_hours
+    end
+    
+    if other_listing.office_24_hours?
+      self.update_attribute :office_24_hours, other_listing.office_24_hours
+    end
+    
+    other_listing.business_hours.each do |hour|
+      self.business_hours.create hour.attributes
+    end
+  end
+  
   def get_searched_size(search)
     return self.sizes.first if search.nil? || search.unit_size.nil?
     dims = search.unit_size.split('x')

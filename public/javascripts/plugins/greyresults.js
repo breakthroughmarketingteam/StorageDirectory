@@ -35,6 +35,11 @@ $(function(){
 		return false;
 	});
 	
+	$('.cancel_link', '.size_form').live('click', function() {
+		$(this).parents('.size_form').fadeOutRemove();
+		return false;
+	});
+	
 	$('.edit_size', '.sl-table-wrap').live('click', function() {
 		var $this = $(this),
 			size = $this.parents('.sl-table-wrap'),
@@ -242,16 +247,16 @@ $(function(){
 		return false;
 	});
 	
-	$('#copy_all_desc a', '#descript').click(function() {
+	$('.copy_all a').live('click', function() {
 		var $this = $(this).fadeTo(600, .5);
 			
 		if (!$this.data('saving')) {
 			$this.data('saving', true);
 			var ajax_loader = $.new_ajax_loader('after', $this).show().css({ 'float': 'left', 'margin': '0 10px' });
 
-			$.getJSON($this.attr('href'), function(response) {
+			$.post($this.attr('href'), function(response) {
 				$.with_json(response, function(data) {
-					$this.after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
+					$this.parent().after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
 
 					setTimeout(function() {
 						$('.success_msg', $this.parent()).fadeOutRemove(1000);
@@ -261,7 +266,7 @@ $(function(){
 				$this.data('saving', false)
 				$this.fadeTo(300, 1);
 				ajax_loader.hide();
-			});
+			}, 'json');
 		}
 		
 		return false;
