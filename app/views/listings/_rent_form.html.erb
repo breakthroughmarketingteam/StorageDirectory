@@ -39,15 +39,17 @@
 							<% unless listing.specials.empty? %>
 								<div>
 									<%= label_tag 'Specials: ', nil, :class => 'block left' %>
-									<ul>
-										<% listing.specials.each do |special| %>
-											<li>
-												<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
-												<%= f.label "special_id_#{special.id}", special.title %>
-											</li>
-										<% end %>
-										<li><%= link_to 'Remove Special', '#', :id => 'remove_special', :class => 'note' %>
-									</ul>
+									<div class="avail_specials">
+										<ul>
+											<% listing.specials.each do |special| %>
+												<li>
+													<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
+													<%= f.label "special_id_#{special.id}", special.title %>
+												</li>
+											<% end %>
+											<li><%= link_to 'Remove Special', '#', :id => 'remove_special', :class => 'note' %>
+										</ul>
+									</div>
 								</div>
 							<% end %>
 						</div>
@@ -143,7 +145,7 @@
 								<div class="uncollapse">
 									<div class="state_field">
 										<%= bf.label :state, 'State:', :class => 'block' %> 
-										<%= bf.text_field :state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+										<%= bf.select :state, States.names, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
 									</div>
 									<div class="zip_field">
 								        <%= bf.label :zip, 'Zip:', :class => 'block' %> 
@@ -160,7 +162,7 @@
 								</div>
 								<div>
 							        <%= bf.label :card_number, 'Card Number:', :class => 'block' %> 
-									<%= bf.text_field :card_number, :class => 'required' %>
+									<%= bf.text_field :card_number, :class => 'credit_card' %>
 								</div>
 								<div>
 									<%= bf.label :ccv, 'CCV:', :class => 'block' %> 
@@ -177,11 +179,7 @@
 								</div>
 							<% end %>
 							
-							<% f.fields_for :rental, Rental.new do |rf| %>
-								<%= rf.hidden_field :listing_id, :value => listing.id %>
-							<% end %>
 							<%= f.submit 'Save', :class => 'hide' %>
-							
 							<div class="verisign"><span class="hidden">Verisign Secure</span></div>
 						</div>
 					<% end %>
@@ -190,7 +188,13 @@
 			
 			<div id="rent_step3" class="workflow_step">
 				<div class="inner">
-					DONE!
+					<div id="processing_rental">
+						<%= ajax_loader 'ajax-loader-long-green.gif' %>
+					</div>
+					
+					<div id="rental_complete" class="hide">
+						DONE!
+					</div>
 				</div>
 			</div>
 		</div> <!-- /.items -->

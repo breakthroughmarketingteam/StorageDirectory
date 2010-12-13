@@ -18,4 +18,9 @@ class Tenant < User
     self.billing_info.full_address
   end
   
+  def name=(val)
+    self.first_name = val.split(' ').first
+    self.last_name = val.split(' ').last
+  end
+  
 end

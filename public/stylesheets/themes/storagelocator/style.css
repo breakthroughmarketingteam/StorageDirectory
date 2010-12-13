@@ -1149,7 +1149,6 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 input#tenant_email{margin-bottom:0;}
 #rent_steps #rent_step2 input#tenant_billing_infos_address{margin-top:10px;}
 #rent_steps #rent_step2 input#tenant_billing_infos_zip{width:50px;}
-.rental_form #rent_step2 label#address{margin-top:10px;}
 #rent_steps #rent_step2 .note{margin-left:100px;}
 #issn_steps{width:795px;}
 #workflow_steps{height:440px;}
@@ -1716,7 +1715,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .cal{width:25%;font-size:12px;}
 .rental_form .calendar_wrap{cursor:pointer;background:url(/images/ui/storagelocator/blue-cal.jpg) no-repeat 55% 39%;}
 .rental_form .tiny{width:5%;}
-#rent_step1 .col1 ul{float:left;width:75%;border:0 none;line-height:1;clear:none;height:auto;}
+#rent_step1 .col1 .avail_specials{float:left;width:75%;border:0 none;line-height:1;clear:none;height:123px;margin:0;overflow-x:hidden;overflow-y:auto;width:77%;}
 .rental_form .col1 li{font-weight:normal;margin:0 0 5px;width:250px;}
 .rental_form .col1 li input{margin-left:0;}
 .rental_form .col1 span{color:#4c4bcc;font-size:14px;font-weight:bold;margin-left:2px;}
