@@ -8,7 +8,7 @@
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
-				<% form_for [listing, Rental.new], :html => { 'data-pr' => '1' } do |f| %>
+				<% form_for [listing, Rental.new], :html => { 'data-pr' => (listing.prorated ? 1 : 0) } do |f| %>
 					<div class="inner">
 						<div class="col1">
 							<div>
@@ -18,21 +18,27 @@
 			
 							<div>
 								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
-								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', listing.available_sizes, get_search.unit_size, :class => 'required sizes_select' %>
-							</div>
-			
-							<div><%= label_tag 'Rate: ', nil, :class => 'block left' %><span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
-			
-							<div class="calendar_wrap">
-								<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %><%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
+								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', listing.available_sizes, (size ? size.dims : get_search.unit_size), :class => 'required sizes_select' %>
 							</div>
 			
 							<div>
-								<%= label_tag 'Paid until: ', nil, :class => 'block left' %><span class="paid_through"></span>
+								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
+								<span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span>
+							</div>
+			
+							<div class="calendar_wrap">
+								<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %>
+								<%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
+							</div>
+			
+							<div id="paid_until">
+								<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
+								<span class="paid_through"></span>
 							</div>
 			
 							<% unless listing.specials.empty? %>
-								<div><%= label_tag 'Specials: ', nil, :class => 'block left' %>
+								<div>
+									<%= label_tag 'Specials: ', nil, :class => 'block left' %>
 									<ul>
 										<% listing.specials.each do |special| %>
 											<li>
@@ -49,6 +55,10 @@
 						<div class="col2">
 							<div class="size_picker">
 								<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+								<p class="size_details">
+									<%= size ? size.title : nil %>
+									<%= size ? size.dims : get_search.unit_size %>
+								</p>
 							</div>
 						</div>
 	
@@ -61,7 +71,7 @@
 								</li>
 								<li class="admin_fee">
 									Admin Fees: 
-									<span class="right">$<span><%= sprintf "%.2f", listing.admin_fee %></span></span>
+									<span class="right">$<span><%= sprintf "%.2f", listing.get_admin_fee_for(size) %></span></span>
 								</li>
 								<% unless listing.specials.empty? %>
 									<li class="discount">Specials: <span class="right">-$<span></span></span></li>
@@ -87,64 +97,77 @@
 
 			<div id="rent_step2" class="workflow_step">
 				<div class="inner">
-					<div class="left">
-						<div>
-					        <%= label_tag 'tenant[name]', 'Your Name:', :class => 'block' %> 
-							<%= text_field_tag 'tenant[name]', nil, :class => 'required' %>
-						</div>
-						<div>
-					        <%= label_tag 'mailing_address[phone]', 'Phone:', :class => 'block' %> 
-							<%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
-						</div>
-						<div>
-					        <%= label_tag 'tenant[email]', 'Email:', :class => 'block' %> 
-							<%= text_field_tag 'tenant[email]', nil, :class => 'email' %>
-							<%= hidden_field_tag "tenant[listing_id]", listing.id %>
-							<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
-						</div>
-						<div>
-					        <%= label_tag 'tenant[billing_infos][address]', 'Address:', :class => 'block', :id => 'address'  %> 
-							<%= text_field_tag 'tenant[billing_infos][address]', nil, :class => 'required' %>
-						</div>
-						<div>
-					        <%= label_tag 'tenant[billing_infos][city]', 'City:', :class => 'block' %> 
-							<%= text_field_tag 'tenant[billing_infos][city]', nil, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
-						</div>
-						<div class="uncollapse">
-							<div class="state_field">
-								<%= label_tag 'tenant[billing_infos][state]', 'State:', :class => 'block' %> 
-								<%= text_field_tag 'tenant[billing_infos][state]', nil, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+					<% form_for Tenant.new, :html => { :class => 'silent' } do |f| %>
+						<h4 class="stack">Renter Information</h4>
+						<div class="left">
+							<div>
+						        <%= f.label :name, 'Your Name:', :class => 'block' %> 
+								<%= f.text_field :name, :class => 'required' %>
 							</div>
-							<div class="zip_field">
-						        <%= label_tag 'tenant[billing_infos][zip]', 'Zip:', :class => 'block' %> 
-								<%= text_field_tag 'tenant[billing_infos][zip]', nil, :class => 'required', :maxlength => 5 %>
+							<div>
+						        <%= f.label :email, 'Email:', :class => 'block' %> 
+								<%= f.text_field :email, :class => 'email' %>
+								<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
 							</div>
+							
+							<% f.fields_for :billing_infos, BillingInfo.new do |bf| %>
+								<div>
+							        <%= bf.label :phone, 'Phone:', :class => 'block' %> 
+									<%= bf.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %>
+								</div>
+								<div>
+							        <%= bf.label :address, 'Address:', :class => 'block', :id => 'address' %> 
+									<%= bf.text_field :address, :class => 'required' %>
+								</div>
+								<div>
+							        <%= bf.label :city, 'City:', :class => 'block' %> 
+									<%= bf.text_field :city, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+								</div>
+								<div class="uncollapse">
+									<div class="state_field">
+										<%= bf.label :state, 'State:', :class => 'block' %> 
+										<%= bf.text_field :state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+									</div>
+									<div class="zip_field">
+								        <%= bf.label :zip, 'Zip:', :class => 'block' %> 
+										<%= bf.text_field :zip, :class => 'required', :maxlength => 5 %>
+									</div>
+								</div>
+							<% end %>
 						</div>
-					</div>
-					<div class="right">
-						<div>
-					        <%= label_tag 'tenant[billing_infos][card_type]', 'Card Type:', :class => 'block' %> 
-							<%= select_tag 'tenant[billing_infos][card_type]', option_tags(BillingInfo.credit_cards), :class => 'required' %>
+						<div class="right">
+							<% f.fields_for :billing_infos, BillingInfo.new do |bf| %>
+								<div class="stack">
+							        <%= bf.label :card_type, 'Card Type:', :class => 'block' %> 
+									<%= bf.select :card_type, BillingInfo.credit_cards, :class => 'required' %>
+								</div>
+								<div>
+							        <%= bf.label :card_number, 'Card Number:', :class => 'block' %> 
+									<%= bf.text_field :card_number, :class => 'required' %>
+								</div>
+								<div>
+									<%= bf.label :ccv, 'CCV:', :class => 'block' %> 
+									<%= bf.text_field :ccv, :class => 'required', :maxlength => 4 %>
+								</div>
+								<div>
+							        <%= bf.label :expires_month, 'Expires:', :class => 'block' %>
+									<%= bf.text_field :expires_month, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
+									<%= bf.text_field :expires_year, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
+								</div>
+								<div>
+									<%= check_box_tag 'agree', 1, false, :class => 'required' %>
+									<%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
+								</div>
+							<% end %>
+							
+							<% f.fields_for :rental, Rental.new do |rf| %>
+								<%= rf.hidden_field :listing_id, :value => listing.id %>
+							<% end %>
+							<%= f.submit 'Save', :class => 'hide' %>
+							
+							<div class="verisign"><span class="hidden">Verisign Secure</span></div>
 						</div>
-						<div>
-					        <%= label_tag 'tenant[billing_infos][card_number]', 'Card Number:', :class => 'block' %> 
-							<%= text_field_tag 'tenant[billing_infos][card_number]', nil, :class => 'required' %>
-						</div>
-						<div>
-							<%= label_tag 'tenant[billing_infos][ccv]', 'CCV:', :class => 'block' %> 
-							<%= text_field_tag 'tenant[billing_infos][ccv]', nil, :class => 'required', :maxlength => 4 %>
-						</div>
-						<div>
-					        <%= label_tag 'tenant[billing_infos][expires_month]', 'Expires:', :class => 'block' %>
-							<%= text_field_tag 'tenant[billing_infos][expires_month]', nil, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
-							<%= text_field_tag 'tenant[billing_infos][expires_year]', nil, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
-						</div>
-						<div>
-							<%= check_box_tag 'agree', 1, false, :class => 'required' %> <%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
-						</div>
-						
-						<div class="verisign"><span class="hidden">Verisign Secure</span></div>
-					</div>
+					<% end %>
 				</div>
 			</div>
 			

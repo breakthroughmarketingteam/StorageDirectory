@@ -35,6 +35,16 @@ class Size < ActiveRecord::Base
     width * length unless width.blank?
   end
   
+  def storage_type
+    case self.title when /(upper)/i
+      'Upper'
+    when /(lower)/i
+      'Lower'
+    when /(outside)|(outdoor)|(drive)/i
+      'Drive-up'
+    end
+  end
+  
   def icon(size = 'thumb')
     @size_icon ||= SizeIcon.first(:conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]).try :icon
   end

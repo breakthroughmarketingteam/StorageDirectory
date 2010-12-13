@@ -1,4 +1,4 @@
-<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_reservations? %>">
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
@@ -7,19 +7,12 @@
 				<% if result.premium? %>
 					<div class="rslt-features">
 						<a href="#" class="hours" title="24 Hours"></a>
-						
 						<a href="#" class="security" title="Security"></a>
-						
 						<a href="#" class="keypad" title="Keypad Access"></a>
-						
 						<a href="#" class="ac" title="AC"></a>
-						
 						<a href="#" class="driveup" title="Drive Up"></a>
-						
 						<a href="#" class="climate" title="Climate Controlled"></a>
-						
 						<a href="#" class="spanish" title="Spanish"></a>
-						
 					</div>
 				<% end %>
 			</div>
@@ -40,6 +33,8 @@
 				<% if result.premium? %>
 					<p><span class="rslt-phone">1-800-567-4321</span></p>
 				<% end %>
+				
+				<%= claim_listing_link(result) unless result.premium? %>
 			</div>
 			
 			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>

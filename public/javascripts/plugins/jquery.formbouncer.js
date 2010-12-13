@@ -43,7 +43,9 @@ jQuery.fn.runValidation = function() {
 		if (!input.hasClass('invalid')) input.addClass('invalid').removeClass('hint_text');
 		$('.invalid', form).eq(0).focus();
 
-		$('.invalid', 'form.silent').blur(function(){ $(this).removeClass('invalid'); });
+		$('.invalid', form).blur(function(){
+			$(this).parent().runValidation();
+		});
 	}
 	
 	function is_numeric(input) {
@@ -54,9 +56,8 @@ jQuery.fn.runValidation = function() {
 	$('.error', form).remove();
 
 	jQuery('input, select, textarea', form).each(function(){
-		var input = jQuery(this), error = '';
-
-		input.removeClass('invalid');
+		var input = jQuery(this).removeClass('invalid'), 
+			error = '';
 		
 		if (!input.attr('disabled')) {
 			

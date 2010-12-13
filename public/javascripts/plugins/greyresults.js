@@ -1012,7 +1012,7 @@ $.activate_datepicker = function(context) {
 $.activateSizeSelect = function(context) {
 	var $size_picker = $('.size_picker', context),
 		$size_img = $('img', $size_picker),
-		$size_select = $('.sizes_select');
+		$size_select = $('.sizes_select', context);
 
 	// preload
 	var pre_loaded_size_icons = [];
@@ -1036,11 +1036,14 @@ $.activateSizeSelect = function(context) {
 		var self = input[0] || this,
 			$this = $(self),
 			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
-			new_img = $('<img src="'+ selected +'" alt="" />');
-
+			new_img = $('<img src="'+ selected +'" alt="" />'),
+			size_details = capitalize(self.tagName.toLowerCase() == 'option' ? $this.attr('data-unit-type') : $('option:selected', self).attr('data-unit-type'));
+		
+		size_details += "&nbsp;"+ (self.tagName.toLowerCase() == 'option' ? $this.text() : $('option:selected', self).text());
+		
 		if ($size_img.attr('src') != selected) {
 			$size_img.fadeOut(100, function(){
-				$size_picker.html(new_img)
+				$size_picker.html('').append(new_img).append('<p class="size_details">'+ size_details +'</p>');
 				new_img.hide().fadeIn(120);
 				$size_img = $('img', $size_picker);
 
@@ -1160,10 +1163,7 @@ $.fn.rental_form = function() {
 				nav_vis : [
 					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
 					['back', 'fadeOut'] 
-				],
-				action : function(wizard) {
-					//console.log('step 1')
-				}
+				]
 			}, // END slide 1
 			{
 				div_id  : 'rent_step2',
@@ -1172,10 +1172,10 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					//console.log('step 2')
+					wizard.form_data = $('#new_rental', wizard.workflow).serialize();
 				},
 				validate : function(wizard) {
-					return $('#rent_step2', wizard.workflow).runValidation().data('valid');
+					return $('#new_tenant', wizard.workflow).runValidation().data('valid');
 				}
 			},
 			{
