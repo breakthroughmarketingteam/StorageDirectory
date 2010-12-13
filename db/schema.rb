@@ -850,16 +850,4 @@ ActiveRecord::Schema.define(:version => 20101213015804) do
     t.integer  "owner_id"
   end
 
-  create_table "web_specials", :force => true do |t|
-    t.string   "label"
-    t.string   "title"
-    t.text     "description"
-    t.string   "coupon_code"
-    t.integer  "value"
-    t.string   "function"
-    t.integer  "listing_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end

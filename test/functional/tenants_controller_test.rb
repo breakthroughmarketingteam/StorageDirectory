@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class WebSpecialTest < ActiveSupport::TestCase
+class TenantsControllerTest < ActionController::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

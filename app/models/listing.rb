@@ -15,7 +15,6 @@ class Listing < ActiveRecord::Base
   has_many :clicks         , :dependent => :destroy
   has_many :impressions    , :dependent => :destroy
   has_many :reviews        , :class_name => 'Comment', :as => :commentable
-  has_many :web_specials   , :dependent => :destroy
   has_many :staff_emails   , :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
@@ -154,10 +153,6 @@ class Listing < ActiveRecord::Base
   
   def display_special
     self.client.display_special if self.client
-  end
-  
-  def pro_rated?
-    self.client ? self.client.pro_rated? : false
   end
   
   def admin_fee
@@ -310,8 +305,8 @@ class Listing < ActiveRecord::Base
   #
   # OpenTech ISSN wrapper code
   #
-  def accepts_reservations?
-    self.issn_enabled?
+  def accepts_rentals?
+    !self.siblings.empty?
   end
   
   def issn_enabled?

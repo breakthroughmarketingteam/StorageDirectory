@@ -1012,7 +1012,7 @@ $.activate_datepicker = function(context) {
 $.activateSizeSelect = function(context) {
 	var $size_picker = $('.size_picker', context),
 		$size_img = $('img', $size_picker),
-		$size_select = $('.sizes_select');
+		$size_select = $('.sizes_select', context);
 
 	// preload
 	var pre_loaded_size_icons = [];
@@ -1036,11 +1036,14 @@ $.activateSizeSelect = function(context) {
 		var self = input[0] || this,
 			$this = $(self),
 			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
-			new_img = $('<img src="'+ selected +'" alt="" />');
-
+			new_img = $('<img src="'+ selected +'" alt="" />'),
+			size_details = capitalize(self.tagName.toLowerCase() == 'option' ? $this.attr('data-unit-type') : $('option:selected', self).attr('data-unit-type'));
+		
+		size_details += "&nbsp;"+ (self.tagName.toLowerCase() == 'option' ? $this.text() : $('option:selected', self).text());
+		
 		if ($size_img.attr('src') != selected) {
 			$size_img.fadeOut(100, function(){
-				$size_picker.html(new_img)
+				$size_picker.html('').append(new_img).append('<p class="size_details">'+ size_details +'</p>');
 				new_img.hide().fadeIn(120);
 				$size_img = $('img', $size_picker);
 
@@ -1060,6 +1063,59 @@ $.fn.special_txt_anim = function() {
 
 // make an auto updating form, when values change, update the total
 $.fn.rental_form = function() {
+	var rent_workflow = {
+		slides : [
+			{
+				div_id  : 'rent_step1',
+				nav_vis : [
+					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
+					['back', 'fadeOut'] 
+				]
+			}, // END slide 1
+			{
+				div_id  : 'rent_step2',
+				nav_vis : [
+					['next', 'fadeIn'],
+					['back', 'fadeIn']
+				],
+				action : function(wizard) {
+					wizard.form_data = $('#new_rental', wizard.workflow).serialize();
+					$('.numeric_phone', wizard.workflow).formatPhoneNum();
+					
+					$('#new_tenant', wizard.workflow).unbind('submit').submit(function() {
+						wizard.next();
+						return false;
+					});
+				},
+				validate : function(wizard) {
+					return $('#new_tenant', wizard.workflow).runValidation().data('valid');
+				}
+			},
+			{
+				div_id  : 'rent_step3',
+				nav_vis : [
+					['next', function(btn, wizard) { btn.text('Done').fadeIn() }],
+					['back', 'fadeOut']
+				],
+				action : function(wizard) {
+					var form = $('#new_tenant', wizard.workflow);
+					wizard.form_data += '&'+ form.serialize();
+					
+					$.post(form.attr('action'), wizard.form_data, function(response) {
+						$.with_json(response, function(data) {
+							$('#processing_rental', wizard.workflow).hide();
+							$('#rental_complete', wizard.workflow).show();
+							console.log(data);
+						});
+					});
+				}
+			}, // END slide 1
+		],
+		finish_action : function(wizard) {
+			//console.log('done')
+		}
+	};
+	
 	function update_end_date(limit, calendar, multiplier, has_special, prorated, form) {
 		if (typeof limit == 'undefined') var limit = 1;
 		
@@ -1077,6 +1133,8 @@ $.fn.rental_form = function() {
 				end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, days_in_month - 1);
 				
 			} else end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit - 1, days_in_month);
+		} else {
+			multiplier = limit;
 		}
 		
 		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear()).special_txt_anim();
@@ -1152,50 +1210,6 @@ $.fn.rental_form = function() {
 		tax_text.text(tax_amt.toFixed(2));
 		total_text.text(total.toFixed(2)).special_txt_anim();
 	}
-	
-	var rent_workflow = {
-		slides : [
-			{
-				div_id  : 'rent_step1',
-				nav_vis : [
-					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
-					['back', 'fadeOut'] 
-				],
-				action : function(wizard) {
-					//console.log('step 1')
-				}
-			}, // END slide 1
-			{
-				div_id  : 'rent_step2',
-				nav_vis : [
-					['next', 'fadeIn'],
-					['back', 'fadeIn']
-				],
-				action : function(wizard) {
-					//console.log('step 2')
-				},
-				validate : function(wizard) {
-					return $('#rent_step2', wizard.workflow).runValidation().data('valid');
-				}
-			},
-			{
-				div_id  : 'rent_step3',
-				nav_vis : [
-					['next', function(btn, wizard) { btn.text('Done').fadeIn() }],
-					['back', 'show'] 
-				],
-				action : function(wizard) {
-					$('.next', wizard.nav_bar).click(function() {
-						wizard.workflow.parent().dialog('destroy').remove();
-					});
-					return false;
-				}
-			}, // END slide 1
-		],
-		finish_action : function(wizard) {
-			//console.log('done')
-		}
-	};
 	
 	return this.each(function() {
 		var form 		 = $(this),
