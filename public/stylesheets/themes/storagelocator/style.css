@@ -1748,7 +1748,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form #paid_until .paid_through{display:block;padding-top:2px;}
 .rental_form #price{margin:3px 0 0;width:120px;}
 #rent_step2 .agree label{float:none;width:auto;}
-#rent_steps .remove_special{}
+#rent_steps .remove_special{display:block;float:left;margin:3px 3px 0 0;}
 
 .panel .rental_form,.sl-table-wrap .rental_form{border-color:-moz-use-text-color -moz-use-text-color #ccc;border-style:none none solid;border-width:medium medium 1px;margin-top:0;}
 .panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
