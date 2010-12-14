@@ -120,8 +120,8 @@
 				<div class="inner">
 					<% form_for Tenant.new, :url => tenants_url(:protocol => 'https'), :html => { :class => 'silent' } do |f| %>
 						<div class="uncollapse">
-							<h4 class="stack left">Renter Information</h4>
-							<%= link_to 'Already have an account?', login_path, :id => 'already_member', :class => 'right' %>
+							<h4 class="stack">Renter Information</h4>
+							<%= link_to 'Already have an account?', login_path, :id => 'already_member' %>
 						</div>
 						
 						<div class="left">
@@ -151,11 +151,11 @@
 								<div class="uncollapse">
 									<div class="state_field">
 										<%= bf.label :state, 'State:', :class => 'block' %> 
-										<%= bf.select :state, States.names, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+										<%= bf.select :state, States.names, {}, :class => 'state required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
 									</div>
 									<div class="zip_field">
 								        <%= bf.label :zip, 'Zip:', :class => 'block' %> 
-										<%= bf.text_field :zip, :class => 'required', :maxlength => 5 %>
+										<%= bf.text_field :zip, :class => 'zip required', :maxlength => 5 %>
 									</div>
 								</div>
 						</div>
@@ -169,13 +169,13 @@
 									<%= bf.text_field :card_number, :class => 'credit_card' %>
 								</div>
 								<div>
-									<%= bf.label :ccv, 'CCV:', :class => 'block' %> 
-									<%= bf.text_field :ccv, :class => 'required', :maxlength => 4 %>
+									<%= bf.label :ccv, 'CVV:', :class => 'block' %> 
+									<%= bf.text_field :ccv, :class => 'cvv required', :maxlength => 4 %>
 								</div>
 								<div>
 							        <%= bf.label :expires_month, 'Expires:', :class => 'block' %>
-									<%= bf.text_field :expires_month, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
-									<%= bf.text_field :expires_year, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
+									<%= bf.text_field :expires_month, :class => 'month required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>/ 
+									<%= bf.text_field :expires_year, :class => 'year required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %> mm/yy
 								</div>
 								<div class="agree">
 									<%= check_box_tag 'agree', 1, false, :class => 'required' %>

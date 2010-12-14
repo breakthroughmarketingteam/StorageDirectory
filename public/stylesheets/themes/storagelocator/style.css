@@ -276,7 +276,7 @@ li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-title h3{float:left;font-size:19px;height:26px;padding:12px 0 0 20px;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
-.rslt-phone{color:#33c;font-size:14px;font-weight:bold;}
+.rslt-phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
 #clients_controller .rslt-contact #listing_title{width:93%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;padding:0 14px;margin-left:-1px;}
@@ -329,9 +329,9 @@ ul.tabs li{-moz-border-radius-bottomleft:4px;-moz-border-radius-bottomright:4px;
 .listing:hover ul.tabs li:hover,div.listing ul.tabs li:active,div.listing ul.tabs li.active{background:#3333CB;}
 ul.tabs li.open_tab_li{padding:0 0 1px 0;width:18px;}
 ul.tabs li.open_tab_li a{padding:0 5px;font-size:100%;font-weight:bold;line-height:0.8;}
-ul.tabs li a{float:left;display:block;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:1px 5px 1px 25px;}
+ul.tabs li a{float:left;display:block;color:#fff;font-weight:bold;font-size:10px;text-decoration:none;text-align:right;text-transform:uppercase;padding:2px 5px 1px 25px;}
 li.fac-map a{background:url(/images/ui/storagelocator/map-icon.png) no-repeat 0% 4px;}
-li.fac-specials a{background:url(/images/ui/storagelocator/specials-icon.png) no-repeat 0 41%;}
+li.fac-specials a{background:url(/images/ui/storagelocator/specials-icon.png) no-repeat 0 2px;}
 li.fac-sizes a{background:url(/images/ui/storagelocator/sizes-icon.png) no-repeat 0 4px;}
 li.fac-pictures a{background:url(/images/ui/storagelocator/pictures-icon.png) no-repeat 0 3px;}
 li.fac-reviews a{background:url(/images/ui/storagelocator/reviews-icon.png) no-repeat 0 1px;}
@@ -589,18 +589,17 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #sl-tabs-overview{margin-top:20px;}
 .show_action .sizes_list_in{margin-top:0;}
 .panel .sizes_list_in{margin-top:0;}
-.sizes_list_in ul{clear:both;height:37px;line-height:2.5;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
+.sizes_list_in ul{clear:both;height:37px;line-height:3.1;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 .sizes_list_in ul li{display:block;float:left;}
 .sizes_list_in ul.sl-table-head{background:url(/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:22px;font-size:80%;color:#666;width:100%;}
-.sizes_list_in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:3px 0 0;cursor:pointer;font-size:90%;}
+.sizes_list_in ul.sl-table{background:url(/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:3px 0 0;cursor:pointer;font-size: 12px;}
 .edit_action .sizes_list_in ul.sl-table{cursor:default;}
 .sizes_list_in .rental_duration ul{border:0 none;font-size:120%;}
 .sizes_list_in ul.active,.sizes_list_in .sl-table:hover,.sizes_list_in .sl-table-wrap.active .sl-table{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x top left;color:#333;}
 .sizes_list_in .sl-table-head{font-weight:bold;}
 .sizes_list_in .sl-table input{padding:3px;}
 .sizes_list_in ul li.st-size{margin-left:20px;width:76px;}
-.sizes_list_in .sl-table .st-size{font-weight:bold;line-height:2.5;margin-left:15px;}
-.sizes_list_in .sl-table .st-size input{width:15px;}
+.sizes_list_in .sl-table .st-size{font-weight:bold;margin-left:15px;width: 76px;}
 .sizes_list_in .sl-table .st-desc input{width:90%;}
 .sizes_list_in .sl-table .st-pric input{width:72%;}
 .sizes_list_in .sl-table .st-sele{margin-top:11px;height:auto;}
@@ -873,13 +872,13 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #list-name{background-position:99% 50%;}
 #list-miles{background-position:97% 50%;}
 .listing{overflow:hidden;margin-bottom:10px;}
-.listing .inner{padding:0;background:#fff;position:relative;border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
+.listing .inner{padding:0;background:#fff;position:relative;border-bottom:1px solid #ccc;}
 .listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{position:relative;}
 .unit_detail_in{cursor:default;padding:4px 12px 10px;font-size:80%;overflow:hidden;}
 .unit_detail_in .special_txt{font-weight:bold;}
 .unit_detail_in .left{margin-left:5px;}
-.unit_detail span{color:#4c51a3;}
+.unit_detail span{color:#4c4bcc;}
 .unit_detail .size_display,.unit_detail .month_rate{font-weight:bold;}
 .unit_detail .size_display{margin-right:10px;}
 .unit_detail .month_rate{}
@@ -1151,11 +1150,13 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps{height:331px;background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;}
 #rent_steps hr{border:none;}
 #rent_steps #rent_step2 input{margin-bottom:10px;width:200px;}
+#rent_steps #rent_step2 input.state{width:50px;}
 #rent_steps #rent_step2 .agree input{margin:0;width:auto;}
-#rent_steps #rent_step2 input#tenant_email{margin-bottom:0;}
+#rent_steps #rent_step2 input#tenant_email{margin-bottom:2px;}
 #rent_steps #rent_step2 input#tenant_billing_infos_address{margin-top:10px;}
 #rent_steps #rent_step2 input#tenant_billing_infos_zip{width:50px;}
-#rent_steps #rent_step2 .note{margin-left:100px;}
+#rent_steps #rent_step2 .note{font-size:11px;margin-bottom:5px;margin-left:100px;}
+#rent_steps #rent_step2 .note a{font-size:11px;}
 #issn_steps{width:795px;}
 #workflow_steps{height:440px;}
 #workflow_nav,#map_flow_nav{bottom:15px;position:absolute;right:20px;}
@@ -1172,6 +1173,17 @@ form .error p{margin:0 0 7px 0;}
 #workflow_nav .ajax_loader,#map_flow_nav .ajax_loader{position:absolute;top:15px;right:121px;}
 .workflow_step,.map_flow_step{position:relative;float:left;;width:760px;overflow:hidden;padding-left:15px;}
 #rent_steps .workflow_step{padding:0;width:753px;}
+#rent_steps #rent_step2 .state_field{float:left;width:225px;}
+#rent_steps #rent_step2 .zip_field{float:left;}
+#rent_steps #rent_step2 input.state{width:100px;}
+#rent_steps #rent_step2 input.zip{height:13px;width:40px;}
+#rent_steps #rent_step2 .cvv{width:25px;}
+#rent_steps #rent_step2{font-size:12px;}
+#rent_steps #rent_step2 .month{margin:0 5px 0 0;width:20px;}
+#rent_steps #rent_step2 .year{margin-right:10px;width:20px;}
+#rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
+#rent_steps .agree{margin:10px 0 0 100px;}
+#rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:24px;}
 .map_flow_step{height:395px;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
@@ -1640,7 +1652,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list #spec{background:#ffc;border:1px dotted #666;color:red;padding:5px;width:90%;}
 #feat-list #size{color:#4c4bcc;float:left;font-size:14px;font-weight:bold;width:50%;}
 #feat-list #price{color:#393;float:right;font-size:14px;width:50%;}
-#feat-list #more-info{float:right;margin:0;}
+#feat-list #more-info{float:right;margin:5px 0 0;}
 #feat-list #more-info a{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/green-btn-bg1.png) repeat scroll 0 0 transparent;border:1px solid #666;font-size:100%;line-height:2.2;text-decoration:none;width:150px;}
 #feat-list #more-info a:hover{}
 #feat-list #spec p,#feat-list #size p, #feat-list #price p{color:#000;font-size:10px;font-weight:normal;margin-bottom:5px;}
@@ -1711,10 +1723,11 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .realtime{background:url(/images/ui/storagelocator/greencheck.png) no-repeat;font-size:14px;font-weight:bold;height:30px;padding:12px 0 0 42px;position:absolute;right:0;top:0;width:215px;}
 .rental_form h2,.rental_form .realtime{margin-top:-45px;}
 .rental_form .inner{padding:0;}
-.rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;font-size:12px;height:13px;padding:10px 20px;}
+.rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;border-bottom:1px solid #eee;font-size:12px;height:13px;padding:15px 20px;}
 .rental_form .head span{color:#4c4bcc;font-weight:bold;}
 .rental_form .head a{font-size:100%;}
 .rental_form label{font-size:12px;padding-top:3px;width:69px;}
+.rental_form .avail_specials label{}
 .rental_form #rent_step2 label{float:left;font-size:12px;margin-right:15px;padding-top:4px;text-align:right;width:85px;}
 .rental_form .col1{float:left;padding:20px 0 20px 20px;width:41%;}
 .rental_form .col1 div{float:left;font-weight:bold;margin:0 0 10px;width:100%;}
@@ -1734,22 +1747,27 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step1  .col3 ul li span{font-size:14px;}
 #rent_step1  .col3 ul li.total span{font-size:18px;}
 .rental_form .col3 li.total{font-size:16px;}
-.rental_form .col3 li.special_discount{color:#c33;}
+.rental_form .col3 li.discount{color:#f60;}
+.rental_form .col3 li.special_discount{color:#f60;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
 .rental_form .col3 .grey span{float:none;color:#999;}
 .rental_form .col3 hr{background:url(/images/ui/storagelocator/price-hr.png) repeat-x;border:none;height:11px;margin:0 0 5px;}
 #rent_steps .button{position:absolute;bottom:20px;left:20px;text-align:center;text-decoration:none;}
+#rent_steps .back{line-height:28px;}
 #rent_steps .next{width:182px;color:#fff;font-size:16px;height:21px;line-height:22px;padding:6px;left:auto;right:20px;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(/images/ui/storagelocator/reserve-btn.png) repeat-x;}
 #rent_step1{font-size:12px;}
 #rent_step2 .inner{padding:15px 20px;}
 #rent_step2 .inner .left{width:45%;margin-right:20px;}
 #rent_step2 .inner .right{width:48%;}
-.rental_form .size_picker .size_details{font-size:100%;}
+#rent_steps .state_field .state{width:100px;}
+#rent_steps .zip_field label{width:20px;}
+.rental_form .size_picker .size_details{color:#4c4bcc;font-size:13px;font-weight:bold;}
 .rental_form #paid_until{font-size:120%;}
 .rental_form #paid_until .paid_through{display:block;padding-top:2px;}
 .rental_form #price{margin:3px 0 0;width:120px;}
-#rent_step2 .agree label{float:none;width:auto;}
+#rent_step2 .agree a{font-size:12px;}
+#rent_step2 .agree label{float:none;margin:0 0 0 7px;width:auto;}
 #rent_step3 .conf{padding:20px;}
 #rent_steps .remove_special img{float:none;}
 
@@ -1759,7 +1777,8 @@ form .note{clear:both;display:block;font-size:80%;}
 .listing .panel .rental_form .col1 ul{height:auto;line-height:1.3;border:0 none;}
 .listing .panel .rental_form .col3 li{float:none;}
 
-#rent_step2 .inner{border:0 none;background:none;}
+#rent_step2 .inner{border:0 none;background:none;margin-top:10px;}
+#rent_step2 .inner .uncollapse{margin-bottom:10px;}
 #new_tenant{padding-right:20px;}
 
 #sl-edit-tabs{margin-bottom:18px;margin-top:4px;overflow:hidden;}
