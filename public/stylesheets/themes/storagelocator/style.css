@@ -1183,7 +1183,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 .year{margin-right:10px;width:20px;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
-#rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:24px;}
+#rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
 .map_flow_step{height:395px;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
@@ -1763,7 +1763,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_steps .state_field .state{width:100px;}
 #rent_steps .zip_field label{width:20px;}
 .rental_form .size_picker .size_details{color:#4c4bcc;font-size:13px;font-weight:bold;}
-.rental_form #paid_until{font-size:120%;}
+.rental_form #paid_until{font-size:120%;height:16px;}
 .rental_form #paid_until .paid_through{display:block;padding-top:2px;}
 .rental_form #price{margin:3px 0 0;width:120px;}
 #rent_step2 .agree a{font-size:12px;}
