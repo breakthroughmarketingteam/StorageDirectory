@@ -1857,7 +1857,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td.miscinfo{width:125px;}
 #sl-edit-tabs #fac_reports #leads table tbody tr td.miscinfo a{font-size:11px;}
 #sl-edit-tabs #fac_reports #leads form{margin-bottom:10px;float:right;}
-#request_review form,#request_review p{margin-left:20px;margin-right:20px;}
+#request_review form,#request_review p,#list_reviews p{margin-left:20px;margin-right:20px;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
 #admin-l-col{margin-top:15px;}

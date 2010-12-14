@@ -26,7 +26,7 @@
 						</div>
 						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
 							<span class="type"><%= type %>:</span>
-							<span class="price"><%= size ? number_to_currency(size.dollar_price) : '-' %></span>
+							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "•&nbsp;&nbsp;&nbsp;&nbsp;" %></span>
 						</label>
 					</li>
 				<% end %>

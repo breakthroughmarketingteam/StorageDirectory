@@ -96,6 +96,12 @@ class ApplicationController < ActionController::Base
     @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
   end
   
+  def default_url_options(options)
+    host = request.host
+    host << ":#{request.port}" if request.port != 80
+    { :host => host }
+  end
+  
   # keep a clean home URL by redirecting to the main page
   def clean_home_url
     redirect_to(home_page) and return if request.path == '/'

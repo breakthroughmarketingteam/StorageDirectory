@@ -1,5 +1,6 @@
 class TenantsController < ApplicationController
   
+  before_filter :require_ssl, :only => :create
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   

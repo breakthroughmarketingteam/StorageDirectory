@@ -30,8 +30,9 @@ class ListingsController < ApplicationController
     
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
-    
-      if Search.diff? @search, @new_search
+      different = Search.diff? @search, @new_search
+      
+      if different
         @new_search.save
         @search.add_child @new_search
         @search = @new_search
@@ -45,8 +46,8 @@ class ListingsController < ApplicationController
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     
-      # updates the impressions only for listings on current page
-      @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
+      # updates the impressions only for listings on current page if the search has changed
+      @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser') if different
     
       respond_to do |format|
         format.html {}

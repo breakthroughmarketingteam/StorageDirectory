@@ -9,7 +9,7 @@
 		<div id="advanced_opts">
 			<div id="type_select">
 				<%= f.label :storage_type, 'Type:', :class => 'auto' %>
-				<%= f.select :storage_type, @facility_features, :selected => @search.storage_type, :class => 'auto' %>
+				<%= f.select :storage_type, (@facility_features | [['Truck Rentals', 'Truck'], ['Moving Companies', 'Moving']]), :selected => @search.storage_type, :class => 'auto' %>
 			</div>
 			
 			<% if is_self_storage_search? %>

@@ -380,7 +380,7 @@ $(document).ready(function() {
 	
 	// user tips page
 	$('a', '#tips_sort').live('click', function() {
-		$('a', '#tips_sort').removeClass('up').removeClass('down')
+		$('a', '#tips_sort').removeClass('up').removeClass('down');
 		var $this = $(this),
 			sort_what = $this.text(),
 			tips = $('.blog-lock', '#tips-wrap');
@@ -1708,7 +1708,7 @@ $.preload_us_map_imgs = function() {
 	});
 }
 
-// uses a jquery plugin sortElement
+// uses the jquery plugin sortElement
 var tip_sort_inverse = false;
 $.sort_tips = function(sort_link, tips, sortFunc) {
 	sort_link.addClass(tip_sort_inverse ? 'down' : 'up');

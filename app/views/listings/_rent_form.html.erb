@@ -8,7 +8,7 @@
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
-				<% form_for Rental.new, :html => { 'data-pr' => (listing.prorated ? 1 : 0) } do |f| %>
+				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (listing.prorated ? 1 : 0) } do |f| %>
 					<div class="inner">
 						<div class="col1">
 							<div>
@@ -118,7 +118,7 @@
 
 			<div id="rent_step2" class="workflow_step">
 				<div class="inner">
-					<% form_for Tenant.new, :html => { :class => 'silent' } do |f| %>
+					<% form_for Tenant.new, :url => tenants_url(:protocol => 'https'), :html => { :class => 'silent' } do |f| %>
 						<div class="uncollapse">
 							<h4 class="stack left">Renter Information</h4>
 							<%= link_to 'Already have an account?', login_path, :id => 'already_member', :class => 'right' %>

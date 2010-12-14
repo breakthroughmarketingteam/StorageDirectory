@@ -1104,6 +1104,7 @@ $.fn.rental_form = function() {
 					$('#processing_rental .flash', wizard.workflow).remove();
 					wizard.form_data += '&'+ form.serialize();
 					
+					return false;
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
 							$('#rental_complete', wizard.workflow).show();

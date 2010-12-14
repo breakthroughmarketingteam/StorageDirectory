@@ -262,6 +262,30 @@ module ListingsHelper
     html
   end
   
+  def listing_sort_class(sort_by)
+    classes = 'list_sort'
+    if @search.sorted_by == sort_by
+      classes << ' active '
+      classes << (@search.sort_reverse == '+' ? 'up' : 'down')
+    end
+    classes
+  end
+  
+  def friendly_sorted_by_label
+    if @search.sorted_by.blank?
+      html = "Your <span id='sorted_by'>most relevant</span> #{@search.storage_type} is being displayed first"
+    else
+      case @search.sorted_by when 'name'
+        html = "Displaying results in <span id='sorted_by'>alphabetical</span> order #{@search.sort_reverse == '-' ? 'in reverse Z-A' : 'A-Z'}"
+      when 'distance'
+        html = "The <span id='sorted_by'>#{@search.sort_reverse == '-' ? 'farthest' : 'closest'}</span> facility is being displayed first"
+      when 'price'
+        html = "The <span id='sorted_by'>#{@search.sort_reverse == '-' ? 'cheapest' : 'most expensive'}</span> facility is being displayed first"
+      end
+    end
+    html
+  end
+  
   def if_tabs_empty_text
     '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
   end

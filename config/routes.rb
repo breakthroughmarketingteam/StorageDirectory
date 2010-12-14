@@ -31,6 +31,9 @@ ActionController::Routing::Routes.draw do |map|
     eval "map.#{type.gsub(' ', '_').downcase} '/#{type.parameterize}/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => '#{type}'"
   end
   
+  map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck'
+  map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving'
+  
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.tenant_activate '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
   map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
@@ -63,7 +66,6 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :reservations
     listing.resources :rentals
     listing.resources :reviews
-    listing.resources :web_specials
     listing.resources :facility_features
     listing.resources :business_hours
   end
@@ -131,7 +133,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :galleries
   map.resources :images
   map.resources :size_icons
-  map.resources :virtual_models
   map.resources :links
   map.resources :link_groups
   map.resources :helptexts
