@@ -23,7 +23,7 @@
 			
 							<div>
 								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
-								<span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span>
+								<div id="price"><span>$</span><span class="rental_rate"><%= size.dollar_price if size %></span><span>/month</span></div>
 							</div>
 			
 							<div class="calendar_wrap">
@@ -47,9 +47,9 @@
 												<li>
 													<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
 													<%= f.label "special_id_#{special.id}", special.title %>
+													<%= link_to '<img src="/images/ui/storagelocator/remove.png">', '#', :class => 'remove_special hidden' %>
 												</li>
 											<% end %>
-											<li><%= link_to 'Remove Special', '#', :id => 'remove_special', :class => 'note' %>
 										</ul>
 									</div>
 								</div>
