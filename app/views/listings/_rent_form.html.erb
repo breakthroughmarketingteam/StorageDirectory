@@ -47,7 +47,7 @@
 												<li>
 													<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
 													<%= f.label "special_id_#{special.id}", special.title %>
-													<%= link_to '<img src="/images/ui/storagelocator/remove.png">', '#', :class => 'remove_special hidden' %>
+													<%= link_to image_tag('/images/ui/storagelocator/remove.png'), '#', :class => 'remove_special hide' %>
 												</li>
 											<% end %>
 										</ul>

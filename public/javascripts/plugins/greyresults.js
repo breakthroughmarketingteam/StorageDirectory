@@ -1223,7 +1223,7 @@ $.fn.rental_form = function() {
 	
 	return this.each(function() {
 		var form 		 = $(this),
-			remove_special = $('#remove_special', form).hide(),
+			remove_special = $('.remove_special', form).hide(),
 			prorated	 = (form.attr('data-pr') == '1' ? true : false),
 			type_select  = $('select[name=unit_type]', form),
 			unit_type 	 = type_select.val().toLowerCase(),
@@ -1267,7 +1267,13 @@ $.fn.rental_form = function() {
 		});
 		
 		$('input[name="rental[special_id]"]', form).click(function() {
-			if (remove_special.is(':hidden')) remove_special.fadeIn();
+			var $this = $(this);
+			
+			if ($this.is(':checked')) {
+				remove_special.hide();
+				$this.siblings('.remove_special').show();
+			}
+			
 			form.trigger('recalc');
 		});
 		
@@ -1276,9 +1282,7 @@ $.fn.rental_form = function() {
 		});
 		
 		remove_special.click(function() {
-			var $this = $(this);
-			$(':radio:checked', $this.parents('ul')).attr('checked', false);
-			$this.fadeOut();
+			$(this).hide().siblings('input').attr('checked', false);
 			form.trigger('recalc');
 			return false;
 		});
