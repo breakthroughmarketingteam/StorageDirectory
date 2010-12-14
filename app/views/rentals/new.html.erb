@@ -1,0 +1,211 @@
+<div class="rental_form">
+	<h2>Rent a Unit</h2>
+	<div class="realtime">Real-Time Storage Unit Rentals</div>
+	<div class="head">
+		Use this form to rent a unit from <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> and take advantage of their <span>Online Specials</span>.
+	</div>
+	
+	<div id="rent_steps">
+		<div class="items">
+			<div id="rent_step1" class="workflow_step">
+				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (@listing.prorated ? 1 : 0) } do |f| %>
+					<div class="inner">
+						<div class="col1">
+							<div>
+								<%= label_tag :unit_type, 'Type: ', :class => 'block left' %>
+								<%= select_tag :unit_type, option_tags(@listing.unit_types_for_select, (@size && @size.title)), :class => 'required' %>
+							</div>
+			
+							<div>
+								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
+								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.available_sizes, (@size ? @size.dims : get_search.unit_size), :class => 'required sizes_select' %>
+							</div>
+			
+							<div>
+								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
+								<div id="price"><span>$</span><span class="rental_rate"><%= @size.dollar_price if @size %></span><span>/month</span></div>
+							</div>
+			
+							<div class="calendar_wrap">
+								<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %>
+								<%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
+							</div>
+			
+							<div id="paid_until">
+								<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
+								<span class="paid_through"></span>
+								<%= f.hidden_field :duration, :value => 1 %>
+								<%= f.hidden_field :listing_id, :value => @listing.id %>
+							</div>
+			
+							<% unless @listing.specials.empty? %>
+								<div>
+									<%= label_tag 'Specials: ', nil, :class => 'block left' %>
+									<div class="avail_specials">
+										<ul>
+											<% @listing.specials.each do |special| %>
+												<li>
+													<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
+													<%= f.label "special_id_#{special.id}", special.title %>
+													<%= link_to image_tag('/images/ui/storagelocator/remove.png'), '#', :class => 'remove_special hide' %>
+												</li>
+											<% end %>
+										</ul>
+									</div>
+								</div>
+							<% end %>
+						</div>
+	
+						<div class="col2">
+							<div class="size_picker">
+								<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+								<p class="size_details">
+									<%= @size ? @size.title : nil %>
+									<%= @size ? @size.dims : get_search.unit_size %>
+								</p>
+							</div>
+						</div>
+	
+						<div class="col3">
+							<ul>
+								<li>
+									Rent: 
+									<span class="grey">
+										(<span class="dur"></span> x 
+										$<span class="rental_rate"></span>)
+									</span> 
+									<span class="subtotal right">
+										$<span></span>
+									</span>
+								</li>
+								<li class="admin_fee">
+									Admin Fees: 
+									<span class="right">
+										$<span><%= sprintf "%.2f", @listing.admin_fee %></span>
+									</span>
+								</li>
+								<% unless @listing.specials.empty? %>
+									<li class="discount">Specials: 
+										<span class="right">
+											-$<span></span>
+										</span>
+									</li>
+								<% end %>
+								<li class="special_discount">
+									USSSL Discount: 
+									<span class="right">
+										-$<span></span>
+									</span>
+								</li>
+								<li class="tax" data-tax="<%= @listing.tax_rate %>">
+									Tax: 
+									<span class="right">
+										$<span></span>
+									</span>
+								</li>
+								<li><hr /></li>
+								<li class="total">
+									Move-In Total: 
+									<span class="right">
+										$<span>0.00</span>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				<% end %>
+			</div>
+
+			<div id="rent_step2" class="workflow_step">
+				<div class="inner">
+					<% form_for Tenant.new, :url => tenants_url(:protocol => 'https'), :html => { :class => 'silent' } do |f| %>
+						<div class="uncollapse">
+							<h4 class="stack">Renter Information</h4>
+							<%= link_to 'Already have an account?', login_path(), :id => 'already_member' %>
+						</div>
+						
+						<div class="left">
+							<div>
+						        <%= f.label :name, 'Your Name:', :class => 'block' %> 
+								<%= f.text_field :name, :class => 'required' %>
+							</div>
+							<div>
+						        <%= f.label :email, 'Email:', :class => 'block' %> 
+								<%= f.text_field :email, :class => 'required email' %>
+								<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
+							</div>
+							
+							<% f.fields_for :billing_infos, BillingInfo.new do |bf| %>
+								<div>
+							        <%= bf.label :phone, 'Phone:', :class => 'block' %> 
+									<%= bf.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %>
+								</div>
+								<div>
+							        <%= bf.label :address, 'Address:', :class => 'block', :id => 'address' %> 
+									<%= bf.text_field :address, :class => 'required' %>
+								</div>
+								<div>
+							        <%= bf.label :city, 'City:', :class => 'block' %> 
+									<%= bf.text_field :city, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+								</div>
+								<div class="uncollapse">
+									<div class="state_field">
+										<%= bf.label :state, 'State:', :class => 'block' %> 
+										<%= bf.select :state, States.names, {}, :class => 'state required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+									</div>
+									<div class="zip_field">
+								        <%= bf.label :zip, 'Zip:', :class => 'block' %> 
+										<%= bf.text_field :zip, :class => 'zip required', :maxlength => 5 %>
+									</div>
+								</div>
+						</div>
+						<div class="right">
+								<div class="stack">
+							        <%= bf.label :card_type, 'Card Type:', :class => 'block' %> 
+									<%= bf.select :card_type, BillingInfo.credit_cards, :class => 'required' %>
+								</div>
+								<div>
+							        <%= bf.label :card_number, 'Card Number:', :class => 'block' %> 
+									<%= bf.text_field :card_number, :class => 'required credit_card' %>
+								</div>
+								<div>
+									<%= bf.label :ccv, 'CVV:', :class => 'block' %> 
+									<%= bf.text_field :ccv, :class => 'cvv required', :maxlength => 4 %>
+								</div>
+								<div>
+							        <%= bf.label :expires_month, 'Expires:', :class => 'block' %>
+									<%= bf.text_field :expires_month, :class => 'month required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>/ 
+									<%= bf.text_field :expires_year, :class => 'year required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %> mm/yy
+								</div>
+								<div class="agree">
+									<%= check_box_tag 'agree', 1, false, :class => 'required' %>
+									<%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
+								</div>
+							<% end %>
+							
+							<%= f.submit 'Save', :class => 'hide' %>
+							<div class="verisign"><span class="hidden">Verisign Secure</span></div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+			
+			<div id="rent_step3" class="workflow_step">
+				<div class="inner">
+					<div id="processing_rental" class="conf">
+						<%= ajax_loader 'ajax-loader-long-green.gif' %>
+					</div>
+					
+					<div id="rental_complete" class="hide conf">
+						DONE!
+					</div>
+				</div>
+			</div>
+		</div> <!-- /.items -->
+
+		<div id="workflow_nav">
+			<a href="#back" class="back button">Back</a>
+			<a href="#next" class="next button">Next</a>
+		</div>
+	</div>
+</div>

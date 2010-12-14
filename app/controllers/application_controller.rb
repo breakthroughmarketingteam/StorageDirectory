@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
   
   include UtilityMethods
   include Geokit
+  include SslRequirement
   
   # for the SharedModelMethod module
   # TODO: move this into a theme config or something since not all layouts have all regions

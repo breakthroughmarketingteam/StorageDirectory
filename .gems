@@ -8,3 +8,4 @@ httparty
 cobravsmongoose
 dalli
 json
+ssl_requirement
