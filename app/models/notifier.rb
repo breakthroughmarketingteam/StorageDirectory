@@ -45,6 +45,12 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
+  def new_tenant_alert(tenant, rental)
+    setup_email 'customer_care@usselfstoragelocator.com', 'admin@usselfstoragelocator.com', 'New Tenant!'
+    @body[:tenant] = tenant
+    @body[:rental] = rental
+  end
+  
   def admin_reservation_alert(reserver, reservation, comments)
     setup_email 'reservations@usselfstoragelocator.com', 'notifier@usselfstorageolocator.com', 'New Reservation'
     @body[:user]        = reserver

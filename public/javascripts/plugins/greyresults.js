@@ -1099,23 +1099,28 @@ $.fn.rental_form = function() {
 				],
 				action : function(wizard) {
 					var form = $('#new_tenant', wizard.workflow),
-						ajax_loader = $('#processing_rental', wizard.workflow).show();
+						ajax_loader = $('#processing_rental .ajax_loader', wizard.workflow).show();
 					
-					console.log(ajax_loader)
+					$('#processing_rental .flash', wizard.workflow).remove();
 					wizard.form_data += '&'+ form.serialize();
 					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
-							$('#processing_rental', wizard.workflow).hide();
 							$('#rental_complete', wizard.workflow).show();
-							console.log(data);
+							$('#processing_rental', wizard.workflow).hide();
+							
+						}, function(data) { // uh oh, something failed
+							$('#processing_rental', wizard.workflow).append('<div class="flash error">'+ data.join('<br />') +'</div>');
+							$('.back', wizard.nav_bar).show();
 						});
+						
+						ajax_loader.hide();
 					});
 				}
 			}, // END slide 1
 		],
 		finish_action : function(wizard) {
-			//console.log('done')
+			wizard.workflow.parents('.panel').slideUp().removeClass('active').parents('.active').removeClass('active');
 		}
 	};
 	
@@ -1141,7 +1146,7 @@ $.fn.rental_form = function() {
 			multiplier = limit;
 		}
 		
-		$('#rental_duration', form).val(multiplier);
+		$('#rental_duration', form).val(limit);
 		paid_through.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear()).special_txt_anim();
 		return multiplier;
 	}

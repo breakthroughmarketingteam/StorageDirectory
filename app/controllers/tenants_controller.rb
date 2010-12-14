@@ -20,15 +20,13 @@ class TenantsController < ApplicationController
     @tenant = Tenant.new params[:tenant]
     @rental = @tenant.rentals.build params[:rental]
     
-    if @rental.listing
-    
     if @tenant.save_without_session_maintenance
       Notifier.deliver_tenant_notification @tenant, @rental
-      Notifier.deliver_new_tenant_alert @tenant
+      Notifier.deliver_new_tenant_alert @tenant, @rental
       
       render :json => { :success => true }
     else
-      render :json => { :success => false, :data => model_errors(@tenant) }
+      render :json => { :success => false, :data => model_errors(@tenant).uniq }
     end
   end
     
