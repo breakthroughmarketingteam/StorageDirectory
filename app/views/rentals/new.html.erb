@@ -132,7 +132,7 @@
 							<div>
 						        <%= f.label :email, 'Email:', :class => 'block' %> 
 								<%= f.text_field :email, :class => 'required email' %>
-								<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy' %></span>
+								<span class="note">We won't spam your email, <%= link_to 'honest!', '/privacy', :title => 'Privacy Policy', :rel => 'Privacy Policy', :target => '_blank' %></span>
 							</div>
 							
 							<% f.fields_for :billing_infos, BillingInfo.new do |bf| %>
