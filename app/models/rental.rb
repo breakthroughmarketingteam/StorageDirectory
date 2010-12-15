@@ -8,7 +8,7 @@ class Rental < ActiveRecord::Base
   def paid_through
     t = self.move_in_date
     t = Time.gm t.year, t.month
-    t + self.duration.months
+    t + self.duration.to_i.months
   end
   
 end
