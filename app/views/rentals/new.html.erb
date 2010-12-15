@@ -58,7 +58,7 @@
 	
 						<div class="col2">
 							<div class="size_picker">
-								<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+								<%= image_tag SizeIcon.medium_icons.first.icon.url rescue 'Missing Size Icon' %>
 								<p class="size_details">
 									<%= @size ? @size.title : nil %>
 									<%= @size ? @size.dims : get_search.unit_size %>

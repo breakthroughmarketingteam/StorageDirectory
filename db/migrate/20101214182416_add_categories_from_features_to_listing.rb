@@ -13,7 +13,11 @@ class AddCategoriesFromFeaturesToListing < ActiveRecord::Migration
       elsif listing.category =~ /(truck)/i
         features = 'truck rentals'
       else
-        features = listing.facility_features.map(&:title).reject(&:blank?).map(&:downcase).join(',')
+        begin
+          features = listing.facility_features.map(&:title).reject(&:nil?).map(&:downcase).join(',')
+        rescue => e
+          puts "\nERROR: #{e.message}\n"
+        end
       end
         
       listing.update_attribute :storage_types, features

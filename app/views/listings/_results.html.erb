@@ -1,31 +1,33 @@
-<div id="results_wrap">
-	<div class="rslt-head-txt">
-		<p>Your <span>nearest</span> self storage is being displayed first</p>
-		<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
-	</div>
+<% cache params[:search].to_s.parameterize do %>
+	<div id="results_wrap">
+		<div class="rslt-head-txt">
+			<p>Your <span>nearest</span> self storage is being displayed first</p>
+			<div class="right"><%= render :partial => 'listings/paginator' unless @listings.blank? %></div>
+		</div>
 
-	<div id="type-one-top-bar">
-		<div id="search-head">
-			<ul>
-			 	<li id="list-name"><a href=""><span class="hidden">List by </span>Facility Name</a></li>
-			 	<li id="list-miles"><a href=""><span class="hidden">List by </span>Miles</a></li>
-			 	<li id="list-size"><span class="hidden">List by </span>Size</li>
-			 	<li id="list-price"><a href=""><span class="hidden">List by </span>Price</a></li>
-				<li id="list-amenities"><span class="hidden">List by </span>Amenities</li>
-			</ul>
-		</div>
+		<div id="type-one-top-bar">
+			<div id="search-head">
+				<ul>
+				 	<li id="list-name"><a href=""><span class="hidden">List by </span>Facility Name</a></li>
+				 	<li id="list-miles"><a href=""><span class="hidden">List by </span>Miles</a></li>
+				 	<li id="list-size"><span class="hidden">List by </span>Size</li>
+				 	<li id="list-price"><a href=""><span class="hidden">List by </span>Price</a></li>
+					<li id="list-amenities"><span class="hidden">List by </span>Amenities</li>
+				</ul>
+			</div>
 		 
-		<div id="rslt-list-bg">
+			<div id="rslt-list-bg">
 			
-			<%= render :partial => 'listings/result', :collection => @listings %>
-			<% if @listings.blank? %>
-				<div class="no_results framed">
-					Sorry, that search didn't return any results. Try using less filter options.
-	        	</div>
-			<% end %>
+				<%= render :partial => 'listings/result', :collection => @listings %>
+				<% if @listings.blank? %>
+					<div class="no_results framed">
+						Sorry, that search didn't return any results. Try using less filter options.
+		        	</div>
+				<% end %>
 	
+			</div>
+	
+			<%= render :partial => 'listings/paginator' unless @listings.blank? %>
 		</div>
-	
-		<%= render :partial => 'listings/paginator' unless @listings.blank? %>
 	</div>
-</div>
+<% end %>

@@ -16,7 +16,7 @@
 				</div>
 
 				<div id="size_picker">
-					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+					<%= image_tag SizeIcon.medium_icons.first.icon.url rescue 'Missing Size Icon' %>
 				</div>
 
 				<div>
@@ -52,7 +52,7 @@
 					<p><%= label_tag 'Features:' %></p>
 
 					<div id="features">
-						<% @unit_features.each do |feature| %>
+						<% IssnUnitTypeFeature.labels.each do |feature| %>
 							<div class="selectable_wrap">
 								<div class="selectable"><%= check_box_tag 'storage_features[]', feature %></div>
 								<%= label_tag feature %>

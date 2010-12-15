@@ -1,6 +1,6 @@
 class AddIndexToListing < ActiveRecord::Migration
   def self.up
-    #add_index :listings, :category
+    add_index :listings, :category
     add_index :listings, :enabled
     add_index :listings, :title
     add_index :maps, :state
