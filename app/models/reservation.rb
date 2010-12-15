@@ -52,7 +52,7 @@ class Reservation < ActiveRecord::Base
         :name_on_card => billing_info.name,
         :number       => billing_info.card_number,
         :zip          => billing_info.zip.to_s,
-        :ccv          => billing_info.ccv.to_s,
+        :cvv          => billing_info.cvv.to_s,
         :expires => {
           :month => billing_info.expires_month,
           :year  => "20#{billing_info.expires_year}"

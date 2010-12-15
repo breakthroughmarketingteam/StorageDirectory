@@ -1349,7 +1349,7 @@ form .error p{margin:0 0 7px 0;}
 .size_picker img{float:none;}
 #distance_btns{border-bottom:1px solid #ccc;margin-left:5px;overflow:hidden;padding:12px 0 12px 0;}
 #distance_btns .uncollapse{margin:7px 0;}
-#distance_btns .radio_wrap{width:20%;float:left;border:1px solid #CCC;font-weight:bold;cursor:pointer;margin:7px 1px 7px -6px;padding:5px;background-position:15% 50%;-moz-border-radius:13px;-webkit-border-radius:13px;border-radius:13px;
+#distance_btns .radio_wrap{width:20%;float:left;border:1px solid #CCC;font-weight:bold;cursor:pointer;margin:7px 1px 7px -6px;padding:5px;background:url("/images/ui/storagelocator/checkbox.png") no-repeat 18% 59%;-moz-border-radius:13px;-webkit-border-radius:13px;border-radius:13px;
 -moz-transform: rotate(-45deg);  
 -o-transform: rotate(-45deg);  
 -webkit-transform: rotate(-45deg);  

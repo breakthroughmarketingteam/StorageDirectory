@@ -5,39 +5,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-  filter_parameter_logging /(password)|(card_number)|(csv)|(expires)/i
-  helper_method :current_user_session, 
-                :current_user,
-                :benchmark,
-                :_crud,
-                :regions,    # for blocks_model_form
-                :view_types, # for model_view_form
-                :models,     # for model_view_form
-                :view_types_dir,
-                :blocks_models,           # for the add_blocks_for helper
-                :model_blocks_for_region, # for the add_blocks_for helper
-                :rest_methods,  # for the virtual forms builder
-                :_actions,      # for the virtual forms builder
-                :_controllers,  # for the virtual forms builder
-                :_field_types,  # for the virtual forms builder
-                :_page_actions, # suggestions form
-                :_models_having_assoc,
-                :_models_with_title,
-                :_themes,  # for the site_settings form
-                :_plugins, # for the site_settings form
-                :_widgets, # for the site_settings form
-                :_user_hint_places, # client account control panel
-                :in_edit_mode?,
-                :in_mode?,
-                :user_allowed?,
-                :reject_blocks_enabled_on_this, # for the blocks_fields
-                :reject_views_enabled_on_this,  # for the blocks_fields
-                :reject_forms_enabled_on_this,  # for the blocks_fields
-                :use_scripts,
-                :get_coords,
-                :is_admin?,
-                :home_page,
-                :get_list_of_file_names
+  filter_parameter_logging /(password)|(card_number)|(cvv)|(expires)/i
+  helper_method :current_user_session, :current_user, :benchmark, :_crud, :regions, :view_types, :models, :view_types_dir, :blocks_models,           
+                :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
+                :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
+                :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
+                :is_admin?, :home_page, :get_list_of_file_names
   
   include UtilityMethods
   include Geokit
@@ -65,9 +38,8 @@ class ApplicationController < ActionController::Base
   
   $_usssl_discount = '10% Off'
   
-  # loads website title and theme, meta info, widgets and plugins
-  before_filter :load_app_config
-  
+  before_filter :ensure_domain
+  before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
   #before_filter :authorize_user
   before_filter :clean_home_url
@@ -78,7 +50,12 @@ class ApplicationController < ActionController::Base
   layout lambda { app_config[:theme] }
   
   protected # -----------------------------------------------
-  
+
+  $root_domain = 'usselfstoragelocator.com'
+  def ensure_domain
+    redirect_to $root_domain if request.env['HTTP_HOST'] != $root_domain
+  end
+
   # display full error message when logged in as an Admin
   def local_request?
     current_user && current_user.has_role?('Admin')
