@@ -560,4 +560,8 @@ module ApplicationHelper
     end
   end
   
+  def in_production?
+    RAILS_ENV == 'production' && request.host =~ /usselfstoragelocator.com/i 
+  end
+  
 end

@@ -577,7 +577,6 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						console.log(rform)
 						$('#rent_step1 form', rform).rental_form();
 					});
 				} else {
@@ -585,7 +584,6 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						console.log(rform)
 						$('#rent_step1 form').rental_form();
 					});
 				}
@@ -1255,6 +1253,12 @@ $.fn.rental_form = function() {
 		
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		$.activateSizeSelect(form);
+		$('.auto_next', '#new_tenant').autoNext();
+		
+		// pop up login form
+		$('#already_member', '#new_tenant').click(function() {
+			get_pop_up_and_do
+		});
 		
 		sizes_select.change(function() {
 			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
