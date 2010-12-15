@@ -1,4 +1,3 @@
-<% cache params[:search].to_s.parameterize do %>
 <div id="results_wrap">
 	<div class="rslt-head-txt">
 		<p>Your <span>nearest</span> self storage is being displayed first</p>
@@ -24,10 +23,9 @@
 					Sorry, that search didn't return any results. Try using less filter options.
 	        	</div>
 			<% end %>
-				
+	
 		</div>
 	
 		<%= render :partial => 'listings/paginator' unless @listings.blank? %>
 	</div>
 </div>
-<% end %>

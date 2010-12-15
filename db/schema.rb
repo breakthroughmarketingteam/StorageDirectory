@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215220840) do
+ActiveRecord::Schema.define(:version => 20101215225728) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -409,7 +409,10 @@ ActiveRecord::Schema.define(:version => 20101215220840) do
     t.string   "storage_types"
   end
 
+  add_index "listings", ["category"], :name => "index_listings_on_category"
+  add_index "listings", ["enabled"], :name => "index_listings_on_enabled"
   add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
+  add_index "listings", ["title"], :name => "index_listings_on_title"
 
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "user_id"
@@ -441,7 +444,11 @@ ActiveRecord::Schema.define(:version => 20101215220840) do
     t.string   "address2"
   end
 
+  add_index "maps", ["city"], :name => "index_maps_on_city"
+  add_index "maps", ["lat"], :name => "index_maps_on_lat"
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
+  add_index "maps", ["lng"], :name => "index_maps_on_lng"
+  add_index "maps", ["state"], :name => "index_maps_on_state"
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
@@ -541,6 +548,7 @@ ActiveRecord::Schema.define(:version => 20101215220840) do
   end
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"
+  add_index "posts", ["title"], :name => "index_posts_on_title"
 
   create_table "predef_special_assigns", :force => true do |t|
     t.integer  "predefined_special_id"
@@ -698,7 +706,9 @@ ActiveRecord::Schema.define(:version => 20101215220840) do
     t.integer  "listing_id"
   end
 
+  add_index "sizes", ["length"], :name => "index_sizes_on_length"
   add_index "sizes", ["listing_id", "price"], :name => "index_sizes_on_listing_id_and_price"
+  add_index "sizes", ["width"], :name => "index_sizes_on_width"
 
   create_table "specials", :force => true do |t|
     t.integer  "client_id"

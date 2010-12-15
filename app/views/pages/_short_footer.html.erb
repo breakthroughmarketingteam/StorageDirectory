@@ -1,4 +1,3 @@
-<% cache 'short_footer' do %>
 <hr />
 <div id="footer_btm">
 	<div id="wrapper1">
@@ -12,12 +11,14 @@
 				<div class="prev"></div>
 				<div class="in">
 					<div class="items">
-						<% @ad_partners.in_groups_of 6, false do |group| %>
-							<div class="left">
-								<% group.each do |ad_partner| %>
-									<%= render ad_partner %>
-								<% end %>
-							</div>
+						<% cache @ad_partners.map(&:cache_key).join(',') do %>
+							<% @ad_partners.in_groups_of 6, false do |group| %>
+								<div class="left">
+									<% group.each do |ad_partner| %>
+										<%= render ad_partner %>
+									<% end %>
+								</div>
+							<% end %>
 						<% end %>
 					</div>
 				</div>
@@ -39,9 +40,12 @@
 			</div>
 		</div>
 		
+		
 		<div id="top_cities">
 			<p><strong>Most Popular Self Storage Cities <%= "in #{States.name_of @search.state}" if in_mode? 'locator' %></strong></p>
-			<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@search.state) : Map.top_cities %>
+			<% cache "Listings-#{Listing.count}" do %>
+				<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@search.state) : Map.top_cities %>
+			<% end %>
 		</div>
 		
 		<div id="wrapper2">
@@ -62,4 +66,3 @@
 		
 	</div>
 </div>
-<% end %>
