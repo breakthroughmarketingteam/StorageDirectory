@@ -1094,7 +1094,7 @@ $.fn.rental_form = function() {
 			{
 				div_id  : 'rent_step3',
 				nav_vis : [
-					['next', function(btn, wizard) { btn.text('Done').fadeIn() }],
+					['next', 'fadeOut'],
 					['back', 'fadeOut']
 				],
 				action : function(wizard) {
