@@ -371,7 +371,7 @@ li.map-plus a{width:22px;}
 #type-one-top-bar hr{border-color:#CCCCCC -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;}
 #add-fac-head-in h2{font-size:28px;font-weight:bold;left:20px;line-height:36px;width:450px;}
 #info-in h2{font-size:28px;font-weight:bold;line-height:36px;}
-.green-head .inner p{font-size:12px;margin-top:10px;color:#666;position:relative;line-height:1.4;}
+.green-head .inner p{font-size:12px;margin-top:10px;color:#333;position:relative;line-height:1.4;}
 .sub-head-txt{color:#fff;font-size:100%;font-weight:bold;text-shadow:1px 1px 0px #333;position:relative;left:20px;top:-3px;padding-bottom:10px;}
 #city-box{width:197px;color:#555;text-align:center;margin-bottom:20px;}
 #city-box-in{width:163px;background:url(/images/ui/storagelocator/city-list-box-bg.png) no-repeat top left;position:relative;left:20px;top:17px;}
@@ -1660,7 +1660,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
 
 .edit_action img#listing_img, .show_action img#listing_img{border:4px solid #fff;height:129px;width:174px;}
-.edit_action .clogo, .show_action .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
+.edit_action .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
 #feat-list .clogo{border:1px solid #666;}
 .show_action a.dlogo_wrap span{display:block;line-height:24px;margin-left:4px;padding:5px;top:20px;width:164px;}
 #ov-units .clogo,#ov-units .dlogo_wrap{float:left;height:77px;margin:10px;width:102px;}
