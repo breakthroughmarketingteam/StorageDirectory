@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
 
   $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
-    redirect_to $root_domain if request.env['HTTP_HOST'] != $root_domain
+    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
   end
 
   # display full error message when logged in as an Admin
