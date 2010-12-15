@@ -883,6 +883,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .unit_detail .size_display{margin-right:10px;}
 .unit_detail .month_rate{}
 .panel{width:auto;overflow:hidden;display:none;cursor:default;background:#fff;position:relative;z-index:600;border-top:0 none;}
+.home_action .panel{background:none repeat scroll 0 0 #fff;border-bottom:1px solid #ccc;border-top:0 none;cursor:default;display:none;overflow:hidden;position:relative;width:auto;z-index:600;}
 .panel .inner{height:72%;padding:13px 16px;overflow:hidden;position:relative;}
 .panel .inner_box{padding:13px 16px;}
 .panel #map_partial{height:auto;overflow:hidden;background:#f2f5fe;}
@@ -1147,7 +1148,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #workflow_steps,#issn_steps,#rent_steps{overflow:hidden;position:relative;}
-#rent_steps{height:331px;background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;}
+#rent_steps{background:url(/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;height:332px;}
 #rent_steps hr{border:none;}
 #rent_steps #rent_step2 input{margin-bottom:10px;width:200px;}
 #rent_steps #rent_step2 input.state{width:50px;}
@@ -1184,7 +1185,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
-.panel iframe{height:375px;margin-bottom:-4px;overflow:hidden;width:100%;}
+.panel iframe{height:376px;margin-bottom:-4px;overflow:hidden;width:100%;}
 .map_flow_step{height:395px;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
@@ -1773,7 +1774,12 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_steps .remove_special img{float:none;}
 
 #rent_step3 #processing_rental{font-size:22px;margin-top:120px;text-align:center;}
-
+#rental_complete{}
+#rental_complete h4{font-size:22px;margin:10px 0 15px;}
+#rental_complete p{font-size:12px;margin-bottom:10px;}
+#rental_complete #rental-info{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#fff;border:1px solid #ccc;margin-top:20px;padding:15px 20px 5px;width:50%;}
+#rental_complete #rental-info p{margin-bottom:10px;}
+#rental_complete #rental-info span{color:#4c4bcc;}
 
 .panel .rental_form,.sl-table-wrap .rental_form{border-color:-moz-use-text-color -moz-use-text-color #ccc;border-style:none none solid;border-width:medium medium 1px;margin-top:0;}
 .panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
