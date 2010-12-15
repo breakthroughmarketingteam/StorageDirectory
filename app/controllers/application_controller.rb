@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
     @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
   end
   
-  def default_url_options(options)
+  def default_url_options(options = nil)
     host = request.host
     host << ":#{request.port}" if request.port != 80
     { :host => host }
