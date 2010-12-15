@@ -1068,14 +1068,14 @@ $.fn.rental_form = function() {
 			{
 				div_id  : 'rent_step1',
 				nav_vis : [
-					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
+					['next', function(btn, wizard) { btn.text('Next').fadeIn() }],
 					['back', 'fadeOut'] 
 				]
 			}, // END slide 1
 			{
 				div_id  : 'rent_step2',
 				nav_vis : [
-					['next', 'fadeIn'],
+					['next', function(btn, wizard) { btn.text('Rent It!') }],
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
