@@ -1,0 +1,8 @@
+<form action="" method="" class="issn_enable_opts">
+	<p>Supported Property Management Systems: <%= select_tag 'pm_software', option_tags($_pm_softwares, nil, 'Choose Your System'), :class => 'required' %></p>
+
+	<p class="framed">
+		<%= check_box_tag 'agree', true, false, :class => 'required' %>
+		<%= label_tag 'agree', 'I agree' %>
+	</p>
+</form>

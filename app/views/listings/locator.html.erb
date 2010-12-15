@@ -1,0 +1,52 @@
+<% declare_content_for unless request.xhr? %>
+
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
+	
+	<img src="/images/ui/storagelocator/discount.png" alt="Discount" id="disocunt_pic" />
+	
+	<p class="hhh">
+		You're looking at a revolution in getting things done quickly and easily. The ease of online shopping and comparison has finally made it to the <strong>self storage business</strong>. Now finding and getting the best deals 
+		in self storage units and features is easier than ever. Search from hundreds of facilities ranging from self storage to car storage to wine storage - in the size and price you want. We do all the work for you
+		and offer you a discount for any unit you rent through USSelfStorageLocator.com. 
+	</p>
+	
+	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>"></div>
+
+	<div id="results_wrap">
+		<div class="rslt-head-txt">
+			<% if @listings && !@listings.empty? %>
+				<h2><%= locator_header %></h2>
+				<p><%= friendly_sorted_by_label %></p>
+			<% else %>
+				<h2 class="no_results">Couldn't find any listings, try widening your search</h2>
+			<% end %>
+		</div>
+
+		<div id="type-one-top-bar">
+			<% if @listings && !@listings.empty? %>
+				<div id="search-head">
+					<ul>
+					 	<li id="list-name" class="sorter">
+							<%= link_to '<span class="hide">List by </span>Facility Name', '#sort-name', :class => listing_sort_class('name'), 'data-sorted_by' => 'name', 'data-sort_reverse' => @search.sort_reverse %>
+						</li>
+					 	<li id="list-miles" class="sorter">
+							<%= link_to '<span class="hide">List by </span>Miles', '#sort-distance', :class => listing_sort_class('distance'), 'data-sorted_by' => 'distance', 'data-sort_reverse' => @search.sort_reverse %>
+						</li>
+					 	<li id="list-size"><span class="hide">List by </span>Size</li>
+					 	<li id="list-price" class="sorter">
+							<%= link_to '<span class="hide">List by </span>Price', '#sort-price', :class => listing_sort_class('price'), 'data-sorted_by' => 'price', 'data-sort_reverse' => @search.sort_reverse %>
+						</li>
+						<li id="list-amenities"><span class="hide">List by </span>Amenities</li>
+					</ul>
+				</div>
+
+				<div id="rslt-list-bg">
+					<%= render :partial => 'listings/result', :collection => @listings %>
+				</div>
+
+				<%= render :partial => 'listings/paginator' %>
+			<% end %>
+		</div>
+	</div>
+</div>

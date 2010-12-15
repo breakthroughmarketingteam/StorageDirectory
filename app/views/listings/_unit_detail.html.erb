@@ -1,0 +1,15 @@
+<div class="unit_detail_in">
+	<div class="left">
+		<% if listing.special %>
+			Special: <span class="special_txt" title="<%= listing.special.description %>"><%= listing.special.title %></span>
+		<% end %>
+	</div>
+	
+	<% if @listings.select(&:premium?).size > 1 %>
+		<div class="compare" title="Select 2 or more to compare">
+			<%= link_to 'Click here to compare', compare_listings_path, :class => 'hide' %>
+			<%= label_tag "compare_#{listing.id}", 'Compare' %>
+			<input type="checkbox" value="<%= listing.id %>" name="compare" id="compare_<%= listing.id %>" />
+		</div>
+	<% end %>
+</div>

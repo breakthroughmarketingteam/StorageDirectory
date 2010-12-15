@@ -1,0 +1,49 @@
+<% declare_content_for %>
+<%= content_for :stylesheets, ajaxful_rating_style %>
+<%= display_message flash %>
+
+<div class="staticContent">
+	<h1 class="hidden">Self Storage Facility: <%= @listing.title.titleize %></h1>
+	<a name="top" id="top"></a>
+
+	<div id="type-one-r-col">
+	  <div id="type-three-r-col-in">
+
+	    <% unless in_mode?('show') && (@listing.available_sizes.empty? && @listing.pictures.empty?) %>
+	        <div id="sl-tabs">
+	          <div id="sl-tabs-in" class="tabular_content">
+	            <ul id="sl-tabs-nav" class="tabular">
+	                <%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
+	                <%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless @listing.available_sizes.empty? %>
+	                <% if @listing.premium? %><div id="sl-phone"><%= "Call #{@listing.tracked_number}" if @listing.tracked_number %></div><% end %>
+	            </ul>
+	            <!-- tab content -->
+	            <%= render :partial => 'overview' %>
+	            <%= render :partial => 'sizes' unless @listing.available_sizes.empty? %>
+	          </div>
+	        </div>
+	    <% end %>    
+
+        <div id="outer_map">
+			<div id="pl" class="dp">
+				<h3><%= @listing.title %></h3>
+				<p><%=h @listing.description %></p>
+			</div>
+			<div id="street_view" data-coords="<%= "#{@listing.lat},#{@listing.lng}" %>"></div>
+            <%= render :partial => 'big_map', :locals => { :listing => @listing, :coords => "#{@listing.lat},#{@listing.lng}"} %>
+        </div>
+        <%= print_link '#outer_map', '#', :id => 'single_print' %>
+
+	    <div id="listing_extras">
+	        <div id="sl-extra">
+				
+	        </div>
+	    </div>
+		
+		<% unless @listing.premium? %>
+			
+		<% end %>
+		
+	  </div>
+	</div>
+</div>

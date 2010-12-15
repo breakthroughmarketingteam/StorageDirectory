@@ -1,0 +1,77 @@
+<% form_for @reservation, :html => { :id => 'reservation_form2', :class => 'less_verbose' } do |f| %>
+	<h4>Lock In This Rate</h4>
+
+	<div id="cost_display" class="sl-table-exp-form-l">
+		<% if @reservation.listing.web_special %>
+			<p><span class="block left w100 bold"><%= @reservation.listing.web_special.label %>: </span> <%= @reservation.listing.web_special.title %></p>
+		<% end %>
+		
+		<% if @reservation.size %>
+			<p><span class="block left w100 bold">Unit Size: </span> <%= @reservation.unit_size %></p>
+		<% end %>
+
+		<p><span class="block left w100 bold">Monthly Rate: </span><%= number_to_currency @reservation.size.dollar_price %></p>
+		<p>
+			<strong class="darkgreen">You Only Pay:</strong><br />
+			<span class="block left w100 bold">Deposit:</span> <%= number_to_currency @reservation.fee %>
+		</p>
+	</div>
+
+	<div class="sl-table-exp-form-r">
+		<% if @reservation.listing.web_special %>
+		<p>
+		This special discount will be applied at move in.
+		</p>
+		<% end %>
+		<p>
+		The deposit is a one time fee you pay to reserve this unit. It is charged to your credit card when you finish your reservation and goes toward your move-in costs. 		
+		</p>
+	</div>
+	
+	<h4 class="clear">Billing Info</h4>
+	
+	<div class="sl-table-exp-form-l">
+		<p>
+	        <%= label_tag 'billing_info[name]', 'Name', :class => 'block' %> <%= text_field_tag 'billing_info[name]', @reserver.name, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[phone]', 'Phone', :class => 'block' %> <%= text_field_tag 'billing_info[phone]', @reserver.mailing_address.phone, :class => 'required', :maxlength => 13 %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[address]', 'Address', :class => 'block' %> <%= text_field_tag 'billing_info[address]', @reserver.mailing_address.address, :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[city]', 'City', :class => 'block' %> <%= text_field_tag 'billing_info[city]', @reserver.mailing_address.city, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+		</p>
+		<div class="uncollapse">
+			<p class="state_field">
+				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+			</p>
+			<p class="zip_field">
+		        <%= label_tag 'billing_info[zip]', 'Zip', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required', :maxlength => 5 %>
+			</p>
+		</div>
+	</div>
+	
+	<div class="sl-table-exp-form-r">
+		<p>
+	        <%= label_tag 'billing_info[card_type]', 'Card Type', :class => 'block' %> <%= select_tag 'billing_info[card_type]', option_tags(['Visa', 'Amex', 'MasterCard', 'Discover']), :class => 'required' %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[card_number]', 'Card Number', :class => 'block' %> <%= text_field_tag 'billing_info[card_number]', nil, :class => 'required' %>
+		</p>
+		<p>
+			<%= label_tag 'billing_info[ccv]', 'CCV', :class => 'block' %> <%= text_field_tag 'billing_info[ccv]', nil, :class => 'required', :maxlength => 4 %>
+		</p>
+		<p>
+	        <%= label_tag 'billing_info[expires_month]', 'Expires', :class => 'block' %>
+			<%= text_field_tag 'billing_info[expires_month]', nil, :class => 'required tiny_text_field left hintable', :title => 'MM', :maxlength => 2 %>
+			<%= text_field_tag 'billing_info[expires_year]', nil, :class => 'required tiny_text_field  hintable', :title => 'YY', :maxlength => 2 %>
+		</p>
+		<p>
+			<%= check_box_tag 'agree', 1, false, :class => 'required' %> <%= label_tag 'agree', "I agree to the #{link_to 'Terms of Service', '#', :class => 'tos' }" %>
+		</p>
+	</div>
+	
+	<p class="verisign"><span class="hidden">Verisign Secure</span></p>
+<% end %>

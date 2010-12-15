@@ -1,0 +1,57 @@
+<div class="stack">
+	<fieldset>
+	
+		<div class="uncollapse stack">
+			<%= f.label :title %>
+			<div class="shadow_wrap">
+				<%= f.text_field :title, :class => 'required' %>
+			</div>
+		</div>
+
+		<div class="stack">
+			<%= f.label :description %>
+			<div class="shadow_wrap">
+				<%= f.text_area :description, :class => 'small_textarea' %>
+			</div>
+		</div>
+
+		<div class="stack">
+			<%= f.label :url %>
+			<div class="shadow_wrap">
+				<%= f.text_field :url, :class => 'required hintable', :title => 'Ad URL' %>
+			</div>
+		</div>
+		
+		<div class="stack imgfield">
+			<%= link_to 'Upload image', '#slideDown_.adupload_.imgfield', :class => "toggle_action toggle_right#{ ' toggle_down' unless @ad_partner.image_file_size.blank? }" %>
+			<div class="framed adupload<%= ' hide' if @ad_partner.image_file_size.blank? %>">
+				<%= f.file_field :image %>
+			</div>
+		</div>
+		
+		<div class="stack imgurl">
+			<%= link_to 'Or use image url', '#slideDown_.adimgurl_.imgurl', :class => "toggle_action toggle_right#{ ' toggle_down' unless @ad_partner.image_file_name.blank? }" %>
+			<div class="framed adimgurl<%= ' hide' if @ad_partner.image_file_name.blank? %>">
+				<%= f.text_field :image_file_name, :class =>'hintable', :title => 'http://somedomain.com/path/to/the/img.jpg' %>
+			</div>
+		</div>
+		
+		<div class="stack">
+			<%= f.label :html_attributes %>
+			<div class="shadow_wrap">
+				<%= f.text_area :html_attributes, :class => 'small_textarea hintable', :title => '{ :attribute => "value", ... }' %>
+			</div>
+		</div>
+		
+		<div class="uncollapse">
+			<%= f.label :enabled, nil, :class => 'left right_space' %>
+			<div class="left right_space">
+				<%= f.radio_button :enabled, true %>Yes
+			</div>
+			<div class="left right_space">
+				<%= f.radio_button :enabled, false %>No
+			</div>
+		</div>
+		
+	</fieldset>
+</div>

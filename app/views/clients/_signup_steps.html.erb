@@ -1,0 +1,135 @@
+<div id="workflow_steps">
+	<div class="items">
+		<div id="signupstep_2" class="workflow_step">
+			<div class="left">
+				<h3>Choose Your Facility.</h3> 
+				<p>We’ve found some facilities in our database that might belong to you. Please select any that apply to add them to your account. You’ll be able to edit the details for each facility once you complete the signup process.</p>
+				<img src="/images/ui/storagelocator/step1a.png"/>
+			</div>
+		
+			<div class="found_box">
+				<p class="display">We found <span></span> facilities that might belong to you.</p>
+				<div class="small_listings"></div>
+			</div>
+		
+			<div class="hidden listing_div selectable">
+				<div class="left block num"></div>
+			  	<div class="listing_in">
+	  				<p class="listing_title"></p>
+	  				<p class="listing_address"></p>
+	  				<div class="check"><span><input type="checkbox" class="hidden" name="listing_id" value="" /></span></div>
+	  			</div>
+			</div>
+		
+		</div> <!-- END step 2 -->
+
+		<div id="signupstep_3" class="workflow_step">
+		
+			<div class="intro">
+				<h3>Great! Now enter your contact information.</h3> 
+				<p>This name and address will be used on your main Administrator Account, you'll have full access to all the facilities added to this account.</p>
+			</div>
+		
+		    <form action="" method="" id="contact_info_form" class="silent">
+				<div class="left">
+					<p>
+						<label>First Name:</label><br />
+						<input type="text" id="first_name" name="first_name" class="required" />
+					</p>
+					<p>	
+						<label>Last Name:</label><br />
+						<input type="text" id="last_name" name="last_name" class="required" />
+					</p>	
+					<p>
+						<label>Facility Address (Line 1):</label><br />
+						<input type="text" id="listing_address" name="listing_address" class="required" />
+					</p>
+					<p>
+						<label>Facility Address (Line 2):</label><br />
+						<input type="text" id="listing_address2" name="listing_address2" />
+					</p>
+				</div>
+				<div class="left">
+					<p>
+						<label>City:</label><br />
+						<input type="text" id="listing_city" name="listing_city" class="required autocomplete" rel="UsCity_names|5" />
+					</p>
+					<p>
+						<label>State:</label><br />
+						<input type="text" id="listing_state" name="listing_state" class="required autocomplete" rel="States_abbrevs|1" />
+					</p>
+					<p>
+						<label>Zip Code:</label><br />
+						<input type="text" id="listing_zip" maxlength="5" name="listing_zip" class="numeric_zip" />
+					</p>
+					<p>
+						<label>Phone Number:</label><br />
+						<input type="text" id="listing_phone" maxlength="12" name="listing_phone" class="numeric_phone" />
+					</p>
+			
+				</div>
+				<p class="opt_in">
+					<input type="checkbox" name="wants_newsletter" id="wants_newsletter" value="1" />
+					<label for="wants_newsletter">Send me the latest news.</label>
+				</p>
+			</form>
+	  		
+			<img src="/images/ui/storagelocator/step1b.png"/>
+	
+		</div> <!-- END step 3 -->
+
+		<div id="signupstep_4" class="workflow_step">
+			<div class="intro">
+				<h3>Make sure everything's cool before you finish.</h3>
+				<p>This information will be used for your main Administrator Account. You’ll be able to add more facilities later, and assign limited access manager accounts if necessary.</p>
+			</div>
+			<div class="wraped">
+				<div class="inner hidden"></div>
+			</div>
+			<img src="/images/ui/storagelocator/step4.png"/>
+			
+			<p id="terms_use">
+				<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" class="required" />
+				<label for="term_of_use">I have read and agree to the <a href="/terms-of-use" target="_blank">Terms of Use</a>.</label>
+			</p>
+			
+		</div> <!-- END step 4 -->
+		
+		<div id="signupstep_5" class="workflow_step">
+			<div id="signup_processing">
+				<div class="intro">
+					<h3>Your account is being created.</h3>
+					<p>Please wait while we setup your account. </p>
+				</div>
+				
+				<div class="wraped">
+					<%= ajax_loader 'ajax-loader-long-green.gif', :style => 'margin:90px auto;display:block;' %>
+				</div>
+			</div>
+			
+			<div id="signup_complete" class="hide">
+				<div class="intro">
+					<h3>Your account has been created.</h3>
+				</div>
+				
+				<div class="wraped">
+					<p><strong>Thank You!</strong></p> 
+					<br />
+					<p>Please check your email and activate your account by clicking on the link provided in the activation email we sent you.'</p>
+					<br />
+					<p>If you do not receive this activation email, check your spam folder or <a  id="resend_link" href="">click here</a> to have it resent.</p>
+				</div>
+			</div>
+				
+			<img src="/images/ui/storagelocator/step5.png"/>
+		</div> <!-- END step 4 -->
+
+	</div>
+	<div id="contact">Need Help Signing Up?  Call <strong>1-305-945-7561</strong></div>
+	<div id="workflow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+		<a class="button skip" id="skip" href="#skip">Skip</a>
+	  	<a class="button next" id="next" href="#next">Next</a>
+	</div>
+	
+</div>

@@ -1,0 +1,25 @@
+<div id="map_partial" class="inner inner_box">
+	<h5><%= listing.title %></h5>
+	
+	<div class="left">
+		<div class="facility-intro">
+			<p><%=h listing.description %></p>
+		</div>
+		<%= display_listing_hours(listing) %>
+	</div>
+	
+	<div id="map_container" class="google_map">
+		<div id="map_<%= listing.map.id %>" rel="<%= "#{listing.lat},#{listing.lng}" %>" class="map_wrap"></div>
+		<ul class="get_dir">
+			<li>
+				<% form_tag '/ajax/directions', :id => 'get_dirs', 'data-container' => 'map_container', 'data-wrap' => "map_#{ listing.map.id }", 'data-to-addr' => listing.full_address do %>
+					<div>
+						<input type="text" value="" title="For directions enter your starting address and... " name="from_address" id="from_address" class="directions hintable"> <%= link_to 'Go!', "/ajax/directions", :class => 'white submit_btn', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>
+					</div>
+				<% end %>
+			</li>
+		</ul>
+	</div>
+	
+	<%= print_link '#map_partial' %>
+</div>

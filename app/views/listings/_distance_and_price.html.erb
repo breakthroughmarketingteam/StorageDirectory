@@ -1,0 +1,36 @@
+<ul class="dnp">
+	<li class="rslt-miles">
+		<span class="shifted-text"><span><%= listing_distance(listing) %></span> Miles<%= ' away' if feat %></span>
+	</li>
+
+	<% if (unit_size = listing.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size)) %>
+		<li class="rslt-size">
+			<%= image_tag unit_size.icon.url %>
+			<span class="size"><%= unit_size.display_dimensions %></span>
+		</li>
+		<li class="rslt-price">
+		  	<ul>
+				<% @upper_type_size = listing.get_upper_type_size(unit_size) %>
+				<% @indoor_type_size = listing.get_interior_type_size(unit_size) %>
+				<% @drive_up_type_size = listing.get_drive_up_type_size(unit_size) %>
+				
+				<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
+					<% type, size = types %>
+					<li class="radio_wrap">
+						<div class="radio">
+							<% if size && !feat %>
+								<div class="radio_select">
+									<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id %>
+								</div>
+							<% end %>
+						</div>
+						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
+							<span class="type"><%= type %>:</span>
+							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "•&nbsp;&nbsp;&nbsp;&nbsp;" %></span>
+						</label>
+					</li>
+				<% end %>
+			</ul>		
+		</li>			
+	<% end %>
+</ul>

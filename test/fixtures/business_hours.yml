@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  day: MyString
+  opening: MyString
+  closing: MyString
+  listing_id: 1
+
+two:
+  day: MyString
+  opening: MyString
+  closing: MyString
+  listing_id: 1

@@ -1,0 +1,14 @@
+<% declare_content_for %>
+<div id="ajax_wrap_inner">
+  <%= display_message flash %>
+
+  <%= render :partial => 'shared/model_options', :locals => { :model => model, :edit_path => edit_model_path(model), :hide_anchor => 'hide_.collapseable_.staticContent' } %>
+	
+  <%= show_title model %>
+
+  <div class="collapseable">
+  	<%= render_model_content(model) %>
+  </div>
+  
+  <%= render :partial => 'shared/model_new_back_buttons' %>
+</div>

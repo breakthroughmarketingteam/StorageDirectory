@@ -1,0 +1,15 @@
+<div id="UserHint_<%= user_hint.id %>" class="user_hint <%= @hint.placement(current_user).hide? ? 'hide' : 'open' %>" data-rel="<%= rel %>">
+	<div class="hint_title_bar uncollapse">
+		<p class="left hint_title"><%= user_hint.title %></p>
+		<p id="UserHintPlacement_<%= user_hint.placement(current_user).id %>" class="right">
+			<%= ajax_loader %>
+			<a href="#" class="hint_toggle" title="Close this hint" rel="hide">X</a>
+			<a href="#" class="hint_toggle hidden" title="Open this hint" rel="open">O</a>
+		</p>
+	</div>
+	
+	<div class="hint_content">
+		<%= user_hint.content %>
+	</div>
+	<div id="hint-arrow"></div>
+</div>

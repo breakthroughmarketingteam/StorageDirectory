@@ -1,0 +1,79 @@
+<h3>Facility Details:</h3>
+<% form_for @listing, :html => { :id => 'fac_detail_form', 'data-target' => 'details' } do |f| %>
+	<table cellspacing="0" cellpadding="0" class="fac-details">
+           <tbody>
+               <tr>
+				<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
+               	<td><%= f.text_field :title, :class => 'required', :maxlength => 32 %></td>
+               </tr>
+			
+			<% f.fields_for :map, @listing.map do |mf| %>
+               	<tr>
+                	<td class="col_label"><%= mf.label :address %></td>
+                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 32 %></td>
+                </tr>
+			
+                <tr>
+                	<td class="col_label"><%= mf.label :address2 %></td>
+                	<td><%= mf.text_field :address2 %></td>
+                </tr>
+
+                <tr>
+                	<td class="col_label"><%= mf.label :city %></td>
+                	<td><%= mf.text_field :city, :class => 'required' %></td>
+                </tr>
+
+                <tr>
+                	<td class="col_label"><%= mf.label :state %></td>
+                	<td><%= mf.text_field :state, :class => 'required' %></td>
+                </tr>
+
+                <tr>
+               		<td class="col_label"><%= mf.label :zip, 'Zip Code' %></td>
+                	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+                </tr>
+			<% end %>
+			
+				<tr>
+               		<td class="col_label"><%= f.label :phone %></td>
+               		<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
+               </tr>
+			
+			<tr class="track">
+				<td class="col_label">Tracked Number</td>
+				<td class="track_req">
+					<%= "<span>#{@listing.tracked_number}</span>" unless @listing.tracked_number.blank? %>
+					<div id="tracking_num_req">Request</div>
+					<p class="note">Only your tracked number is visible in your listing.</p>
+				</td>
+			</tr>
+		
+			<tr>
+               	<td class="col_label"><label for="email">Email</label></td>
+               	<td>
+					<div>
+					<% @listing.staff_emails.each do |staff_email| %>
+						<% unless staff_email.new_record? %>
+							<span>
+								<%= staff_email.email %> &nbsp; 
+								[<%= link_to 'remove', "/ajax/destroy?model=StaffEmail&id=#{staff_email.id}", :class => 'rm_field post_link before_confirm', :title => "Delete #{staff_email.email}?" %>]
+								<br />
+							</span>
+						<% else %>
+							<% f.fields_for :staff_emails, staff_email do |sf| %>
+								<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+							<% end %>
+						<% end %>
+					<% end %>
+					</div>
+               	</td>
+               </tr>
+           </tbody>
+       </table>
+
+	<div>
+		<%= hidden_field_tag :listing_detail, 1 %>
+		<%= f.submit 'Save Changes', :id => 'listing_detail_submit', :class => 'save' %>
+		<%= ajax_loader %>
+	</div>
+<% end %>

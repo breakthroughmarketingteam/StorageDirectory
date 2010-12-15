@@ -1,0 +1,11 @@
+<div class="sl-table-exp">
+	<div class="uncollapse">
+		<p>Request a <strong>Hold</strong> for this unit to make sure it's available when you need it. This will also expedite the rental process. <br /><span class="blue"><%= @model.title %></span> will contact you to complete the unit rental with details about their <strong>Move-In Discount</strong>.</p>
+	</div>
+	
+	<% form_tag @model.info_requests.new, :class => 'new_listing_request less_verbose' do %>
+		<%= render :partial => 'reservations/quickform', :locals => { :listing => @model, :request_type => 'info_request', :size => defined?(size) && size } %>
+	<% end %>
+	
+	<p class="verisign"><span class="hidden">Verisign Secure</span></p>
+</div>

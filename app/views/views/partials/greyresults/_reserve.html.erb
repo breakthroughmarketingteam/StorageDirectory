@@ -1,0 +1,24 @@
+<!--<div id="reserve_steps" class="sl-table-exp">
+	<div id="reserve_step1" class="workflow_step">
+
+		<%# form_for Reservation.new, :html => { :id => 'reservation_form1', :class => 'less_verbose' } do |f| %>
+			<%#= render :partial => 'reservations/quickform', :locals => { :f => f, :listing => listing, :request_type => 'reservation', :size => (defined?(size) && size) } %>
+		<%# end %>
+		
+		<p class="verisign"><span class="hidden">Verisign Secure</span></p>
+	</div>
+	
+	<div id="reserve_step2" class="workflow_step">
+		<%#= ajax_loader 'ajax-loader-lrg.gif' %>
+	</div>
+	
+	<div id="reserve_step3" class="workflow_step">
+		<%#= ajax_loader 'ajax-loader-lrg.gif' %>
+	</div>
+	
+	<div id="workflow_nav">
+		<a class="button back" href="#back">Back</a>
+	  	<a class="button next"\ href="#next">Next</a>
+	</div>
+</div>-->
+<%= render :partial => 'listings/rent_form', :locals => { :listing => listing, :size => listing.get_searched_size(@search) } %>

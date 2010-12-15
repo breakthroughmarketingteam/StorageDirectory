@@ -1,0 +1,9 @@
+Client: <%= @client.name %> <<%= @client.email %>
+
+Account: <%= edit_client_path @client %>
+
+Listings: 
+<% @client.listings.each do |listing| %>
+	(<%= listing.id %>) <%= listing.title %>
+	<%= listing.full_address %>
+<% end %>

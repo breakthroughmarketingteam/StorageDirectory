@@ -1,0 +1,54 @@
+<fieldset>
+	<div class="uncollapse stack">
+		<div class="left">
+			<div class="stack">
+				<%= f.label :title %>
+				<div class="shadow_wrap">
+					<%= f.text_field :title, :class => 'required' %>
+				</div>
+			</div>
+			
+			<div class="stack">
+				<%= f.label :description %>
+				<div class="shadow_wrap">
+					<%= f.text_area :description, :class => 'required small_textarea' %>
+				</div>
+			</div>
+		</div>
+
+		<%= image_tag @size_icon.icon.url(:thumb), :class => 'right' if @size_icon.icon.exists? %>
+	</div>
+	
+	<div class="uncollapse stack">
+		<div class="left right_space">
+			<%= f.label :width %>
+			<div class="shadow_wrap">
+				<%= f.text_field :width, :class => 'required' %>
+			</div>
+		</div>
+		
+		<div class="left right_space">
+			<%= f.label :length %>
+			<div class="shadow_wrap">
+				<%= f.text_field :length, :class => 'required' %>
+			</div>
+		</div>
+	</div>
+	
+	<div class="uncollapse stack">
+		<div class="left right_space">
+			<%= f.label :icon_size %>
+			<div class="shadow_wrap">
+				<%= f.select :icon_size, @icon_sizes, { :include_blank => true }, :class => 'required' %>
+			</div>
+		</div>
+		
+		<div class="left">
+			<%= f.label :icon %>
+			<div class="shadow_wrap">
+				<%= f.file_field :icon, :class => 'required' %>
+			</div>
+		</div>
+	</div>
+	
+</fieldset>

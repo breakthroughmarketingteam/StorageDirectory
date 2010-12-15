@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  special_id: 1
+  Description: MyText
+  sID: MyString
+  UseAtCounter: MyString
+  Code: MyString
+  UseAtWeb: MyString
+  UseAtKiosk: MyString
+  LastTimeUpdated: 2010-09-07 17:16:41
+  CouponCode: MyString
+
+two:
+  special_id: 1
+  Description: MyText
+  sID: MyString
+  UseAtCounter: MyString
+  Code: MyString
+  UseAtWeb: MyString
+  UseAtKiosk: MyString
+  LastTimeUpdated: 2010-09-07 17:16:41
+  CouponCode: MyString

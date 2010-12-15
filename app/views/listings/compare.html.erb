@@ -1,0 +1,52 @@
+<div id="compare_wrap">
+	<div id="compare_map">
+	</div>
+
+	<div class="uncollpase stack">
+		<table cellpadding="0" cellspacing="0">
+			<tbody>
+				<% @comparables.each_with_index do |comparable, i| %>
+					<% compare = comparable[0]; subcomps = comparable[1] %>
+					<tr class="<%= cycle 'odd', 'even' %>">
+						<% if i == 0 %>
+							<th></th>
+						<% else %>
+							<th>
+								<% if subcomps == :self %>
+									<span class="comp_label"><%= compare.to_s.titleize %></span>
+								<% elsif subcomps.is_a? Array %>
+									<span class="comp_label"><%= compare.to_s.titleize %></span>
+								
+									<ul class="sub_comp_list">
+										<% subcomps.each do |subcomp| %>
+											<li><%= subcomp.to_s.titleize %></li>
+										<% end %>
+									</ul>
+								<% end %>
+							</th>
+						<% end %>
+						
+						<% @listings.each do |listing| %>
+							<% if i == 0 %>
+								<th><%= link_to selective_abbrev(listing.title).titleize, facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id) %></th>
+							<% else %>
+								<td>
+									<% if subcomps == :self %>
+										<span class="compared"><%= display_compared listing, compare %></span>
+										
+									<% elsif subcomps.is_a? Array %>
+										<ul>
+										<% subcomps.each do |subcomp| %>
+											<li><%= display_compared listing, subcomp %></li>
+										<% end %>
+										</ul>
+									<% end %>
+								</td>
+							<% end %>
+						<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<li id="<%= (sortable_id rescue '') if is_admin? %>" class="block" rel="position">
+	
+	<%= render :partial => 'shared/model_options', :locals => { :model => block, :edit_path => contextual_edit_block_path(block), :hide_anchor => "hide_.collapseable_.inBlock#{block.id}" } %>
+	
+	<div class="collapseable">
+		
+		<div class="block_content">
+			<%= render_model_content(block) %>
+		</div>
+		
+		<% unless block.forms.empty? %>
+			<div class="block_models_view block_render">
+				<%= render_forms_in_this(block) %>
+			</div>
+		<% end %>
+		
+		<% unless block.views.empty? %>
+			<div class="block_models_view block_render">
+				<%= render_views_in_this(block) %>
+			</div>
+		<% end %>
+		
+	</div>
+</li>

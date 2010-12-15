@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  MappingCodes: MyString
+  sID: MyString
+  Abbreviation: MyString
+  LongDescription: MyText
+  ShortDescription: MyString
+
+two:
+  MappingCodes: MyString
+  sID: MyString
+  Abbreviation: MyString
+  LongDescription: MyText
+  ShortDescription: MyString

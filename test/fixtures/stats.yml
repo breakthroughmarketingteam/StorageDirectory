@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  impressions: 1
+  clicks: 
+  reservations: 
+
+two:
+  impressions: 1
+  clicks: 
+  reservations: 

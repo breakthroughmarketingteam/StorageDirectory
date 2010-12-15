@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  listing_id: 1
+  duration: MyString
+  unit_type_size: MyString
+  move_in_date: 2010-10-10 18:31:23
+
+two:
+  listing_id: 1
+  duration: MyString
+  unit_type_size: MyString
+  move_in_date: 2010-10-10 18:31:23

@@ -1,0 +1,12 @@
+<div id="PredefinedSize_<%= predefined_size.id %>" class="sl-table-wrap">
+	<ul class="sl-table">
+		<li class="st-size"><%= predefined_size.dims %></li>
+		<li class="st-type" input-type="select"><%= predefined_size.title %></li>
+		<li class="st-desc" title="<%= predefined_size.description %>"><%= predefined_size.description %></li>
+		
+		<li class="st-rese">
+			<%= ajax_loader %>
+			<%= link_to 'Select', '#', :class => 'select_predefined_size' %>
+		</li>
+	</ul>
+</div>

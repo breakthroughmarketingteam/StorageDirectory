@@ -1,0 +1,66 @@
+<% form_for @search, :html => { :class => 'silent' } do |f| %>
+	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
+	<div id="search_field">
+		<%= f.text_field :query, :class => 'hintable autocomplete required focus_onload', :title => location_guess, :rel => 'UsCity_namesNstate|4' %>
+		<%= reverse_captcha %>
+		<%= f.submit 'Locate', :class => 'grn_btn' %>
+		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>
+	</div>
+	
+	<div id="advanced_opts">
+		<p id="ao_top">Choose your options for a refined Self Storage search:</p>
+			<div class="left">
+				<div>
+					<%= f.label :storage_type, 'Type:' %>
+					<%= f.select :storage_type, @facility_features, :selected => @search.storage_type %>
+				</div>
+
+				<div id="size_picker">
+					<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
+				</div>
+
+				<div>
+					<%= f.label :unit_size %>
+					<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size %>
+				</div>
+			</div>
+
+			<div class="right">
+				<div class="top">
+					
+					<div id="distance_btns">
+						<%= f.label :within %>
+						<div class="uncollapse">
+							<% @distance_options.each do |distance| %>
+								<div class="radio_wrap">
+									<div class="radio_select">
+										<%= radio_button_tag 'search[within]', distance, (@search.within == distance.to_i) %>
+									</div>
+									<%= f.label "within_#{distance}", "#{distance}" %>
+								</div>
+							<% end %>
+						</div>
+						<%= label_tag 'miles.', nil, :class => 'right' %>
+					</div>
+
+					<div id="loc_btn">
+						<%= f.submit 'Locate', :id => 'search_submit2', :class => 'grn_btn' %>
+					</div>
+				</div>
+
+				<div class="bottom">
+					<p><%= label_tag 'Features:' %></p>
+
+					<div id="features">
+						<% @unit_features.each do |feature| %>
+							<div class="selectable_wrap">
+								<div class="selectable"><%= check_box_tag 'storage_features[]', feature %></div>
+								<%= label_tag feature %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

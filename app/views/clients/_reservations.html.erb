@@ -1,0 +1,32 @@
+<% @reservations = model.reservations.paginate :page => params[:page], :per_page => 11, :order => 'move_in_date DESC' %>
+<div id="clients_reservations">
+	<% unless @reservations.empty? %>
+		<table class="table_view" id="client_reservations">
+			<thead>
+				<tr>
+					<th>By</th>
+					<th>In date</th>
+					<th>Duration</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @reservations.each do |reservation| %>
+					<tr class="<%= cycle('odd', 'even') %>">
+						<td><%= link_to reservation.name, reserver_path(reservation.reserver), :class => 'reserver_detail_link' %></td>
+						<td><%= reservation.nice_move_in_date %></td>
+						<td><%= reservation.duration %> months</td>
+						<td class="region">
+							<%= link_to 'Details', reservation.partial_link, :class => 'rsvr_detail_link' %>
+							<%= ajax_loader %>
+						</td>
+					</tr>	
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= render :partial => 'views/paginate', :locals => { :data => @reservations } %>
+	<% else %>
+		<p>No Reservations</p>
+	<% end %>
+</div>

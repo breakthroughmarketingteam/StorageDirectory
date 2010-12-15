@@ -1,0 +1,22 @@
+<% declare_content_for %>
+<%= display_message flash %>
+
+<div id="login_page">
+	<% form_tag '/password_resets', :method => 'post', :id => 'password_resets_form' do  %>
+		<fieldset>
+			<h2>Enter your email</h2>
+		
+			<div class="stack i">
+				<%= label_tag :email, nil, :class => 'hidden' %>
+				<div class="shadow_wrap">
+	  			<%= text_field_tag :email, nil, :class => 'email hintable required', :title => 'Your Email Address' %>
+				</div>
+			</div>
+		
+			<div class="stack">
+				<%= submit_tag 'Send', :id => 'send_btn' %>
+			</div>
+		
+		</fieldset>
+	<% end %>
+</div>

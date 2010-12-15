@@ -1,0 +1,23 @@
+<% form_for @listing, :html => { :id => 'logo_form', :class => 'logo_form', :multipart => true } do |f| %>
+	<h3 class="label">Logo:</h3>
+	<div id="col1">
+		<%= display_logo @listing, :id => 'listing_img' %>
+	</div>
+	<div id="col2">
+		<div class="stack">
+			<p>Upload a logo image from your computer...</p>
+			<%= f.file_field :logo, :class => 'required' %>
+		</div>
+		
+		<div>
+			<p>Or choose from one of our default images below.</p>
+			<%= render :partial => 'listings/logo_choices' %>
+		</div>
+		
+		<div>
+			<%= hidden_field_tag 'from', 'uplogo' %>
+			<%= f.submit 'Upload', :id => 'listing_logo_submit', :class => 'save' %>
+			<%= ajax_loader %>
+		</div>
+	</div>
+<% end %>

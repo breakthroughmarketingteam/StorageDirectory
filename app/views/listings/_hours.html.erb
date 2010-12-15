@@ -1,0 +1,41 @@
+<div id="sl-tabs-hours">
+  <div id="sl-tabs-hours-in">
+	<% form_tag "/listings/#{@listing.id}/business_hours", :id => 'business_hours_form' do %>
+	
+		<% %w(office access).each do |hour_type| %>
+			<div class="hours_display left">
+				<h4>
+					<%= hour_type.titleize %> Hours 
+					<span><%= check_box_tag "#{hour_type}_24_hours", 1, @listing.send("#{hour_type}_24_hours?"), :class => 'all_day_check' %>&nbsp;<%= label_tag "#{hour_type}_24_hours", '24 Hours ' %></span>
+				</h4>
+
+				<ul class="hr_legend">
+					<li class="open_label">Open</li>
+					<li class="from_label">From</li>
+					<li class="to_label">To</li>
+				</ul>
+
+				<ul>
+					<% BusinessHour.days.each_with_index do |day, i| %>
+						<li>
+							<%= label_tag "#{hour_type}_hours_closed", day, :class => 'day_field' %>
+							<%= check_box_tag 'business_hours[][closed]', 0, (get_hour_by(day, hour_type) && !get_hour_by(day, hour_type).try(:closed?)), :id => "#{day}_#{hour_type}_hours_closed", :class => 'day_closed', :title => 'Open or closed on this day?' %>
+
+							<div class="hour_range">
+								<%= hidden_field_tag "business_hours[][day]", day %>
+								<%= hidden_field_tag "business_hours[][hours_type]", hour_type %>
+
+								<%= select_tag 'business_hours[][opening_time]', option_tags(BusinessHour.times, (get_hour_by(day, hour_type).try(:opening_time) || '9:00 Am')), :id => "#{day}_business_hours_opening_time_#{hour_type}", :rel => 'opening' %>&nbsp;-
+								<%= select_tag 'business_hours[][closing_time]', option_tags(BusinessHour.times, (get_hour_by(day, hour_type).try(:closing_time) || '5:00 Pm')), :id => "#{day}_business_hours_closing_time_#{hour_type}", :rel => 'closing' %>
+
+								<%= link_to 'Copy all', '#', :class => 'copy_all_hours icon16' if i == 0 %>
+							</div>
+						</li>
+					<% end %>
+				</ul>
+
+			</div>
+		<% end %>
+	<% end %>
+  </div>
+</div>

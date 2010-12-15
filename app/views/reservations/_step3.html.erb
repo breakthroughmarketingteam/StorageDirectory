@@ -1,0 +1,37 @@
+<div id="print_box">
+	<h4 class="left_space">Your Storage Unit Has Been <%= @reservation.listing.issn_enabled? ? 'Reserved' : 'Held' %>!</h4>
+
+	<div class="sl-table-exp-form-l">
+		<p>When: <%= @reservation.nice_move_in_date %></p>
+		
+		<% unless @reservation.reserve_code.blank? %>
+			<p>Reservation Code: <%= @reservation.reserve_code %></p>
+		<% end %>
+		
+		<% unless (unit_name = (@response['sUnitName'] || @response['sUnitId'])).blank? %>
+			<p>Unit Number: <%= unit_name %>
+		<% end %>
+	
+		<div>
+			<p>Where: </p>
+			<p class="listing_title"><%= @reservation.listing.title %></p>
+			<div class="listing_address">
+				<p>
+					<%= @reservation.listing.address %><br />
+					<%= @reservation.listing.city %>, <%= @reservation.listing.state %> <%= @reservation.listing.zip %>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="gmap_dirs"></div>
+</div>
+
+<% if @reservation.listing.issn_enabled? %>
+<div class="clear stack">
+	<p>
+		<%= print_link('#print_box', "/ajax/get_partial?partial=reservations/print_wrap&model=Reservation&id=#{@reservation.id}") %>
+		this page and bring it with you to <%= @reservation.listing.title %>.
+	</p>
+</div>
+<% end %>

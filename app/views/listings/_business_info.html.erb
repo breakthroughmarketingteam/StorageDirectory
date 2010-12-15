@@ -1,0 +1,55 @@
+<div id="narrow-box">
+	<div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
+
+		<%= display_logo @listing, :id => 'listing_img' %>
+	
+		<ul>
+			<li id="location_display" >
+				<p class="info_heading">Location</p>
+			
+				<div class="address">
+					<span rel="address" class="block value"><%= edit_listing_address @listing %></span>
+					<% unless @listing.map.nil? %>
+						<span rel="city" class="value"><%= @listing.map.city %></span>, <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
+					<% else %>
+						<%= edit_listing_city_state_zip @listing %>
+					<% end %>
+					<% if @listing.premium? %><div id="sl-phone">(561) 342-1984</div><% end %>
+				</div>
+			</li>
+			<% if @listing.premium? %>
+				<li id="display_hours" >
+					<%= display_listing_hours(@listing) %>
+				</li>
+				<li id="display_features" >
+					<% unless @facility_features.empty? %>
+						<div class="facility_features">
+							<p class="info_heading">Features</p>
+							<ul class="greylist">
+								<% @facility_features.each do |feature| %>
+									<li class="feature_<%= feature.parameterize %>"><%= feature %></li>
+								<% end %>
+							</ul>
+						</div>
+					<% end %>
+				</li>
+			<% else %>
+				<li><%= claim_listing_link(@listing) %></li>
+			<% end %>
+		
+			<% if @listing.premium? %>
+				<div id="sl-seals">
+					<p class="info_heading">Facility Affiliations</p>
+					<div id="wrap">
+						<img src="/images/ui/storagelocator/bbb-logo.png" alt="" />
+						<img src="/images/ui/storagelocator/ssam-logo.png" alt="" />
+					</div>
+				</div>
+			<% end %>
+		</ul>
+	
+		<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>
+	</div>
+	
+	<%= link_to 'Edit this listing', edit_listing_path(@listing), :class => 'left_space' if is_admin? %> 
+</div>

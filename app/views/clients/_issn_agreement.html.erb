@@ -1,0 +1,115 @@
+<div id="netmem_agree">
+	<p class="bold">Network Member</p>
+	<span class="np note">You can edit the information below</span>
+	
+	<div id="sig_box">
+		<div class="signature_line"></div>
+		<p class="label">Authorized Signature</p>
+	
+		<div class="signature_line">
+			<%= text_field_tag '', client.name %>
+		</div>
+		<p class="label">Print Name</p>
+	
+		<div class="signature_line">
+			<%= text_field_tag '', Time.now.strftime("%B, %d %Y") %>
+		</div>
+		<p class="label">Date</p>
+	</div>
+	
+	<p class="bold">Network Member Information</p>
+	<table>
+		<tr>
+			<th>Name:</th>
+			<td class="value">
+				<%= text_field_tag '', client.name %>
+			</td>
+			<th>Account ID:</th>
+			<td class="value">
+				<%= client.issn_id %>
+			</td>
+		</tr>
+		<tr>
+			<th>Address:</th>
+			<td class="value" colspan="3">
+				<%= text_field_tag '', (client.listings.first.map.full_address rescue false) %>
+			</td>
+		</tr>
+		<tr>
+			<th>Contact Name:</th>
+			<td class="value">
+				<%= text_field_tag '', client.name %>
+			</td>
+			
+			<th>Phone (work):</th>
+			<td class="value">
+				<%= text_field_tag '', (client.listings.first.map.phone rescue false) %>
+			</td>
+		</tr>
+		<tr>
+			<th>Contact Email:</th>
+			<td class="value">
+				<%= text_field_tag '', client.email %>
+			</td>
+			<th>Phone (cell):</th>
+			<td class="value">
+				<%= text_field_tag '' %>
+			</td>
+		</tr>
+		<tr>
+			<th>PMSoftware:</th>
+			<td class="value" colspan="3">
+				<p class="np left small_framed">Supported Property Management Systems</p>
+				<%= select_tag 'pm_software', option_tags($_pm_softwares, nil, 'Choose Your System'), :class => 'required np' %>
+			</td>
+		</tr>
+	</table>
+	
+	<div class="page-break"></div>
+	
+	<p class="bold">Network Member Facility Information</p>
+	<div id="client_listings_table">
+		<% client.listings.each do |listing| %>
+			<table>
+				<tr>
+					<th>Action to be Performed</th>
+					<td colspan="3">ADD</td>
+				</tr>
+				<tr>
+					<th>Facility Name:</th>
+					<td class="value" colspan="3">
+						<%= text_field_tag '', listing.title %>
+					</td>
+				</tr>
+				<tr>
+					<th>Address:</th>
+					<td class="value" colspan="3">
+						<%= text_field_tag '', (client.listings.first.map.full_address rescue false) %>
+					</td>
+				</tr>
+				<tr>
+					<th>Contact Name:</th>
+					<td class="value">
+						<%= text_field_tag '', client.name %>
+					</td>
+			
+					<th>Phone (work):</th>
+					<td class="value">
+						<%= text_field_tag '', (client.listings.first.map.phone rescue false) %>
+					</td>
+				</tr>
+				<tr>
+					<th>Contact Email:</th>
+					<td class="value">
+						<%= text_field_tag '', client.email %>
+					</td>
+					<th>Phone (cell):</th>
+					<td class="value">
+						<%= text_field_tag '' %>
+					</td>
+				</tr>
+			</table>
+		<% end %>
+	</div>
+	
+</div>
