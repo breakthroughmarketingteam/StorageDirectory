@@ -23,6 +23,7 @@
 						<%= display_listing_hours(@listing) %>
 					</li>
 					<li id="display_features" >
+						<% @facility_features = @listing.facility_features.map(&:label).reject(&:blank?) %>
 						<% unless @facility_features.empty? %>
 							<div class="facility_features">
 								<p class="info_heading">Features</p>

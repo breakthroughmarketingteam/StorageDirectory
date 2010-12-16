@@ -11,6 +11,7 @@
 				<div class="prev"></div>
 				<div class="in">
 					<div class="items">
+						<% @ad_partners = AdPartner.all_enabled %>
 						<% cache @ad_partners.map(&:cache_key).join(',') do %>
 							<% @ad_partners.in_groups_of 6, false do |group| %>
 								<div class="left">

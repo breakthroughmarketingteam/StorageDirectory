@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215225728) do
+ActiveRecord::Schema.define(:version => 20101215233032) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -711,7 +711,7 @@ ActiveRecord::Schema.define(:version => 20101215225728) do
   add_index "sizes", ["width"], :name => "index_sizes_on_width"
 
   create_table "specials", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "listing_id"
     t.string   "title"
     t.string   "description"
     t.boolean  "enabled"
@@ -723,7 +723,7 @@ ActiveRecord::Schema.define(:version => 20101215225728) do
     t.integer  "month_limit"
   end
 
-  add_index "specials", ["client_id", "title"], :name => "index_specials_on_listing_id_and_title"
+  add_index "specials", ["listing_id", "title"], :name => "index_specials_on_listing_id_and_title"
 
   create_table "staff_emails", :force => true do |t|
     t.integer  "listing_id"

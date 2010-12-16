@@ -13,6 +13,8 @@ class AdPartner < ActiveRecord::Base
   
   access_shared_methods
 
+  named_scope :all_enabled, :conditions => 'enabled IS TRUE'
+
   def html_attributes
     to_hash(read_attribute :html_attributes)
   end

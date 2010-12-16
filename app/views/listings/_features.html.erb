@@ -1,6 +1,6 @@
 <div id="sl-tabs-feat">
 	<ul id="sl-tabs-feat-in">
-    	<% @facility_features.each do |feature| %>
+    	<% IssnFacilityFeature.labels.each do |feature| %>
       		<li>
         		<span class="facility_feature<%= ' selected' if @listing.has_feature?(feature) %>">
           			<%= check_box_tag 'feature', feature, false, :class => 'hidden' %>

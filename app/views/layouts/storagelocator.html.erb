@@ -32,7 +32,6 @@
         <%= javascript_include_tag @plugins %>
         <%= yield :scripts %>
         <%= javascript_include_tag 'greymatter', 'application' %>
-        <%= @widgets_js.map { |js| javascript_include_tag js } %>
 		<%= javascript_include_tag 'swfobject_modified' %>
         
     </head>
@@ -86,7 +85,9 @@
                             <!-- Start the editable area -->
                             <a name="top" id="top"></a>
                             <div id="content">
+
                                 <%= yield %>
+
                                 <div id="column_5" class="region">
                                     <%= yield :column_5 %>
                                 </div>
@@ -116,7 +117,9 @@
         </div>
         
 		<% unless current_user %>
-			<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
+			<% cache 'login' do %>
+				<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
+			<% end %>
 		<% end %>
 
         <script type="text/javascript">

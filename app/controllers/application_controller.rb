@@ -125,29 +125,18 @@ class ApplicationController < ActionController::Base
   # instance variables for the helpers and templates
   def get_content_vars
     unless request.xhr?
-      @controller_name   = controller_name
-      @action_name       = action_name
       @theme_css         = theme_css(session[:theme]  || @@app_config[:theme])
       @plugin_css        = plugin_css 'jquery.ui.css'
       @meta_keywords     = @@app_config[:keywords]    || @@app_config[:title]
       @meta_description  = @@app_config[:description] || @meta_keywords
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
-      @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Save, <strong>Rent Self Storage</strong> Anywhere, Anytime.'
-      @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
-    
-    @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
+         
     @per_page = 20
     @listings_per_page = 10        
     @app_name = 'USSelfStorageLocator.com'                                                  
-    @distance_options = Search.distance_options
-    
-    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    unless controller_name == 'user_sessions' && request.xhr?
-      @facility_features = $_storage_types #IssnFacilityFeature.labels
-    end
   end
   
   # TODO: move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

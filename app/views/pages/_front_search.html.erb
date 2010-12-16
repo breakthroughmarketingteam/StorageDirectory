@@ -12,7 +12,7 @@
 			<div class="left">
 				<div>
 					<%= f.label :storage_type, 'Type:' %>
-					<%= f.select :storage_type, @facility_features, :selected => @search.storage_type %>
+					<%= f.select :storage_type, [$_storage_types | ['Truck Rentals', 'Moving Companies']], :selected => @search.storage_type %>
 				</div>
 
 				<div id="size_picker">
@@ -31,7 +31,7 @@
 					<div id="distance_btns">
 						<%= f.label :within %>
 						<div class="uncollapse">
-							<% @distance_options.each do |distance| %>
+							<% Search.distance_options.each do |distance| %>
 								<div class="radio_wrap">
 									<div class="radio_select">
 										<%= radio_button_tag 'search[within]', distance, (@search.within == distance.to_i) %>

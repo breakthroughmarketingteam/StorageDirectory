@@ -294,7 +294,7 @@ module ApplicationHelper
     if !params[:model].blank?
       str << "#{params[:model].titleize} Tagged With \"#{params[:tag]}\""
     elsif !params[:user_id].blank?
-      str << @user.name.possessive + ' ' + controller_name.titleize
+      str << User.find_by_id(params[:user_id]).name.possessive + ' ' + controller_name.titleize
     else
       str << controller_name.titleize
     end
@@ -310,7 +310,7 @@ module ApplicationHelper
   end
   
   def model_form_heading
-    str = params[:user_id].blank? ? '' : ' for ' + @user.name
+    str = params[:user_id].blank? ? '' : ' for ' + User.find_by_id(params[:user_id]).name
     "#{action_name} #{controller_name.singular}".titleize + str
   rescue
     "#{action_name} #{controller_name.singular}".titleize

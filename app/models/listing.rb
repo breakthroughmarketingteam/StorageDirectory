@@ -1,6 +1,6 @@
 class Listing < ActiveRecord::Base
   
-  belongs_to :client, :foreign_key => 'user_id'
+  belongs_to :client, :foreign_key => 'user_id', :touch => true
   
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact'
@@ -257,6 +257,14 @@ class Listing < ActiveRecord::Base
       hash.store attribute.to_sym, self.respond_to?(attribute) ? self.send(attribute) : self.map.send(attribute)
     end
     hash.merge :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb))
+  end
+  
+  def self.update_stat(listings, stat, request, t = Time.now)
+    insert_sql = listings.map do |listing|
+      "INSERT INTO #{stat} (listing_id, referrer, request_uri, created_at, updated_at) VALUES ('#{listing.id}', #{request.referrer}', '#{request.request_uri}', '#{t}', '#{t}')"
+    end.join(';')
+    
+    ActiveRecord::Base.connection.execute insert_sql
   end
   
   # create a stat record => clicks, impressions
