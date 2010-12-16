@@ -197,7 +197,18 @@
 					</div>
 					
 					<div id="rental_complete" class="hide conf">
-						DONE!
+						<h4>Great! Here's Your Unit Rental Information.</h4>
+						<p>We have sent your unit rental information to <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> and you'll be contacted by one of their representatives to complete the rental process.</p> 
+						<p>You will need to stop by the facility to sign their rental agreement and to gain access to your self storage unit. We've sent you a confirmation email with your rental information. Please print it and bring it at the time of move in.</p>
+						
+						<div id="rental-info">
+							<p><strong>Confirmation Number:</strong><span></span></p>
+							<p>Name:<span></span></p>
+							<p>Unit Type:<span></span></p>
+							<p>Unit Size:<span></span></p>
+							<p>Move-in Date:<span></span></p>
+							<p>Special:<span></span></p>
+						</div>
 					</div>
 				</div>
 			</div>
