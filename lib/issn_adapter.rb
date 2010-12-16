@@ -115,7 +115,7 @@ class IssnAdapter
             "&sCreditCardExpMonth=#{escape_query pad_int_str(args[:credit_card][:expires][:month])}"+
             "&sCreditCardExpYear=#{escape_query pad_int_str(args[:credit_card][:expires][:year])}"+
             "&sCreditCardPostalCode=#{escape_query args[:credit_card][:zip]}"+
-            "&sCreditCardCCV=#{escape_query args[:credit_card][:ccv]}"+
+            "&sCreditCardCCV=#{escape_query args[:credit_card][:cvv]}"+
             "&sSaveCreditCardInfo=#{escape_query args[:save_credit_card_info]}"+
             "&sBankRoutingNumber=#{escape_query args[:bank][:routing_number]}"+
             "&sBankAccountNumber=#{escape_query args[:bank][:account_number]}"+
@@ -138,7 +138,7 @@ class IssnAdapter
              &sCreditCardExpMonth=#{escape_query args[:credit_card][:expires][:month]}
              &sCreditCardExpYear=#{escape_query args[:credit_card][:expires][:year]}
              &sCreditCardPostalCode=#{escape_query args[:credit_card][:zip]}
-             &sCreditCardCCV=#{escape_query args[:credit_card][:ccv]}
+             &sCreditCardCCV=#{escape_query args[:credit_card][:cvv]}
              &sBankRoutingNumber=#{escape_query args[:bank][:routing_number]}
              &sBankAccountNumber=#{escape_query args[:bank][:account_number]}
              &sBankName=#{escape_query args[:bank][:name]}

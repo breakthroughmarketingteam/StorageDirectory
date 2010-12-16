@@ -1,81 +1,83 @@
-<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
-	<div class="inner">
-		<div class="in">
-			<div class="rslt-title">
-				<h3><%= link_to_if result.premium?, result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id) %></h3>
+<% cache "#{result.cache_key},#{@search.unit_size}" do %>
+	<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
+		<div class="inner">
+			<div class="in">
+				<div class="rslt-title">
+					<h3><%= link_to_if result.premium?, result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id) %></h3>
 				
-				<% if result.premium? %>
-					<div class="rslt-features">
-						<a href="#" class="hours" title="24 Hours"></a>
-						<a href="#" class="security" title="Security"></a>
-						<a href="#" class="keypad" title="Keypad Access"></a>
-						<a href="#" class="ac" title="AC"></a>
-						<a href="#" class="driveup" title="Drive Up"></a>
-						<a href="#" class="climate" title="Climate Controlled"></a>
-						<a href="#" class="spanish" title="Spanish"></a>
-					</div>
-				<% end %>
-			</div>
+					<% if result.premium? %>
+						<div class="rslt-features">
+							<a href="#" class="hours" title="24 Hours"></a>
+							<a href="#" class="security" title="Security"></a>
+							<a href="#" class="keypad" title="Keypad Access"></a>
+							<a href="#" class="ac" title="AC"></a>
+							<a href="#" class="driveup" title="Drive Up"></a>
+							<a href="#" class="climate" title="Climate Controlled"></a>
+							<a href="#" class="spanish" title="Spanish"></a>
+						</div>
+					<% end %>
+				</div>
 
-			<div class="num_icon">
-				<%= result_index(result) %>
-			</div>
+				<div class="num_icon">
+					<%= result_index(result) %>
+				</div>
 			
-			<div class="facility-logo">
-				<%= display_logo result, :width => '102px', :height => '77px' %>
-			</div>
+				<div class="facility-logo">
+					<%= display_logo result, :width => '102px', :height => '77px' %>
+				</div>
 			
-			<div class="rslt-contact">
-				<p>
-					<span class="rslt-address"><%= result.map.address %>,</span><br />
-					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
-				</p>
-				<% if result.premium? %>
-					<p><span class="rslt-phone">1-800-567-4321</span></p>
-				<% end %>
+				<div class="rslt-contact">
+					<p>
+						<span class="rslt-address"><%= result.map.address %>,</span><br />
+						<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
+					</p>
+					<% if result.premium? %>
+						<p><span class="rslt-phone">1-800-567-4321</span></p>
+					<% end %>
 				
-				<%= claim_listing_link(result) unless result.premium? %>
-			</div>
+					<%= claim_listing_link(result) unless result.premium? %>
+				</div>
 			
-			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>
+				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>
 			
-			<div class="action_btn<%= listing_action_btn_class(result) %>">
-				<%= results_main_button(result) %>
+				<div class="action_btn<%= listing_action_btn_class(result) %>">
+					<%= results_main_button(result) %>
+				</div>
 			</div>
+		
+			<% if result.premium? %>
+				<div class="unit_detail">
+					<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
+				</div>
+			<% end %>
 		</div>
+	
+		<div class="panel"></div>
+	
+		<ul class="tabs">
+			<li class="open_tab_li">
+				<%= link_to '+', '#', :class => 'open_tab' %>
+			</li>
+			<li class="fac-map">
+				<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
+			</li>
 		
-		<% if result.premium? %>
-			<div class="unit_detail">
-				<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
-			</div>
-		<% end %>
+			<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
+				<%= link_to "More Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
+			</li>
+		
+			<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
+				<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
+			</li>
+		
+			<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
+				<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
+			</li>
+		
+			<li class="fac-reviews<%= ' hide' if result.reviews.empty? %>">
+				<%= link_to "Reviews#{" (#{result.reviews.size})"}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
+			</li>
+		</ul>
+		<div class="highlight-green progress">&nbsp;</div>
 	</div>
-	
-	<div class="panel"></div>
-	
-	<ul class="tabs">
-		<li class="open_tab_li">
-			<%= link_to '+', '#', :class => 'open_tab' %>
-		</li>
-		<li class="fac-map">
-			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
-		</li>
-		
-		<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
-			<%= link_to "More Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
-		</li>
-		
-		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
-			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
-		</li>
-		
-		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
-			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
-		</li>
-		
-		<li class="fac-reviews<%= ' hide' if result.reviews.empty? %>">
-			<%= link_to "Reviews#{" (#{result.reviews.size})"}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
-		</li>
-	</ul>
-	<div class="highlight-green progress">&nbsp;</div>
-</div>
+<% end %>

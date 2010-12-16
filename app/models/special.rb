@@ -1,6 +1,6 @@
 class Special < ActiveRecord::Base
   
-  belongs_to :client
+  belongs_to :listing, :touch => true
   has_one :promo
   has_many :rentals
   

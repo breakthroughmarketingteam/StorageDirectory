@@ -32,7 +32,6 @@
         <%= javascript_include_tag @plugins %>
         <%= yield :scripts %>
         <%= javascript_include_tag 'greymatter', 'application' %>
-        <%= @widgets_js.map { |js| javascript_include_tag js } %>
 		<%= javascript_include_tag 'swfobject_modified' %>
         
     </head>
@@ -86,7 +85,9 @@
                             <!-- Start the editable area -->
                             <a name="top" id="top"></a>
                             <div id="content">
+
                                 <%= yield %>
+
                                 <div id="column_5" class="region">
                                     <%= yield :column_5 %>
                                 </div>
@@ -116,17 +117,31 @@
         </div>
         
 		<% unless current_user %>
-			<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
+			<% cache 'login' do %>
+				<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
+			<% end %>
 		<% end %>
 
         <script type="text/javascript">
             swfobject.registerObject("FlashID");
             ussslgid = '<%= GOOGLE_APPLICATION_ID %>';
         </script>
-		<script type="text/javascript">
-			var websiteId = 3817;
-			var httpReferer = escape(document.referrer);
-		</script>
-		<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
+		<% if in_production? %>
+			<script type="text/javascript">
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-20270920-1']);
+			  _gaq.push(['_trackPageview']);
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+			</script>
+			<script type="text/javascript">
+				var websiteId = 3817;
+				var httpReferer = escape(document.referrer);
+			</script>
+			<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
+		<% end %>
     </body>
 </html>

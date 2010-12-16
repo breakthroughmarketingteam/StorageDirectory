@@ -1,109 +1,111 @@
-<% declare_content_for %>
-<%= js_plugins 'excanvas.min', 'jquery.jqplot.min', 'jqplot.dateAxisRenderer.min', 'jqplot.canvasTextRenderer.min', 'jqplot.canvasAxisTickRenderer.min', 'jqplot.highlighter.min', 'jqplot.cursor.min' %>
-<%= plugin_stylesheets 'jquery.jqplot' %>
+<% cache @client do %>
+	<% declare_content_for %>
+	<%= js_plugins 'excanvas.min', 'jquery.jqplot.min', 'jqplot.dateAxisRenderer.min', 'jqplot.canvasTextRenderer.min', 'jqplot.canvasAxisTickRenderer.min', 'jqplot.highlighter.min', 'jqplot.cursor.min' %>
+	<%= plugin_stylesheets 'jquery.jqplot' %>
 
-<h1 class="hidden">Search results listing</h1>
-<a name="top" id="top"></a>
+	<h1 class="hidden">Search results listing</h1>
+	<a name="top" id="top"></a>
 
-<div id="type-one-r-col">
-  <div id="type-three-r-col-in">
+	<div id="type-one-r-col">
+	  <div id="type-three-r-col-in">
     
-    <div id="ov-header">
-      	<h2>Account Overview</h2>
-		<ul>
-          	<li>Account #: <span id="client_id"><%= @client.id %></span></li>
-          	<li>
-				Number of listings: <span id="listings_size"><%= @client.enabled_listings.size %></span>
-				<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
-		  	</li>
-        </ul>
-    </div>
+	    <div id="ov-header">
+	      	<h2>Account Overview</h2>
+			<ul>
+	          	<li>Account #: <span id="client_id"><%= @client.id %></span></li>
+	          	<li>
+					Number of listings: <span id="listings_size"><%= @client.enabled_listings.size %></span>
+					<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
+			  	</li>
+	        </ul>
+	    </div>
 
-	<div id="w-msg">
-		<%= display_message flash %>
+		<div id="w-msg">
+			<%= display_message flash %>
 		
-		<h3><%= greeting %> <span id="client_name"><%= @client.name %></span></h3>
-		<%= @client_welcome %>
-	</div>
+			<h3><%= greeting %> <span id="client_name"><%= @client.name %></span></h3>
+			<%= @client_welcome %>
+		</div>
     
-    <div id="ov-page-cnt">
+	    <div id="ov-page-cnt">
 	
-	<%= render_hints_for :reports, 'ov-reports' %>
-      <div id="ov-reports" class="hideable">
-        <div class="ov-item-head">
-          	<h3><span>Activity Tracker</span></h3>
-			<p>-&nbsp; Total activity for all your listed facilities.</p>
-        </div>
-        <div id="ov-reports-cnt">
-			<div id="stats_graph" class="Xtab_content"></div>
-			<div id="graph_controls">
-				<%= label_tag 'Starting from' %> 
-				<%= select_tag 'months_ago', option_tags([1..24].map(&:to_a).flatten), :class => 'auto_change' %> 
-				months ago.
-			</div>
-        </div>
-      </div>
+		<%= render_hints_for :reports, 'ov-reports' %>
+	      <div id="ov-reports" class="hideable">
+	        <div class="ov-item-head">
+	          	<h3><span>Activity Tracker</span></h3>
+				<p>-&nbsp; Total activity for all your listed facilities.</p>
+	        </div>
+	        <div id="ov-reports-cnt">
+				<div id="stats_graph" class="Xtab_content"></div>
+				<div id="graph_controls">
+					<%= label_tag 'Starting from' %> 
+					<%= select_tag 'months_ago', option_tags([1..24].map(&:to_a).flatten), :class => 'auto_change' %> 
+					months ago.
+				</div>
+	        </div>
+	      </div>
 		
-	<%= render_hints_for :facilities, 'ov-units' %>
-      <div id="ov-units" class="hideable">
-		<div class="ov-item-head">
-			<h3><span>Facilities</span></h3>
-			<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
-			<%= ajax_loader %>
-			<a href="#" id="add_fac" class="btn" title="Add a new facility">New</a>
-        </div>
+		<%= render_hints_for :facilities, 'ov-units' %>
+	      <div id="ov-units" class="hideable">
+			<div class="ov-item-head">
+				<h3><span>Facilities</span></h3>
+				<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
+				<%= ajax_loader %>
+				<a href="#" id="add_fac" class="btn" title="Add a new facility">New</a>
+	        </div>
         
-        <div id="client_listing_box">
-          <% unless @listings.empty? %>
-            <div id="rslt-list-bg">
-              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true } %>
-              <%= will_paginate @listings %>
-            </div>
-          <% end %>
-        </div>
-      </div>
+	        <div id="client_listing_box">
+	          <% unless @listings.empty? %>
+	            <div id="rslt-list-bg">
+	              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true } %>
+	              <%= will_paginate @listings %>
+	            </div>
+	          <% end %>
+	        </div>
+	      </div>
 	
-	<%= render_hints_for :services, 'ov-services' %>
-      <div id="ov-services" class="hideable">
-        <div class="ov-item-head">
-          <h3><span>Services</span></h3>
-        </div>
-        <div id="ov-services-cnt">
-			<div>
-				<ul>
-					<li><%= link_to "<span>#{@client.issn_enabled? ? 'Manage Sync' : 'Enable Sync'}</span>", '#reservations', :id => 'reservations' %></li>
-					<li><%= link_to "<span>#{@client.call_tracking_enabled? ? 'Call Log' : 'Activate Call Tracking'}</span>", '#calls', :id => 'calls' %></li>
-					<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'calls' %></li>
-				</ul>
-			</div>
-        </div>
-      </div>
+		<%= render_hints_for :services, 'ov-services' %>
+	      <div id="ov-services" class="hideable">
+	        <div class="ov-item-head">
+	          <h3><span>Services</span></h3>
+	        </div>
+	        <div id="ov-services-cnt">
+				<div>
+					<ul>
+						<li><%= link_to "<span>#{@client.issn_enabled? ? 'Manage Sync' : 'Enable Sync'}</span>", '#reservations', :id => 'reservations' %></li>
+						<li><%= link_to "<span>#{@client.call_tracking_enabled? ? 'Call Log' : 'Activate Call Tracking'}</span>", '#calls', :id => 'calls' %></li>
+						<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'calls' %></li>
+					</ul>
+				</div>
+	        </div>
+	      </div>
 
-	<%= render_hints_for :owner_info, 'ov-info' %>
- 	  <div id="ov-info" class="instant_form hideable">
-        <div class="ov-item-head">
-          <h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
+		<%= render_hints_for :owner_info, 'ov-info' %>
+	 	  <div id="ov-info" class="instant_form hideable">
+	        <div class="ov-item-head">
+	          <h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
 
-  	      <%= ajax_loader %>
-          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a>
-        </div>
+	  	      <%= ajax_loader %>
+	          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a>
+	        </div>
 		
-		<%= render :partial => 'owner_info' %>
-      </div>
+			<%= render :partial => 'owner_info' %>
+	      </div>
  
-	<%= render_hints_for :settings, 'ov-settings' %>
-      <div id="ov-settings" class="hideable">
-        <div class="ov-item-head">
-        	<h3><span>Settings</span></h3>
+		<%= render_hints_for :settings, 'ov-settings' %>
+	      <div id="ov-settings" class="hideable">
+	        <div class="ov-item-head">
+	        	<h3><span>Settings</span></h3>
 
-			<%= ajax_loader 'ajax-loader-facebook.gif', :id => 'sf_loader' %>
-	        <a id="client_edit_settings" class="btn save_btn" context="#ov-settings" loader="#sf_loader" replace="#ov-settings-cnt" href="#">Update</a>
-        </div>
-        <%= render :partial => 'settings' %>
-      </div>
+				<%= ajax_loader 'ajax-loader-facebook.gif', :id => 'sf_loader' %>
+		        <a id="client_edit_settings" class="btn save_btn" context="#ov-settings" loader="#sf_loader" replace="#ov-settings-cnt" href="#">Update</a>
+	        </div>
+	        <%= render :partial => 'settings' %>
+	      </div>
       
-    </div>
-    <div class="clear"></div>
+	    </div>
+	    <div class="clear"></div>
 
-  </div>
-</div>
+	  </div>
+	</div>
+<% end %>

@@ -1109,6 +1109,24 @@ $.fn.animAndRemove = function(anim, speed) {
 	});
 }
 
+// focus on next input when current input reaches maxlength
+$.fn.autoNext = function() {
+	return this.each(function() {
+		var $this = $(this);
+		if (typeof $this.attr('maxlength') == 'undefined') return;
+		
+		var form = $this.parents('form'),
+			inputs = $('input, textarea, select', form);
+		
+		$this.keyup(function() {
+			var input = $(this);
+			
+			if (input.val().length == input.attr('maxlength'))
+				inputs.eq(inputs.index(input) + 1).focus();
+		});
+	});
+}
+
 /******************************************* SUCCESS CALLBACKS *******************************************/
 
 $.toggleHelptext = function(clickedLink) {

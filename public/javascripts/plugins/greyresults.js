@@ -385,7 +385,7 @@ $(function(){
 			plus_sign 	 = $this.find('span > span').hide(),
 			ajax_loader  = $('.ajax_loader', $this).show(),
 			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
-			page = $('span[name=params_page]', $this.parent()).eq(0).text();
+			page = $('input[name=page]', $this.parent()).eq(0).val();
 		
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);
@@ -399,7 +399,7 @@ $(function(){
 					}
 
 					// this updates the page count so the next time the user clicks, we pull the correct data
-					$('span[name=params_page]').text(parseInt(page) + 1);
+					$('input[name=page]').val(parseInt(page) + 1);
 
 					var range 		= $('.results_range'),
 						range_start = parseInt(range.eq(0).text().split('-')[0]),
@@ -577,7 +577,6 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						console.log(rform)
 						$('#rent_step1 form', rform).rental_form();
 					});
 				} else {
@@ -585,7 +584,6 @@ $(function(){
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
-						console.log(rform)
 						$('#rent_step1 form').rental_form();
 					});
 				}
@@ -1075,7 +1073,7 @@ $.fn.rental_form = function() {
 			{
 				div_id  : 'rent_step2',
 				nav_vis : [
-					['next', function(btn, wizard) { btn.text('Rent It!') }],
+					['next', function(btn, wizard) { btn.text('Rent It!').fadeIn() }],
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
@@ -1255,6 +1253,12 @@ $.fn.rental_form = function() {
 		
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		$.activateSizeSelect(form);
+		$('.auto_next', '#new_tenant').autoNext();
+		
+		// pop up login form
+		$('#already_member', '#new_tenant').click(function() {
+			get_pop_up_and_do
+		});
 		
 		sizes_select.change(function() {
 			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));

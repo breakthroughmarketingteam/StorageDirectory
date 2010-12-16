@@ -17,18 +17,18 @@ $(document).ready(function() {
 	
 	// ajaxify the login form and forgot password link
 	$('#login_link').click(function() {
+		var $this = $(this);
+		if ($this.hasClass('active')) return false;
+
+		$this.addClass('active');
+		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
+
+		pop_up.fadeIn();
+		$('input[type=text]', pop_up).eq(0).focus();
+		$.bindPlugins();
+		
 		// TODO: this is a quickfix, find out why in IE the login box closes even when clicking inside of it, good luck.
 		if (!$.browser.msie) {
-			var $this = $(this);
-			if ($this.hasClass('active')) return false;
-
-			$this.addClass('active');
-			var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
-
-			pop_up.fadeIn();
-			$('input[type=text]', pop_up).eq(0).focus();
-			$.bindPlugins();
-
 			// close login box when user clicks outside of it
 			$(document).click(function(e) {
 				if ($(e.target).parents('#pop_up_box').length == 0) {
@@ -38,9 +38,9 @@ $(document).ready(function() {
 					});
 				}
 			});
-
-			return false;
 		}
+		
+		return false;
 	});
 	
 	// log the user in and change the topbar to the logged in links

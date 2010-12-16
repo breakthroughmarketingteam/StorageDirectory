@@ -1,69 +1,76 @@
-<div id="narrow-box">
-	<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
-	<% form_for @search, :url => search_form_path('auto_search'), :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
-		<div id="offset_search_box">
-			<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
-			<%= reverse_captcha %>
-			<%= f.submit 'Locate', :class => 'grn_btn' %>
-		</div>
-		<div id="advanced_opts">
-			<div id="type_select">
-				<%= f.label :storage_type, 'Type:', :class => 'auto' %>
-				<%= f.select :storage_type, (@facility_features | [['Truck Rentals', 'Truck'], ['Moving Companies', 'Moving']]), :selected => @search.storage_type, :class => 'auto' %>
+<% cache params.to_s.parameterize do %>
+	<%
+		@unit_features     = IssnUnitTypeFeature.labels
+		@top_features      = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
+		@unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
+	%>
+	<div id="narrow-box">
+		<!--<form id="narrow_results_form" action="/self-storage" class="silent" method="get" name="narrow_results_form">-->
+		<% form_for @search, :url => search_form_path('auto_search'), :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
+			<div id="offset_search_box">
+				<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+				<%= reverse_captcha %>
+				<%= f.submit 'Locate', :class => 'grn_btn' %>
 			</div>
-			
-			<% if is_self_storage_search? %>
-				<div id="size_option">
-					<div class="size_picker">
-						<%= image_tag @unit_size_icons.first.icon.url rescue 'Missing Size Icon' %>
-					</div>
-					<div>
-						<%= f.label :unit_size, 'Unit Size:' %>
-						<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size, :class => 'auto sizes_select' %>
-					</div>
+			<div id="advanced_opts">
+				<div id="type_select">
+					<%= f.label :storage_type, 'Type:', :class => 'auto' %>
+					<%= f.select :storage_type, ($_storage_types | ['Truck Rentals', 'Moving Companies']), :selected => @search.storage_type, :class => 'auto' %>
 				</div>
-			<% end %>
 			
-			<div id="distance_btns">
-				<%= f.label :within,"Distance in miles:" %>
-				<div class="uncollapse">
-					<% @distance_options.each do |distance| %>
-						<div class="radio_wrap auto">
-							<%= f.label "within_#{distance}", "#{distance}" %>							
-							<div class="radio_select">
-								<%= f.radio_button :within, distance %>
-							</div>
+				<% if is_self_storage_search? %>
+					<div id="size_option">
+						<div class="size_picker">
+							<%= image_tag SizeIcon.medium_icons.first.icon.url rescue 'Missing Size Icon' %>
 						</div>
-					<% end %>
-				</div>
-			</div>
-			
-			<div id="unit_features" class="unitfeatures">
-				<ul id="top_features">
-				<% @top_features.each do |top_feature| %>
-					<li class="selectable_wrap auto">
-						<div class="selectable">
-							<%= check_box_tag 'search[features]', top_feature %>
+						<div>
+							<%= f.label :unit_size, 'Unit Size:' %>
+							<%= select_tag_for_unit_size_icons 'search[unit_size]', @search.unit_size, :class => 'auto sizes_select' %>
 						</div>
-						<%= label_tag top_feature %>
-					</li>
+					</div>
 				<% end %>
-				</ul>
-				
-				<p><%= link_to 'More Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
-				
-				<ul class="collapseable hide">
-					<% @unit_features.each do |feature| %>
-					<li class="selectable_wrap auto">
-						<div class="selectable">
-							<%= check_box_tag 'search[features]', feature %>
-						</div>
-						<%= label_tag feature %>
-					</li>
-					<% end %>
-				</ul>
-			</div>
 			
-		</div>
-	<% end %>
-</div>
+				<div id="distance_btns">
+					<%= f.label :within,"Distance in miles:" %>
+					<div class="uncollapse">
+						<% Search.distance_options.each do |distance| %>
+							<div class="radio_wrap auto">
+								<%= f.label "within_#{distance}", "#{distance}" %>							
+								<div class="radio_select">
+									<%= f.radio_button :within, distance %>
+								</div>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			
+				<div id="unit_features" class="unitfeatures">
+					<ul id="top_features">
+					<% @top_features.each do |top_feature| %>
+						<li class="selectable_wrap auto">
+							<div class="selectable">
+								<%= check_box_tag 'search[features]', top_feature %>
+							</div>
+							<%= label_tag top_feature %>
+						</li>
+					<% end %>
+					</ul>
+				
+					<p><%= link_to 'More Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+				
+					<ul class="collapseable hide">
+						<% @unit_features.each do |feature| %>
+						<li class="selectable_wrap auto">
+							<div class="selectable">
+								<%= check_box_tag 'search[features]', feature %>
+							</div>
+							<%= label_tag feature %>
+						</li>
+						<% end %>
+					</ul>
+				</div>
+			
+			</div>
+		<% end %>
+	</div>
+<% end %>

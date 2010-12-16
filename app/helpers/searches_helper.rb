@@ -14,4 +14,8 @@ module SearchesHelper
     @search ||= Search.find_by_id(session[:search_id])
   end
   
+  def sort_status(search, sort)
+    search.sorted_by == sort ? search.sort_reverse : '-'
+  end
+  
 end

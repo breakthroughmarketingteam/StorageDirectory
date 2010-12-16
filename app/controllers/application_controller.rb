@@ -5,39 +5,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-  filter_parameter_logging /(password)|(card_number)|(csv)|(expires)/i
-  helper_method :current_user_session, 
-                :current_user,
-                :benchmark,
-                :_crud,
-                :regions,    # for blocks_model_form
-                :view_types, # for model_view_form
-                :models,     # for model_view_form
-                :view_types_dir,
-                :blocks_models,           # for the add_blocks_for helper
-                :model_blocks_for_region, # for the add_blocks_for helper
-                :rest_methods,  # for the virtual forms builder
-                :_actions,      # for the virtual forms builder
-                :_controllers,  # for the virtual forms builder
-                :_field_types,  # for the virtual forms builder
-                :_page_actions, # suggestions form
-                :_models_having_assoc,
-                :_models_with_title,
-                :_themes,  # for the site_settings form
-                :_plugins, # for the site_settings form
-                :_widgets, # for the site_settings form
-                :_user_hint_places, # client account control panel
-                :in_edit_mode?,
-                :in_mode?,
-                :user_allowed?,
-                :reject_blocks_enabled_on_this, # for the blocks_fields
-                :reject_views_enabled_on_this,  # for the blocks_fields
-                :reject_forms_enabled_on_this,  # for the blocks_fields
-                :use_scripts,
-                :get_coords,
-                :is_admin?,
-                :home_page,
-                :get_list_of_file_names
+  filter_parameter_logging /(password)|(card_number)|(cvv)|(expires)/i
+  helper_method :current_user_session, :current_user, :benchmark, :_crud, :regions, :view_types, :models, :view_types_dir, :blocks_models,           
+                :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
+                :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
+                :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
+                :is_admin?, :home_page, :get_list_of_file_names
   
   include UtilityMethods
   include Geokit
@@ -65,9 +38,8 @@ class ApplicationController < ActionController::Base
   
   $_usssl_discount = '10% Off'
   
-  # loads website title and theme, meta info, widgets and plugins
-  before_filter :load_app_config
-  
+  before_filter :ensure_domain
+  before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
   #before_filter :authorize_user
   before_filter :clean_home_url
@@ -78,7 +50,12 @@ class ApplicationController < ActionController::Base
   layout lambda { app_config[:theme] }
   
   protected # -----------------------------------------------
-  
+
+  $root_domain = 'usselfstoragelocator.com'
+  def ensure_domain
+    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
+  end
+
   # display full error message when logged in as an Admin
   def local_request?
     current_user && current_user.has_role?('Admin')
@@ -148,33 +125,18 @@ class ApplicationController < ActionController::Base
   # instance variables for the helpers and templates
   def get_content_vars
     unless request.xhr?
-      @controller_name   = controller_name
-      @action_name       = action_name
       @theme_css         = theme_css(session[:theme]  || @@app_config[:theme])
       @plugin_css        = plugin_css 'jquery.ui.css'
       @meta_keywords     = @@app_config[:keywords]    || @@app_config[:title]
       @meta_description  = @@app_config[:description] || @meta_keywords
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
-      @widgets_js        = use_scripts(:widgets, (@@app_config[:widgets] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Save, <strong>Rent Self Storage</strong> Anywhere, Anytime.'
-      @ad_partners       = AdPartner.all :conditions => 'enabled IS TRUE'
     end
-    
-    @user     = User.find(params[:user_id]) unless params[:user_id].blank?        
+         
     @per_page = 20
-    @listings_per_page = 10        
+    @listings_per_page = 20        
     @app_name = 'USSelfStorageLocator.com'                                                  
-    @distance_options = Search.distance_options
-    
-    # TODO: these are only getting the standard set, if the facility is ISSN enabled include the facility specific data
-    unless controller_name == 'user_sessions' && request.xhr?
-      @facility_features = $_storage_types #IssnFacilityFeature.labels
-      @unit_features     = IssnUnitTypeFeature.labels
-      @top_features      = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
-      @unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
-      @unit_size_icons   = SizeIcon.medium_icons
-    end
   end
   
   # TODO: move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }

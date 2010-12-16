@@ -18,7 +18,7 @@
 			<% end %>
 		</li>
 		
-		<% if in_mode?('edit', 'create', 'get_partial', 'update') && !@listing.issn_enabled? %>
+		<% if in_mode?('edit', 'create', 'update') && !@listing.issn_enabled? %>
 			<li class="st-sele">
 				<%= ajax_loader %>
 				<%= link_to 'Delete', listing_size_path(@listing, size), :class => 'delete_link iconOnly16 right', :title => 'Delete' %>

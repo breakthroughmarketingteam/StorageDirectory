@@ -39,7 +39,7 @@ class ListingsController < ApplicationController
       end
     
       @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
-    
+      
       session[:search_id] = @search.id
       @location = @search.location
       @listings = @search.results # this calls the Listing model
@@ -47,8 +47,11 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
     
       # updates the impressions only for listings on current page if the search has changed
-      @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser') if different
-    
+      if different
+        @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser') if different
+        #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
+      end
+      
       respond_to do |format|
         format.html {}
         format.js do
@@ -209,11 +212,9 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @special = @listing.specials.last || (@listing.client && @listing.specials.new)
-    @facility_features = @listing.facility_features.map(&:label).reject(&:blank?)
     @search = Search.find_by_id session[:search_id]
     
     if action_name == 'edit'
-      @facility_feature = FacilityFeature.new
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
       @hours = @listing.business_hours
