@@ -33,5 +33,12 @@
 			</div>
 		</div>
 	</div>
-	<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
+	
+	<div id="rent_wrap">
+		<h2>Rent a Unit</h2>
+		<div class="realtime">Real-Time Storage Unit Rentals</div>
+		<div id="rent_inner">
+			<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @listing.get_searched_size(@search) } unless @listing.sizes.empty? %>
+		</div>
+	</div>
 </div>

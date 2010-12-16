@@ -49,6 +49,10 @@ class Size < ActiveRecord::Base
     @size_icon ||= SizeIcon.first(:conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]).try :icon
   end
   
+  def compare_for_uniq
+    { :width => self.width, :length => self.length, :title => self.title.try(:downcase) }
+  end
+  
   # ISSN methods
   def update_reserve_costs!
     self.unit_type.update_reserve_costs unless self.unit_type.nil?

@@ -556,13 +556,14 @@ ul#specials_list {margin:15px 10px;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
 .facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
+.listing .facility-logo span{font-size:16px;line-height:16px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .facility-logo span.short{padding:0 5px 0;display:block;}
 .dlogo_wrap img{position:absolute;left:0;top:0;}
 .facility-logo img.default_logo{position:absolute;left:1;top:0;}
 #sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;text-decoration:none;}
-.listing .dlogo_wrap span{display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
+.listing .dlogo_wrap span{display:inline-block;font-size:16px;line-height:16px;margin:0 10px;text-align:center;top:9px;}
 #ov-units .dlogo_wrap span{position:relative;color:#fff;font-size:100%;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}
 #sl-fac-dist-in-edit p.sl-dist,#sl-fac-dist-in p.sl-dist,#ls_top .sl-dist{color:#33c;font-size:120%;}
@@ -1186,6 +1187,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
 .panel iframe{height:376px;margin-bottom:-4px;overflow:hidden;width:100%;background:url("/images/ui/storagelocator/secure-loader.gif") no-repeat 47% 47%;}
+#sl-tabs-overview iframe{width:100%;height:375px;overflow:hidden;}
 .map_flow_step{height:395px;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
@@ -1721,9 +1723,13 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-tabs #ratings{color:#666;float:right;font-size:12px;position:relative;}
 
 .rental_form{position:relative;text-align:left;}
-.rental_form h2{background:url(/images/ui/storagelocator/rent-form-tab-bg.png) no-repeat;color:#fff;font-size:28px;height:37px;padding:8px 0 0 20px;text-shadow:1px 1px 0 #333;width:323px;}
-.rental_form .realtime{background:url(/images/ui/storagelocator/greencheck.png) no-repeat;font-size:14px;font-weight:bold;height:30px;padding:12px 0 0 42px;position:absolute;right:0;top:0;width:215px;}
+.rental_form h2,#rent_wrap h2{background:url(/images/ui/storagelocator/rent-form-tab-bg.png) no-repeat;color:#fff;font-size:28px;height:37px;padding:8px 0 0 20px;text-shadow:1px 1px 0 #333;width:323px;}
+.rental_form .realtime,#rent_wrap .realtime{background:url(/images/ui/storagelocator/greencheck.png) no-repeat;font-size:14px;font-weight:bold;height:30px;padding:12px 0 0 42px;position:absolute;right:0;top:0;width:215px;}
 .rental_form h2,.rental_form .realtime{margin-top:-45px;}
+#rent_wrap{background:url("/images/ui/storagelocator/secure-loader.gif") no-repeat 47% 47%;}
+#rent_inner{border:1px solid #ccc;clear:both;}
+#rent_wrap h2,#rent_wrap .realtime{margin-top:0;float:left;}
+#rent_wrap .realtime{position:static;float:right;}
 .rental_form .inner{padding:0;}
 .rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;border-bottom:1px solid #eee;font-size:12px;height:13px;padding:15px 20px;}
 .rental_form .head span{color:#4c4bcc;font-weight:bold;}

@@ -207,10 +207,6 @@ class Listing < ActiveRecord::Base
     self.sizes.find :first, :conditions => ['width = ? AND length = ?', dims[0], dims[1]]
   end
   
-  def unit_types_for_select
-    self.sizes.all(:select => 'DISTINCT title', :order => 'title').map { |s| [s.title, s.title] }
-  end
-  
   def get_partial_link(name)
     "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}"
   end
@@ -278,6 +274,18 @@ class Listing < ActiveRecord::Base
   
   def available_sizes
     @available_sizes ||= self.issn_enabled? ? self.sizes.sorted.select { |size| size.unit_type.units_available? } : self.sizes.sorted
+  end
+  
+  def available_unit_types
+    self.available_sizes.map(&:title).uniq
+  end
+  
+  def uniq_avail_sizes
+    uniques = []
+    self.available_sizes.each do |size|
+      uniques << size unless uniques.any? { |u| u.compare_for_uniq.values == size.compare_for_uniq.values }
+    end
+    uniques
   end
   
   def average_rate
