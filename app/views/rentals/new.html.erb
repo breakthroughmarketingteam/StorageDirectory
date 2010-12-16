@@ -2,7 +2,7 @@
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
 	<div class="head">
-		Use this form to rent a unit from <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> and take advantage of their <span>Online Specials</span>.
+		Rent a unit from <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> using this secure rental form.
 	</div>
 	
 	<div id="rent_steps">
@@ -119,6 +119,7 @@
 			<div id="rent_step2" class="workflow_step">
 				<div class="inner">
 					<% form_for Tenant.new, :url => tenants_url(:protocol => 'https'), :html => { :class => 'silent' } do |f| %>
+						
 						<div class="uncollapse">
 							<h4 class="stack">Renter Information</h4>
 							<%= link_to 'Already have an account?', login_path(), :id => 'already_member' %>
@@ -159,6 +160,7 @@
 									</div>
 								</div>
 						</div>
+						
 						<div class="right">
 								<div class="stack">
 							        <%= bf.label :card_type, 'Card Type:', :class => 'block' %> 
@@ -186,7 +188,9 @@
 							<%= f.submit 'Save', :class => 'hide' %>
 							<div class="verisign"><span class="hidden">Verisign Secure</span></div>
 						</div>
+				
 					<% end %>
+
 				</div>
 			</div>
 			
@@ -197,9 +201,9 @@
 					</div>
 					
 					<div id="rental_complete" class="hide conf">
-						<h4>Great! Here's Your Unit Rental Information.</h4>
-						<p>We have sent your unit rental information to <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> and you'll be contacted by one of their representatives to complete the rental process.</p> 
-						<p>You will need to stop by the facility to sign their rental agreement and to gain access to your self storage unit. We've sent you a confirmation email with your rental information. Please print it and bring it at the time of move in.</p>
+						<h4>Great! Your Unit Rental Has Been Submitted.</h4>
+						<p>Your rental information has been sent to <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span>. You'll be contacted by one of their representatives to complete the rental process.</p> 
+						<p>We've also sent you an email confirmation with all the details of your unit rental. Please print it and bring it in at the time of move in.</p>
 						
 						<div id="rental-info">
 							<p><strong>Confirmation Number:</strong><span></span></p>
@@ -218,5 +222,6 @@
 			<a href="#back" class="back button">Back</a>
 			<a href="#next" class="next button">Next</a>
 		</div>
+		<img id="secure" src="/images/ui/storagelocator/secure.png"/>
 	</div>
 </div>

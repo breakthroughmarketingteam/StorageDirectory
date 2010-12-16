@@ -218,7 +218,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
 #rslt-head-txt .ajax_loader{margin:4px 0;display:block;}
-.listing > .inner{border-top:1px solid #ccc;}
+.listing > .inner{border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
 
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > div > .inner:hover{background:url(/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #666;border-bottom:1px solid #666;}
 #rslt-list-bg > div.active > .inner .rslt-title,#rslt-list-bg > div > .inner:hover .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;}
@@ -582,7 +582,7 @@ ul#specials_list {margin:15px 10px;}
 p.blue-edit{background:url(/images/ui/storagelocator/blue-edit.png) no-repeat top left;width:68px;height:22px;line-height:22px;text-align:center;font-weight:bold;position:relative;left:20px;}
 p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22px;}
 #sl-footer{border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;background-color:#ddd;height:30px;clear:both;margin-bottom:15px;}
-.panel #sl-tabs-sizes{margin-bottom:0;padding:0;}
+.panel #sl-tabs-sizes{margin-bottom:0;padding:0 0 1px;}
 .sizes_list_in{clear:right;}
 .sizes_list_in .uncollapse{margin:0 3px 3px;}
 #sl-tabs{position:relative;overflow:hidden;}
@@ -599,12 +599,12 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .sizes_list_in ul.active,.sizes_list_in .sl-table:hover,.sizes_list_in .sl-table-wrap.active .sl-table{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x top left;color:#333;}
 .sizes_list_in .sl-table-head{font-weight:bold;}
 .sizes_list_in .sl-table input{padding:3px;}
-.sizes_list_in ul li.st-size{margin-left:20px;width:76px;}
+.sizes_list_in ul li.st-size{margin-left:18px;width:76px;}
 .sizes_list_in .sl-table .st-size{font-weight:bold;margin-left:15px;width: 76px;}
 .sizes_list_in .sl-table .st-desc input{width:90%;}
 .sizes_list_in .sl-table .st-pric input{width:72%;}
 .sizes_list_in .sl-table .st-sele{margin-top:11px;height:auto;}
-.sizes_list_in ul li.st-type{width:13%;}
+.sizes_list_in ul li.st-type{width:24%;}
 .sizes_list_in ul li.st-desc{width:37%;height:10px;}
 .sizes_list_in ul li.st-pric{width:12%;}
 .sizes_list_in ul li.st-avail{width:10%;text-align:center;}
@@ -626,6 +626,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .panel .sizes_list_in .sl-table-exp{top:0;}
 #new_picture .stack{margin-bottom:20px;margin-left:20px;}
 #sl-tabs-pict .gallery{margin:0 20px;}
+.home_action #sl-tabs-pict .gallery{margin:0}
 .sl-table-exp{padding:10px 20px;font-size:100%;background:url(/images/ui/storagelocator/blue-box-bg.jpg) repeat-x bottom left #fafbff;border-bottom:7px solid #4C4BCC;overflow:hidden;}
 div.sl-table-exp div input{width:75%;float:left;clear:left;}
 div.sl-table-exp div #agree{width:auto;height:auto;margin-right:5px;}
@@ -873,7 +874,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #list-name{background-position:99% 50%;}
 #list-miles{background-position:97% 50%;}
 .listing{overflow:hidden;margin-bottom:10px;}
-.listing .inner{padding:0;background:#fff;position:relative;border-bottom:1px solid #ccc;}
+.listing .inner{padding:0;background:#fff;position:relative;}
 .listing .selected{background:url(/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{position:relative;}
 .unit_detail_in{cursor:default;padding:4px 12px 10px;font-size:80%;overflow:hidden;}
@@ -1023,7 +1024,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #new_client a.search-button:hover{background:url(/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
-#sl-tabs-sizes{background:#fff;border-color:-moz-use-text-color #ccc #ccc;border-right:1px solid #ccc;border-style:none solid solid;border-width:medium 1px 1px;position:relative;}
+#sl-tabs-sizes{background:#fff;border-color:-moz-use-text-color #ccc;border-style:none solid;border-width:medium 1px;position:relative;}
 .sizes_list_in .sl-table-wrap{overflow:hidden;}
 .sizes_list_in .ajax_loader{float:right;position:relative;top:8px;}
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
@@ -1731,7 +1732,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_wrap h2,#rent_wrap .realtime{margin-top:0;float:left;}
 #rent_wrap .realtime{position:static;float:right;}
 .rental_form .inner{padding:0;}
-.rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;border-bottom:1px solid #eee;font-size:12px;height:13px;padding:15px 20px;}
+.rental_form .head{-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f2f7ff;border-bottom:1px solid #eee;font-size:12px;height:12px;padding:15px 20px;}
 .rental_form .head span{color:#4c4bcc;font-weight:bold;}
 .rental_form .head a{font-size:100%;}
 .rental_form label{font-size:12px;padding-top:3px;width:69px;}
@@ -1768,6 +1769,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step2 .inner{padding:15px 20px;}
 #rent_step2 .inner .left{width:45%;margin-right:20px;}
 #rent_step2 .inner .right{width:48%;}
+.rental_form #secure{bottom:20px;position:absolute;right:230px;}
 #rent_steps .state_field .state{width:100px;}
 #rent_steps .zip_field label{width:20px;}
 .rental_form .size_picker .size_details{color:#4c4bcc;font-size:13px;font-weight:bold;}
@@ -1781,11 +1783,12 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #rent_step3 #processing_rental{font-size:22px;margin-top:120px;text-align:center;}
 #rental_complete{}
-#rental_complete h4{font-size:22px;margin:10px 0 15px;}
+#rental_complete h4{color:#4c4bcc;font-size:28px;margin:10px 0 15px;}
 #rental_complete p{font-size:12px;margin-bottom:10px;}
-#rental_complete #rental-info{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#fff;border:1px solid #ccc;margin-top:20px;padding:15px 20px 5px;width:50%;}
+#rental_complete #rental-info{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;box-shadow:1px 1px 3px #999;-webkit-box-shadow:1px 1px 3px #999;background:#fff;border:2px solid #ccc;margin-top:20px;padding:15px 20px 5px;width:50%;}
 #rental_complete #rental-info p{margin-bottom:10px;}
 #rental_complete #rental-info span{color:#4c4bcc;}
+#rental_complete #rental-info strong{font-size:16px;}
 
 .panel .rental_form,.sl-table-wrap .rental_form{border-color:-moz-use-text-color -moz-use-text-color #ccc;border-style:none none solid;border-width:medium medium 1px;margin-top:0;}
 .panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
@@ -1895,14 +1898,14 @@ form .note{clear:both;display:block;font-size:80%;}
 #request_review form,#request_review p,#list_reviews p{margin-left:20px;margin-right:20px;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
-#admin-l-col{margin-top:15px;}
+#admin-l-col{margin-top:8px;}
 #tracking_request{padding:0 20px 20px;}
 
 #tab1{margin-bottom:20px;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
 #sl-edit-tabs .ajax_loader{float:right;margin:7px 10px 0 0;}
 #sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
-#sl-edit-tabs h2,#sl-edit-tabs h3{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:7px 20px;border-bottom:1px solid #ccc;}
+#sl-edit-tabs h2,#sl-edit-tabs h3{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:11px 20px 7px;border-bottom:1px solid #ccc;}
 #flogo h3,#hours h3{margin-bottom:20px;}
 #sl-edit-tabs #details{width:100%;}
 #sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}
