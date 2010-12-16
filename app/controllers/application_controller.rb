@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
     end
          
     @per_page = 20
-    @listings_per_page = 10        
+    @listings_per_page = 20        
     @app_name = 'USSelfStorageLocator.com'                                                  
   end
   

@@ -385,7 +385,7 @@ $(function(){
 			plus_sign 	 = $this.find('span > span').hide(),
 			ajax_loader  = $('.ajax_loader', $this).show(),
 			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
-			page = $('input[name=page]', $this.parent()).eq(0).text();
+			page = $('input[name=page]', $this.parent()).eq(0).val();
 		
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);
@@ -399,7 +399,7 @@ $(function(){
 					}
 
 					// this updates the page count so the next time the user clicks, we pull the correct data
-					$('input[name=page]').text(parseInt(page) + 1);
+					$('input[name=page]').val(parseInt(page) + 1);
 
 					var range 		= $('.results_range'),
 						range_start = parseInt(range.eq(0).text().split('-')[0]),

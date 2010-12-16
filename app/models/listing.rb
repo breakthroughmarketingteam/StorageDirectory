@@ -261,7 +261,7 @@ class Listing < ActiveRecord::Base
   
   def self.update_stat(listings, stat, request, t = Time.now)
     insert_sql = listings.map do |listing|
-      "INSERT INTO #{stat} (listing_id, referrer, request_uri, created_at, updated_at) VALUES ('#{listing.id}', #{request.referrer}', '#{request.request_uri}', '#{t}', '#{t}')"
+      "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}')"
     end.join(';')
     
     ActiveRecord::Base.connection.execute insert_sql
