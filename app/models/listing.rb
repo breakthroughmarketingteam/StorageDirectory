@@ -180,7 +180,7 @@ class Listing < ActiveRecord::Base
   end
   
   def storage_type
-    self.facility_features.empty? ? 'self-storage' : self.facility_features.first.title.parameterize
+    self.storage_types.blank? ? 'self storage' : self.storage_types.split(',').first
   end
   
   def update_description(other_listing)

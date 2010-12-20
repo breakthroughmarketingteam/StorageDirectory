@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
   
-  before_filter :get_models, :only => :index
-  before_filter :get_model, :only => [:show, :edit]
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_transaction_types, :only => [:new, :edit]
   
   require 'GoToBillingLibrary'
@@ -15,7 +15,6 @@ class PaymentsController < ApplicationController
   end
 
   def new
-    @payment = Payment.new
     render :layout => false if request.xhr?
   end
   

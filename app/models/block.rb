@@ -1,5 +1,5 @@
 class Block < ActiveRecord::Base
-
+  
   has_many_polymorphs :models, :from => [:pages, :posts, :links]
   
   has_one :module, :class_name => 'ModelsModule', :as => :model

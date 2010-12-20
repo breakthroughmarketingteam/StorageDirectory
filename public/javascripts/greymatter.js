@@ -31,7 +31,6 @@ $(function(){
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
 	$('.click_sel').live('focus', function() { $(this).select() });
-	$('.click_sel').live('click', function() { $(this).select() });
 	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash

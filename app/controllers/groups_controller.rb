@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-  before_filter :get_group, :only => [:show, :edit, :update, :destroy]
+  
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     @groups = Group.all_for_index_view
@@ -11,7 +12,6 @@ class GroupsController < ApplicationController
   end
   
   def new
-    @group = Group.new
     render :layout => false if request.xhr?
   end
 
@@ -50,12 +50,6 @@ class GroupsController < ApplicationController
     end
     
     redirect_back_or_default groups_path
-  end
-
-  private
-  
-  def get_group
-    @group = Group.find(params[:id])
   end
   
 end

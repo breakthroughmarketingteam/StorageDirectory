@@ -1,6 +1,7 @@
 class Client < User
   
   has_many :listings, :foreign_key => 'user_id'
+  has_many :sizes, :through => :listings
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   #has_many :specials, :dependent => :destroy

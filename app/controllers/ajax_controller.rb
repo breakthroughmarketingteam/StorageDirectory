@@ -1,6 +1,5 @@
 class AjaxController < ApplicationController
   
-  skip_before_filter :authorize_user, :except => [:get_partial, :find_listings, :get_cities]
   skip_before_filter :init
   
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]

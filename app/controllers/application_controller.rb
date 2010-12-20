@@ -39,9 +39,9 @@ class ApplicationController < ActionController::Base
   $_usssl_discount = '10% Off'
   
   before_filter :ensure_domain
+  before_filter :simple_auth
   before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
-  #before_filter :authorize_user
   before_filter :clean_home_url
   before_filter :init, :except => [:create, :update, :delete]
   before_filter :get_content_vars
@@ -55,7 +55,18 @@ class ApplicationController < ActionController::Base
   def ensure_domain
     redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
   end
-
+  
+  # Pages#show, Listings#home and #locator are allowed by anonymous
+  # Clients#new and #create are also allowed by anonymous
+  # Posts#create is also allowed by anonymous (submit tip on storage-tips page)
+  # kick out anonymous from doing anything else
+  def simple_auth
+    # anonymous allowed in:
+    unless %w(pages clients posts).include?(controller_name)
+      
+    end
+  end
+  
   # display full error message when logged in as an Admin
   def local_request?
     current_user && current_user.has_role?('Admin')
@@ -88,23 +99,6 @@ class ApplicationController < ActionController::Base
   def init
     set_session_vars
     get_list_of_controllers_for_menu if is_admin?
-  end
-  
-  # the 'frontend' of the website is a page's show action
-  def authorize_user
-    # simple authorization: kick out anonymous users from backend actions
-    if !current_user
-      if action_name =~ /index|edit|update|destroy/
-        flash[:error] = "Please log in first."
-        store_location
-        redirect_to login_path and return
-      end
-    else
-      unless current_user.has_permission?(controller_name, action_name, params)
-        flash[:warning] = 'Access Denied'
-        redirect_back_or_default(home_page) and return
-      end
-    end
   end
   
   # hidden field hack_me must pass through empty, cheap reverse captcha trick
@@ -294,13 +288,17 @@ class ApplicationController < ActionController::Base
     case params[:filter_by] when 'tag'
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
     else
-      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :all, :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
     end
   end
   
   # before filters, show
   def get_model
-    eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find(params[:id])" rescue nil
+    if action_name == 'new'
+      eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.new"
+    else
+      eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find_by_id(params[:id])"
+    end
   end
   
   # for the shared blocks_model_form
@@ -448,13 +446,8 @@ class ApplicationController < ActionController::Base
     [modes].flatten.any? { |m| action_name == m }
   end
   
-  def require_client
-    return if current_user && current_user.has_role?('admin')
-
-    if !current_user || !current_user.has_role?('advertiser') && (current_user.id != params[:id] || !current_user.listing_ids.include?(params[:id]))
-      flash[:warning] = 'You must be logged in to do go there.'
-      redirect_to login_path
-    end
+  def get_or_create_search
+    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
   end
   
   def benchmark

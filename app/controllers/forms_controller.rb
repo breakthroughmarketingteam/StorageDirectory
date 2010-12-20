@@ -1,7 +1,8 @@
 class FormsController < ApplicationController
   
+  get_image
   before_filter :get_models, :only => :index
-  before_filter :get_form, :except => [:index, :new, :create]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_field, :only => [:new, :edit]
   
   def index
@@ -97,10 +98,6 @@ class FormsController < ApplicationController
   end
 
   private
-  
-  def get_form
-    @form ||= Form.find params[:id]
-  end
   
   def get_field
     @field ||= Field.new :form_id => (@form.try(:id) || 0)

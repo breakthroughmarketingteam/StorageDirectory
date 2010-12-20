@@ -1,7 +1,7 @@
 class HelptextsController < ApplicationController
   
-  before_filter :get_models, :only => :index
-  before_filter :get_helptext, :except => [:index, :new, :create]
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
@@ -12,12 +12,11 @@ class HelptextsController < ApplicationController
   end
   
   def new
-    @helptext = Helptext.new
     render :layout => false if request.xhr?
   end
 
   def create
-    @helptext = Helptext.new(params[:helptext])
+    @helptext = Helptext.new params[:helptext]
     
     respond_to do |format|
       format.html do
@@ -95,12 +94,6 @@ class HelptextsController < ApplicationController
         end
       end
     end
-  end
-
-  private
-  
-  def get_helptext
-    @helptext = Helptext.find(params[:id])
   end
   
 end

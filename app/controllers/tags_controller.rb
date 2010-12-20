@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
-  before_filter :get_tag, :only => [:edit, :update, :destroy]
+  
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     @tags = Tag.all
@@ -12,12 +13,11 @@ class TagsController < ApplicationController
   end
   
   def new
-    @tag = Tag.new
     render :layout => false if request.xhr?
   end
 
   def create
-    @tag = Tag.new(params[:tag], params, current_user)
+    @tag = Tag.new params[:tag], params, current_user
     
     if @tag.save
       flash[:notice] = @tag.name + ' has been created.'
@@ -50,12 +50,6 @@ class TagsController < ApplicationController
       flash[:error] = 'Error destroying ' + @tag.name
       render :action => 'edit'
     end
-  end
-
-  private
-  
-  def get_tag
-    @tag = Tag.find(params[:id])
   end
 
 end

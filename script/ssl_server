@@ -130,4 +130,3 @@ begin
 ensure
   puts 'Exiting'
 end
-

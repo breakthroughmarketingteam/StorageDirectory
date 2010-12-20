@@ -15,14 +15,16 @@
 						<% else %>
 							<%= edit_listing_city_state_zip @listing %>
 						<% end %>
-						<% if @listing.premium? %><div id="sl-phone">(561) 342-1984</div><% end %>
+						<% if @listing.tracked_number %>
+							<div id="sl-phone"><%= @listing.tracked_number %></div>
+						<% end %>
 					</div>
 				</li>
 				<% if @listing.premium? %>
-					<li id="display_hours" >
+					<li id="display_hours">
 						<%= display_listing_hours(@listing) %>
 					</li>
-					<li id="display_features" >
+					<li id="display_features">
 						<% @facility_features = @listing.facility_features.map(&:label).reject(&:blank?) %>
 						<% unless @facility_features.empty? %>
 							<div class="facility_features">

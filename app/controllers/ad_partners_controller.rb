@@ -1,6 +1,7 @@
 class AdPartnersController < ApplicationController
-  before_filter :get_models, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
+  
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
@@ -11,12 +12,11 @@ class AdPartnersController < ApplicationController
   end
 
   def new
-    @ad_partner = AdPartner.new
     render :layout => false if request.xhr?
   end
 
   def create
-    @ad_partner = AdPartner.new(params[:ad_partner])
+    @ad_partner = AdPartner.new params[:ad_partner]
     
     respond_to do |format|
       format.html do

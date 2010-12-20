@@ -16,6 +16,16 @@
 							<a href="#" class="spanish" title="Spanish"></a>
 						</div>
 					<% end %>
+					<%# if result.premium? %>
+						<%# @features = result.facility_features.map(&:label).reject(&:blank?) %>
+						<%# unless @features.empty? %>
+							<!--<div class="rslt-features">
+								<%# @features.each do |feature| %>
+									<a href="#" class="<%#= feature.parameterize %>" title="<%#= feature %>"><%#= feature %></a>
+								<%# end %>
+							</div>-->
+						<%# end %>
+					<%# end %>
 				</div>
 
 				<div class="num_icon">
@@ -31,8 +41,8 @@
 						<span class="rslt-address"><%= result.map.address %>,</span><br />
 						<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
 					</p>
-					<% if result.premium? %>
-						<p><span class="rslt-phone">1-800-567-4321</span></p>
+					<% if result.premium? && result.tracked_number %>
+						<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
 					<% end %>
 				
 					<%= claim_listing_link(result) unless result.premium? %>

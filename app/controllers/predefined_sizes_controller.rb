@@ -1,13 +1,13 @@
 class PredefinedSizesController < ApplicationController
-  before_filter :get_models, :only => [:index, :new, :edit]
-  before_filter :get_model, :only => [:edit, :update, :destroy]
+  
+  before_filter :get_models_paginated, :only => [:index, :new, :edit]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
   end
 
   def new
-    @predefined_size = PredefinedSize.new
     render :layout => false if request.xhr?
   end
   

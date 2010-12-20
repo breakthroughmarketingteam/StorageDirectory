@@ -15,7 +15,10 @@
 	            <ul id="sl-tabs-nav" class="tabular">
 	                <%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
 	                <%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless @listing.available_sizes.empty? %>
-	                <% if @listing.premium? %><div id="sl-phone"><%= "Call #{@listing.tracked_number}" if @listing.tracked_number %></div><% end %>
+	                
+					<% if @listing.tracked_number %>
+						<div id="sl-phone"><%= "Call #{@listing.tracked_number}" %></div>
+					<% end %>
 	            </ul>
 	            <!-- tab content -->
 	            <%= render :partial => 'overview' %>

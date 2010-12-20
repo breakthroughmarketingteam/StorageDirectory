@@ -6,7 +6,7 @@
 			<div id="type-three-r-col-in">
 				<div id="sl-edit-tabs">
 					<div id="sl-tabs-in" class="tabular_content">
-						<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.map.city %>, <%= @listing.map.state %></h2>
+						<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.city %>, <%= @listing.state %></h2>
 					
 						<%= display_message flash %>
 					
@@ -108,15 +108,21 @@
 						<div id="unit_sizes" class="tab_content">
 							<div id="custom_sizes">
 								<h3>My Unit Sizes</h3>
-								<p>Create a custom unit size...</p>
+								<% unless @listing.issn_enabled? %>
+									<p>Create a custom unit size...</p>
+								<% else %>
+									<p>These are your units that were synchronized with your facility management software...</p>
+								<% end %>
 								<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
 							</div>
-						
-							<div id="predefined_sizes">
-								<h3>Standard Sizes</h3>
-								<p>Or choose from these common unit sizes</p>
-								<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
-							</div>
+							
+							<% unless @listing.issn_enabled? %>
+								<div id="predefined_sizes">
+									<h3>Standard Sizes</h3>
+									<p>Or choose from these common unit sizes</p>
+									<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
+								</div>
+							<% end %>
 						</div>
 						<div id="fac_pictures" class="tab_content">
 							<p class="label">Facility Pictures:</p>

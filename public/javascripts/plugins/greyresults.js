@@ -55,7 +55,7 @@ $(function(){
 				size.after(form);
 				size.hide();
 				
-				$('#size_price', form).val(parseInt$('#size_price', form).val())
+				$('#size_price', form).val(parseInt($('#size_price', form).val()))
 				
 				$('.cancel_link', form).click(function() {
 					ajax_loader.hide();
@@ -1142,6 +1142,9 @@ $.fn.rental_form = function() {
 			
 		} else {
 			multiplier = limit;
+			
+			if (limit == 1 && has_special)
+				multplier += 1.00;
 		}
 		
 		$('#rental_duration', form).val(limit);

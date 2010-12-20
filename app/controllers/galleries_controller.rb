@@ -1,5 +1,7 @@
 class GalleriesController < ApplicationController
-  before_filter :get_gallery, :only => [:show, :edit, :update, :destroy]
+  
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_image, :only => [:show, :edit, :update, :destroy]
   before_filter :get_associations, :only => [:new, :edit]
   
   def index
@@ -53,8 +55,7 @@ class GalleriesController < ApplicationController
   
   private
   
-  def get_gallery
-    @gallery = Gallery.find(params[:id])
+  def get_image
     @image = Image.new if action_name =~ /^e.+(r|y)$/
   end
   

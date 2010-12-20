@@ -1,6 +1,6 @@
 class ViewsController < ApplicationController
   
-  before_filter :get_view, :except => [:index, :new, :create]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     @views = View.all_for_index_view
@@ -12,12 +12,11 @@ class ViewsController < ApplicationController
   end
 
   def new
-    @view = View.new
     render :layout => false if request.xhr?
   end
 
   def create
-    @view = View.new(params[:view])
+    @view = View.new params[:view]
     
     if @view.save
       flash[:notice] = @view.name + ' has been created.'
@@ -48,12 +47,6 @@ class ViewsController < ApplicationController
       flash[:error] = 'Error destroying ' + @view.name
       render :action => 'edit'
     end
-  end
-  
-  private
-  
-  def get_view
-    @view = View.find(params[:id])
   end
   
 end

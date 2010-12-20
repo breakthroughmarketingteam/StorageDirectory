@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
-  before_filter :get_comment, :except => [:index, :new, :create, :contact]
+  
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
-    @comments = Comment.all
     render :layout => false if request.xhr?
   end
   
@@ -11,7 +12,6 @@ class CommentsController < ApplicationController
   end
   
   def new
-    @comment = Comment.new
     render :layout => false if request.xhr?
   end
 
@@ -72,12 +72,6 @@ class CommentsController < ApplicationController
     end
     
     redirect_to comments_path
-  end
-
-  private
-  
-  def get_comment
-    @comment = Comment.find(params[:id])
   end
   
 end

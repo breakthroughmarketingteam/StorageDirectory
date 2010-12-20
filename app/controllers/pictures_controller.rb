@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
+  
   before_filter :get_models, :only => :index
-  before_filter :get_model, :only => [:show, :edit, :update]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
@@ -11,7 +12,6 @@ class PicturesController < ApplicationController
   end
 
   def new
-    @picture = Picture.new
     render :layout => false if request.xhr?
   end
 
