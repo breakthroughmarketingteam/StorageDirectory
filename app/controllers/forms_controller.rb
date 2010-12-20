@@ -1,6 +1,5 @@
 class FormsController < ApplicationController
   
-  get_image
   before_filter :get_models, :only => :index
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_field, :only => [:new, :edit]
