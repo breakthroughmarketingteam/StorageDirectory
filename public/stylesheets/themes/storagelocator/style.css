@@ -1000,7 +1000,7 @@ img.right{margin:0 0 10px 10px;}
 #client_form .flash{margin:0 0 21px 44px;width:52.3%;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 /* edit client */
 #ov-units .listing .crud_btn{width:145px;}
-#ov-reports-cnt{padding:10px 9px;min-height:350px;}
+#ov-reports-cnt{padding:10px 9px;min-height:345px;}
 #ov-page-cnt > div{margin:0 0 20px 0;}
 #ov-page-cnt #sl-footer{width:99.5%;height:40px;margin:20px 0;border:1px solid #ccc;}
 #ov-page-cnt #ov-top{margin:18px 0 10px;overflow:hidden;}
@@ -1059,7 +1059,7 @@ sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
 /*#ov-units-head #add_fac{float:right;height:24px;margin:8px 19px 0 0;padding:1px;width:79px;}*/
-.btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:1.8;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
+.btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:2.1;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 .my_account .flash{width:96%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}

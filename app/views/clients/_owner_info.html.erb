@@ -21,6 +21,14 @@
 				<span class="label">Card Number:</span>
 				<span class="value" rel="billing_info"><%= @client.active_billing_info.obscured_card_number if @client.has_billing_info? %></span>
 			</li>
+			<li>
+				<span class="label">CVV:</span>
+				<span class="value" rel="billing_info"><%= @client.active_billing_info.cvv if @client.has_billing_info? %></span>
+			</li>
+			<li>
+				<span class="label">Expires:</span>
+				<span class="value" rel="billing_info"><%= @client.active_billing_info.expires_month if @client.has_billing_info? %></span>
+			</li>
 		</ul>
 	</div>
 	<div class="ov-info-cnt">

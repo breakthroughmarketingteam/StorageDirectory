@@ -20,9 +20,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address].merge(:name => @client.name, :company => @client.company, :email => @client.email)
-    
-    @client.user_hints = UserHint.all
-    @client.report_recipients = @client.email
+    @billing_info = @client.billing_infos.build :name => @client.name, :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip, :phone => @mailing_address.phone
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
@@ -50,7 +48,7 @@ class ClientsController < ApplicationController
     @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
 
     @settings = @client.settings || @client.build_settings    
-    @client_welcome = Post.tagged_with('client welcome').last.try :content
+    @client_welcome = Post.tagged_with('client welcome').last.content if @client.login_count == 1
     
     redirect_to new_client_path if @client.nil?
   end
