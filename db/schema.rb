@@ -476,6 +476,14 @@ ActiveRecord::Schema.define(:version => 20101217173721) do
   add_index "maps", ["lng"], :name => "index_maps_on_lng"
   add_index "maps", ["state"], :name => "index_maps_on_state"
 
+  create_table "models_modules", :force => true do |t|
+    t.string   "name"
+    t.integer  "model_id"
+    t.string   "model_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"
     t.integer  "model_id"
