@@ -13,10 +13,15 @@ class Client < User
   
   has_many :staff_emails, :through => :listings
   
+  has_many :sizes, :through => :listings
+  has_many :rentals, :through => :listings
+  
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'
     self.status = 'unverified'
+    self.reports_recipients = self.email
+    self.user_hints = UserHint.all
   end
 
   def active_mailing_address

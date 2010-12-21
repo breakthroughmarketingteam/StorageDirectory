@@ -21,6 +21,8 @@ module ApplicationHelper
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
       title = "#{@search ? @search.storage_type : 'Self Storage'} in #{@search.city}, #{@search.state}"
+    elsif controller_name == 'user_sessions' && action_name == 'new'
+      title = 'Login'
     else
       title = (@page ? @page.title  : controller_name.titleize).to_s
     end
@@ -349,7 +351,7 @@ module ApplicationHelper
   
   # for the client account pages to take account who is viewing the page, an admin or the client
   def admin_conditional_path(user, options = {})
-    is_admin? ? edit_client_path(user, options) : client_account_path(options)
+    is_admin? ? edit_client_path('clients', user.id, 'edit', options) : client_account_path(options)
   end
   
   # return a either a links absolute path or get the target resource path

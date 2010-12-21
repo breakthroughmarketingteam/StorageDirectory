@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  
   before_filter :get_link, :only => [:show, :edit, :update, :destroy]
   before_filter :get_associations, :only => [:new, :edit]
   

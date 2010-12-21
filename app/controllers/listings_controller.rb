@@ -1,13 +1,12 @@
 class ListingsController < ApplicationController
   
-  before_filter :require_client, :except => [:home, :locator, :show, :compare]
-  
-  before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_or_create_search, :only => [:home, :locator]
   before_filter :get_client, :only => [:edit, :disable, :request_review, :tracking_request]
   before_filter :get_listing_relations, :only => [:show, :edit]
   
-  geocode_ip_address :only => :locator
+  geocode_ip_address :only => [:home, :locator]
   
   def index 
     render :layout => false if request.xhr?
@@ -16,7 +15,6 @@ class ListingsController < ApplicationController
   # action is used as the home page of the site (the user navigates to it with a blank url) so we load the page first and then get the results via ajax
   def home
     @page = Page.find_by_title 'Self Storage'
-    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     session[:search_id] = @search.id
     
     render :action => 'locator'
@@ -26,7 +24,6 @@ class ListingsController < ApplicationController
     benchmark do
       # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
-      @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
     
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
@@ -44,11 +41,11 @@ class ListingsController < ApplicationController
       @location = @search.location
       @listings = @search.results # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 14 }, :maps => @listings.collect(&:map_data) }
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
       # updates the impressions only for listings on current page if the search has changed
       if different
-        @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser') if different
+        @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
         #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
       end
       

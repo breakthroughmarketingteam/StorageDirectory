@@ -1,8 +1,8 @@
 class SizesController < ApplicationController
   
   before_filter :get_models_paginated, :only => :index
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_listing, :only => [:update, :create, :destroy]
-  before_filter :get_size, :only => [:show, :edit, :update, :destroy]
   before_filter :convert_price_to_cents, :only => [:update, :create]
   
   def index
@@ -47,10 +47,6 @@ class SizesController < ApplicationController
   
   def get_listing
     @listing = is_admin? ? Listing.find(params[:listing_id]) : current_user.listings.find(params[:listing_id])
-  end
-  
-  def get_size
-    @size = @listing.nil? ? Size.find(params[:id]) : @listing.sizes.find(params[:id])
   end
   
   def convert_price_to_cents

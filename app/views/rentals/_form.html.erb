@@ -1,0 +1,77 @@
+<fieldset>
+	<div class="stack uncollapse round box framed">
+		<div class="left stack">
+			<%= f.label :move_in_date, 'Move In Date: ' %>
+			<%= f.text_field :move_in_date, :class => 'short' %>
+		</div>
+		
+		<div class="left left_space stack">
+			<%= f.label :duration, 'Duration: ' %>
+			<%= f.text_field :duration, :class => 'short' %>
+		</div>
+		
+		<div class="left left_space stack">
+			<%= f.label :total, 'Total: ' %>
+			<%= f.text_field :total, :class => 'short' %>
+		</div>
+		
+		<div class="left">
+			<%= label_tag 'Created: ' %>
+			<%= @rental.created_at.asctime %>
+		</div>
+	</div>
+	
+	<p class="stack">Tenant</p>
+	<div class="stack uncollapse round box framed">
+		<div class="left">
+			<%= label_tag 'Name: ' %>
+			<%= link_to @rental.tenant.name, tenant_path(@rental.tenant) %>
+		</div>
+		
+		<div class="left left_space">
+			<%= label_tag 'Email: ' %>
+			<%= @rental.tenant.email %>
+		</div>
+		
+		<div class="left left_space right_space">
+			<%= label_tag 'Joined: ' %>
+			<%= @rental.tenant.created_at.asctime %>
+		</div>
+		
+		<div class="left">
+			<%= label_tag 'Status' %>
+			<%= @rental.tenant.status %>
+		</div>
+	</div>
+	
+	<p class="stack">Unit</p>
+	<div class="stack uncollapse round box framed">
+		<div class="left">
+			<%= label_tag 'Name: ' %>
+			<%= @rental.size.title %>
+		</div>
+		
+		<div class="left left_space">
+			<%= label_tag 'Size: ' %>
+			<%= @rental.size.dims %>
+		</div>
+		
+		<div class="left left_space">
+			<%= label_tag 'Price: ' %>
+			<%= number_to_currency @rental.size.dollar_price %>
+		</div>
+	</div>
+	
+	<p class="stack">Facility</p>
+	<div class="stack uncollapse round box framed">
+		<div class="left">
+			<%= label_tag 'Name: ' %>
+			<%= link_to @rental.listing.title, facility_path(@rental.listing.storage_type, @rental.listing.title, @rental.id) %>
+		</div>
+		
+		<div class="left left_space">
+			<%= label_tag 'Address: ' %>
+			<%= @rental.listing.full_address %>
+		</div>
+	</div>
+</fieldset>

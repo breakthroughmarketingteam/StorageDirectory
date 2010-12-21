@@ -100,8 +100,9 @@ module ListingsHelper
       if @search.is_city?
   			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
   			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}#{" #{@search.zip}" if @search.is_zip? }</span>" unless @search.lat.blank?
-  		else
-  			html << " matching <span class=\"hlght-text\">#{@search.extrapolate :title}</span>"
+  			
+  		elsif !(title = @search.extrapolate(:title)).blank?
+  			html << " matching <span class=\"hlght-text\">#{title}</span>"
   		end
     else
       html = "Looking for #{@search.storage_type} within <span class='hlght-text'>#{@search.within}</span> miles of <span class='hlght-text'>#{@search.city}, #{@search.state}</span> #{ajax_loader}"

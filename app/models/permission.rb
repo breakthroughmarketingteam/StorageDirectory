@@ -27,7 +27,7 @@ class Permission < ActiveRecord::Base
   # Instance Methods
   
   def title
-    "#{self.role.title} may #{self.action} #{self.resource}" unless self.new_record?
+    "#{self.role.title} may #{self.action} #{self.resource}#{' on owned' if self.scoped?}" unless self.new_record?
   end
   
   # map REST action to CRUD action
@@ -48,7 +48,7 @@ class Permission < ActiveRecord::Base
   end
   
   def on?(user, model)
-    return true unless self.scoped?
+    return true unless self.scoped? && !model.nil?
     model_class = model.class.name.underscore.pluralize
     user.respond_to?(model_class) && user.send(model_class).include?(model)
   end

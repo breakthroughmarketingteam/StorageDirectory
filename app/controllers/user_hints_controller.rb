@@ -1,6 +1,7 @@
 class UserHintsController < ApplicationController
+  
   before_filter :get_models, :only => [:index, :show, :new, :edit]
-  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
@@ -11,7 +12,6 @@ class UserHintsController < ApplicationController
   end
 
   def new
-    @user_hint = UserHint.new
     render :layout => false if request.xhr?
   end
   

@@ -1,30 +1,28 @@
 class PagesController < ApplicationController
-  before_filter :get_page, :only => [:show, :edit, :update, :destroy]
+  
+  before_filter :get_models_paginated, :only => :index
+  before_filter :get_page, :only => :show
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
+  before_filter :get_or_create_search, :only => :show
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
   
   geocode_ip_address :only => :show
   
   def index
-    @pages = Page.all_for_index_view
     render :layout => false if request.xhr?
   end
 
   def show
-    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
-    
-    if params[:title] == 'home' || params[:id].to_i == 1
-      render :layout => 'locatorfront'
-    end
+    render :layout => false if request.xhr?
   end
 
   def new
-    @page = Page.new
     render :layout => false if request.xhr?
   end
 
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new params[:page]
     
     respond_to do |format|
       format.html do
@@ -95,11 +93,11 @@ class PagesController < ApplicationController
   
   def get_page
     # monkey patched parameterize method. see: /lib/utility_methods.rb:31
-    @page = params[:title] ? Page.find_by_title_in_params(params[:title]) : (Page.find(params[:id]) rescue nil)
+    @page = params[:title] ? Page.find_by_title_in_params(params[:title]) : Page.find_by_id(params[:id])
     
     if @page.nil?
       #flash[:warning] = "Page Not Found"
-      @page = Page.find_by_title('Home')
+      @page = Page.find_by_title 'Home'
     end
   end
 

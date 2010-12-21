@@ -77,11 +77,11 @@ class User < ActiveRecord::Base
   def has_role?(*roles)
     roles.map(&:downcase).include? self.role.title.downcase
   end
-  
+
   # only allow a user to view and update their own profile
   # or perform allowed action on resources defined in their permissions
   def has_permission?(controller, action, params = {}, model = nil)
-    return true if self.has_role?('Admin') || controller == 'user_sessions'
+    return true if self.has_role?('admin') || controller == 'user_sessions'
     
     if controller =~ /(users)|(images)/ && action !~ /new|create|destroy/
       if (controller == 'users' && params[:id].to_i == self.id) || (controller == 'images' && params[:user_id].to_i == self.id)
@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
     self.permissions.any? { |p| p.allows?(action, controller) && p.on?(self, model) }
   end
   
+  def role_symbols
+    [self.role.title.downcase.to_sym]
+  end
+
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)

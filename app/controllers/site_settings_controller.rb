@@ -1,5 +1,5 @@
 class SiteSettingsController < ApplicationController
-
+  
   def edit
     @site_settings = @@app_config
     @new_setting_field = [:field, :value]

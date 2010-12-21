@@ -1,6 +1,5 @@
 class ClientsController < ApplicationController
   
-  before_filter :require_client, :except => [:index, :new, :create, :activate, :resend_activation]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   
@@ -21,9 +20,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new params[:client]
     @mailing_address = @client.mailing_addresses.build params[:mailing_address].merge(:name => @client.name, :company => @client.company, :email => @client.email)
-    
-    @client.user_hints = UserHint.all
-    @client.report_recipients = @client.email
+    @billing_info = @client.billing_infos.build :name => @client.name, :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip, :phone => @mailing_address.phone
     
     unless params[:listings].blank?
       @client.listing_ids = params[:listings]
@@ -47,11 +44,11 @@ class ClientsController < ApplicationController
   def edit
     redirect_to client_account_path if current_user.has_role?('advertiser') && params[:id]
    
-    @client = params[:id].blank? ? current_user : Client.find(params[:id])
+    @client = is_admin? ? Client.find_by_id(params[:id]) : current_user
     @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
 
-    @settings = @client.settings || @client.build_settings    
-    @client_welcome = Post.tagged_with('client welcome').last.try :content
+    @settings = @client.settings || @client.build_settings
+    @client_welcome = Post.tagged_with('client welcome').last.content if @client.login_count == 1
     
     redirect_to new_client_path if @client.nil?
   end

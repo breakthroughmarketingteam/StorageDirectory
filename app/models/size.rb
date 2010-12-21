@@ -58,4 +58,8 @@ class Size < ActiveRecord::Base
     self.unit_type.update_reserve_costs unless self.unit_type.nil?
   end
   
+  def owner
+    self.listing.client
+  end
+  
 end

@@ -1,7 +1,6 @@
 class ReservationsController < ApplicationController
 
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :scrub_comments, :only => :create
 
   def index
@@ -13,13 +12,12 @@ class ReservationsController < ApplicationController
   end
 
   def new
-    @reservation = Reservation.new
     render :layout => false if request.xhr?
   end
   
   def create
     split_name_param!
-    @reserver = Reserver.find(:first, :conditions => { :email => params[:reserver][:email] }) || Reserver.new(params[:reserver])
+    @reserver = Tenant.find(:first, :conditions => { :email => params[:reserver][:email] }) || Tenant.new(params[:reserver])
 
     # reservation_id comes through if the user had gone back and changed an input in the first step, if the user changed their email, we won't find the reservation, so fallback to build
     @reservation = @reserver.reservations.find_by_id(params[:reservation_id]) || @reserver.reservations.build

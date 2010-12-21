@@ -1,6 +1,7 @@
 class SizeIconsController < ApplicationController
-  before_filter :get_models, :only => [:index, :show, :new, :edit]
-  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
+  
+  before_filter :get_models_paginated, :only => [:index, :show, :new, :edit]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :_get_icon_sizes, :only => [:new, :edit]
   
   def index
@@ -12,7 +13,6 @@ class SizeIconsController < ApplicationController
   end
 
   def new
-    @size_icon = SizeIcon.new
     render :layout => false if request.xhr?
   end
   

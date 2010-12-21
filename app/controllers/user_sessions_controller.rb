@@ -1,20 +1,19 @@
 class UserSessionsController < ApplicationController
   
-  skip_before_filter :authorize_user
   before_filter :require_no_user, :only => :new
-  before_filter :require_user, :only => :destroy
+  skip_before_filter :simple_auth
   
   def new
     @user_session = UserSession.new
     
     respond_to do |format|
-      format.html
+      format.html {}
       format.js { render :layout => false }
     end
   end
   
   def create
-    @user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.new params[:user_session]
     
     if @user_session.save
       respond_to do |format|

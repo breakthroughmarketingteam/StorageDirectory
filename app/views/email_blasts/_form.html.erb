@@ -1,0 +1,41 @@
+<fieldset>
+	
+	<div class="stack">
+		<%= f.label :title, 'Nav Title' %>
+		<div class="shadow_wrap">
+			<%= f.text_field :title, :class => 'required' %>
+		</div>
+	</div>
+  
+  	<div class="uncollapse stack">
+  		<div class="check_box_wrap left right_space">
+	  		<%= f.radio_button :status, 'draft' %>
+	  		<%= f.label :status, 'Draft', :class => 'small_label' %>
+		
+			<%= f.radio_button :status, 'blast' %>
+	  		<%= f.label :status, 'Blast', :class => 'small_label' %>
+	  	</div>
+	
+	  	<div class="left">
+			<%= f.label :blast_date %>
+			<div class="shadow_wrap">
+				<%= f.text_field :blast_date, :class => 'required mini_calendar' %>
+			</div>
+		</div>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :description, nil, :class => 'block_label' %>
+		<div class="shadow_wrap">
+			<%= f.text_area :description, :class => 'small_textarea' %>
+		</div>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :content, nil, :class => 'block_label' %>
+		<div class="shadow_wrap">
+			<%= f.text_area :content, :class => 'wysiwyg' %>
+		</div>
+	</div>
+
+</fieldset>
