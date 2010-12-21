@@ -21,6 +21,8 @@ module ApplicationHelper
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
       title = "#{@search ? @search.storage_type : 'Self Storage'} in #{@search.city}, #{@search.state}"
+    elsif controller_name == 'user_sessions' && action_name == 'new'
+      title = 'Login'
     else
       title = (@page ? @page.title  : controller_name.titleize).to_s
     end

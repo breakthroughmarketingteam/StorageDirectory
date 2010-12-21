@@ -44,10 +44,10 @@ class ClientsController < ApplicationController
   def edit
     redirect_to client_account_path if current_user.has_role?('advertiser') && params[:id]
    
-    @client = params[:id].blank? ? current_user : Client.find(params[:id])
+    @client = is_admin? ? Client.find_by_id(params[:id]) : current_user
     @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
 
-    @settings = @client.settings || @client.build_settings    
+    @settings = @client.settings || @client.build_settings
     @client_welcome = Post.tagged_with('client welcome').last.content if @client.login_count == 1
     
     redirect_to new_client_path if @client.nil?

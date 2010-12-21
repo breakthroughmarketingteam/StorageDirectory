@@ -1,7 +1,6 @@
 class Client < User
   
   has_many :listings, :foreign_key => 'user_id'
-  has_many :sizes, :through => :listings
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   #has_many :specials, :dependent => :destroy
@@ -13,6 +12,9 @@ class Client < User
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
   
   has_many :staff_emails, :through => :listings
+  
+  has_many :sizes, :through => :listings
+  has_many :rentals, :through => :listings
   
   def initialize(params = {})
     super params

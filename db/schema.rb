@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101217173721) do
+ActiveRecord::Schema.define(:version => 20101221221029) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -133,6 +133,16 @@ ActiveRecord::Schema.define(:version => 20101217173721) do
 
   add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
+
+  create_table "email_blasts", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "content"
+    t.string   "status"
+    t.datetime "blast_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "facility_features", :force => true do |t|
     t.integer  "standard_id"
@@ -475,14 +485,6 @@ ActiveRecord::Schema.define(:version => 20101217173721) do
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
   add_index "maps", ["lng"], :name => "index_maps_on_lng"
   add_index "maps", ["state"], :name => "index_maps_on_state"
-
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"

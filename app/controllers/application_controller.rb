@@ -61,9 +61,27 @@ class ApplicationController < ActionController::Base
   # Posts#create is also allowed by anonymous (submit tip on storage-tips page)
   # kick out anonymous from doing anything else
   def simple_auth
-    # anonymous allowed in:
-    unless %w(pages clients posts).include?(controller_name)
-      
+    @allowed = false
+    @kickback_to = login_path
+    
+    # global permissions
+    if controller_name == 'pages' && action_name == 'show'
+      @allowed = true
+    elsif controller_name == 'listings' && %w(home locator compare).include?(action_name)
+      @allowed = true
+    elsif controller_name == 'posts' && %w(show create).include?(action_name)
+      @allowed = true
+    elsif controller_name == 'ajax'
+      @allowed = true
+    # everything else
+    elsif current_user
+      @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
+    end
+    
+    unless @allowed
+      flash[:error] = 'Access Denied'
+      store_location
+      redirect_to login_path and return
     end
   end
   
@@ -368,8 +386,8 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:warning] = "You must be logged in to have #{action_name} access to #{controller_name}"
-      redirect_to new_user_session_path
+      flash[:error] = "You must be logged in to have #{action_name} access to #{controller_name}"
+      redirect_to login_path
       return false
     end
   end
@@ -377,8 +395,17 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:warning] = 'You must be logged out to do that'
+      flash[:error] = 'You must be logged out to do that'
       redirect_to current_user
+      return false
+    end
+  end
+  
+  def require_admin
+    unless is_admin?
+      store_location
+      flash[:error] = 'Access Denied'
+      redirect_to login_path
       return false
     end
   end
