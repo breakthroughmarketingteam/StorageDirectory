@@ -1,5 +1,4 @@
 <% one_of_these = /^commentable|_type$/i %>
-
 <table class="table_view round box" cellpadding="0" cellspacing="0">
 	<thead>
 		
@@ -22,7 +21,7 @@
 	</thead>
 	<tbody>
 		<% data.each do |model| %>
-	
+		
 			<tr class="<%= cycle('odd', 'even') %>">
 				<% if model.respond_to?('image') %>
 					<td><%= link_to image_tag(model.image.url(:thumb)), model %></td>
@@ -31,10 +30,10 @@
 				<% model.attributes.each_pair do |key, val| %>
 					<% next if key =~ one_of_these %>
 					<% case key; when /(title)|(name)/ %>
-						
+					
 						<td>
 							<span class="title">
-								<%= link_to val.try(:titleize), model %>
+								<%= link_to val.respond_to?(:titleize) ? val.titleize : val, model %>
 							</span>
 						</td>
 						
