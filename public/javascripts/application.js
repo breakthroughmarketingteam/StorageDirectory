@@ -341,21 +341,20 @@ $(document).ready(function() {
 	
 	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
 	
-	if ($.on_page([['locator', 'listings']])) {
-		var main_map = $('#main_map');
-		
+	if ($.on_page([['locator, home', 'listings']])) {
 		$('#top_map_btn').live('click', function(){
 			var $this = $(this),
+				main_map = $('#main_map'),
 				location = $this.attr('rel').split(','),
 				lat = parseFloat(location[0]),
 				lng = parseFloat(location[1]);
 
 			if ($this.text() == 'Show Map') {
-				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', true, { expires: 30 });
+				$.cookie('mo', true, { expires: 30 });
 				$('span', $this).text('Hide Map');
 				main_map.slideDown();
 			} else {
-				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', null);
+				$.cookie('mo', null);
 				$('span', $this).text('Show Map');
 				main_map.slideUp();
 			}
@@ -367,8 +366,8 @@ $(document).ready(function() {
 			}, 300);
 		});
 		
-		if (!$.cookie('main_map_open')) {
-			$.cookie('main_map_open', true);
+		if (!$.cookie('mo')) {
+			$.cookie('mo', true);
 			$.open_map(main_map);
 		}
 	}
