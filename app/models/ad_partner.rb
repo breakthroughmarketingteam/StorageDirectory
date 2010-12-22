@@ -28,7 +28,7 @@ class AdPartner < ActiveRecord::Base
   end
   
   def to_hash(str)
-    s= eval "#{str}"
+    s = eval "#{str}"
   end
   
 end
