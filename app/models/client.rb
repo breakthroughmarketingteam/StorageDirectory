@@ -20,7 +20,7 @@ class Client < User
     super params
     self.role_id = Role.get_role_id 'advertiser'
     self.status = 'unverified'
-    self.reports_recipients = self.email
+    self.report_recipients = self.email
     self.user_hints = UserHint.all
   end
 

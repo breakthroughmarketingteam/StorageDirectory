@@ -50,7 +50,7 @@ class Permission < ActiveRecord::Base
   def on?(user, model)
     return true unless self.scoped? && !model.nil?
     model_class = model.class.name.underscore.pluralize
-    user.respond_to?(model_class) && user.send(model_class).include?(model)
+    user.respond_to?(model_class) && user.send(model_class).map.include?(model)
   end
   
 end
