@@ -97,7 +97,7 @@ class EmailBlastsController < ApplicationController
       sent_to = []
       params[:test_emails].split(/,\s?/).each do |email|
         sent_to << email
-        Blaster.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+        Blaster.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template') unless email.blank?
       end
       
       render :json => { :success => true, :data => "Sent to #{sent_to.size}: #{sent_to.join(', ')}" }

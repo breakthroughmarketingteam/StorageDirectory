@@ -9,7 +9,7 @@ class Blaster < ActionMailer::Base
   end
   
   def setup_email(recipient, from, subject = '')
-    @recipients = recipient
+    @recipients = "Self Storage Specials <#{recipient}>"
     @from       = from
     @subject    = subject
     @sent_on    = Time.now.utc
