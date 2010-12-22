@@ -7,7 +7,10 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'
 require 'issn_adapter'
-require 'PP' if RAILS_ENV == 'development' # pretty_print
+if RAILS_ENV == 'development' # pretty_print
+  require 'PP'
+  Hirb.enable :pager => true, :formatter => true if defined? Hirb
+end
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -51,9 +54,4 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
-end
-
-if defined? Hirb
-  Hirb.enable :pager => true
-  Hirb.enable :formatter => true
 end

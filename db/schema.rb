@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101221221029) do
+ActiveRecord::Schema.define(:version => 20101222175409) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -444,11 +444,6 @@ ActiveRecord::Schema.define(:version => 20101221221029) do
     t.string   "tracked_number"
     t.string   "storage_types"
   end
-
-  add_index "listings", ["category"], :name => "index_listings_on_category"
-  add_index "listings", ["enabled"], :name => "index_listings_on_enabled"
-  add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
-  add_index "listings", ["title"], :name => "index_listings_on_title"
 
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "user_id"
