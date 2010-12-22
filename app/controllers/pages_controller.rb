@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_page, :only => :show
+  before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   before_filter :get_or_create_search, :only => :show
   before_filter :get_blocks, :only => [:new, :edit]
@@ -86,18 +86,6 @@ class PagesController < ApplicationController
     else
       flash[:error] = 'Error destroying ' + @page.title
       render :action => 'edit'
-    end
-  end
-  
-  private
-  
-  def get_page
-    # monkey patched parameterize method. see: /lib/utility_methods.rb:31
-    @page = params[:title] ? Page.find_by_title_in_params(params[:title]) : Page.find_by_id(params[:id])
-    
-    if @page.nil?
-      #flash[:warning] = "Page Not Found"
-      @page = Page.find_by_title 'Home'
     end
   end
 

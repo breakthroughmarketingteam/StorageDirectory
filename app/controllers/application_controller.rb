@@ -319,6 +319,18 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def get_model_by_title_or_id
+    @model_class = controller_name.singularize.camelcase.constantize
+    @model = controller_name.singularize.underscore
+    
+    eval("@#{@model} = params[:title] ? #{@model_class}.find_by_title_in_params(params[:title].downcase) : #{@model_class}.find_by_id(params[:id])")
+    
+    if @model.nil?
+      #flash[:warning] = "Page Not Found"
+      eval("@#{@model} = @model_class.find_by_title 'Home'")
+    end
+  end
+
   # for the shared blocks_model_form
   def get_blocks
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }

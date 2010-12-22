@@ -217,7 +217,8 @@ module ApplicationHelper
   
   # processes any ERB tags in the model's content field, binding instance variables to it
   def render_model_content(model)
-    if model.is_using_extra_options?
+    
+    if model.respond_to?(:is_using_extra_options?) && model.is_using_extra_options?
       #if model.use_placeholders? && (placeholders = /\[(\w*):(.*)\]/i.match(model.content)) # anything in brackets with a colon inside => [model:title_or_id]
       #  model.content = set_content_in_placeholders(model, placeholders)
       #end

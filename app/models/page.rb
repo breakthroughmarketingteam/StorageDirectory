@@ -24,10 +24,6 @@ class Page < ActiveRecord::Base
     all :select => 'title, description, content, id, parent_id'
   end
   
-  def self.find_by_title_in_params(title)
-    all.detect { |page| page.title.parameterize == title }
-  end
-  
   def self.nav_pages
     pages = all(:conditions => 'show_in_nav IS TRUE', :order => 'position, id')
   end
