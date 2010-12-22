@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
   $_listing_search_distance = 20
   
   $_usssl_discount = '10% Off'
+  $_usssl_phone = '1-305-945-7561'
   
   before_filter :ensure_domain
   before_filter :simple_auth

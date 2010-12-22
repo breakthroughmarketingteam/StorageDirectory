@@ -553,14 +553,13 @@ $(document).ready(function() {
 		if (email == '' || email == email_input.attr('title')) return false;
 		
 		if (!chk_avail.data('checking')) {
-			ajax_loader.show();
-			chk_avail.text('Checking').data('checking', true).show();
+			chk_avail.text('Checking').data('checking', true);
 			
 			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
 				$.with_json(response, function(data) {
 					if (data.length) {
 						email_input.addClass('invalid').focus();
-						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
+						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail').show();
 					} else {
 						email_input.removeClass('invalid');
 						form.data('saving', false);
@@ -1584,13 +1583,13 @@ function workflow_step3() {
 	
 	$.setup_autocomplete('#listing_city', wizard.workflow);
 	
-	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(addresses[0]);
-	else $('#listing_address', wizard.workflow).autocomplete({ source: (addresses || []) });
+	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
+	else $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
 	
 	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
 	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
 	
-	$('#listing_city', wizard.workflow).val(city);
+	$('#listing_city', wizard.workflow).val(capitalize(city));
 	$('#listing_state', wizard.workflow).val(state.toUpperCase());
 	
 	// bind plugins and change pop_up title

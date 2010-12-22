@@ -21,112 +21,101 @@
 	</ul>
 	
 	<div id="type-one-top-bar">
-		
 		<div id="top_fac_page" class="uncollapse">
-			
 			<div id="add-fac-form-extra">
-				
 				<div class="tabular_content fade" id="add-fac-form-extra-in">
-				
-					<div class="tab_content active" id="fac-signup">
-						
-						
-				<div id="add-fac-txt">
-					<h3><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a> is today's most complete Self Storage locator on the web.</h3>
-					<p>In today's market <span class="blue">you're missing out on business</span> if your self storage facility is not accessible on the Internet. Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
-				
-				</div>
-			<div id="add-fac-form">
-				<% form_for @client, :html => { :class => 'silent' } do |f| %>
-					<span class="sub_head">Locate Your Facility and Get Started.</span>
-					<div>
-						<%= f.label :company, 'Facility Name:', :class => 'label' %>
-						<%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
-					</div>
-
-					<div id="email_check">
-						<%= f.label :email, 'Contact Email:', :class => 'email-label' %>
-						<%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
-						<%= f.text_field :email, :class => 'email' %>
-					
-					</div>
-
-					<div id="city">
-						<label class="label">City:</label>
-						<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
-					</div>
-					<div id="state">
-						<label class="label">State:</label>
-						<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
-					</div>
-
-					<div id="submit_wrap">
-						<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
-						<%= ajax_loader %>
-						<input type="submit" name="commit" class="hidden">
-					</div>
-				<% end %>					
-			</div>
-			
-			<div id="price-block">
-				<h4>Try it now and <br />
-					<strong>Get 60 Days Free!</strong>
-				</h4>
-				<p id="join-now">
-					or join and become a <br />
-					Network Member now for <span>$54.50/Month</span> <br />
-					and <br /><br />
-					<strong>Get 50% Off</strong><br />
-					the First 6 Months.
-				</p>
-					
-			</div>
+					<div class="tab_content active" id="fac-signup">						
 						<div id="add-fac-txt">
-				<p>When you list your self storage facility with USSelfStorageLocator.com  you're not just creating a business profile, you're joining a network of successful self storage facilities across the country. Our services go beyond a directory listing and include the latest enhancements in web marketing, SEO, and social networking.</p>
+							<h3><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a> is today's most complete Self Storage locator on the web.</h3>
+							<p>In today's market <span class="blue">you're missing out on business</span> if your self storage facility is not accessible on the Internet. Our network members benefit from easy to use marketing tools and reports to increase their leads, phone calls, and ultimately gain more unit rentals.</p>
+						</div>
+					
+						<div id="add-fac-form">
+							<% form_for @client, :html => { :class => 'silent' } do |f| %>
+								<span class="sub_head">Locate Your Facility and Get Started.</span>
+								<div>
+									<%= f.label :company, 'Facility Name:', :class => 'label' %>
+									<%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
+								</div>
+
+								<div id="email_check">
+									<%= f.label :email, 'Contact Email:', :class => 'email-label' %>
+									<%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
+									<%= f.text_field :email, :class => 'email' %>
+					
+								</div>
+
+								<div id="city">
+									<label class="label">City:</label>
+									<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
+								</div>
+								<div id="state">
+									<label class="label">State:</label>
+									<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+								</div>
+
+								<div id="submit_wrap">
+									<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+									<%= ajax_loader %>
+									<input type="submit" name="commit" class="hidden">
+								</div>
+							<% end %>					
+						</div>
 			
-				<p class="phone">Call <span>1-305-945-7561</span> For More Information.</p>
-			</div>			
+						<div id="price-block">
+							<h4>Try it now and <br />
+								<strong>Get 60 Days Free!</strong>
+							</h4>
+							<p id="join-now">
+								or join and become a <br />
+								Network Member now for <span>$54.50/Month</span> <br />
+								and <br /><br />
+								<strong>Get 50% Off</strong><br />
+								the First 6 Months.
+							</p>
+						</div>
+			
+						<div id="add-fac-txt">
+							<p>When you list your self storage facility with USSelfStorageLocator.com  you're not just creating a business profile, you're joining a network of successful self storage facilities across the country. Our services go beyond a directory listing and include the latest enhancements in web marketing, SEO, and social networking.</p>
+			
+							<p class="phone">Call <span><%= $_usssl_phone %></span> For More Information.</p>
+						</div>			
+					
 						<hr />
 						
-					<div id="fac-bottom">
-						<div class="feat">
-							<h4 class="box1">Easily Create and Customize Your Self Storage Facility's Profile.</h4>
-							<p>Add all the details you'd like your customers to know about your self storage facility like: hours of operation, amenities, pictures, logo, and more.</p>
+						<div id="fac-bottom">
+							<div class="feat">
+								<h4 class="box1">Easily Create and Customize Your Self Storage Facility's Profile.</h4>
+								<p>Add all the details you'd like your customers to know about your self storage facility like: hours of operation, amenities, pictures, logo, and more.</p>
+							</div>
+							<div class="feat">
+								<h4 class="box2">Take Reservations Online 24 Hours a Day, 7 Days a Week.</h4>
+								<p>Let your customers choose the unit size they need, the date they want to move in, and make a reservation online, any time, any day.</p>
+							</div>
+							<div class="feat">
+								<h4 class="box3">Easy to Use Customer Lead Tracking and Activity Graphs.</h4>
+								<p>Keep track of potential customer phone calls, messages, and reservations made through our website. All made available to you in easy to use activity logs and graphs.</p>
+							</div>
+							<div class="feat">
+								<h4 class="box4">Sync Your Profile with Your Facility's Inventory Management System.</h4>
+								<p>Easily synchronize your facility's profile with your inventory, and provide prospective customers up to date unit size availability for online reservations.</p>
+							</div>
+							<div class="feat">
+								<h4 class="box5">Always Get Notified of Potential Tenants when they're trying to reach you.</h4>
+								<p>Get email notifications whenever a potential customer has contacted you through our website, and never miss the opportunity to make the sale.</p>
+							</div>
+							<div class="feat">
+								<h4 class="box6">Smart Online Marketing Solution for Your Self Storage Facility.</h4>
+								<p>We give your self storage facility the online exposure it deserves for just a fraction of the price of a storage facility website. </p>
+							</div>
 						</div>
-						<div class="feat">
-							<h4 class="box2">Take Reservations Online 24 Hours a Day, 7 Days a Week.</h4>
-							<p>Let your customers choose the unit size they need, the date they want to move in, and make a reservation online, any time, any day.</p>
-						</div>
-						<div class="feat">
-							<h4 class="box3">Easy to Use Customer Lead Tracking and Activity Graphs.</h4>
-							<p>Keep track of potential customer phone calls, messages, and reservations made through our website. All made available to you in easy to use activity logs and graphs.</p>
-						</div>
-						<div class="feat">
-							<h4 class="box4">Sync Your Profile with Your Facility's Inventory Management System.</h4>
-							<p>Easily synchronize your facility's profile with your inventory, and provide prospective customers up to date unit size availability for online reservations.</p>
-						</div>
-						<div class="feat">
-							<h4 class="box5">Always Get Notified of Potential Tenants when they're trying to reach you.</h4>
-							<p>Get email notifications whenever a potential customer has contacted you through our website, and never miss the opportunity to make the sale.</p>
-						</div>
-						<div class="feat">
-							<h4 class="box6">Smart Online Marketing Solution for Your Self Storage Facility.</h4>
-							<p>We give your self storage facility the online exposure it deserves for just a fraction of the price of a storage facility website. </p>
-						</div>
-					</div>
 						
-						
 					</div>
-					
-					
-					
 					
 					<div class="tab_content" id="fac-features">
 						<h3>Enhanced Online Marketing For Your Self Storage.</h3>
 						
-						<p>
-							At <strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> we offer a variety of tools to help you promote your facility and grow your business. Today's businesses thrive on Internet exposure, and your potential customers are turning to specialized directories like ours to find professional services. We offer our network members a variety of services for marketing and customer leads.
-						</p>
+						<p>At <strong><a href="http://storagelocator.heroku.com">USSelfStorageLocator.com</a></strong> we offer a variety of tools to help you promote your facility and grow your business. Today's businesses thrive on Internet exposure, and your potential customers are turning to specialized directories like ours to find professional services. We offer our network members a variety of services for marketing and customer leads.</p>
 						
 						<p>With no contract necessary, you can list your self storage facility on a month-to-month subscription plan with easy online payments for all major credit cards. You can even enjoy a <strong><a href="">FREE 60-day trial</a></strong> of our services!</p>
 						
@@ -147,7 +136,6 @@
 						
 						<h3>Start Accepting Reservations Online, plus more!</h3>
 
-
 						<p><em>Online Reservations</em> - Your customers generally conduct their storage facility research and reservations during non-business hours. With online reservations, you can give your customers the freedom of making their reservation at any hour of the night, even on weekends and holidays!</p>
 
 						<p><em>Local Phone Number for Call Tracking</em> - The calls that come from the unique local phone number we provide your company with are all tracked and recorded. Your listing reports will tell you where inbound calls come from and allow you to listen in to real customer calls.</p>
@@ -167,11 +155,11 @@
 						
 						<h4></h4>
 						
-						<p>Getting started with an account is quick and easy with either our online form or over the phone at <strong>1-305-945-7561</strong>. We offer support to companies looking to add large quantities of facilities, as well as customer service experts that can identify the right solutions for your self storage facility listing.</p>
+						<p>Getting started with an account is quick and easy with either our online form or over the phone at <strong><%= $_usssl_phone %></strong>. We offer support to companies looking to add large quantities of facilities, as well as customer service experts that can identify the right solutions for your self storage facility listing.</p>
 							
 						<p><strong>Premium listings will always have an equal chance of showing up on top of our directory search results, giving all of our network members a fair advantage.</strong></p>
-							
 					</div>
+					
 					<div class="tab_content" id="fac-results">
 						<h3>
 							<span>Increased Online Exposure Means More Rentals.</span>
@@ -190,14 +178,10 @@
 						</div>
 						
 						<p><em>By being a USSelfStorageLocator.com member you'll be leveraging our traffic to get on the first page of mayor search engines like Google, Yahoo, and Bing. Help us gain popularity by letting your friends know about us!</em>  - <a href="">Facebook</a> | <a href="">Twitter</a> | <a href="">Digg</a> | <a href="">Stumble Upon</a></p>
-						
-						
+							
 					</div>
 				</div>
-	
 			</div>
-		
 		</div>
-		
 	</div>
 </div>

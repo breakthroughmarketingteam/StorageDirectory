@@ -1462,3 +1462,21 @@ String.prototype.replaceAll = function(find, replace) {
     }
     return temp;
 }
+
+function capitalize_addr(addr) {
+	if (typeof addr != 'string') return;
+	var capped = '',
+		parts = addr.split(' '),
+		dirs = ['ne', 'nw', 'se', 'sw'];
+	
+	$.each(parts, function(i) {
+		if (dirs.indexOf(this.toLowerCase()) >= 0)
+			capped += this.toUpperCase();
+		else
+			capped += capitalize(this);
+		
+		if (i < parts.length - 1) capped += ' ';
+	});
+	
+	return capped;
+}
