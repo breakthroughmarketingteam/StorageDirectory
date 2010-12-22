@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101222220649) do
+ActiveRecord::Schema.define(:version => 20101222233812) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -50,6 +50,22 @@ ActiveRecord::Schema.define(:version => 20101222220649) do
   end
 
   add_index "billing_infos", ["client_id", "name", "expires_month"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+
+  create_table "blast_clicks", :force => true do |t|
+    t.integer  "blast_id"
+    t.text     "referrer"
+    t.string   "remote_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blasts", :force => true do |t|
+    t.integer  "email_blast_id"
+    t.string   "blast_type"
+    t.integer  "damage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"

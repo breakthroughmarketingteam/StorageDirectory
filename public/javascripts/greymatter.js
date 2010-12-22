@@ -402,7 +402,7 @@ $(function(){
 		if (form.data('valid') && !$this.data('blasting')) {
 			$this.data('blasting', true);
 			
-			$.getJSON($this.attr('data-blast-path'), form.serialize(), function(response) {
+			$.getJSON($this.attr('data-blast-path'), { blast_type: blast_type, test_emails: test_emails, authenticity_token: $.get_auth_token() }, function(response) {
 				$.with_json(response, function(data) {
 					$.greyAlert(data, false);
 				});

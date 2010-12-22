@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email_blast_id: 1
+  blast_type: MyString
+  damage: 1
+
+two:
+  email_blast_id: 1
+  blast_type: MyString
+  damage: 1

@@ -87,8 +87,6 @@ class EmailBlastsController < ApplicationController
   end
   
   def blast
-    @email_blast.update_attributes params[:email_blast]
-    
     case params[:blast_type] when 'blast'
       Client.opted_in.each do |client|
         Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
