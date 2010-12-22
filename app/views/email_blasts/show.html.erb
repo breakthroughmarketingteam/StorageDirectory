@@ -1,2 +1,2 @@
-<% content_for :web_link, email_blast_web_version_path(@email_blast.title.parameterize) %>
+<% content_for :web_link, "/look/#{@email_blast.title.parameterize}" %>
 <%= render_model_content @email_blast %>

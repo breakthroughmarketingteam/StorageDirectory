@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
-  map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show', :requirements => { :title => /\D/}
+  map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show', :requirements => { :title => /\D/ }
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
