@@ -1260,7 +1260,7 @@ $.fn.rental_form = function() {
 		
 		// pop up login form
 		$('#already_member', '#new_tenant').click(function() {
-			$.greyAlert('Sorry, this feature is not yet implemented.')
+			$.greyAlert('Sorry, this feature is not yet implemented.');
 			return false;
 		});
 		
