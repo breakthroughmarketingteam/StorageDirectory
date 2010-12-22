@@ -42,6 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
+  map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show', :requirements => { :title => /\D/}
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
@@ -57,7 +58,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
-  map.resources :listings, :member => { :rate => :post, :copy_to_all => :post, :tracking_request => :post, :add_predefined_size => :post, :request_review => :post }, 
+  map.resources :listings, :member => { :rate => :post, 
+                                        :copy_to_all => :post, 
+                                        :tracking_request => :post, 
+                                        :add_predefined_size => :post, 
+                                        :request_review => :post }, 
                            :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
@@ -153,6 +158,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :searches
   map.resources :ad_partners
   map.resources :predefined_sizes
+  map.resources :email_blasts, :member => { :blast => :get }
   
   map.resources :admin
   map.resource :site_setting

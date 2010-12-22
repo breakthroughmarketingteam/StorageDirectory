@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101222175409) do
+ActiveRecord::Schema.define(:version => 20101222220649) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20101222175409) do
     t.datetime "blast_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "process_erb"
   end
 
   create_table "facility_features", :force => true do |t|

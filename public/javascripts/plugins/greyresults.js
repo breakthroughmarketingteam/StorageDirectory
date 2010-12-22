@@ -79,7 +79,7 @@ $(function(){
 			ajax_loader.show();
 			
 			$.post($this.attr('href'), { _method: 'delete' }, function(response) {
-				$.with_json(response, function() {
+				$.with_json(response, function(data) {
 					$this.parents('.sl-table-wrap').fadeOutRemove();
 				});
 			});

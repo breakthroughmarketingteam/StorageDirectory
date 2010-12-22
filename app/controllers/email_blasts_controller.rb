@@ -1,11 +1,12 @@
 class EmailBlastsController < ApplicationController
   
-  before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model_by_title_or_id, :only => :show
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
   
   geocode_ip_address :only => :show
   
   def index
+    @email_blasts = EmailBlast.all_for_index_view
     render :layout => false if request.xhr?
   end
 
@@ -82,6 +83,28 @@ class EmailBlastsController < ApplicationController
     else
       flash[:error] = 'Error destroying ' + @email_blast.title
       render :action => 'edit'
+    end
+  end
+  
+  def blast
+    @email_blast.update_attributes params[:email_blast]
+    
+    case params[:blast_type] when 'blast'
+      Client.opted_in.each do |client|
+        Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+      end
+      
+      render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+    when 'test'
+      sent_to = []
+      params[:test_emails].split(/,\s?/).each do |email|
+        sent_to << email
+        Blaster.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+      end
+      
+      render :json => { :success => true, :data => "Sent to #{sent_to.size}: #{sent_to.join(', ')}" }
+    else
+      render :json => { :success => false, :data => 'Did not choose blast type' }
     end
   end
   

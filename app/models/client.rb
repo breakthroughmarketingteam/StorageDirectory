@@ -16,6 +16,8 @@ class Client < User
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
   
+  named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
+  
   def initialize(params = {})
     super params
     self.role_id = Role.get_role_id 'advertiser'

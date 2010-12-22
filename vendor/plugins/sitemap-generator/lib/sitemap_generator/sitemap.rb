@@ -29,15 +29,23 @@ module SitemapGenerator
         # monkey patch by d.s. for usssl
         if model_instance.is_a? UsCity
           @xml.loc "http://#{Options.domain}#{us_city_url(model_instance)}"
+          puts "added sitemap record: UsCity [#{@xml.loc}]"
         elsif model_instance.is_a? Listing
-          
-          @xml.loc "http://#{Options.domain}#{facility_path(model_instance.storage_types.split(',')[0].try(:parameterize), model_instance.title, model_instance.id)}"
+          begin
+            @xml.loc "http://#{Options.domain}#{facility_path(model_instance.storage_types.split(',')[0].try(:parameterize), model_instance.title.parameterize, model_instance.id)}"
+          rescue => e
+            raise [e.message, model_instance].pretty_inspect
+          end
+          puts "added sitemap record: Listing [#{@xml.loc}]"
         elsif model_instance.is_a? Page
           @xml.loc "http://#{Options.domain}#{page_title(model_instance)}"
+          puts "added sitemap record: Page [#{@xml.loc}]"
         elsif model_instance.is_a? Post
           @xml.loc "http://#{Options.domain}#{post_title(model_instance)}"
+          puts "added sitemap record: Post [#{@xml.loc}]"
         else
           @xml.loc "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
+          puts "added sitemap record: #{model_instance.class.name} [#{@xml.loc}]"
         end
         @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
         @xml.changefreq change_freq.to_s if change_freq

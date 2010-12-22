@@ -48,7 +48,7 @@ class ClientsController < ApplicationController
     @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 5, :page => params[:page], :order => 'id DESC', :include => :map)
 
     @settings = @client.settings || @client.build_settings
-    @client_welcome = Post.tagged_with('client welcome').last.content if @client.login_count == 1
+    @client_welcome = Post.tagged_with('client welcome').last.content if !is_admin? && @client.login_count == 1
     
     redirect_to new_client_path if @client.nil?
   end

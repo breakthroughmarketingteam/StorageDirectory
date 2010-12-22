@@ -392,7 +392,28 @@ $(function(){
 		
 	} // END Edit Forms
 	
-	
+	$('#blast_off').live('click', function() {
+		var $this = $(this),
+			form = $this.parents('form').runValidation(),
+			blast_type = $('input[name=blast_type]:checked', '#blaster').val(),
+			test_emails = $('#test_emails', '#blaster').val(),
+			ajax_loader = $.new_ajax_loader('after', $this).show();
+		
+		if (form.data('valid') && !$this.data('blasting')) {
+			$this.data('blasting', true);
+			
+			$.getJSON($this.attr('data-blast-path'), form.serialize(), function(response) {
+				$.with_json(response, function(data) {
+					$.greyAlert(data, false);
+				});
+				
+				$this.data('blasting', false);
+				ajax_loader.hide();
+			});
+		}
+		
+		return false;
+	});
 });
 
 $.option_tags_from_model = function(model_class, models, options) {
@@ -674,9 +695,9 @@ $.get_param_value = function(key) {
 }
 
 // replacement for the browser's confirm box
-$.greyConfirm = function(msg, action, cancel, do_alert_instead) {
+$.greyConfirm = function(msg, action, cancel, do_alert_instead, error) {
 	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
-		title: do_alert_instead ? 'Alert' : 'Confirm',
+		title: do_alert_instead ? (error ? 'Alert' : 'Notice') : 'Confirm',
 		width: 400,
 		height: 150,
 		modal: true,
@@ -684,7 +705,7 @@ $.greyConfirm = function(msg, action, cancel, do_alert_instead) {
 		close: function() { $(this).dialog('destroy').remove() }
 	});
 	
-	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">Doh!</a></div>'; 
+	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a></div>'; 
 	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
 	pop_up.append(btns);
 	
@@ -707,8 +728,9 @@ $('.greyConfirm').live('click', function() {
 	});
 });
 
-$.greyAlert = function(msg) {
-	$.greyConfirm(msg, null, null, true);
+$.greyAlert = function(msg, error) {
+	if (typeof error == 'undefined') error = true;
+	$.greyConfirm(msg, null, null, true, error);
 }
 
 $.ajax_loader_tag = function(img, context) {

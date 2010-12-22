@@ -1,59 +1,116 @@
 <% declare_content_for %>
-<% display_message flash %>
+<div id="ajax_wrap_inner">
+	<% display_message flash %>
+	<div id="ov-header">
+		<h2><%= user_account_title %></h2>
+		<ul>
+			<li>Account #: <span id="client_id"><%= @client.id %></span></li>
+			<li>
+				Number of listings: <span id="listings_size"><%= @client.enabled_listings.size %></span>
+				<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
+			</li>
+		</ul>
+	</div>
 
-<h2><%= user_account_title %></h2>
+	<div id="ov-page-cnt">
+		<div id="ov-member" class="stack">
+			<div class="ov-item-head">
+				<h3><span>Member Info</span></h3>
+			</div>
+			
+			<div class="framed uncollapse">
+				<div class="right framed">
+					<%= link_to image_tag(@client.profile_image.image.url(:thumb), :alt => @client.name), @client.profile_image unless @client.images.empty? %>
+				</div>
+
+			  	<ul class="left right_space">
+					<li>
+			  	  		<b class="block left w110">Login:</b>
+			  	  		<%=h @client.name %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Email:</b>
+			  	  		<%=h @client.email %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Role:</b>
+			  	  		<%=h @client.role.title %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Login count:</b>
+			  	  		<%=h @client.login_count %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Last request at:</b>
+			  	  		<%=h @client.last_request_at %>
+			  		</li>
+			  	</ul>
+				<ul class="left left_space">
+					<li>
+			  	  		<b class="block left w110">Last login at:</b>
+			  	  		<%=h @client.last_login_at %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Current login at:</b>
+			  	  		<%=h @client.current_login_at %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Last login ip:</b>
+			  	  		<%=h @client.last_login_ip %>
+			  		</li>
+			  		<li>
+			  	  		<b class="block left w110">Current login ip:</b>
+			  	  		<%=h @client.current_login_ip %>
+			  		</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="ov-units" class="hideable">
+			<div class="ov-item-head">
+				<h3><span>Facilities</span></h3>
+				<% if @client.listings.size > 1 %>
+					<p id="address_sort"><a href="#">Sort by address</a></p>
+				<% end %>
+				<%= ajax_loader %>
+				<a href="#" id="add_fac" class="btn" title="Add a new facility">New</a>
+			</div>
+
+			<div id="client_listing_box">
+				<% unless @client.listings.empty? %>
+				<div id="rslt-list-bg">
+					<%= render :partial => 'listings/listing', :collection => @client.listings, :locals => { :owned => true } %>
+				</div>
+				<% end %>
+			</div>
+		</div>
+
+		<div id="ov-info" class="instant_form hideable">
+			<div class="ov-item-head">
+				<h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
+
+				<%= ajax_loader %>
+				<a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a>
+			</div>
+
+			<%= render :partial => 'owner_info' %>
+		</div>
+
+		<div id="ov-settings" class="hideable">
+			<div class="ov-item-head">
+				<h3><span>Settings</span></h3>
+
+				<%= ajax_loader 'ajax-loader-facebook.gif', :id => 'sf_loader' %>
+				<a id="client_edit_settings" class="btn save_btn" context="#ov-settings" loader="#sf_loader" replace="#ov-settings-cnt" href="#">Update</a>
+			</div>
+			<%= render :partial => 'settings' %>
+		</div>
+	</div>
+</div>
+
 
 <div class="round box framed uncollapse stack">
-  <div class="right framed">
-  	<%= link_to image_tag(@client.profile_image.image.url(:thumb), :alt => @client.name), @client.profile_image unless @client.images.empty? %>
-  </div>
   
-  <ul class="plain with_floats spaced_list_items">
-	  <li>
-  	  <b class="block left w110">Login:</b>
-  	  <%=h @client.name %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Email:</b>
-  	  <%=h @client.email %>
-  	</li>
-  	
-  	<li>
-  	  <b class="block left w110">Role:</b>
-  	  <%=h @client.role.title %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Login count:</b>
-  	  <%=h @client.login_count %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Last request at:</b>
-  	  <%=h @client.last_request_at %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Last login at:</b>
-  	  <%=h @client.last_login_at %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Current login at:</b>
-  	  <%=h @client.current_login_at %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Last login ip:</b>
-  	  <%=h @client.last_login_ip %>
-  	</li>
-
-  	<li>
-  	  <b class="block left w110">Current login ip:</b>
-  	  <%=h @client.current_login_ip %>
-  	</li>
-  </ul>
 </div>
 
 <div class="uncollapse">

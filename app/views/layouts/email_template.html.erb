@@ -10,7 +10,7 @@
     <tr valign="top">
         <td>
             <!--leaf background-->
-            <table cellspacing="0" border="0" id="leaf" align="center" style="background: url('http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/canvas-bg.jpg') no-repeat;" cellpadding="0" width="960">
+            <table cellspacing="0" border="0" id="leaf" align="center" style="background: url('http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/canvas-bg.jpg') no-repeat;" cellpadding="0" width="960">
                 <tr>
                     <td>
                         <!--container-->
@@ -62,7 +62,7 @@
                                                             <table cellspacing="0" border="0" id="date" style="-webkit-transform: rotate(2deg); -moz-transform: rotate(2deg); background-color: #4c4bcc; position: relative; right: 10px; bottom: -20px; color: #fff; font-size: 16px; font-weight: bold; font-family: 'Helvetica Neue',Helvetica,Tahoma,Verdana,Arial,sans-serif; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px;" bgcolor="#85bc73" cellpadding="5" width="175">
                                                                 <tr>
                                                                     <td height="25" width="25" style="padding-right: 0pt;"><img src="/images/clock-icon.jpg" align="left" height="25" width="25" /></td>
-                                                                    <td height="25" width="175" style="font-size: 12px; padding-left: 0pt;"><b><%= Time.now.month %></b></td>
+                                                                    <td height="25" width="175" style="font-size: 12px; padding-left: 0pt;"><b><%= Time.now.strftime '%B' %></b></td>
                                                                 </tr>
                                                             </table>
                                                             <!--/date-->
@@ -78,7 +78,7 @@
                                     <!--brown intro-->
                                     <table cellspacing="0" border="0" cellpadding="0" width="680" bgcolor="#33cc33">
                                         <tr>
-                                            <td id="brown-intro" valign="top" style="background-color: #33cc33; background-image: url('http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/intro-bg.jpg'); background-position: top; background-repeat: repeat-y;">
+                                            <td id="brown-intro" valign="top" style="background-color: #33cc33; background-image: url('http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/intro-bg.jpg'); background-position: top; background-repeat: repeat-y;">
                                                 <!--table to pad content for x browser-->
                                                 <table width="680" border="0" cellspacing="0" cellpadding="20">
                                                     <tr>
@@ -87,7 +87,7 @@
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr>
                                                                     <td height="200" style="background:#ffffff; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px;" >
-                                                                    <img style="float:left; margin-left:10px;" src="http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/usselfstoragelocator-logo.jpg" alt="USSelfStorageLocator.com">	
+                                                                    <img style="float:left; margin-left:10px;" src="http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/usselfstoragelocator-logo.jpg" alt="USSelfStorageLocator.com">	
 																	<h1 style="display: none; color: #29b02e; margin: 45px 0px 0 10px; float:left; text-shadow: #ccc 2px 2px 1px; font-size: 32px; font-family: 'Helvetica Neue',Helvetica,Tahoma,Verdana,Arial,sans-serif;">USSelfStorageLocator.com</h1>
 
                                                                     </td>
@@ -102,8 +102,8 @@
                                     </table>
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
-                                                        <td height="31" style="background-color: #4c4bcc; background-image: url('http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/intro-bg-bottom.jpg'); background-position: top; background-repeat: no-repeat;margin: 0px; padding: 0px; display: block;"></td>
-														<td height="19" style="background-image: url('<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/shadow.jpg'); background-position: top; background-repeat: no-repeat;margin: 0px; padding: 0px; display: block;"></td>
+                                                        <td height="31" style="background-color: #4c4bcc; background-image: url('http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/intro-bg-bottom.jpg'); background-position: top; background-repeat: no-repeat;margin: 0px; padding: 0px; display: block;"></td>
+														<td height="19" style="background-image: url('<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/shadow.jpg'); background-position: top; background-repeat: no-repeat;margin: 0px; padding: 0px; display: block;"></td>
                                                     </tr>
                                                 </table>
                                     <!--/brown intro-->
@@ -115,13 +115,13 @@
                                         <tr>
                                             <td valign="top" width="300">
                                                 <p style="color: #999999; margin: 0px 0px 12px; font-weight: bold; font-size: 13px; font-family: Arial, Helvetica, sans-serif;">You’re receiving this newsletter because you’ve subscribed to our Newsletter.
-                                                    <a href="http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/unsubscribe/<%= @email_blast.id %>" style="color: #ff881c; text-decoration: underline;">Unsubscribe instantly.</a>
+                                                    <a href="http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/unsubscribe/<%= @email_blast.id %>" style="color: #ff881c; text-decoration: underline;">Unsubscribe instantly.</a>
                                                 </p>
                                             </td>
                                             <td valign="top" width="300">
                                                 <table cellspacing="0" border="0" cellpadding="0" width="220">
                                                     <tr>
-                                                        <td valign="top"><a href="#" style="color: #9999cc; text-decoration: underline;"><img src="http://<%= RAILS_ENV == 'development' ? 'locahost:3000' : $root_domain %>/files/email_html/images/home-icon.png" border="0" height="19" alt="visit us" width="31" /></a></td>
+                                                        <td valign="top"><a href="#" style="color: #9999cc; text-decoration: underline;"><img src="http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/files/email_html/images/home-icon.png" border="0" height="19" alt="visit us" width="31" /></a></td>
                                                         <td>
                                                             <p style="color: #339933; margin: 0px 0px 12px; font-weight: bold; font-size: 13px; font-family: Arial, Helvetica, sans-serif;">USSelfStorageLocator.com<br>
                                                              </p>

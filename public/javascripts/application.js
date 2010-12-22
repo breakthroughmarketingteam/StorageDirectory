@@ -1,4 +1,3 @@
-/***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
 $(document).ready(function() {
 	if ($('body').hasClass('home')) $('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
@@ -1404,7 +1403,7 @@ $(document).ready(function() {
 			ajax_loader.show();
 			
 			$.getJSON($this.attr('href'), function(response) {
-				$.with_json(response, function() {
+				$.with_json(response, function(data) {
 					$this.parent().after('<p class="success_msg">The activation email has been resent.</p>');
 				});
 				
