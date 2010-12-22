@@ -20,7 +20,7 @@ module ApplicationHelper
     elsif controller_name == 'listings' && action_name == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && action_name == 'locator'
-      title = "#{@search ? @search.storage_type : 'Self Storage'} in #{@search.city}, #{@search.state}"
+      title = " in #{@search.city}, #{@search.state}"
     elsif controller_name == 'user_sessions' && action_name == 'new'
       title = 'Login'
     else

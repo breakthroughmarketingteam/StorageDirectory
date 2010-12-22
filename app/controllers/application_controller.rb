@@ -64,16 +64,19 @@ class ApplicationController < ActionController::Base
     @allowed = false
     @kickback_to = login_path
     
-    # global permissions
+    # public areas
     if controller_name == 'pages' && action_name == 'show'
       @allowed = true
-    elsif controller_name == 'listings' && %w(home locator compare).include?(action_name)
+    elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true
-    elsif controller_name == 'posts' && %w(show create).include?(action_name)
+    elsif controller_name =~ /(posts)|(comments)/ && %w(show create).include?(action_name)
+      @allowed = true
+    elsif controller_name == 'rentals' && %w(new create).include?(action_name)
       @allowed = true
     elsif controller_name == 'ajax'
       @allowed = true
-    # everything else
+    
+    # restrict access to everything else by permissions
     elsif current_user
       @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
     end
