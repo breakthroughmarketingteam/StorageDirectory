@@ -110,6 +110,13 @@ class EmailBlastsController < ApplicationController
     end
   end
   
+  def unsub
+    @client = Client.find_by_perishable_token params[:token] unless params[:token] =~ /(test)/
+    @client.update_attribute :wants_newsletter, false if @client
+    
+    render :layout => 'email_template'
+  end
+  
   private
   
   def get_email_blast
