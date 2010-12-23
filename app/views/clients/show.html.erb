@@ -14,15 +14,12 @@
 
 	<div id="ov-page-cnt">
 		<div id="ov-member" class="stack">
-			<div class="ov-item-head">
-				<h3><span>Member Info</span></h3>
+			<div class="ov-item-head uncollapse">
+				<h3 class="left"><span>Member Info</span></h3>
+				<%= link_to 'Control Panel', admin_to_client_path(@client), :class => 'right click_thru' %>
 			</div>
 			
 			<div class="framed uncollapse">
-				<div class="right framed">
-					<%= link_to image_tag(@client.profile_image.image.url(:thumb), :alt => @client.name), @client.profile_image unless @client.images.empty? %>
-				</div>
-
 			  	<ul class="left right_space">
 					<li>
 			  	  		<b class="block left w110">Login:</b>

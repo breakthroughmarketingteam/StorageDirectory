@@ -2155,3 +2155,95 @@ Migrating to AddUnSubColumnToListingContact (20101223002715)
   [4;36;1mSQL (3.7ms)[0m   [0;1mSHOW FIELDS FROM `widgets`[0m
   [4;35;1mSQL (1.5ms)[0m   [0mdescribe `widgets`[0m
   [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `widgets`[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (26.0ms)[0m   [0;1mSELECT * FROM `listings` WHERE (title like "Handy") [0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra       | rows  | ref | key
+   ----------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using where | 46503 |     |    
+[0m
+  [4;36;1mListing Load (51.3ms)[0m   [0;1mSELECT * FROM `listings` WHERE (title like "Handy%") [0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra       | rows  | ref | key
+   ----------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using where | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mMap Load (26.3ms)[0m   [0mSELECT * FROM `maps` WHERE (`maps`.listing_id = 68401) LIMIT 1[0m
+  [4;36;1mAnalyzing Map Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;35;1mMap Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mMap Load (0.5ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 68402) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (1.1ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 70735) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (1.5ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 77672) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (5.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93366) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 2    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93367) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (0.4ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93368) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (0.4ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93369) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (0.3ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93370) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
+  [4;36;1mMap Load (0.2ms)[0m   [0;1mSELECT * FROM `maps` WHERE (`maps`.listing_id = 93371) LIMIT 1[0m
+  [4;35;1mAnalyzing Map Load
+[0m   [0mselect_type | key_len | table | id | possible_keys                                             | type | Extra       | rows | ref   | key                                                      
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
+[0m
