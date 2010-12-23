@@ -45,8 +45,13 @@
 		</div>
 		
 		<div class="stack">
-			<%= radio_button_tag 'blast_type', 'for_real' %>
+			<%= radio_button_tag 'blast_type', 'blast' %>
 			<%= label_tag "Blast to all #{pluralize Client.opted_in.count, 'client'}" %>
+		</div>
+		
+		<div class="stack">
+			<%= radio_button_tag 'blast_type', 'listing_contacts' %>
+			<%= label_tag "Blast to all #{pluralize ListingContact.not_unsub.count, 'listing'}" %>
 		</div>
 		
 		<div class="stack">

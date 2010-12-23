@@ -87,19 +87,23 @@ class EmailBlastsController < ApplicationController
   end
   
   def blast
-    case params[:blast_type] when 'blast'
+    case params[:blast_type] when 'listing_contacts'
       ListingContact.not_unsub.each do |contact|
         @token = contact.unsub_token
         Blaster.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
       end
       
+      @email_blast.udpate_attribute :blast_date, Time.now
+      
       render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
-    when 'clients'
+    when 'blast'
        Client.opted_in.each do |client|
           @token = client.perishable_token
           Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
         end
-
+        
+        @email_blast.udpate_attribute :blast_date, Time.now
+        
         render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
         
     when 'test'
