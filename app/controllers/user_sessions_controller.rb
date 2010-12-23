@@ -49,7 +49,7 @@ class UserSessionsController < ApplicationController
   end
   
   def destroy
-    current_user_session.destroy
+    current_user_session.destroy if current_user_session
     session.clear
     redirect_to root_path
   end

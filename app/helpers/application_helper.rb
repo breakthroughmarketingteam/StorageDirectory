@@ -19,8 +19,8 @@ module ApplicationHelper
       title = @title
     elsif controller_name == 'listings' && action_name == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
-    elsif controller_name == 'listings' && action_name == 'locator'
-      title = "#{@search ? @search.storage_type : 'Self Storage'} in #{@search.city}, #{@search.state}"
+    elsif controller_name == 'listings' && %w(home locator).include?(action_name)
+      title = "Rent #{(@search.storage_type || 'self storage').titleize} Online in #{@search.city}, #{@search.state}"
     elsif controller_name == 'user_sessions' && action_name == 'new'
       title = 'Login'
     else
@@ -217,7 +217,7 @@ module ApplicationHelper
   
   # processes any ERB tags in the model's content field, binding instance variables to it
   def render_model_content(model)
-    if model.is_using_extra_options?
+    if model.respond_to?(:is_using_extra_options?) && model.is_using_extra_options?
       #if model.use_placeholders? && (placeholders = /\[(\w*):(.*)\]/i.match(model.content)) # anything in brackets with a colon inside => [model:title_or_id]
       #  model.content = set_content_in_placeholders(model, placeholders)
       #end
@@ -351,7 +351,7 @@ module ApplicationHelper
   
   # for the client account pages to take account who is viewing the page, an admin or the client
   def admin_conditional_path(user, options = {})
-    is_admin? ? edit_client_path('clients', user.id, 'edit', options) : client_account_path(options)
+    is_admin? ? admin_to_client_path(user, options) : client_account_path(options)
   end
   
   # return a either a links absolute path or get the target resource path

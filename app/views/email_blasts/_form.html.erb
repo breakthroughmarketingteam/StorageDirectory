@@ -1,5 +1,4 @@
-<fieldset>
-	
+<fieldset>	
 	<div class="stack">
 		<%= f.label :title, 'Nav Title' %>
 		<div class="shadow_wrap">
@@ -9,19 +8,12 @@
   
   	<div class="uncollapse stack">
   		<div class="check_box_wrap left right_space">
-	  		<%= f.radio_button :status, 'draft' %>
+	  		<%= f.radio_button :status, 'draft', :checked => (@email_blast.new_record? ? true : @email_blast.status == 'draft') %>
 	  		<%= f.label :status, 'Draft', :class => 'small_label' %>
 		
 			<%= f.radio_button :status, 'blast' %>
 	  		<%= f.label :status, 'Blast', :class => 'small_label' %>
 	  	</div>
-	
-	  	<div class="left">
-			<%= f.label :blast_date %>
-			<div class="shadow_wrap">
-				<%= f.text_field :blast_date, :class => 'required mini_calendar' %>
-			</div>
-		</div>
 	</div>
 	
 	<div class="stack">
@@ -37,5 +29,28 @@
 			<%= f.text_area :content, :class => 'wysiwyg' %>
 		</div>
 	</div>
-
 </fieldset>
+
+<% unless @email_blast.new_record? %>
+	<fieldset id="blaster">
+		<div class="stack">
+			<%= radio_button_tag :blast_type, 'test' %>
+			<%= label_tag 'Test blast' %>
+			<%= text_field_tag 'test_emails', 'diego@usselfstoragelocator.com', :style => 'width:400px' %>
+		</div>
+		
+		<div class="stack">
+			<%= radio_button_tag 'blast_type', 'blast' %>
+			<%= label_tag "Blast to all #{pluralize Client.opted_in.count, 'client'}" %>
+		</div>
+		
+		<div class="stack">
+			<%= radio_button_tag 'blast_type', 'listing_contacts' %>
+			<%= label_tag "Blast to all #{pluralize ListingContact.not_unsub.count, 'listing contact'}" %>
+		</div>
+		
+		<div class="stack">
+			<button id="blast_off" class="right_space" data-blast-path="<%= blast_email_blast_path @email_blast %>">Blast Off!</button>
+		</div>
+	</fieldset>	
+<% end %>

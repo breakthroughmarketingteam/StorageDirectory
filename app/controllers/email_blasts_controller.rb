@@ -1,11 +1,12 @@
 class EmailBlastsController < ApplicationController
   
-  before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model_by_title_or_id, :only => :show
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
   
   geocode_ip_address :only => :show
   
   def index
+    @email_blasts = EmailBlast.all_for_index_view
     render :layout => false if request.xhr?
   end
 
@@ -83,6 +84,54 @@ class EmailBlastsController < ApplicationController
       flash[:error] = 'Error destroying ' + @email_blast.title
       render :action => 'edit'
     end
+  end
+  
+  def blast
+    case params[:blast_type] when 'listing_contacts'
+      ListingContact.not_unsub.each do |contact|
+        @contact = contact
+        @token = contact.unsub_token
+        @listing = contact.listing
+        Blaster.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+      end
+      
+      @email_blast.udpate_attribute :blast_date, Time.now
+      
+      render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+    when 'blast'
+       Client.opted_in.each do |client|
+          @token = client.perishable_token
+          Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+        end
+        
+        @email_blast.udpate_attribute :blast_date, Time.now
+        
+        render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+        
+    when 'test'
+      sent_to = []
+      params[:test_emails].split(/,\s?/).each_with_index do |email, i|
+        unless email.blank?
+          sent_to << email
+          @token = "test-#{i + 1}"
+          Blaster.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+        end
+      end
+      
+      render :json => { :success => true, :data => "Sent to #{sent_to.size}: #{sent_to.join(', ')}" }
+    else
+      render :json => { :success => false, :data => 'Did not choose blast type' }
+    end
+  end
+  
+  def unsub
+    unless params[:token] =~ /(test)/
+      @model = Client.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
+      @model.update_attribute :wants_newsletter, false if @model.is_a? Client
+      @model.update_attribute :unsub, true if @model.is_a? ListingContact
+    end
+    
+    render :layout => 'email_template'
   end
   
   private

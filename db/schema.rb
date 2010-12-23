@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101221221029) do
+ActiveRecord::Schema.define(:version => 20101223002715) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -50,6 +50,22 @@ ActiveRecord::Schema.define(:version => 20101221221029) do
   end
 
   add_index "billing_infos", ["client_id", "name", "expires_month"], :name => "index_billing_infos_on_client_id_and_name_and_card_expiration"
+
+  create_table "blast_clicks", :force => true do |t|
+    t.integer  "blast_id"
+    t.text     "referrer"
+    t.string   "remote_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blasts", :force => true do |t|
+    t.integer  "email_blast_id"
+    t.string   "blast_type"
+    t.integer  "damage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "block_forms", :force => true do |t|
     t.integer  "block_id"
@@ -142,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20101221221029) do
     t.datetime "blast_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "process_erb"
   end
 
   create_table "facility_features", :force => true do |t|
@@ -397,6 +414,8 @@ ActiveRecord::Schema.define(:version => 20101221221029) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
+    t.boolean  "unsub"
+    t.string   "unsub_token"
   end
 
   create_table "listing_descriptions", :force => true do |t|
@@ -444,11 +463,6 @@ ActiveRecord::Schema.define(:version => 20101221221029) do
     t.string   "tracked_number"
     t.string   "storage_types"
   end
-
-  add_index "listings", ["category"], :name => "index_listings_on_category"
-  add_index "listings", ["enabled"], :name => "index_listings_on_enabled"
-  add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
-  add_index "listings", ["title"], :name => "index_listings_on_title"
 
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "user_id"

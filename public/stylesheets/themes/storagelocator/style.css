@@ -38,9 +38,9 @@ span.blue{color:#4c4bcc;}
 #logoimg{position:relative;top:6px;}
 #logoshadow{margin-left:15px;position:absolute;z-index:999;bottom:0;}
 #title{background:url(/images/ui/storagelocator/usselfstoragelocator-sml.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:655px;position:relative;left:140px;}
-
 #title h1{bottom:10px;color:#333;font-size:14px;font-weight:normal;left:4px;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
+#a{text-indent:-9999px;width:745px;height:49px;background:url(/images/ui/storagelocator/discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -519,7 +519,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:10px;right:17px;text-align:center;}
 #sl-header p.back-btn:hover{background:url(/images/ui/storagelocator/back-btn-hover.png) no-repeat top left}
 #ov-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat left top;color:#fff;float:right;font-size:14px;height:33px;line-height:2.3;position:relative;right:17px;text-align:center;text-shadow:1px 1px 0 #666;top:10px;width:172px;}
-#sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 0 #666;position:relative;left:15px;display:block;width:160px;height:33px;}
+#sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 0 #666;position:relative;left:15px;display:block;width:160px;height:33px;line-height:2.5;}
 #sl-fac-detail-in-edit{border:1px solid #ccc;}
 #sl-fac-detail-in .dlogo_wrap{margin-bottom:25px;}
 #sl-fac-detail-in-edit p a,#sl-fac-detail-in p a{font-weight:bold;color:#33c;text-decoration:none;}
@@ -1191,8 +1191,9 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
-.panel iframe{height:376px;margin-bottom:-4px;overflow:hidden;width:100%;background:url("/images/ui/storagelocator/secure-loader.gif") no-repeat 47% 47%;}
-#sl-tabs-overview iframe{width:100%;height:375px;overflow:hidden;}
+.panel iframe,.sl-table-wrap iframe{height:376px;margin-bottom:-4px;overflow:hidden;width:100%;background:url("/images/ui/storagelocator/secure-loader.gif") no-repeat 47% 47%;}
+#sl-tabs-overview iframe{width:100%;height:375px;overflow:hidden;margin-bottom:-4px;}
+.sl-table-wrap iframe{height:375px;}
 .map_flow_step{height:395px;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
@@ -1606,8 +1607,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #login_page input#send_btn{padding:5px 0;width:322px;}
 
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
-.confirm_box p{font-size:100%;text-align:center;}
-.confirm_box .btn,.alert_box .btn{position:absolute;bottom:6px;right:12px;color:#fff;}
+.confirm_box p,.alert_box p{font-size:100%;text-align:center;}
+.confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;}
 .confirm_box #confirm_yes{right:10px;}
 .confirm_box #confirm_cancel{left:10px;}
 
@@ -1946,3 +1947,4 @@ p.breadcrumb a{color:#fff;}
 
 .edit_rental input.short{width:100px;}
 .edit_rental label{font-weight:bold;}
+#unsub_wrap{background:none repeat scroll 0 0 #FFFFFF;color:#555555;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;margin-left:-10px;padding:20px 35px;width:110%;}

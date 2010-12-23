@@ -11,7 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
   map.new_client '/add-your-facility', :controller => 'clients', :action => 'new', :title => 'add-your-facility'
-  
+  map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show'
+  map.unsub_from_email_blast '/unsubscribe/:token', :controller => 'email_blasts', :action => 'unsub'
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
   map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
   map.admin_to_client '/clients/:id/account', :controller => 'clients', :action => 'edit'
@@ -57,7 +58,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
-  map.resources :listings, :member => { :rate => :post, :copy_to_all => :post, :tracking_request => :post, :add_predefined_size => :post, :request_review => :post }, 
+  map.resources :listings, :member => { :rate => :post, 
+                                        :copy_to_all => :post, 
+                                        :tracking_request => :post, 
+                                        :add_predefined_size => :post, 
+                                        :request_review => :post }, 
                            :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
@@ -97,6 +102,7 @@ ActionController::Routing::Routes.draw do |map|
     page.resources :suggestions
   end
   
+  map.connect 'posts/:title', :controller => 'posts', :action => 'show', :requirements => { :title => /\D+/ }
   map.resources :posts do |post|
     post.resources :views
     post.resources :blocks
@@ -152,6 +158,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :searches
   map.resources :ad_partners
   map.resources :predefined_sizes
+  map.resources :email_blasts, :member => { :blast => :get }
   
   map.resources :admin
   map.resource :site_setting
@@ -176,7 +183,6 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   
-  map.connect 'posts/:title', :controller => 'posts', :action => 'show'
   map.connect ':title', :controller => 'pages', :action => 'show'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

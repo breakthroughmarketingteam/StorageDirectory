@@ -79,7 +79,7 @@ $(function(){
 			ajax_loader.show();
 			
 			$.post($this.attr('href'), { _method: 'delete' }, function(response) {
-				$.with_json(response, function() {
+				$.with_json(response, function(data) {
 					$this.parents('.sl-table-wrap').fadeOutRemove();
 				});
 			});
@@ -1260,7 +1260,8 @@ $.fn.rental_form = function() {
 		
 		// pop up login form
 		$('#already_member', '#new_tenant').click(function() {
-			get_pop_up_and_do
+			$.greyAlert('Sorry, this feature is not yet implemented.');
+			return false;
 		});
 		
 		sizes_select.change(function() {

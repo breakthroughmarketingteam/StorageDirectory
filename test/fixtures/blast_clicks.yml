@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  blast_id: 1
+  referrer: MyText
+  remote_ip: MyString
+
+two:
+  blast_id: 1
+  referrer: MyText
+  remote_ip: MyString

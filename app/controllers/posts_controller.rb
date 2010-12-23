@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
   
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model_by_title_or_id, :only => :show
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
   def index
@@ -9,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post ||= Post.find :first, :conditions => ['LOWER(title) = ?', (params[:title] || params[:id]).gsub('-', ' ')]
+    @title = "#{@post.title} - #{@post.tag_list.split(/,\s?/).flatten.map(&:titleize).join(', ')}"
     
     respond_to do |format|
       format.html {}

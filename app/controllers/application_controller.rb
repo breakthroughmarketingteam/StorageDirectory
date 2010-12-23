@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
   $_listing_search_distance = 20
   
   $_usssl_discount = '10% Off'
+  $_usssl_phone = '1-305-945-7561'
   
   before_filter :ensure_domain
   before_filter :simple_auth
@@ -64,16 +65,19 @@ class ApplicationController < ActionController::Base
     @allowed = false
     @kickback_to = login_path
     
-    # global permissions
+    # public areas
     if controller_name == 'pages' && action_name == 'show'
       @allowed = true
-    elsif controller_name == 'listings' && %w(home locator compare).include?(action_name)
+    elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true
-    elsif controller_name == 'posts' && %w(show create).include?(action_name)
+    elsif controller_name =~ /(posts)|(comments)/ && %w(show create).include?(action_name)
+      @allowed = true
+    elsif controller_name =~ /(rentals)|(clients)/ && %w(new create).include?(action_name)
       @allowed = true
     elsif controller_name == 'ajax'
       @allowed = true
-    # everything else
+    
+    # restrict access to everything else by permissions
     elsif current_user
       @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
     end
@@ -319,6 +323,18 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def get_model_by_title_or_id
+    @model_class = controller_name.singularize.camelcase.constantize
+    @model = controller_name.singularize.underscore
+    
+    eval("@#{@model} = params[:title] ? #{@model_class}.find_by_title_in_params(params[:title].downcase) : #{@model_class}.find_by_id(params[:id])")
+    
+    if @model.nil?
+      #flash[:warning] = "Page Not Found"
+      eval("@#{@model} = @model_class.find_by_title 'Home'")
+    end
+  end
+
   # for the shared blocks_model_form
   def get_blocks
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }

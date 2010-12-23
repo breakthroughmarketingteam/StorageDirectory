@@ -4,7 +4,7 @@
 			<tr>
 				<th title="Setup where and when to send reports"><p>Email reports: </p></th>
 				<td id="email_reports_settings">
-					<% f.fields_for :settings, @settings do |s| %>
+					<% f.fields_for :settings, (@client.settings || @client.build_settings) do |s| %>
 						<p>
 							<%= s.text_field :reports_recipients, :class => 'hintable text', :title => 'Reports Recipients' %>
 							<span class="note">Separate multiple emails by comma, or delete to stop email reports</span>

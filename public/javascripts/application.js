@@ -1,4 +1,3 @@
-/***************** UTILITY FUNCTIONS *****************/
 $ = jQuery;
 $(document).ready(function() {
 	if ($('body').hasClass('home')) $('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
@@ -341,21 +340,20 @@ $(document).ready(function() {
 	
 	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
 	
-	if ($.on_page([['locator', 'listings']])) {
-		var main_map = $('#main_map');
-		
+	if ($.on_page([['locator, home', 'listings']])) {
 		$('#top_map_btn').live('click', function(){
 			var $this = $(this),
+				main_map = $('#main_map'),
 				location = $this.attr('rel').split(','),
 				lat = parseFloat(location[0]),
 				lng = parseFloat(location[1]);
 
 			if ($this.text() == 'Show Map') {
-				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', true, { expires: 30 });
+				$.cookie('mo', true, { expires: 30 });
 				$('span', $this).text('Hide Map');
 				main_map.slideDown();
 			} else {
-				if ($.on_page([['locator', 'listings']])) $.cookie('main_map_open', null);
+				$.cookie('mo', null);
 				$('span', $this).text('Show Map');
 				main_map.slideUp();
 			}
@@ -367,8 +365,8 @@ $(document).ready(function() {
 			}, 300);
 		});
 		
-		if (!$.cookie('main_map_open')) {
-			$.cookie('main_map_open', true);
+		if (!$.cookie('mo')) {
+			$.cookie('mo', true);
 			$.open_map(main_map);
 		}
 	}
@@ -553,14 +551,13 @@ $(document).ready(function() {
 		if (email == '' || email == email_input.attr('title')) return false;
 		
 		if (!chk_avail.data('checking')) {
-			ajax_loader.show();
-			chk_avail.text('Checking').data('checking', true).show();
+			chk_avail.text('Checking').data('checking', true);
 			
 			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
 				$.with_json(response, function(data) {
 					if (data.length) {
 						email_input.addClass('invalid').focus();
-						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail');
+						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail').show();
 					} else {
 						email_input.removeClass('invalid');
 						form.data('saving', false);
@@ -1406,7 +1403,7 @@ $(document).ready(function() {
 			ajax_loader.show();
 			
 			$.getJSON($this.attr('href'), function(response) {
-				$.with_json(response, function() {
+				$.with_json(response, function(data) {
 					$this.parent().after('<p class="success_msg">The activation email has been resent.</p>');
 				});
 				
@@ -1584,13 +1581,13 @@ function workflow_step3() {
 	
 	$.setup_autocomplete('#listing_city', wizard.workflow);
 	
-	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(addresses[0]);
-	else $('#listing_address', wizard.workflow).autocomplete({ source: (addresses || []) });
+	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
+	else $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
 	
 	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
 	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
 	
-	$('#listing_city', wizard.workflow).val(city);
+	$('#listing_city', wizard.workflow).val(capitalize(city));
 	$('#listing_state', wizard.workflow).val(state.toUpperCase());
 	
 	// bind plugins and change pop_up title

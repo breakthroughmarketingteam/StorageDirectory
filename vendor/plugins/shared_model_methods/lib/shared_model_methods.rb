@@ -27,6 +27,10 @@ module SharedModelMethods #:nodoc:
       Helptext.find_by_model(self.name.downcase).update_attributes(attributes)
     end
     
+    def find_by_title_in_params(title)
+      all.detect { |model| model.name_or_title.parameterize == title }
+    end
+    
   end
   
   # This module contains instance methods
@@ -88,7 +92,7 @@ module SharedModelMethods #:nodoc:
     end
     
     def is_using_extra_options?
-       self.has_extra_options? && self.process_erb?
+      self.has_extra_options? && self.process_erb?
     end
     
     def update_assoc(assoc, params)
