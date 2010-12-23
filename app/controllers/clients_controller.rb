@@ -26,7 +26,7 @@ class ClientsController < ApplicationController
       @client.listing_ids = params[:listings]
       @client.enable_listings!
     else
-      @listing = @client.listings.build :title => @client.company, :status => 'unverified', :enabled => true
+      @listing = @client.listings.build :title => @client.company, :status => 'unverified', :enabled => true, :category => 'Storage', :storage_types => 'self storage'
       @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
     end
     

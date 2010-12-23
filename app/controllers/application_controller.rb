@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
     @kickback_to = login_path
     
     # public areas
-    if controller_name == 'pages' && action_name == 'show'
+    if controller_name =~ /(pages)|(email_blasts)/ && action_name == 'show'
       @allowed = true
     elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true
