@@ -115,7 +115,7 @@
                                         <tr>
                                             <td valign="top" width="300">
                                                 <p style="color: #999999; margin: 0px 0px 12px; font-weight: bold; font-size: 13px; font-family: Arial, Helvetica, sans-serif;">You’re receiving this newsletter because you’ve subscribed to our Newsletter.
-                                                    <a href="http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %>/unsubscribe/<%= @email_blast.id %>" style="color: #ff881c; text-decoration: underline;">Unsubscribe instantly.</a>
+                                                    <a href="http://<%= RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain %><%= yield :unsub %>" style="color: #ff881c; text-decoration: underline;">Unsubscribe instantly.</a>
                                                 </p>
                                             </td>
                                             <td valign="top" width="300">

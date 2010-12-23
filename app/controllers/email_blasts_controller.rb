@@ -89,15 +89,17 @@ class EmailBlastsController < ApplicationController
   def blast
     case params[:blast_type] when 'blast'
       Client.opted_in.each do |client|
+        @token = client.perishable_token
         Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
       end
       
       render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
     when 'test'
       sent_to = []
-      params[:test_emails].split(/,\s?/).each do |email|
+      params[:test_emails].split(/,\s?/).each_with_index do |email, i|
         unless email.blank?
           sent_to << email
+          @token = "test-#{i + 1}"
           Blaster.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
         end
       end
