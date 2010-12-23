@@ -10,7 +10,9 @@ module SitemapGenerator
       :yearly,
       :never
     ]
-
+    
+    @@addedd_city_paths = []
+    
     attr_accessor :xml
     
     def initialize(xml)
@@ -28,24 +30,33 @@ module SitemapGenerator
       @xml.url do
         # monkey patch by d.s. for usssl
         if model_instance.is_a? UsCity
-          @xml.loc "http://#{Options.domain}#{us_city_url(model_instance)}"
-          puts "added sitemap record: UsCity [#{@xml.loc}]"
-        elsif model_instance.is_a? Listing
-          begin
-            @xml.loc "http://#{Options.domain}#{facility_path(model_instance.storage_types.split(',')[0].try(:parameterize), model_instance.title.parameterize, model_instance.id)}"
-          rescue => e
-            raise [e.message, model_instance].pretty_inspect
+          path = "http://#{Options.domain}#{us_city_url(model_instance)}"
+          
+          unless @@addedd_city_paths.include? path
+            @@addedd_city_paths << path
+            @xml.loc path
+            puts "added sitemap record: UsCity [#{path}]"
           end
-          puts "added sitemap record: Listing [#{@xml.loc}]"
+        
+        elsif model_instance.is_a? Listing
+          path = "http://#{Options.domain}#{facility_path(model_instance.storage_types.split(',')[0].try(:parameterize), model_instance.title.parameterize, model_instance.id)}"
+          @xml.loc path
+          puts "added sitemap record: Listing [#{path}]"
+          
         elsif model_instance.is_a? Page
-          @xml.loc "http://#{Options.domain}#{page_title(model_instance)}"
-          puts "added sitemap record: Page [#{@xml.loc}]"
+          path = "http://#{Options.domain}#{page_title(model_instance)}"
+          @xml.loc path
+          puts "added sitemap record: Page [#{path}]"
+        
         elsif model_instance.is_a? Post
-          @xml.loc "http://#{Options.domain}#{post_title(model_instance)}"
-          puts "added sitemap record: Post [#{@xml.loc}]"
+          path = "http://#{Options.domain}#{post_title(model_instance)}"
+          @xml.loc path
+          puts "added sitemap record: Post [#{path}]"
+        
         else
-          @xml.loc "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
-          puts "added sitemap record: #{model_instance.class.name} [#{@xml.loc}]"
+          path = "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
+          @xml.loc path
+          puts "added sitemap record: #{model_instance.class.name} [#{path}]"
         end
         @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
         @xml.changefreq change_freq.to_s if change_freq

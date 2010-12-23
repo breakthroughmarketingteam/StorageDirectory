@@ -2248,6 +2248,7 @@ Migrating to AddUnSubColumnToListingContact (20101223002715)
    SIMPLE      | 5       | maps  | 1  | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng | ref  | Using where | 1    | const | index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng
 [0m
 <<<<<<< HEAD
+<<<<<<< HEAD
 Rendered shared/_edit_delete_link (4.7ms)
   [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `roles` WHERE (`roles`.`id` = 5) [0m
 Rendered shared/_edit_delete_link (200.1ms)
@@ -2265,12 +2266,15 @@ Rendered views/partials/_list (323.1ms)
 Rendered shared/_base_model_index (351.6ms)
 Rendered shared/_model_index (394.9ms)
 Completed in 704ms (View: 394, DB: 22) | 200 OK [http://localhost/permissions]
+=======
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
 ** has_many_polymorphs: rails environment detected
 ** has_many_polymorphs: loaded ok
 ** has_many_polymorphs: autoload hook invoked
 ** has_many_polymorphs: preloading parent model Block
 ** has_many_polymorphs: associating Block.models
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+<<<<<<< HEAD
   [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
   [4;36;1mBlocksModel Columns (12.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
   [4;35;1mLink Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `links`[0m
@@ -18818,11 +18822,54 @@ Rendered shared/_extra_model_options (2.1ms)
 Rendered shared/_model_delete_cancel_link (1.8ms)
 Rendered shared/_model_form (548.3ms)
 Completed in 632ms (View: 533, DB: 32) | 200 OK [http://localhost/blocks/44/edit]
+=======
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (15.7ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (17.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (25.4ms)[0m   [0;1mSELECT * FROM `listings` WHERE (storage_types is NULL) [0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra       | rows  | ref | key
+   ----------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using where | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListing Update (0.3ms)[0m   [0;1mUPDATE `listings` SET `updated_at` = '2010-12-23 17:33:29', `storage_types` = 'self storage', `category` = 'Storage' WHERE `id` = 113006[0m
+  [4;35;1mUser Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mClient Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mClient Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 25252) AND ( (`users`.`type` = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys                                            | type  | Extra | rows | ref   | key    
+   --------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 4       | users | 1  | PRIMARY,index_users_on_id_and_email_and_type_and_company | const |       | 1    | const | PRIMARY
+[0m
+  [4;35;1mUser Load (0.6ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`email` = BINARY 'merry@a1outdoorstorage.com' AND `users`.type = 'Client' AND `users`.id <> 25252) LIMIT 1[0m
+  [4;36;1mAnalyzing User Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys                                            | type  | Extra                    | rows | ref | key                                             
+   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   SIMPLE      | 778     | users | 1  | PRIMARY,index_users_on_id_and_email_and_type_and_company | index | Using where; Using index | 42   |     | index_users_on_id_and_email_and_type_and_company
+[0m
+  [4;35;1mClient Update (0.3ms)[0m   [0mUPDATE `users` SET `updated_at` = '2010-12-23 17:33:29', `perishable_token` = 'YLmVg_8syr7PyIlWIMkA' WHERE `id` = 25252[0m
+[paperclip] Saving attachments.
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
 ** has_many_polymorphs: autoload hook invoked
 ** has_many_polymorphs: preloading parent model Block
 ** has_many_polymorphs: associating Block.models
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
   [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+<<<<<<< HEAD
   [4;36;1mBlocksModel Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
   [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
   [4;36;1mPage Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
@@ -19051,18 +19098,47 @@ Rendered menus/_topnav (6.0ms)
 [0m
 Rendered pages/_home (2.6ms)
 Completed in 1094ms (View: 417, DB: 39) | 200 OK [http://localhost/terms-of-use-facility-owners]
+=======
+  [4;36;1mBlocksModel Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (3.6ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (494.3ms)[0m   [0;1mSELECT * FROM `listings` ORDER BY user_id desc[0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra          | rows  | ref | key
+   -------------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using filesort | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
 ** has_many_polymorphs: autoload hook invoked
 ** has_many_polymorphs: preloading parent model Block
 ** has_many_polymorphs: associating Block.models
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
   [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+<<<<<<< HEAD
   [4;36;1mBlocksModel Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
   [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
   [4;36;1mPage Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+=======
+  [4;36;1mBlocksModel Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
   [4;35;1mPost Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
 ** has_many_polymorphs: preloading parent model View
 ** has_many_polymorphs: associating View.models
   [4;36;1mBlock Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+<<<<<<< HEAD
   [4;35;1mModelsView Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
 
 
@@ -19356,11 +19432,44 @@ Processing AjaxController#get_partial (for 127.0.0.1 at 2010-12-23 17:46:43) [GE
 Cached fragment hit: views/listings/85480-20101217185155 (0.0ms)
 Rendered listings/_featured (89.8ms)
 Completed in 99ms (View: 3, DB: 0) | 200 OK [http://localhost/ajax/get_partial?partial=listings%2Ffeatured]
+=======
+  [4;35;1mModelsView Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (320.4ms)[0m   [0;1mSELECT * FROM `listings` ORDER BY user_id desc[0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra          | rows  | ref | key
+   -------------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using filesort | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mUsCity Load (227367.7ms)[0m   [0m SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
+ WHERE us_cities.name LIKE maps.city
+ ORDER BY us_cities.name
+[0m
+  [4;36;1mUsCity Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `us_cities`[0m
+  [4;35;1mPost Load (1.3ms)[0m   [0mSELECT * FROM `posts` ORDER BY updated_at desc[0m
+  [4;36;1mAnalyzing Post Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys | type | Extra          | rows | ref | key
+   ---------------------------------------------------------------------------------------------
+   SIMPLE      |         | posts | 1  |               | ALL  | Using filesort | 42   |     |    
+[0m
+  [4;35;1mPage Load (0.8ms)[0m   [0mSELECT * FROM `pages` ORDER BY updated_at desc[0m
+  [4;36;1mAnalyzing Page Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys | type | Extra          | rows | ref | key
+   ---------------------------------------------------------------------------------------------
+   SIMPLE      |         | pages | 1  |               | ALL  | Using filesort | 12   |     |    
+[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
 ** has_many_polymorphs: autoload hook invoked
 ** has_many_polymorphs: preloading parent model Block
 ** has_many_polymorphs: associating Block.models
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
   [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+<<<<<<< HEAD
   [4;36;1mBlocksModel Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
   [4;35;1mLink Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `links`[0m
   [4;36;1mPage Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
@@ -19458,11 +19567,34 @@ Rendered views/partials/_table (127.8ms)
 Rendered shared/_base_model_index (249.3ms)
 Rendered shared/_model_index (267.0ms)
 Completed in 359ms (View: 267, DB: 17) | 200 OK [http://localhost/blocks/44]
+=======
+  [4;36;1mBlocksModel Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (317.0ms)[0m   [0;1mSELECT * FROM `listings` ORDER BY user_id desc[0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra          | rows  | ref | key
+   -------------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using filesort | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817
 ** has_many_polymorphs: autoload hook invoked
 ** has_many_polymorphs: preloading parent model Block
 ** has_many_polymorphs: associating Block.models
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
   [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+<<<<<<< HEAD
   [4;36;1mBlocksModel Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
   [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
   [4;36;1mPage Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
@@ -19697,3 +19829,40 @@ Rendered menus/_topnav (6.3ms)
 [0m
 Rendered pages/_home (2.6ms)
 Completed in 1305ms (View: 445, DB: 38) | 200 OK [http://localhost/add-your-facility]
+=======
+  [4;36;1mBlocksModel Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mListing Load (319.0ms)[0m   [0;1mSELECT * FROM `listings` ORDER BY user_id desc[0m
+  [4;35;1mAnalyzing Listing Load
+[0m   [0mselect_type | key_len | table    | id | possible_keys | type | Extra          | rows  | ref | key
+   -------------------------------------------------------------------------------------------------
+   SIMPLE      |         | listings | 1  |               | ALL  | Using filesort | 46503 |     |    
+[0m
+  [4;36;1mListing Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `listings`[0m
+  [4;35;1mUsCity Load (217212.7ms)[0m   [0m SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
+ WHERE us_cities.name LIKE maps.city
+ ORDER BY us_cities.name
+[0m
+  [4;36;1mUsCity Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `us_cities`[0m
+  [4;35;1mPost Load (1.6ms)[0m   [0mSELECT * FROM `posts` ORDER BY updated_at desc[0m
+  [4;36;1mAnalyzing Post Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys | type | Extra          | rows | ref | key
+   ---------------------------------------------------------------------------------------------
+   SIMPLE      |         | posts | 1  |               | ALL  | Using filesort | 36   |     |    
+[0m
+  [4;35;1mPage Load (0.8ms)[0m   [0mSELECT * FROM `pages` ORDER BY updated_at desc[0m
+  [4;36;1mAnalyzing Page Load
+[0m   [0;1mselect_type | key_len | table | id | possible_keys | type | Extra          | rows | ref | key
+   ---------------------------------------------------------------------------------------------
+   SIMPLE      |         | pages | 1  |               | ALL  | Using filesort | 12   |     |    
+[0m
+>>>>>>> 2199c20a8fdfb52bed1bc102fee780a79d473817

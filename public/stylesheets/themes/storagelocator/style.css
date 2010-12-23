@@ -113,6 +113,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 /* Start the results page styles here */
 #type-two-l-col,#type-one-l-col,#content_bottom{width:191px;float:left;margin-left:5px;}
 #type-one-l-col,#content_bottom{border-right:1px dotted #ccc;margin:9px 0 25px 9px;}
+#clients_controller #content_bottom{border-right:none;}
 .new_action #content_bottom{border:none;}
 .my_account #content_bottom{margin:15px 0 25px 9px;}
 #posts_controller.show_action #content{padding:15px;}

@@ -70,7 +70,6 @@
 				<div>
 					<ul>
 						<li><%= link_to "<span>#{@client.issn_enabled? ? 'Manage Sync' : 'Enable Sync'}</span>", '#reservations', :id => 'reservations' %></li>
-						<li><%= link_to "<span>#{@client.call_tracking_enabled? ? 'Call Log' : 'Activate Call Tracking'}</span>", '#calls', :id => 'calls' %></li>
 						<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'calls' %></li>
 					</ul>
 				</div>
