@@ -319,7 +319,7 @@ class ApplicationController < ActionController::Base
     if action_name == 'new'
       eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.new"
     else
-      eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find_by_id(params[:id])"
+      eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find_by_id(params[:id].to_i)"
     end
   end
   
