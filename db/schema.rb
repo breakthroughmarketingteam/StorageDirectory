@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101222233812) do
+ActiveRecord::Schema.define(:version => 20101223002715) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -414,6 +414,8 @@ ActiveRecord::Schema.define(:version => 20101222233812) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
+    t.boolean  "unsub"
+    t.string   "unsub_token"
   end
 
   create_table "listing_descriptions", :force => true do |t|

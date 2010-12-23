@@ -88,12 +88,20 @@ class EmailBlastsController < ApplicationController
   
   def blast
     case params[:blast_type] when 'blast'
-      Client.opted_in.each do |client|
-        @token = client.perishable_token
-        Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+      ListingContact.not_unsub.each do |contact|
+        @token = contact.unsub_token
+        Blaster.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
       end
       
       render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+    when 'clients'
+       Client.opted_in.each do |client|
+          @token = client.perishable_token
+          Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
+        end
+
+        render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+        
     when 'test'
       sent_to = []
       params[:test_emails].split(/,\s?/).each_with_index do |email, i|
@@ -111,8 +119,11 @@ class EmailBlastsController < ApplicationController
   end
   
   def unsub
-    @client = Client.find_by_perishable_token params[:token] unless params[:token] =~ /(test)/
-    @client.update_attribute :wants_newsletter, false if @client
+    unless params[:token] =~ /(test)/
+      @model = Client.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
+      @model.update_attribute :wants_newsletter, false if @model.is_a? Client
+      @model.update_attribute :unsub, true if @model.is_a? ListingContact
+    end
     
     render :layout => 'email_template'
   end

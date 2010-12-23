@@ -1118,3 +1118,1040 @@ Migrating to CreateBlastClicks (20101222233812)
   [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `widgets`[0m
   [4;35;1mSQL (1.1ms)[0m   [0mdescribe `widgets`[0m
   [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `widgets`[0m
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (2.8ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (4.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: rails environment detected
+** has_many_polymorphs: loaded ok
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mBlocksModel Columns (6.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks_models`[0m
+  [4;35;1mLink Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mPage Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPost Columns (11.3ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mBlock Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mModelsView Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `models_views`[0m
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: preloading parent model View
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20091014021209)
+Migrating to CreatePageLinks (20091014225335)
+Migrating to CreateLinks (20091014225552)
+Migrating to RenameNameColumnInLinks (20091014230855)
+Migrating to DropTablePageLinks (20091015195645)
+Migrating to CreateBlocks (20091015200226)
+Migrating to CreatePageBlocks (20091015200506)
+Migrating to AddColumnsToBlock (20091015200950)
+Migrating to AddColumnsToPageBlock (20091015232818)
+Migrating to AddEnabledColumnToPageBlock (20091022045224)
+Migrating to AddShowInNavColumnToPage (20091022055430)
+Migrating to AddContentColumnToPage (20091023043448)
+Migrating to AddContentColumnToBlock (20091024234522)
+Migrating to AddContentColumnToWidget (20091026033106)
+Migrating to CreateImages (20091026044725)
+Migrating to CreateGalleries (20091026044840)
+Migrating to CreateGalleryImages (20091026045218)
+Migrating to AddDescriptionColumnToGallery (20091026050451)
+Migrating to CreateUsers (20091101233717)
+Migrating to AddColumnsToUser (20091102010603)
+Migrating to AddFacebookColumnToUser (20091102020639)
+Migrating to CreatePosts (20091103020329)
+Migrating to CreateRoles (20091103021236)
+Migrating to CreatePermissions (20091103021509)
+Migrating to CreateModelBlocks (20091103033125)
+Migrating to AddPlaceColumnToBlocksModel (20091103035431)
+Migrating to AddShowTitleColumnToBlocksModel (20091224022844)
+Migrating to CreateModelViews (20091225054127)
+Migrating to RenameModelColumnInModelView (20091225073949)
+Migrating to RemoveModelFieldsFromModelView (20091225185949)
+Migrating to CreateViewsModels (20091225190523)
+Migrating to RenameViewsModelTable (20091225191132)
+Migrating to ChangeColumnsInView (20091225223106)
+Migrating to AddIsGlobalColumnToBlock (20091226162714)
+Migrating to AddShowTitleColumnToBlock (20091226163306)
+Migrating to ChangeIsGlobalColumn (20091226174507)
+Migrating to AddFieldsColumnToModelsView (20091226190656)
+Migrating to CreateComment (20091228053428)
+Migrating to AddCommentColumnsToPost (20091228061033)
+Migrating to AddScopeColumnToView (20091228063338)
+Migrating to AddOwnerColumnToView (20091228161508)
+Migrating to CreateHelptexts (20091228200352)
+Migrating to AddDescriptionToPage (20091228233644)
+Migrating to DropPageBlocksTable (20091228235420)
+Migrating to CreateLinkGroups (20091229032609)
+Migrating to AddGroupIdColumnToLink (20091229033215)
+Migrating to CreateForms (20091229094516)
+Migrating to AddEmailColumnToComment (20091229125341)
+Migrating to CreateBlockForms (20091229133234)
+Migrating to AddEnabledColumnInModelsView (20091229150821)
+Migrating to AddPositionColumnToBlocksModel (20091229202439)
+Migrating to RemoveMethodColumnFromForm (20091229205600)
+Migrating to AddScopeColumnsToForm (20091229211742)
+Migrating to ActsAsTaggableOnMigration (20091230043506)
+Migrating to CreateFields (20100103015729)
+Migrating to AddFormIdToForm (20100103015807)
+Migrating to RemoveFieldsFromForm (20100103022328)
+Migrating to RenameAttributesColumnInField (20100103022640)
+Migrating to AddUserIdColumnToImage (20100103090350)
+Migrating to AddRoleIdColumnToUser (20100103215134)
+Migrating to AddContentColumnToImage (20100107070421)
+Migrating to AddColumnsToLink (20100115031926)
+Migrating to AddShowTitleColumnToPage (20100221085730)
+Migrating to AddColumnsToForm (20100317043322)
+Migrating to RenameLinkGroups (20100405040028)
+Migrating to RenameColumnInLink (20100405041841)
+Migrating to AddPositionColumnToPage (20100407004449)
+Migrating to AddShowTitleColumnInForm (20100410064827)
+Migrating to AddUseOwnNameColumnToField (20100410100145)
+Migrating to AddPositionColumnToBlock (20100415105309)
+Migrating to CreateListings (20100416092642)
+Migrating to CreateMaps (20100421030405)
+Migrating to CreateSpecials (20100421030623)
+Migrating to CreateSizes (20100421030726)
+Migrating to CreatePictures (20100421031025)
+Migrating to AddPhoneColumnToMap (20100421044645)
+Migrating to RenameLongColumnInMap (20100422173627)
+Migrating to TypeChangeInMap (20100428014504)
+Migrating to LatLngPrecision (20100428074941)
+Migrating to CreateUsCities (20100428084820)
+Migrating to CreateRates (20100601002707)
+Migrating to AddProcessErbColumnToPageAndBlock (20100616045236)
+Migrating to AddConditionsColumnToModelsView (20100625193047)
+Migrating to AddPaginateColumnToModelsView (20100625193205)
+Migrating to AddUsePlaceholdersColumnToPage (20100628155028)
+Migrating to AddPositionColumnToField (20100628161601)
+Migrating to AddRestfulRegionColumnToBlock (20100629065858)
+Migrating to AddResfulRegionColumnToBlock (20100629073232)
+Migrating to AddTypeColumnToUser (20100629140414)
+Migrating to AddCompanyColumnToUser (20100629190946)
+Migrating to MigrateClientsAndUserTypes (20100629200950)
+Migrating to CreateReservations (20100705224006)
+Migrating to CreateMailingAddresses (20100713004311)
+Migrating to CreateBillingInfos (20100713004446)
+Migrating to RenameCardNumColumnInBillingInfoToCardNumber (20100713015656)
+Migrating to ChangeColumnTypesInClientInfoTables (20100713031751)
+Migrating to AddListingsToClients (20100713194508)
+Migrating to AddSizesToListings (20100713233040)
+Migrating to AddColumnsToSizes (20100714200010)
+Migrating to AddListingIdColumnToSizeAndRemoveJoinTable (20100714215015)
+Migrating to AddPositionColumnToPost (20100731013600)
+Migrating to AddMoreColumnsToUser (20100803235359)
+Migrating to RemoveTempClientModels (20100804004347)
+Migrating to AddColumnsToMailingAddresses (20100804014042)
+Migrating to AddStatusColumnToListing (20100804014526)
+Migrating to AddStatusColumnToUser (20100804021353)
+Migrating to CreateUserHints (20100805010446)
+Migrating to CreateUserHintPlacements (20100805010645)
+Migrating to AddHintsToExistingUsers (20100805160506)
+Migrating to CreateFacilityInfos (20100807005244)
+Migrating to AddIndeces (20100807005314)
+Migrating to AddImageColumnsToPicture (20100807031231)
+Migrating to AddTempPassColumnToUser (20100809205715)
+Migrating to ChangeNameColumnInUser (20100809210351)
+Migrating to RenameImageColumnsInPicture (20100811183414)
+Migrating to CreateClicks (20100819174656)
+Migrating to CreateImpressions (20100819174712)
+Migrating to AddCounterColumnsToListing (20100819175031)
+Migrating to AddReferrerColumnToStatsTables (20100819175936)
+Migrating to AddRequestUriColumnToStatsTables (20100819192713)
+Migrating to CreatePayments (20100826194832)
+Migrating to AddListingIdColumnToFacilityInfo (20100830163602)
+Migrating to AddExtraColumnsToFacilityInfo (20100830165600)
+Migrating to CreateIssnUnitTypeSizes (20100830183413)
+Migrating to CreateIssnUnitTypeFeatures (20100830184416)
+Migrating to CreateUnitTypes (20100830210308)
+Migrating to AddUsersPasswordResetFields (20100831161116)
+Migrating to AddColumnsToSpecial (20100901140246)
+Migrating to RenameColumnsInSize (20100902201021)
+Migrating to AddSizesIdColumnToUnitType (20100902205012)
+Migrating to CreateFeatures (20100902212025)
+Migrating to RenameColumnInSizes (20100902220447)
+Migrating to CreateIssnFacilityFeatures (20100903211542)
+Migrating to CreateFacilityFeatures (20100903212106)
+Migrating to CreatePromos (20100907211641)
+Migrating to RevertColumnsInSpecial (20100907211840)
+Migrating to AddListingIdColumnToSpecial (20100907212137)
+Migrating to CreateAccountSettings (20100907222429)
+Migrating to CreateIssnFacilityUnitFeatures (20100913161045)
+Migrating to CreateFacilityUnits (20100913181900)
+Migrating to CreateMoveInCosts (20100913192916)
+Migrating to CreateReserveCosts (20100913193214)
+Migrating to AddUnitTypeIdToReservation (20100914040033)
+Migrating to RemoveRequestColumnFromReservation (20100917173923)
+Migrating to RenameDateColumnsInReservation (20100917181027)
+Migrating to RenameIdColumnInMailingAddress (20100920185911)
+Migrating to RenameUserColumnInreservation (20100920215606)
+Migrating to AddZipColumnsToBillingInfo (20100921155829)
+Migrating to AddConfirmationColumnToReservation (20100921161233)
+Migrating to AddColumnsToBillingInfo (20100921174520)
+Migrating to RenameConfirmationCodeColumnInReservation (20100921180034)
+Migrating to AddResponseColumnToReservation (20100921191930)
+Migrating to ChangeScopeColumnInPermission (20100922223456)
+Migrating to AddReportRecipientsColumnToUser (20100925021221)
+Migrating to AddDurationColumnToReservation (20100928160738)
+Migrating to AddUnitTypeSizeColumnToReservation (20100928161356)
+Migrating to CreateFacilityInsurances (20101005192826)
+Migrating to CreateBusinessHours (20101005193633)
+Migrating to AddAccessHoursColumnsToListing (20101005221443)
+Migrating to CreateSizeIcons (20101008194507)
+Migrating to CreateInfoRequests (20101010223123)
+Migrating to RenameColumnInReservation (20101013231345)
+Migrating to AddSizeIdColumnToInfoRequest (20101013235339)
+Migrating to AddInfoRequestsCountColumnToListing (20101014000241)
+Migrating to ChangeDefaultInCounterColumnsInListing (20101014003254)
+Migrating to RemoveReportRecipientsColumnFromUser (20101016011952)
+Migrating to AddColumnsToAccountSettings (20101016014832)
+Migrating to CreateSearches (20101021233626)
+Migrating to AddNestedSetColumnsToSearch (20101022204744)
+Migrating to AddLogoColumnsToListing (20101025204215)
+Migrating to AddDefaultLogoColumnToListing (20101025211224)
+Migrating to CreateListingContacts (20101026231741)
+Migrating to CreateGlobalDescriptions (20101028004048)
+Migrating to AddHashColumnToAccountSetting (20101028183750)
+Migrating to AddErrorColumnToFacilityUnit (20101029195110)
+Migrating to AddCategoryColumnToListing (20101031020530)
+Migrating to AddImpressionsCountToPost (20101102010612)
+Migrating to CreateAdPartners (20101102212133)
+Migrating to AddEnabledColumnToAdPartner (20101104184025)
+Migrating to AddRatingAverageToPost (20101116201422)
+Migrating to CreateRentals (20101122185233)
+Migrating to AddCalcColumnsToSpecial (20101122210055)
+Migrating to AddLimitColumnsToSpecial (20101122210541)
+Migrating to ChangeListingColumnInSpecial (20101123183527)
+Migrating to AddProRateColumnToUser (20101123184226)
+Migrating to ChangeColumnsInSpecial (20101123184557)
+Migrating to CreatePredefinedSpecials (20101123203359)
+Migrating to CreatePredefSpecialAssigns (20101123203618)
+Migrating to AddEmailColumnToListingContact (20101129161558)
+Migrating to AddSortedByColumnToSearch (20101130195458)
+Migrating to AddSortNumColumnToSearch (20101130201057)
+Migrating to ChangeColumnSortNumInSearch (20101201212436)
+Migrating to ChangeDefaultSortReverseInSearch (20101202201039)
+Migrating to AddColumnsToMapAndListing (20101206185751)
+Migrating to CreateStaffEmails (20101206191739)
+Migrating to CreatePredefinedSizes (20101207223140)
+Migrating to AddAdminFeeColumnToListing (20101207224034)
+Migrating to AddDefaultsToSearch (20101210165129)
+Migrating to AddTrackedNumberColumnToListing (20101213015804)
+Migrating to ChangeDurationColumnInRental (20101213224448)
+Migrating to AddCategoriesFromFeaturesToListing (20101214182416)
+Migrating to RemoveColumnDurationFromRental (20101215161611)
+Migrating to RenameCcvColumnInBillingInfo (20101215220840)
+Migrating to AddIndexToListing (20101215225728)
+Migrating to RenameClientIdColumnInSpecialToListingId (20101215233032)
+Migrating to ReplaceRequestUriColumnInImpressions (20101216004339)
+Migrating to AddColumnsToRental (20101217173721)
+Migrating to CreateEmailBlasts (20101221221029)
+Migrating to AddProcessErbColumnToEmailBlast (20101222220649)
+Migrating to CreateBlasts (20101222233709)
+Migrating to CreateBlastClicks (20101222233812)
+Migrating to AddUnSubColumnToListingContact (20101223002715)
+  [4;36;1mSQL (458.0ms)[0m   [0;1mALTER TABLE `listing_contacts` ADD `unsub` tinyint(1)[0m
+  [4;35;1mSQL (405.1ms)[0m   [0mALTER TABLE `listing_contacts` ADD `unsub_token` varchar(255)[0m
+  [4;36;1mListingContact Load (49.5ms)[0m   [0;1mSELECT * FROM `listing_contacts` WHERE (email IS NOT NULL) [0m
+  [4;35;1mAnalyzing ListingContact Load
+[0m   [0mselect_type | key_len | table            | id | possible_keys | type | Extra       | rows  | ref | key
+   ------------------------------------------------------------------------------------------------------
+   SIMPLE      |         | listing_contacts | 1  |               | ALL  | Using where | 48382 |     |    
+[0m
+  [4;36;1mListingContact Columns (5.4ms)[0m   [0;1mSHOW FIELDS FROM `listing_contacts`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9969ffa8a54a6b70c361fdcc7a3076d9f932c82b' WHERE `id` = 61843[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (3.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'f86b8b6304fd1f51686f179351fadae1dfb3ff80' WHERE `id` = 61844[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9be5b1862940dd1ac2e509be22a9b13d9dc5256a' WHERE `id` = 61845[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.9ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '7a3a0bfcb2bb1891a3c992b0715b15c318c1f56b' WHERE `id` = 61846[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '6d3554b505c4ecb74fd9d1ddcbfc93d46cd14589' WHERE `id` = 61847[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '728e88b6a4f13a32ce556172d184cafd6d57a748' WHERE `id` = 61848[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '766e972590101bd8745d53d8257df15f5a7b6f36' WHERE `id` = 61849[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '458ee2eafe43c3e15a65ef60e8a60305869175b5' WHERE `id` = 61850[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '76400008afdade996a26f026869c41777bc5ce3a' WHERE `id` = 61851[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '6320b69da50d4c13e60cbc358b965e76d6139f98' WHERE `id` = 61852[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (1.7ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'f320e74c3b20a986724853a32269b1e1b20fce1c' WHERE `id` = 61853[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'aa2c0b1cf1c338804568ee603922510f68962f52' WHERE `id` = 61854[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'e26221b7623cd30766d93d846842939545ddc66e' WHERE `id` = 61855[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (1.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'a6bc96890ec71c74cd38844ca808e8c55615f007' WHERE `id` = 61856[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (7.6ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '55126b37b62371b690a2562b25bb012b7188a1d4' WHERE `id` = 61857[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '2747f1779b73dfdb26c7749c3edd8f6d7338c40d' WHERE `id` = 61858[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'e9e5f9b538e84ba4d57939fc9c9960c4b31ddb86' WHERE `id` = 61859[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'b81d1e7c9a84f96669adc5f96e0558950de28126' WHERE `id` = 61860[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '2fcadab5bde091b6d113ed1115a7dac996c0e8ec' WHERE `id` = 61861[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '1adc8ebb42be96f41c18b15b392f69b603aaaf4b' WHERE `id` = 61862[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'd6e2edee091a88b1ba23bfa9e3a39910c1c37190' WHERE `id` = 61863[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '6de8e58835d6b64efa7341e7b5ed0945c205f2c7' WHERE `id` = 61864[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'ab907061b03e1f414ff151bf6a7e276aaaf21f70' WHERE `id` = 61865[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (2.7ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '2e2fd33946326007fafb973595bfabfed268f320' WHERE `id` = 61866[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'd6e2edee091a88b1ba23bfa9e3a39910c1c37190' WHERE `id` = 61867[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (3.7ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9fb3b72784a6e4d64ed434463c513986cf103607' WHERE `id` = 61868[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'd2d3c47d7ead2b8135112c1a6ac2d9b67e457b52' WHERE `id` = 61869[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (7.9ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'ab907061b03e1f414ff151bf6a7e276aaaf21f70' WHERE `id` = 61870[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'cecaf1f5912c5e83e9a567e31b1944d72c798a73' WHERE `id` = 61871[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '3faf3b341b94ce65c35e0a5f67cb609e2b6ba00b' WHERE `id` = 61872[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'ab907061b03e1f414ff151bf6a7e276aaaf21f70' WHERE `id` = 61873[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'ab907061b03e1f414ff151bf6a7e276aaaf21f70' WHERE `id` = 61874[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'dac190187a691227269451e8f3b8ab7bcbb62043' WHERE `id` = 61875[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'ab907061b03e1f414ff151bf6a7e276aaaf21f70' WHERE `id` = 61876[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '44044da0f49a83d87268bfd4cd921b513bb16da4' WHERE `id` = 61877[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '69ea35b3ebaf2cc6c459b650bc5f2ac3f6a764d7' WHERE `id` = 61878[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '69ea35b3ebaf2cc6c459b650bc5f2ac3f6a764d7' WHERE `id` = 61879[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '69ea35b3ebaf2cc6c459b650bc5f2ac3f6a764d7' WHERE `id` = 61880[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '44044da0f49a83d87268bfd4cd921b513bb16da4' WHERE `id` = 61881[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'fa43eeab418b564bbe1bc377d796ac118a3ee3e7' WHERE `id` = 61882[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9cdf46b541bd1d467e113cebbeb8d44ceadfd1df' WHERE `id` = 61883[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'c731327cdfc51dc538134ac5a2fa7ea0a3a095c5' WHERE `id` = 61884[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9be5b1862940dd1ac2e509be22a9b13d9dc5256a' WHERE `id` = 61885[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9be5b1862940dd1ac2e509be22a9b13d9dc5256a' WHERE `id` = 61886[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '44044da0f49a83d87268bfd4cd921b513bb16da4' WHERE `id` = 61887[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '44044da0f49a83d87268bfd4cd921b513bb16da4' WHERE `id` = 61888[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '44044da0f49a83d87268bfd4cd921b513bb16da4' WHERE `id` = 61889[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '9cdf46b541bd1d467e113cebbeb8d44ceadfd1df' WHERE `id` = 61890[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (8.5ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'dac190187a691227269451e8f3b8ab7bcbb62043' WHERE `id` = 61891[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '08032db9a0a630c28459b457ad3a04a424237ff4' WHERE `id` = 61892[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '55ac286b6152b0cea4ec3be9614ee74a4084babc' WHERE `id` = 61893[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '55ac286b6152b0cea4ec3be9614ee74a4084babc' WHERE `id` = 61894[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'f456b6e12066c7bfa73fb3ed470a347ee21b3cc4' WHERE `id` = 61895[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '458ee2eafe43c3e15a65ef60e8a60305869175b5' WHERE `id` = 61896[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '35867b2cf7c0d073282ef47f0b04ff7df5ae20ac' WHERE `id` = 61897[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'a9430b48956adc1c0b58a2757db07e8a4b983882' WHERE `id` = 61898[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'f456b6e12066c7bfa73fb3ed470a347ee21b3cc4' WHERE `id` = 61899[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '86a8b3185d5e65122c7240234e4901f91ffc4fda' WHERE `id` = 61900[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '6401e8398241dd3fa95fd3202c3bcbc10b525ec6' WHERE `id` = 61901[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'c5c94e5a17cf182319f0dbfc4d414e7e73f69a2c' WHERE `id` = 61902[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'c5f49979f0d68ad33a488faeec0c8df40d58317b' WHERE `id` = 61903[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = '1a6f50bec283732ee5010e352af485fad6420018' WHERE `id` = 61904[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'c546bd9360a1969453ddd03a44ef464ed9261355' WHERE `id` = 61905[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'bf715160952cfd9a511ccf898e90de9c5946dda2' WHERE `id` = 61906[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'c6f3f1d33cbc07d357cd8df47d2066059ee10086' WHERE `id` = 61907[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:02', `unsub_token` = 'f59e15343c47b1e1c334f2d6e8208b4d4b928b57' WHERE `id` = 61908[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '0962d4ebaab5e1aed53e87403f5148e704d400ed' WHERE `id` = 61909[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '1b86b5356f29c67cd0f444128daef69c400531a4' WHERE `id` = 61910[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '61736eb1bd30154442eb97b2ea47b67a53ed31ab' WHERE `id` = 61911[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5f13c2b3e894ea070becbf3e8ed0870db972ff6e' WHERE `id` = 61912[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '0962d4ebaab5e1aed53e87403f5148e704d400ed' WHERE `id` = 61913[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'f98667a0425e1054f1efc6141cda05f55b56fed9' WHERE `id` = 61914[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (4.9ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '3145d06e3950cbc717b3d19049d6c32d561d5c12' WHERE `id` = 61915[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '1adc8ebb42be96f41c18b15b392f69b603aaaf4b' WHERE `id` = 61916[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '8ac709df3c7730c5f644e69cc364054ffc0743f9' WHERE `id` = 61917[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '8d06feb87f2c28d946f51dcf1d0fe3331c8fefb9' WHERE `id` = 61918[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.4ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '7eedbf287d52ba8abeb737e45527e1247354c62b' WHERE `id` = 61919[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '6a07f353468eec9b76dae9643583ccff587c0b25' WHERE `id` = 61920[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (6.0ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '00b5404d3d8f40abec536f78ceda051710757c37' WHERE `id` = 61921[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (5.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5964cad0ce9da71d2c1f5893db9e1f67fc38cfbf' WHERE `id` = 61922[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '3145d06e3950cbc717b3d19049d6c32d561d5c12' WHERE `id` = 61923[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '751a81b8267b85c821edeee050e77af62af6cdd7' WHERE `id` = 61924[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2fb995cc8f4e454f971aa95ca7b9a26362771353' WHERE `id` = 61925[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (8.6ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2fb995cc8f4e454f971aa95ca7b9a26362771353' WHERE `id` = 61926[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '87d884673f985bbf1e9970cf5a6798b98451c195' WHERE `id` = 61927[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (1.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '87d884673f985bbf1e9970cf5a6798b98451c195' WHERE `id` = 61928[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2fb995cc8f4e454f971aa95ca7b9a26362771353' WHERE `id` = 61929[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a5184196fcbcb60918c100dbe5e3060888fcd750' WHERE `id` = 61930[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '1f32d9d79c8b6f30ba2ddafa42cd317e4fbd61e2' WHERE `id` = 61931[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (7.6ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '1f32d9d79c8b6f30ba2ddafa42cd317e4fbd61e2' WHERE `id` = 61932[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '6b9205a7f3c88baa29c21aca754d2fb3fce935d0' WHERE `id` = 61933[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '9520b6d4325db0fd43cad65e0f5a9fe71c167f13' WHERE `id` = 61934[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'fc7c8fac04d3f8398045d92bbac8544444f37037' WHERE `id` = 61935[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '01139898485b8313eac61418d89dec980a915dda' WHERE `id` = 61936[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'fbd843554ae075bac58e1479ed3dadc4e1da2724' WHERE `id` = 61937[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '49b846e01b1724678becec72840bd811272474ad' WHERE `id` = 61938[0m
+  [4;36;1mSQL (3.5ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '63777be6c5012bf0e5201973cbe6d4d245da1421' WHERE `id` = 61939[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (4.1ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'e369976abe47be9452c146a5cd6bad0f967f383e' WHERE `id` = 61940[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '35fbd3ad60d6006b8d681ef9c2e45fe01ac20782' WHERE `id` = 61941[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '35fbd3ad60d6006b8d681ef9c2e45fe01ac20782' WHERE `id` = 61942[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b1ac088f47cdd1e2814a26046fdd00b52c33063c' WHERE `id` = 61943[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b239ae358e6a32eb7a89492e617e58e7dd48ff7b' WHERE `id` = 61944[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'f98667a0425e1054f1efc6141cda05f55b56fed9' WHERE `id` = 61945[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (3.8ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b0af7a9d457ff4c1e7298727d2fab298bab48b19' WHERE `id` = 61946[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (1.7ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '4ffd442904980a6aef4be4d3fb67b468f9171eef' WHERE `id` = 61947[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (7.5ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'ff0de31d16cd9cac3dbd290a9ad83d1a5936bbf4' WHERE `id` = 61948[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '4ffd442904980a6aef4be4d3fb67b468f9171eef' WHERE `id` = 61949[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'ff0de31d16cd9cac3dbd290a9ad83d1a5936bbf4' WHERE `id` = 61950[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.5ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '537cfff9568d7b7b4f7d7f0b782323c95c517d50' WHERE `id` = 61951[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2747f1779b73dfdb26c7749c3edd8f6d7338c40d' WHERE `id` = 61952[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2747f1779b73dfdb26c7749c3edd8f6d7338c40d' WHERE `id` = 61953[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '7eedbf287d52ba8abeb737e45527e1247354c62b' WHERE `id` = 61954[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5ea0b3500ec347d7647877b18e68835e28652615' WHERE `id` = 61955[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5ea84c43ca18f0ed4662f9e18234fc4bd7ebe06d' WHERE `id` = 61956[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (11.7ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'fe41497a0d3ea5f306907dee834d4d58d04735b4' WHERE `id` = 61957[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '7a6cdec05122059b4717d7679351b606afaf0a69' WHERE `id` = 61958[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '455082797bfc4dd01dc3523fa3fefe77306cb223' WHERE `id` = 61959[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'f708686effb00cf3e572908b784d9ae23c56c362' WHERE `id` = 61960[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '6623bdee7345dc4f6792511093899887569807e5' WHERE `id` = 61961[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '47fcadb37e0ee98884d484be54cc71339afec649' WHERE `id` = 61962[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'd52a85d523266b8aedb6cf111e766be9d466b5b6' WHERE `id` = 61963[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '214c9909b857311ca79955fdc6e6db1e74f5b814' WHERE `id` = 61964[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '697d662f623171406464aeb0a3724232a6b239b8' WHERE `id` = 61965[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '65c715d2ffdbada916b2d1a736a81b4d9daad993' WHERE `id` = 61966[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c078418824a7ec3ff5eed1107f8ba8e3a7e15d6f' WHERE `id` = 61967[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '560a8fe54a86e2597729781e714e8457ad902bce' WHERE `id` = 61968[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.4ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b2311f030bae671d0f0c4e218f4c4a3c9c2fc727' WHERE `id` = 61969[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.5ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a5cc26b521ab63870fd5f1f7c28643214e60d30d' WHERE `id` = 61970[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '10b78560ac0162240c5c0a58c57697241e1f39c7' WHERE `id` = 61971[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b20a07ef1540cea604133a0450587cb569ba0ff7' WHERE `id` = 61972[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5d54987968e8b88beac334f4c2b943e13d36dd8d' WHERE `id` = 61973[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b20a07ef1540cea604133a0450587cb569ba0ff7' WHERE `id` = 61974[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '26cf0d1a5c0add8a66044a34527cc591ed707f0c' WHERE `id` = 61975[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5d54987968e8b88beac334f4c2b943e13d36dd8d' WHERE `id` = 61976[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c5f49979f0d68ad33a488faeec0c8df40d58317b' WHERE `id` = 61977[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '139dc7622309005398c80baf5fb40d6a9c78fbaa' WHERE `id` = 61978[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '8fe1c2b4a1259d0ac38270b50470ad52219fce07' WHERE `id` = 61979[0m
+  [4;35;1mSQL (7.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '728e88b6a4f13a32ce556172d184cafd6d57a748' WHERE `id` = 61980[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (1.5ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '5b0941a4fa5e8e42110b721569f0d9d1c6bc9f40' WHERE `id` = 61981[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '728e88b6a4f13a32ce556172d184cafd6d57a748' WHERE `id` = 61982[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '55ac286b6152b0cea4ec3be9614ee74a4084babc' WHERE `id` = 61983[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '58f18c80ec9920a990773f6c8fc9f3f073a181da' WHERE `id` = 61984[0m
+  [4;36;1mSQL (6.0ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '436e3335e28bcadcdad2346827d487f207ae8698' WHERE `id` = 61985[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '8fe1c2b4a1259d0ac38270b50470ad52219fce07' WHERE `id` = 61986[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (1.8ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '4ffd442904980a6aef4be4d3fb67b468f9171eef' WHERE `id` = 61987[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '1714d88dfa6c2f21836a39e398048aa87983135d' WHERE `id` = 61988[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c6a46778428d30fc4313f5d9434ba670c151e89d' WHERE `id` = 61989[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '58f18c80ec9920a990773f6c8fc9f3f073a181da' WHERE `id` = 61990[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '751a81b8267b85c821edeee050e77af62af6cdd7' WHERE `id` = 61991[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'd6f1857f5ca5543996d1be6dd18cf453ce8c95f7' WHERE `id` = 61992[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a0e1bf35d2a341816f8c21dab31790aff469ecf0' WHERE `id` = 61993[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'eb542633564bc1de03c6a0ff4ad7e26dfdb87046' WHERE `id` = 61994[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '3dd0ba5dfd71a5cda8599c64ef0ff78fd4992b97' WHERE `id` = 61995[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (7.9ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'd6f1857f5ca5543996d1be6dd18cf453ce8c95f7' WHERE `id` = 61996[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '0cbe6c20973b570076e81bed20cb0eb284418ea5' WHERE `id` = 61997[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'bf715160952cfd9a511ccf898e90de9c5946dda2' WHERE `id` = 61998[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '68a99b494445ee58db78af88fae41d3bf47af9a6' WHERE `id` = 61999[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.2ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '8e0414b1fadca5aef829137f824bddaee2fd5523' WHERE `id` = 62000[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.2ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '2747f1779b73dfdb26c7749c3edd8f6d7338c40d' WHERE `id` = 62001[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '0962d4ebaab5e1aed53e87403f5148e704d400ed' WHERE `id` = 62002[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (2.9ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '91938cc5df30153d7065d2846d4d219240be7b4b' WHERE `id` = 62003[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '0962d4ebaab5e1aed53e87403f5148e704d400ed' WHERE `id` = 62004[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b09dd218efeb9cc41898e1527c4e092f273da077' WHERE `id` = 62005[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (6.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '7eedbf287d52ba8abeb737e45527e1247354c62b' WHERE `id` = 62006[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (3.7ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a1ab3f3a3a1190c24e81713cbe53b56ab56acfb7' WHERE `id` = 62007[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a5e360501b5b8e2eff456fe5f55f2763cc433347' WHERE `id` = 62008[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '4871d23aa34b9ce8d4c8e52a4b5388d8a97b0d24' WHERE `id` = 62009[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '4871d23aa34b9ce8d4c8e52a4b5388d8a97b0d24' WHERE `id` = 62010[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '9be36659370cef361efe52994773e39e719cc930' WHERE `id` = 62011[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'b0ca7af26b5ff15e0eae3daed6d6a971ebcd4721' WHERE `id` = 62012[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c5f49979f0d68ad33a488faeec0c8df40d58317b' WHERE `id` = 62013[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c5f49979f0d68ad33a488faeec0c8df40d58317b' WHERE `id` = 62014[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'a5e360501b5b8e2eff456fe5f55f2763cc433347' WHERE `id` = 62015[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = 'c524bec6a5e3c2d1f4cafc92160bbb6f4094154b' WHERE `id` = 62016[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '9ff8d4c16005e1ac06625d5d99ff8e56af5a4e61' WHERE `id` = 62017[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:03', `unsub_token` = '9ff8d4c16005e1ac06625d5d99ff8e56af5a4e61' WHERE `id` = 62018[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = 'b09dd218efeb9cc41898e1527c4e092f273da077' WHERE `id` = 62019[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.4ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = 'c524bec6a5e3c2d1f4cafc92160bbb6f4094154b' WHERE `id` = 62020[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = '9ff8d4c16005e1ac06625d5d99ff8e56af5a4e61' WHERE `id` = 62021[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = '9ff8d4c16005e1ac06625d5d99ff8e56af5a4e61' WHERE `id` = 62022[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = 'b09dd218efeb9cc41898e1527c4e092f273da077' WHERE `id` = 62023[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.7ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = '9ff8d4c16005e1ac06625d5d99ff8e56af5a4e61' WHERE `id` = 62024[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mListingContact Update (0.3ms)[0m   [0;1mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = 'b09dd218efeb9cc41898e1527c4e092f273da077' WHERE `id` = 62025[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mListingContact Update (0.3ms)[0m   [0mUPDATE `listing_contacts` SET `updated_at` = '2010-12-23 00:30:04', `unsub_token` = 'b09dd218efeb9cc41898e1527c4e092f273da077' WHERE `id` = 62026[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20101223002715')[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (5.5ms)[0m   [0mSHOW FIELDS FROM `account_settings`[0m
+  [4;36;1mSQL (12.8ms)[0m   [0;1mdescribe `account_settings`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `account_settings`[0m
+  [4;36;1mSQL (10.1ms)[0m   [0;1mSHOW FIELDS FROM `ad_partners`[0m
+  [4;35;1mSQL (15.9ms)[0m   [0mdescribe `ad_partners`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `ad_partners`[0m
+  [4;35;1mSQL (4.8ms)[0m   [0mSHOW FIELDS FROM `billing_infos`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `billing_infos`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `billing_infos`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `blast_clicks`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mdescribe `blast_clicks`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `blast_clicks`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `blasts`[0m
+  [4;36;1mSQL (14.8ms)[0m   [0;1mdescribe `blasts`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW KEYS FROM `blasts`[0m
+  [4;36;1mSQL (5.2ms)[0m   [0;1mSHOW FIELDS FROM `block_forms`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mdescribe `block_forms`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `block_forms`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `block_widgets`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `block_widgets`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `block_widgets`[0m
+  [4;36;1mSQL (13.6ms)[0m   [0;1mSHOW FIELDS FROM `blocks`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `blocks`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `blocks`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `blocks_models`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `blocks_models`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `blocks_models`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `business_hours`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `business_hours`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `business_hours`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `clicks`[0m
+  [4;36;1mSQL (4.8ms)[0m   [0;1mdescribe `clicks`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `clicks`[0m
+  [4;36;1mSQL (12.6ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `comments`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `comments`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `email_blasts`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mdescribe `email_blasts`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `email_blasts`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSHOW FIELDS FROM `facility_features`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `facility_features`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `facility_features`[0m
+  [4;35;1mSQL (5.1ms)[0m   [0mSHOW FIELDS FROM `facility_infos`[0m
+  [4;36;1mSQL (18.4ms)[0m   [0;1mdescribe `facility_infos`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `facility_infos`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `facility_insurances`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `facility_insurances`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `facility_insurances`[0m
+  [4;35;1mSQL (7.4ms)[0m   [0mSHOW FIELDS FROM `facility_units`[0m
+  [4;36;1mSQL (15.6ms)[0m   [0;1mdescribe `facility_units`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `facility_units`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `features`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `features`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `features`[0m
+  [4;35;1mSQL (2.3ms)[0m   [0mSHOW FIELDS FROM `fields`[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mdescribe `fields`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW KEYS FROM `fields`[0m
+  [4;36;1mSQL (5.6ms)[0m   [0;1mSHOW FIELDS FROM `forms`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mdescribe `forms`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `forms`[0m
+  [4;35;1mSQL (5.5ms)[0m   [0mSHOW FIELDS FROM `galleries`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `galleries`[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSHOW KEYS FROM `galleries`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `gallery_images`[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mdescribe `gallery_images`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `gallery_images`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `groups`[0m
+  [4;36;1mSQL (8.8ms)[0m   [0;1mdescribe `groups`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `groups`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSHOW FIELDS FROM `helptexts`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `helptexts`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `helptexts`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `images`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `images`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW KEYS FROM `images`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `impressions`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mdescribe `impressions`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `impressions`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `info_requests`[0m
+  [4;36;1mSQL (11.1ms)[0m   [0;1mdescribe `info_requests`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `info_requests`[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mSHOW FIELDS FROM `issn_facility_features`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mdescribe `issn_facility_features`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `issn_facility_features`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mSHOW FIELDS FROM `issn_facility_unit_features`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `issn_facility_unit_features`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `issn_facility_unit_features`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSHOW FIELDS FROM `issn_ids`[0m
+  [4;35;1mSQL (10.3ms)[0m   [0mdescribe `issn_ids`[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1mSHOW KEYS FROM `issn_ids`[0m
+  [4;35;1mSQL (2.9ms)[0m   [0mSHOW FIELDS FROM `issn_unit_type_features`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `issn_unit_type_features`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `issn_unit_type_features`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `issn_unit_type_sizes`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `issn_unit_type_sizes`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `issn_unit_type_sizes`[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mdescribe `links`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `links`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mSHOW FIELDS FROM `listing_contacts`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `listing_contacts`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `listing_contacts`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSHOW FIELDS FROM `listing_descriptions`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `listing_descriptions`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `listing_descriptions`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `listing_sizes`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `listing_sizes`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW KEYS FROM `listing_sizes`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSHOW FIELDS FROM `listings`[0m
+  [4;36;1mSQL (10.4ms)[0m   [0;1mdescribe `listings`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `listings`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `mailing_addresses`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mdescribe `mailing_addresses`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `mailing_addresses`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW FIELDS FROM `maps`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `maps`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `maps`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `models_views`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `models_views`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `models_views`[0m
+  [4;35;1mSQL (15.9ms)[0m   [0mSHOW FIELDS FROM `move_in_costs`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `move_in_costs`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `move_in_costs`[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `pages`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `pages`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `payments`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mdescribe `payments`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `payments`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `permissions`[0m
+  [4;35;1mSQL (10.9ms)[0m   [0mdescribe `permissions`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `permissions`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `pictures`[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mdescribe `pictures`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `pictures`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `posts`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `posts`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `predef_size_assigns`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `predef_size_assigns`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `predef_size_assigns`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `predef_special_assigns`[0m
+  [4;35;1mSQL (13.2ms)[0m   [0mdescribe `predef_special_assigns`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `predef_special_assigns`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `predefined_sizes`[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1mdescribe `predefined_sizes`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `predefined_sizes`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `predefined_specials`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mdescribe `predefined_specials`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `predefined_specials`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `promos`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mdescribe `promos`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `promos`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSHOW FIELDS FROM `rates`[0m
+  [4;35;1mSQL (8.7ms)[0m   [0mdescribe `rates`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `rates`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `rentals`[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mSHOW KEYS FROM `rentals`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `reservations`[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mdescribe `reservations`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `reservations`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW FIELDS FROM `reserve_costs`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `reserve_costs`[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSHOW KEYS FROM `reserve_costs`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mdescribe `roles`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW KEYS FROM `roles`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSHOW FIELDS FROM `searches`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `searches`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW KEYS FROM `searches`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `size_icons`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mdescribe `size_icons`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `size_icons`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `sizes`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mdescribe `sizes`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW KEYS FROM `sizes`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `specials`[0m
+  [4;35;1mSQL (6.4ms)[0m   [0mdescribe `specials`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `specials`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSHOW FIELDS FROM `staff_emails`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mdescribe `staff_emails`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `staff_emails`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW FIELDS FROM `suggestions`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `suggestions`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW KEYS FROM `suggestions`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `taggings`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mdescribe `taggings`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `taggings`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `tags`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `tags`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `tags`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mSHOW FIELDS FROM `unit_types`[0m
+  [4;36;1mSQL (3.8ms)[0m   [0;1mdescribe `unit_types`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `unit_types`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mSHOW FIELDS FROM `us_cities`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `us_cities`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW KEYS FROM `us_cities`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `user_hint_placements`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `user_hint_placements`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `user_hint_placements`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `user_hints`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `user_hints`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `user_hints`[0m
+  [4;35;1mSQL (3.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `users`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `users`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `views`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `views`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `views`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `virtual_models`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mdescribe `virtual_models`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `virtual_models`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `web_specials`[0m
+  [4;35;1mSQL (5.4ms)[0m   [0mdescribe `web_specials`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `web_specials`[0m
+  [4;35;1mSQL (4.8ms)[0m   [0mSHOW FIELDS FROM `widget_galleries`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mdescribe `widget_galleries`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `widget_galleries`[0m
+  [4;36;1mSQL (3.7ms)[0m   [0;1mSHOW FIELDS FROM `widgets`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `widgets`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `widgets`[0m
