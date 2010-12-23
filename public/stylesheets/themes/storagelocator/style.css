@@ -471,8 +471,11 @@ p.foot-text{margin:40px;font-weight:bold;}
 #type-two-l-col,#type-one-l-col{position:relative;}
 #add-fac-box{color:#555;margin:4px 0 40px;position:relative;width:175px;}
 #add-fac-box ul{}
-#add-fac-box li{border-bottom:1px solid #ddd;}
-#add-fac-box li a{display:block;font-size:14px;padding:10px 0 10px 15px;}
+#add-fac-box ul li{background:url(/images/ui/storagelocator/menu-leaf.gif) no-repeat scroll 0 12px transparent;list-style-image:none;list-style-type:none;border-bottom:1px solid #ddd;margin-left:5px;padding-left:17px;}
+#add-fac-box ul li.collapsed{background: url(/images/ui/storagelocator/menu-collapsed.gif) no-repeat scroll 0 12px transparent;}
+#add-fac-box ul li.expanded{background: url(/images/ui/storagelocator/menu-expanded.gif) no-repeat scroll 0 10px transparent;}
+#add-fac-box ul.child li{border-bottom:none;}
+#add-fac-box li a{display:block;font-size:14px;padding:10px 0 8px 5px;}
 #add-fac-box li a:hover,#add-fac-box li a.active{text-decoration:underline;}
 #add-fac-box p{margin:10px;}
 #add-fac-box h2{background:url(/images/ui/storagelocator/money.png) no-repeat scroll 1px 7px transparent;height:44px;padding:9px 0 0 64px;position:relative;width:90px;}
@@ -830,7 +833,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Customizations - D.S */
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
 #ajax_wrap{float:left;padding-left:20px;margin-top:-23px;width:86%;min-height:684px;}
-#ajax_wrap_inner > h2{margin-bottom:7px;}
+#ajax_wrap_inner > h2{margin-bottom: -4px;margin-top: 10px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
