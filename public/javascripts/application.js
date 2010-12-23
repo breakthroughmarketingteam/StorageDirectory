@@ -1151,6 +1151,65 @@ $(document).ready(function() {
 		});
 	});
 	
+	// CLIENT billing info and mailing address
+	$('#client_edit_contact').live('click', function() {
+		var $this = $(this), xhr = false,
+			cancel_link = $('<a class="cancel_link iconOnly16 right" style="margin-top:13px;" title="Cancel Editing">Cancel</a>'),
+			wrap = $('#owner_info_wrap', $this.parent().parent()),
+			ajax_loader = $.new_ajax_loader('before', $this);
+
+		if ($this.text() == 'Edit') {
+			ajax_loader.show();
+			
+			xhr = $.getJSON($this.attr('href'), function(response) {
+				$.with_json(response, function(data) {
+					$this.text('Save').after(cancel_link);
+					wrap.hide().after(data);
+					$('.numeric_phone', wrap.parent()).formatPhoneNum();
+					$('.hintable', wrap.parent()).hinty();
+					$('.auto_next', wrap.parent()).autoNext();
+				});
+				
+				ajax_loader.hide();
+			});
+			
+		} else if ($this.text() == 'Save') {
+			var form = $('#edit_info', wrap.parent()).runValidation();
+			
+			if (!$this.data('saving') && form.data('valid')) {
+				$this.data('saving', true);
+				$('.cancel_link', $this.parent()).remove();
+				ajax_loader.show();
+				
+				xhr = $.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						$this.text('Edit').after('<span class="success_msg right">Saved!</span>');
+						wrap.show().html(data);
+						form.remove();
+						
+						setTimeout(function() {
+							$('.success_msg', $this.parent()).fadeOutRemove(1000);
+						}, 3000);
+					});
+					
+					$this.data('saving', false);
+					ajax_loader.hide();
+				});
+			}
+		}
+		
+		cancel_link.click(function() {
+			if (xhr && typeof(xhr.abort) == 'function') xhr.abort();
+			$('#edit_info').remove();
+			$('#owner_info_wrap').show();
+			$(this).fadeOutRemove(300);
+			$('#client_edit_contact').text('Edit');
+			return false;
+		});
+		
+		return false;
+	});
+	
 	var fac_photo_show = $('#sl-photos');
 	if (fac_photo_show.length > 0) {
 		var imgs = $('img:not(.main_pic)', fac_photo_show), count = 0;
@@ -1417,72 +1476,6 @@ $(document).ready(function() {
 	
 }); // END document ready
 
-// jQuery Plugins
-
-// first implemented for the client edit form. turns spans into inputs and submits the data via ajax
-$.fn.instantForm = function() {
-	return this.each(function(){
-		var $this 		= $(this),
-			hidden_form = $('form:hidden', this), // a hidden form we use for the authenticity token and to submit via ajax
-			submit_btn 	= $('.instant_submit', this),
-			client_id 	= hidden_form.attr('id').replace('client_edit_', ''),
-			ajax_loader = $('.ajax_loader', $this),
-			cancel_btn 	= $('<a href="#" id="cancel_btn">Cancel</a>').hide().appendTo($this);
-		
-		// serves as the edit mode button and submit button
-		submit_btn.click(function(){
-			if ($(this).text() == 'Edit') {
-				$(this).data('saving', false);
-				cancel_btn.fadeIn();
-				
-				// turn elements with a class of value into an input. use it's rel attr and text for the field name, the rel attr is the relation name, e.g. mailing_address, billing_info. the text is the attr name
-				$('.value', $this).each(function(){
-					var $self 		= $(this).hide(),
-						label_text 	= $self.prev('.label').text().replace(':', '').replace(' ', '_').toLowerCase(),
-						field_name	= 'client'+ ($self.attr('rel') ? '['+ $self.attr('rel') +']' : '') +'[' + label_text +']', 
-						input 		= $('<input type="text" class="small_text_field '+ label_text +' '+ $self.attr('validate') +'" name="'+ field_name +'" value="'+ $self.text() +'" />');
-
-					input.prependTo($self.parent());
-				});
-				
-				$('.small_text_field', $this).eq(0).focus();
-				$(this).text('Save');
-				$.bindPlugins(); // so that hinty and formbouncer will work.
-				$('.numeric_phone', $this).formatPhoneNum();
-				
-			} else if ($(this).text() == 'Save' && !$(this).data('saving')) {
-				$(this).data('saving', true);
-				ajax_loader.show();
-				
-				// put copies of the inputs into the form so we can serialize it and send the data
-				$('input', $this).each(function(){ hidden_form.append($(this).clone()); });
-				
-				$.post(hidden_form.attr('action'), hidden_form.serialize(), function(response){
-					$.with_json(response, function(data){
-						$('#owner_info_wrap', $this).replaceWith(data);
-						submit_btn.text('Edit');
-					});
-					
-					ajax_loader.hide();
-					cancel_btn.fadeOut();
-					$(this).data('saving', false);
-					
-				}, 'json');
-			}
-			
-			return false;
-		});
-		
-		cancel_btn.click(function(){
-			$('.small_text_field', $this).remove();
-			$('.value', $this).show();
-			$(this).fadeOut();
-			submit_btn.text('Edit').data('saving', false);
-			return false;
-		});
-	});
-}
-
 // NEW CLIENT Workflow (sign up through the add-your-facility page)
 var workflow_settings = {
 	title		 : 'Add Your Facility',
@@ -1696,7 +1689,6 @@ $.get_checked_listings_addresses = function(wizard, address_part) {
 	return addresses;
 }
 
-
 $.preload_us_map_imgs = function() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
@@ -1762,6 +1754,7 @@ $.translate_with = function(translations) {
 		
 		$.each(this.elements, function() {
 			var element = $(this.element, page);
+			
 			if (element.length > 0)
 				element[this.method](this.translation);
 		});

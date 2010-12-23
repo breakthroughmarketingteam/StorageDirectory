@@ -754,7 +754,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-info h3{overflow:hidden;width:82%;}
 #ov-info h3 span{display:block;float:left;width:50%;}
 #ov-info h3 span.right{text-align:right;width:34%;}
-.ov-info-cnt{float:left;position:relative;width:45%;margin-top:10px;}
+.ov-info-cnt{float:left;position:relative;width:46%;margin-top:10px;}
 .ov-info-cnt .label{margin-left:35px;}
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
@@ -1016,6 +1016,12 @@ img.right{margin:0 0 10px 10px;}
 #email_reports_settings p{position:relative;}
 #email_reports_settings .submit_btn{position:absolute;bottom:0;right:10px;color:#333;}
 #email_reports_settings .submit_btn:hover{text-decoration:underline;}
+#edit_info{overflow:hidden;padding:0 20px;}
+#edit_info .ov-info-cnt label{float:left;display:block;width:27%;}
+#edit_info .ov-info-cnt input{width:69%;border:1px solid #ccc;padding:3px 5px;}
+#edit_info .ov-info-cnt .tiny_text_field,#edit_info .ov-info-cnt .state_zip .numeric{width:12%;}
+#edit_info .ov-info-cnt .expiry input{width:6%;}
+#edit_info .ov-info-cnt .state_zip .numeric{margin-left:10px;}
 /* reserve form */
 .new_listing_request select{margin-bottom:14px;}
 body.locator_action form.new_listing_request,body.home_action form.new_listing_request{margin-top:10px;}

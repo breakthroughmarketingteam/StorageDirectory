@@ -1,0 +1,69 @@
+<% form_for @client, :html => { :id => 'edit_info' } do |f| %>
+	<% f.fields_for :billing_infos, @client.active_billing_info do |bf| %>
+		<div class="ov-info-cnt right_space">
+			<ul>
+				<li>
+					<%= bf.label :name %>
+					<%= bf.text_field :name, :class => 'required' %>
+				</li>
+				<li>
+					<%= bf.label :address %>
+					<%= bf.text_field :address, :class => 'required' %>
+				</li>
+				<li>
+					<%= bf.label :phone %>
+					<%= bf.text_field :phone, :class => 'required numeric_phone auto_next', :maxlength => 12 %>
+				</li>
+				<li>
+					<%= bf.label :card_type %>
+					<%= bf.select :card_type, BillingInfo.credit_cards, :class => 'required' %>
+				</li>
+				<li>
+					<%= bf.label :card_number %>
+					<%= bf.text_field :card_number, :class => 'required numeric auto_next', :maxlength => 16 %>
+				</li>
+				<li>
+					<%= bf.label :cvv %>
+					<%= bf.text_field :cvv, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
+				</li>
+				<li class="expiry">
+					<%= bf.label :expires %>
+					<%= bf.text_field :expires_month, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
+					<%= bf.text_field :expires_year, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'YY' %>
+				</li>
+			</ul>
+		</div>
+	<% end %>
+	
+	<% f.fields_for :mailing_addresses, @client.active_mailing_address do |mf| %>
+		<div class="ov-info-cnt">
+			<ul>
+				<li>
+					<%= mf.label :name %>
+					<%= mf.text_field :name, :class => 'required' %>
+				</li>
+				<li>
+					<%= mf.label :company %>
+					<%= mf.text_field :company %>
+				</li>
+				<li>
+					<%= mf.label :phone %>
+					<%= mf.text_field :phone, :class => 'required numeric_phone auto_next', :maxlength => 12 %>
+				</li>
+				<li>
+					<%= mf.label :address %>
+					<%= mf.text_field :address, :class => 'required' %>
+				</li>
+				<li>
+					<%= mf.label :city %>
+					<%= mf.text_field :city, :class => 'required' %>
+				</li>
+				<li class="state_zip">
+					<%= mf.label :state %>
+					<%= mf.select :state, States.names, :class => 'required' %>
+					<%= mf.text_field :zip, :class => 'required numeric' , :maxlength => 5 %>
+				</li>
+			</ul>
+		</div>
+	<% end %>
+<% end %>

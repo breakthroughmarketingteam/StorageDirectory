@@ -22,7 +22,6 @@ $(function(){
 	$('h4 a', '#info-accordion').accordion(); // my very own accordion widget :)
 	$('.tabular_content').tabular_content(); // a div that contains divs as the tabbed content, the tab list can be anywhere
 	$('.clickerd').clickOnLoad();             // a click is triggered on page load for these elements
-	$('.instant_form').instantForm();		// turn a tags with class name label and value into form labels and inputs
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
@@ -1141,7 +1140,7 @@ $.fn.autoNext = function() {
 		$this.keyup(function() {
 			var input = $(this);
 			
-			if (input.val().length == input.attr('maxlength'))
+			if (input.val().length == input.attr('maxlength') && input.val() != input.attr('title'))
 				inputs.eq(inputs.index(input) + 1).focus();
 		});
 	});

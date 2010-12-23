@@ -32,25 +32,30 @@ class Permission < ActiveRecord::Base
   
   # map REST action to CRUD action
   def allows?(action, controller)
-    return true if self.action == 'all'
+    return true if controller == self.resource && self.action == 'all'
     
-    controller == self.resource && case action.to_sym when :new, :create
+    controller == self.resource && case action.to_s when 'new', /(create)/
       self.action == 'create'
-    when :index, :show
+    when 'index', /(show)/
       self.action == 'read'
-    when :edit, :update
+    when /(edit)/, /(update)/
       self.action == 'update'
-    when :destroy
+    when /(destroy)/
       self.action == 'delete'
-    else # fallback: if @param action is already a CRUD action
+    else # fallback: if :action is already a CRUD action
       self.action == action
     end
   end
   
+  # does user own this model?
   def on?(user, model)
     return true unless self.scoped? && !model.nil?
-    model_class = model.class.name.underscore.pluralize
-    user.respond_to?(model_class) && user.send(model_class).map.include?(model)
+    return true if user == model
+    
+    single = model.class.name.underscore.singularize
+    collection = single.pluralize
+    
+    user.respond_to?(collection) ? user.send(collection).map.include?(model) : user.send(single) == model
   end
   
 end

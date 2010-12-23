@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101223002715) do
+ActiveRecord::Schema.define(:version => 20101223194028) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -470,7 +470,6 @@ ActiveRecord::Schema.define(:version => 20101223002715) do
     t.string   "company"
     t.string   "address"
     t.string   "phone"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "city"

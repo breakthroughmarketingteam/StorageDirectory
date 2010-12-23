@@ -71,19 +71,12 @@
 			<li class="fac-map">
 				<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 			</li>
-		
-			<li class="fac-specials<%= ' hide' if result.specials.empty? %>">
-				<%= link_to "More Specials#{" (#{result.specials.size})"}", result.get_partial_link(:specials), :rel => 'specials', :class => "tab_link" %>
-			</li>
-		
 			<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
 				<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
 			</li>
-		
 			<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
 				<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
 			</li>
-		
 			<li class="fac-reviews<%= ' hide' if result.reviews.empty? %>">
 				<%= link_to "Reviews#{" (#{result.reviews.size})"}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
 			</li>

@@ -70,19 +70,19 @@
 				<div>
 					<ul>
 						<li><%= link_to "<span>#{@client.issn_enabled? ? 'Manage Sync' : 'Enable Sync'}</span>", '#reservations', :id => 'reservations' %></li>
-						<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'calls' %></li>
+						<li><%= link_to "<span>#{@client.call_tracking_enabled? ? 'Call Log' : 'Activate Call Tracking'}</span>", '#calls', :id => 'calls' %></li>
+						<li><%= link_to '<span>Request Log</span>', '#calls', :id => 'request_log' %></li>
 					</ul>
 				</div>
 	        </div>
 	      </div>
 
 		<%= render_hints_for :owner_info, 'ov-info' %>
-	 	  <div id="ov-info" class="instant_form hideable">
+	 	  <div id="ov-info" class="hideable">
 	        <div class="ov-item-head">
-	          <h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
-
-	  	      <%= ajax_loader %>
-	          <a id="client_edit_contact" class="btn instant_submit" href="#">Edit</a>
+	          	<h3><span>Billing Info</span><span class="right">Mailing Address</span></h3>
+				
+				<%= link_to 'Edit', edit_info_client_path(@client), :id => 'client_edit_contact', :class => 'btn' %>
 	        </div>
 		
 			<%= render :partial => 'owner_info' %>

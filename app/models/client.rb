@@ -58,16 +58,11 @@ class Client < User
   def has_special?(special)
     self.predefined_specials.include? special
   end
-  
-  def update_info(info) 
+
+  def update_info(info)
     if info[:settings_attributes]
       settings = self.settings || self.build_settings(info[:settings_attributes])
       settings.new_record? ? settings.save : settings.update_attributes(info[:settings_attributes])
-    end
-    
-    if info[:listing_description_attributes]
-      listing_description = self.listing_description || self.build_listing_description(info[:listing_description_attributes])
-      listing_description.new_record? ? listing_description.save : listing_description.update_attributes(info[:listing_description_attributes])
     end
 
     if info[:mailing_address]
@@ -76,12 +71,24 @@ class Client < User
     end
   
     if info[:billing_info]
+      require 'openssl'
+      require 'base64'
+
+      pkey_file = "#{RAILS_ROOT}/cert/tuna_salad.pem";
+      pkey = OpenSSL::PKey::RSA.new File.read(pkey_file)
+      
+      info[:billing_info][:card_number]   = Base64.encode64 public_key.public_encrypt(info[:billing_info][:card_number])
+      info[:billing_info][:cvv]           = Base64.encode64 public_key.public_encrypt(info[:billing_info][:cvv])
+      info[:billing_info][:expires_month] = Base64.encode64 public_key.public_encrypt(info[:billing_info][:expires_month])
+      info[:billing_info][:expires_year]  = Base64.encode64 public_key.public_encrypt(info[:billing_info][:expires_year])
+      info[:billing_info][:card_type]     = Base64.encode64 public_key.public_encrypt(info[:billing_info][:card_type])
+      
       billing_info = self.active_billing_info || self.billing_infos.build(info[:billing_info])
       billing_info.new_record? ? billing_info.save : billing_info.update_attributes(info[:billing_info])
     end
     self.save
   end
-  
+
   def enable_listings!
     self.listings.each { |listing| listing.update_attributes :enabled => true }
   end

@@ -83,7 +83,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :permissions
   end
   
-  map.resources :clients, :member => { :toggle_specials => :post } do |clients|
+  map.resources :clients, :member => { :toggle_specials => :post, :edit_info => :get } do |clients|
     clients.resources :listings, :member => { :disable => :post } do |listings|
       listings.resources :staff_emails
     end
