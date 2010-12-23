@@ -1,3 +1,3 @@
 <% content_for :web_link, "/look/#{@email_blast.title.parameterize}" %>
-<% content_for :unsub, unsub_email_blast_path(@token) %>
+<% content_for :unsub, unsub_from_email_blast_path(@token) %>
 <%= render_model_content @email_blast %>
