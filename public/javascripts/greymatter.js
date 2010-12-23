@@ -394,12 +394,11 @@ $(function(){
 	
 	$('#blast_off').live('click', function() {
 		var $this = $(this),
-			form = $this.parents('form').runValidation(),
 			blast_type = $('input[name=blast_type]:checked', '#blaster').val(),
 			test_emails = $('#test_emails', '#blaster').val(),
 			ajax_loader = $.new_ajax_loader('after', $this).show();
 		
-		if (form.data('valid') && !$this.data('blasting')) {
+		if (!$this.data('blasting')) {
 			$this.data('blasting', true);
 			
 			$.getJSON($this.attr('data-blast-path'), { blast_type: blast_type, test_emails: test_emails, authenticity_token: $.get_auth_token() }, function(response) {

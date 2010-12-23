@@ -89,7 +89,9 @@ class EmailBlastsController < ApplicationController
   def blast
     case params[:blast_type] when 'listing_contacts'
       ListingContact.not_unsub.each do |contact|
+        @contact = contact
         @token = contact.unsub_token
+        @listing = contact.listing
         Blaster.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
       end
       
