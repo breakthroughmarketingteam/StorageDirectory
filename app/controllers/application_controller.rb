@@ -57,6 +57,11 @@ class ApplicationController < ActionController::Base
     redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
   end
   
+  def ensure_secure_subdomain
+    return if RAILS_ENV == 'development'
+    redirect_to "https://secure.#{$root_domain}?#{params.to_query}" unless request.env['HTTP_HOST']['secure']
+  end
+  
   # Pages#show, Listings#home and #locator are allowed by anonymous
   # Clients#new and #create are also allowed by anonymous
   # Posts#create is also allowed by anonymous (submit tip on storage-tips page)
@@ -87,7 +92,7 @@ class ApplicationController < ActionController::Base
     unless @allowed
       flash[:error] = 'Access Denied'
       store_location
-      redirect_to login_path and return
+      redirect_to kick_back_path and return
     end
   end
   
@@ -493,6 +498,16 @@ class ApplicationController < ActionController::Base
   
   def get_or_create_search
     @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+  end
+  
+  def kick_back_path
+    case current_user.role.title when /(admin)/i
+      '/admin'
+    when /(advertiser)/o
+      '/my_account'
+    else
+      login_path
+    end
   end
   
   def benchmark

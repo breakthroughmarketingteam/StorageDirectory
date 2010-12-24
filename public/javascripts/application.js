@@ -1199,7 +1199,7 @@ $(document).ready(function() {
 		}
 		
 		cancel_link.click(function() {
-			if (xhr && typeof(xhr.abort) == 'function') xhr.abort();
+			if (xhr) xhr.abort();
 			$('#edit_info').remove();
 			$('#owner_info_wrap').show();
 			$(this).fadeOutRemove(300);
@@ -1290,7 +1290,7 @@ $(document).ready(function() {
 				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
 			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
-				$.with_json(response, function(data){
+				$.with_json(response, function(data) {
 					$.jqplot.preInitHooks.push(function() {
 						stats_graph.children().remove();
 					});

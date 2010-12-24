@@ -27,11 +27,11 @@ class Client < User
   end
 
   def active_mailing_address
-    self.mailing_addresses.last
+    @mailing_address ||= self.mailing_addresses.last
   end
   
   def active_billing_info
-    self.billing_infos.last
+    @billing_info ||= self.billing_infos.last
   end
   
   def has_mailing_address?
@@ -64,25 +64,13 @@ class Client < User
       settings = self.settings || self.build_settings(info[:settings_attributes])
       settings.new_record? ? settings.save : settings.update_attributes(info[:settings_attributes])
     end
-
+    raise info.pretty_inspect
     if info[:mailing_address]
       mailing_address = self.active_mailing_address || self.mailing_addresses.build(info[:mailing_address])
       mailing_address.new_record? ? mailing_address.save : mailing_address.update_attributes(info[:mailing_address])
     end
   
     if info[:billing_info]
-      require 'openssl'
-      require 'base64'
-
-      pkey_file = "#{RAILS_ROOT}/cert/tuna_salad.pem";
-      pkey = OpenSSL::PKey::RSA.new File.read(pkey_file)
-      
-      info[:billing_info][:card_number]   = Base64.encode64 public_key.public_encrypt(info[:billing_info][:card_number])
-      info[:billing_info][:cvv]           = Base64.encode64 public_key.public_encrypt(info[:billing_info][:cvv])
-      info[:billing_info][:expires_month] = Base64.encode64 public_key.public_encrypt(info[:billing_info][:expires_month])
-      info[:billing_info][:expires_year]  = Base64.encode64 public_key.public_encrypt(info[:billing_info][:expires_year])
-      info[:billing_info][:card_type]     = Base64.encode64 public_key.public_encrypt(info[:billing_info][:card_type])
-      
       billing_info = self.active_billing_info || self.billing_infos.build(info[:billing_info])
       billing_info.new_record? ? billing_info.save : billing_info.update_attributes(info[:billing_info])
     end

@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   
-  before_filter :get_models_paginated, :only => :index
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   before_filter :get_or_create_search, :only => :show
@@ -10,6 +9,7 @@ class PagesController < ApplicationController
   geocode_ip_address :only => :show
   
   def index
+    @pages = Page.all_for_index_view
     render :layout => false if request.xhr?
   end
 
