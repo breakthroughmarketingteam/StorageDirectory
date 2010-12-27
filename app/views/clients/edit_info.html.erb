@@ -1,5 +1,5 @@
 <% form_for @client, :html => { :id => 'edit_info' } do |f| %>
-	<% f.fields_for :billing_infos, @client.active_billing_info do |bf| %>
+	<% f.fields_for :billing_info, @client.billing_info do |bf| %>
 		<div class="ov-info-cnt right_space">
 			<ul>
 				<li>
@@ -35,8 +35,8 @@
 		</div>
 	<% end %>
 	
-	<% f.fields_for :mailing_addresses, @client.active_mailing_address do |mf| %>
-		<div class="ov-info-cnt">
+	<% f.fields_for :mailing_address, @client.mailing_address do |mf| %>
+		<div class="ov-info-cnt left_space">
 			<ul>
 				<li>
 					<%= mf.label :name %>

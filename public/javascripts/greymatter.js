@@ -31,6 +31,14 @@ $(function(){
 	// highlight text within a text field or area when focused
 	$('.click_sel').live('focus', function() { $(this).select() });
 	
+	$('.greyConfirm').live('click', function() {
+		$.greyConfirm('Are you sure?', function() {
+			return true;
+		}, function() {
+			return false;
+		});
+	});
+	
 	// we call the toggleAction in case we need to trigger any plugins declared above
 	$.toggleAction(window.location.href, true); // toggle a container if its id is in the url hash
 	
@@ -692,40 +700,35 @@ $.get_param_value = function(key) {
 	}
 }
 
-// replacement for the browser's confirm box
-$.greyConfirm = function(msg, action, cancel, do_alert_instead, error) {
-	var pop_up = $('<div id="pop_up" class="'+ (typeof(do_alert_instead) == 'undefined' || !do_alert_instead ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
-		title: do_alert_instead ? (error ? 'Alert' : 'Notice') : 'Confirm',
+// replacement for the browser's confirm and alert box
+// msg: what to show in the pop up. action: callback if yes. cancel: callback if no. alert: do alert box instead (with only 1 btn). error: whether the alert is an error or simple alert.
+$.greyConfirm = function(msg, action, cancel, alert, error) {
+	var pop_up = $('<div id="pop_up" class="'+ (typeof(alert) == 'undefined' || !alert ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
+		title: alert ? (error ? 'Alert' : 'Notice') : 'Confirm',
 		width: 400,
-		height: 150,
+		height: 'auto',
 		modal: true,
 		resizable: false,
-		close: function() { $(this).dialog('destroy').remove() }
+		close: function() { $(this).dialog('destroy') }
 	});
 	
-	if (typeof(do_alert_instead) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a></div>'; 
+	if (typeof(alert) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a></div>'; 
 	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
 	pop_up.append(btns);
 	
 	$('.btn', pop_up).click(function() {
-		if (typeof(do_alert_instead) == 'undefined' || !do_alert_instead) {
+		if (typeof(alert) == 'undefined' || !alert) {
 			var confirm = $(this).text() == 'Yes' ? true : false;
 			if (confirm && typeof(action) == 'function') action.call(this);
 			else if (typeof cancel == 'function') cancel.call(this);
 		}
-		pop_up.dialog('close');
+		
+		pop_up.dialog('destroy');
 		return false;
 	});
 }
 
-$('.greyConfirm').live('click', function() {
-	$.greyConfirm('Are you sure?', function() {
-		return true;
-	}, function() {
-		return false;
-	});
-});
-
+// msg: what to show in the pop up. error: boolean, error or just simple alert
 $.greyAlert = function(msg, error) {
 	if (typeof error == 'undefined') error = true;
 	$.greyConfirm(msg, null, null, true, error);

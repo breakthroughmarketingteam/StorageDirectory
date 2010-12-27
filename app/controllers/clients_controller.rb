@@ -21,23 +21,12 @@ class ClientsController < ApplicationController
   end
   
   def create
-    @client = Client.new params[:client]
-    @mailing_address = @client.mailing_addresses.build params[:mailing_address].merge(:name => @client.name, :company => @client.company)
-    @billing_info = @client.billing_infos.build :name => @client.name, :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip, :phone => @mailing_address.phone
-    
-    unless params[:listings].blank?
-      @client.listing_ids = params[:listings]
-      @client.enable_listings!
-    else
-      @listing = @client.listings.build :title => @client.company, :status => 'unverified', :enabled => true, :category => 'Storage', :storage_types => 'self storage'
-      @listing.build_map :address => @mailing_address.address, :city => @mailing_address.city, :state => @mailing_address.state, :zip => @mailing_address.zip ,:phone => @mailing_address.phone
-    end
+    @client = Client.new params
     
     if @client.save_without_session_maintenance
       Notifier.deliver_client_notification @client
       Notifier.deliver_new_client_alert @client
       
-      flash[:new_client_created] = "We've sent you an email to #{@client.email} with your new account details. You'll be able to login by following the link in your email to activate your account."
       render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
     else
       render :json => { :success => false, :data => model_errors(@client) }
@@ -60,7 +49,7 @@ class ClientsController < ApplicationController
     render :json => { :success => false, :data => e.message }
   end
   
-  def update
+  def update    
     respond_to do |format|
       if @client.update_info params[:client]
         # upsets is a hidden field set to true in the settings partial

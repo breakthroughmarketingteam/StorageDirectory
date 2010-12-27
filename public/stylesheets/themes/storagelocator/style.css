@@ -776,7 +776,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services ul li a:hover,#ov-reports ul li a:active{color:#393;}
 #ov-services ul li span{position:relative;top:145px;}
 #ov-services ul li a#clicks{background:url(/images/ui/storagelocator/click-logo.png) no-repeat top center;}
-#ov-services ul li a#calls{background:url(/images/ui/storagelocator/calls-logo.png) no-repeat top center;}
+#ov-services ul li a#calls,#ov-services ul li a#request_log{background:url(/images/ui/storagelocator/calls-logo.png) no-repeat top center;}
 #ov-services ul li a#reservations{background:url(/files/content/issn_networklogo.jpg) no-repeat top center;}
 #ov-settings p{float:left;margin:10px;}
 #ov-settings-cnt table{width:100%;}
@@ -1617,6 +1617,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #login_page input#send_btn{padding:5px 0;width:322px;}
 
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
+.confirm_box,.alert_box{padding-bottom:10px !important;}
 .confirm_box p,.alert_box p{font-size:100%;text-align:center;}
 .confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;}
 .confirm_box #confirm_yes{right:10px;}

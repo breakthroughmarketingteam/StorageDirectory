@@ -1,10 +1,18 @@
 class AjaxController < ApplicationController
   
   skip_before_filter :init
-  
+  ssl_required :get_client_stats
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method]
+  
+  def get_client_stats
+    @client = Client.find params[:client_id]
+    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    json_response true, data
+  rescue => e
+    render_error "Error loading Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
+  end
   
   def get_all
     if (has_name = _get_model_class.first.respond_to?('name')) || _get_model_class.first.respond_to?('title')
@@ -33,11 +41,13 @@ class AjaxController < ApplicationController
   def find
     @found = eval "@model_class.find_all_by_#{params[:by]}('#{params[:value]}')" rescue nil
     json_response true, @found
+  rescue => e
+    render_error e
   end
   
   # find listings in a city or state which don't have an owner
   def find_listings
-    company, city, state = *[params[:company], params[:city], params[:state]].map { |p| p.downcase.gsub(/\\|'/) { |c| "\\#{c}" } }
+    company, city, state = *[params[:company], params[:city], params[:state]].map { |p| p.downcase.gsub(/\\|'/) { |c| "\\#{c}" } } # strip quotes
     @listings = Listing.find_listings_by_company_city_and_state company, city, state
     
     json_response true, @listings
@@ -52,12 +62,6 @@ class AjaxController < ApplicationController
     
   rescue => e
     render_error e
-  end
-  
-  def get_client_stats
-    @client = Client.find params[:client_id]
-    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
-    json_response true, data
   end
   
   def get_attributes
@@ -197,7 +201,7 @@ class AjaxController < ApplicationController
   end
   
   def render_error(e)
-    render :json => { :success => false, :data => e.message }
+    render :json => { :success => false, :data => e.respond_to?(:message) ? e.message.gsub(/<|>/, ' ') : e }
   end
   
 end

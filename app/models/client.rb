@@ -3,43 +3,40 @@ class Client < User
   has_many :listings, :foreign_key => 'user_id'
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
-  #has_many :specials, :dependent => :destroy
+  has_many :specials, :through => :listings
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
   has_many :predef_special_assigns, :dependent => :destroy
   has_many :predefined_specials, :through => :predef_special_assigns
-  has_many :billing_infos, :dependent => :destroy
-  accepts_nested_attributes_for :listings, :mailing_addresses, :billing_infos
+  
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
+  has_one :billing_info, :dependent => :destroy
+  has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
+  accepts_nested_attributes_for :mailing_address, :billing_info
   
   has_many :staff_emails, :through => :listings
-  
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
   
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
   
-  def initialize(params = {})
-    super params
+  def initialize(client_params, params = {})
+    super client_params
+    
+    ma = self.build_mailing_address params[:mailing_address].merge(:name => self.name, :company => self.company)
+    self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+    
+    unless params[:listings].blank?
+      self.listing_ids = params[:listings]
+      self.enable_listings!
+    else
+      listing = self.listings.build :title => self.company, :status => 'unverified', :enabled => true, :category => 'Storage', :storage_types => 'self storage'
+      listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+    end
+    
     self.role_id = Role.get_role_id 'advertiser'
-    self.status = 'unverified'
     self.report_recipients = self.email
     self.user_hints = UserHint.all
-  end
-
-  def active_mailing_address
-    @mailing_address ||= self.mailing_addresses.last
-  end
-  
-  def active_billing_info
-    @billing_info ||= self.billing_infos.last
-  end
-  
-  def has_mailing_address?
-    !active_mailing_address.nil?
-  end
-  
-  def has_billing_info?
-    !active_billing_info.nil?
+    self
   end
   
   def display_special
@@ -64,16 +61,10 @@ class Client < User
       settings = self.settings || self.build_settings(info[:settings_attributes])
       settings.new_record? ? settings.save : settings.update_attributes(info[:settings_attributes])
     end
-    raise info.pretty_inspect
-    if info[:mailing_address]
-      mailing_address = self.active_mailing_address || self.mailing_addresses.build(info[:mailing_address])
-      mailing_address.new_record? ? mailing_address.save : mailing_address.update_attributes(info[:mailing_address])
-    end
-  
-    if info[:billing_info]
-      billing_info = self.active_billing_info || self.billing_infos.build(info[:billing_info])
-      billing_info.new_record? ? billing_info.save : billing_info.update_attributes(info[:billing_info])
-    end
+    
+    self.mailing_address_attributes = info[:mailing_address_attributes] if info[:mailing_address_attributes]
+    self.billing_info_attributes = info[:billing_info_attributes] if info[:billing_info_attributes]
+    
     self.save
   end
 

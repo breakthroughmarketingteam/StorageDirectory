@@ -3,31 +3,31 @@
 		<ul>
 			<li>
 				<span class="label">Name:</span>
-				<span class="value"><%= @client.active_billing_info.name if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.name if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Address:</span>
-				<span class="value"><%= @client.active_billing_info.address if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.address if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Phone:</span>
-				<span class="value"><%= @client.active_billing_info.phone if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.phone if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Card Type:</span>
-				<span class="value"><%= @client.active_billing_info.card_type if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.card_type if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Card Number:</span>
-				<span class="value"><%= @client.active_billing_info.obscured_card_number if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.obscured_card_number if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">CVV:</span>
-				<span class="value"><%= @client.active_billing_info.cvv if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.cvv if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Expires:</span>
-				<span class="value"><%= @client.active_billing_info.expires_month if @client.has_billing_info? %></span>
+				<span class="value"><%= @client.billing_info.expires_month if @client.billing_info %></span>
 			</li>
 		</ul>
 	</div>
@@ -36,31 +36,31 @@
 		<ul>
 			<li>
 				<span class="label">Name:</span>
-				<span class="value"><%= @client.active_mailing_address.name if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.name if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">Company:</span>
-				<span class="value"><%= @client.active_mailing_address.company if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.company if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">Phone:</span>
-				<span class="value"><%= @client.active_mailing_address.phone if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.phone if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">Address:</span>
-				<span class="value" ><%= @client.active_mailing_address.address if @client.has_mailing_address? %></span>
+				<span class="value" ><%= @client.mailing_address.address if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">City:</span>
-				<span class="value"><%= @client.active_mailing_address.city if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.city if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">State:</span>
-				<span class="value"><%= @client.active_mailing_address.state if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.state if @client.mailing_address %></span>
 			</li>
 			<li>
 				<span class="label">Zip:</span>
-				<span class="value"><%= @client.active_mailing_address.zip if @client.has_mailing_address? %></span>
+				<span class="value"><%= @client.mailing_address.zip if @client.mailing_address %></span>
 			</li>
 		</ul>
 	</div>
