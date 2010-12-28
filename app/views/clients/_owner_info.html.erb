@@ -11,20 +11,10 @@
 			</li>
 			<li>
 				<span class="label">Address:</span>
-				<span class="value"><%= @client.billing_info.address if @client.billing_info %></span>
+				<span class="value" ><%= @client.billing_info.address if @client.billing_info %></span>
 			</li>
-			<li>
-				<span class="label">City:</span>
-				<span class="value"><%= @client.billing_info.city if @client.billing_info %></span>
-			</li>
-			<li class="state_zip uncollapse">
-				<div class="left right_space">
-					<span class="label">&nbsp;</span>
-					<span class="value"><%= @client.billing_info.state if @client.billing_info %></span>
-				</div>
-				<div class="left">
-					<span class="value"><%= @client.billing_info.zip if @client.billing_info %></span>
-				</div>
+			<li class="uncollapse">
+				<span class="value" ><%= @client.billing_info.city_state_zip if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Card Type:</span>
@@ -63,18 +53,8 @@
 				<span class="label">Address:</span>
 				<span class="value" ><%= @client.mailing_address.address if @client.mailing_address %></span>
 			</li>
-			<li>
-				<span class="label">City:</span>
-				<span class="value"><%= @client.mailing_address.city if @client.mailing_address %></span>
-			</li>
-			<li class="state_zip uncollapse">
-				<div class="left right_space">
-					<span class="label">&nbsp;</span>
-					<span class="value"><%= @client.mailing_address.state if @client.mailing_address %></span>
-				</div>
-				<div class="left">
-					<span class="value"><%= @client.mailing_address.zip if @client.mailing_address %></span>
-				</div>
+			<li class="uncollapse">
+				<span class="value" ><%= @client.mailing_address.city_state_zip if @client.mailing_address %></span>
 			</li>
 		</ul>
 	</div>

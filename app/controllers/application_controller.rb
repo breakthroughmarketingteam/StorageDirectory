@@ -501,12 +501,16 @@ class ApplicationController < ActionController::Base
   end
   
   def kick_back_path
-    case current_user.role.title when /(admin)/i
-      '/admin'
-    when /(advertiser)/o
-      '/my_account'
+    if current_user
+      case current_user.role.title when /(admin)/i
+        '/admin'
+      when /(advertiser)/o
+        '/my_account'
+      else
+        login_path
+      end
     else
-      login_path
+      login_url
     end
   end
   

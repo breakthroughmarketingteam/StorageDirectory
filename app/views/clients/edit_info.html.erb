@@ -20,12 +20,12 @@
 				</li>
 				<li class="state_zip">
 					<%= bf.label :state %>
-					<%= bf.select :state, States.names, { :selected => @billing_info.card_type }, :class => 'required' %>
+					<%= bf.select :state, States.names, :class => 'required' %>
 					<%= bf.text_field :zip, :class => 'required numeric hintable', :title => 'Zip', :maxlength => 5 %>
 				</li>
 				<li>
 					<%= bf.label :card_type %>
-					<%= bf.select :card_type, BillingInfo.credit_cards, :class => 'required' %>
+					<%= bf.select :card_type, BillingInfo.credit_cards, { :selected => @billing_info.card_type }, :class => 'required' %>
 				</li>
 				<li>
 					<%= bf.label :card_number %>

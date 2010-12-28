@@ -1487,18 +1487,18 @@ var workflow_settings = {
 			div_id  : 'signupstep_2',
 			action  : workflow_step2,
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
-				['skip', 'fadeIn'],
-				['back', function(btn, wizard){ btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }] 
+				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
+				['skip', function(btn, wizard) { btn.fadeIn().bind('click', ensure_no_listings_checked) }],
+				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }] 
 			]
 		},
 		{ 
 			div_id  : 'signupstep_3',
 			action  : workflow_step3,
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Next').data('done', false).show() }],
+				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
 				['skip', 'fadeOut'],
-				['back', function(btn, wizard){ btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
+				['back', function(btn, wizard) { btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
 			],
 			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
 		},
@@ -1506,7 +1506,7 @@ var workflow_settings = {
 			div_id  : 'signupstep_4',
 			action  : workflow_step4,
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Submit').data('done', false); }],
+				['next', function(btn, wizard) { btn.text('Submit').data('done', false); }],
 				['skip', 'hide'],
 				['back', 'fadeIn']
 			],
@@ -1527,9 +1527,13 @@ var workflow_settings = {
 	finish_action : function(wizard){ 
 		wizard.workflow.parent().dialog('destroy').remove();
 		$('#new_client')[0].reset();
-		$('.ajax_loader', '#new_client').hide();
+		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
 };
+
+function ensure_no_listings_checked() {
+	$('input[name=listing_id]:checked', '#signupstep_2').attr('checked', false).parents('.selected').removeClass('selected');
+}
 
 function close_pop_up_and_focus_on_fac_name(event){
 	$('#pop_up').dialog('close');

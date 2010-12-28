@@ -40,7 +40,7 @@ span.blue{color:#4c4bcc;}
 #title{background:url(/images/ui/storagelocator/usselfstoragelocator-sml.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:655px;position:relative;left:140px;}
 #title h1{bottom:10px;color:#333;font-size:14px;font-weight:normal;left:4px;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;background:url(/images/ui/storagelocator/discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -414,13 +414,13 @@ li.share a.socialmediathree{background:url(/images/ui/storagelocator/socialmedia
 .listing .review h6{font-size:100%;margin-bottom:8px;padding-top:5px;}
 .listing .review .stack{font-size:80%;line-height:18px;}
 /* Start the add facility page styles here */
-form#new_client{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;background:none repeat scroll 0 0 #4C4BCC;border:3px solid #ccc;float:left;height:240px;margin-top:10px;padding:15px;width:330px;position:relative;}
-form#new_client .ajax_loader{bottom:26px;position:absolute;right:156px;}
+form#new_client{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;background:none repeat scroll 0 0 #4C4BCC;border:3px solid #ccc;float:left;height:255px;margin-top:10px;padding:15px;width:330px;position:relative;}
+form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #add-fac-form .label{color:#99f;display:block;font-size:12px;margin-bottom:5px;}
 #add-fac-form .email-label{color:#99f;display:inline-block;font-size:12px;margin-bottom:4px;}
-#add-fac-form #city{float:left;margin-right:30px;width:210px;}
+#add-fac-form #city{float:left;margin-right:30px;width:263px;}
 #add-fac-form #state{margin-bottom:0;}
-#add-fac-form #submit_wrap{margin-top:12px;}
+#add-fac-form #submit_wrap{margin-top:15px;float:right;}
 #new_client span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:8px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
@@ -428,8 +428,8 @@ form#new_client .ajax_loader{bottom:26px;position:absolute;right:156px;}
 #new_client input,#signupstep_3 input{border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;border:1px solid #ccc;font-size:14px;height:22px;padding:3px 6px;}
 #new_client input{width:313px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
-#new_client #listing_city{width:208px;}
-#new_client #listing_state{width:73px;}
+#new_client #listing_city{width:97%;}
+#new_client #listing_state{width:20px;}
 #add-fac-txt{float:left;width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:22px;}
 #add-fac-txt a:hover;{text-decoration:underline;}
@@ -513,7 +513,7 @@ ul#specials_list {margin:15px 10px;}
 #top_map_btn:hover, #results_header #top_map_btn:active{}
 #top_map_btn img{}
 #top_map_btn span{display:block;float:left;height:20px;margin:3px 7px 0 0;}
-#main_map,#compare_map{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 50%;border:1px solid #ccc;height:226px;margin:4px 0 0 1px;width:97.7%;}
+#main_map,#compare_map{background:url(/images/ui/ajax-loader-long-green.gif) no-repeat 50% 50%;border:1px solid #ccc;height:226px;margin:0 0 0 1px;width:97.7%;}
 #compare_map{width:100%;margin-bottom:20px;}
 #sl-header h2{float:left;text-shadow:1px 1px 0px #666;margin-left:20px;font-size:28px;}
 #results_header h2{float:left;font-size:18px;margin:10px 0 0 20px;}
@@ -761,8 +761,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt .label{margin-left:35px;}
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
-.ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
-.ov-info-cnt ul .state_zip span.value {float:left;;}
+.ov-info-cnt ul li span.value{width:60%;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
+.ov-info-cnt ul .state_zip span.value {float:left;}
+#edit_info .ov-info-cnt ul li{margin:10px 0;}
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc -moz-use-text-color -moz-use-text-color;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
@@ -835,7 +836,6 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 /* Customizations - D.S */
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
 #ajax_wrap{float:left;padding-left:20px;margin-top:-23px;width:86%;min-height:684px;}
-#ajax_wrap_inner > h2{margin-bottom: -4px;margin-top: 10px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
@@ -1212,7 +1212,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_2 .small_listings,#signupstep_4 > .left{overflow-y:auto;height:334px;width:100%;}
 #signupstep_4 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
 #workflow_steps .right,#signupstep_2 .left{width:46%;}
-#workflow_steps .left{margin:20px 0 0 20px;}
+#workflow_steps .left{margin:0 0 0 20px;}
 #contact_info_form .left{margin:0;width:50%;}
 #workflow_steps p{font-size:12px;line-height:16px;}
 #signupstep_4 .left{width:50%}
@@ -1228,11 +1228,11 @@ form .error p{margin:0 0 7px 0;}
 .listing_title, .listing_title a{font-weight:bold;color:#060;display:block;}
 #workflow_steps .listing_title{font-size:13px;margin:2px 0;}
 #workflow_steps .listing_title span{font-weight:normal;font-size:80%;padding-left:10px;}
-#signupstep_2 .found_box{float:right;margin-top:10px;width:48%;}
+#signupstep_2 .found_box{float:right;margin-top:16px;width:48%;}
 #signupstep_2 .found_box p.display{margin:0 0 7px 52px;}
 #signupstep_2 .found_box p.display span {color:#3333CB;font-weight:bold;}
 /*#signupstep_3{padding:20px;}*/
-#workflow_steps .intro{margin:15px 0 0 20px;}
+#workflow_steps .intro{margin:0 0 0 20px;}
 #signupstep_3 p{font-size:12px;line-height:18px;}
 #signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 20px;width:428px;}
 #signupstep_3 #contact_info_form p{overflow:hidden;}
@@ -1954,7 +1954,7 @@ p.breadcrumb a{color:#fff;}
 .ui-widget-header .ui-icon:hover{background:url(/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}
-#signupstep_2 img{margin-left:50px;margin-top:10px;}
+#signupstep_2 img{margin:10px 0 0 75px;width:50%;}
 #signupstep_3 img{height:195px;margin:60px 0 0 25px;width:214px;}
 
 .edit_rental input.short{width:100px;}

@@ -17,11 +17,11 @@ class BillingInfo < ActiveRecord::Base
   end
   
   def before_save
-    self.card_number   = pb_sandwich.public_encrypt(self.card_number)
-    self.card_type     = pb_sandwich.public_encrypt(self.card_type)
-    self.cvv           = pb_sandwich.public_encrypt(self.cvv)
-    self.expires_month = pb_sandwich.public_encrypt(self.expires_month)
-    self.expires_year  = pb_sandwich.public_encrypt(self.expires_year)
+    self.card_number   = pb_sandwich.public_encrypt(self.card_number)   if self.card_number
+    self.card_type     = pb_sandwich.public_encrypt(self.card_type)     if self.card_type
+    self.cvv           = pb_sandwich.public_encrypt(self.cvv)           if self.cvv
+    self.expires_month = pb_sandwich.public_encrypt(self.expires_month) if self.expires_month
+    self.expires_year  = pb_sandwich.public_encrypt(self.expires_year)  if self.expires_year
   end
   
   def obscured_card_number

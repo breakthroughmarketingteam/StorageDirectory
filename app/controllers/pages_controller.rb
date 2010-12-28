@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   
+  
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   before_filter :get_or_create_search, :only => :show

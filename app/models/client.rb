@@ -1,6 +1,6 @@
 class Client < User
   
-  has_many :listings, :foreign_key => 'user_id'
+  has_many :listings, :foreign_key => 'user_id', :conditions => 'status = "verified"'
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :specials, :through => :listings
@@ -19,24 +19,27 @@ class Client < User
   
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
   
-  def initialize(client_params, params = {})
-    super client_params
+  def initialize(params = {})
+    super params[:client]
     
-    ma = self.build_mailing_address params[:mailing_address].merge(:name => self.name, :company => self.company)
-    self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+    unless params.blank? 
+      ma = self.build_mailing_address params[:mailing_address].merge(:name => self.name, :company => self.company)
+      self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
     
-    unless params[:listings].blank?
-      self.listing_ids = params[:listings]
-      self.ensure_listings_unverified!
-      #self.enable_listings! # auto verify
-    else
-      listing = self.listings.build :title => self.company, :status => 'unverified', :enabled => true, :category => 'Storage', :storage_types => 'self storage'
-      listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+      unless params[:listings].blank?
+        self.listing_ids = params[:listings]
+        self.ensure_listings_unverified!
+        #self.enable_listings! # auto verify
+      else
+        listing = self.listings.build :title => self.company, :status => 'unverified', :enabled => true, :category => 'Storage', :storage_types => 'self storage'
+        listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+      end
+    
+      self.role_id = Role.get_role_id 'advertiser'
+      self.report_recipients = self.email
+      self.user_hints = UserHint.all
     end
     
-    self.role_id = Role.get_role_id 'advertiser'
-    self.report_recipients = self.email
-    self.user_hints = UserHint.all
     self
   end
   
