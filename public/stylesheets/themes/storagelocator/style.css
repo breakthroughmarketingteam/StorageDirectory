@@ -762,6 +762,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt p,.ov-info-cnt ul li{list-style:none;margin:5px 0px;clear:both;color:#333;font-size:80%;line-height:1.5;}
 .ov-info-cnt p{text-align:left;position:relative;left:50px;font-size:120%;margin:10px 0 5px;}
 .ov-info-cnt ul li span.value{width:60%;height:1px;display:block;float:right;text-align:left;position:relative;left:10px;color:#666;}
+.ov-info-cnt ul .state_zip span.value {float:left;;}
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc -moz-use-text-color -moz-use-text-color;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}

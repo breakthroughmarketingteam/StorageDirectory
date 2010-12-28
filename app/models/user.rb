@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
   require 'digest'
+  attr_protected :role_id, :type, :temp_password, :pro_rated, :report_recipients, :activation_code, :perishable_token
   
   belongs_to :role
   has_many :permissions, :finder_sql => 'SELECT * FROM permissions p, users u ' +
@@ -66,7 +67,7 @@ class User < ActiveRecord::Base
   end
   
   def make_activation_code
-    Digest::SHA1.hexdigest(self.to_s)
+    Digest::SHA1.hexdigest self.to_s
   end
   
   def update_attributes(params)

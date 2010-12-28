@@ -6,12 +6,25 @@
 				<span class="value"><%= @client.billing_info.name if @client.billing_info %></span>
 			</li>
 			<li>
+				<span class="label">Phone:</span>
+				<span class="value"><%= @client.billing_info.phone if @client.billing_info %></span>
+			</li>
+			<li>
 				<span class="label">Address:</span>
 				<span class="value"><%= @client.billing_info.address if @client.billing_info %></span>
 			</li>
 			<li>
-				<span class="label">Phone:</span>
-				<span class="value"><%= @client.billing_info.phone if @client.billing_info %></span>
+				<span class="label">City:</span>
+				<span class="value"><%= @client.billing_info.city if @client.billing_info %></span>
+			</li>
+			<li class="state_zip uncollapse">
+				<div class="left right_space">
+					<span class="label">&nbsp;</span>
+					<span class="value"><%= @client.billing_info.state if @client.billing_info %></span>
+				</div>
+				<div class="left">
+					<span class="value"><%= @client.billing_info.zip if @client.billing_info %></span>
+				</div>
 			</li>
 			<li>
 				<span class="label">Card Type:</span>
@@ -27,7 +40,7 @@
 			</li>
 			<li>
 				<span class="label">Expires:</span>
-				<span class="value"><%= @client.billing_info.expires_month if @client.billing_info %></span>
+				<span class="value"><%= "#{@client.billing_info.expires_month}/#{@client.billing_info.expires_year}" if @client.billing_info %></span>
 			</li>
 		</ul>
 	</div>
@@ -54,13 +67,14 @@
 				<span class="label">City:</span>
 				<span class="value"><%= @client.mailing_address.city if @client.mailing_address %></span>
 			</li>
-			<li>
-				<span class="label">State:</span>
-				<span class="value"><%= @client.mailing_address.state if @client.mailing_address %></span>
-			</li>
-			<li>
-				<span class="label">Zip:</span>
-				<span class="value"><%= @client.mailing_address.zip if @client.mailing_address %></span>
+			<li class="state_zip uncollapse">
+				<div class="left right_space">
+					<span class="label">&nbsp;</span>
+					<span class="value"><%= @client.mailing_address.state if @client.mailing_address %></span>
+				</div>
+				<div class="left">
+					<span class="value"><%= @client.mailing_address.zip if @client.mailing_address %></span>
+				</div>
 			</li>
 		</ul>
 	</div>

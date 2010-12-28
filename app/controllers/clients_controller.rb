@@ -44,6 +44,9 @@ class ClientsController < ApplicationController
   end
   
   def edit_info
+    @billing_info = @client.billing_info || @client.build_billing_info
+    @mailing_address = @client.mailing_address || @client.build_mailing_address
+    
     render :json => { :success => true, :data => render_to_string(:layout => false) }
   rescue => e
     render :json => { :success => false, :data => e.message }

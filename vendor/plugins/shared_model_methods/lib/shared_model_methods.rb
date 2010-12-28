@@ -95,6 +95,11 @@ module SharedModelMethods #:nodoc:
       self.has_extra_options? && self.process_erb?
     end
     
+    def full_address
+      return unless self.respond_to? :address
+      "#{address} #{city}, #{state} #{zip}"
+    end
+    
     def update_assoc(assoc, params)
       return if params.blank?
       
