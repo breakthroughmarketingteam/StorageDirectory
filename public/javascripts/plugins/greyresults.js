@@ -215,11 +215,11 @@ $(function(){
 			feature = encodeURIComponent($this.find('input').val().replaceAll(' ', '-')),
 			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
 			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
-		
+			
 		$this.after(ajax_loader.show()).siblings('.f').hide();
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
-		$.post(path, {}, function(response) {
+		$.post(path, function(response) {
 			$.with_json(response, function(data){
 				$this.toggleClass('selected');
 				//update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);

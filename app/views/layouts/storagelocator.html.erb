@@ -115,12 +115,8 @@
             </div>
             <%= yield :footer %>
         </div>
-        
-		<% unless current_user %>
-			<% cache 'login' do %>
-				<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
-			<% end %>
-		<% end %>
+
+		<div id="pop_up_box"><%= render :partial => 'user_sessions/form' %></div>
 
         <script type="text/javascript">
             swfobject.registerObject("FlashID");

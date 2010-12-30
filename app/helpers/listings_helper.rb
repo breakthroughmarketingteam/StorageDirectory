@@ -297,4 +297,16 @@ module ListingsHelper
     end
   end
   
+  def display_comparison(comp, listing)
+    case comp when 'distance'
+      "<td><span class='hide'>#{listing.title} is within </span>#{listing.distance} Miles</td>"
+    when 'special'
+      "<td>#{listing.specials.first}</td>"
+    when 'price'
+      "<td><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
+    else
+      
+    end
+  end
+  
 end
