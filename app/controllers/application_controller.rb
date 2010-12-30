@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   
   def ensure_secure_subdomain
     return if RAILS_ENV == 'development'
-    redirect_to "https://secure.#{$root_domain}?#{params.to_query}" unless request.env['HTTP_HOST']['secure']
+    redirect_to "https://secure.#{$root_domain}#{request.path}" unless request.env['HTTP_HOST']['secure']
   end
   
   # Pages#show, Listings#home and #locator are allowed by anonymous
