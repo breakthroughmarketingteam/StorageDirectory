@@ -1489,7 +1489,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
 				['skip', function(btn, wizard) { btn.fadeIn().bind('click', ensure_no_listings_checked) }],
-				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }] 
+				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }]
 			]
 		},
 		{ 
