@@ -31,7 +31,7 @@ class Client < User
         self.ensure_listings_unverified!
         #self.enable_listings! # auto verify
       else
-        listing = self.listings.build :title => self.company, :status => 'unverified', :enabled => false, :category => 'Storage', :storage_types => 'self storage'
+        listing = self.listings.build :title => self.company, :status => 'unverified' :category => 'Storage', :storage_types => 'self storage'
         listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
       end
     
@@ -77,7 +77,7 @@ class Client < User
   end
   
   def ensure_listings_unverified!
-    self.listings.each { |listing| listing.update_attributes :enabled => false, :status => 'unverified' }
+    self.listings.each { |listing| listing.update_attributes :status => 'unverified' }
   end
   
   # a simple listing search for the add your facility page
