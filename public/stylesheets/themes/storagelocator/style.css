@@ -1008,11 +1008,13 @@ img.right{margin:0 0 10px 10px;}
 .tabular_content .tab_content{display:none;}
 .tabular_content .active{display:block;}
 /* add tip */
-#add_new_tip{background:#ebebeb;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;margin:10px 13px 30px 14px;padding:7px 10px;}
+#add_new_tip{background:#ebebeb;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;border:1px solid #ccc;margin:0 15px;}
+.storage_tips hr{margin-bottom:15px;}
+#add_new_tip #create_tip{margin:15px;}
 #add_new_tip legend{margin-bottom:10px;font-size:14px;font-weight:bold;color:#666;}
 #add_new_tip p{margin-bottom:10px;}
 #add_new_tip .submit input{width:auto;}
-#add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
+#add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;}
 #tip_created{padding:0 15px 20px;text-align:center;}
 /* add size */
 .sizes_list .btn{float:right;margin:0 15px 15px 10px;}
@@ -1424,8 +1426,8 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #unit_features .selectable_wrap label{font-size:80%;font-weight:normal;}
 #unit_features .toggle_action{font-weight:bold;color:#333;padding-left:25px;}
 #unit_features .collapseable{margin:10px 0 5px 0;width:105%;}
-#unit_features a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 4px 4px;}
-#unit_features a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
+#unit_features a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 4px 1px;}
+#unit_features a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 2px;}
 #top_features{margin-bottom:10px;}
 #sub_submit{text-align:center;}
 #advanced_opts #sub_submit input{margin:20px 0 20px 5px;text-align:center;width:173px;}
@@ -1602,11 +1604,11 @@ form .note{clear:both;display:block;font-size:80%;}
 #print_issn_auth a{font-size:100%;margin-top:10px;}
 #print_issn_auth{font-size:80%;width:30%;margin:0 auto;text-align:center;}
 
-#info_tabs li.first a{background:none;margin-left:-1px;text-shadow:1px 1px 0 #666;}
-#info_tabs li.first{background:url(/images/ui/storagelocator/block-title-bg.png) no-repeat;color:#fff;font-size:24px;font-weight:bold;height:42px;margin:0 0 4px 4px;padding:7px 0 0 0;text-shadow:1px 1px 0 #666;}
+#info_tabs li.first a{color:#000;font-size:22px;font-weight:bold;padding:5px 0 15px 15px;}
+#info_tabs li.first{}
 #info_tabs li.first a:hover{background:none;}
-#info_tabs li a{background:url(/images/ui/storagelocator/info-btn.png) no-repeat;color:#fff;display:block;font-weight:normal;height:21px;margin:0 0 4px 4px;padding:9px 0 0 15px;text-decoration:none;text-shadow:1px 1px 0 #333;}
-#info_tabs li a:hover{background:url(/images/ui/storagelocator/info-btn-hover.png) no-repeat;}
+#info_tabs li a{border-bottom:1px dotted #ddd;color:#4c4bcc;display:block;font-weight:normal;height:20px;padding:10px 0 0 15px;text-decoration:none;}
+#info_tabs li a:hover{background:#f3f3f3}
 
 
 #footer hr{background:#fff;border:none;height:10px;margin:0;}
@@ -1659,7 +1661,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #media-entry a{margin-right:20px;}
 #terms ul#media-entry{margin:0;}
-#terms ul#media-entry li{border-bottom:1px solid #ccc;border-top:1px solid #ccc;list-style:none;margin:0 10px 0 15px;padding:0 0 10px;}
+#terms ul#media-entry li{border-top:1px solid #ccc;list-style:none;margin:0 10px 0 15px;padding:0 0 10px;}
 #terms ul#media-entry img{margin-left:20px;}
 
 #storage-info-content .tip-box{-moz-border-radius:8px;background:#ffc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
