@@ -1632,7 +1632,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #g-res h4{color:#4c4bcc;font-size:22px;margin:0 0 35px;text-decoration:underline;width:240px;}
 
 #terms{margin-bottom:60px;min-height:600px;}
-#terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;height:39px;margin:6px 10px 20px 15px;padding:10px 0 0 15px;}
+#terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;margin:6px 10px 20px 15px;padding:10px 0 7px 15px;}
 #terms h3{color:#4c4bcc;font-size:22px;margin:0 0 15px 20px;padding-top:15px;padding-top:15px;}
 #terms p{font-size:12px;line-height:18px;margin:0 20px 20px;}
 #terms a{font-size:12px;}
