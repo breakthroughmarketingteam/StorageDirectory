@@ -1,5 +1,5 @@
 <div id="login_page">
-	<% form_for (@user_session ||= UserSession.new) do |f| %>
+	<% form_for (@user_session ||= UserSession.new), :url => "https://#{RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"}" do |f| %>
 		<fieldset>
 			<h2>Login to your account</h2>
 			<%= display_message flash %>

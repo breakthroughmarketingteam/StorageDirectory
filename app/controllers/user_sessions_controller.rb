@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
   
+  ssl_required :new, :create
   before_filter :require_no_user, :only => :new
   skip_before_filter :simple_auth
   
