@@ -9,7 +9,11 @@ config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = false
 config.action_view.cache_template_loading            = true
 
-config.action_controller.session[:domain] = '.usselfstoragelocator.com'
+begin
+  config.action_controller.session = { :domain => '.usselfstoragelocator.com' }
+rescue
+  config.action_controller.session[:domain] = '.usselfstoragelocator.com'
+end
 
 # See everything in the log (default is :info)
 # config.log_level = :debug
