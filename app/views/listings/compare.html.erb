@@ -1,52 +1,135 @@
 <div id="compare_wrap">
+    <div id="compare_map"></div>
+    <div class="uncollapse stack">
+        <table cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr class="odd">
+                    <th id="unit_size" class="column"><span id="label">Unit Size:</span><span id="size"><%= @search.unit_size %></span></th>
+					<% @listings.each do |listing| %>
+                    	<th class="column"><%= display_logo listing %></th>
+					<% end %>
+                </tr>
+				<% @comparables.each do |comp| -%>
+					<tr class="even">
+	                    <th id="<%= comp %>"><span class="comp_label"><%= comp.titleize %>:</span></th>
+						<% @listings.each do |listing| %>
+							<%= display_comparison(comp, listing) %>
+						<% end %>
+	                </tr>
+				<% end %>
+                <tr class="even">
+                    <th id="distance"><span class="comp_label">Distance:</span></th>
+                    <td><span class="hide">listing is within </span>2 Miles</td>
+                    <td><span class="hide">listing is within </span>4 Miles</td>
+                    <td><span class="hide">listing is within </span>6 Miles</td>
+                    <td><span class="hide">listing is within </span>8 Miles</td>
+                </tr>
+                <tr class="odd">
+                    <th><span class="comp_label">24 hour Access:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                </tr>
+                <tr class="even">
+                    <th><span class="comp_label">Climate Controlled:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="odd">
+                    <th><span class="comp_label">Drive-up Access:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="even">
+                    <th><span class="comp_label">Truck Rental:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                </tr>
+                <tr class="odd">
+                    <th><span class="comp_label">Boxes & Supplies:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="even">
+                    <th><span class="comp_label">Business Center:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td></td>
+                </tr>
+                <tr class="odd">
+                    <th><span class="comp_label">Keypad Access:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="even">
+                    <th><span class="comp_label">Online Bill Pay:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                </tr>
+                <tr class="odd">
+                    <th><span class="comp_label">Security Cameras:</span></th>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                    <td><span class="hide">listing does not have feature </span></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="even">
+                    <th><span class="comp_label">Se Habla Español:</span></th>
+                    <td></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                    <td></td>
+                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
+                </tr>
+                <tr class="odd">
+                    <th id="special"><span class="comp_label">Special:</span></th>
+                    <td>First Month Free</td>
+                    <td>First Month Free</td>
+                    <td>First Month Free</td>
+                    <td>First Month Free</td>
+                </tr>
+                <tr class="even">
+                    <th id="price"><span class="comp_label">Price:</span></th>
+                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
+                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
+                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
+                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
+                </tr>
+                <tr>
+                    <th id="usssl-special">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Facilities</th>
+                    <td><a class="rent-btn" href="">Rent It!</a></td>
+                    <td><a class="rent-btn" href="">Rent It!</a></td>
+                    <td><a class="rent-btn" href="">Rent It!</a></td>
+                    <td><a class="rent-btn" href="">Rent It!</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--
+<div id="compare_wrap">
 	<div id="compare_map">
 	</div>
 
 	<div class="uncollpase stack">
 		<table cellpadding="0" cellspacing="0">
 			<tbody>
-				<% @comparables.each_with_index do |comparable, i| %>
-					<% compare = comparable[0]; subcomps = comparable[1] %>
-					<tr class="<%= cycle 'odd', 'even' %>">
-						<% if i == 0 %>
-							<th></th>
-						<% else %>
-							<th>
-								<% if subcomps == :self %>
-									<span class="comp_label"><%= compare.to_s.titleize %></span>
-								<% elsif subcomps.is_a? Array %>
-									<span class="comp_label"><%= compare.to_s.titleize %></span>
-								
-									<ul class="sub_comp_list">
-										<% subcomps.each do |subcomp| %>
-											<li><%= subcomp.to_s.titleize %></li>
-										<% end %>
-									</ul>
-								<% end %>
-							</th>
-						<% end %>
-						
-						<% @listings.each do |listing| %>
-							<% if i == 0 %>
-								<th><%= link_to selective_abbrev(listing.title).titleize, facility_path(@search.storage_type.parameterize, listing.title.parameterize, listing.id) %></th>
-							<% else %>
-								<td>
-									<% if subcomps == :self %>
-										<span class="compared"><%= display_compared listing, compare %></span>
-										
-									<% elsif subcomps.is_a? Array %>
-										<ul>
-										<% subcomps.each do |subcomp| %>
-											<li><%= display_compared listing, subcomp %></li>
-										<% end %>
-										</ul>
-									<% end %>
-								</td>
-							<% end %>
-						<% end %>
-					</tr>
-				<% end %>
+				
 			</tbody>
 		</table>
 	</div>
 </div>
+-->

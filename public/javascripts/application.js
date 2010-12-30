@@ -522,7 +522,7 @@ $(document).ready(function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				$.with_json(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up) { // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (data.length > 0) { // we found matching listings, start on the first step of the workflow
@@ -533,6 +533,8 @@ $(document).ready(function() {
 						
 						signup_form.data('saving', false);
 					});
+					
+					ajax_loader.hide();
 				});
 			}, 'json');
 		} 
@@ -1153,7 +1155,7 @@ $(document).ready(function() {
 	
 	// CLIENT billing info and mailing address
 	$('#client_edit_contact').live('click', function() {
-		var $this = $(this), xhr = false,
+		var $this = $(this),
 			cancel_link = $('<a class="cancel_link iconOnly16 right" style="margin-top:13px;" title="Cancel Editing">Cancel</a>'),
 			wrap = $('#owner_info_wrap', $this.parent().parent()),
 			ajax_loader = $.new_ajax_loader('before', $this);
@@ -1161,7 +1163,7 @@ $(document).ready(function() {
 		if ($this.text() == 'Edit') {
 			ajax_loader.show();
 			
-			xhr = $.getJSON($this.attr('href'), function(response) {
+			$.getJSON($this.attr('href'), function(response) {
 				$.with_json(response, function(data) {
 					$this.text('Save').after(cancel_link);
 					wrap.hide().after(data);
@@ -1170,7 +1172,7 @@ $(document).ready(function() {
 					$('.auto_next', wrap.parent()).autoNext();
 				});
 				
-				ajax_loader.hide();
+				ajax_loader.fadeOutRemove('fast');
 			});
 			
 		} else if ($this.text() == 'Save') {
@@ -1181,9 +1183,9 @@ $(document).ready(function() {
 				$('.cancel_link', $this.parent()).remove();
 				ajax_loader.show();
 				
-				xhr = $.post(form.attr('action'), form.serialize(), function(response) {
+				$.post(form.attr('action'), form.serialize(), function(response) {
 					$.with_json(response, function(data) {
-						$this.text('Edit').after('<span class="success_msg right">Saved!</span>');
+						$this.text('Edit').after('<span class="success_msg">Saved!</span>');
 						wrap.show().html(data);
 						form.remove();
 						
@@ -1193,13 +1195,12 @@ $(document).ready(function() {
 					});
 					
 					$this.data('saving', false);
-					ajax_loader.hide();
+					ajax_loader.fadeOutRemove('fast');
 				});
 			}
 		}
 		
 		cancel_link.click(function() {
-			if (xhr) xhr.abort();
 			$('#edit_info').remove();
 			$('#owner_info_wrap').show();
 			$(this).fadeOutRemove(300);
@@ -1489,7 +1490,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
 				['skip', function(btn, wizard) { btn.fadeIn().bind('click', ensure_no_listings_checked) }],
-				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }] 
+				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }]
 			]
 		},
 		{ 
@@ -1569,9 +1570,8 @@ function workflow_step2(wizard) {
 	
 }
 
-function workflow_step3() {
-	var wizard    = arguments[0],
-		addresses = $.get_checked_listings_addresses(wizard),
+function workflow_step3(wizard) {
+	var addresses = $.get_checked_listings_addresses(wizard),
 		city 	  = $('#listing_city', '#new_client').val(),
 		state 	  = $('#listing_state', '#new_client').val(),
 		zips	  = $.get_checked_listings_addresses(wizard, 'zip');
@@ -1579,10 +1579,10 @@ function workflow_step3() {
 	$.setup_autocomplete('#listing_city', wizard.workflow);
 	
 	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
-	else $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
+	else if (addresses.length > 1) $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
 	
 	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
-	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
+	else if (zips.length > 1) $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
 	
 	$('#listing_city', wizard.workflow).val(capitalize(city));
 	$('#listing_state', wizard.workflow).val(state.toUpperCase());

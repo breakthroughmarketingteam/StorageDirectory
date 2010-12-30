@@ -2,7 +2,7 @@
 	<li class="rslt-miles">
 		<span class="shifted-text"><span><%= listing_distance(listing) %></span> Miles<%= ' away' if feat %></span>
 	</li>
-
+	
 	<% if (unit_size = listing.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size)) %>
 		<li class="rslt-size">
 			<%= image_tag unit_size.icon.url %>
@@ -16,6 +16,7 @@
 				
 				<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
 					<% type, size = types %>
+					
 					<li class="radio_wrap">
 						<div class="radio">
 							<% if size && !feat %>
@@ -24,6 +25,7 @@
 								</div>
 							<% end %>
 						</div>
+						
 						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
 							<span class="type"><%= type %>:</span>
 							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "•&nbsp;&nbsp;&nbsp;&nbsp;" %></span>

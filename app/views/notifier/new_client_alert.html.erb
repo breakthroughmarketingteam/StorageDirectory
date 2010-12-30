@@ -1,9 +1,9 @@
-Client: <%= @client.name %> <<%= @client.email %>
+Client: <%= @client.name %> <<%= @client.email %>>
 
-Account: <%= edit_client_path @client %>
+Account: <%= edit_client_url @client, :protocol => 'https' %>
 
 Listings: 
-<% @client.listings.each do |listing| %>
+<% @client.listings.each do |listing| -%>
 	(<%= listing.id %>) <%= listing.title %>
 	<%= listing.full_address %>
-<% end %>
+<% end -%>

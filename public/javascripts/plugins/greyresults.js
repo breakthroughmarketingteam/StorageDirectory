@@ -215,11 +215,11 @@ $(function(){
 			feature = encodeURIComponent($this.find('input').val().replaceAll(' ', '-')),
 			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
 			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
-		
+			
 		$this.after(ajax_loader.show()).siblings('.f').hide();
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
-		$.post(path, {}, function(response) {
+		$.post(path, function(response) {
 			$.with_json(response, function(data){
 				$this.toggleClass('selected');
 				//update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
@@ -573,7 +573,7 @@ $(function(){
 				ajax_loader.show();
 				
 				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
-					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id, show_size_ops: false }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
@@ -1144,7 +1144,7 @@ $.fn.rental_form = function() {
 			multiplier = limit;
 			
 			if (limit == 1 && has_special)
-				multplier += 1.00;
+				multiplier += 1.00;
 		}
 		
 		$('#rental_duration', form).val(limit);

@@ -44,8 +44,10 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
       # updates the impressions only for listings on current page if the search has changed
-      if different
-        @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
+      if different || (current_user && !current_user.has_role?('admin', 'advertiser'))
+        Listing.transaction do
+          @listings.map { |m| m.update_stat 'impressions', request }
+        end
         #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
       end
       
@@ -70,7 +72,7 @@ class ListingsController < ApplicationController
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-      @comparables = { :online_rentals => :self, :monthly_rates => Listing.top_types, :specials => :self, :features => :self }
+      @comparables = ['distance', '24_hour_access', 'climate_controlled', 'drive_up_access', 'truck_rentals', 'boxes_&_supplies', 'business_center', 'keypad_access', 'online_bill_pay', 'security_cameras', 'se_habla_español', 'specials', 'total_price']
       
       render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
     else

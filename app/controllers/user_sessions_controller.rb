@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
   
+  ssl_required :new, :create
   before_filter :require_no_user, :only => :new
   skip_before_filter :simple_auth
   
@@ -23,7 +24,7 @@ class UserSessionsController < ApplicationController
           case current_user.role.title.downcase when 'admin'
             redirect_back_or_default admin_index_path
           when 'advertiser'
-            redirect_to client_account_path
+            redirect_to client_account_url :protocol => 'https'
           else
             redirect_back_or_default root_path
           end

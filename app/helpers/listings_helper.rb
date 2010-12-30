@@ -293,7 +293,19 @@ module ListingsHelper
   
   def claim_listing_link(listing)
     if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Hey! This is my facility!', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}"
+      link_to 'Claim and verify ownership', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", :title => 'Claim this listing if you are the verifiable owner/manager.'
+    end
+  end
+  
+  def display_comparison(comp, listing)
+    case comp when 'distance'
+      "<td><span class='hide'>#{listing.title} is within </span>#{listing.distance} Miles</td>"
+    when 'special'
+      "<td>#{listing.specials.first}</td>"
+    when 'price'
+      "<td><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
+    else
+      
     end
   end
   

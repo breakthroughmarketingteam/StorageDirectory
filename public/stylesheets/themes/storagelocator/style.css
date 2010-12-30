@@ -130,9 +130,26 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #listings_controller.compare_action #content #type-one-r-col-in{width:auto;}
 #listings_controller.compare_action #content #type-one-r-col-in #results_header{width:98.5%;}
 #listings_controller.compare_action #content #type-one-r-col-in #compare_map{width:100%;}
-#compare_wrap{padding:3px 20px 15px;}
-#compare_wrap table td,#compare_wrap table th{padding:12px 15px;}
-#compare_wrap table td.odd,#compare_wrap table th.odd{background:#ebebeb;}
+#compare_wrap{font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:12px;padding:20px;}
+#compare_map{background:url("/images/ui/ajax-loader-long-green.gif") no-repeat scroll 50% 50% transparent;border:1px solid #CCCCCC;height:226px;margin:0;width:100%;background-color:#E5E3DF;position:relative;width:100%;}
+#compare_wrap th.odd{}
+#compare_wrap tr.even{background:#eee;}
+#compare_wrap tr.rent{border-top:1px solid #ccc}
+#compare_wrap th{color:#999;font-weight:normal;height:20px;text-align:right;}
+#compare_wrap td{border-left:5px solid #fff;padding:3px;text-align:center;}
+#compare_wrap a{text-decoration:none;color:#4c4bcc;}
+#compare_wrap .column{text-align:center;height:90px;width:150px;}
+#compare_wrap .logo{border:1px solid #000;}
+#compare_wrap #unit_size #size{color:#4c4bcc;font-weight:bold;font-size:18px;}
+#compare_wrap #unit_size #label{color:#000000;display:inline-block;font-size:12px;font-weight:bold;margin-right:10px;}
+#compare_wrap #distance{color:#000;height:30px;font-weight:bold;}
+#compare_wrap #special{color:#000;height:50px;font-weight:bold;}
+#compare_wrap #price{color:#000;height:50px;font-weight:bold;}
+#compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;}
+#compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
+#compare_wrap .comp_label{margin-right:15px;}
+.ui-widget-header{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;-moz-border-radius-topright:8px;border-radius-topright:8px;-webkit-border-radius-topright:8px;-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(/images/ui/storagelocator/purple-bg.png) repeat scroll center top transparent;border:3px solid #fff;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;padding:0.5em 1em 0.3em;}
+#compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-59px;width:510px;z-index:500;}
@@ -747,6 +764,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header ul{}
 #ov-units,#ov-reports,#ov-info,#ov-specials,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;}
 .ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
+#ov-info .ov-item-head .success_msg{color:#393;position:absolute;right:110px;}
 #ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,.ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,.ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
@@ -1128,7 +1146,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #pop_up_box{display:none;background:#fff;position:absolute;z-index:9999;padding:15px;border-radius:22px;-moz-border-radius:22px;-webkit-border-radius:22px;-moz-box-shadow:1px 2px 8px #999;box-shadow:1px 2px 8px #999;-webkit-box-shadow:1px 2px 8px #999;}
 #pop_up_box #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
-#pop_up_box .flash{margin:0 0 10px;width:auto;}
+#pop_up_box .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}

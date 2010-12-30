@@ -13,9 +13,14 @@ class Notifier < ActionMailer::Base
     @body[:host] = host
   end
   
-  def client_notification(user)
-    setup_email user.email, 'admin@usselfstoragelocator.com', 'Activate Your Account'
-    @body[:user] = user
+  def client_notification(client)
+    setup_email client.email, 'admin@usselfstoragelocator.com', 'Pending Verification'
+    @body[:client] = client
+  end
+  
+  def client_activation(client)
+    setup_email client.email, 'admin@usselfstoragelocator.com', 'Activate Your Account'
+    @body[:client] = client
   end
   
   def tenant_notification(user, rental)

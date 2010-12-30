@@ -21,7 +21,7 @@
 				<li class="state_zip">
 					<%= bf.label :state %>
 					<%= bf.select :state, States.names, :class => 'required' %>
-					<%= bf.text_field :zip, :class => 'required numeric hintable', :title => 'Zip', :maxlength => 5 %>
+					<%= bf.text_field :zip, :class => 'required numeric hintable auto_next', :title => 'Zip', :maxlength => 5 %>
 				</li>
 				<li>
 					<%= bf.label :card_type %>
