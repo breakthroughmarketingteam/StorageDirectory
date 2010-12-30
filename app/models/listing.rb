@@ -58,7 +58,7 @@ class Listing < ActiveRecord::Base
   cattr_accessor :top_types
   @@upper_types = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
-  @@lower_types = %w(interior indoor standard)
+  @@lower_types = %w(interior indoor standard lower)
   
   #
   # Search methods
@@ -69,7 +69,7 @@ class Listing < ActiveRecord::Base
     
     # build the options for the model find method
     options = {
-      :include => [:map, :sizes, :pictures, :reviews],
+      :include => [:map, :sizes],
       :within  => search.within,
       :origin  => search.lat_lng
     }
@@ -220,20 +220,20 @@ class Listing < ActiveRecord::Base
   end
   
   def get_upper_type_size(size)
-    @upper_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
-      @@upper_types.any? { |type| s.title =~ /(#{type})/i }
+    @upper_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
+      @@upper_types.any? { |type| size.title =~ /(#{type})/i }
     end
   end
   
   def get_drive_up_type_size(size)
-    @drive_up_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
-      @@drive_up_types.any? { |type| s.title =~ /(#{type})/i }
+    @drive_up_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
+      @@drive_up_types.any? { |type| size.title =~ /(#{type})/i }
     end
   end
   
   def get_interior_type_size(size)
-    @interior_type_size ||= self.sizes.find(:all, :conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |s|
-      @@lower_types.any? { |type| s.title =~ /(#{type})/i }
+    @interior_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
+      @@lower_types.any? { |type| size.title =~ /(#{type})/i }
     end
   end
   
@@ -250,15 +250,18 @@ class Listing < ActiveRecord::Base
   def map_data
     hash = {}
     %w(id title address city state zip lat lng).each do |attribute|
-      hash.store attribute.to_sym, self.respond_to?(attribute) ? self.send(attribute) : self.map.send(attribute)
+      hash.store attribute.to_sym, self.send(attribute)
     end
     hash.merge :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb))
   end
   
-  def self.update_stat(listings, stat, request, t = Time.now)
+  # TODO: make this work
+  def self.update_stat(listings, stat, request)
+    t = Time.now
+    
     insert_sql = listings.map do |listing|
-      "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}')"
-    end.join(';')
+      "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}');"
+    end.join('')
     
     ActiveRecord::Base.connection.execute insert_sql
   end

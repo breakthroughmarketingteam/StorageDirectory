@@ -1,4 +1,4 @@
-<% cache "#{result.cache_key},#{@search.unit_size}" do %>
+<% cache "#{result.cache_key},#{@search.cache_key}" do %>
 	<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
 		<div class="inner">
 			<div class="in">

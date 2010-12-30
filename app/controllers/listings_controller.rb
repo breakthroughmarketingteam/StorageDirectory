@@ -44,8 +44,10 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
       # updates the impressions only for listings on current page if the search has changed
-      if different
-        @listings.map { |m| m.update_stat 'impressions', request } unless current_user && current_user.has_role?('admin', 'advertiser')
+      if different || (current_user && !current_user.has_role?('admin', 'advertiser'))
+        Listing.transaction do
+          @listings.map { |m| m.update_stat 'impressions', request }
+        end
         #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
       end
       
