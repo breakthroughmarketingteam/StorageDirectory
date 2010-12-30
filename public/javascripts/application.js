@@ -522,7 +522,7 @@ $(document).ready(function() {
 			
 			$.post('/ajax/find_listings', form_data, function(response){
 				$.with_json(response, function(data){
-					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up){ // prepping step 2
+					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up) { // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
 						if (data.length > 0) { // we found matching listings, start on the first step of the workflow
@@ -533,6 +533,8 @@ $(document).ready(function() {
 						
 						signup_form.data('saving', false);
 					});
+					
+					ajax_loader.hide();
 				});
 			}, 'json');
 		} 
@@ -1569,9 +1571,8 @@ function workflow_step2(wizard) {
 	
 }
 
-function workflow_step3() {
-	var wizard    = arguments[0],
-		addresses = $.get_checked_listings_addresses(wizard),
+function workflow_step3(wizard) {
+	var addresses = $.get_checked_listings_addresses(wizard),
 		city 	  = $('#listing_city', '#new_client').val(),
 		state 	  = $('#listing_state', '#new_client').val(),
 		zips	  = $.get_checked_listings_addresses(wizard, 'zip');
@@ -1579,10 +1580,10 @@ function workflow_step3() {
 	$.setup_autocomplete('#listing_city', wizard.workflow);
 	
 	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
-	else $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
+	else if (addresses.length > 1) $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
 	
 	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
-	else $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
+	else if (zips.length > 1) $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
 	
 	$('#listing_city', wizard.workflow).val(capitalize(city));
 	$('#listing_state', wizard.workflow).val(state.toUpperCase());
