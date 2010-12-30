@@ -1,1 +1,1 @@
-<iframe src="<%= new_rental_url(:listing_id => listing.id, :size_id => size.try(:id), :host => (RAILS_ENV == 'development' ? 'localhost:443' : "secure.#{request.host.sub('www.', '')}"), :protocol => 'https') %>" id="secure_frame"></iframe>
+<iframe src="<%= new_rental_url(:listing_id => listing.id, :size_id => size.try(:id), :host => (RAILS_ENV == 'development' ? 'localhost:443' : "secure.#{request.host.sub('www.', '')}"), :protocol => 'https', :show_size_ops => show_size_ops) %>" id="secure_frame"></iframe>

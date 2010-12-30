@@ -191,6 +191,9 @@ class AjaxController < ApplicationController
       @locals.merge!(params[:sub_model].downcase.to_sym => @sub_model)
     end
     
+    # used by the reserve partial
+    @locals.merge!(:show_size_ops => params[:show_size_ops]) if params[:show_size_ops]
+    
     @locals
   rescue
     nil

@@ -573,7 +573,7 @@ $(function(){
 				ajax_loader.show();
 				
 				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
-					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
+					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id, show_size_ops: false }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
 						ajax_loader.hide();
@@ -1144,7 +1144,7 @@ $.fn.rental_form = function() {
 			multiplier = limit;
 			
 			if (limit == 1 && has_special)
-				multplier += 1.00;
+				multiplier += 1.00;
 		}
 		
 		$('#rental_duration', form).val(limit);

@@ -11,12 +11,12 @@
 				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (@listing.prorated ? 1 : 0) } do |f| %>
 					<div class="inner">
 						<div class="col1">
-							<div>
+							<div class="<%= 'hide' if params[:show_size_ops] == 'false' %>">
 								<%= label_tag :unit_type, 'Type: ', :class => 'block left' %>
 								<%= select_tag :unit_type, option_tags(@listing.available_unit_types, (@size && @size.title)), :class => 'required' %>
 							</div>
-			
-							<div>
+		
+							<div class="<%= 'hide' if params[:show_size_ops] == 'false' %>">
 								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
 								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.uniq_avail_sizes, (@size ? @size.dims : get_search.unit_size), :class => 'required sizes_select' %>
 							</div>
