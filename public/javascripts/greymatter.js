@@ -1494,7 +1494,7 @@ function capitalize_addr(addr) {
 		dirs = ['ne', 'nw', 'se', 'sw'];
 	
 	$.each(parts, function(i) {
-		if (dirs.indexOf(this.toLowerCase()) >= 0)
+		if ($.inArray(this.toLowerCase(), dirs)) >= 0)
 			capped += this.toUpperCase();
 		else
 			capped += capitalize(this);
