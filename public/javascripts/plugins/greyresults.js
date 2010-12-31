@@ -1264,15 +1264,19 @@ $.fn.rental_form = function() {
 			return false;
 		});
 		
-		sizes_select.change(function() {
-			month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
-			form.trigger('recalc');
-		});
-		
-		set_size_select(sizes_select, unit_type);
-		type_select.change(function() {
-			set_size_select(sizes_select, $(this).val().toLowerCase());
-		});
+		if (sizes_select.is(':visible')) {
+			sizes_select.change(function() {
+				month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
+				form.trigger('recalc');
+			});
+			set_size_select(sizes_select, unit_type);
+			
+			type_select.change(function() {
+				set_size_select(sizes_select, $(this).val().toLowerCase());
+			});
+			
+		} else form.trigger('recalc');
+
 		
 		$('input[name="rental[special_id]"]', form).click(function() {
 			var $this = $(this);
