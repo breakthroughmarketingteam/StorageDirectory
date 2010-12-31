@@ -4,6 +4,7 @@ class Listing < ActiveRecord::Base
   
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact'
+  accepts_nested_attributes_for :contact
   
   has_one  :map, :dependent => :destroy
   accepts_nested_attributes_for :map
@@ -208,7 +209,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_partial_link(name)
-    "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}"
+    "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}&show_size_ops=true"
   end
   
   def city_and_state

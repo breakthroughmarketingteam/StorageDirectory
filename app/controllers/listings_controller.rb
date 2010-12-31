@@ -1,10 +1,10 @@
 class ListingsController < ApplicationController
   
-  before_filter :get_model, :only => [:show, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
+  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator]
-  before_filter :get_client, :only => [:edit, :disable, :request_review, :tracking_request]
-  before_filter :get_listing_relations, :only => [:show, :edit]
+  before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request]
+  before_filter :get_listing_relations, :only => [:show, :profile]
   
   geocode_ip_address :only => [:home, :locator]
   
@@ -94,8 +94,35 @@ class ListingsController < ApplicationController
   def new
     render :layout => false if request.xhr?
   end
-
-  def edit
+  
+  def create
+    @listing = Listing.new params[:listing]
+    
+    respond_to do |format|
+      format.html do
+        if @listing.save
+          flash[:notice] = "#{@listing.title} created successfully!"
+          redirect_to listings_path
+        else
+          flash[:error] = model_errors @listing
+          redirect_to edit_listing_path
+        end
+      end
+      
+      format.js do
+        if @listing.save
+          flash.now[:notice] = "#{@listing.title} created successfully!"
+          get_models_paginated
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors @listing
+          render :action => 'edit', :layout => false
+        end
+      end
+    end
+  end
+  
+  def profile
     # when a user creates a listing, a partial pops up and they fill in the address and click edit, sending data via GET
     # we intercept those those values here and save it to the map that was created when they clicked new and typed in a title (blur event on the title input)
     unless params[:map].blank?
@@ -105,6 +132,10 @@ class ListingsController < ApplicationController
     
     @listing.staff_emails.build
     
+    render :layout => false if request.xhr?
+  end
+
+  def edit
     render :layout => false if request.xhr?
   end
   

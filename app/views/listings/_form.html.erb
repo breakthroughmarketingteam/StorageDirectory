@@ -1,0 +1,97 @@
+<fieldset><br />
+	<legend>Name &amp; Address</legend>
+	
+	<div class="stack">
+		<%= f.label :title, nil, :class => 'block left w100' %>
+		<%= f.text_field :title, :class => 'required' %>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :description, nil, :class => 'block left w100' %>
+		<%= f.text_field :description, :class => 'small_text_field' %>
+	</div>
+	
+	<% f.fields_for :map, (@listing.map.nil? ? Map.new : @listing.map) do |mf| %>
+		<div class="stack">
+			<%= mf.label :address, nil, :class => 'block left w100' %>
+			<%= mf.text_field :address, :class => 'required' %>
+		</div>
+		
+		<div class="stack">
+			<%= mf.label :city, nil, :class => 'block left w100' %>
+			<%= mf.text_field :city, :class => 'required' %>
+		</div>
+		
+		<div class="stack uncollapse">
+			<div class="left right_space">
+				<%= mf.label :state, nil, :class => 'block left w100' %>
+				<%= mf.select :state, States.names, :class => 'required' %>
+			</div>
+			
+			<div class="left">
+				<%= mf.label :zip, nil, :class => 'block left w100' %>
+				<%= mf.text_field :zip, :class => 'required tiny_text_field' %>
+			</div>
+		</div>
+	<% end %>
+</fieldset>	
+
+<fieldset>
+	<legend>Extras &amp; Internal Contact Info</legend>
+	
+	<div class="stack uncollapse">
+		<div class="left right_space">
+			<%= f.check_box :enabled %>
+			<%= f.label :enabled %>
+		</div>
+		
+		<div class="left right_space">
+			<%= f.label :category, nil, :class => 'block left w100' %>
+			<%= f.text_field :category, :class => 'required tiny_text_field' %>
+		</div>
+		
+		<div class="left right_space">
+			<%= f.label :storage_types, nil, :class => 'block left w100' %>
+			<%= f.text_field :storage_types, :class => 'required tiny_text_field hintable', :title => 'Separate by comma' %>
+		</div>
+	</div>
+	
+	<% f.fields_for :contact, (@listing.contact || @listing.build_contact) do |cf| %>
+		<div class="stack uncollapse">
+			<div class="left right_space">
+				<%= cf.label :first_name, nil, :class => 'block left w100' %>
+				<%= cf.text_field :first_name %>
+			</div>
+			
+			<div class="left">
+				<%= cf.label :last_name, nil, :class => 'block left w100' %>
+				<%= cf.text_field :last_name %>
+			</div>
+		</div>
+		
+		<div class="stack uncollapse">
+			<div class="left right_space">
+				<%= cf.label :title, nil, :class => 'block left w100' %>
+				<%= cf.text_field :title %>
+			</div>
+			
+			<div class="left">
+				<%= cf.label :phone, nil, :class => 'block left w100' %>
+				<%= cf.text_field :phone %>
+			</div>
+		</div>
+		
+		<div class="stack uncollapse">
+			<div class="left right_space">
+				<%= cf.label :email, nil, :class => 'block left w100' %>
+				<%= cf.text_field :email %>
+			</div>
+			
+			<div class="left">
+				<%= cf.label :web_address, nil, :class => 'block left w100' %>
+				<%= cf.text_field :web_address %>
+			</div>
+		</div>
+	<% end %>
+	
+</fieldset>
