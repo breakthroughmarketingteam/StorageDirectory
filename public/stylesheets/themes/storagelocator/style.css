@@ -1653,15 +1653,15 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #terms{margin-bottom:60px;min-height:600px;}
 #terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;margin:6px 10px 20px 15px;padding:10px 0 7px 15px;}
-#terms h3{color:#4c4bcc;font-size:22px;margin:0 0 15px 20px;padding-top:15px;padding-top:15px;}
-#terms p{font-size:12px;line-height:18px;margin:0 20px 20px;}
+#terms h3{color:#4c4bcc;font-size:22px;padding-top:15px;line-height:26px;padding-top:15px;}
+#terms p{font-size:12px;line-height:18px;margin:15px 0;}
 #terms a{font-size:12px;}
 #terms ul{margin:20px;}
 #terms li{font-size:12px;list-style:disc;margin:10px 0 0 30px;}
 
-#media-entry a{margin-right:20px;}
+#media-entry a{}
 #terms ul#media-entry{margin:0;}
-#terms ul#media-entry li{border-top:1px solid #ccc;list-style:none;margin:0 10px 0 15px;padding:0 0 10px;}
+#terms ul#media-entry li{border-top:1px solid #ccc;list-style:none;margin:20px 30px 0;padding:15px 0 10px;}
 #terms ul#media-entry img{margin-left:20px;}
 
 #storage-info-content .tip-box{-moz-border-radius:8px;background:#ffc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
