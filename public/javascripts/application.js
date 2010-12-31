@@ -341,9 +341,10 @@ $(document).ready(function() {
 	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
 	
 	if ($.on_page([['locator, home', 'listings']])) {
+		var main_map = $('#main_map');
+		
 		$('#top_map_btn').live('click', function(){
 			var $this = $(this),
-				main_map = $('#main_map'),
 				location = $this.attr('rel').split(','),
 				lat = parseFloat(location[0]),
 				lng = parseFloat(location[1]);
@@ -1563,8 +1564,11 @@ function workflow_step2(wizard) {
 
 		setTimeout(function(){
 			listings_box.fadeIn(wizard.settings.fade_speed);
-			listing_id = $.get_param_value('listing_id');
-			if (listing_id) $('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+			var listing_id = $.get_param_value('listing_id');
+			
+			if (listing_id) 
+				$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+				
 		}, 350);
 	}
 	

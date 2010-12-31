@@ -23,7 +23,7 @@ span.blue{color:#4c4bcc;}
 #page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
-#page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
+#page-cnt{position:relative;z-index:1;background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
 #page-ctr-wrap{background:url(/images/ui/storagelocator/) no-repeat center;}
 
 .storage_info #page-cnt, .add_your_facility #page-cnt{}
@@ -293,6 +293,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;width:159px;}
+.listing .dnp{overflow:hidden;height:100px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0;}
 .rslt-title h3{float:left;font-size:19px;height:26px;padding:12px 0 0 20px;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
@@ -314,9 +315,9 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:125px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
 .listing ul li.rslt-price ul li.radio_wrap .radio_select{height:16px;width:16px;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
-.rslt-price .radio_wrap label{float:left;overflow:hidden;line-height:1.7;width:80%;text-align:right;}
+.rslt-price .radio_wrap label{float:left;overflow:hidden;line-height:1.7;width:81.1%;text-align:right;}
 .rslt-price .radio_wrap label .type{display:block;float:left;padding:0 0 1px;text-align:left;width:50px;}
-.listing .action_btn{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 2px #999;border:1px solid #666;float:right;font-size:20px;height:44px;line-height:41px;margin:27px 10px 0 0;position:relative;text-align:center;text-shadow:1px 1px 0 #666;width:90px;}
+.listing .action_btn{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 2px #999;border:1px solid #666;font-size:20px;height:44px;line-height:41px;margin:27px 10px 0 0;position:absolute;top:38px;right:0;text-align:center;text-shadow:1px 1px 0 #666;width:90px;}
 .listing .action_btn a{color:#fff;text-decoration:none;display:block;font-weight:bold;margin-top:3px;padding-left:2px;}
 .listing .action_btn a.cancel_link,.listing .action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:-14px;top:17px;}
 .listing .reserve{background:url(/images/ui/storagelocator/reserve-btn.png) repeat-x;}
@@ -981,7 +982,7 @@ h4#more-info-header-bg{background:url(/images/ui/storagelocator/more-info-header
 img.left{margin:0 10px 10px 0;}
 img.right{margin:0 0 10px 10px;}
 .ajax_loader{display:none;}
-#latch-img{position:absolute;right:0;z-index:0;bottom:.7%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
+#latch-img{position:absolute;right:0;z-index:0;bottom:.4%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
 #compare_labels{float:left;width:19%;margin:65px 0 0 0;}
 /* cities */
 #map_nav{position:relative;height:423px;}

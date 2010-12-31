@@ -22,8 +22,6 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     
     if @user.save
-      #Notifier.deliver_subscriber_notification(@form.recipient, @user, request.host) if @form && @form.should_send_email?
-      
       flash[:notice] = 'Great! Thanks for signing up!'
       redirect_back_or_default user_path(@user)
     else
