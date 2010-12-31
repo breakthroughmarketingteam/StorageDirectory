@@ -23,7 +23,7 @@ span.blue{color:#4c4bcc;}
 #page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
-#page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
+#page-cnt{position:relative;z-index:1;background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
 #page-ctr-wrap{background:url(/images/ui/storagelocator/) no-repeat center;}
 
 .storage_info #page-cnt, .add_your_facility #page-cnt{}
@@ -982,7 +982,7 @@ h4#more-info-header-bg{background:url(/images/ui/storagelocator/more-info-header
 img.left{margin:0 10px 10px 0;}
 img.right{margin:0 0 10px 10px;}
 .ajax_loader{display:none;}
-#latch-img{position:absolute;right:0;z-index:0;bottom:.7%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
+#latch-img{position:absolute;right:0;z-index:0;bottom:.4%;width:155px;height:78px;background:url(/images/ui/storagelocator/latch.png) no-repeat;}
 #compare_labels{float:left;width:19%;margin:65px 0 0 0;}
 /* cities */
 #map_nav{position:relative;height:423px;}

@@ -1,0 +1,2 @@
+class Reserver < User
+end
