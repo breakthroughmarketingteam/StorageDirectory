@@ -1563,8 +1563,11 @@ function workflow_step2(wizard) {
 
 		setTimeout(function(){
 			listings_box.fadeIn(wizard.settings.fade_speed);
-			listing_id = $.get_param_value('listing_id');
-			if (listing_id) $('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+			var listing_id = $.get_param_value('listing_id');
+			
+			if (listing_id) 
+				$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+				
 		}, 350);
 	}
 	
