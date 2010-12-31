@@ -6,19 +6,19 @@
 		<li class="st-desc" title="<%= size.description %>"><%= size.description %></li>
 		<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
 		
-		<% if in_edit_mode? && @listing.issn_enabled? %>
+		<% if in_mode?('profile') && @listing.issn_enabled? %>
 			<li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li>
 		<% end %>
 		
 		<li class="st-rese">
-			<% if (in_edit_mode? || (defined?(pretend_action) && pretend_action == 'edit')) && !@listing.issn_enabled? %>
+			<% if (in_mode?('profile') || (defined?(pretend_action) && pretend_action == 'edit')) && !@listing.issn_enabled? %>
 				<%= link_to 'Edit', edit_listing_size_path(@listing, size), :class => 'edit_size', 'data-size-id' => size.id %>
 			<% elsif current_user.nil? || (current_user && current_user.is_a?(Tenant)) %>
 				<a href="#" class="rsr-btn">Select</a>
 			<% end %>
 		</li>
 		
-		<% if in_mode?('edit', 'create', 'update') && !@listing.issn_enabled? %>
+		<% if in_mode?('profile', 'create', 'update') && !@listing.issn_enabled? %>
 			<li class="st-sele">
 				<%= ajax_loader %>
 				<%= link_to 'Delete', listing_size_path(@listing, size), :class => 'delete_link iconOnly16 right', :title => 'Delete' %>

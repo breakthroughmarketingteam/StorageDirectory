@@ -305,7 +305,11 @@ module ListingsHelper
     when 'price'
       "<td><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
     else
-      
+      if listing.facility_features.map(&:title).include? comp
+        "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comp.titleize}' /></td>"
+      else
+        "<td><span class='hide'>#{listing.title} does not have #{comp.titleize}</span></td>"
+      end
     end
   end
   

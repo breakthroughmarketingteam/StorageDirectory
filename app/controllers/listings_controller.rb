@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   
+  ssl_required :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator]
@@ -244,7 +245,7 @@ class ListingsController < ApplicationController
     @special = @listing.specials.last || (@listing.client && @listing.specials.new)
     @search = Search.find_by_id session[:search_id]
     
-    if action_name == 'edit'
+    if action_name == 'profile'
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
       @hours = @listing.business_hours

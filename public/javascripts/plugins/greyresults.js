@@ -8,6 +8,14 @@ $(function(){
 	 * BACK END, listing owner page methods
 	 */
 	
+	var listings = $('.listing', '#client_listing_box');
+	if (listings.length > 0) {
+		listings.each(function() {
+			$('.progressbar', this).progressbar({ value: parseInt($('.percent', this).text()) });
+		});
+	}
+	
+	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);

@@ -176,6 +176,10 @@ class Listing < ActiveRecord::Base
     (read_attribute(:tax_rate) || 6) / 100.0
   end
   
+  def hours_filled_out?
+    !self.business_hours.empty? || self.access_24_hours? || self.office_24_hours?
+  end
+  
   def siblings
     self.client ? self.client.listings.select { |l| l != self } : []
   end
@@ -322,6 +326,47 @@ class Listing < ActiveRecord::Base
                        "OR (LOWER(m.city) LIKE '%#{city}%' " +
                          "AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL " +
                          "ORDER BY l.title LIMIT 100"
+  end
+  
+  # add up a score based on model methods
+  # when the methods return collections, calculate the size compared to the integer in the criteria,
+  # when its a single object, do the comparison and return 0 or 100
+  def self.criteria
+    {
+      :sizes             => 5,
+      :pictures          => 5,
+      :facility_features => 5,
+      :specials          => 3,
+      :reviews           => 5,
+      :description       => { :points => 5, :calc => lambda { |o, p| o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
+      :logo              => { :points => 5, :calc => lambda { |o, p| o.nil?       ? 0 : p }},
+      :tracked_number    => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
+      :admin_fee         => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
+      :tax_rate          => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
+      :hours_filled_out? => { :points => 5, :calc => lambda { |o, p| !o           ? 0 : p }}
+    }
+  end
+  
+  def percent_complete
+    total = score = 0
+    
+    # perform the calculations by passing in the object returned by each method represented by the criteria keys,
+    # add up and return percent of the total score, figure out total dynamically
+    Listing.criteria.each do |c|
+      obj, crit = self.send(c[0]), c[1]
+      
+      if crit.is_a?(Fixnum) # obj should be a collection
+        total += crit
+        score += obj.size > crit ? crit : obj.size # cap it off, so we dont get more than 100% in the final result
+        
+      elsif crit.is_a?(Hash)
+        points, calc = crit[:points], crit[:calc]
+        total += points
+        score += calc.call(obj, points)
+      end
+    end
+    
+    (score.to_f / total.to_f * 100).to_i
   end
   
   #
