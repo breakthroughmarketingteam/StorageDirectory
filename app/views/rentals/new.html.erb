@@ -20,10 +20,10 @@
 								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
 								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.uniq_avail_sizes, (@size ? @size.dims : get_search.unit_size), :class => 'required sizes_select' %>
 							</div>
-			
+							
 							<div>
 								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
-								<div id="price"><span>$</span><span class="rental_rate"><%= @size.dollar_price if @size %></span><span>/month</span></div>
+								<div id="price"><span>$</span><span class="rental_rate"><%= number_to_currency(@size.dollar_price).sub('$', '') %></span><span>/month</span></div>
 							</div>
 			
 							<div class="calendar_wrap">

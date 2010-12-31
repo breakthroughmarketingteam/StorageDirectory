@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show'
   map.unsub_from_email_blast '/unsubscribe/:token', :controller => 'email_blasts', :action => 'unsub'
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
-  map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'edit'
+  map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'profile'
   map.admin_to_client '/clients/:id/account', :controller => 'clients', :action => 'edit'
   
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
@@ -58,7 +58,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
-  map.resources :listings, :member => { :rate => :post, 
+  map.resources :listings, :member => { :profile => :get,
+                                        :rate => :post,
                                         :copy_to_all => :post, 
                                         :tracking_request => :post, 
                                         :add_predefined_size => :post, 
