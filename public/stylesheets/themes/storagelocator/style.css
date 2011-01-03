@@ -1982,3 +1982,5 @@ p.breadcrumb a{color:#fff;}
 .edit_rental label{font-weight:bold;}
 #unsub_wrap{background:none repeat scroll 0 0 #FFFFFF;color:#555555;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;margin-left:-10px;padding:20px 35px;width:110%;}
 #new_listing input[type="text"]{width:80%;}
+.home_action .profile_link{background:url(/images/ui/storagelocator/link.png) no-repeat right;padding-right: 25px;}
+#rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(/images/ui/storagelocator/link-hover.png) no-repeat right;}
