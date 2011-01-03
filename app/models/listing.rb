@@ -56,10 +56,11 @@ class Listing < ActiveRecord::Base
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types = %w(upper lower drive_up)
-  cattr_accessor :top_types
   @@upper_types = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
   @@lower_types = %w(interior indoor standard lower)
+  @@comparables = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
+  cattr_accessor :top_types, :comparables
   
   #
   # Search methods
@@ -174,6 +175,10 @@ class Listing < ActiveRecord::Base
   
   def tax_rate
     (read_attribute(:tax_rate) || 6) / 100.0
+  end
+  
+  def hours_filled_out?
+    !self.business_hours.empty? || self.access_24_hours? || self.office_24_hours?
   end
   
   def siblings
@@ -324,6 +329,55 @@ class Listing < ActiveRecord::Base
                          "ORDER BY l.title LIMIT 100"
   end
   
+  # add up a score based on model methods
+  # when the methods return collections, calculate the size compared to the integer in the criteria,
+  # when its a single object, do the comparison and return 0 or 100
+  def self.criteria
+    {
+      :sizes             => 5,
+      :pictures          => 5,
+      :facility_features => 5,
+      :specials          => 3,
+      :reviews           => 5,
+      :description       => { :p => 5, :c => lambda { |o, p| o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
+      :logo              => { :p => 5, :c => lambda { |o, p| o.nil?       ? 0 : p }},
+      :tracked_number    => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :admin_fee         => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :tax_rate          => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :hours_filled_out? => { :p => 5, :c => lambda { |o, p| !o           ? 0 : p }}
+    }
+  end
+  
+  def percent_complete
+    total = score = 0
+    
+    # perform the calculations by passing in the object returned by each method represented by the criteria keys,
+    # add up and return percent of the total score, figure out total dynamically
+    Listing.criteria.each do |c|
+      obj, crit = self.send(c[0]), c[1]
+      
+      if crit.is_a?(Fixnum) # obj should be a collection
+        total += crit
+        score += obj.size > crit ? crit : obj.size # cap it off, so we dont get more than 100% in the final result
+        
+      elsif crit.is_a?(Hash)
+        points, calc = crit[:p], crit[:c]
+        total += points
+        score += calc.call(obj, points)
+      end
+    end
+    
+    (score.to_f / total.to_f * 100).to_i
+  end
+  
+  def call_tracking_enabled?
+    true
+  end
+  
+  def call_tracking_num
+    '555-234-5678'
+  end
+  
   #
   # OpenTech ISSN wrapper code
   #
@@ -333,14 +387,6 @@ class Listing < ActiveRecord::Base
   
   def issn_enabled?
     !self.facility_id.blank?
-  end
-  
-  def call_tracking_enabled?
-    true
-  end
-  
-  def call_tracking_num
-    '954-234-5678'
   end
   
   def has_feature?(*features)

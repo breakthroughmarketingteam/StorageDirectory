@@ -45,9 +45,8 @@
 							</div>
 							<div id="hours" class="left">
 								<h3 class="label">Hours:</h3>
-							
 								<div class="inner">
-									<%= render :partial => 'hours' if in_edit_mode? %>
+									<%= render :partial => 'hours' %>
 								</div>
 							
 								<%= copy_all_link :business_hours, @listing, :text => 'Copy to all listings', :title => 'Copy these hours to all your other listings' %>

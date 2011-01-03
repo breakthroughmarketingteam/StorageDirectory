@@ -338,8 +338,6 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	if ($.on_page([['compare', 'listings']])) $.open_map($('#main_map'));
-	
 	if ($.on_page([['locator, home', 'listings']])) {
 		var main_map = $('#main_map');
 		

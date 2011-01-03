@@ -8,6 +8,14 @@ $(function(){
 	 * BACK END, listing owner page methods
 	 */
 	
+	var listings = $('.listing', '#client_listing_box');
+	if (listings.length > 0) {
+		listings.each(function() {
+			$('.progressbar', this).progressbar({ value: parseInt($('.percent', this).text()) });
+		});
+	}
+	
+	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
@@ -362,7 +370,7 @@ $(function(){
 						title: 'Comparing '+ compares.length +' Facilities',
 						width: 'auto',
 						height: 'auto',
-						modal: false
+						modal: true
 					}));
 					
 					$.setGmap(data['maps_data'], 'compare_map');
@@ -684,7 +692,7 @@ $(function(){
 		delayed_submit(this);
 	});
 	
-	var feature_toggle = $('.toggle_action', '#unit_features');
+	var feature_toggle = $('.openDiv', '#unit_features');
 	if (feature_toggle.length) {
 		feature_toggle.data('orig', feature_toggle.text());
 		

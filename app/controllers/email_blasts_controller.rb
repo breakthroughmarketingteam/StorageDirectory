@@ -1,5 +1,6 @@
 class EmailBlastsController < ApplicationController
   
+  ssl_required :index, :new, :create, :edit, :update, :destroy
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
   

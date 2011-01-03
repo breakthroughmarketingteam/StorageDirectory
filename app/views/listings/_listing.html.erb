@@ -11,11 +11,12 @@
       </p>
     </div>
     <ul class="listing_options">
-      <li class="<%= listing.new_record? ? 'new_listing_tips' : 'rslt-offer' %>">
+      <li class="<%= listing.new_record? ? 'new_listing_tips' : 'profile_completion' %>">
         <% if listing.new_record? %>
           <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
-        <% elsif listing.pictures.empty? %>
-			<p class="listing_advice bold">Click Edit to add features and pictures.</p>
+        <% else %>
+			<div class="progressbar"></div>
+			<p>Profile Completion <span class="percent"><%= listing.percent_complete %>%</span></p>
 		<% end %>
       </li>
       <li class="action_btn">

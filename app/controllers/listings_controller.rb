@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   
+  ssl_required :index, :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator]
@@ -72,7 +73,6 @@ class ListingsController < ApplicationController
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-      @comparables = ['distance', '24_hour_access', 'climate_controlled', 'drive_up_access', 'truck_rentals', 'boxes_&_supplies', 'business_center', 'keypad_access', 'online_bill_pay', 'security_cameras', 'se_habla_español', 'specials', 'total_price']
       
       render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
     else
@@ -244,7 +244,7 @@ class ListingsController < ApplicationController
     @special = @listing.specials.last || (@listing.client && @listing.specials.new)
     @search = Search.find_by_id session[:search_id]
     
-    if action_name == 'edit'
+    if action_name == 'profile'
       @facility_features = IssnFacilityFeature.labels
       @specials = @listing.specials
       @hours = @listing.business_hours

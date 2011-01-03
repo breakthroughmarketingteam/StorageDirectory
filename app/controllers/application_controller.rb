@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
-    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
+    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www'] || (request.env['HTTP_HOST']['secure'] && request.protocol == 'http://')
   end
   
   def ensure_secure_subdomain
@@ -115,9 +115,9 @@ class ApplicationController < ActionController::Base
   end
   
   def default_url_options(options = nil)
-    host = request.host
-    host << ":#{request.port}" if request.port != 80
-    { :host => host }
+    ops = { :host => request.host }.merge (options || {})
+    ops.merge! :port => 3000 if RAILS_ENV == 'development'
+    ops
   end
   
   # keep a clean home URL by redirecting to the main page
