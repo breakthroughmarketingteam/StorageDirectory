@@ -95,7 +95,7 @@ module ListingsHelper
   
   def locator_header
     unless @listings.blank?
-      html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1}"
+      html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1 || !['truck rentals', 'moving_companies'].include?(@search.storage_type.downcase)}"
       
       if @search.is_city?
   			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
@@ -297,18 +297,21 @@ module ListingsHelper
     end
   end
   
-  def display_comparison(comp, listing)
-    case comp when 'distance'
+  def display_comparison(comparison, listing)
+    case comparison when 'distance'
       "<td class='padded'><span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles</td>"
+    
     when /(special)/i
       "<td class='padded' title='#{listing.special.description}'>#{listing.special.title}</td>"
+    
     when /(price)/i
-      "<td class='padded'><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
-    else
-      if listing.facility_features.map {|f| f.title.try :underscore }.include? comp
-        "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comp.titleize}' /></td>"
+      "<td class='padded'><span class='price'>#{number_to_currency listing.calculated_price[:amount]}</span><br /><span class='date'>Paid through #{listing.calculated_price[:paid_thru]}</span></td>"
+    
+    else # features
+      if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison
+        "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
       else
-        "<td><span class='hide'>#{listing.title} does not have #{comp.titleize}</span></td>"
+        "<td><span class='hide'>#{listing.title} does not have #{comparison.titleize}</span></td>"
       end
     end
   end

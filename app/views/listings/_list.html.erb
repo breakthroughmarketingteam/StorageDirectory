@@ -1,0 +1,28 @@
+<div id="moving">
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+			<tr class="odd">
+				<th class="left"></th>
+				<th class="marker"></th>
+				<th class="name">Company Name</th>
+				<th class="address">Address</th>
+				<th class="divider"></th>
+				<th class="distance">Miles</th>
+				<th class="right"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @listings.each_with_index do |listing, i| %>
+				<tr class="listing <%= cycle 'odd', 'even' %>">
+					<td class="left"></td>
+					<td class="marker"><div class="num_icon"><%= i+1 %></div></td>
+					<td class="name"><%= listing.title %></td>
+					<td class="address"><%= listing.full_address %></td>
+					<td class="divider"></td>
+					<td class="distance"><%= sprintf '%.2f', listing.distance %> Miles</td>
+					<td class="right"></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
