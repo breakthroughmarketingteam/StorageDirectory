@@ -299,13 +299,13 @@ module ListingsHelper
   
   def display_comparison(comp, listing)
     case comp when 'distance'
-      "<td><span class='hide'>#{listing.title} is within </span>#{listing.distance} Miles</td>"
-    when 'special'
-      "<td>#{listing.specials.first}</td>"
-    when 'price'
-      "<td><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
+      "<td class='padded'><span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles</td>"
+    when /(special)/i
+      "<td class='padded' title='#{listing.special.description}'>#{listing.special.title}</td>"
+    when /(price)/i
+      "<td class='padded'><span class='price'>$90.00</span><br /><span class='date'>Paid through 03/01/11</span></td>"
     else
-      if listing.facility_features.map(&:title).include? comp
+      if listing.facility_features.map {|f| f.title.try :underscore }.include? comp
         "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comp.titleize}' /></td>"
       else
         "<td><span class='hide'>#{listing.title} does not have #{comp.titleize}</span></td>"

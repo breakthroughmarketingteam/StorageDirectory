@@ -370,7 +370,7 @@ $(function(){
 						title: 'Comparing '+ compares.length +' Facilities',
 						width: 'auto',
 						height: 'auto',
-						modal: false
+						modal: true
 					}));
 					
 					$.setGmap(data['maps_data'], 'compare_map');
@@ -692,7 +692,7 @@ $(function(){
 		delayed_submit(this);
 	});
 	
-	var feature_toggle = $('.toggle_action', '#unit_features');
+	var feature_toggle = $('.openDiv', '#unit_features');
 	if (feature_toggle.length) {
 		feature_toggle.data('orig', feature_toggle.text());
 		

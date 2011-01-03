@@ -1,6 +1,6 @@
 <div id="compare_wrap">
     <div id="compare_map"></div>
-    <div class="uncollapse stack">
+    <div class="uncollapse">
         <table cellspacing="0" cellpadding="0">
             <tbody>
                 <tr class="odd">
@@ -9,127 +9,23 @@
                     	<th class="column"><%= display_logo listing %></th>
 					<% end %>
                 </tr>
-				<% @comparables.each do |comp| -%>
-					<tr class="even">
+				
+				<% Listing.comparables.each do |comp| -%>
+					<tr class="<%= cycle('even', 'odd') %>">
 	                    <th id="<%= comp %>"><span class="comp_label"><%= comp.titleize %>:</span></th>
 						<% @listings.each do |listing| %>
 							<%= display_comparison(comp, listing) %>
 						<% end %>
 	                </tr>
 				<% end %>
-                <tr class="even">
-                    <th id="distance"><span class="comp_label">Distance:</span></th>
-                    <td><span class="hide">listing is within </span>2 Miles</td>
-                    <td><span class="hide">listing is within </span>4 Miles</td>
-                    <td><span class="hide">listing is within </span>6 Miles</td>
-                    <td><span class="hide">listing is within </span>8 Miles</td>
-                </tr>
-                <tr class="odd">
-                    <th><span class="comp_label">24 hour Access:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                </tr>
-                <tr class="even">
-                    <th><span class="comp_label">Climate Controlled:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="odd">
-                    <th><span class="comp_label">Drive-up Access:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="even">
-                    <th><span class="comp_label">Truck Rental:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                </tr>
-                <tr class="odd">
-                    <th><span class="comp_label">Boxes & Supplies:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="even">
-                    <th><span class="comp_label">Business Center:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td></td>
-                </tr>
-                <tr class="odd">
-                    <th><span class="comp_label">Keypad Access:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="even">
-                    <th><span class="comp_label">Online Bill Pay:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                </tr>
-                <tr class="odd">
-                    <th><span class="comp_label">Security Cameras:</span></th>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                    <td><span class="hide">listing does not have feature </span></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="even">
-                    <th><span class="comp_label">Se Habla Español:</span></th>
-                    <td></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                    <td></td>
-                    <td><img src="images/green-checkmark.png" width="18" height="17" alt="Yes" /></td>
-                </tr>
-                <tr class="odd">
-                    <th id="special"><span class="comp_label">Special:</span></th>
-                    <td>First Month Free</td>
-                    <td>First Month Free</td>
-                    <td>First Month Free</td>
-                    <td>First Month Free</td>
-                </tr>
-                <tr class="even">
-                    <th id="price"><span class="comp_label">Price:</span></th>
-                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
-                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
-                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
-                    <td><span class="price">$90.00</span> <br /> <span class="date">Paid through 03/01/11</span></td>
-                </tr>
+				
                 <tr>
-                    <th id="usssl-special">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Facilities</th>
-                    <td><a class="rent-btn" href="">Rent It!</a></td>
-                    <td><a class="rent-btn" href="">Rent It!</a></td>
-                    <td><a class="rent-btn" href="">Rent It!</a></td>
-                    <td><a class="rent-btn" href="">Rent It!</a></td>
+                    <th id="usssl-special" title="We offer a 10% off the move in cost on top of the facility's own special discount!">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Facilities</th>
+                    <% @listings.each do |listing| %>
+						<td><a class="rent-btn" href="<%= facility_path listing.storage_type, listing.title, listing.id %>">Rent It!</a></td>
+					<% end %>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<!--
-<div id="compare_wrap">
-	<div id="compare_map">
-	</div>
-
-	<div class="uncollpase stack">
-		<table cellpadding="0" cellspacing="0">
-			<tbody>
-				
-			</tbody>
-		</table>
-	</div>
-</div>
--->

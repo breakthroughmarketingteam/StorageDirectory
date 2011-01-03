@@ -130,21 +130,21 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #listings_controller.compare_action #content #type-one-r-col-in{width:auto;}
 #listings_controller.compare_action #content #type-one-r-col-in #results_header{width:98.5%;}
 #listings_controller.compare_action #content #type-one-r-col-in #compare_map{width:100%;}
-#compare_wrap{font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:12px;padding:20px;}
+#compare_wrap{font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:12px;padding:0 20px 20px 20px;}
 #compare_map{background:url("/images/ui/ajax-loader-long-green.gif") no-repeat scroll 50% 50% transparent;border:1px solid #CCCCCC;height:226px;margin:0;width:100%;background-color:#E5E3DF;position:relative;width:100%;}
-#compare_wrap th.odd{}
-#compare_wrap tr.even{background:#eee;}
-#compare_wrap tr.rent{border-top:1px solid #ccc}
-#compare_wrap th{color:#999;font-weight:normal;height:20px;text-align:right;}
-#compare_wrap td{border-left:5px solid #fff;padding:3px;text-align:center;}
+#compare_wrap .odd{background:#fff;}
+#compare_wrap .even{background:#eee;}
+#compare_wrap .rent{border-top:1px solid #ccc}
+#compare_wrap th{color:#999;font-weight:normal;height:20px;text-align:right;vertical-align:middle;}
+#compare_wrap td{border-left:5px solid #fff;padding:3px;text-align:center;vertical-align:middle;}
+#compare_wrap .padded{padding:7px 3px;}
 #compare_wrap a{text-decoration:none;color:#4c4bcc;}
 #compare_wrap .column{text-align:center;height:90px;width:150px;}
-#compare_wrap .logo{border:1px solid #000;}
+#compare_wrap .clogo{width:80%;margin:0 auto;}
+#compare_wrap .clogo img{width:100%;}
 #compare_wrap #unit_size #size{color:#4c4bcc;font-weight:bold;font-size:18px;}
 #compare_wrap #unit_size #label{color:#000000;display:inline-block;font-size:12px;font-weight:bold;margin-right:10px;}
-#compare_wrap #distance{color:#000;height:30px;font-weight:bold;}
-#compare_wrap #special{color:#000;height:50px;font-weight:bold;}
-#compare_wrap #price{color:#000;height:50px;font-weight:bold;}
+#compare_wrap #distance,#compare_wrap #specials,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
 #compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;}
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
@@ -327,10 +327,12 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing .hold_unit{background:url(/images/ui/storagelocator/reserve-btn.png) repeat-x;}
 .listing .hold_unit:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) repeat-x;}
 .listing .request,.crud_btn{text-shadow:1px 1px 0 #333;}
+.listing .request{background:url(/images/ui/storagelocator/request-btn.png) repeat-x;}
 .listing .request:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) repeat-x;}
 .listing .compare{float:right;}
 .listing .compare input{margin:0;cursor:pointer;}
 .listing .compare label{cursor:pointer;font-size:80%;}
+.listing .compare .ajax_loader{margin:1px 7px 0 0;}
 #feat-list .dnp{clear:both;}
 #feat-list .dnp li.rslt-price,#feat-list .dnp li.rslt-miles,#feat-list .dnp li.rslt-size{background:none;height:auto;width:auto;float:none;}
 #feat-list .dnp li.rslt-miles{display:block;font-size:12px;padding:0;text-align:center;width:100%;}
@@ -1429,8 +1431,8 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #unit_features .selectable{float:left;width:21px;height:18px;margin-right:5px;}
 #unit_features .selectable_wrap label{font-size:80%;font-weight:normal;}
 #unit_features .toggle_action{font-weight:bold;color:#333;padding-left:25px;}
-#unit_features .collapseable{margin:10px 0 5px 0;width:105%;}
-#unit_features a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 4px 1px;}
+#unit_features #more_features{margin:10px 0 5px 0;width:105%;}
+#unit_features a.toggle_right{color:#333333;font-weight:bold;padding-left:17px;text-decoration:none;background:url(/images/ui/storagelocator/right-grn.png) no-repeat 4px 1px;}
 #unit_features a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 2px;}
 #top_features{margin-bottom:10px;}
 #sub_submit{text-align:center;}
@@ -1985,3 +1987,4 @@ p.breadcrumb a{color:#fff;}
 .edit_rental label{font-weight:bold;}
 #unsub_wrap{background:none repeat scroll 0 0 #FFFFFF;color:#555555;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;margin-left:-10px;padding:20px 35px;width:110%;}
 #new_listing input[type="text"]{width:80%;}
+

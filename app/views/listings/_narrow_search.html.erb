@@ -1,4 +1,4 @@
-<% cache params.to_s.parameterize do %>
+<% cache @search do %>
 	<%
 		@unit_features     = IssnUnitTypeFeature.labels
 		@top_features      = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
@@ -56,9 +56,9 @@
 					<% end %>
 					</ul>
 				
-					<p><%= link_to 'More Features', { :anchor => 'show_.collapseable_.unitfeatures' }, :class => 'toggle_action toggle_right', :title => 'Show Features' %></p>
+					<p><%= link_to 'More Features', '#', :class => 'openDiv toggle_right', :rel => 'more_features', :title => 'Show Features' %></p>
 				
-					<ul class="collapseable hide">
+					<ul id="more_features" class="hide">
 						<% @unit_features.each do |feature| %>
 						<li class="selectable_wrap auto">
 							<div class="selectable">

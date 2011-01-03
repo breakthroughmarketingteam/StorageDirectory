@@ -968,6 +968,7 @@ $.fn.openDiv = function() {
 		$this.click(function() {
 			$('#'+div_to_open).slideToggle(600);
 			$this.parent('.bg').toggleClass('expanded');
+			if ($this.hasClass('toggle_right')) $this.toggleClass('toggle_down');
 			return false;
 		});
 	});
