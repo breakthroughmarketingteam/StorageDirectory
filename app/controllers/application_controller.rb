@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
-    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www']
+    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www'] || (request.env['HTTP_HOST']['secure'] && request.protocol != 'https')
   end
   
   def ensure_secure_subdomain
