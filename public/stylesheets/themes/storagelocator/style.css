@@ -144,7 +144,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap .clogo img{width:100%;}
 #compare_wrap #unit_size #size{color:#4c4bcc;font-weight:bold;font-size:18px;}
 #compare_wrap #unit_size #label{color:#000000;display:inline-block;font-size:12px;font-weight:bold;margin-right:10px;}
-#compare_wrap #distance,#compare_wrap #specials,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
+#compare_wrap #distance,#compare_wrap #facility_special,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
 #compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;}
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
