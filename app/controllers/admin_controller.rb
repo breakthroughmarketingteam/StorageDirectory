@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   
+  before_filter :ensure_secure_subdomain
   ssl_required :index
   
   def index
