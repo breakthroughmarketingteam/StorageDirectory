@@ -1,5 +1,6 @@
 class RolesController < ApplicationController
   
+  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_models, :only => [:index, :show, :new, :edit]
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   

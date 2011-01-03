@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
-
+  
+  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_models_paginated, :only => :index
   before_filter :scrub_comments, :only => :create
 

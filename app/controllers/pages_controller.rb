@@ -1,12 +1,11 @@
 class PagesController < ApplicationController
   
-  
+  ssl_required :index, :new, :create, :edit, :update, :destroy
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   before_filter :get_or_create_search, :only => :show
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
-  
   geocode_ip_address :only => :show
   
   def index

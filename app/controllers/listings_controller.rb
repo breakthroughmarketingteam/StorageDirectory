@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   
-  ssl_required :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
+  ssl_required :index, :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator]

@@ -1,5 +1,6 @@
 class LinksController < ApplicationController
   
+  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_link, :only => [:show, :edit, :update, :destroy]
   before_filter :get_associations, :only => [:new, :edit]
   

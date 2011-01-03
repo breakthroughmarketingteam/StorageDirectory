@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   
+  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_image, :only => [:show, :edit, :update, :destroy]
   
   def index

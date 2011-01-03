@@ -338,12 +338,12 @@ class Listing < ActiveRecord::Base
       :facility_features => 5,
       :specials          => 3,
       :reviews           => 5,
-      :description       => { :points => 5, :calc => lambda { |o, p| o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
-      :logo              => { :points => 5, :calc => lambda { |o, p| o.nil?       ? 0 : p }},
-      :tracked_number    => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
-      :admin_fee         => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
-      :tax_rate          => { :points => 5, :calc => lambda { |o, p| o.blank?     ? 0 : p }},
-      :hours_filled_out? => { :points => 5, :calc => lambda { |o, p| !o           ? 0 : p }}
+      :description       => { :p => 5, :c => lambda { |o, p| o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
+      :logo              => { :p => 5, :c => lambda { |o, p| o.nil?       ? 0 : p }},
+      :tracked_number    => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :admin_fee         => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :tax_rate          => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
+      :hours_filled_out? => { :p => 5, :c => lambda { |o, p| !o           ? 0 : p }}
     }
   end
   
@@ -360,13 +360,21 @@ class Listing < ActiveRecord::Base
         score += obj.size > crit ? crit : obj.size # cap it off, so we dont get more than 100% in the final result
         
       elsif crit.is_a?(Hash)
-        points, calc = crit[:points], crit[:calc]
+        points, calc = crit[:p], crit[:c]
         total += points
         score += calc.call(obj, points)
       end
     end
     
     (score.to_f / total.to_f * 100).to_i
+  end
+  
+  def call_tracking_enabled?
+    true
+  end
+  
+  def call_tracking_num
+    '555-234-5678'
   end
   
   #
@@ -378,14 +386,6 @@ class Listing < ActiveRecord::Base
   
   def issn_enabled?
     !self.facility_id.blank?
-  end
-  
-  def call_tracking_enabled?
-    true
-  end
-  
-  def call_tracking_num
-    '954-234-5678'
   end
   
   def has_feature?(*features)

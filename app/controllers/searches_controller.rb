@@ -1,5 +1,6 @@
 class SearchesController < ApplicationController
   
+  ssl_required :index, :show
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
