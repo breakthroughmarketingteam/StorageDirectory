@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101230155654) do
+ActiveRecord::Schema.define(:version => 20110103192351) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -37,15 +37,15 @@ ActiveRecord::Schema.define(:version => 20101230155654) do
     t.string   "name"
     t.string   "address"
     t.string   "phone"
-    t.binary   "card_type"
-    t.binary   "card_number"
-    t.binary   "expires_month"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
+    t.binary   "card_number"
+    t.binary   "card_type"
     t.binary   "cvv"
+    t.binary   "expires_month"
     t.binary   "expires_year"
   end
 
@@ -462,6 +462,11 @@ ActiveRecord::Schema.define(:version => 20101230155654) do
     t.string   "storage_types"
   end
 
+  add_index "listings", ["category"], :name => "index_listings_on_category"
+  add_index "listings", ["enabled"], :name => "index_listings_on_enabled"
+  add_index "listings", ["id", "user_id", "title"], :name => "index_listings_on_id_and_user_id_and_title"
+  add_index "listings", ["title"], :name => "index_listings_on_title"
+
   create_table "mailing_addresses", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -721,7 +726,7 @@ ActiveRecord::Schema.define(:version => 20101230155654) do
     t.string   "storage_type", :default => "self storage"
     t.string   "features"
     t.string   "within",       :default => "20"
-    t.string   "referrer"
+    t.text     "referrer"
     t.string   "remote_ip"
     t.float    "lat"
     t.float    "lng"
