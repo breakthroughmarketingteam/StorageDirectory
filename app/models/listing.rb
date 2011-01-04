@@ -76,7 +76,7 @@ class Listing < ActiveRecord::Base
     }
     
     base_conditions = 'listings.enabled IS TRUE'
-    search_type = search.storage_type
+    search_type = search.storage_type.downcase
     
     unless search_type =~ /(self storage)/i
       options[:include] << :facility_features
