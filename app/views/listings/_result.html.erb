@@ -3,7 +3,7 @@
 		<div class="inner">
 			<div class="in">
 				<div class="rslt-title">
-					<h3><%= link_to_if result.premium?, result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id) %></h3>
+					<h3><%= link_to_if result.premium?, result.title, facility_path(@search.storage_type.parameterize, result.title.parameterize, result.id), :class => "profile_link" %></h3>
 				
 					<% if result.premium? %>
 						<div class="rslt-features">
