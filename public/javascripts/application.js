@@ -339,10 +339,9 @@ $(document).ready(function() {
 	});
 	
 	if ($.on_page([['locator, home', 'listings']])) {
-		var main_map = $('#main_map');
-		
 		$('#top_map_btn').live('click', function(){
 			var $this = $(this),
+				main_map = $('#main_map'),
 				location = $this.attr('rel').split(','),
 				lat = parseFloat(location[0]),
 				lng = parseFloat(location[1]);
@@ -366,7 +365,7 @@ $(document).ready(function() {
 		
 		if (!$.cookie('mo')) {
 			$.cookie('mo', true);
-			$.open_map(main_map);
+			$.open_map($('#main_map'));
 		}
 	}
 	
