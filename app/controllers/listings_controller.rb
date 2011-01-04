@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
   ssl_required :index, :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_or_create_search, :only => [:home, :locator]
+  before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request]
   before_filter :get_listing_relations, :only => [:show, :profile]
   
@@ -67,11 +67,7 @@ class ListingsController < ApplicationController
 
   def show
     @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
-    
-    if session[:search_id]
-      @search = Search.find session[:search_id]
-      @search.update_attribute :listing_id, @listing.id
-    end
+    @search.update_attribute :listing_id, @listing.id
     
     render :layout => false if request.xhr?
   end

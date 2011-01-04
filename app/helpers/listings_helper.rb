@@ -95,9 +95,9 @@ module ListingsHelper
   
   def locator_header
     unless @listings.blank?
-      html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1 || !['truck rentals', 'moving_companies'].include?(@search.storage_type.downcase)}"
+      html = "Found <span class=\"hlght-text\">#{@listings.total_entries}</span> #{@search.storage_type || 'self storage'}#{'s' if @listings.size > 1 && !@search.for_auxilary_listing?}"
       
-      if @search.is_city?
+      if @search.is_city? || @search.for_auxilary_listing?
   			html << " within <span class=\"hlght-text\">#{@search.within}</span> miles"
   			html << " of <span class='hlght-text'>#{@search.city}, #{@search.state}#{" #{@search.zip}" if @search.is_zip? }</span>" unless @search.lat.blank?
   			

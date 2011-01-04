@@ -93,28 +93,32 @@ class Search < ActiveRecord::Base
     self.sort_reverse == '+' ? '-' : '+'
   end
   
-  def is_address_query?
-    self.is_zip? || self.is_city? || self.is_state?
+  def for_auxilary_listing?
+    @aux ||= self.storage_type =~ /(truck)|(moving)/i
   end
   
-  @@zip_regex = /\d{5}/
-  @@city_regex = Proc.new { |query| /#{query.split(/(,\W?)|(\W*)/) * '|'}/i }
-  @@states_regex = States::NAMES.map { |state| "(#{state[0]})|(#{state[1]})" } * '|'
+  def is_address_query?
+    @addr ||= self.is_zip? || self.is_city? || self.is_state?
+  end
+  
+  @@zip_regex    = /\d{5}/
+  @@city_regex   = lambda { |q| /#{q.split(/(,\W?)|(\W*)/) * '|'}/i }
+  @@states_regex = States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'
   
   def self.is_zip?(q)
     q.match @@zip_regex if q
   end
   
   def is_zip?
-    self.class.is_zip? self.query
+    @isz ||= self.class.is_zip? self.query
   end
   
   def is_city?
-    UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) if self.query }
+    @isc ||= UsCity.names.any? { |c| c =~ @@city_regex.call(self.query) if self.query }
   end
   
   def is_state?
-    self.query.match(/#{@@states_regex}/i) if self.query
+    @iss ||= self.query.match(/#{@@states_regex}/i) if self.query
   end
   
   def extrapolate(part)

@@ -20,7 +20,11 @@ module ApplicationHelper
     elsif controller_name == 'listings' && action_name == 'show'
       title = "#{@listing.title.titleize} - Self Storage in #{@listing.city}, #{@listing.state}"
     elsif controller_name == 'listings' && %w(home locator).include?(action_name)
-      title = "Rent #{(@search.storage_type || 'self storage').titleize} Online in #{@search.city}, #{@search.state}"
+      if ['truck rentals', 'moving companies'].include? @search.storage_type.downcase
+        title = "#{@search.storage_type.titleize} in #{@search.city}, #{@search.state}"
+      else
+        title = "Rent #{(@search.storage_type || 'self storage').titleize} Online in #{@search.city}, #{@search.state}"
+      end
     elsif controller_name == 'user_sessions' && action_name == 'new'
       title = 'Login'
     else
