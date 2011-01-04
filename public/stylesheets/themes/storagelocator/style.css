@@ -1486,7 +1486,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #more_info .inner h5{font-size:28px;margin-bottom:10px;}
 #more_info .inner p{margin-bottom:20px;}
 
-#footer_btm{color:#ccccff;font-size:90%;min-height:350px;border-top:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
+#footer_btm{color:#ccccff;font-size:90%;border-top:1px solid #3c3d98;background:url(/images/ui/storagelocator/purple-bg.png) repeat;}
 #footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:20px;width:961px;height:129px;padding:0 7px;}
 #footer_btm .usssl_adp{width:140px;height:110px;margin:9.4px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 #footer_btm .usssl_adp:hover{border:1px solid #333;width:138px;height:108px;box-shadow:2px 2px 2px #66c;-moz-box-shadow:2px 2px 2px #66c;-webkit-box-shadow:2px 2px 2px #66c;}
