@@ -328,6 +328,8 @@ class ApplicationController < ActionController::Base
     else
       eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find_by_id(params[:id].to_i)"
     end
+  rescue
+    nil
   end
   
   def get_model_by_title_or_id
