@@ -15,9 +15,7 @@ class ListingsController < ApplicationController
   
   # action is used as the home page of the site (the user navigates to it with a blank url) so we load the page first and then get the results via ajax
   def home
-    @page = Page.find_by_title 'Self Storage'
-    session[:search_id] = @search.id
-    
+    @page = Page.find_by_title 'Self Storage' # we still need this model for the relations to blocks, etc.
     render :action => 'locator'
   end
   
@@ -25,27 +23,14 @@ class ListingsController < ApplicationController
     benchmark do
       # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
-    
-      # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
-      @new_search = Search.new((params[:search] || _build_search_attributes(params)), request, @search)
-      different = Search.diff? @search, @new_search
       
-      if different
-        @new_search.save
-        @search.add_child @new_search
-        @search = @new_search
-      end
-    
-      @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
-      
-      session[:search_id] = @search.id
       @location = @search.location
       @listings = @search.results # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
     
       # updates the impressions only for listings on current page if the search has changed
-      if different || (current_user && !current_user.has_role?('admin', 'advertiser'))
+      if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
         Listing.transaction do
           @listings.map { |m| m.update_stat 'impressions', request }
         end
@@ -280,17 +265,6 @@ class ListingsController < ApplicationController
   
   def _storage_type_path(type, search)
     "/#{type.parameterize}/#{search.state.parameterize}/#{search.city.parameterize}"
-  end
-  
-  def _build_search_attributes(params)
-    { 
-      :storage_type => params[:storage_type],
-      :city         => params[:city],
-      :state        => params[:state],
-      :zip          => params[:zip],
-      :unit_size    => nil,
-      :within       => nil
-    }
   end
   
   def _scrub_params

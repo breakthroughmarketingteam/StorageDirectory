@@ -55,33 +55,32 @@ class Listing < ActiveRecord::Base
   sitemap :order => 'updated_at DESC'
   
   # the most common unit sizes, to display on a premium listing's result partial
-  @@top_types = %w(upper lower drive_up)
-  @@upper_types = %w(upper)
+  @@top_types      = %w(upper lower drive_up)
+  @@upper_types    = %w(upper)
   @@drive_up_types = ['drive up', 'outside']
-  @@lower_types = %w(interior indoor standard lower)
-  @@comparables = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
+  @@lower_types    = %w(interior indoor standard lower)
+  @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
   cattr_accessor :top_types, :comparables
   
   #
   # Search methods
   #
-  
   def self.find_by_location(search)
     @location = search.location
     
     # build the options for the model find method
     options = {
-      :include => [:map, :sizes],
+      :include => [:map, :sizes, :pictures],
       :within  => search.within,
       :origin  => search.lat_lng
     }
     
     base_conditions = 'listings.enabled IS TRUE'
-    search_type = (search.storage_type || 'self storage').downcase
+    search_type = search.storage_type
     
     unless search_type =~ /(self storage)/i
       options[:include] << :facility_features
-      base_conditions += " AND LOWER(listings.category) LIKE '%#{search_type}%'"
+      base_conditions += " AND LOWER(listings.storage_types) LIKE '%#{search_type}%'"
     end
     
     if !search.is_address_query? && !search.query.blank? # try query by name? 
@@ -376,6 +375,12 @@ class Listing < ActiveRecord::Base
   
   def call_tracking_num
     '555-234-5678'
+  end
+  
+  def calculated_price
+    amount, paid_thru = 90, '01/31/11'
+    
+    { :amount => amount, :paid_thru => paid_thru}
   end
   
   #

@@ -10,7 +10,7 @@ module UtilityMethods
     SINGULARS =[['(quiz)zes$', '\1'],['(matr)ices$', '\1ix'],['(vert|ind)ices$', '\1ex'],['^(ox)en$', '\1'],['(alias|status)es$', '\1'],
       ['(octop|vir)i$', '\1us'],['(cris|ax|test)es$', '\1is'],['(shoe)s$', '\1'],['[o]es$', '\1'],['[bus]es$', '\1'],['([m|l])ice$', '\1ouse'],
       ['(x|ch|ss|sh)es$', '\1'],['(m)ovies$', '\1ovie'],['[s]eries$', '\1eries'],['([^aeiouy]|qu)ies$', '\1y'],['[lr]ves$', '\1f'],
-      ['(tive)s$', '\1'],['(hive]s$', '\1'],['([^f]]ves$', '\1fe'],['(^analy)ses$', '\1sis'],
+      ['(tive)s$', '\1'],['(hive)s$', '\1'],['([^f]ves$', '\1fe'],['(^analy)ses$', '\1sis'],
       ['([a]naly|[b]a|[d]iagno|[p]arenthe|[p]rogno|[s]ynop|[t]he)ses$', '\1\2sis'],['([ti])a$', '\1um'],['(news)$', '\1ews'],['s{1}$', '']]
 
     def singular()

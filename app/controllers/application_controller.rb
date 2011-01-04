@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   end
   
   def default_url_options(options = nil)
-    ops = { :host => request.host }.merge (options || {})
+    ops = { :host => request.host }.merge(options || {})
     ops.merge! :port => 3000 if RAILS_ENV == 'development'
     ops
   end
@@ -497,7 +497,34 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
-    @search = Search.find_by_id(session[:search_id]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+    if @search = Search.find_by_id(session[:search_id])
+      # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
+      @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
+      @diff_search = Search.diff? @search, @new_search
+
+      if @diff_search
+        @new_search.save
+        @search.add_child @new_search
+        @search = @new_search
+      end
+    else 
+      @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+      @diff_search = true
+    end
+  
+    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
+    session[:search_id] = @search.id
+  end
+  
+  def build_search_attributes(params)
+    { 
+      :storage_type => params[:storage_type],
+      :city         => params[:city],
+      :state        => params[:state],
+      :zip          => params[:zip],
+      :unit_size    => nil,
+      :within       => nil
+    }
   end
   
   def kick_back_path

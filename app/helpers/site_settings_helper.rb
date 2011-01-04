@@ -8,7 +8,7 @@ module SiteSettingsHelper
       select_tag field_name, option_tags(_themes(false), setting[1]), :class => 'required', :title => 'Select an available theme.'
     when :plugins, :widgets
       options_array = eval "_#{setting[0]}(false)" # _plugins, _widgets. defined in ApplicationController
-      site_setting_check_boxes setting, field_name.sub(/]$/, '][]'), options_array
+      site_setting_check_boxes setting, field_name.sub(/\]$/, '][]'), options_array
     else
       text_field_tag field_name, nil, setting_field_options(setting)
     end

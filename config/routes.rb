@@ -32,8 +32,8 @@ ActionController::Routing::Routes.draw do |map|
     eval "map.#{type.gsub(' ', '_').downcase} '/#{type.parameterize}/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => '#{type}'"
   end
   
-  map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck'
-  map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving'
+  map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck Rentals'
+  map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving Companies'
   
   map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.tenant_activate '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'

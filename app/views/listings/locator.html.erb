@@ -21,30 +21,33 @@
 				<h2><%= locator_header %></h2>
 				<p><%= friendly_sorted_by_label %></p>
 			<% else %>
-				<h2 class="no_results">Couldn't find any listings, try widening your search</h2>
+				<h2 class="no_results">Couldn't find any <%= @search.storage_type.titleize %> listings, try widening your search</h2>
 			<% end %>
 		</div>
 
 		<div id="type-one-top-bar">
 			<% if @listings && !@listings.empty? %>
-				<div id="search-head">
-					<ul>
-					 	<li id="list-name" class="sorter">
-							<%= link_to '<span class="hide">List by </span>Facility Name', '#sort-name', :class => listing_sort_class('name'), 'data-sorted_by' => 'name', 'data-sort_reverse' => sort_status(@search, 'name') %>
-						</li>
-					 	<li id="list-miles" class="sorter">
-							<%= link_to '<span class="hide">List by </span>Miles', '#sort-distance', :class => listing_sort_class('distance'), 'data-sorted_by' => 'distance', 'data-sort_reverse' => sort_status(@search, 'distance') %>
-						</li>
-					 	<li id="list-size"><span class="hide">List by </span>Size</li>
-					 	<li id="list-price" class="sorter">
-							<%= link_to '<span class="hide">List by </span>Price', '#sort-price', :class => listing_sort_class('price'), 'data-sorted_by' => 'price', 'data-sort_reverse' => sort_status(@search, 'price') %>
-						</li>
-						<li id="list-amenities"><span class="hide">List by </span>Amenities</li>
-					</ul>
-				</div>
-
 				<div id="rslt-list-bg">
-					<%= render :partial => 'listings/result', :collection => @listings %>
+					<% if ['truck rentals', 'moving companies'].include?(@search.storage_type.downcase) %>
+						<%= render :partial => 'list' %>
+					<% else %>	
+						<div id="search-head">
+							<ul>
+							 	<li id="list-name" class="sorter">
+									<%= link_to '<span class="hide">List by </span>Facility Name', '#sort-name', :class => listing_sort_class('name'), 'data-sorted_by' => 'name', 'data-sort_reverse' => sort_status(@search, 'name') %>
+								</li>
+							 	<li id="list-miles" class="sorter">
+									<%= link_to '<span class="hide">List by </span>Miles', '#sort-distance', :class => listing_sort_class('distance'), 'data-sorted_by' => 'distance', 'data-sort_reverse' => sort_status(@search, 'distance') %>
+								</li>
+							 	<li id="list-size"><span class="hide">List by </span>Size</li>
+							 	<li id="list-price" class="sorter">
+									<%= link_to '<span class="hide">List by </span>Price', '#sort-price', :class => listing_sort_class('price'), 'data-sorted_by' => 'price', 'data-sort_reverse' => sort_status(@search, 'price') %>
+								</li>
+								<li id="list-amenities"><span class="hide">List by </span>Amenities</li>
+							</ul>
+						</div>
+						<%= render :partial => 'result', :collection => @listings %>
+					<% end %>
 				</div>
 
 				<%= render :partial => 'listings/paginator' %>

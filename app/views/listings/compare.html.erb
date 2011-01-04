@@ -20,7 +20,7 @@
 				<% end %>
 				
                 <tr>
-                    <th id="usssl-special" title="We offer a 10% off the move in cost on top of the facility's own special discount!">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Facilities</th>
+                    <th id="usssl-special" title="We offer <%= $_usssl_discount %> the move in cost on top of the facility's own special discount!">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Rentals</th>
                     <% @listings.each do |listing| %>
 						<td><a class="rent-btn" href="<%= facility_path listing.storage_type, listing.title, listing.id %>">Rent It!</a></td>
 					<% end %>

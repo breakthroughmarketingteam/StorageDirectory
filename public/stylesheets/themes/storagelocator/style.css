@@ -483,7 +483,7 @@ ul#bottom-nav li a{color:#fff;text-decoration:none;margin-right:20px;}
 #foot-box-bottom-bg{background:url(/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;}
 .blue-line-in{width:920px;margin:0px auto;text-align:left;font-weight:bold;text-shadow:1px 1px 0px #666;}
 .more_results_form,.results_showing{float:right;}
-.no_results{padding:1px 0;text-align:center;}
+.no_results{padding:1px 0;}
 .results_showing{font-size:80%;}
 p#foot-text-l{float:left;margin-left:20px;}
 p#foot-text-r{float:right;margin-right:20px}
@@ -1990,3 +1990,22 @@ p.breadcrumb a{color:#fff;}
 .home_action .profile_link{background:url(/images/ui/storagelocator/link.png) no-repeat right;padding-right: 25px;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(/images/ui/storagelocator/link-hover.png) no-repeat right;}
 
+#moving{width:100%;background:#fff;}
+#moving tr{height:55px;}
+#moving th{color:#393;text-decoration:underline;}
+#moving th, #moving td{text-align:left;vertical-align:middle;}
+#moving hr{border-top:1px dashed #ccc;border-bottom:none;border-left:none;border-right:none}
+#moving .odd{background:#fff;}
+#moving .even td.left{background:url(/images/ui/storagelocator/left-bg.png) no-repeat;}
+#moving .even td.right{background:url(/images/ui/storagelocator/right-bg.png) no-repeat;}
+#moving th.left,#moving th.right{width:4px;}
+#moving th.marker{width:50px;}
+#moving th.name{width:240px;}
+#moving th.address{width:220px;}
+#moving th.divider{width:163px;}
+#moving th.distance{width:60px;}
+#moving td.name{font-weight:bold;}
+#moving td.divider{padding-right:15px;}
+#moving td.distance{color:#4c4bcc;font-weight:bold;}
+#moving .even .marker,#moving .even .name,#moving .even .address,#moving .even .divider,#moving .even .distance{background:#f3f3f3;}
+#moving .num_icon{background:url(/images/ui/storagelocator/result-number.png) no-repeat;color:#fff;font-weight:bold;height:32px;padding:7px 0 0;text-align:center;position:static;text-shadow:1px 1px 0 #666;width:29px;}
