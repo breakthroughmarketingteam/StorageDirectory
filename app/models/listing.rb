@@ -76,11 +76,11 @@ class Listing < ActiveRecord::Base
     }
     
     base_conditions = 'listings.enabled IS TRUE'
-    search_type = search.storage_type
+    search_type = search.storage_type.downcase
     
     unless search_type =~ /(self storage)/i
       options[:include] << :facility_features
-      base_conditions += " AND LOWER(listings.storage_types) LIKE \"%#{search_type}%\""
+      base_conditions += " AND LOWER(listings.storage_types) LIKE '%#{search_type}%'"
     end
     
     if !search.is_address_query? && !search.query.blank? # try query by name? 
