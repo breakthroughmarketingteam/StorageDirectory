@@ -43,7 +43,6 @@ class ApplicationController < ActionController::Base
   before_filter :simple_auth
   before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
-  before_filter :clean_home_url
   before_filter :init, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
@@ -118,11 +117,6 @@ class ApplicationController < ActionController::Base
     ops = { :host => request.host }.merge(options || {})
     ops.merge! :port => 3000 if RAILS_ENV == 'development'
     ops
-  end
-  
-  # keep a clean home URL by redirecting to the main page
-  def clean_home_url
-    redirect_to(home_page) and return if request.path == '/'
   end
   
   def init
@@ -328,6 +322,8 @@ class ApplicationController < ActionController::Base
     else
       eval "@#{controller_name.singular} = #{controller_name.singular.camelcase}.find_by_id(params[:id].to_i)"
     end
+  rescue
+    nil
   end
   
   def get_model_by_title_or_id

@@ -18,6 +18,9 @@ class Page < ActiveRecord::Base
   access_shared_methods
   sitemap :change_frequency => :monthly, :priority => 0.7, :order => 'updated_at DESC'
   
+  @@searchables    = %w(title description)
+  cattr_accessor :searchables
+  
   # Class Methods
   
   def self.all_for_index_view

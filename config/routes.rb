@@ -156,7 +156,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :facility_features
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
   map.resources :us_cities
-  map.resources :searches
+  map.resources :searches, :collection => { :models => :get }
   map.resources :ad_partners
   map.resources :predefined_sizes
   map.resources :email_blasts, :member => { :blast => :get }
@@ -175,7 +175,7 @@ ActionController::Routing::Routes.draw do |map|
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => 'listings', :action => 'locator'
+  map.root :controller => 'listings', :action => 'home', :storage_type => 'self storage'
   #map.root :controller => 'pages', :action => 'show', :title => 'home'
   
   # See how all your routes lay out with "rake routes"

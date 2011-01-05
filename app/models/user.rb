@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   acts_as_tagger
   access_shared_methods
   
+  @@searchables    = %w(first_name last_name email)
+  cattr_accessor :searchables
+  
   # Class Methods
   
   def self.all_for_index_view

@@ -17,6 +17,9 @@ class Post < ActiveRecord::Base
   ajaxful_rateable :dimensions => [:usefulness]
   sitemap :change_frequency => :weekly, :priority => 0.8, :order => 'updated_at DESC' 
   
+  @@searchables    = %w(title content)
+  cattr_accessor :searchables
+  
   # Class Methods
   def self.all_for_index_view
     all :select => 'title, content, published, id, user_id, updated_at'

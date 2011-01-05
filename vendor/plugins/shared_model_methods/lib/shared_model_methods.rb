@@ -31,6 +31,24 @@ module SharedModelMethods #:nodoc:
       all.detect { |model| model.name_or_title.parameterize == title }
     end
     
+    # when a model implements an alias to a field in an associated model, we need to get the assoc table name to use in a sql condition
+    # for example @listing responds_to :address, but address is not a field in listings, rather a field in its associated model map.
+    def get_assoc_prefix_for(field)
+      prefix = join = ''
+      
+      self.reflect_on_all_associations.each do |reflection|
+        assoc_class = reflection.name.to_s.singularize.camelcase.constantize rescue next
+        
+        if assoc_class.column_names.include?(field)
+          join = reflection.name.to_s
+          prefix = join.pluralize
+          break
+        end
+      end
+      
+      { :prefix => prefix, :join => join }
+    end
+    
   end
   
   # This module contains instance methods
