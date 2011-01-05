@@ -19,7 +19,7 @@ class SearchesController < ApplicationController
     query = params[:query]
     
     unless query.blank?
-      query.downcase!.gsub!(/<\/?[^>]*>/, "")
+      query = query.downcase.gsub(/<\/?[^>]*>/, "")
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
