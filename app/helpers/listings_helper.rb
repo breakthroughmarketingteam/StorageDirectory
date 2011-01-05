@@ -143,7 +143,7 @@ module ListingsHelper
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"
       
       link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap' do |name|
-        "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>"
+        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).titleize}</span></div>"
       end
     end
   end

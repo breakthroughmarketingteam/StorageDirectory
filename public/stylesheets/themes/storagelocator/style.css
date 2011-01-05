@@ -787,6 +787,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
 #ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc -moz-use-text-color -moz-use-text-color;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
+#ov-units #rslt-list-bg .listing .default_logo{margin-right:10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .profile_completion{height:86px;padding:20px 0 0 15px;position:relative;width:200px;}
