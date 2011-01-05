@@ -11,6 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   
   # restful pages that replace pages from the Page model by overwriting the title, this allows us to manage a nav pages position, but the url takes you to a restful action
   map.new_client '/self-storage-advertising', :controller => 'clients', :action => 'new', :title => 'self-storage-advertising'
+  map.connect '/add-your-facility', :controller => 'clients', :action => 'new', :title => 'self-storage-advertising' # old page
+  
   map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show'
   map.unsub_from_email_blast '/unsubscribe/:token', :controller => 'email_blasts', :action => 'unsub'
   map.client_account '/my_account', :controller => 'clients', :action => 'edit'
