@@ -338,7 +338,7 @@ class Listing < ActiveRecord::Base
       :facility_features => 5,
       :specials          => 3,
       :reviews           => 5,
-      :description       => { :p => 5, :c => lambda { |o, p| o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
+      :description       => { :p => 5, :c => lambda { |o, p| o && o.size < 100 ? 0 : p }}, # these are boolean-like, they either get the full score or 0
       :logo              => { :p => 5, :c => lambda { |o, p| o.nil?       ? 0 : p }},
       :tracked_number    => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
       :admin_fee         => { :p => 5, :c => lambda { |o, p| o.blank?     ? 0 : p }},
