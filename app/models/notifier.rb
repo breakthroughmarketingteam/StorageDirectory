@@ -14,17 +14,17 @@ class Notifier < ActionMailer::Base
   end
   
   def client_notification(client)
-    setup_email client.email, 'admin@usselfstoragelocator.com', 'Pending Verification'
+    setup_email client.email, 'diego@usselfstoragelocator.com', 'Pending Verification'
     @body[:client] = client
   end
   
   def client_activation(client)
-    setup_email client.email, 'admin@usselfstoragelocator.com', 'Activate Your Account'
+    setup_email client.email, 'diego@usselfstoragelocator.com', 'Activate Your Account'
     @body[:client] = client
   end
   
   def tenant_notification(user, rental)
-    setup_email user.email, 'admin@usselfstoragelocator.com', 'Your Self Storage Rental'
+    setup_email user.email, 'diego@usselfstoragelocator.com', 'Your Self Storage Rental'
     @body[:user] = user
     @body[:rental] = rental
   end
@@ -35,7 +35,7 @@ class Notifier < ActionMailer::Base
   end
   
   def new_contact_alert(comment, page)
-    setup_email 'admin@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', "New Message: #{comment.title}"
+    setup_email 'diego@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', "New Message: #{comment.title}"
     @body[:comment] = comment
   end
   
@@ -46,12 +46,12 @@ class Notifier < ActionMailer::Base
   end
   
   def new_client_alert(client)
-    setup_email 'customer_care@usselfstoragelocator.com', 'admin@usselfstoragelocator.com', 'New Client!'
+    setup_email 'customer_care@usselfstoragelocator.com', 'diego@usselfstoragelocator.com', 'New Client!'
     @body[:client] = client
   end
   
   def new_tenant_alert(tenant, rental)
-    setup_email 'customer_care@usselfstoragelocator.com', 'admin@usselfstoragelocator.com', 'New Tenant!'
+    setup_email 'customer_care@usselfstoragelocator.com', 'diego@usselfstoragelocator.com', 'New Tenant!'
     @body[:tenant] = tenant
     @body[:rental] = rental
   end
@@ -64,7 +64,7 @@ class Notifier < ActionMailer::Base
   end
   
   def password_reset_instructions(user)
-    setup_email user.email, 'admin@usselfstoragelocator.com', 'Password Reset Instructions'
+    setup_email user.email, 'diego@usselfstoragelocator.com', 'Password Reset Instructions'
     @body[:url] = edit_password_reset_url(user.perishable_token)
   end
   
