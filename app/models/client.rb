@@ -23,7 +23,7 @@ class Client < User
     super params[:client]
     
     unless params.blank? 
-      ma = self.build_mailing_address (params[:mailing_address] || {}).merge(:name => self.name, :company => self.company)
+      ma = self.build_mailing_address (params[:mailing_address].blank? || {}).merge(:name => self.name, :company => self.company)
       self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
     
       unless params[:listings].blank?
