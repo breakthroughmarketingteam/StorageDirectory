@@ -20,7 +20,7 @@ span.blue{color:#4c4bcc;}
 #head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip2.png) repeat-x bottom;}
 #head-ctr-in{height:275px;margin:0 auto;position:relative;text-align:left;width:980px;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;overflow:hidden;}
-#page-ctr-in{padding-bottom:30px;position:relative;top:-115px;z-index:10;}
+#page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
 #page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
