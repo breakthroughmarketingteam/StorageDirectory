@@ -21,6 +21,9 @@ class Block < ActiveRecord::Base
   
   access_shared_methods
   
+  @@searchables    = %w(title description)
+  cattr_accessor :searchables
+  
   # Class Methods
   def self.all_for_index_view
     all :select => 'title, description, id'

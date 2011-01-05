@@ -1,13 +1,15 @@
 class Comment < ActiveRecord::Base
-
+  
   belongs_to :commentable, :polymorphic => true
   
   # NOTE: install the acts_as_votable plugin if you want user to vote on the quality of comments.
   #acts_as_voteable
   
   belongs_to :user
-  
   access_shared_methods
+  
+  @@searchables    = %w(title email comment)
+  cattr_accessor :searchables
   
   # Helper class method to lookup all comments assigned to all commentable types for a given user.
   def self.find_comments_by_user(user)

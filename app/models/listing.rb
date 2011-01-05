@@ -27,7 +27,7 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
-  has_many :searches # user searches are associated to listings to gather search behavior data
+  #has_many :searches # user searches are associated to listings to gather search behavior data
   
   # OpentTech ISSN data
   has_one  :facility_info, :dependent => :destroy
@@ -60,7 +60,8 @@ class Listing < ActiveRecord::Base
   @@drive_up_types = ['drive up', 'outside']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
-  cattr_accessor :top_types, :comparables
+  @@searchables    = %w(title address city state zip)
+  cattr_accessor :top_types, :comparables, :searchables
   
   #
   # Search methods

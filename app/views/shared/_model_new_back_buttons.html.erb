@@ -1,5 +1,5 @@
 <% if is_admin? && not_on_home_page %>
-<div class="left">
+<div class="left right_space">
 	<div class="buttons grey_buttons">
 		<% case action_name when 'index', 'show', 'update', 'create' %>
 			<%= link_to model_crud_title('new', controller_name), new_model_path(controller_name, :user_id => params[:user_id]) %>

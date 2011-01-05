@@ -156,7 +156,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :facility_features
   map.resources :password_resets, :only => [:new, :create, :edit, :update]
   map.resources :us_cities
-  map.resources :searches
+  map.resources :searches, :collection => { :models => :get }
   map.resources :ad_partners
   map.resources :predefined_sizes
   map.resources :email_blasts, :member => { :blast => :get }
