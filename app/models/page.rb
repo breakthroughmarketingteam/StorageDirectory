@@ -14,7 +14,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :title
   
   acts_as_commentable
-  acts_as_taggable_on :categories
+  acts_as_taggable_on :categories, :keywords
   access_shared_methods
   sitemap :change_frequency => :monthly, :priority => 0.7, :order => 'updated_at DESC'
   

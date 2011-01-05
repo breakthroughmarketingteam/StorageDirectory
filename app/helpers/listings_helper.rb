@@ -143,7 +143,7 @@ module ListingsHelper
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"
       
       link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap' do |name|
-        "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>"
+        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).titleize}</span></div>"
       end
     end
   end
@@ -293,7 +293,7 @@ module ListingsHelper
   
   def claim_listing_link(listing)
     if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Claim and verify ownership', "/add-your-facility?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", :title => 'Claim this listing if you are the verifiable owner/manager.'
+      link_to 'Claim and verify ownership', "/self-storage-advertising?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", :title => 'Claim this listing if you are the verifiable owner/manager.'
     end
   end
   

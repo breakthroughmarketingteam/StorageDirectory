@@ -26,8 +26,8 @@ span.blue{color:#4c4bcc;}
 #page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
 #page-ctr-wrap{background:url(/images/ui/storagelocator/) no-repeat center;}
 
-.storage_info #page-cnt, .add_your_facility #page-cnt{}
-.add_your_facility #bluebar{}
+.storage_info #page-cnt, .self_storage_advertising #page-cnt{}
+.self_storage_advertising #bluebar{}
 #page-cnt-top-bg{/*background:url(/images/ui/storagelocator/world-shadow.png) no-repeat top left;background-position:42px 0px;*/text-align:left;/*float:left;*/width:975px;}
 #page-cnt-in{margin:12px 5px;}
 #type-two-cnt-in{margin:2px 0px;}
@@ -121,7 +121,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content,#clients_controller.new_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
-#clients_controller.add_your_facility #content{top:0;}
+#clients_controller.self_storage_advertising #content{top:0;}
 #pages_controller.storage_tips #content{top:-5px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
 #listings_controller.locator_action #content,#listings_controller.home_action #content{left:3px;top:0;padding-left:10px;width:760px;}
@@ -458,10 +458,10 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:0;}
 #add-fac-txt h4{font-size:14px;}
 #add-fac-form-extra{position:relative;}
-.add_your_facility #type-one-r-col ul.tabular{border:none;margin-left:15px;margin-top:-39px;}
-.add_your_facility #type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/add-tabs-bg-inactive.png) no-repeat;display:block;float:left;height:39px;margin-right:2px;position:relative;text-align:center;width:136px;}
-.add_your_facility #type-one-r-col ul.tabular li a{background:none repeat scroll 0 0 transparent;color:#4c4bcc;padding:13px 20px;}
-.add_your_facility #type-one-r-col ul.tabular li.active a{background:url(/images/ui/storagelocator/add-tabs-bg-active.png) no-repeat scroll 0 0 transparent;color:#fff;height:23px;margin:5px;padding-top:8px;position:relative;text-shadow:1px 1px 0 #666;}
+.self_storage_advertising #type-one-r-col ul.tabular{border:none;margin-left:15px;margin-top:-39px;}
+.self_storage_advertising #type-one-r-col ul.tabular li{background:url(/images/ui/storagelocator/add-tabs-bg-inactive.png) no-repeat;display:block;float:left;height:39px;margin-right:2px;position:relative;text-align:center;width:136px;}
+.self_storage_advertising #type-one-r-col ul.tabular li a{background:none repeat scroll 0 0 transparent;color:#4c4bcc;padding:13px 20px;}
+.self_storage_advertising #type-one-r-col ul.tabular li.active a{background:url(/images/ui/storagelocator/add-tabs-bg-active.png) no-repeat scroll 0 0 transparent;color:#fff;height:23px;margin:5px;padding-top:8px;position:relative;text-shadow:1px 1px 0 #666;}
 
 #type-one-r-col ul.tabular{border-bottom:5px solid #ccc;height:39px;}
 #type-one-r-col ul.tabular li{display:block;float:left;margin-right:5px;position:relative;text-align:center;}
@@ -1577,7 +1577,7 @@ ul.desclist li p{}
 #price-block{float:left;margin-top:27px;width:326px;}
 #price-block h4{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:82px;line-height:28px;margin:10px 0 15px 10px;padding:11px 0 0 6px;text-align:center;width:322px;}
 #price-block p{color:#000;font-size:15px;margin:0;margin:0 0 0 32px;text-align:center;}
-#price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;}
+#price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
 #price-block span{color:#4C4BCC;}
 
 #new_client_message{margin:0 auto;width:950px;}
@@ -1902,7 +1902,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #tab2 #tax input#listing_tax_rate{text-align:right;width:15px;}
 #sl-edit-tabs #flogo{width:100%;}
 #sl-edit-tabs #flogo .dlogo_wrap{-moz-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;display:block;font-size:100%;height:137px;position:relative;text-align:center;text-decoration:none;vertical-align:middle;width:182px;}
-#sl-edit-tabs #flogo .dlogo_wrap span{color:#fff;display:block;position:absolute;text-align:center;text-shadow:1px 1px 1px #333;top:20px;width:100%;z-index:2;}
+#sl-edit-tabs #flogo .dlogo_wrap span{color:#fff;font-size:16px;display:block;position:absolute;text-align:center;text-shadow:1px 1px 1px #333;top:20px;width:100%;z-index:2;}
+#sl-edit-tabs #flogo .dlogo_wrap img{width:100%;}
 #sl-edit-tabs textarea{color:#333333;font:12px "Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;line-height:1.3;margin-bottom:10px;padding:5px;width:100%;}
 #sl-edit-tabs #descript p{margin-bottom:20px;}
 #sl-edit-tabs #hours{padding-bottom:15px;width:100%;}
@@ -2013,8 +2014,8 @@ p.breadcrumb a{color:#fff;}
 
 #fac-features #feats{background: url(/images/ui/storagelocator/usssl-imac.png) no-repeat right;margin: 0 20px 0 40px;}
 #top_fac_page #fac-features h3#heading{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:url(/images/ui/storagelocator/blue-bg2.png) repeat-x;color:#fff;font-size:24px;font-weight:normal;height:37px;padding-top:8px;text-align:center;text-shadow:1px 1px 0 #333;}
-.add_your_facility #hr-divider{background:url(/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:40px 0 20px;width:712px;}
-.add_your_facility #hr-divider{display:inline-block;}
+.self_storage_advertising #hr-divider{background:url(/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:40px 0 20px;width:712px;}
+.self_storage_advertising #hr-divider{display:inline-block;}
 
 #modeL_search{margin:2px 0 0 0;}
 #modeL_search .required{width:185px;}
