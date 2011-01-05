@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110103192351) do
+ActiveRecord::Schema.define(:version => 20110105193856) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -544,6 +544,7 @@ ActiveRecord::Schema.define(:version => 20110103192351) do
     t.integer  "position",         :default => 0
     t.boolean  "process_erb"
     t.boolean  "use_placeholders"
+    t.text     "meta_desc"
   end
 
   add_index "pages", ["id", "title", "parent_id", "show_in_nav"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"

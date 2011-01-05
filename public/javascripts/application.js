@@ -1475,7 +1475,7 @@ $(document).ready(function() {
 	
 }); // END document ready
 
-// NEW CLIENT Workflow (sign up through the add-your-facility page)
+// NEW CLIENT Workflow (sign up through the self-storage-advertising page)
 var workflow_settings = {
 	title		 : 'Add Your Facility',
 	nav_id : 'workflow_nav',

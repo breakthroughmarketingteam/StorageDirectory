@@ -7,16 +7,16 @@
 		</div>
 	</div>
   
-  <div class="uncollapse stack">
-  	<div class="check_box_wrap left right_space">
-  		<%= f.check_box :show_in_nav %>
-  		<%= f.label :show_in_nav, nil, :class => 'small_label' %>
-  	</div>
+  	<div class="uncollapse stack">
+  		<div class="check_box_wrap left right_space">
+	  		<%= f.check_box :show_in_nav %>
+	  		<%= f.label :show_in_nav, nil, :class => 'small_label' %>
+	  	</div>
 	
-  	<div class="check_box_wrap left">
-  		<%= f.check_box :show_title %>
-  		<%= f.label :show_title, 'Show Title', :class => 'small_label' %>
-  	</div>
+	  	<div class="check_box_wrap left">
+	  		<%= f.check_box :show_title %>
+	  		<%= f.label :show_title, 'Show Title', :class => 'small_label' %>
+	  	</div>
 	</div>
 	
 	<div class="stack">
@@ -30,6 +30,20 @@
 		<%= f.label :content, nil, :class => 'block_label' %>
 		<div class="shadow_wrap">
 			<%= f.text_area :content, :class => 'wysiwyg' %>
+		</div>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :meta_desc, 'Meta Description', :class => 'block_label' %>
+		<div class="shadow_wrap">
+			<%= f.text_area :meta_desc, :class => 'small_textarea' %>
+		</div>
+	</div>
+	
+	<div class="stack">
+		<%= f.label :keyword_list, 'Meta Keywords' %>
+		<div class="shadow_wrap">
+			<%= f.text_area :keyword_list, :class => 'small_textarea' %>
 		</div>
 	</div>
 

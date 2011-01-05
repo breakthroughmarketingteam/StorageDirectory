@@ -3,8 +3,12 @@ module ApplicationHelper
   
   @@meta_tag_keys = '(keywords)|(description)|(google-site-verification)'
   def site_meta_tags
-    ApplicationController.app_config.map do |name, content|
-      "\n<meta name='#{name.to_s}' content=\"#{content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
+    if @page && (!@page.meta_desc.blank? || !@page.keywords.empty?)
+      "\n<meta name='keywords' content=\"#{h @page.keyword_list}\" />\n<meta name='description' content=\"#{h @page.meta_desc}\" />"
+    else
+      ApplicationController.app_config.map do |name, content|
+        "\n<meta name='#{name.to_s}' content=\"#{content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
+      end
     end
   end
   
