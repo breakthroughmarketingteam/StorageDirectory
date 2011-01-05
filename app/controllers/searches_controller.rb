@@ -9,7 +9,7 @@ class SearchesController < ApplicationController
   end
   
   def show
-    
+    render :layout => false if request.xhr?
   end
   
   # search any model which responds to :searchables

@@ -65,36 +65,6 @@ $(function(){
 		return false;
 	});
 	
-	$.setup_autocomplete = function(els, context) {
-		if (typeof els == 'undefined') var $autocompleters = $('.autocomplete');
-		else if (els && typeof(context) == 'undefined') var $autocompleters = $(els);
-		else var $autocompleters = $(els, context);
-		
-		var $autcompleted = {};
-		
-		if ($autocompleters.length > 0) {
-			$autocompleters.each(function(){
-				var $this   = $(this), rel = $this.attr('rel'),
-					info	= rel.split('|')[0],
-					minLen	= rel.split('|')[1],
-					model   = info.split('_')[0],
-					method  = info.split('_')[1];
-
-				if (!$autcompleted[rel]) {
-					$.getJSON('/ajax/get_autocomplete', { 'model': model, 'method': method }, function(response){
-						if (response.success && response.data.length > 0) { 
-							$autcompleted[rel] = response.data;
-							$this.autocomplete({
-								source: response.data,
-								minLength: minLen
-							});
-						} else $.ajax_error(response);
-					});
-				}
-			});
-		}
-	}
-	
 	$('a', '#admin-box').click(function(){
 		var $this = $(this),
 			other_links = $('a:not(this)', '#admin-box').removeClass('active');
@@ -140,7 +110,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action):not(.toggle_action):not(.partial_addable .add_link):not(.click_thru)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action):not(.toggle_action):not(.partial_addable .add_link .cancel_link):not(.click_thru)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {
@@ -761,6 +731,36 @@ $.setInterval = function(callback, interval) {
 		callback.call(this);
 		setTimeout(arguments.callee, interval);
 	}, interval)
+}
+
+$.setup_autocomplete = function(els, context) {
+	if (typeof els == 'undefined') var $autocompleters = $('.autocomplete');
+	else if (els && typeof(context) == 'undefined') var $autocompleters = $(els);
+	else var $autocompleters = $(els, context);
+	
+	var $autcompleted = {};
+	
+	if ($autocompleters.length > 0) {
+		$autocompleters.each(function(){
+			var $this   = $(this), rel = $this.attr('rel'),
+				info	= rel.split('|')[0],
+				minLen	= rel.split('|')[1],
+				model   = info.split('_')[0],
+				method  = info.split('_')[1];
+
+			if (!$autcompleted[rel]) {
+				$.getJSON('/ajax/get_autocomplete', { 'model': model, 'method': method }, function(response){
+					if (response.success && response.data.length > 0) { 
+						$autcompleted[rel] = response.data;
+						$this.autocomplete({
+							source: response.data,
+							minLength: minLen
+						});
+					} else $.ajax_error(response);
+				});
+			}
+		});
+	}
 }
 
 /******************************************* JQUERY PLUGINS *******************************************/

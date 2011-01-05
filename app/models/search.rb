@@ -147,7 +147,7 @@ class Search < ActiveRecord::Base
   end
   
   def title
-    self.attributes.to_query
+    self.storage_type + ' in '+ (self.query.blank? ? self.city_and_state : self.query)
   end
   
   def lat_lng
