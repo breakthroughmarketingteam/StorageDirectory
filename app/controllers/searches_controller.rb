@@ -23,10 +23,10 @@ class SearchesController < ApplicationController
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "LOWER(#{@model_class.table_name}.#{field}) LIKE '%#{query}%'"
+          "#{RAILS_ENV == 'development' ? 'LOWER(' : ''}#{@model_class.table_name}.#{field}#{RAILS_ENV == 'development' ? ') LIKE' : 'ILIKE'} '%#{query}%'"
         else
           assoc = @model_class.column_names.include?(field) ? '' : @model_class.get_assoc_prefix_for(field)
-          "LOWER(#{assoc[:prefix]}.#{field}) LIKE '%#{query}%'"
+          "#{assoc[:prefix]}.#{field} #{RAILS_ENV == 'development' ? 'LIKE' : 'ILIKE'} '%#{query}%'"
         end
       end.join(' OR ') if @model_class.respond_to? :searchables
     
@@ -34,7 +34,7 @@ class SearchesController < ApplicationController
       options.store :include, assoc[:join] if assoc
       @results = @model_class.all options
     else
-      flash[:error] = "Type something in to search for, DUH"
+      flash[:error] = 'Type something in to search for, DUH'
     end
     
     render :layout => false if request.xhr?

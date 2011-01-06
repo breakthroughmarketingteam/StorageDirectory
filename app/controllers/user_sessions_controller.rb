@@ -23,7 +23,7 @@ class UserSessionsController < ApplicationController
           case current_user.role.title.downcase when 'admin'
             redirect_back_or_default admin_index_path
           when 'advertiser'
-            redirect_to client_account_url :protocol => 'https'
+            redirect_to client_account_url(:protocol => 'https')
           else
             redirect_back_or_default root_path
           end

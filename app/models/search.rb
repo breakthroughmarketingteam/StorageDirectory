@@ -76,7 +76,7 @@ class Search < ActiveRecord::Base
       self.set_location! Geokit::Geocoders::MultiGeocoder.geocode(self.query)
       
     elsif self.query && (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
-      self.set_location! GeoKit::GeoLoc.new named_listing
+      self.set_location! GeoKit::GeoLoc.new(named_listing)
       
     else # test ip, we should only be getting here when session[:geo_location] is nil, this happens in localhost
       self.set_location! Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
