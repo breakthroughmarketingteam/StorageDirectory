@@ -23,7 +23,7 @@
 			  	<ul id="member_attributes">
 					<% @client.attributes.each do |key, val| %>
 						<li>
-							<span class="block left w100">:<%= key.titleize %></span>
+							<span class="block left w100">:<%= key.to_s.titleize %></span>
 							<span><%= val %></span>
 						</li>
 					<% end %>
