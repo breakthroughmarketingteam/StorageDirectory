@@ -23,7 +23,7 @@ class SearchesController < ApplicationController
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "#{RAILS_ENV == 'development' ? 'LOWER(' : ''}#{@model_class.table_name}.#{field}#{RAILS_ENV == 'development' ? ') LIKE' : 'ILIKE'} '%#{query}%'"
+          "#{RAILS_ENV == 'development' ? 'LOWER(' : ''}#{@model_class.table_name}.#{field} #{RAILS_ENV == 'development' ? ') LIKE' : 'ILIKE'} '%#{query}%'"
         else
           assoc = @model_class.column_names.include?(field) ? '' : @model_class.get_assoc_prefix_for(field)
           "#{assoc[:prefix]}.#{field} #{RAILS_ENV == 'development' ? 'LIKE' : 'ILIKE'} '%#{query}%'"
