@@ -142,8 +142,8 @@ class Listing < ActiveRecord::Base
   
   # Instance Methods
   
-  def web_special
-    self.web_specials.last
+  def verified?
+    self.status == 'verified'
   end
   
   def specials

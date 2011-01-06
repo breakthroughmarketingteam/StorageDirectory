@@ -1,6 +1,7 @@
 class EmailBlastsController < ApplicationController
   
-  ssl_required :index, :new, :create, :edit, :update, :destroy
+  ssl_required :index, :new, :create, :edit, :update, :destroy, :blast
+  ssl_allowed :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
   
@@ -96,16 +97,16 @@ class EmailBlastsController < ApplicationController
         Blaster.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
       end
       
-      @email_blast.udpate_attribute :blast_date, Time.now
+      @email_blast.update_attribute :blast_date, Time.now
       
-      render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
+      render :json => { :success => true, :data => "Sent to #{ListingContact.not_unsub.count} clients." }
     when 'blast'
        Client.opted_in.each do |client|
           @token = client.perishable_token
           Blaster.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => 'email_template')
         end
         
-        @email_blast.udpate_attribute :blast_date, Time.now
+        @email_blast.update_attribute :blast_date, Time.now
         
         render :json => { :success => true, :data => "Sent to #{Client.opted_in.count} clients." }
         
@@ -128,8 +129,12 @@ class EmailBlastsController < ApplicationController
   def unsub
     unless params[:token] =~ /(test)/
       @model = Client.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
-      @model.update_attribute :wants_newsletter, false if @model.is_a? Client
-      @model.update_attribute :unsub, true if @model.is_a? ListingContact
+      
+      case @model.class when Client
+        @model.update_attribute :wants_newsletter, false
+      when ListingContact
+        @model.update_attribute :unsub, true if @model.is_a? ListingContact
+      end
     end
     
     render :layout => 'email_template'

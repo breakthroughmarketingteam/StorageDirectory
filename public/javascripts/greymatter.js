@@ -110,7 +110,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action):not(.toggle_action):not(.partial_addable .add_link .cancel_link):not(.click_thru)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action, .toggle_action, .partial_addable, .add_link, .cancel_link, .click_thru)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {
@@ -150,6 +150,29 @@ $(function(){
 					ajax_wrap.removeClass('loading').children().hide().fadeIn('fast');
 				}
 			});
+			
+			return false;
+		});
+		
+		// Clients#show: quick verify listings
+		$('#client_verify', '#ov-member').live('click', function() {
+			var $this = $(this),
+				ajax_loader = $.new_ajax_loader('after', this);
+			
+			if (!$this.data('sending')) {
+				ajax_loader.show();
+				$this.data('sending', true);
+				
+				$.post(this.href, { authenticity_token: $.get_auth_token() }, function(response) {
+					$.with_json(response, function(data) {
+						$this.fadeOutRemove('fast');
+					}, function() {
+						$this.data('sending', false);
+					});
+					
+					ajax_loader.fadeOutRemove('fast');
+				}, 'json');
+			}
 			
 			return false;
 		});

@@ -205,6 +205,19 @@ module SharedModelMethods #:nodoc:
       (zip.to_s.size < 5 ? "0#{zip}" : zip) if self.respond_to? :zip
     end
     
+    def ordered_attributes
+      if self.class.respond_to? :attribute_order
+        ordered = []
+        
+        self.class.attribute_order.each do |key|
+            ordered << [key, self.send(key)]
+        end
+        ordered
+      else
+        self.attributes.sort
+      end
+    end
+    
     private
     
     def _should_be_selected?(object, attribute, option, selected) 
