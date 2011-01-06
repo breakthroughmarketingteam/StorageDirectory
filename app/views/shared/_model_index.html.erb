@@ -3,7 +3,7 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 	
-	<h2><%= contextual_index_view_title((local_assigns.has_key?(:title) ? title : nil)) %></h2>
+	<h2 class="stack"><%= contextual_index_view_title((local_assigns.has_key?(:title) ? title : nil)) %></h2>
 	<%= render_model_helptext(controller_name) %>
 	
 	<%= render :partial => 'shared/base_model_index', :locals => { :data => data } %>

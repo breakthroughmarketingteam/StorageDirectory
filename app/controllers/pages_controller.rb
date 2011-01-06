@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   before_filter :get_or_create_search, :only => :show
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
+  before_filter :catch_nil_page, :only => :show
   geocode_ip_address :only => :show
   
   def index
@@ -89,4 +90,12 @@ class PagesController < ApplicationController
     end
   end
 
+  private
+  
+  def catch_nil_page
+    if @page.nil?
+      flash[:warning] = "Page not found"
+      redirect_to '/' and return
+    end
+  end
 end

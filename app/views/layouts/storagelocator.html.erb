@@ -130,6 +130,14 @@
 				var httpReferer = escape(document.referrer);
 			</script>
 			<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
+			<!-- KISSinsights for usselfstoragelocator.com -->
+			<script type="text/javascript">var _kiq = _kiq || [];</script>
+			<script type="text/javascript" src="//s3.amazonaws.com/ki.js/12495/2ec.js" async="true"></script>
+			<% if current_user %>
+			<script type="text/javascript" charset="utf-8">
+				_kiq.push(['identify', <%= current_user.id %>]);
+			</script>
+			<% end %>
 		<% end %>
     </body>
 </html>

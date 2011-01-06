@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   acts_as_tagger
   access_shared_methods
   
-  @@searchables    = %w(first_name last_name email)
+  @@searchables = %w(first_name last_name email)
   cattr_accessor :searchables
   
   # Class Methods
