@@ -37,6 +37,17 @@
 					</div>
 				</div>
 			<% end %>
+			
+			<div class="stack uncollapse">
+				<div class="left right_space">
+					<%= display_logo @listing %>
+				</div>
+				
+				<div class="left">
+					<%= f.label :logo, nil, :class => 'block left right_space' %>
+					<%= f.file_field :logo %>
+				</div>
+			</div>
 		</div>
 	</fieldset>	
 

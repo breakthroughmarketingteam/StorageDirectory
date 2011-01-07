@@ -15,6 +15,20 @@ $(function(){
 		});
 	}
 	
+	$('a', '#address_sort').live('click', function() {
+		var $this = $(this),
+			listings = $('.listing', '#client_listing_box');
+			
+		$.sort_stuff($this, listings, '.inner', function(a, b) {
+			var a1 = parseInt($('.rslt-contact p', a).text()),
+				b1 = parseInt($('.rslt-contact p', b).text());
+
+			return a1 > b1 ? (stuff_sort_inverse ? 1 : -1) : (stuff_sort_inverse ? -1 : 1);
+		});
+		
+		return false;
+	});
+	
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
 		var form = $(this).runValidation(),

@@ -786,6 +786,22 @@ $.setup_autocomplete = function(els, context) {
 	}
 }
 
+// uses the jquery plugin sortElement
+var stuff_sort_inverse = false;
+$.sort_stuff = function(sort_link, elements, selector, sortFunc) {
+	sort_link.addClass(stuff_sort_inverse ? 'down' : 'up');
+	sort_link.removeClass(stuff_sort_inverse ? 'up' : 'down');
+	
+	elements.sortElements(function(a, b) {
+		return sortFunc(a, b);
+
+	}, function() {
+		return $(this).children(selector)[0];
+	});
+	
+	stuff_sort_inverse = !stuff_sort_inverse;
+}
+
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
 	var disablees = d || 'input, textarea, select, checkbox, radio';

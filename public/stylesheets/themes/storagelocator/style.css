@@ -1099,6 +1099,8 @@ sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #sl-fac-detail-in-edit input.tag_list{margin-bottom:0;}
 #sl-fac-detail-in-edit .tags{line-height:1.5;}
 #ov-units-head #address_sort{float:left;}
+#address_sort a{padding-right:16px;background:url(/images/ui/storagelocator/wht-arrow-dwn.png) no-repeat right;}
+#address_sort .up{background:url(/images/ui/storagelocator/wht-arrow-up.png) no-repeat right;}
 /*#ov-units-head #add_fac{float:right;height:24px;margin:8px 19px 0 0;padding:1px;width:79px;}*/
 .btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:2.1;text-align:center;background:url(/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 .my_account .flash{width:96%;}

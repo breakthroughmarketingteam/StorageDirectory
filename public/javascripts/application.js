@@ -382,31 +382,30 @@ $(document).ready(function() {
 			tips = $('.blog-lock', '#tips-wrap');
 		
 		switch (sort_what) {
-			case 'Newest' : $.sort_tips($this, tips, function(a, b) {
+			case 'Newest' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = parseInt($('.updated_at', a).text()),
 						b1 = parseInt($('.updated_at', b).text());
 					
-					return a1 > b1 ? (tip_sort_inverse ? 1 : -1) : (tip_sort_inverse ? -1 : 1);
+					return a1 > b1 ? (stuff_sort_inverse ? 1 : -1) : (stuff_sort_inverse ? -1 : 1);
 				});
 			break;
-			case 'Rating' : $.sort_tips($this, tips, function(a, b) {
+			case 'Rating' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = $('.show-value', a).width(),
 						b1 = $('.show-value', b).width();
 					
 					// this one should sort down when the values are equal since most of the ratings are the same number
-					return a1 == b1 ? -1 : a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+					return a1 == b1 ? -1 : a1 > b1 ? (stuff_sort_inverse ? -1 : 1) : (stuff_sort_inverse ? 1 : -1);
 				});
 			break;
-			case 'Title' : $.sort_tips($this, tips, function(a, b) {
+			case 'Title' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = $('h3 a', a).text(),
 						b1 = $('h3 a', b).text();
 						
-					return a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+					return a1 > b1 ? (stuff_sort_inverse ? -1 : 1) : (stuff_sort_inverse ? 1 : -1);
 				});
 			break;
 		}
 		
-		tip_sort_inverse = !tip_sort_inverse;
 		return false;
 		
 		/* TODO: do serverside sorting when we have more tips
@@ -1699,19 +1698,6 @@ $.preload_us_map_imgs = function() {
 	$.each(states, function(){
 		var img = new Image();
 		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
-	});
-}
-
-// uses the jquery plugin sortElement
-var tip_sort_inverse = false;
-$.sort_tips = function(sort_link, tips, sortFunc) {
-	sort_link.addClass(tip_sort_inverse ? 'down' : 'up');
-	
-	tips.sortElements(function(a, b) {
-		return sortFunc(a, b);
-
-	}, function() {
-		return $(this).children('.tip_in')[0];
 	});
 }
 
