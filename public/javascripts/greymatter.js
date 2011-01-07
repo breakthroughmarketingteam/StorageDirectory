@@ -110,7 +110,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action, .toggle_action, .partial_addable, .add_link, .cancel_link, .click_thru)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action, .toggle_action, .partial_addable, .add_link, .cancel_link, .click_thru, .ps)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {

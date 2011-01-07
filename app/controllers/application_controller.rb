@@ -170,6 +170,8 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'list'
     elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)|(ad_partners)/
       session[:view_type] = 'gallery'
+    elsif controller_name =~ /(users)$|(clients)|(tenants)/
+      session[:view_type] = 'users'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('image_file_name')
@@ -226,7 +228,7 @@ class ApplicationController < ActionController::Base
   # TODO move this to a config file or something
   def view_types_dir() 'views/partials/' end
   def get_view_types
-    get_list_of_file_names("/app/views/#{view_types_dir}", '.html.erb').map { |v| v.sub(/^_/, '').to_sym }.select { |f| f.to_s =~ /(blog_roll)|(box)|(gallery)|^(list)|(table)/i }
+    get_list_of_file_names("/app/views/#{view_types_dir}", '.html.erb').map { |v| v.sub(/^_/, '').to_sym }.select { |f| f.to_s !~ /(grey)|(signup)|(tips)/i }
   end
   
   def _controllers(for_select = true)
