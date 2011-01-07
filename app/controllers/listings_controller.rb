@@ -143,6 +143,14 @@ class ListingsController < ApplicationController
       
       render :text => render_to_string(:partial => 'logo_form')
       
+    when 'admin'
+      if @listing.update_attributes params[:listing]
+        get_models_paginated
+        render :action => 'index', :layout => false
+      else
+        render :action => 'edit', :layout => false
+      end
+      
     else # regular update
       _scrub_params
       

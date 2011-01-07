@@ -1,9 +1,9 @@
 class ClientsController < ApplicationController
   
   before_filter :ensure_secure_subdomain, :only => [:edit, :edit_info, :update, :toggle_specials]
-  ssl_required :index, :show, :edit, :edit_info, :update, :toggle_specials
+  ssl_required :index, :show, :edit, :edit_info, :update, :toggle_specials, :verify
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
+  before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials, :verify]
   before_filter :get_client, :only => [:edit, :edit_info]
   
   def index
@@ -89,7 +89,7 @@ class ClientsController < ApplicationController
     
     case @client.status when 'unverified'
       @client.update_attribute :status, 'active'
-      flash[:notice] = 'Congratulations! Your account is now active. Go ahead and log in.'
+      flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
       redirect_to login_path
       
     when 'active'
@@ -119,6 +119,17 @@ class ClientsController < ApplicationController
     end
     
     render :json => { :success => true }
+  end
+  
+  def verify
+    @client.enable_listings!
+    @partial = 'activation_email'
+    Blaster.deliver_html_email @client.email, "Your account is ready at USSelfStorageLocator.com", render_to_string(:layout => 'email_template')
+    
+    respond_to do |format|
+      format.html { redirect_back_or_default '/admin' }
+      format.js { render :json => { :success => true } }
+    end
   end
   
   def test_issn

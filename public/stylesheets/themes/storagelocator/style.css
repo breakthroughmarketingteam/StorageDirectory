@@ -788,6 +788,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc -moz-use-text-color -moz-use-text-color;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
+#ov-units .listing.unverified{background:#ebebeb;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .profile_completion{height:86px;padding:20px 0 0 15px;position:relative;width:200px;}
 #client_listing_box .profile_completion .progress{height:30px;border:1px solid #ccc;}
@@ -2019,5 +2020,7 @@ p.breadcrumb a{color:#fff;}
 
 #modeL_search{margin:2px 0 0 0;}
 #modeL_search .required{width:185px;}
-#member_attributes{overflow:hidden;}
-#member_attributes li{float:left;width:49%;font-size:80%;}
+.member_attributes{overflow:hidden;width:50%;float:left;}
+.member_attributes li{font-size:80%;margin:0 0 5px 0;}
+.member_attributes .label{display:block;float:left;width:31%;font-weight:bold;text-align:right;margin-right:5px;}
+.member_attributes input{background:#EBEBEB;border:0 none;padding:0 2px;width:65%;}

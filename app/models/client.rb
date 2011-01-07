@@ -58,6 +58,10 @@ class Client < User
   def has_special?(special)
     self.predefined_specials.include? special
   end
+  
+  def listings_verified?
+    self.listings.all? &:verified?
+  end
 
   def update_info(info)
     if info[:settings_attributes]

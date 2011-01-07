@@ -4,6 +4,7 @@
 	<div class="stack">
 		<%= f.label :title, nil, :class => 'block left w100' %>
 		<%= f.text_field :title, :class => 'required' %>
+		<%= hidden_field_tag 'from', 'admin' %>
 	</div>
 	
 	<div class="stack">

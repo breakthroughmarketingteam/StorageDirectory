@@ -1,3 +1,5 @@
-<% content_for :web_link, "/look/#{@email_blast.title.parameterize}" %>
-<% content_for :unsub, unsub_from_email_blast_path(@token) %>
-<%= render_model_content @email_blast %>
+<div id="ajax_wrap_inner" class="framed">
+	<% content_for :web_link, "/look/#{@email_blast.title.parameterize}" %>
+	<% content_for :unsub, unsub_from_email_blast_path(@token) %>
+	<%= render_model_content @email_blast %>
+</div>

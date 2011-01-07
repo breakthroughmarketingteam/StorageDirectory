@@ -1,0 +1,18 @@
+<p>
+	Thank you for signing up with USSelfStorageLocator.com. We're really excited to see the fruits of our labor after 
+	all the research and development we've done to build the best Self Storage Promotion tool money can buy. So we'll hold you up
+	no more. Below is your login information, everything else will be self explanatory (we hope). Feel free to contact us by phone or email
+	if you have any questions.
+</p>
+
+<p>Click <a href="https://secure.usselfstoragelocator.com/clients/activate/<%= @client.activation_code %>">here to login</a> to your account, or copy the following link:
+http://usselfstoragelocator.com/clients/activate/<%= @client.activation_code %></p>
+
+<p>Your account information:</p>
+<ul>
+	<li>User Name:  <%= @client.email %></li>
+ 	<li>Password: <%= @client.temp_password %> </li>
+ 	<li>We recommend you change your temporary password soon after you log on. </li>
+</ul>
+
+<p>Have a great day!</p>
