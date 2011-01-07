@@ -27,7 +27,8 @@ class User < ActiveRecord::Base
   
   @@searchables = %w(first_name last_name email)
   @@attribute_order = %w(first_name last_name email company status report_recipients wants_newsletter login_count failed_login_count temp_password activation_code role_title current_login_at current_login_ip last_login_at last_login_ip last_request_at created_at updated_at)
-  cattr_accessor :searchables, :attribute_order
+  @@basic_attributes = %w(name email company status wants_newsletter login_count last_login_at)
+  cattr_accessor :searchables, :attribute_order, :basic_attributes
   
   # Class Methods
   

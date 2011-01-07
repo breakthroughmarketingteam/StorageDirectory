@@ -246,6 +246,7 @@ input.tiny_text_field{width:30px;}
 .box_icon{background-image:url(/images/ui/box_icon.png);}
 .table_icon{background-image:url(/images/ui/table_icon.png);}
 .gallery_icon{background-image:url(/images/ui/gallery_icon.png);}
+.users_icon{background-image:url(/images/ui/users_icon.png);}
 a.loading{padding-left:26px !important;background:url(/images/ui/ajax-loader-facebook.gif) no-repeat 10% 54% !important;}
 a.toggle_right{padding-left:14px;background:url(/images/ui/toggle_icon-right.png) no-repeat left;}
 a.toggle_down{background-image:url(/images/ui/toggle_icon-down.png);}

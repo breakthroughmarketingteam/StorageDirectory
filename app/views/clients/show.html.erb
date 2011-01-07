@@ -21,17 +21,7 @@
 			</div>
 			
 			<div id="mem_info" class="framed uncollapse">
-				<% @client.ordered_attributes.in_groups_of(10, false).each do |group| %>
-					<ul class="member_attributes">
-						<% group.each do |key, val| %>
-							<li>
-								<span class="label"><%= key.to_s.titleize %>:</span>
-								<span><%= text_field_tag key, nice_output_by_type(val), :class => 'click_sel ps' %></span>
-								<span class="dp"><%= nice_output_by_type(val) %></span>
-							</li>
-						<% end %>
-					</ul>
-				<% end %>
+				<%= render :partial => 'users/user_info', :locals => { :user => @client } %>
 			</div>
 			<%= print_link '#mem_info', '#', :class => 'ps right right_space', :style => 'margin:-20px 17px 0 0' %>
 		</div>

@@ -1,0 +1,28 @@
+<ul class="users_view list_view plain">
+	<% data.each do |model| %>
+		<li id="<%= model_class_and_id(model) %>" class="medium_round <%= cycle('odd', 'even') %>">
+			<div class="buttons left_space right">
+				<div id="Mem_<%= model.id %>" class="hide">
+					<%= render :partial => 'users/user_info', :locals => { :user => model } %>
+				</div>
+				<%= print_link "#Mem_#{model.id}", '#', { :title => "Print this #{model.class.name.possessive} details" }, '' %>&nbsp;
+				<%= render :partial => 'shared/edit_delete_link', :locals => { :model => model } %>
+			</div>
+			
+			<div class="left_space right note">
+				<%= model.status %>
+			</div>
+			
+			<span class="title">
+				<span class="note">(<%= model.id %>)</span>
+				<%= link_to model_name_or_title(model), model_path(model) %>
+			</span>
+			<span class="email">
+				<%= mail_to model.email %>
+			</span>
+			
+		</li>
+	<% end %>
+</ul>
+
+<%= render :partial => 'views/paginate', :locals => { :data => data } %>
