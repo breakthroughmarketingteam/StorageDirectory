@@ -2,6 +2,7 @@ class AjaxController < ApplicationController
   
   skip_before_filter :init
   ssl_required :get_client_stats, :destroy
+  ssl_allowed :get_partial, :get_multipartial
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method]
