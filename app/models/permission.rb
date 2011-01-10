@@ -55,7 +55,7 @@ class Permission < ActiveRecord::Base
     single = model.class.name.underscore.singularize
     collection = single.pluralize
     
-    user.respond_to?(collection) ? user.send(collection).map.include?(model) : user.send(single) == model
+    user.respond_to?(collection) ? user.send(collection).map.include?(model) : user.send(single) == model rescue false
   end
   
 end

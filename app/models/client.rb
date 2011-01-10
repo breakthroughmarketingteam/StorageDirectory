@@ -5,6 +5,7 @@ class Client < User
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :specials, :through => :listings
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
+  has_many :pictures, :through => :listings
   has_many :predef_special_assigns, :dependent => :destroy
   has_many :predefined_specials, :through => :predef_special_assigns
   

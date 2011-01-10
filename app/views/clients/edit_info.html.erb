@@ -1,48 +1,48 @@
 <% form_for @client, :html => { :id => 'edit_info' } do |f| %>
-	<% f.fields_for :billing_info, @billing_info do |bf| %>
+	<!--<%# f.fields_for :billing_info, @billing_info do |bf| %>
 		<div class="ov-info-cnt right_space">
 			<ul>
 				<li>
-					<%= bf.label :name %>
-					<%= bf.text_field :name, :class => 'required' %>
+					<%#= bf.label :name %>
+					<%#= bf.text_field :name, :class => 'required' %>
 				</li>
 				<li>
-					<%= bf.label :phone %>
-					<%= bf.text_field :phone, :class => 'required numeric_phone auto_next', :maxlength => 12 %>
+					<%#= bf.label :phone %>
+					<%#= bf.text_field :phone, :class => 'required numeric_phone auto_next', :maxlength => 12 %>
 				</li>
 				<li>
-					<%= bf.label :address %>
-					<%= bf.text_field :address, :class => 'required' %>
+					<%#= bf.label :address %>
+					<%#= bf.text_field :address, :class => 'required' %>
 				</li>
 				<li>
-					<%= bf.label :city %>
-					<%= bf.text_field :city, :class => 'required' %>
+					<%#= bf.label :city %>
+					<%#= bf.text_field :city, :class => 'required' %>
 				</li>
 				<li class="state_zip">
-					<%= bf.label :state %>
-					<%= bf.select :state, States.names, :class => 'required' %>
-					<%= bf.text_field :zip, :class => 'required numeric hintable auto_next', :title => 'Zip', :maxlength => 5 %>
+					<%#= bf.label :state %>
+					<%#= bf.select :state, States.names, :class => 'required' %>
+					<%#= bf.text_field :zip, :class => 'required numeric hintable auto_next', :title => 'Zip', :maxlength => 5 %>
 				</li>
 				<li>
-					<%= bf.label :card_type %>
-					<%= bf.select :card_type, BillingInfo.credit_cards, { :selected => @billing_info.card_type }, :class => 'required' %>
+					<%#= bf.label :card_type %>
+					<%#= bf.select :card_type, BillingInfo.credit_cards, { :selected => @billing_info.card_type }, :class => 'required' %>
 				</li>
 				<li>
-					<%= bf.label :card_number %>
-					<%= bf.text_field :card_number, :value => @billing_info.card_number, :class => 'required numeric auto_next', :maxlength => 16 %>
+					<%#= bf.label :card_number %>
+					<%#= bf.text_field :card_number, :value => @billing_info.card_number, :class => 'required numeric auto_next', :maxlength => 16 %>
 				</li>
 				<li>
-					<%= bf.label :cvv, 'CVV' %>
-					<%= bf.text_field :cvv, :value => @billing_info.cvv, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
+					<%#= bf.label :cvv, 'CVV' %>
+					<%#= bf.text_field :cvv, :value => @billing_info.cvv, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
 				</li>
 				<li class="expiry">
-					<%= bf.label :expires %>
-					<%= bf.text_field :expires_month, :value => @billing_info.expires_month, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
-					<%= bf.text_field :expires_year, :value => @billing_info.expires_year, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'YY' %>
+					<%#= bf.label :expires %>
+					<%#= bf.text_field :expires_month, :value => @billing_info.expires_month, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
+					<%#= bf.text_field :expires_year, :value => @billing_info.expires_year, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'YY' %>
 				</li>
 			</ul>
 		</div>
-	<% end %>
+	<%# end %>-->
 	
 	<% f.fields_for :mailing_address, @mailing_address do |mf| %>
 		<div class="ov-info-cnt left_space">
