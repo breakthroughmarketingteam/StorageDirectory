@@ -18,7 +18,7 @@
 				<%= link_to model_name_or_title(model), model_path(model) %>
 			</span>
 			<span class="email">
-				<%= mail_to model.email %>
+				<%= mail_to model.email, nil, :class => 'click_thru' %>
 			</span>
 			
 		</li>
