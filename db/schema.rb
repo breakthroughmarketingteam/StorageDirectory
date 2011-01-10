@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110105193856) do
+ActiveRecord::Schema.define(:version => 20110110225557) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -147,6 +147,19 @@ ActiveRecord::Schema.define(:version => 20110105193856) do
 
   add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.text     "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "email_blasts", :force => true do |t|
     t.string   "title"

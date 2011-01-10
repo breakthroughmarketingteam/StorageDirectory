@@ -15,4 +15,8 @@ class PredefinedSpecial < ActiveRecord::Base
     PredefSpecialAssign.name
   end
   
+  def overall_value
+    value * month_limit
+  end
+  
 end

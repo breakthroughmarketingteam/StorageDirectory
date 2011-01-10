@@ -2,8 +2,8 @@
 <div id="sl-tabs-sizes" class="sizes_list <%= 'tab_content' if in_mode?('show') %>">
 	<% if is_facility_owner? && in_mode?('profile') %>
 		<%= ajax_loader %>
-		<span class="loading_txt hide">This may take a few minutes</span>
-		<%= link_to 'Sync', "/ajax/model_method?model=Listing&id=#{@listing.id}&model_method=update_unit_types_and_sizes", :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
+		<span class="loading_txt hide flash warning">This may take a few minutes</span>
+		<%= link_to 'Sync', sync_issn_listing_path(@listing), :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
 	<% end %>
 
 	<div id="sl-tabs-sizes-in" class="sizes_list_in">

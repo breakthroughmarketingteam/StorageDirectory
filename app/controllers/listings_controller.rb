@@ -1,8 +1,8 @@
 class ListingsController < ApplicationController
   
-  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
+  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn
   ssl_allowed :show
-  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
+  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request]
@@ -229,6 +229,10 @@ class ListingsController < ApplicationController
     Notifier.deliver_tracking_request @listing, @client, params[:phone_number]
     flash[:notice] = "Your request is being processed. Please allow 24 hours for setup. We will email you when it's done."
     redirect_to client_listing_path(@listing)
+  end
+  
+  def sync_issn
+    render :json => { :success => @listing.update_unit_types_and_sizes }
   end
   
   private

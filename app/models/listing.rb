@@ -30,13 +30,13 @@ class Listing < ActiveRecord::Base
   #has_many :searches # user searches are associated to listings to gather search behavior data
   
   # OpentTech ISSN data
-  has_one  :facility_info, :dependent => :destroy
-  has_many :unit_types, :dependent => :destroy
-  has_many :units, :class_name => 'FacilityUnit', :through => :unit_types
-  has_many :issn_facility_unit_features, :dependent => :destroy
-  has_many :promos, :dependent => :destroy
-  has_many :facility_features, :dependent => :destroy
+  has_one  :facility_info,       :dependent => :destroy
+  has_many :unit_types,          :dependent => :destroy
+  has_many :units,               :class_name => 'FacilityUnit', :through => :unit_types
+  has_many :promos,              :dependent => :destroy
+  has_many :facility_features,   :dependent => :destroy
   has_many :facility_insurances, :dependent => :destroy
+  has_many :issn_facility_unit_features, :dependent => :destroy
   
   has_attached_file :logo,
     :storage => :s3, 
@@ -46,7 +46,6 @@ class Listing < ActiveRecord::Base
     :path => ":attachment/:id/:style_:basename.:extension"
   
   validates_attachment_content_type :logo, :content_type => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
-  
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
@@ -148,7 +147,7 @@ class Listing < ActiveRecord::Base
   
   def specials
     return [] if self.client.nil?
-    self.client.predefined_specials
+    self.client.predefined_specials.sort_by &:overall_value
   end
   
   def special

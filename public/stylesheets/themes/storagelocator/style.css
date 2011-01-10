@@ -636,7 +636,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .sizes_list_in ul li.st-avail{width:10%;text-align:center;}
 .sizes_list_in ul li.st-spec{width:17%;font-weight:normal;max-height:45px;overflow:hidden;}
 .sizes_list_in ul li.st-type .predef_dims{display:none;}
-#unit_sizes .sizes_list .ajax_loader{margin:-6px 0 0 0;}
+#unit_sizes .sizes_list .ajax_loader{margin:7px 0 0 0;}
 #sl-tabs-sizes-in .size_form .st-size input{width:19%;}
 #predefined_sizes .sizes_list .ajax_loader{margin:15px 0 0 0;}
 .panel .sizes_list_in ul li.st-spec{width:157px;}

@@ -65,7 +65,8 @@ ActionController::Routing::Routes.draw do |map|
                                         :copy_to_all => :post, 
                                         :tracking_request => :post, 
                                         :add_predefined_size => :post, 
-                                        :request_review => :post }, 
+                                        :request_review => :post,
+                                        :sync_issn => :post }, 
                            :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials

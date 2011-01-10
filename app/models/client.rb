@@ -3,9 +3,9 @@ class Client < User
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
-  has_many :specials, :through => :listings
+  
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
-  has_many :pictures, :through => :listings
+  
   has_many :predef_special_assigns, :dependent => :destroy
   has_many :predefined_specials, :through => :predef_special_assigns
   
@@ -17,6 +17,8 @@ class Client < User
   has_many :staff_emails, :through => :listings
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
+  has_many :specials, :through => :listings
+  has_many :pictures, :through => :listings
   
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
   
