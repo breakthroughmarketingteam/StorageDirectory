@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
   
+  ssl_allowed :destroy
   before_filter :require_no_user, :only => :new
   skip_before_filter :simple_auth
   
@@ -51,6 +52,11 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy if current_user_session
     session.clear
+    
+    cookies.to_hash.each_pair do |k, v| 
+      cookies[k.to_sym] = { :value => '', :path => '/', :domain => ".#{$root_domain}", :expire => 1.day.ago } 
+    end 
+    
     redirect_to root_path
   end
 

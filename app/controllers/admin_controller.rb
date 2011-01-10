@@ -5,6 +5,7 @@ class AdminController < ApplicationController
   
   def index
     @controllers.reject! { |c| c =~ /(admin)|(^sizes)|(maps)|(staff_emails)|(^specials)|(predef_special)|(facility_features)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)|(widgets)|(business_hours)/i }
+    @controllers.sort!
     
     respond_to do |format|
       format.html {}

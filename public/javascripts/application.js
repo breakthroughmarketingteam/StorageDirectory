@@ -382,31 +382,30 @@ $(document).ready(function() {
 			tips = $('.blog-lock', '#tips-wrap');
 		
 		switch (sort_what) {
-			case 'Newest' : $.sort_tips($this, tips, function(a, b) {
+			case 'Newest' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = parseInt($('.updated_at', a).text()),
 						b1 = parseInt($('.updated_at', b).text());
 					
-					return a1 > b1 ? (tip_sort_inverse ? 1 : -1) : (tip_sort_inverse ? -1 : 1);
+					return a1 > b1 ? (stuff_sort_inverse ? 1 : -1) : (stuff_sort_inverse ? -1 : 1);
 				});
 			break;
-			case 'Rating' : $.sort_tips($this, tips, function(a, b) {
+			case 'Rating' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = $('.show-value', a).width(),
 						b1 = $('.show-value', b).width();
 					
 					// this one should sort down when the values are equal since most of the ratings are the same number
-					return a1 == b1 ? -1 : a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+					return a1 == b1 ? -1 : a1 > b1 ? (stuff_sort_inverse ? -1 : 1) : (stuff_sort_inverse ? 1 : -1);
 				});
 			break;
-			case 'Title' : $.sort_tips($this, tips, function(a, b) {
+			case 'Title' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
 					var a1 = $('h3 a', a).text(),
 						b1 = $('h3 a', b).text();
 						
-					return a1 > b1 ? (tip_sort_inverse ? -1 : 1) : (tip_sort_inverse ? 1 : -1);
+					return a1 > b1 ? (stuff_sort_inverse ? -1 : 1) : (stuff_sort_inverse ? 1 : -1);
 				});
 			break;
 		}
 		
-		tip_sort_inverse = !tip_sort_inverse;
 		return false;
 		
 		/* TODO: do serverside sorting when we have more tips
@@ -806,8 +805,12 @@ $(document).ready(function() {
 				listing = $this.parents('.listing'),
 				listing_id = listing.attr('id').replace('Listing_', '');
 			
-			if (listing_id.length) delete_client_listing(listing_id);
-			else listing.slideUpRemove();
+			if (listing_id.length) {
+				$.greyConfirm('Are you sure?', function() {
+					delete_client_listing(listing_id);
+					listing.slideUpRemove();
+				});
+			} else listing.slideUpRemove();
 			
 			return false;
 		});
@@ -820,16 +823,14 @@ $(document).ready(function() {
 		});
 		
 		function delete_client_listing(listing_id) {
-			$.greyConfirm('Are you sure you want to delete this facility and all information associated with it?', function() {
-				var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
-				
-				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
-					$.with_json(response, function(data) {
-						$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
-					});
-					
-					ajax_loader.hide();
+			var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
+			
+			$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
+				$.with_json(response, function(data) {
+					$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
 				});
+				
+				ajax_loader.hide();
 			});
 		}
 	
@@ -848,7 +849,7 @@ $(document).ready(function() {
 				tip_inner.text('Enter the street address.');
 				ajax_loader.show();
 				
-				var params = { title: title_input.val() };
+				var params = { title: title_input.val(), client_id: $('#client_id').text() };
 				if (listing_id) params['id'] = listing_id;
 				
 				$.post('/listings/quick_create', params, function(response){
@@ -1100,6 +1101,7 @@ $(document).ready(function() {
 	$('#sync_listing').click(function() {
 		var $this = $(this).text('Syncing'),
 			ajax_loader = $this.siblings('.ajax_loader').show(),
+			loading_txt = $('.loading_txt', $this.parent()).show(),
 			sizes_in = $('#sl-tabs-sizes-in').addClass('faded');
 		
 		$('.edit-btn', sizes_in).hide();
@@ -1112,6 +1114,7 @@ $(document).ready(function() {
 					if (resp.success) sizes_in.replaceWith($(resp.data).find('#sl-tabs-sizes-in'));
 					else $.ajax_error(resp);
 					
+					loading_txt.hide();
 					ajax_loader.hide();
 					$this.text('Sync');
 				});
@@ -1699,19 +1702,6 @@ $.preload_us_map_imgs = function() {
 	$.each(states, function(){
 		var img = new Image();
 		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
-	});
-}
-
-// uses the jquery plugin sortElement
-var tip_sort_inverse = false;
-$.sort_tips = function(sort_link, tips, sortFunc) {
-	sort_link.addClass(tip_sort_inverse ? 'down' : 'up');
-	
-	tips.sortElements(function(a, b) {
-		return sortFunc(a, b);
-
-	}, function() {
-		return $(this).children('.tip_in')[0];
 	});
 }
 

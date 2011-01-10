@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
   
-  ssl_required :index, :create, :profile, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
+  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request
+  ssl_allowed :show
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request]
   before_filter :get_models_paginated, :only => :index
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show]
@@ -66,8 +67,10 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing.update_stat 'clicks', request unless current_user && current_user.has_role?('admin', 'advertiser')
-    @search.update_attribute :listing_id, @listing.id
+    unless current_user && current_user.has_role?('admin', 'advertiser')
+      @listing.update_stat 'clicks', request
+      @search.update_attribute :listing_id, @listing.id
+    end
     
     render :layout => false if request.xhr?
   end
@@ -78,6 +81,8 @@ class ListingsController < ApplicationController
   
   def create
     @listing = Listing.new params[:listing]
+    #@listing.status = 'verified'
+    #@listing.enabled = true
     
     respond_to do |format|
       format.html do
@@ -164,7 +169,8 @@ class ListingsController < ApplicationController
   
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
-    @listing = params[:id] ? Listing.find(params[:id]) : current_user.listings.build(:title => params[:title])
+    @client = Client.find params[:client_id] if is_admin?
+    @listing = params[:id] ? Listing.find(params[:id]) : (is_admin? ? @client : current_user).listings.build(:title => params[:title])
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map

@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
   
   $_usssl_discount = '10% Off'
   $_usssl_phone = '1-305-945-7561'
+  $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   
   before_filter :ensure_domain
   before_filter :simple_auth

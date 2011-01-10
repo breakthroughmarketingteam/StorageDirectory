@@ -110,7 +110,7 @@ $(function(){
 		admin_links.live('click', function(){ $.cookie('active_admin_link', this.id) });
 		
 		// ajaxify the admin links to inject the index view content into the #ajax_wrap, exclude certain ajax_links
-		$('a:not(.ajax_action, .toggle_action, .partial_addable, .add_link, .cancel_link, .click_thru, .ps)', '#admin_panel').live('click', function() {
+		$('a:not(.ajax_action, .toggle_action, .partial_addable, .add_link, .cancel_link, .click_thru, .ps, .btn)', '#admin_panel').live('click', function() {
 			var $this = $(this);
 			
 			if ($this.hasClass('admin_link')) {
@@ -784,6 +784,22 @@ $.setup_autocomplete = function(els, context) {
 			}
 		});
 	}
+}
+
+// uses the jquery plugin sortElement
+var stuff_sort_inverse = false;
+$.sort_stuff = function(sort_link, elements, selector, sortFunc) {
+	sort_link.addClass(stuff_sort_inverse ? 'down' : 'up');
+	sort_link.removeClass(stuff_sort_inverse ? 'up' : 'down');
+	
+	elements.sortElements(function(a, b) {
+		return sortFunc(a, b);
+
+	}, function() {
+		return $(this).children(selector)[0];
+	});
+	
+	stuff_sort_inverse = !stuff_sort_inverse;
 }
 
 /******************************************* JQUERY PLUGINS *******************************************/

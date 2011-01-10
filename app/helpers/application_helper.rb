@@ -469,6 +469,8 @@ module ApplicationHelper
   end
   
   def selective_abbrev(words, max = 40)
+    return if words.nil?
+    
     @abbrevs = { 
       'international' => 'intl.',
       'management' => 'mgmt.',

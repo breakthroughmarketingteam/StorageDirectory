@@ -3,7 +3,7 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 	
-	<h2><%= local_assigns.keys.include?(:heading) ? heading : model_form_heading %></h2>
+	<h2 class="stack"><%= local_assigns.keys.include?(:heading) ? heading : model_form_heading %></h2>
 	<%= render_model_helptext(controller_name) %>
 
 	<div class="clear">
