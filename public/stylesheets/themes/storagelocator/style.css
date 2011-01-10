@@ -299,7 +299,7 @@ li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
 .rslt-phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
-#clients_controller .rslt-contact #listing_title{width:93%;}
+#clients_controller .rslt-contact #listing_title{width:105%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-miles{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat top right;padding:0 14px;margin-left:-1px;}
 li.rslt-size{width:99px;}
@@ -321,7 +321,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 #client_listing_box .listing .action_btn{top:0;right:8px;background:url(/images/ui/storagelocator/request-btn.png) repeat-x;}
 #client_listing_box .listing .action_btn:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) repeat-x;}
 .listing .action_btn a{color:#fff;text-decoration:none;display:block;font-weight:bold;margin-top:3px;padding-left:2px;}
-.listing .action_btn a.cancel_link,.listing .action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:-14px;top:17px;}
+.listing .action_btn a.cancel_link,.listing .action_btn a.delete_link{display:block;padding:1px 9px;position:absolute;right:-20px;top:13px;}
 .listing .reserve{background:url(/images/ui/storagelocator/reserve-btn.png) repeat-x;}
 .listing .reserve:hover{background:url(/images/ui/storagelocator/reserve-btn-hover.png) repeat-x;}
 .listing .hold_unit{background:url(/images/ui/storagelocator/reserve-btn.png) repeat-x;}
@@ -830,8 +830,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #issn_steps .workflow_step{height:auto;padding:15px 20px;}
 #issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{bottom:10px;margin-top:15px;padding:15px 20px;position:absolute;width:88.5%;}
-#issn_status_option .left,#issn_status_option .right{width:49%;text-align:center;font-weight:bold;}
-#issn_status_option .left a,#issn_status_option .right a{display:block;padding:15px;border:1px solid #ccc;cursor:pointer;color:#33c;text-shadow:1px 1px 1px #fff;}
+#issn_status_option .left a,#issn_status_option .right a{color:#FFF;cursor:pointer;line-height:1.7;}
 #issn_status_option .left a{margin-right:15px;background:lightblue;}
 #issn_status_option .right {background:lightyellow;}
 .client_info_preview ul{font-size:80%;}
@@ -940,7 +939,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp .size_icon{margin-left:10px;width:100px;}
 .panel .sl-table-exp textarea{width:202px;font-size:90%;}
 .listing:hover .inner{border-color:#aaa;}
-.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:107%;}
+.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:112%;}
 .panel #head{padding-bottom:15px;}
 .panel #head.blue{background-color:#4c4bcc;position:relative;}
 .panel #head a{text-decoration:underline;color:#fff;font-size:18px;}
@@ -1071,8 +1070,8 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 .sizes_list_in .ajax_loader{float:right;position:relative;top:8px;}
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
 #clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
-#clients_controller #ov-units .rslt-contact p .small_text_field{width:86.5%;}
-#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}
+#clients_controller #ov-units .rslt-contact p .small_text_field{width:93.5%;}
+#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:18%;}
 #listings_controller .st-type input.small_text_field{font-size:100%;}
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
@@ -1210,7 +1209,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #workflow_nav{bottom:0;right:0;width:100%;}
 #workflow_steps .items,#issn_steps .items,#rent_steps .items{position:absolute;width:2000px;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
-#workflow_nav .button,#map_flow_nav .button{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/blue-btn-bg.png) repeat-x;border:1px solid #666;color:#fff;display:block;float:left;font-size:14px;font-weight:bold;height:26px;line-height:1.8;margin-left:15px;padding:0 30px;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #333;z-index:551;}
+#workflow_nav .button,#map_flow_nav .button,#issn_status_option a{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/blue-btn-bg.png) repeat-x;border:1px solid #666;color:#fff;display:block;float:left;font-size:14px;font-weight:bold;height:26px;line-height:1.8;margin-left:15px;padding:0 30px;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #333;z-index:551;}
 #map_flow_nav .button{bottom:-27px;}
 #workflow_nav .button:hover{background:url(/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 #workflow_nav .button:hover,#map_flow_nav .button:hover{background:url(/images/ui/storagelocator/green-btn-bg1.png);}

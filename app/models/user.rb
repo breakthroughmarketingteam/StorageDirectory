@@ -49,12 +49,16 @@ class User < ActiveRecord::Base
   # Instance Methods
   
   def initialize(params = {})
-    super params
-    self.temp_password         = self.class.rand_password
-    self.password              = self.temp_password
-    self.password_confirmation = self.temp_password
-    self.activation_code       = self.make_activation_code
-    self.status                = 'unverified'
+    super
+    self.temp_password = self.class.rand_password
+    
+    if self.password.blank?
+      self.password              = self.temp_password
+      self.password_confirmation = self.temp_password
+    end
+    
+    self.activation_code = self.make_activation_code
+    self.status          = 'unverified'
   end
   
   def name

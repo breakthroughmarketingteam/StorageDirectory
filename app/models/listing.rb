@@ -307,7 +307,7 @@ class Listing < ActiveRecord::Base
   end
   
   def premium?
-    self.client && self.client.status == 'active'
+    self.client && self.client.status == 'active' && !self.new_record?
   end
   
   def unverified?

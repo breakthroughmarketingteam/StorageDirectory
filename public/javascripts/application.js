@@ -805,8 +805,12 @@ $(document).ready(function() {
 				listing = $this.parents('.listing'),
 				listing_id = listing.attr('id').replace('Listing_', '');
 			
-			if (listing_id.length) delete_client_listing(listing_id);
-			else listing.slideUpRemove();
+			if (listing_id.length) {
+				$.greyConfirm('Are you sure?', function() {
+					delete_client_listing(listing_id);
+					listing.slideUpRemove();
+				});
+			} else listing.slideUpRemove();
 			
 			return false;
 		});
@@ -819,16 +823,14 @@ $(document).ready(function() {
 		});
 		
 		function delete_client_listing(listing_id) {
-			$.greyConfirm('Are you sure you want to delete this facility and all information associated with it?', function() {
-				var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
-				
-				$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
-					$.with_json(response, function(data) {
-						$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
-					});
-					
-					ajax_loader.hide();
+			var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
+			
+			$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
+				$.with_json(response, function(data) {
+					$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
 				});
+				
+				ajax_loader.hide();
 			});
 		}
 	
@@ -847,7 +849,7 @@ $(document).ready(function() {
 				tip_inner.text('Enter the street address.');
 				ajax_loader.show();
 				
-				var params = { title: title_input.val() };
+				var params = { title: title_input.val(), client_id: $('#client_id').text() };
 				if (listing_id) params['id'] = listing_id;
 				
 				$.post('/listings/quick_create', params, function(response){

@@ -81,6 +81,8 @@ class ListingsController < ApplicationController
   
   def create
     @listing = Listing.new params[:listing]
+    #@listing.status = 'verified'
+    #@listing.enabled = true
     
     respond_to do |format|
       format.html do
@@ -167,7 +169,8 @@ class ListingsController < ApplicationController
   
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
-    @listing = params[:id] ? Listing.find(params[:id]) : current_user.listings.build(:title => params[:title])
+    @client = Client.find params[:client_id] if is_admin?
+    @listing = params[:id] ? Listing.find(params[:id]) : (is_admin? ? @client : current_user).listings.build(:title => params[:title])
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map

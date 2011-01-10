@@ -140,10 +140,14 @@ module ListingsHelper
       img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
       img_hash[:alt] = listing.title
       img = image_tag img_hash[:src], img_hash.merge(options)
-      span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if listing.title.size <= @min_title_len}'>"
+      span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if !listing.new_record? && listing.title.size <= @min_title_len}'>"
       
-      link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>", facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'dlogo_wrap' do |name|
-        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).titleize}</span></div>"
+      begin
+        link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span>", facility_path(get_storage_type, listing.title.try(:parameterize), listing.id), :class => 'dlogo_wrap' do |name|
+          "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
+        end
+      rescue ActionController::RoutingError # for some reason even if listing.premium? return false the facility_path still gets called
+        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
       end
     end
   end

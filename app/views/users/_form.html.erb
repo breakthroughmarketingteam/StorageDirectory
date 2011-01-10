@@ -8,14 +8,14 @@
 		<% end %>
 		
 		<div class="stack">
-  		<% if user_allowed?('users', 'update', params) %>
-  	    <%= f.label :role_id %>
-  			<%= f.select :role_id, @roles.map { |r| [r.title, r.id] }, { :include_blank => true }, :class => 'required' %>
-    	<% else %>
-    	  <%= f.label :role_id, @default_role.title %>
-        <%= f.hidden_field :role_id, :value => @default_role.id %>
-    	<% end %>
-  	</div>
+  			<% if user_allowed?('users', 'update', params) %>
+  	    	<%= f.label :role_id %>
+  				<%= f.select :role_id, @roles.map { |r| [r.title, r.id] }, { :include_blank => true }, :class => 'required' %>
+    		<% else %>
+    		  	<%= f.label :role_id, @default_role.title %>
+        		<%= f.hidden_field :role_id, :value => @default_role.id %>
+    		<% end %>
+  		</div>
 		
 		<div class="left stack right_space">
 			<%= f.label :first_name %>

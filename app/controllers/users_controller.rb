@@ -19,8 +19,8 @@ class UsersController < ApplicationController
   end
   
   def create
-    @form = Form.find(params[:fid]) unless params[:fid].blank?
-    @user = User.new(params[:user])
+    @form = Form.find params[:fid] unless params[:fid].blank?
+    @user = User.new params[:user]
     
     respond_to do |format|
       format.html do
