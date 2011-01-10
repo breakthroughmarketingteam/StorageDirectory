@@ -167,7 +167,7 @@ $(function(){
 		window.location.hash = this.href.split('#')[1];
 	});
 	
-	if ($.on_page([['edit', 'listings']])) {
+	if ($.on_page([['profile', 'listings']])) {
 		if (window.location.hash != '') {
 			setTimeout(function() { // wait for tabular_content to attach the click handler to the tabs, then trigger it
 				$('a[href="'+ window.location.hash +'"]', '#sl-tabs-nav').click();
