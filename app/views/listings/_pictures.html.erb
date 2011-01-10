@@ -8,7 +8,8 @@
 			<%= f.hidden_field :listing_id, :value => @listing.id %>
 			<%= hidden_field_tag 'format', 'js' %>
 		</div>
-	<% end if action_name == 'edit' %>
+	<% end if in_mode?('profile') && user_allowed?('pictures', 'create', params) %>
+	
 	<div class="gallery">
 	    <ul id="sl-tabs-pict-gall">
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
