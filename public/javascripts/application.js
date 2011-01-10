@@ -1101,6 +1101,7 @@ $(document).ready(function() {
 	$('#sync_listing').click(function() {
 		var $this = $(this).text('Syncing'),
 			ajax_loader = $this.siblings('.ajax_loader').show(),
+			loading_txt = $('.loading_txt', $this.parent()).show(),
 			sizes_in = $('#sl-tabs-sizes-in').addClass('faded');
 		
 		$('.edit-btn', sizes_in).hide();
@@ -1113,6 +1114,7 @@ $(document).ready(function() {
 					if (resp.success) sizes_in.replaceWith($(resp.data).find('#sl-tabs-sizes-in'));
 					else $.ajax_error(resp);
 					
+					loading_txt.hide();
 					ajax_loader.hide();
 					$this.text('Sync');
 				});
