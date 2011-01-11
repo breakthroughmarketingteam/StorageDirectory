@@ -71,6 +71,7 @@ class UsersController < ApplicationController
   end
   
   def authenticate
+    current_user.reload
     @authentic = UserSession.new params[:auth].merge(:email => current_user.email)
     render :json => { :success => @authentic.valid?, :data => model_errors(@authentic) }
   end

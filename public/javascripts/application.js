@@ -1158,7 +1158,7 @@ $(document).ready(function() {
 	$('#client_edit_contact').live('click', function() {
 		var $this = $(this);
 		
-		$.authenticate_user_and_do(function(data) {
+		$.authenticate_user_and_do($this, function(data) {
 			var cancel_link = $('<a class="cancel_link iconOnly16 right" style="margin-top:13px;" title="Cancel Editing">Cancel</a>'),
 				wrap = $('#owner_info_wrap', $this.parent().parent()),
 				ajax_loader = $.new_ajax_loader('before', $this);
@@ -1371,7 +1371,7 @@ $(document).ready(function() {
 			ajax_loader = $($this.attr('loader')); // the context the ajax_loader is in
 		
 		if (form.data('valid')) {
-			$.authenticate_user_and_do(function(data) {
+			$.authenticate_user_and_do($this, function(data) {
 				if (!form.data('saving')) {
 					form.data('saving', true);
 					$this.text('Updating');

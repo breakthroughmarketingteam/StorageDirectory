@@ -149,7 +149,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
 .ui-widget-header{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;-moz-border-radius-topright:8px;border-radius-topright:8px;-webkit-border-radius-topright:8px;-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(/images/ui/storagelocator/purple-bg.png) repeat scroll center top transparent;border:3px solid #fff;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;padding:0.5em 1em 0.3em;}
-#compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;}
+#compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;font-size:119%;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-59px;width:510px;z-index:500;}
@@ -2033,6 +2033,6 @@ p.breadcrumb a{color:#fff;}
 .admin_listing_form input[type="text"],.admin_listing_form textarea{width:75%;}
 .admin_listing_form .shorter div.left{width:48%;}
 #auth_yourself{display:none;position:relative;}
-#auth_yourself .invalid{border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
-#auth_yourself .flash{font-size:80%;margin:0 13px;}
+#auth_yourself .invalid{height:23px;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
+#auth_yourself .flash{bottom:1px;font-size:80%;margin:0 13px;position:absolute;right:-18px;}
 #al_auth_yourself{position:absolute;bottom:25px;right:98px;}

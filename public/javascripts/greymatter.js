@@ -728,8 +728,7 @@ $.greyAlert = function(msg, error) {
 }
 
 // send password to users#authenticate before allowing critical operations to happen, i.e change password, billing info, etc.
-$.authenticate_user_and_do = function(callback, bypass) {
-	console.log('b', bypass, typeof bypass != 'undefined' && bypass)
+$.authenticate_user_and_do = function(btn, callback, bypass) {
 	if (typeof bypass != 'undefined' && bypass) { // some buttons dont need to call auth twice, i.e edit/save buttons
 		callback.call(this);
 	} else {
@@ -739,35 +738,38 @@ $.authenticate_user_and_do = function(callback, bypass) {
 			height: 140,
 			modal: true,
 			resizable: false,
-			close: function() { $(this).dialog('destroy') }
+			close: function() { $(this).dialog('destroy').remove() }
 		});
 
 		pop_up.append($('#auth_yourself', '#content').clone().show());
 		var input = $('input', pop_up).removeClass('invalid').focus();
-
+		
 		$('#confirm_yes', pop_up).click(function() { $(this).parents('form').submit(); return false; });
 		$('#auth_yourself', pop_up).submit(function() {
 			var form = $('form', '#pop_up').runValidation(),
 				ajax_loader = $.new_ajax_loader('before', this),
 				text = $('p', form).show();
-
+			
 			if (form.data('valid') && !form.data('sending')) {
 				form.data('sending', true);
 				ajax_loader.show();
 				
 				$.post(form.attr('action'), form.serialize(), function(response) {
 					$.with_json(response, function(data) {
-						pop_up.dialog('destroy');
+						pop_up.dialog('destroy').remove();
 						callback.call(this, data);
 
 					}, function(data) {
 						$('.flash', form).remove();
-						form.prepend('<div class="flash error">'+ data +'</div>');
+						form.prepend('<div class="flash error">'+ data +'</div>').find('.flash').css('position', 'static');
 						form.data('sending', false);
 						ajax_loader.fadeOutRemove('fast');
 						text.hide();
 						input.val('').addClass('invalid').focus();
 					});
+					
+					form.data('sending', false);
+					ajax_loader.hide();
 				}, 'json');
 			}
 
@@ -779,16 +781,16 @@ $.authenticate_user_and_do = function(callback, bypass) {
 // put a new ajax loader somewhere by calling a jquery method on the el
 $.ajax_loaders = {};
 $.new_ajax_loader = function(where, parent, img) {
-	var loader_id = [where, parent].join();
-	
+	var loader_id = [where, $.objLen($.ajax_loaders) + 1].join('-');
+	//console.log(loader_id, $.ajax_loaders[loader_id], $.ajax_loaders)
 	if (typeof $.ajax_loaders[loader_id] != 'undefined') {
-		//console.log('c',$.ajax_loaders[loader_id])
+		//console.log('in',$.ajax_loaders[loader_id], $.ajax_loaders)
 		return $.ajax_loaders[loader_id];
 	} else {
 		var parent = $(parent);
 		var loader = $($.ajax_loader_tag(img, parent));
 		$.ajax_loaders[loader_id] = loader;
-		//console.log('n', $.ajax_loaders)
+		
 		try {
 			parent[where](loader);
 			return loader;
@@ -800,9 +802,15 @@ $.new_ajax_loader = function(where, parent, img) {
 
 $.ajax_loader_tag = function(img, context) {
 	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
-	var id = typeof(context.attr('id')) == 'undefined' ? '' : 'al_'+ context.attr('id');
+	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
 	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
 }
+
+$.objLen = function(obj) {
+    var size = 0, key;
+    for (key in obj) if (obj.hasOwnProperty(key)) size++;
+    return size;
+};
 
 $.setInterval = function(callback, interval) {
 	setTimeout(function() {
