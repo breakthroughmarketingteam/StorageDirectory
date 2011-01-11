@@ -1717,17 +1717,17 @@ var translations = [
 			{
 				element 	: '#footer_top .wrapper',
 				method 		: 'text',
-				translation : 'Encuentre una unidad de almacenamiento en cualquier lugar y en cualquier momento!'
+				translation : 'Encuentre un espacio de almacenamiento en cualquier lugar y en cualquier momento!'
 			},
 			{
 				element 	: '#title h1',
 				method 		: 'text',
-				translation : 'Encuentré, ahorré y alquilé almacenamiento en cualquier momento.'
+				translation : 'Busque, Ahorre y Rente Almacenamiento En Cualquier Momento.'
 			},
 			{
 				element 	: '#aff-box p',
 				method 		: 'html',
-				translation : '<strong>Socios Afiliados</strong> - Obtener grandes ofertas y ahorre en su próximo alquiler almacenamiento con uno de nuestros socios afiliados.'
+				translation : '<strong>Socios Afiliados</strong> - Obtenga grandes ofertas y ahorre en su próximo alquiler de almacenamiento con uno de nuestros socios afiliados.'
 			},
 			{
 				element 	: '#social-media p',
