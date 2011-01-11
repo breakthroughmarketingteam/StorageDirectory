@@ -79,7 +79,7 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :business_hours
   end
   
-  map.resources :users do |user|
+  map.resources :users, :member => { :authenticate => :post } do |user|
     user.resources :posts, :collection => { :published => :get }
     user.resources :images
     user.resources :comments

@@ -727,26 +727,81 @@ $.greyAlert = function(msg, error) {
 	$.greyConfirm(msg, null, null, true, error);
 }
 
-$.ajax_loader_tag = function(img, context) {
-	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
-	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
-	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
+// send password to users#authenticate before allowing critical operations to happen, i.e change password, billing info, etc.
+$.authenticate_user_and_do = function(callback, bypass) {
+	console.log('b', bypass, typeof bypass != 'undefined' && bypass)
+	if (typeof bypass != 'undefined' && bypass) { // some buttons dont need to call auth twice, i.e edit/save buttons
+		callback.call(this);
+	} else {
+		var pop_up = $('<div id="pop_up" class="confirm_box auth_box"></div>').dialog({ 
+			title: 'Authenticate Yourself',
+			width: 400,
+			height: 140,
+			modal: true,
+			resizable: false,
+			close: function() { $(this).dialog('destroy') }
+		});
+
+		pop_up.append($('#auth_yourself', '#content').clone().show());
+		var input = $('input', pop_up).removeClass('invalid').focus();
+
+		$('#confirm_yes', pop_up).click(function() { $(this).parents('form').submit(); return false; });
+		$('#auth_yourself', pop_up).submit(function() {
+			var form = $('form', '#pop_up').runValidation(),
+				ajax_loader = $.new_ajax_loader('before', this),
+				text = $('p', form).show();
+
+			if (form.data('valid') && !form.data('sending')) {
+				form.data('sending', true);
+				ajax_loader.show();
+				
+				$.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						pop_up.dialog('destroy');
+						callback.call(this, data);
+
+					}, function(data) {
+						$('.flash', form).remove();
+						form.prepend('<div class="flash error">'+ data +'</div>');
+						form.data('sending', false);
+						ajax_loader.fadeOutRemove('fast');
+						text.hide();
+						input.val('').addClass('invalid').focus();
+					});
+				}, 'json');
+			}
+
+			return false;
+		});
+	}
 }
 
-$.ajax_loaders = [];
 // put a new ajax loader somewhere by calling a jquery method on the el
-$.new_ajax_loader = function(where, el, img) {
-	el = $(el);
-	var a = $($.ajax_loader_tag(img, el));
+$.ajax_loaders = {};
+$.new_ajax_loader = function(where, parent, img) {
+	var loader_id = [where, parent].join();
 	
-	try {
-		el[where](a);
-		$.ajax_loaders.push(a);
-		return a;
-		
-	} catch(e) {
-		$.log('new ajax loader failed: '+ e);
+	if (typeof $.ajax_loaders[loader_id] != 'undefined') {
+		//console.log('c',$.ajax_loaders[loader_id])
+		return $.ajax_loaders[loader_id];
+	} else {
+		var parent = $(parent);
+		var loader = $($.ajax_loader_tag(img, parent));
+		$.ajax_loaders[loader_id] = loader;
+		//console.log('n', $.ajax_loaders)
+		try {
+			parent[where](loader);
+			return loader;
+		} catch(e) {
+			$.log('new ajax loader failed: '+ e);
+		}
 	}
+}
+
+$.ajax_loader_tag = function(img, context) {
+	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
+	var id = typeof(context.attr('id')) == 'undefined' ? '' : 'al_'+ context.attr('id');
+	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
 }
 
 $.setInterval = function(callback, interval) {
@@ -1158,17 +1213,22 @@ $.fn.shimmy = function() {
 	});
 }
 
-$.fn.slideUpRemove = function(speed) {
-	$.fn.animAndRemove.call(this, 'slideUp', speed);
+$.fn.slideUpRemove = function(speed, callback) {
+	$.fn.animAndRemove.call(this, 'slideUp', speed, callback);
 }
 
-$.fn.fadeOutRemove = function(speed) {
-	$.fn.animAndRemove.call(this, 'fadeOut', speed);
+$.fn.fadeOutRemove = function(speed, callback) {
+	$.fn.animAndRemove.call(this, 'fadeOut', speed, callback);
 }
 
-$.fn.animAndRemove = function(anim, speed) {
+$.fn.animAndRemove = function(anim, speed, callback) {
 	return this.each(function() {
-		$(this)[anim](speed || 'fast', function() { $(this).remove(); });
+		$(this)[anim](speed || 'fast', function() { 
+			$(this).remove();
+			
+			if (typeof callback == 'function') 
+				callback.call(this);
+		});
 	});
 }
 
@@ -1187,6 +1247,16 @@ $.fn.autoNext = function() {
 			if (input.val().length == input.attr('maxlength') && input.val() != input.attr('title'))
 				inputs.eq(inputs.index(input) + 1).focus();
 		});
+	});
+}
+
+$.fn.fadeOutLater = function(fade_speed, timeout, callback) {
+	return this.each(function() {
+		var $this = $(this);
+		
+		setTimeout(function() {
+			$this.fadeOut(fade_speed, callback);
+		}, timeout || 1000);
 	});
 }
 

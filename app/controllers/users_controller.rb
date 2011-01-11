@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy
+  ssl_allowed :authenticate
+  skip_before_filter :simple_auth, :only => :authenticate
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_roles, :only => [:index, :new, :edit, :create]
   before_filter :get_default_role, :only => :new
@@ -66,6 +68,11 @@ class UsersController < ApplicationController
       flash[:error] = 'Error destroying ' + @user.name
       render :action => 'edit'
     end
+  end
+  
+  def authenticate
+    @authentic = UserSession.new params[:auth].merge(:email => current_user.email)
+    render :json => { :success => @authentic.valid?, :data => model_errors(@authentic) }
   end
   
   private

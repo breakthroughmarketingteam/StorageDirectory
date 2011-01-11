@@ -1156,58 +1156,57 @@ $(document).ready(function() {
 	
 	// CLIENT billing info and mailing address
 	$('#client_edit_contact').live('click', function() {
-		var $this = $(this),
-			cancel_link = $('<a class="cancel_link iconOnly16 right" style="margin-top:13px;" title="Cancel Editing">Cancel</a>'),
-			wrap = $('#owner_info_wrap', $this.parent().parent()),
-			ajax_loader = $.new_ajax_loader('before', $this);
+		var $this = $(this);
+		
+		$.authenticate_user_and_do(function(data) {
+			var cancel_link = $('<a class="cancel_link iconOnly16 right" style="margin-top:13px;" title="Cancel Editing">Cancel</a>'),
+				wrap = $('#owner_info_wrap', $this.parent().parent()),
+				ajax_loader = $.new_ajax_loader('before', $this);
 
-		if ($this.text() == 'Edit') {
-			ajax_loader.show();
-			
-			$.getJSON($this.attr('href'), function(response) {
-				$.with_json(response, function(data) {
-					$this.text('Save').after(cancel_link);
-					wrap.hide().after(data);
-					$('.numeric_phone', wrap.parent()).formatPhoneNum();
-					$('.hintable', wrap.parent()).hinty();
-					$('.auto_next', wrap.parent()).autoNext();
-				});
-				
-				ajax_loader.fadeOutRemove('fast');
-			});
-			
-		} else if ($this.text() == 'Save') {
-			var form = $('#edit_info', wrap.parent()).runValidation();
-			
-			if (!$this.data('saving') && form.data('valid')) {
-				$this.data('saving', true);
-				$('.cancel_link', $this.parent()).remove();
+			if ($this.text() == 'Edit') {
 				ajax_loader.show();
-				
-				$.post(form.attr('action'), form.serialize(), function(response) {
+
+				$.getJSON($this.attr('href'), function(response) {
 					$.with_json(response, function(data) {
-						$this.text('Edit').after('<span class="success_msg">Saved!</span>');
-						wrap.show().html(data);
-						form.remove();
-						
-						setTimeout(function() {
-							$('.success_msg', $this.parent()).fadeOutRemove(1000);
-						}, 3000);
+						$this.text('Save').after(cancel_link);
+						wrap.hide().after(data);
+						$('.numeric_phone', wrap.parent()).formatPhoneNum();
+						$('.hintable', wrap.parent()).hinty();
+						$('.auto_next', wrap.parent()).autoNext();
 					});
-					
-					$this.data('saving', false);
+
 					ajax_loader.fadeOutRemove('fast');
 				});
+
+			} else if ($this.text() == 'Save') {
+				var form = $('#edit_info', wrap.parent()).runValidation();
+
+				if (!$this.data('saving') && form.data('valid')) {
+					$this.data('saving', true);
+					$('.cancel_link', $this.parent()).remove();
+					ajax_loader.show();
+
+					$.post(form.attr('action'), form.serialize(), function(response) {
+						$.with_json(response, function(data) {
+							$this.text('Edit').after('<span class="success_msg">Saved!</span>').next('.success_msg').fadeOutLater('slow', 3000);
+							wrap.show().html(data);
+							form.remove();
+						});
+
+						$this.data('saving', false);
+						ajax_loader.fadeOutRemove('fast');
+					});
+				}
 			}
-		}
-		
-		cancel_link.click(function() {
-			$('#edit_info').remove();
-			$('#owner_info_wrap').show();
-			$(this).fadeOutRemove(300);
-			$('#client_edit_contact').text('Edit');
-			return false;
-		});
+
+			cancel_link.click(function() {
+				$('#edit_info').remove();
+				$('#owner_info_wrap').show();
+				$(this).fadeOutRemove(300);
+				$('#client_edit_contact').text('Edit');
+				return false;
+			});
+		}, $this.text() == 'Save');
 		
 		return false;
 	});
@@ -1370,19 +1369,25 @@ $(document).ready(function() {
 		var $this = $(this),
 			form = $('form', $this.attr('context')).runValidation(), // the context the form is in
 			ajax_loader = $($this.attr('loader')); // the context the ajax_loader is in
-		if (form.data('valid') && !form.data('saving')) {
-			form.data('saving', true);
-			$this.text('Updating');
-			ajax_loader.show();
-			
-			$.post(form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, function(data) {
-					$($this.attr('replace'), $this.attr('context')).replaceWith(data);
-				});
+		
+		if (form.data('valid')) {
+			$.authenticate_user_and_do(function(data) {
+				if (!form.data('saving')) {
+					form.data('saving', true);
+					$this.text('Updating');
+					ajax_loader.show();
 				
-				form.data('saving', false);
-				$this.text('Update');
-				ajax_loader.hide();
+					$.post(form.attr('action'), form.serialize(), function(response) {
+						$.with_json(response, function(data) {
+							$($this.attr('replace'), $this.attr('context')).replaceWith(data);
+							$this.after('<span class="success_msg">Saved!</span>').next('.success_msg').fadeOutLater('slow', 3000);
+						});
+
+						form.data('saving', false);
+						$this.text('Update');
+						ajax_loader.hide();
+					});
+				}
 			});
 		}
 		
