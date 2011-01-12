@@ -150,6 +150,7 @@ class ApplicationController < ActionController::Base
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Save, <strong>Rent Self Storage</strong> Anywhere, Anytime.'
+      @user_stat         = UserStat.create_from_request current_user, request if current_user
     end
          
     @per_page = 20
