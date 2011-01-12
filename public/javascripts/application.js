@@ -1,11 +1,12 @@
 $ = jQuery;
-$(document).ready(function() {
+$(function() {
 	if ($('body').hasClass('home')) $('#dock').jqDock({ size: 60, attenuation: 400, fadeIn: 1000 });
 	else $('#dock').jqDock({ size: 50, attenuation: 400, fadeIn: 1000 });
 	
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 
 	$.translate_with(translations);
+	$.preloadCssImages();
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {
@@ -1175,7 +1176,7 @@ $(document).ready(function() {
 						$('.auto_next', wrap.parent()).autoNext();
 					});
 
-					ajax_loader.fadeOutRemove('fast');
+					ajax_loader.hide();
 				});
 
 			} else if ($this.text() == 'Save') {
@@ -1194,7 +1195,7 @@ $(document).ready(function() {
 						});
 
 						$this.data('saving', false);
-						ajax_loader.fadeOutRemove('fast');
+						ajax_loader.hide();
 					});
 				}
 			}
