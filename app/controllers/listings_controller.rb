@@ -240,7 +240,6 @@ class ListingsController < ApplicationController
   def get_listing_relations
     @map = @listing.map
     @pictures = @listing.pictures
-    @special = @listing.specials.last || (@listing.client && @listing.specials.new)
     @search = Search.find_by_id session[:search_id]
     
     if action_name == 'profile'

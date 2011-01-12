@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110225557) do
+ActiveRecord::Schema.define(:version => 20110112205333) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -893,6 +893,16 @@ ActiveRecord::Schema.define(:version => 20110110225557) do
     t.text     "description"
     t.text     "content"
     t.string   "place"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_stats", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "user_agent"
+    t.text     "request_uri"
+    t.text     "referrer"
+    t.text     "env"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

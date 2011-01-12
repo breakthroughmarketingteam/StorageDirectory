@@ -85,6 +85,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :comments
     user.resources :tags
     user.resources :permissions
+    user.resources :user_stats
   end
   
   map.resources :clients, :member => { :toggle_specials => :post, :edit_info => :get, :verify => :post } do |clients|
@@ -131,6 +132,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_hints, :member => { :hide => :post, :open => :post }
   map.resources :pictures
   map.resources :user_sessions
+  map.resources :user_stats
   map.resources :permissions
   map.resources :roles
   map.resources :pages
