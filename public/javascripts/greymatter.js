@@ -763,7 +763,7 @@ $.authenticate_user_and_do = function(btn, callback, bypass) {
 						$('.flash', form).remove();
 						form.prepend('<div class="flash error">'+ data +'</div>').find('.flash').css('position', 'static');
 						form.data('sending', false);
-						ajax_loader.fadeOutRemove('fast');
+						ajax_loader.hide();
 						text.hide();
 						input.val('').addClass('invalid').focus();
 					});
@@ -780,19 +780,19 @@ $.authenticate_user_and_do = function(btn, callback, bypass) {
 
 // put a new ajax loader somewhere by calling a jquery method on the el
 $.ajax_loaders = {};
-$.new_ajax_loader = function(where, parent, img) {
-	var loader_id = [where, $.objLen($.ajax_loaders) + 1].join('-');
-	//console.log(loader_id, $.ajax_loaders[loader_id], $.ajax_loaders)
-	if (typeof $.ajax_loaders[loader_id] != 'undefined') {
-		//console.log('in',$.ajax_loaders[loader_id], $.ajax_loaders)
-		return $.ajax_loaders[loader_id];
+$.new_ajax_loader = function(where, el, img) {
+	var el = $(el);
+	
+	if (el.data('ajax_id')) {
+		return $.ajax_loaders[el.data('ajax_id')];
+		
 	} else {
-		var parent = $(parent);
-		var loader = $($.ajax_loader_tag(img, parent));
-		$.ajax_loaders[loader_id] = loader;
+		el.data('ajax_id', (new Date()).getTime());
+		var loader = $($.ajax_loader_tag(img, el));
+		$.ajax_loaders[el.data('ajax_id')] = loader;
 		
 		try {
-			parent[where](loader);
+			el[where](loader);
 			return loader;
 		} catch(e) {
 			$.log('new ajax loader failed: '+ e);
@@ -805,12 +805,6 @@ $.ajax_loader_tag = function(img, context) {
 	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
 	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
 }
-
-$.objLen = function(obj) {
-    var size = 0, key;
-    for (key in obj) if (obj.hasOwnProperty(key)) size++;
-    return size;
-};
 
 $.setInterval = function(callback, interval) {
 	setTimeout(function() {
