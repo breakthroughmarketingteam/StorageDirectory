@@ -4,7 +4,10 @@ class UserStat < ActiveRecord::Base
   access_shared_methods
   
   def self.create_from_request(user, request)
-    self.user_id = user.id
+    stat = self.new
+    stat.user_id = user.id
+    stat.save
+    stat
   end
   
 end
