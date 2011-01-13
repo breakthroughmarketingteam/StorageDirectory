@@ -374,7 +374,7 @@ class Listing < ActiveRecord::Base
   end
   
   def call_tracking_num
-    '555-234-5678'
+    ''
   end
   
   def calculated_price
