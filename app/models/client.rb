@@ -20,6 +20,8 @@ class Client < User
   has_many :specials, :through => :listings
   has_many :pictures, :through => :listings
   
+  has_many :staff_emails, :through => :listings
+  
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
   
   def initialize(params = {})
