@@ -63,6 +63,10 @@ class Listing < ActiveRecord::Base
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
   cattr_accessor :top_types, :comparables, :searchables, :categories
   
+  def before_update
+    self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
+  end
+  
   #
   # Search methods
   #

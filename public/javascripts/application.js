@@ -949,7 +949,7 @@ $(function() {
 	// END new listing workflow
 	
 	// the forms in the listing detail edit page
-	$('.edit_listing').submit(function() {
+	$('.edit_listing').live('submit', function() {
 		var form = $(this).runValidation(),
 			context = form.parent(),
 			btn = $('.save', form),

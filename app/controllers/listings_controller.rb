@@ -162,6 +162,7 @@ class ListingsController < ApplicationController
       _scrub_params
       
       if @listing.update_attributes params[:listing]
+        @listing.staff_emails.build
         render :json => { :success => true, :data => (params[:listing_detail] ? render_to_string(:partial => 'edit_detail') : nil) }
       else
         render :json => { :success => false, :data => model_errors(@listing) }
