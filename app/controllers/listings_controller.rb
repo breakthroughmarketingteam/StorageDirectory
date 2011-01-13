@@ -59,11 +59,13 @@ class ListingsController < ApplicationController
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-      
-      render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
     else
-      
+      @listings = []
+      @location = @search.location
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => [] }
     end
+    
+    render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
   end
 
   def show

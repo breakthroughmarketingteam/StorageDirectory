@@ -43,9 +43,9 @@ module ApplicationHelper
           html << render_region_top(region)
           html << render_all_blocks_in(region)
         
-        html << '</div>' 
+        html << '</div>'
         
-        html if html.match(/(class="block")/)
+        html if html.match /(class="block")/i
       end
     end
   end
