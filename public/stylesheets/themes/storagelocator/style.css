@@ -1650,7 +1650,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
 .confirm_box,.alert_box{padding-bottom:10px !important;}
 .confirm_box p,.alert_box p{font-size:100%;text-align:center;}
-.confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;}
+.confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;z-index:999;}
 .confirm_box #confirm_yes{right:10px;}
 .auth_box #confirm_yes{bottom:0;right:15px;}
 .auth_box div{margin:20px 15px 0;}
