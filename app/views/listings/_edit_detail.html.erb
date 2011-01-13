@@ -33,11 +33,11 @@
                 	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
                 </tr>
 			<% end %>
-			
-				<tr>
-               		<td class="col_label"><%= f.label :phone %></td>
-               		<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
-               </tr>
+		
+			<tr>
+           		<td class="col_label"><%= f.label :phone %></td>
+           		<td><%= f.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
+            </tr>
 			
 			<tr class="track">
 				<td class="col_label">Tracked Number</td>
@@ -67,9 +67,20 @@
 					<% end %>
 					</div>
                	</td>
-               </tr>
-           </tbody>
-       </table>
+            </tr>
+			
+			<tr>
+				<td class="col_label"><label for="email">Categories</label></td>
+				<td>
+					<ul>
+						<% Listing.categories.each do |category| %>
+							<li><%= f.check_box :storage_types, category.titleize.downcase %><%= f.label :storage_types, category.titleize %></li>
+						<% end %>
+					</ul>
+				</td>
+			</tr>
+        </tbody>
+	</table>
 
 	<div>
 		<%= hidden_field_tag :listing_detail, 1 %>
