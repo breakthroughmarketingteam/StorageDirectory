@@ -42,6 +42,7 @@ class Client < User
       self.user_hints = UserHint.all
     end
     
+    self.type = self.class.name
     self
   end
   
