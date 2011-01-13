@@ -705,7 +705,7 @@ $.get_param_value = function(key) {
 // replacement for the browser's confirm and alert box
 // msg: what to show in the pop up. action: callback if yes. cancel: callback if no. alert: do alert box instead (with only 1 btn). error: whether the alert is an error or simple alert.
 $.greyConfirm = function(msg, action, cancel, alert, error) {
-	var pop_up = $('<div id="pop_up" class="'+ (typeof(alert) == 'undefined' || !alert ? 'confirm_box' : 'alert_box') +'"><p>' + msg +'</p>').dialog({ 
+	var pop_up = $('<div id="pop_up" class="'+ (typeof(alert) == 'undefined' || !alert ? 'confirm_box' : 'alert_box') +'"></div>').dialog({ 
 		title: alert ? (error ? 'Alert' : 'Notice') : 'Confirm',
 		width: 400,
 		height: 'auto',
@@ -714,9 +714,12 @@ $.greyConfirm = function(msg, action, cancel, alert, error) {
 		close: function() { $(this).dialog('destroy') }
 	});
 	
-	if (typeof(alert) != 'undefined') var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a></div>'; 
-	else var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a></div>';
-	pop_up.append(btns);
+	if (typeof(alert) != 'undefined') 
+		var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a>'; 
+	else 
+		var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a>';
+	
+	pop_up.html('<p>' + msg +'</p>'+ btns);
 	
 	$('.btn', pop_up).click(function() {
 		if (typeof(alert) == 'undefined' || !alert) {
