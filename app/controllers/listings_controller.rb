@@ -59,11 +59,13 @@ class ListingsController < ApplicationController
       @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-      
-      render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
     else
-      
+      @listings = []
+      @location = @search.location
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => [] }
     end
+    
+    render :json => { :success => true, :data => { :html => render_to_string(:action => 'compare', :layout => false), :maps_data => @map_data } }
   end
 
   def show
@@ -240,7 +242,6 @@ class ListingsController < ApplicationController
   def get_listing_relations
     @map = @listing.map
     @pictures = @listing.pictures
-    @special = @listing.specials.last || (@listing.client && @listing.specials.new)
     @search = Search.find_by_id session[:search_id]
     
     if action_name == 'profile'

@@ -2,6 +2,13 @@
 	<% form_for @client, :id => 'client_settings' do |f| %>
 		<table cellspacing="0" cellpadding="0">
 			<tr>
+				<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
+				<td id="user_hint_toggles">
+					<p><%= radio_button_tag 'user_hints', 'open', !all_hints_hidden_for?(@client) %> Show</p>
+					<p><%= radio_button_tag 'user_hints', 'hide', all_hints_hidden_for?(@client)  %> Hide</p>
+				</td>
+			</tr>
+			<tr>
 				<th title="Setup where and when to send reports"><p>Email reports: </p></th>
 				<td id="email_reports_settings">
 					<% f.fields_for :settings, (@client.settings || @client.build_settings) do |s| %>
@@ -13,10 +20,15 @@
 				</td>
 			</tr>
 			<tr>
-				<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
-				<td id="user_hint_toggles">
-					<p><%= radio_button_tag 'user_hints', 'open', !all_hints_hidden_for?(@client) %> Show</p>
-					<p><%= radio_button_tag 'user_hints', 'hide', all_hints_hidden_for?(@client)  %> Hide</p>
+				<th title="Update your password"><p>Password: </p></th>
+				<td>
+					<p>
+						<%= f.password_field :password, :class => 'text password' %>
+					</p>
+					<p>
+						<%= f.password_field :password_confirmation, :class => 'text confirm' %>
+						<span class="note">Confirm password</span>
+					</p>
 				</td>
 			</tr>
 		</table>

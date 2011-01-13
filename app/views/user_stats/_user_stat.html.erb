@@ -1,0 +1,10 @@
+<table class="user_stat" cellspacing="0" cellpadding="">
+	<tbody>
+		<% user_stat.attributes.each_pair do |key, val| -%>
+		<tr>
+			<th><%=h key.titleize %></th>
+			<td><%=h val %></td>
+		</tr>
+		<% end -%>
+	</tbody>
+</table>

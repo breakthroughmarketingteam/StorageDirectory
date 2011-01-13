@@ -67,13 +67,18 @@ class Client < User
   end
 
   def update_info(info)
-    if info[:settings_attributes]
-      settings = self.settings || self.build_settings(info[:settings_attributes])
-      settings.new_record? ? settings.save : settings.update_attributes(info[:settings_attributes])
+    if sets = info.delete(:settings)
+      settings = self.settings || self.build_settings(sets)
+      settings.new_record? ? settings.save : settings.update_attributes(sets)
     end
     
-    self.mailing_address_attributes = info[:mailing_address_attributes] if info[:mailing_address_attributes]
-    self.billing_info_attributes = info[:billing_info_attributes] if info[:billing_info_attributes]
+    self.mailing_address_attributes = info.delete(:mailing_address_attributes) if info[:mailing_address_attributes]
+    self.billing_info_attributes = info.delete(:billing_info_attributes) if info[:billing_info_attributes]
+    
+    if info[:password]
+      self.password = info[:password]
+      self.password_confirmation = info[:password_confirmation]
+    end
     
     self.save
   end

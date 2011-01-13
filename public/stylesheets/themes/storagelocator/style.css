@@ -149,7 +149,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
 .ui-widget-header{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;-moz-border-radius-topright:8px;border-radius-topright:8px;-webkit-border-radius-topright:8px;-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(/images/ui/storagelocator/purple-bg.png) repeat scroll center top transparent;border:3px solid #fff;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;padding:0.5em 1em 0.3em;}
-#compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;}
+#compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;font-size:119%;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-59px;width:510px;z-index:500;}
@@ -766,7 +766,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header ul{}
 #ov-units,#ov-reports,#ov-info,#ov-specials,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;}
 .ov-item-head{background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
-#ov-info .ov-item-head .success_msg{color:#393;position:absolute;right:110px;}
+.ov-item-head .success_msg{color:#393;position:absolute;right:110px;}
 #ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,.ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,.ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
@@ -1652,6 +1652,10 @@ form .note{clear:both;display:block;font-size:80%;}
 .confirm_box p,.alert_box p{font-size:100%;text-align:center;}
 .confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;}
 .confirm_box #confirm_yes{right:10px;}
+.auth_box #confirm_yes{bottom:0;right:15px;}
+.auth_box div{margin:20px 15px 0;}
+.auth_box p{font-size:80%;margin-bottom:11px;}
+.auth_box input{padding:0 4px;width:69%;height:20px;}
 .confirm_box #confirm_cancel{left:10px;}
 
 #fac-results ul li{font-size:16px;list-style:disc;margin-top:22px;}
@@ -2029,6 +2033,11 @@ p.breadcrumb a{color:#fff;}
 .admin_listing_form legend{background:#EBEBEB;display:block;margin:10px 0;padding:5px 10px;width:98%;}
 .admin_listing_form input[type="text"],.admin_listing_form textarea{width:75%;}
 .admin_listing_form .shorter div.left{width:48%;}
+
+#auth_yourself{display:none;position:relative;}
+#auth_yourself .invalid{height:23px;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
+#auth_yourself .flash{bottom:1px;font-size:80%;margin:0 13px;position:absolute;right:-18px;}
+#al_auth_yourself{position:absolute;bottom:25px;right:98px;}
 
 #pms{}
 #pms ul{margin:0;width:100%;}

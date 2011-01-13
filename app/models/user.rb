@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_one  :profile_image, :class_name => 'Image'
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
+  has_many :user_stats
   has_many :mailing_addresses
   accepts_nested_attributes_for :mailing_addresses
   
@@ -59,6 +60,8 @@ class User < ActiveRecord::Base
     
     self.activation_code = self.make_activation_code
     self.status          = 'unverified'
+    self.role_id         = params[:role_id] if params
+    self.type            = self.class.name
   end
   
   def name

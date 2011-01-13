@@ -70,3 +70,5 @@ sub { vertical-align:text-bottom; }
 sup, sub { font-size: 1.2em; }
 html > body p code { *white-space:normal; }
 a abbr, a acronym { text-decoration: underline; }
+
+#ie_warn{padding:10px 20px;border:1px solid #ebebeb;font-size:140%;text-align:center;color:#ccc;}

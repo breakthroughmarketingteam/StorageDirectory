@@ -12,33 +12,38 @@
         <title><%= yield :title %></title>
         
         <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        
         <!--[if lte IE 7]>
             <link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
         <![endif]-->
-        
         <!--[if lt IE 7]>
             <script type="text/javascript" src="javascripts/jquery.dropdown.js"></script>
         <![endif]-->
         
-		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 %>
-        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) %>
-        <%= javascript_include_tag 'jquery.all' %>
+		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 -%>
+        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) -%>
+        <%= javascript_include_tag 'jquery.all' -%>
         <script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= GOOGLE_APPLICATION_ID %>'></script>
-		<% unless @map_data.nil? %><script type="text/javascript">var Gmaps_data = <%= @map_data.to_json %>;</script><% end %>
-        <%= if params[:title] == 'storage-tips' then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end %>
-        <%= javascript_include_tag @plugins %>
-        <%= yield :scripts %>
-        <%= javascript_include_tag 'greymatter', 'application' %>
+		<% unless @map_data.nil? -%><script type="text/javascript">var Gmaps_data = <%= @map_data.to_json %>;</script><% end %>
+        <%= if params[:title] == 'storage-tips' then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end -%>
+        <%= javascript_include_tag @plugins -%>
+        <%= yield :scripts -%>
+		<%= "<script type='text/javascript'>var usssl_stat_path = '#{user_user_stat_path current_user, @user_stat}';</script>" if current_user && !is_admin? -%>
+        <%= javascript_include_tag 'greymatter', 'application' -%>
 		<%= javascript_include_tag 'swfobject_modified' %>
-        
     </head>
     <body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
         <div id="topbar">
             <%= render :partial => 'menus/topnav' %>
         </div>
+		<!--[if lte IE 6]>
+            <div id="ie_warn">
+				It seems you are using a very outdated browser which does not support all of the features of this website. 
+				It is recommended to <a href="http://www.mozilla.com/en-US/firefox/" target="_blank">upgrade your browser</a> 
+				to benefit from security enhancements as well as being able to use cool websites like this one.
+			</div>
+        <![endif]-->
         <div id="page-ctr">
             <div id="head-ctr">
                 <div id="head-ctr-in">
@@ -138,6 +143,14 @@
 				_kiq.push(['identify', <%= current_user.id %>]);
 			</script>
 			<% end %>
+			<!-- Start of HubSpot Logging Code  -->
+			<script type="text/javascript" language="javascript">
+				var hs_portalid = 16986; 
+				var hs_salog_version = "2.00";
+				var hs_ppa = "usselfstoragelocator.app101.hubspot.com";
+				document.write(unescape("%3Cscript src='" + document.location.protocol + "//" + hs_ppa + "/salog.js.aspx' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<!-- End of HubSpot Logging Code -->
 		<% end %>
     </body>
 </html>
