@@ -60,7 +60,7 @@ class Listing < ActiveRecord::Base
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
   @@searchables    = %w(title address city state zip)
-  @@categories     = ['self_storage', 'mobile_storage', 'cold_storage', 'car_storage', 'boat_storage', 'rv_storage', 'truck_rentals', 'moving_companies']
+  @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
   cattr_accessor :top_types, :comparables, :searchables, :categories
   
   #
