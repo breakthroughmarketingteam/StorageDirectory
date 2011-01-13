@@ -1617,7 +1617,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #info_tabs li.first a{color:#000;font-size:22px;font-weight:bold;padding:5px 0 15px 15px;}
 #info_tabs li.first{}
 #info_tabs li.first a:hover{background:none;}
-#info_tabs li a{border-bottom:1px dotted #ddd;color:#4c4bcc;display:block;font-weight:normal;height:20px;padding:10px 0 0 15px;text-decoration:none;}
+#info_tabs li a{border-bottom:1px dotted #ddd;color:#4c4bcc;display:block;font-weight:normal;height:19px;padding:8px 0 0 15px;text-decoration:none;}
 #info_tabs li a:hover{background:#f3f3f3}
 
 
