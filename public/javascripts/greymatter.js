@@ -754,7 +754,7 @@ $.authenticate_user_and_do = function(btn, callback, bypass) {
 			close: function() { $(this).dialog('destroy').remove() }
 		});
 
-		pop_up.append($('#auth_yourself', '#content').clone().show());
+		pop_up.append($('#auth_yourself', '#content').clone().css('display', 'block'));
 		var input = $('input', pop_up).removeClass('invalid').focus();
 		
 		$('#confirm_yes', pop_up).click(function() { $(this).parents('form').submit(); return false; });
