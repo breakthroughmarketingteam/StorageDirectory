@@ -31,6 +31,9 @@ $(function(){
 	// highlight text within a text field or area when focused
 	$('.click_sel').live('focus', function() { $(this).select() });
 	
+	$.preloadCssImages();
+	$.updateUserStat();
+	
 	$('.greyConfirm').live('click', function() {
 		$.greyConfirm('Are you sure?', function() {
 			return true;
@@ -591,6 +594,12 @@ $.updateModel = function(path, params, callback) {
 			else alert(data);
 		});
 	}, 'json');
+}
+
+// updates the stats for a logged in user
+$.updateUserStat = function() {
+	if (typeof usssl_stat_path != 'undefined')
+		$.post(usssl_stat_path, { browser_vars: $.browserVars(), _method: 'put' });
 }
 
 // retrieve the attributes/columns of given resource/model, e.g. pages, users, posts

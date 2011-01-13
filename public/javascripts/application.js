@@ -6,7 +6,6 @@ $(function() {
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 
 	$.translate_with(translations);
-	$.preloadCssImages();
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {

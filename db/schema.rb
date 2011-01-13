@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110112205333) do
+ActiveRecord::Schema.define(:version => 20110112221630) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -905,6 +905,7 @@ ActiveRecord::Schema.define(:version => 20110112205333) do
     t.text     "env"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "browser_vars"
   end
 
   create_table "users", :force => true do |t|

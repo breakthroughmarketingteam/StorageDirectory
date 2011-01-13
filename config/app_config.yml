@@ -1,19 +1,19 @@
 --- 
 production: 
-  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages
+  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo
   title: US Self Storage Locator
   theme: storagelocator
   widgets: 
   description: "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory."
   keywords: "rent self storage, rent mobile storage, advertise self storage facility"
 development: !map:HashWithIndifferentAccess 
-  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages
+  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo
   title: US Self Storage Locator
   theme: storagelocator
   description: "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory."
   keywords: "rent self storage, rent mobile storage, advertise self storage facility"
 test: 
-  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages
+  plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo
   theme: storagelocator
   title: US Self Storage Locator
   widgets: 

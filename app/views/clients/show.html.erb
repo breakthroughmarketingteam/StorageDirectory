@@ -65,15 +65,19 @@
 			</div>
 			<%= render :partial => 'settings' %>
 		</div>
+		
+		<div id="ov-stats" class="hideable">
+			<div class="ov-item-head">
+				<h3><span>Last Request Browser Info</span></h3>
+			</div>
+			<div class="framed">
+				<%= render @client.user_stats.last %>
+			</div>
+		</div>
 	</div>
 </div>
 
-
-<div class="round box framed uncollapse stack">
-  
-</div>
-
 <div class="uncollapse">
-  <div class="right"><%= link_to "#{@client.name.possessive} Images", user_images_path(@client) %></div>
-  <div class="buttons"><%= button_to 'Edit', edit_user_path, { :method => 'get' } %></div>
+  	<div class="right"><%= link_to "#{@client.name.possessive} Images", user_images_path(@client) %></div>
+  	<div class="buttons"><%= button_to 'Edit', edit_user_path, { :method => 'get' } %></div>
 </div>
