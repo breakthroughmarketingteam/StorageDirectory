@@ -94,7 +94,7 @@ class UsersController < ApplicationController
   private
   
   def get_users
-    @users = User.paginated :all, :conditions => { :type => 'User' }, :per_page => 15, :page => params[:page]
+    @users = User.all(:conditions => { :type => 'User' }).paginate :per_page => 15, :page => params[:page]
   end
   
   def get_roles

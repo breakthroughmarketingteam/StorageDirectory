@@ -174,6 +174,10 @@ class Listing < ActiveRecord::Base
     self.client.display_special if self.client
   end
   
+  def categories
+    self.storage_types.downcase.split(/,\s?/)
+  end
+  
   def admin_fee
     val = read_attribute(:admin_fee) || 20
     val /= 100 if val > 100

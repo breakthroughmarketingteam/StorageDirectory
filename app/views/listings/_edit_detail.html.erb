@@ -74,7 +74,7 @@
 				<td>
 					<ul>
 						<% Listing.categories.each do |category| %>
-							<li><%= f.check_box :storage_types, :value => category %><%= f.label :storage_types, category.titleize %></li>
+							<li><%= f.check_box :storage_types, :value => category, :checked => @listing.categories.include?(category) %><%= f.label :storage_types, category.titleize %></li>
 						<% end %>
 					</ul>
 				</td>
