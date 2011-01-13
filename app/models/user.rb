@@ -60,8 +60,8 @@ class User < ActiveRecord::Base
     
     self.activation_code = self.make_activation_code
     self.status          = 'unverified'
-    self.role_id         = params[:role_id]
-    self.type            = 'User'
+    self.role_id         = params[:role_id] if params
+    self.type            = self.class.name
   end
   
   def name
