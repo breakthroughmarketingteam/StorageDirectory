@@ -71,7 +71,7 @@
 				<h3><span>Last Request Browser Info</span></h3>
 			</div>
 			<div class="framed">
-				<%= render @client.user_stats.last %>
+				<%= render @client.user_stats.last unless @client.user_stats.empty?  %>
 			</div>
 		</div>
 	</div>
