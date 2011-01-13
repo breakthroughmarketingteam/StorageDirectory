@@ -584,4 +584,8 @@ module ApplicationHelper
     end
   end
   
+  def secure_path_fix(url)
+    request.protocol =~ /(https)/i ? url.sub('http:', 'https:') : url
+  end
+  
 end
