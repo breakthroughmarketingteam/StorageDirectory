@@ -49,22 +49,22 @@
                 <div id="head-ctr-in">
                     <div id="oldlogo">
                         <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="80" height="90">
-                          <param name="movie" value="/images/ui/storagelocator/usselfstoragelocator-flogo.swf" />
+                          <param name="movie" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" />
                           <param name="quality" value="high" />
                           <param name="wmode" value="transparent" />
                           <param name="swfversion" value="6.0.65.0" />
                           <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-                          <param name="expressinstall" value="/files/expressInstall.swf" />
+                          <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
                           <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
                           <!--[if !IE]>-->
-                          <object type="application/x-shockwave-flash" data="/images/ui/storagelocator/usselfstoragelocator-flogo.swf" width="80" height="90">
+                          <object type="application/x-shockwave-flash" data="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" width="80" height="90">
                             <!--<![endif]-->
                             <param name="quality" value="high" />
                             <param name="wmode" value="opaque" />
                             <param name="swfversion" value="6.0.65.0" />
-                            <param name="expressinstall" value="/files/expressInstall.swf" />
+                            <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
                             <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
-                            <a href="/"><img src="/images/ui/storagelocator/usselfstoragelocator-flogo.png" alt="USSelfStorageLocator.com" /></a>
+                            <a href="/"><img src="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.png" alt="USSelfStorageLocator.com" /></a>
                             <!--[if !IE]>-->
                           </object>
                           <!--<![endif]-->

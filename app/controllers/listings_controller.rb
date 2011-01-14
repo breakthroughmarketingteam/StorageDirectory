@@ -83,8 +83,8 @@ class ListingsController < ApplicationController
   
   def create
     @listing = Listing.new params[:listing]
-    #@listing.status = 'verified'
-    #@listing.enabled = true
+    @listing.status = 'verified'
+    @listing.enabled = true
     
     respond_to do |format|
       format.html do
@@ -217,7 +217,7 @@ class ListingsController < ApplicationController
   def request_review
     unless params[:review_request].blank?
       params[:review_request].split(/,|;|^./).reject(&:blank?).map{ |e| e.gsub("\n", '') }.each do |email|
-        Notifier.deliver_review_request(email, params[:message], @listing, @client)
+        Notifier.delay.deliver_review_request(email, params[:message], @listing, @client)
       end
       render :json => { :success => true }
     else
@@ -229,13 +229,14 @@ class ListingsController < ApplicationController
   end
   
   def tracking_request
-    Notifier.deliver_tracking_request @listing, @client, params[:phone_number]
+    Notifier.delay.deliver_tracking_request @listing, @client, params[:phone_number]
     flash[:notice] = "Your request is being processed. Please allow 24 hours for setup. We will email you when it's done."
     redirect_to client_listing_path(@listing)
   end
   
   def sync_issn
-    render :json => { :success => @listing.update_unit_types_and_sizes }
+    @listing.send_later :update_unit_types_and_sizes
+    render :json => { :success => true }
   end
   
   private
