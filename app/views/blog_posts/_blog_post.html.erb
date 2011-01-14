@@ -1,6 +1,8 @@
 <% blog_post ||= model %>
 <div class="blog_post_view">	
 	<div class="blog_post uncollapse">
+		<%= render :partial => 'posts/post_date', :locals => { :post => blog_post } %>
+		
 		<h4 class="left"><%= link_to blog_post.name_or_title, blog_post %></h4>
 		
 		<div class="blog_post_info">
@@ -18,6 +20,5 @@
 		<% end %>
 			
 		<%= render :partial => 'posts/meta', :locals => { :post => blog_post } %>
-			
 	</div>
 </div>
