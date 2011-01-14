@@ -152,9 +152,9 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;font-size:119%;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
-#offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-59px;width:510px;z-index:500;}
-#offset_search_box #search_query{border:3px solid #9999ff;font-size:16px;height:25px;margin-right:10px;padding:2px 10px;width:62%;}
-#offset_search_box .grn_btn{position:relative;}
+#offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-58px;width:510px;z-index:500;}
+#offset_search_box #search_query{border:2px solid #9999ff;font-size:16px;height:26px;margin-right:10px;padding:2px 10px;width:62%;}
+#offset_search_box .grn_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;position:relative;}
 .storage_info #offset_search_box{top:-58px;}
 #oldlogo{float:left;height:103px;margin-left:40px;margin-top:11px;position:relative;}
 #oldlogo object,#oldlogo a{position:absolute;}
@@ -292,7 +292,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .num_icon{background:url("/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
-.rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;width:159px;}
+.rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;position:relative;width:159px;}
 .listing .dnp{overflow:hidden;height:100px;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0;}
 .rslt-title h3{float:left;font-size:19px;height:26px;padding:12px 0 0 20px;}
@@ -317,7 +317,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .rslt-price .radio_wrap label{float:left;overflow:hidden;line-height:1.7;width:81.1%;text-align:right;}
 .rslt-price .radio_wrap label .type{display:block;float:left;padding:0 0 1px;text-align:left;width:50px;}
-.listing .action_btn{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 2px #999;border:1px solid #666;font-size:20px;height:44px;line-height:41px;margin:27px 10px 0 0;position:absolute;top:38px;right:0;text-align:center;text-shadow:1px 1px 0 #666;width:90px;}
+.listing .action_btn{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;border:1px solid #666;font-size:20px;height:44px;line-height:41px;margin:27px 10px 0 0;position:absolute;top:38px;right:0;text-align:center;text-shadow:1px 1px 0 #555;width:90px;}
 #client_listing_box .listing .action_btn{top:0;right:8px;background:url(/images/ui/storagelocator/request-btn.png) repeat-x;}
 #client_listing_box .listing .action_btn:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) repeat-x;}
 .listing .action_btn a{color:#fff;text-decoration:none;display:block;font-weight:bold;margin-top:3px;padding-left:2px;}
@@ -1531,7 +1531,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #disocunt_pic{margin-top:5px;}
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
-.grn_btn{font-size:100%;color:#fff;text-shadow:1px 1px 0px #666;font-weight:bold;text-transform:uppercase;padding:5px 25px;cursor:pointer;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat;border:1px solid #666;}
+.grn_btn{background:url(/images/ui/storagelocator/green-btn-bg.png) repeat scroll 0 0 transparent;border:2px outset #eee;color:#fff;cursor:pointer;font-size:100%;font-weight:bold;padding:4px 25px;text-shadow:1px 1px 0 #666;text-transform:uppercase;}
 .grn_btn:hover{}
 .ui-menu .ui-menu-item a{padding:2px 11px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
@@ -1729,7 +1729,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .show_action #sl-header h2{font-size:20px;margin:8px 0 0 15px;}
 .show_action #sl-header span{font-size:20px;}
 
-.tooltip{display:none;background:url(http://static.flowplayer.org/tools/img/tooltip/black_arrow.png);height:70px;padding:40px 30px 10px 30px;width:149px;font-size:11px;color:#fff;z-index:999;}
+.tooltip{display:none;background:url(/images/ui/storagelocator/text-bubble.png) no-repeat;height:56px;padding:20px 10px 0 10px;width:81px;font-size:12px;font-weight:bold;color:#4c4bcc;z-index:999;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
 
@@ -2052,4 +2052,4 @@ p.breadcrumb a{color:#fff;}
 #alexa a{float:left;height:65px;width:120px;}
 #alexa p{float:left;font-size:12px;margin:24px 0 0 20px;}
 
-#claim{font-size:10px;}
+.claim{bottom:12px;font-size:10px;position:absolute;}
