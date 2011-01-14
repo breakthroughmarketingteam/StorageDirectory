@@ -36,6 +36,10 @@ Rails::Initializer.run do |config|
   config.gem 'ajaxful_rating'
   config.gem 'ssl_requirement'
   config.gem 'delayed_job', :version => '~>2.0.4'
+  config.gem "heroscale"
+  require "heroscale"
+  config.middleware.use "Heroscale::Middleware"
+  
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

@@ -53,7 +53,6 @@ $(function() {
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				if (response.success) {
 					if (response.role == 'advertiser') {
-						console.log(response.account_path)
 						window.location = response.account_path;
 					} else {
 						$('#topbar').html(response.data);
