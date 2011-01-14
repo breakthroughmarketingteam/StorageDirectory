@@ -1101,24 +1101,10 @@ $(function() {
 	$('#sync_listing').click(function() {
 		var $this = $(this).text('Syncing'),
 			ajax_loader = $this.siblings('.ajax_loader').show(),
-			loading_txt = $('.loading_txt', $this.parent()).show(),
 			sizes_in = $('#sl-tabs-sizes-in').addClass('faded');
 		
-		$('.edit-btn', sizes_in).hide();
-		
-		$.post($this.attr('href'), {}, function(response) {
-			$.with_json(response, function(data){
-				$this.text('Reloading');
-				
-				$.getJSON('/ajax/get_partial?model=Listing&id='+ $('#listing_id').val() +'&partial=listings/sizes', function(resp){
-					if (resp.success) sizes_in.replaceWith($(resp.data).find('#sl-tabs-sizes-in'));
-					else $.ajax_error(resp);
-					
-					loading_txt.hide();
-					ajax_loader.hide();
-					$this.text('Sync');
-				});
-			});
+		$.post($this.attr('href'), {}, function() {
+			$.greyAlert('Your unit details are being synced. Reload the page after few minutes to see the changes.', false);
 		}, 'json');
 		
 		return false;

@@ -1,0 +1,8 @@
+# Logfile created on Fri Jan 14 14:37:28 -0500 2011 by logger.rb/22285
+2011-01-14T14:37:28-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] Starting job worker
+2011-01-14T14:37:28-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] acquired lock on Listing#update_unit_types_and_sizes
+2011-01-14T14:40:18-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] Listing#update_unit_types_and_sizes completed after 169.6939
+2011-01-14T14:40:18-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] acquired lock on Listing#update_unit_types_and_sizes
+2011-01-14T14:43:24-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] Listing#update_unit_types_and_sizes completed after 186.0619
+2011-01-14T14:43:24-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] acquired lock on Listing#update_unit_types_and_sizes
+2011-01-14T14:44:35-0500: [Worker(delayed_job host:Diego-iMac.local pid:8303)] Exiting...

@@ -104,7 +104,7 @@ class ClientsController < ApplicationController
   
   def resend_activation
     @client = Client.find_by_activation_code params[:code]
-    Notifier.deliver_client_notification @client
+    Notifier.delay.deliver_client_notification @client
     
     render :json => { :success => true }
   rescue => e
@@ -124,7 +124,7 @@ class ClientsController < ApplicationController
   def verify
     @client.enable_listings!
     @partial = 'activation_email'
-    Blaster.deliver_html_email @client.email, "Your account is ready at USSelfStorageLocator.com", render_to_string(:layout => 'email_template')
+    Blaster.delay.deliver_html_email @client.email, "Your account is ready at USSelfStorageLocator.com", render_to_string(:layout => 'email_template')
     
     respond_to do |format|
       format.html { redirect_back_or_default '/admin' }

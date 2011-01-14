@@ -2,7 +2,6 @@
 <div id="sl-tabs-sizes" class="sizes_list <%= 'tab_content' if in_mode?('show') %>">
 	<% if (is_facility_owner? || is_admin?) && in_mode?('profile') %>
 		<%= ajax_loader %>
-		<p class="loading_txt hide">This may take a few minutes</p>
 		<%= link_to 'Sync', sync_issn_listing_path(@listing), :id => 'sync_listing', :class => 'btn ajax_link', :title => 'Sync unit info with your Property Management System' if @listing.issn_enabled? %>
 	<% end %>
 
