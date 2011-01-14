@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   
-  before_filter :ensure_secure_subdomain, :only => :new
+  before_filter :ensure_secure_subdomain
   ssl_required :new
   ssl_allowed :create, :destroy
   before_filter :require_no_user, :only => :new

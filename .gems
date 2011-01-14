@@ -8,3 +8,4 @@ httparty
 cobravsmongoose
 dalli
 ssl_requirement
+delayed_job --version 2.0.4
