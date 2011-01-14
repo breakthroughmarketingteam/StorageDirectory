@@ -2053,3 +2053,6 @@ p.breadcrumb a{color:#fff;}
 #alexa p{float:left;font-size:12px;margin:24px 0 0 20px;}
 
 .claim{bottom:12px;font-size:10px;position:absolute;}
+
+.post_date{background:#66f;float:left;margin:0 10px 0 0;padding:5px;text-align:center;width:55px;}
+.post_date p{font-size:140%;}

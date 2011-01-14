@@ -7,6 +7,7 @@ class PagesController < ApplicationController
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :clear_empty_blocks_fields, :only => [:create, :update]
   before_filter :catch_nil_page, :only => :show
+  before_filter :scrub_blocks_model_attributes_params, :only => [:create, :update]
   geocode_ip_address :only => :show
   
   def index

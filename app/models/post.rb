@@ -11,6 +11,8 @@ class Post < ActiveRecord::Base
   validates_uniqueness_of :title
   validates_presence_of :title, :content
   
+  named_scope :published, :conditions =>  { :published => true }
+  
   acts_as_commentable
   acts_as_taggable_on :tags, :categories
   access_shared_methods

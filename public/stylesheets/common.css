@@ -263,6 +263,8 @@ a.toggle_down{background-image:url(/images/ui/toggle_icon-down.png);}
 .buttons a{font-size:75%;}
 .grey_buttons a:link,.grey_buttons a:visited{text-decoration:none;padding:3px 10px;background:url("/images/ui/button-bg.jpg") repeat-x top;border:1px solid #dadada;border-top:2px solid #fff;color:#555;text-shadow:0 1px #fff;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;cursor:pointer;line-height:2.3;}
 input[type='reset'],a.cancel:link{color:#a63217;}
+.subfields{width:101%;}
+.subfields .rowCheckable{float:left;margin:0 10px 10px 0;width:48.4%;}
 /* forms */
 #view_type_link_wrap{margin:5px 0;line-height:1.6;font-size:90%;}
 #view_type_link_wrap li{margin:0 2px;}
