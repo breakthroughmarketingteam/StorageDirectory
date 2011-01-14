@@ -45,7 +45,7 @@
 						<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
 					<% end %>
 				
-					<%= claim_listing_link(result) unless result.premium? %>
+					<%= claim_listing_link(result, :class => 'claim') unless result.premium? %>
 				</div>
 			
 				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>
