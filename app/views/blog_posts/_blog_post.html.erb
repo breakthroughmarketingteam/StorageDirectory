@@ -1,0 +1,23 @@
+<% blog_post ||= model %>
+<div class="blog_post_view">	
+	<div class="blog_post uncollapse">
+		<h4 class="left"><%= link_to blog_post.name_or_title, blog_post %></h4>
+		
+		<div class="blog_post_info">
+			<% if blog_post.respond_to?('user') && blog_post.user %>
+				<span> by <%= link_to blog_post.user.name, blog_post.user %></span>
+			<% end %>
+			
+			<% unless blog_post.timestamp.nil? %>
+				<span> on <%= blog_post.timestamp.asctime %></span>
+			<% end %>
+		</div>
+		
+		<% if blog_post.attributes.keys.include?('content') %>
+			<div class="blog_post_content stack"><%= blog_post.content_teaser %></div>
+		<% end %>
+			
+		<%= render :partial => 'meta', :locals => { :blog_post => blog_post } %>
+			
+	</div>
+</div>
