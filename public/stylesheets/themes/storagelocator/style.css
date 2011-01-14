@@ -2046,3 +2046,7 @@ p.breadcrumb a{color:#fff;}
 
 .spanish #comments_create_8{margin:0 20px;}
 .spanish .virtual_form textarea,.spanish .virtual_form input{margin:10px 0;padding:5px 10px;width: 715px;}
+
+#alexa{background:none repeat scroll 0 0 #eee;border:1px solid #999;height:65px;margin:40px 0;overflow:hidden;padding:5px;width:98%;}
+#alexa a{float:left;height:65px;width:120px;}
+#alexa p{float:left;font-size:12px;margin:24px 0 0 20px;}
