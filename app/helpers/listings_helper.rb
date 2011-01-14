@@ -295,9 +295,9 @@ module ListingsHelper
     '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
   end
   
-  def claim_listing_link(listing)
+  def claim_listing_link(listing, options = {})
     if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Claim and verify ownership', "/self-storage-advertising?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", :title => 'Claim this listing if you are the verifiable owner/manager.'
+      link_to 'Claim and verify ownership', "/self-storage-advertising?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", options.merge(:title => 'Claim this listing if you are the verifiable owner/manager.')
     end
   end
   

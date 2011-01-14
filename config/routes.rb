@@ -136,6 +136,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :roles
   map.resources :pages
   map.resources :posts, :member => { :rate => :post }
+  map.resources :blog_posts, :member => { :rate => :post }
   map.resources :blocks
   map.resources :comments
   map.resources :tags

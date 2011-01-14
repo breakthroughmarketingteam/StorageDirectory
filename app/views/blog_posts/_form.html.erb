@@ -1,0 +1,34 @@
+<fieldset>
+	
+	<div class="stack">
+		<%= f.label :title %>
+		<div class="shadow_wrap">
+			<%= f.text_field :title, :class => 'required' %>
+		</div>
+	</div>
+
+	<div class="stack">
+		<%= f.label :content, nil, :class => 'block_label' %>
+		<div class="shadow_wrap">
+			<%= f.text_area :content, :class => 'wysiwyg required' %>
+		</div>
+	</div>
+	
+	<div class="check_box_wrap stack">
+		<%= f.check_box :published %>
+		<%= f.label :published, nil, :class => 'small_label' %>
+	</div>
+	
+	
+	<div>
+		<%= f.label :tag_list %>
+		<div class="shadow_wrap">
+			<%= f.text_field :tag_list, :value => params[:tag_list], :class => 'autocomplete', :rel => 'Tag_names|1' %>
+		</div>
+	</div>
+	
+</fieldset>
+
+<%= render :partial => 'shared/assoc_form',
+	:locals => { :model_field => f, :model => @blog_post, :fields_title => 'Blocks', :enabled_models => @blog_post.enabled_blocks,
+	:disabled_models => reject_blocks_enabled_on_this(@blog_post, @blocks) } %>
