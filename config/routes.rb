@@ -107,7 +107,6 @@ ActionController::Routing::Routes.draw do |map|
     page.resources :suggestions
   end
   
-  map.connect 'posts/:title', :controller => 'posts', :action => 'show', :requirements => { :title => /\D+/ }
   map.resources :posts do |post|
     post.resources :views
     post.resources :blocks
@@ -175,6 +174,7 @@ ActionController::Routing::Routes.draw do |map|
   #     admin.resources :products
   #   end
   
+  map.connect 'posts/:title', :controller => 'posts', :action => 'show', :requirements => { :title => /\D+/ }
   map.ajax '/ajax/:action', :controller => 'ajax', :action => nil 
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }
