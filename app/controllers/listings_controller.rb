@@ -235,7 +235,8 @@ class ListingsController < ApplicationController
   end
   
   def sync_issn
-    render :json => { :success => @listing.update_unit_types_and_sizes }
+    @listing.send_later :update_unit_types_and_sizes
+    render :json => { :success => true }
   end
   
   private

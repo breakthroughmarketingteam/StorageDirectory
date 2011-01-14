@@ -1,226 +1,223 @@
-<% cache @listing do %>
-	<% declare_content_for %>
-	
-	<div class="staticContent">
-		<div id="type-one-r-col">
-			<div id="type-three-r-col-in">
-				<div id="sl-edit-tabs">
-					<div id="sl-tabs-in" class="tabular_content">
-						<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.city %>, <%= @listing.state %></h2>
-					
-						<%= display_message flash %>
-					
-						<ul id="sl-tabs-nav" class="tabular">
-							<%= content_tag :li, link_to("Details", '#fac_details_tab', :id => 'tab_Details', :rel => 'tab1') %>
-							<%= content_tag :li, link_to("Rental Settings", '#settings_tab', :id => 'settings', :rel => 'tab2') %>
-							<%= content_tag :li, link_to("Amenities/Specials", '#amenities_tab', :id => 'tab_Details', :rel => 'tab3') %>
-							<%= content_tag :li, link_to("Unit Sizes", '#unit_sizes_tab', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
-							<%= content_tag :li, link_to("Pictures", '#fac_pictures_tab', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
-							<%#= content_tag :li, link_to("Reports", '#reports_tab', :id => 'reports', :rel => 'fac_reports') %>
-							<%= content_tag :li, link_to("Reviews", '#reviews_tab', :id => 'reviews', :rel => 'fac_reviews') %>
-						</ul>
-						<!-- tab content -->
-						<span id="hint">Here you can change all the details for this facility.</span>
-						<div id="tab1" class="tab_content">
-							<div id="details" class="left">
-								<%= render :partial => 'edit_detail' %>
-							</div>
-							<div id="flogo" class="left">
-								<%= render :partial => 'logo_form' %>
-							</div>
-							<div id="descript" class="left">
-								<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
-									<h3 class="label">Description:</h3>
-								
-									<div class="inner">
-										<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
-										<%= f.text_area :description, :class => 'required', :rows => 6 %>
-									</div>
-								
-									<%= copy_all_link :description, @listing, :text => 'Copy to all listings', :title => 'Copy this description to all your other listings' %>
-								
-									<%= f.submit 'Save Changes', :id => 'listing_desc_submit', :class => 'save' %>
-									<%= ajax_loader %>
-								<% end %>
-							</div>
-							<div id="hours" class="left">
-								<h3 class="label">Hours:</h3>
+<% declare_content_for -%>
+<div class="staticContent">
+	<div id="type-one-r-col">
+		<div id="type-three-r-col-in">
+			<div id="sl-edit-tabs">
+				<div id="sl-tabs-in" class="tabular_content">
+					<h2 id="fac_name"><span><%= @listing.title %></span> - <%= @listing.city %>, <%= @listing.state %></h2>
+				
+					<%= display_message flash %>
+				
+					<ul id="sl-tabs-nav" class="tabular">
+						<%= content_tag :li, link_to("Details", '#fac_details_tab', :id => 'tab_Details', :rel => 'tab1') %>
+						<%= content_tag :li, link_to("Rental Settings", '#settings_tab', :id => 'settings', :rel => 'tab2') %>
+						<%= content_tag :li, link_to("Amenities/Specials", '#amenities_tab', :id => 'tab_Details', :rel => 'tab3') %>
+						<%= content_tag :li, link_to("Unit Sizes", '#unit_sizes_tab', :id => 'tab_Sizes', :rel => 'unit_sizes') %>
+						<%= content_tag :li, link_to("Pictures", '#fac_pictures_tab', :id => 'tab_Pictures', :rel => 'fac_pictures') %>
+						<%#= content_tag :li, link_to("Reports", '#reports_tab', :id => 'reports', :rel => 'fac_reports') %>
+						<%= content_tag :li, link_to("Reviews", '#reviews_tab', :id => 'reviews', :rel => 'fac_reviews') %>
+					</ul>
+					<!-- tab content -->
+					<span id="hint">Here you can change all the details for this facility.</span>
+					<div id="tab1" class="tab_content">
+						<div id="details" class="left">
+							<%= render :partial => 'edit_detail' %>
+						</div>
+						<div id="flogo" class="left">
+							<%= render :partial => 'logo_form' %>
+						</div>
+						<div id="descript" class="left">
+							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
+								<h3 class="label">Description:</h3>
+							
 								<div class="inner">
-									<%= render :partial => 'hours' %>
+									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
+									<%= f.text_area :description, :class => 'required', :rows => 6 %>
 								</div>
 							
-								<%= copy_all_link :business_hours, @listing, :text => 'Copy to all listings', :title => 'Copy these hours to all your other listings' %>
-								<%= submit_tag 'Save Changes', :class => 'save', :id => 'save_hours' %>
-								<%= ajax_loader %>
-							</div>
-						</div>
-						<div id="tab2" class="tab_content">
-							<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
-								<div id="admin_fee" class="left">
-									<h3 class="label">Administrative Fee:</h3>
-									<div class="inner">
-										$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
-									</div>
-								</div>
-								<div id="billing" class="left">
-									<h3 class="label">Billing Method:</h3>
-									<div class="inner">
-										<ul>
-											<li class="radio_wrap<%= ' selected' if @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
-											<li class="radio_wrap<%= ' selected' unless @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 0, :class => 'hide' %></span> <%= f.label :prorated, 'Fixed' %></li>
-										</ul>
-									</div>
-								</div>
-								<div id="tax" class="left">
-									<h3 class="label">State Tax:</h3>
-									<div class="inner">
-										<%= f.text_field :tax_rate, :size => 8, :maxlength => 5 %> % &nbsp; Set your State Tax here so it is added to every unit rental.
-									</div>
-								</div>
-						
-								<%= f.submit 'Save Changes', :class => 'save' %>
+								<%= copy_all_link :description, @listing, :text => 'Copy to all listings', :title => 'Copy this description to all your other listings' %>
+							
+								<%= f.submit 'Save Changes', :id => 'listing_desc_submit', :class => 'save' %>
 								<%= ajax_loader %>
 							<% end %>
 						</div>
-						<div id="tab3" class="tab_content">
-							<div id="features" class="uncollapse stack">
-								<h3 class="label">Facility Amenities:</h3>
-								<div class="inner">
-									<%= render :partial => 'features' %>
-								</div>
-							</div>
-							<div id="specials" class="uncollapse stack">
-								<h3 class="label">Specials:</h3>
-								<div class="inner">
-									<%= render_hints_for :specials %>
-									<p>Select one or more preset specials to make it available for this facility.</p>
-									<% form_tag toggle_specials_client_path(@client) do %>
-										<ul id="toggle_specials">
-											<%= render :partial => PredefinedSpecial.all %>
-										</ul>
-									<% end %>
-								</div>
+						<div id="hours" class="left">
+							<h3 class="label">Hours:</h3>
+							<div class="inner">
+								<%= render :partial => 'hours' %>
 							</div>
 						
-							<%= submit_tag 'Save Changes', :class => 'save' %>
+							<%= copy_all_link :business_hours, @listing, :text => 'Copy to all listings', :title => 'Copy these hours to all your other listings' %>
+							<%= submit_tag 'Save Changes', :class => 'save', :id => 'save_hours' %>
+							<%= ajax_loader %>
 						</div>
-						<div id="unit_sizes" class="tab_content">
-							<div id="custom_sizes">
-								<h3>My Unit Sizes</h3>
-								<% unless @listing.issn_enabled? %>
-									<p>Create a custom unit size...</p>
-								<% else %>
-									<p>These are your units that were synchronized with your facility management software...</p>
-								<% end %>
-								<%= render :partial => 'sizes' unless in_mode?('show') && @listing.available_sizes.empty? %>
+					</div>
+					<div id="tab2" class="tab_content">
+						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
+							<div id="admin_fee" class="left">
+								<h3 class="label">Administrative Fee:</h3>
+								<div class="inner">
+									$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
+								</div>
 							</div>
-							
+							<div id="billing" class="left">
+								<h3 class="label">Billing Method:</h3>
+								<div class="inner">
+									<ul>
+										<li class="radio_wrap<%= ' selected' if @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 1, :class => 'hide' %></span> <%= f.label :prorated, 'Prorated' %></li>
+										<li class="radio_wrap<%= ' selected' unless @listing.prorated? %>"><span class="radio_select"><%= f.radio_button :prorated, 0, :class => 'hide' %></span> <%= f.label :prorated, 'Fixed' %></li>
+									</ul>
+								</div>
+							</div>
+							<div id="tax" class="left">
+								<h3 class="label">State Tax:</h3>
+								<div class="inner">
+									<%= f.text_field :tax_rate, :size => 8, :maxlength => 5 %> % &nbsp; Set your State Tax here so it is added to every unit rental.
+								</div>
+							</div>
+					
+							<%= f.submit 'Save Changes', :class => 'save' %>
+							<%= ajax_loader %>
+						<% end %>
+					</div>
+					<div id="tab3" class="tab_content">
+						<div id="features" class="uncollapse stack">
+							<h3 class="label">Facility Amenities:</h3>
+							<div class="inner">
+								<%= render :partial => 'features' %>
+							</div>
+						</div>
+						<div id="specials" class="uncollapse stack">
+							<h3 class="label">Specials:</h3>
+							<div class="inner">
+								<%= render_hints_for :specials %>
+								<p>Select one or more preset specials to make it available for this facility.</p>
+								<% form_tag toggle_specials_client_path(@client) do %>
+									<ul id="toggle_specials">
+										<%= render :partial => PredefinedSpecial.all %>
+									</ul>
+								<% end %>
+							</div>
+						</div>
+					
+						<%= submit_tag 'Save Changes', :class => 'save' %>
+					</div>
+					<div id="unit_sizes" class="tab_content">
+						<div id="custom_sizes">
+							<h3>My Unit Sizes</h3>
 							<% unless @listing.issn_enabled? %>
-								<div id="predefined_sizes">
-									<h3>Standard Sizes</h3>
-									<p>Or choose from these common unit sizes</p>
-									<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
+								<p>Create a custom unit size...</p>
+							<% else %>
+								<p class="left">These are your units that were synchronized with your facility management software...</p>
+							<% end %>
+							<%= render :partial => 'sizes' %>
+						</div>
+						
+						<% unless @listing.issn_enabled? %>
+							<div id="predefined_sizes">
+								<h3>Standard Sizes</h3>
+								<p>Or choose from these common unit sizes</p>
+								<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
+							</div>
+						<% end %>
+					</div>
+					<div id="fac_pictures" class="tab_content">
+						<p class="label">Facility Pictures:</p>
+						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
+					</div>
+					<div id="fac_reports" class="tab_content">
+						<div id="leads" class="left">
+							<form class="">Show:
+								<select name="type" class="right_space">
+									<option value="0">Lead Type</option>
+									<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
+								  	<option value="5">Banner Clicks</option>	<option value="9">Directions</option>
+								</select> for:
+
+								<select name="range" class="right_space">
+									<option value="180">2 Years</option>
+									<option value="180">1 Year</option>
+									<option selected="" value="180">6 Months</option>
+									<option value="90">3 Months</option>
+									<option value="31">1 Month</option>
+									<option value="14">2 Weeks</option>
+									<option value="0">Today</option>
+								</select>
+						
+								<div class="right"><input type="submit" value="Refine" class="button2"></div>
+							</form>
+							<table id="display_reports">
+								<thead>
+								    <tr>
+							            <th class="col1"><a href="#" class="" title="Sort on Leads">Type</a></th>
+							            <th class="col2"><a href="#" class="" title="Sort on Time">Time</a></th>
+							            <th class="col3"><a href="#" class="" title="Sort on Name">Name</a></th>
+							            <th class="col4"><a href="#" class="" title="Sort on Phone">Phone</a></th>
+							            <th class="col5"><a href="#" class="" title="Sort on Email">Email</a></th>
+							            <th class="col6"><a href="#" class="" title="Sort on More Info">More Info</a></th>
+							        </tr>
+								</thead>
+								<tbody>
+									<% 7.times do %>
+										<tr class="">
+								            <td>Phone Call</td>
+								            <td>12/02/2010 at 1:24 pm</td>
+								            <td>John Smith</td>
+								            <td>(954) 630-6731</td>
+								            <td>myemail@web.com</td>
+								            <td class="miscinfo"><a href="">Voice Recording</a></td>
+									    </tr>
+										<tr class="alt">
+								            <td>Rental</td>
+								            <td>12/02/2010 at 1:24 pm</td>
+								            <td>John Smith</td>
+								            <td>(954) 630-6731</td>
+								            <td>myemail@web.com</td>
+									        <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
+									    </tr>
+									<% end %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div id="fac_reviews" class="tab_content">
+						<div id="request_review" class="stack uncollapse">
+							<h3>Request a Review</h3>
+							<p>Send people you know a request to review your facility. Put each email on a new line.</p>
+						
+							<% form_tag request_review_listing_path(@listing), :id => 'request_review_form' do %>
+								<div class="stack">
+									<%= text_area_tag 'review_request', nil, :class => 'required hintable', :title => "friend1@email.com\nfriend2@emai.com\n..." %>
+								</div>
+							
+								<div>
+									<%= label_tag 'message', 'Personal Message' %>
+									<%= text_area_tag 'message', nil, :class => 'required hintable', :title => "Optional message" %>
+								</div>
+							
+								<div>
+									<%= submit_tag 'Send', :class => 'save' %>
+									<%= ajax_loader %>
 								</div>
 							<% end %>
 						</div>
-						<div id="fac_pictures" class="tab_content">
-							<p class="label">Facility Pictures:</p>
-							<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
+					
+						<div id="list_reviews">
+							<h3>Reviews</h3>
+							<% unless @listing.reviews.empty? %>
+								<p>Here's a list of all the reviews you've received for this facility.</p>
+								<%= render @listing.reviews %>
+							<% else %>
+								<p>You have no reviews yet.</p>
+							<% end %>
 						</div>
-						<div id="fac_reports" class="tab_content">
-							<div id="leads" class="left">
-								<form class="">Show:
-									<select name="type" class="right_space">
-										<option value="0">Lead Type</option>
-										<option value="1">Rentals</option>	<option value="2">Phone Calls</option>	<option value="3">Contact Form</option>	<option value="4">Coupon</option>
-									  	<option value="5">Banner Clicks</option>	<option value="9">Directions</option>
-									</select> for:
-
-									<select name="range" class="right_space">
-										<option value="180">2 Years</option>
-										<option value="180">1 Year</option>
-										<option selected="" value="180">6 Months</option>
-										<option value="90">3 Months</option>
-										<option value="31">1 Month</option>
-										<option value="14">2 Weeks</option>
-										<option value="0">Today</option>
-									</select>
-							
-									<div class="right"><input type="submit" value="Refine" class="button2"></div>
-								</form>
-								<table id="display_reports">
-									<thead>
-									    <tr>
-								            <th class="col1"><a href="#" class="" title="Sort on Leads">Type</a></th>
-								            <th class="col2"><a href="#" class="" title="Sort on Time">Time</a></th>
-								            <th class="col3"><a href="#" class="" title="Sort on Name">Name</a></th>
-								            <th class="col4"><a href="#" class="" title="Sort on Phone">Phone</a></th>
-								            <th class="col5"><a href="#" class="" title="Sort on Email">Email</a></th>
-								            <th class="col6"><a href="#" class="" title="Sort on More Info">More Info</a></th>
-								        </tr>
-									</thead>
-									<tbody>
-										<% 7.times do %>
-											<tr class="">
-									            <td>Phone Call</td>
-									            <td>12/02/2010 at 1:24 pm</td>
-									            <td>John Smith</td>
-									            <td>(954) 630-6731</td>
-									            <td>myemail@web.com</td>
-									            <td class="miscinfo"><a href="">Voice Recording</a></td>
-										    </tr>
-											<tr class="alt">
-									            <td>Rental</td>
-									            <td>12/02/2010 at 1:24 pm</td>
-									            <td>John Smith</td>
-									            <td>(954) 630-6731</td>
-									            <td>myemail@web.com</td>
-										        <td class="miscinfo">10x10 Interior<br />First Month Free<br />$89.00<br />Climate Controlled</td>
-										    </tr>
-										<% end %>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div id="fac_reviews" class="tab_content">
-							<div id="request_review" class="stack uncollapse">
-								<h3>Request a Review</h3>
-								<p>Send people you know a request to review your facility. Put each email on a new line.</p>
-							
-								<% form_tag request_review_listing_path(@listing), :id => 'request_review_form' do %>
-									<div class="stack">
-										<%= text_area_tag 'review_request', nil, :class => 'required hintable', :title => "friend1@email.com\nfriend2@emai.com\n..." %>
-									</div>
-								
-									<div>
-										<%= label_tag 'message', 'Personal Message' %>
-										<%= text_area_tag 'message', nil, :class => 'required hintable', :title => "Optional message" %>
-									</div>
-								
-									<div>
-										<%= submit_tag 'Send', :class => 'save' %>
-										<%= ajax_loader %>
-									</div>
-								<% end %>
-							</div>
-						
-							<div id="list_reviews">
-								<h3>Reviews</h3>
-								<% unless @listing.reviews.empty? %>
-									<p>Here's a list of all the reviews you've received for this facility.</p>
-									<%= render @listing.reviews %>
-								<% else %>
-									<p>You have no reviews yet.</p>
-								<% end %>
-							</div>
-						</div>
-						<div class="hide">
-							<%= hidden_field_tag :client_id, @listing.client.id %>
-							<%= hidden_field_tag :listing_id, @listing.id %>
-						</div>
+					</div>
+					<div class="hide">
+						<%= hidden_field_tag :client_id, @listing.client.id %>
+						<%= hidden_field_tag :listing_id, @listing.id %>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<% end %>
+</div>
