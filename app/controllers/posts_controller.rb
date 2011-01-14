@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   ssl_required :index, :show, :new, :edit, :update, :destroy
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model_by_title_or_id, :only => :show
-  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   
   def index
