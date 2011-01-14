@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110112221630) do
+ActiveRecord::Schema.define(:version => 20110114220002) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -611,6 +611,7 @@ ActiveRecord::Schema.define(:version => 20110112221630) do
     t.integer  "position",                                        :default => 0
     t.integer  "impressions_count",                               :default => 0
     t.decimal  "rating_average",    :precision => 6, :scale => 2, :default => 0.0
+    t.string   "type"
   end
 
   add_index "posts", ["id", "user_id", "published"], :name => "index_posts_on_id_and_user_id_and_published"

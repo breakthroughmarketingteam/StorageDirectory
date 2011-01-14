@@ -6,6 +6,7 @@ $(function(){
 	
 	try { // to load external plugins, ignore failure (if plugins weren't selected in site settings)
 		$.bindPlugins(); // calls a few common plugins, also used after a new element that uses a plugin is created in the dom
+		$.enableEditor();
 	} catch (e){};
 	
 	$('.disabler', '.disabled').disabler();  // checkbox that disables all inputs in its form
@@ -126,6 +127,8 @@ $(function(){
 			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
 				if (status == 'success') {
 					$.bindPlugins();
+					$.enableEditor();
+					$('.disabler', '#ajax_wrap_inner').disabler();
 					fillInFormFieldSelectLists($('#form_controller', '#FormsForm').val());
 				}
 				else $('#ajax_wrap_inner').html(response);
@@ -195,19 +198,6 @@ $(function(){
 		var $this = $(this);
 		$('input[type=checkbox]', $this.parent().parent().parent()).attr('checked', false);
 		$this.attr('checked', !$this.is(':checked'))
-	});
-	
-	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
-	$('textarea.wysiwyg').each(function(i) {
-		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
-		
-		textarea.parent().parent().prepend(toggle);
-		
-		toggle.click(function() {
-			CKEDITOR.replace(textarea.attr('name'));
-			return false;
-		});
 	});
 	
 	// toggle_links have a hash (#) of: #action_elementClass_contextClass 
@@ -485,6 +475,21 @@ $.on_page = function(route_sets) { // routes looks like: [ ['edit, new', 'views,
 			}
 		}
 	}
+}
+
+$.enableEditor = function() {
+	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
+	$('textarea.wysiwyg').each(function(i) {
+		var textarea = jQuery(this),
+				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+		
+		textarea.parent().parent().prepend(toggle);
+		
+		toggle.click(function() {
+			CKEDITOR.replace(textarea.attr('name'));
+			return false;
+		});
+	});
 }
 
 $.get_auth_token = function() {
@@ -875,7 +880,7 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
 	var disablees = d || 'input, textarea, select, checkbox, radio';
-	return this.each(function(){
+	return this.each(function() {
 		var $this = $(this);
 		
 		$this.data('enabled', $this.is(':checked'));

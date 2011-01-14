@@ -22,7 +22,7 @@
         <![endif]-->
         
 		<%= javascript_include_tag 'swfobject_modified' if @page && @page.id == 1 -%>
-        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && ['new', 'edit'].include?(action_name) -%>
+        <%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin') && (['new', 'edit'].include?(action_name) || controller_name == 'admin') -%>
         <%= javascript_include_tag 'jquery.all' -%>
         <script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= GOOGLE_APPLICATION_ID %>'></script>
 		<% unless @map_data.nil? -%><script type="text/javascript">var Gmaps_data = <%= @map_data.to_json %>;</script><% end %>

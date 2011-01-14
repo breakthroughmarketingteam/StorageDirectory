@@ -67,6 +67,7 @@ class ApplicationController < ActionController::Base
   # Posts#create is also allowed by anonymous (submit tip on storage-tips page)
   # kick out anonymous from doing anything else
   def simple_auth
+    return unless is_admin? && action_name == 'index'
     @allowed = false
     @kickback_to = login_path
     
@@ -162,13 +163,14 @@ class ApplicationController < ActionController::Base
   def set_default_view_type
     model_class = controller_name.singular.camelcase.constantize rescue nil
     
+    
     if !params[:view_type].blank?
       session[:view_type] = params[:view_type]
     elsif controller_name == 'site_settings'
       session[:view_type] = 'table'
     elsif controller_name == 'tags' && action_name == 'show'
       session[:view_type] = 'blog_roll'
-    elsif controller_name == 'posts' || controller_name == 'user_hints'
+    elsif controller_name =~ /(posts)/ || controller_name == 'user_hints'
       session[:view_type] = 'list'
     elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)|(ad_partners)/
       session[:view_type] = 'gallery'
@@ -496,6 +498,18 @@ class ApplicationController < ActionController::Base
     [modes].flatten.any? { |m| action_name == m }
   end
   
+  def scrub_blocks_model_attributes_params(attr_name = :place, param_name = :blocks_model_attributes, model_name = controller_name.singular.to_sym)
+    p = params[model_name]
+    bm = p[param_name] if p
+    return unless bm
+    
+    bm.each do |id, attributes|
+      bm.delete id unless attributes[attr_name]
+    end
+    
+    params[model_name][param_name] = bm
+  end
+  
   def get_or_create_search
     if @search = Search.find_by_id(session[:search_id])
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
@@ -541,11 +555,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def benchmark
+  def benchmark(title = "#{controller_name}##{action_name}")
     hr = '**********************************************************************************************************************************'
     cur = Time.now
     result = yield
-    print "#{hr}\nBENCHMARK: #{cur = Time.now - cur} seconds"
+    print "#{hr}\nBENCHMARK (title): #{cur = Time.now - cur} seconds"
     puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n#{hr}" rescue puts ""
     $last_benchmark = cur
     result

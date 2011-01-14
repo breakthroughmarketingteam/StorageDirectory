@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
                                         'ORDER BY p.resource'
   
   has_many :posts
+  has_many :blog_posts
   has_many :images
   has_one  :profile_image, :class_name => 'Image'
   has_many :user_hint_placements, :dependent => :destroy
