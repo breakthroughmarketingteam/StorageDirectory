@@ -1,8 +1,8 @@
 class UserSessionsController < ApplicationController
   
+  before_filter :ensure_secure_subdomain, :only => :new
   ssl_required :new
   ssl_allowed :create, :destroy
-  before_filter :ensure_secure_subdomain, :only => :new
   before_filter :require_no_user, :only => :new
   skip_before_filter :simple_auth
   
@@ -26,7 +26,7 @@ class UserSessionsController < ApplicationController
           case current_user.role.title.downcase when 'admin'
             redirect_back_or_default admin_index_path
           when 'advertiser'
-            redirect_to client_account_url(:protocol => 'https')
+            redirect_to client_account_url(:protocol => 'https', :host => "secure.#{$root_domain}")
           else
             redirect_back_or_default root_path
           end

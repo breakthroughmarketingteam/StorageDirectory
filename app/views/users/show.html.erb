@@ -5,7 +5,7 @@
 
 	<h2 class="stack"><%= user_account_title %></h2>
 
-	<%= render :partial => 'user', :locals => { :user => @user } %>
+	<%= render :partial => 'user_info', :locals => { :user => @user } %>
 
 	<div class="uncollapse">
 	  <div class="right"><%= link_to "#{@user.name.possessive} Images", user_images_path(@user) %></div>

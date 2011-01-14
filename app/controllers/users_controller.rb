@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_filter :get_default_role, :only => :new
   
   def index
-    @users = User.all :conditions => { :type => 'User' }
+    get_users
     render :layout => false if request.xhr?
   end
   
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       format.js do
         if @user.save
           flash.now[:notice] = 'Great! Thanks for signing up!'
-          @users = User.all :conditions => { :type => 'User' }
+          get_users
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors @user
@@ -52,11 +52,26 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(params)
-      flash[:notice] = "#{@user.name.possessive} account has been updated!"
-      redirect_back_or_default user_path(@user)
-    else
-      render :action => :edit
+    respond_to do |format|
+      format.html do
+        if @user.update_attributes(params)
+          flash[:notice] = "#{@user.name.possessive} account has been updated!"
+          redirect_back_or_default user_path(@user)
+        else
+          render :action => :edit
+        end
+      end
+      
+      format.js do
+        if @user.update_attributes(params)
+          flash.now[:notice] = "#{@user.name.possessive} account has been updated!"
+          get_users
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors @user
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
   
@@ -77,6 +92,10 @@ class UsersController < ApplicationController
   end
   
   private
+  
+  def get_users
+    @users = User.all(:conditions => { :type => 'User' }).paginate :per_page => 15, :page => params[:page]
+  end
   
   def get_roles
     @roles = is_admin? ? Role.all : Role.non_admin_roles

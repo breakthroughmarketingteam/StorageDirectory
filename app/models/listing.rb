@@ -60,7 +60,12 @@ class Listing < ActiveRecord::Base
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español facility_special move_in_price)
   @@searchables    = %w(title address city state zip)
-  cattr_accessor :top_types, :comparables, :searchables
+  @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
+  cattr_accessor :top_types, :comparables, :searchables, :categories
+  
+  def before_update
+    self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
+  end
   
   #
   # Search methods
@@ -139,6 +144,21 @@ class Listing < ActiveRecord::Base
     self.find(:all, :conditions => ['listings.id = ?', 85480], :origin => search.location).sort_by_distance_from(search.location).first
   end
   
+  # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.
+  def self.find_listings_by_company_city_and_state(company, city, state)
+    self.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l " +
+                     "LEFT JOIN maps m ON m.listing_id = l.id " +
+                     "LEFT JOIN users u ON u.id = l.user_id " +
+                     "WHERE ((LOWER(m.state) LIKE '%#{state}%' " +
+                           "AND LOWER(m.city) LIKE '%#{city}%' " +
+                           "AND LOWER(l.title) LIKE '%#{company}%') " +
+                       "OR (LOWER(m.state) LIKE '%#{state}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%')) " +
+                       "OR (LOWER(m.city) LIKE '%#{city}%' " +
+                         "AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL " +
+                         "ORDER BY l.title LIMIT 100"
+  end
+  
   # Instance Methods
   
   def verified?
@@ -156,6 +176,10 @@ class Listing < ActiveRecord::Base
   
   def display_special
     self.client.display_special if self.client
+  end
+  
+  def categories
+    self.storage_types.downcase.split(/,\s?/)
   end
   
   def admin_fee
@@ -311,21 +335,6 @@ class Listing < ActiveRecord::Base
   
   def unverified?
     self.client.nil? || self.client.status == 'unverified'
-  end
-  
-  # used in the add your facility process to find listings that the client might own. First look for the facility in the city and then in the state.
-  def self.find_listings_by_company_city_and_state(company, city, state)
-    self.find_by_sql "SELECT l.id, l.title, m.address, m.city, m.state, m.zip FROM listings l " +
-                     "LEFT JOIN maps m ON m.listing_id = l.id " +
-                     "LEFT JOIN users u ON u.id = l.user_id " +
-                     "WHERE ((LOWER(m.state) LIKE '%#{state}%' " +
-                           "AND LOWER(m.city) LIKE '%#{city}%' " +
-                           "AND LOWER(l.title) LIKE '%#{company}%') " +
-                       "OR (LOWER(m.state) LIKE '%#{state}%' " +
-                         "AND LOWER(l.title) LIKE LOWER('%#{company}%')) " +
-                       "OR (LOWER(m.city) LIKE '%#{city}%' " +
-                         "AND LOWER(l.title) LIKE LOWER('%#{company}%'))) AND l.user_id IS NULL " +
-                         "ORDER BY l.title LIMIT 100"
   end
   
   # add up a score based on model methods

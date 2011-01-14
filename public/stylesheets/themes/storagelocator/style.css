@@ -116,7 +116,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #clients_controller #content_bottom{border-right:none;}
 .new_action #content_bottom{border:none;}
 .my_account #content_bottom{margin:15px 0 25px 9px;}
-#posts_controller.show_action #content{padding:15px;}
+#posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content,#clients_controller.new_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
@@ -1650,7 +1650,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
 .confirm_box,.alert_box{padding-bottom:10px !important;}
 .confirm_box p,.alert_box p{font-size:100%;text-align:center;}
-.confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;}
+.confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;z-index:999;}
 .confirm_box #confirm_yes{right:10px;}
 .auth_box #confirm_yes{bottom:0;right:15px;}
 .auth_box div{margin:20px 15px 0;}
@@ -1964,6 +1964,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #flogo h3,#hours h3{margin-bottom:20px;}
 #sl-edit-tabs #details{width:100%;}
 #sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}
+.col_verttop{vertical-align:top;}
 #sl-edit-tabs .fac-details td{padding:6px 12px;}
 #sl-edit-tabs input{border:1px solid #CCC;padding:3px 5px;}
 #sl-edit-tabs .fac-details input#state{width:150px;}
