@@ -18,7 +18,7 @@ span.blue{color:#4c4bcc;}
 /* Start complex layout styles - includes the changing background garage door etc*/
 
 #head-ctr{background:url(/images/ui/storagelocator/top-hdr-strip2.png) repeat-x bottom;}
-#head-ctr-in{height:275px;margin:0 auto;position:relative;text-align:left;width:980px;}
+#head-ctr-in{height:225px;margin:0 auto;position:relative;text-align:left;width:980px;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;overflow:hidden;}
 #page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
@@ -36,9 +36,9 @@ span.blue{color:#4c4bcc;}
 /* Start header styles */
 #logotop{position:absolute;z-index:999;}
 #logoimg{position:relative;top:6px;}
-#logoshadow{margin-left:15px;position:absolute;z-index:999;bottom:0;}
-#title{background:url(/images/ui/storagelocator/usselfstoragelocator-sml.png) no-repeat top left;float:left;margin-top:60px;height:70px;width:655px;position:relative;left:140px;}
-#title h1{bottom:10px;color:#333;font-size:14px;font-weight:normal;left:4px;position:absolute;}
+#logoshadow{bottom:0;margin-left:11px;position:absolute;width:60px;z-index:999;}
+#title{color:#339933;float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:87px;margin-top:38px;position:relative;width:350px;}
+#title h1{bottom:0;color:#333333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
 #a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
@@ -156,7 +156,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #offset_search_box #search_query{border:3px solid #9999ff;font-size:16px;height:25px;margin-right:10px;padding:2px 10px;width:62%;}
 #offset_search_box .grn_btn{position:relative;}
 .storage_info #offset_search_box{top:-58px;}
-#oldlogo{float:left;height:163px;margin-left:40px;margin-top:5px;position:relative;}
+#oldlogo{float:left;height:103px;margin-left:40px;margin-top:11px;position:relative;}
 #oldlogo object,#oldlogo a{position:absolute;}
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
