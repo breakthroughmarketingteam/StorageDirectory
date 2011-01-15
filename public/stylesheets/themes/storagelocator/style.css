@@ -859,7 +859,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 /************************************************** END additions.css *********************************************************/
 /* Customizations - D.S */
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
-#ajax_wrap{float:left;padding-left:20px;margin-top:-23px;width:86%;min-height:684px;}
+#ajax_wrap{float:left;padding-left:20px;width:86%;min-height:684px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
