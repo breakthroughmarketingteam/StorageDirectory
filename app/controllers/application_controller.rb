@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   before_filter :simple_auth
   before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
-  before_filter :init, :except => [:create, :update, :delete]
+  before_filter :set_session_vars, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
   
@@ -121,11 +121,6 @@ class ApplicationController < ActionController::Base
     ops
   end
   
-  def init
-    set_session_vars
-    get_list_of_controllers_for_menu if is_admin?
-  end
-  
   # hidden field hack_me must pass through empty, cheap reverse captcha trick
   def reverse_captcha_check
     redirect_to("/#{home_page}") and return if params.has_key?(:hack_me) && !params[:hack_me].empty?
@@ -193,10 +188,7 @@ class ApplicationController < ActionController::Base
   def get_list_of_controllers_for_menu
     @controllers = get_list_of_file_names('app/controllers').reject! { |c| c =~ /^application|^site_settings|^user_sessions|^ajax/i }
     @controllers.map { |c| c.gsub!('_controller', '') }
-    
-    unless current_user.has_role?('Admin')
-      @controllers.reject! { |c| !current_user.has_permission? c, 'index' }
-    end
+    @controllers.reject! { |c| !current_user.role.permissions.map(&:resource).include?(c) } unless current_user.has_role?('admin')
   end
   
   def get_list_of_file_names(dir, remove = '.rb')

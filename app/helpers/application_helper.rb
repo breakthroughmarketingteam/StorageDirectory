@@ -362,6 +362,10 @@ module ApplicationHelper
     is_admin? ? admin_to_client_path(user, options) : client_account_path(options)
   end
   
+  def has_admin_access?
+    current_user && current_user.has_role?('admin', 'staff')
+  end
+  
   # return a either a links absolute path or get the target resource path
   def dynamic_link_path(link, options = {})
     if link.relative && !link.target_id.blank?
