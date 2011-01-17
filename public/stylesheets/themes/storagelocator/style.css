@@ -541,7 +541,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-header{}
 #sl-header p.back-btn{background:url(/images/ui/storagelocator/back-btn.png) no-repeat top left;width:172px;height:33px;line-height:33px;float:right;position:relative;top:10px;right:17px;text-align:center;}
 #sl-header p.back-btn:hover{background:url(/images/ui/storagelocator/back-btn-hover.png) no-repeat top left}
-#ov-header p.editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat left top;color:#fff;float:right;font-size:14px;height:33px;line-height:2.3;position:relative;right:17px;text-align:center;text-shadow:1px 1px 0 #666;top:10px;width:172px;}
+#sl-header .editing-btn{background:url(/images/ui/storagelocator/editing-btn.png) no-repeat left top;color:#fff;float:right;font-size:14px;height:33px;line-height:2.3;position:relative;right:17px;text-align:center;text-shadow:1px 1px 0 #666;top:10px;width:172px;}
 #sl-header p.back-btn a{font-size:14px;color:#fff;font-weight:bold;text-decoration:none;text-shadow:1px 1px 0 #666;position:relative;left:15px;display:block;width:160px;height:33px;line-height:2.5;}
 #sl-fac-detail-in-edit{border:1px solid #ccc;}
 #sl-fac-detail-in .dlogo_wrap{margin-bottom:25px;}
