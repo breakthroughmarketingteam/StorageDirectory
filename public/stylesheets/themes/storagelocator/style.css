@@ -1950,7 +1950,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #request_review textarea{width:99%;height:80px;}
 #admin-l-col{margin-top:8px;}
 #tracking_request{padding:0 20px 20px;}
-#preview_btn{margin:12px 24px 0 0;}
+#preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #tab1{margin-bottom:20px;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
 #sl-edit-tabs .ajax_loader{float:right;margin:7px 10px 0 0;}
