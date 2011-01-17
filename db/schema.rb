@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110114220002) do
+ActiveRecord::Schema.define(:version => 20110117170314) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
