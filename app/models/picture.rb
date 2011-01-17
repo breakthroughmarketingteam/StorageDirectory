@@ -16,4 +16,12 @@ class Picture < ActiveRecord::Base
   def image() self.facility_image end
   def image=(i) self.facility_image = i end
   
+  def image_url(size = nil)
+    if self.facility_image_file_size.blank?
+      self.facility_image_file_name
+    else
+      self.facility_image.url(size)
+    end
+  end
+  
 end

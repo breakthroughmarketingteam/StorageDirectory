@@ -87,18 +87,23 @@ class ClientsController < ApplicationController
   def activate
     @client = Client.find_by_activation_code params[:code]
     
-    case @client.status when 'unverified'
-      @client.update_attribute :status, 'active'
-      flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
+    if @client.nil?
+      flash[:error] = "We couldn't find that account, make sure you used the correct link or that you copied it completely."
       redirect_to login_path
+    else
+      case @client.status when 'unverified'
+        @client.update_attribute :status, 'active'
+        flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
+        redirect_to login_path
       
-    when 'active'
-      flash[:notice] = 'Your account is already active. Go ahead and log in.'
-      redirect_to login_path
+      when 'active'
+        flash[:notice] = 'Your account is already active. Go ahead and log in.'
+        redirect_to login_path
       
-    when 'suspended'
-      flash[:error] = 'Your account is suspended'
-      redirect_to root_path
+      when 'suspended'
+        flash[:error] = 'Your account is suspended.'
+        redirect_to root_path
+      end
     end
   end
   

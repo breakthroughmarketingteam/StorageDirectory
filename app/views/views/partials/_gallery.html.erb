@@ -8,7 +8,7 @@
 				<% if model.respond_to?('image') %>
 					<div class="gallery_image image">
 						<% if model.respond_to? :image_url %>
-							<%= image_tag(model.image_url) %>
+							<%= link_to image_tag(model.image_url), (model.is_a?(Image) ? "/images/#{model.id}" : model) %>
 						<% else %>
 							<% thumb = model.image.url(:thumb) %>
 							<% if File.exists? thumb %>

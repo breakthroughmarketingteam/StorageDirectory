@@ -35,8 +35,6 @@ class Image < ActiveRecord::Base
     else
       self.image.url(size)
     end
-  rescue => e
-    raise e.pretty_inspect
   end
   
 end
