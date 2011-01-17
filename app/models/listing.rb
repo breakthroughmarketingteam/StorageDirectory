@@ -84,7 +84,6 @@ class Listing < ActiveRecord::Base
     search_type = search.storage_type.downcase
     
     unless search_type =~ /(self storage)/i
-      options[:include] << :facility_features
       base_conditions += " AND LOWER(listings.storage_types) LIKE '%#{search_type}%'"
     end
     

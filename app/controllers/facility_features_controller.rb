@@ -1,18 +1,20 @@
 class FacilityFeaturesController < ApplicationController
   
+  ssl_required :index, :update
   before_filter :get_parent_models, :only => :update
   
   def index
     get_models_paginated
+    render :layout => false if request.xhr?
   end
   
   def update
-    @issn_facility_feature = IssnFacilityFeature.find_by_ShortDescription(params[:title].gsub('-', ' '))
-    
+    @issn_feature = IssnUnitTypeFeature.find params[:id]
+    raise [params, @issn_feature].pretty_inspect
     if params[:status] == 'true' # assign this feature to the list
-      @listing.facility_features.create :standard_id => @issn_facility_feature.id
+      @listing.facility_features.create :standard_id => @issn_feature.id
     else
-      @facility_feature = @listing.facility_features.find_by_standard_id @issn_facility_feature.id
+      @facility_feature = @listing.facility_features.find_by_standard_id @issn_feature.id
       @facility_feature.destroy if @facility_feature
     end
     
