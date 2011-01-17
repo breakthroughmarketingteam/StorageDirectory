@@ -129,7 +129,7 @@ class ClientsController < ApplicationController
   def verify
     @client.enable_listings!
     @partial = 'activation_email'
-    Blaster.delay.deliver_html_email @client.email, "Your account is ready at USSelfStorageLocator.com", render_to_string(:layout => 'email_template')
+    Blaster.delay.deliver_html_email @client.email, 'Your account is ready at USSelfStorageLocator.com', render_to_string(:layout => 'email_template')
     
     respond_to do |format|
       format.html { redirect_back_or_default '/admin' }
