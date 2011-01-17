@@ -13,7 +13,7 @@ module ApplicationHelper
   end
   
   def geo_keywords(page)
-    if @page.keyword_list.join(', ').match(/(\$CITY)|(\$STATE)/)
+    if params[:city] && @page.keyword_list.join(', ').match(/(\$CITY)|(\$STATE)/)
       @page.keyword_list.join(', ').gsub('$CITY', params[:city].titleize).gsub('$STATE', @search.state)
     else
       @page.keyword_list.join ', '
