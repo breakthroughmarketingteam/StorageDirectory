@@ -1411,9 +1411,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #distance_btns .radio_select input{visibility:hidden;}
 #distance_btns .selected{background:url(/images/ui/storagelocator/checkbox.png) no-repeat 4px 5px;}
 #distance_btns .selected .radio_select{background:url(/images/ui/storagelocator/radio-select.png) no-repeat -1px 0;}
-/*#distance_btns #slide_wrap{width:auto;float:none;margin:10px 0;height:30px;}
-#distance_btns #slide_wrap .arrow{margin:6px 0;}
-*/
 #distance_btns label.right{width:auto;padding:0;}
 .home #distance_btns{width:70%;float:left;}
 .home #distance_btns > label{float:left;}
@@ -1444,7 +1441,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #dock a,#dock_nav a{display:block;float:left;width:105px;color:#5256a5;padding-bottom:1px;}
 #dock a img,#dock_nav a img{margin:10px auto;display:block;}
 #dock span,#dock_nav span{display:none;}
-
+#error500{padding:15px 20px;font-size:140%;}
 #footer{overflow:hidden;margin-top:-115px;clear:both;}
 #footer_top{position:relative;background:url(/images/ui/storagelocator/sky-blue-bg.png) repeat-x;}
 #footer_top .divide{-moz-box-shadow:0 1px 2px #999;box-shadow:0 1px 2px #999;-webkit-box-shadow:0 1px 2px #999;background:url(/images/ui/storagelocator/purple-line.gif) repeat-x;border:1px solid #3C3D98;height:20px;padding:5px 0;position:relative;}
