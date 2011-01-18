@@ -715,10 +715,10 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #outer_map .wrap2{float:right;width:50%;}
 #outer_map h3{margin-bottom:10px;}
 
-#sl-tabs-map{background-color:#ccc;border:2px solid #ccc;float:left;height:340px;margin:20px 0 0;width:50%;}
+#sl-tabs-map{background-color:#ccc;border:2px solid #ccc;float:right;height:340px;margin:20px 0 0;width:50%;}
 #sl-tabs-map-in{border:2px solid #fff;height:300px;}
 #sl-tabs-map-in #google_map{height:100%;}
-#street_view{border:2px solid #ccc;float:right;height:300px;margin:20px 0 0;width:46%;}
+#street_view{border:2px solid #ccc;float:left;height:340px;margin:20px 0 0;width:46%;}
 #outer_map{overflow:hidden;width:100%;}
 #outer_map #dirs{clear:both;}
 #single_print{float:right;margin-top:10px;}
@@ -1447,7 +1447,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 .home #footer_top .divide{margin-bottom:10px;}
 #footer_top .divide .wrapper{width:938px;color:#fff;text-shadow:1px 1px 1px #333;font-size:120%;}
 #footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
-#footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;position:relative;}
 #footer_btm .usssl_adp{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #ad_partner_model_index .box{height:230px;}
 #footer_mid #wrapper{background:#fff;-moz-border-radius:10px;border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 1px 10px #666;box-shadow:1px 1px 10px #666;-webkit-box-shadow:1px 1px 10px #666;border:3px solid #ccc;margin:0 auto;width:976px;}
@@ -2062,9 +2061,11 @@ p.breadcrumb a{color:#fff;}
 #more_info{background:#fff;margin-top:-115px;position:relative;text-align:left;}
 #more_info #more_inner{display:none;min-height:300px;margin:0 auto;width:975px;}
 #more_info #block1{padding:40px 20px 20px;}
-#more_info h2{font-size:28px;line-height:28px;margin-bottom:10px;}
+#more_info h2{color:#f63;font-size:34px;line-height:32px;margin-bottom:20px;text-shadow:1px 1px 0 #ccc;}
 #more_info h3{font-size:20px;line-height:22px;margin-bottom:10px;margin-top:30px;}
-#more_info p{font-size:12px;line-height:18px;margin-bottom:15px;}
+#more_info p{font-size:12px;line-height:18px;margin-bottom:15px;margin-left:20px;}
 #footer_btm #more-info-btn{height:40px;margin:0 auto;width:975px;}
 #footer_btm .openDiv{background:url(/images/ui/storagelocator/more-info-btn.png) no-repeat;color:#fff;display:block;float:right;font-size:16px;font-weight:bold;height:29px;margin-right:20px;padding:9px 0 0;text-decoration:none;text-shadow:1px 1px 0 #666;width:294px;}
 #footer_btm .openDiv:hover{background:url(/images/ui/storagelocator/more-info-btn.png) no-repeat bottom;}
+
+#highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}

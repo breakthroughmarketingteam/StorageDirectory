@@ -44,71 +44,80 @@
 				to benefit from security enhancements as well as being able to use cool websites like this one.
 			</div>
         <![endif]-->
-        <div id="page-ctr">
-            <div id="head-ctr">
-                <div id="head-ctr-in">
-                    <div id="oldlogo">
-                        <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="80" height="90">
-                          <param name="movie" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" />
-                          <param name="quality" value="high" />
-                          <param name="wmode" value="transparent" />
-                          <param name="swfversion" value="6.0.65.0" />
-                          <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-                          <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
-                          <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
-                          <!--[if !IE]>-->
-                          <object type="application/x-shockwave-flash" data="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" width="80" height="90">
-                            <!--<![endif]-->
-                            <param name="quality" value="high" />
-                            <param name="wmode" value="opaque" />
-                            <param name="swfversion" value="6.0.65.0" />
-                            <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
-                            <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
-                            <a href="/"><img src="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.png" alt="USSelfStorageLocator.com" /></a>
-                            <!--[if !IE]>-->
-                          </object>
-                          <!--<![endif]-->
-                        </object>
-                        <img id="logoshadow" src="/images/ui/storagelocator/globe-shadow-sm.png" alt="shadow"/>
-                    </div>
-                    <div id="title">
-                        <p>USSelfStorageLocator.com</p>
-                        <h1><%= @slogan %></h1>
-                    </div>
+        
+		<div id="page-ctr">
+            
+			<div id="highlight">
+			
+				<div id="head-ctr">
+	                <div id="head-ctr-in">
+	                    <div id="oldlogo">
+	                        <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="80" height="90">
+	                          <param name="movie" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" />
+	                          <param name="quality" value="high" />
+	                          <param name="wmode" value="transparent" />
+	                          <param name="swfversion" value="6.0.65.0" />
+	                          <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
+	                          <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
+	                          <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
+	                          <!--[if !IE]>-->
+	                          <object type="application/x-shockwave-flash" data="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.swf" width="80" height="90">
+	                            <!--<![endif]-->
+	                            <param name="quality" value="high" />
+	                            <param name="wmode" value="opaque" />
+	                            <param name="swfversion" value="6.0.65.0" />
+	                            <param name="expressinstall" value="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/files/expressInstall.swf" />
+	                            <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
+	                            <a href="/"><img src="<%= request.protocol + request.host if RAILS_ENV != 'development' %>/images/ui/storagelocator/usselfstoragelocator-flogo.png" alt="USSelfStorageLocator.com" /></a>
+	                            <!--[if !IE]>-->
+	                          </object>
+	                          <!--<![endif]-->
+	                        </object>
+	                        <img id="logoshadow" src="/images/ui/storagelocator/globe-shadow-sm.png" alt="shadow"/>
+	                    </div>
+	                    <div id="title">
+	                        <p>USSelfStorageLocator.com</p>
+	                        <h1><%= @slogan %></h1>
+	                    </div>
                     
-                    <%= render :partial => 'pages/home' %>
+	                    <%= render :partial => 'pages/home' %>
                     
-                </div>
-            </div><!-- END header container -->
-            <div id="bluebar"><%= yield :head_bar %></div>
+	                </div>
+	            </div><!-- END header container -->
+            
+				<div id="bluebar"><%= yield :head_bar %></div>
                 
-                <div id="page-ctr-in">
+				<div id="page-ctr-in">
 
-                <div id="page-cnt">
-                    <div id="page-cnt-top-bg">
-                        <div id="type-one-cnt-in">
-                            <!-- Start the editable area -->
-                            <a name="top" id="top"></a>
-                            <div id="content">
+	                <div id="page-cnt">
+	                    <div id="page-cnt-top-bg">
+	                        <div id="type-one-cnt-in">
+	                            <!-- Start the editable area -->
+	                            <a name="top" id="top"></a>
+	                            <div id="content">
 
-                                <%= yield %>
+	                                <%= yield %>
 
-                                <div id="column_5" class="region">
-                                    <%= yield :column_5 %>
-                                </div>
-                            </div><!-- /the stuff -->
-                            <div id="content_bottom" class="region">
-                                <%= yield :content_bottom %>
-                            </div>
-                            <div class="clear"></div><!-- End the editable area -->
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                </div><!-- END main content area -->
-            </div><!-- END page-container-inner -->
+	                                <div id="column_5" class="region">
+	                                    <%= yield :column_5 %>
+	                                </div>
+	                            </div><!-- /the stuff -->
+	                            <div id="content_bottom" class="region">
+	                                <%= yield :content_bottom %>
+	                            </div>
+	                            <div class="clear"></div><!-- End the editable area -->
+	                        </div>
+	                    </div>
+	                    <div class="clear"></div>
+	                </div><!-- END main content area -->
+          
+				</div><!-- END page-container-inner -->
 
-            <div id="latch-img"></div>
-        </div><!-- END page-container-outer -->
+	            <div id="latch-img"></div>
+        	
+			</div>
+		
+		</div><!-- END page-container-outer -->
 		
 		<div id="more_info">
             <%= yield :more_info %>
