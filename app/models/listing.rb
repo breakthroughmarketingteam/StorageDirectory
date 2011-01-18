@@ -27,14 +27,14 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
-  #has_many :searches # user searches are associated to listings to gather search behavior data
+  has_many :listing_features, :dependent => :destroy
+  has_many :facility_features, :through => :listing_features
   
   # OpentTech ISSN data
   has_one  :facility_info,       :dependent => :destroy
   has_many :unit_types,          :dependent => :destroy
   has_many :units,               :class_name => 'FacilityUnit', :through => :unit_types
   has_many :promos,              :dependent => :destroy
-  has_many :facility_features,   :dependent => :destroy
   has_many :facility_insurances, :dependent => :destroy
   has_many :issn_facility_unit_features, :dependent => :destroy
   
@@ -404,12 +404,12 @@ class Listing < ActiveRecord::Base
   
   def has_feature?(*features)
     features.any? do |feature|
-      self.facility_features.map(&:label).include? feature
+      self.facility_feature_ids.include? feature.id
     end
   end
   
   def units_available?
-    self.units.any? { |u| u.Available.downcase == 'y' }
+    self.units.any? { |u| u.Available =~ /y/i }
   end
   
   def facility_id
@@ -519,8 +519,6 @@ class Listing < ActiveRecord::Base
     puts "\nUpdating Unit Types...\n"
     update_unit_types
     update_units
-    #puts "\nUpdating Unit Features...\n"
-    #update_unit_features
     puts "Done.\nSyncing Units With Unit Types...\n"
     sync_units_with_unit_types
     puts "Done.\nSyncing Sizes With Unit Types...\n"
@@ -541,16 +539,17 @@ class Listing < ActiveRecord::Base
   def sync_facility_info_with_listing
     puts "\nSyncing Facility Info With Listing...\n"
     @fi = self.facility_info
+    
     transaction do
       self.update_attributes :title =>  @fi.MS_Name, :description =>  @fi.O_FacilityName
       
       Map.transaction(:requires_new => true) do
         self.map.update_attributes :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
-                                   :city => @fi.O_City,
-                                   :state => @fi.O_StateOrProvince,
-                                   :zip => @fi.O_PostalCode,
-                                   :lat => @fi.O_IssnLatitude,
-                                   :lng => @fi.O_IssnLongitude
+                                   :city    => @fi.O_City,
+                                   :state   => @fi.O_StateOrProvince,
+                                   :zip     => @fi.O_PostalCode,
+                                   :lat     => @fi.O_IssnLatitude,
+                                   :lng     => @fi.O_IssnLongitude
       end
     end
   end

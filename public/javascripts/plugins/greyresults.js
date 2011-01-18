@@ -232,21 +232,31 @@ $(function(){
 		return false;
 	});
 	
-	$('input', '#sl-tabs-feat-in').button();
-	$('input', '#toggle_specials').button();
-	
-	$('.facility_feature', '#sl-tabs-feat').click(function(){
+	$('.facility_feature', '#sl-tabs-feat').button().click(function(){
 		var $this = $(this),
 			feature = encodeURIComponent($this.val().replaceAll(' ', '-')),
-			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
-			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
-			
-		$this.after(ajax_loader.show());
-		path += $this.hasClass('selected') ? '/false' : '/true';
+			ajax_loader = $.new_ajax_loader('after', this).show(),
+			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature +'/'+ $this.hasClass('selected');
 		
 		$.post(path, function(response) {
 			$.with_json(response, function(data){
 				$this.toggleClass('selected');
+			});
+			
+			ajax_loader.hide();
+		}, 'json');
+	});
+	
+	$('.predef_special input', '#toggle_specials').button().click(function() {
+		var $this = $(this),
+			form = $this.parents('form'), 
+			ajax_loader = $.new_ajax_loader('after', this).show(),
+			id = $this.parent('li').attr('id').replace('PredefinedSpecial', '');
+		
+		// for some reason the state on the checkbox is reversed here
+		$.post(form.attr('action'), { 'predefined_special_id': id, 'toggle': !$this.hasClass('selected') }, function(response) {
+			$.with_json(response, function(data) {
+				
 			});
 			
 			ajax_loader.hide();
@@ -797,7 +807,7 @@ $(function(){
 	}
 	
 	var featured_listing = $('#feat_wrap');
-	if ($.on_page([['locator, home, show', 'listings, pages']]) && featured_listing.children().length == 0) {
+	if (featured_listing.length > 0 && featured_listing.children().length == 0 && $.on_page([['locator, home, show', 'listings, pages']])) {
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);

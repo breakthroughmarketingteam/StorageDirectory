@@ -328,7 +328,7 @@ class ApplicationController < ActionController::Base
     @model_class = controller_name.singularize.camelcase.constantize
     @model = controller_name.singularize.underscore
     
-    eval("@#{@model} = params[:title] ? #{@model_class}.find_by_title_in_params(params[:title].downcase) : #{@model_class}.find_by_id(params[:id])")
+    eval("@#{@model} = params[:title] ? #{@model_class}.find_by_title_in_params(params[:title].downcase) : #{@model_class}.find_by_id(params[:id].to_i)")
     
     if @model.nil?
       #flash[:warning] = "Page Not Found"
@@ -371,7 +371,7 @@ class ApplicationController < ActionController::Base
   end
   
   def reject_models_enabled_on_this(model, models)
-    disabled_models = models.reject { |me| me.enabled_in? model }
+    disabled_models = (models || []).reject { |me| me.enabled_in? model }
   end
   
   def model_errors(*models)

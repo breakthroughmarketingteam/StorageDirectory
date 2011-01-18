@@ -47,10 +47,8 @@ module ApplicationHelper
     regions(false).each do |region|
       content_for region do
         html = "<div class='region_#{region} region'>"
-        
           html << render_region_top(region)
           html << render_all_blocks_in(region)
-        
         html << '</div>'
         
         html if html.match /(class="block")/i
@@ -410,7 +408,7 @@ module ApplicationHelper
   
   # takes an AR object and returns the controller name for it
   def model_controller(model)
-    model.class.name.downcase.pluralize
+    model.class.name.underscore.pluralize
   end
   
   # the title or name of an instance of a resource

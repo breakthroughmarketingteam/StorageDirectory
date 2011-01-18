@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   
-  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
+  ssl_required :index, :new, :create, :edit, :update, :destroy
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
@@ -9,7 +9,7 @@ class TagsController < ApplicationController
   end
   
   def show
-    @models = params[:model].singularize.titleize.constantize.tagged_with params[:tag]
+    @models = params[:model].singularize.camelcase.constantize.tagged_with params[:tag]
     render :layout => false if request.xhr?
   end
   

@@ -1,6 +1,6 @@
 <div class="post_metadata">
 	<div class="comments_count left">
-		<%= link_to pluralize(post.comments.size, 'Comment'), post_path(post, :anchor => 'comments') %>
+		<%= link_to pluralize(post.comments.size, 'Comment'), model_path(post, :anchor => 'comments') %>
 	</div>
 	
 	<% unless post.tags.empty? %>

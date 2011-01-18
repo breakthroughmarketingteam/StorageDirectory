@@ -1,11 +1,10 @@
 <div id="sl-tabs-feat">
 	<ul id="sl-tabs-feat-in">
-    	<% IssnUnitTypeFeature.labels.each do |feature| %>
+    	<% FacilityFeature.all.each do |feature| %>
       		<li>
-				<%= check_box_tag 'feature', feature.id, @listing.has_feature?(feature), :id => "feature_#{feature.parameterize}", :class => 'facility_feature' %>
-				<%= label_tag "feature_#{feature.parameterize}", feature.titleize %>
+				<%= check_box_tag 'feature', feature.id, @listing.has_feature?(feature), :id => "feature_#{feature.title.parameterize}", :class => 'facility_feature' %>
+				<%= label_tag "feature_#{feature.title.parameterize}", feature.title %>
       		</li>
     	<% end %>
   	</ul>
-  	<%= ajax_loader if in_mode? 'profile' %>
 </div>

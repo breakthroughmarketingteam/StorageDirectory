@@ -1,5 +1,5 @@
 <%
-	@unit_features = IssnUnitTypeFeature.labels
+	@unit_features = FacilityFeature.all(:select => 'title').map(&:title)
 	@top_features  = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
 	@unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
 %>

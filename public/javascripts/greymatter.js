@@ -721,9 +721,9 @@ $.greyConfirm = function(msg, action, cancel, alert, error) {
 	});
 	
 	if (typeof(alert) != 'undefined') 
-		var btns = '<a href="#" id="alert_ok" class="btn">'+ (error ? 'Doh!' : 'Ok') +'</a>'; 
+		var btns = '<a href="#" id="alert_ok" class="btn yes">'+ (error ? 'Doh!' : 'Ok') +'</a>'; 
 	else 
-		var btns = '<a href="#" id="confirm_yes" class="btn">Yes</a><a href="#" id="confirm_cancel" class="btn">Cancel</a>';
+		var btns = '<a href="#" id="confirm_yes" class="btn yes">Yes</a><a href="#" id="confirm_cancel" class="btn no">Cancel</a>';
 	
 	pop_up.html('<p>' + msg +'</p>'+ btns);
 	
@@ -737,6 +737,17 @@ $.greyConfirm = function(msg, action, cancel, alert, error) {
 		pop_up.dialog('destroy');
 		return false;
 	});
+	
+	$(document).keypress(enter_for_yes_escape_for_no);
+	
+	function enter_for_yes_escape_for_no(e) {
+		var key = e.which || e.keyCode;
+		
+		if (key == 13) {
+			$('.yes', pop_up).click();
+			$(document).unbind('keypress', enter_for_yes_escape_for_no);
+		} 
+	}
 }
 
 // msg: what to show in the pop up. error: boolean, error or just simple alert

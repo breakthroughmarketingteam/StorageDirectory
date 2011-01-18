@@ -482,14 +482,15 @@ $(function() {
 			form.data('saving', true);
 			ajax_loader.show();
 			
-			$.post('/comments/contact', form.serialize(), function(response) {
+			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
-					form.html(data);
+					$.greyAlert(data, false);
+					form[0].reset();
 				});
 				
 				ajax_loader.hide();
 				form.data('saving', false);
-			});
+			}, 'json');
 		}
 		
 		return false;
@@ -1338,16 +1339,6 @@ $(function() {
 			return false;
 		});
 	}
-
-	$('.predef_special', '#toggle_specials').click(function() {
-		var $this = $(this).toggleClass('checked'), form = $this.parents('form'), id = $this.children('input:hidden').val();
-		
-		$.post(form.attr('action'), { 'predefined_special_id': id, 'toggle': $this.hasClass('checked') }, function(response) {
-			$.with_json(response, function(data) {
-				
-			});
-		});
-	});
 		
 	// TODO: refactor all button events that do ajax calls
 	// first refactor: save buttons, they have a form to submit activerecord models and return a form partial to replace html with updated content
