@@ -18,6 +18,8 @@ module ApplicationHelper
     else
       @page.keyword_list.join ', '
     end
+  rescue
+    @page.keyword_list.join ', '
   end
   
   def page_name

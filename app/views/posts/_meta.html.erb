@@ -1,13 +1,16 @@
 <div class="post_metadata">
+	
+	<% unless post.tags.empty? %>
+
+    <div class="tags left post_tags">
+    	Tags:&nbsp;<%= post.tags.map { |tag| "<span>#{link_to tag.name, tagged_with_path(model_controller(post), tag.name) }</span>&nbsp;" } %>
+	</div>
+	
 	<div class="comments_count left">
 		<%= link_to pluralize(post.comments.size, 'Comment'), model_path(post, :anchor => 'comments') %>
 	</div>
 	
-	<% unless post.tags.empty? %>
-  	<div class="right">
-    	<div class="tags left post_tags">
-    		Tags:&nbsp;<%= post.tags.map { |tag| "<span>#{link_to tag.name, tagged_with_path(model_controller(post), tag.name) }</span>&nbsp;" } %>
-    	</div>
-    </div>
+	<div class="more"><%= link_to 'Read More', url_for(post) %></div>
+	
   <% end %>
 </div>
