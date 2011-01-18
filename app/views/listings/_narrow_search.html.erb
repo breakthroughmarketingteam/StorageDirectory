@@ -55,8 +55,6 @@
 						<% end %>
 					</ul>
 			
-					<p><%= link_to 'More Features', '#', :class => 'openDiv toggle_right', :rel => 'more_features', :title => 'Show Features' %></p>
-			
 					<ul id="more_features" class="hide">
 						<% @unit_features.each do |feature| -%>
 						<li class="selectable_wrap auto">
@@ -67,6 +65,9 @@
 						</li>
 						<% end %>
 					</ul>
+					
+					<p><%= link_to 'More Features', '#', :class => 'openDiv toggle_right', :rel => 'more_features', :title => 'Show Features' %></p>
+					
 				</div>
 			<% end %>
 		</div>
