@@ -1,7 +1,9 @@
-New tip created:
-<%= @tip.title %>
-<%= @tip.content %>
+New Tip Created!
+Title: 
+	<%= @tip.title %>
+Content: 
+	<%= @tip.content %>
 
 Tags: <%= @tip.tag_list %>
 
-Link: <%= tip_path @tip %>
+URL: <%= tip_url @tip %>

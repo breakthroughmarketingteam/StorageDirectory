@@ -1,6 +1,6 @@
 class BlogPostsController < ApplicationController
   
-  ssl_required :index, :show, :new, :edit, :update, :destroy
+  ssl_required :index, :new, :edit, :update, :destroy
   ssl_allowed :create
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model_by_title_or_id, :only => :show

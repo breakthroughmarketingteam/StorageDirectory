@@ -14,10 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/add-your-facility', :controller => 'clients', :action => 'new', :title => 'self-storage-advertising' # old page
   
   map.email_blast_web_version '/look/:title', :controller => 'email_blasts', :action => 'show'
-  map.unsub_from_email_blast '/unsubscribe/:token', :controller => 'email_blasts', :action => 'unsub'
-  map.client_account '/my_account', :controller => 'clients', :action => 'edit'
-  map.client_listing '/my_account/listings/:id', :controller => 'listings', :action => 'profile'
-  map.admin_to_client '/clients/:id/account', :controller => 'clients', :action => 'edit'
+  map.unsub_from_email_blast  '/unsubscribe/:token', :controller => 'email_blasts', :action => 'unsub'
+  map.client_account          '/my_account', :controller => 'clients', :action => 'edit'
+  map.client_listing          '/my_account/listings/:id', :controller => 'listings', :action => 'profile'
+  map.admin_to_client         '/clients/:id/account', :controller => 'clients', :action => 'edit'
   
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.signup '/signup', :controller => 'users',         :action => 'new'
@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
-  map.facility '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.facility    '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
   
   # for building routes
   $_storage_types = ['Self', 'Mobile', 'Cold', 'Vehicle', 'Car', 'Boat', 'RV'].map { |t| "#{t} Storage" }
@@ -37,11 +37,11 @@ ActionController::Routing::Routes.draw do |map|
   map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck Rentals'
   map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving Companies'
   
-  map.client_activate '/clients/activate/:code', :controller => 'clients', :action => 'activate'
-  map.tenant_activate '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
-  map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
+  map.client_activate         '/clients/activate/:code', :controller => 'clients', :action => 'activate'
+  map.tenant_activate         '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
+  map.resend_activation       '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
   map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:id/:status', :controller => 'facility_features', :action => 'update'
-  map.map_dirs '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
+  map.map_dirs                '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
   
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'

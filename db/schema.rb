@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110117211557) do
+ActiveRecord::Schema.define(:version => 20110118193056) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -173,8 +173,6 @@ ActiveRecord::Schema.define(:version => 20110117211557) do
   end
 
   create_table "facility_features", :force => true do |t|
-    t.integer  "standard_id"
-    t.integer  "listing_id"
     t.string   "title"
     t.text     "description"
     t.datetime "created_at"
@@ -434,6 +432,14 @@ ActiveRecord::Schema.define(:version => 20110117211557) do
     t.string   "show_in"
     t.integer  "client_id"
     t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "listing_features", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "facility_feature_id"
+    t.integer  "position",            :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

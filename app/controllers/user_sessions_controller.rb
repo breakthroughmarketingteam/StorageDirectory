@@ -16,36 +16,52 @@ class UserSessionsController < ApplicationController
   end
   
   def create
-    @user_session = UserSession.new params[:user_session]
+    @user_session = UserSession.create params[:user_session]
+    status = @user_session.user.try :status
     
-    if @user_session.save
+    if status == 'active' && @user_session.valid?
+      @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
+      
       respond_to do |format|
         format.html do
-          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Welcome!"
-          
-          case current_user.role.title.downcase when 'admin'
+          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Hi #{@user_session.user.first_name}"
+
+          case current_user.role.title.downcase when 'admin', 'staff'
             redirect_back_or_default admin_index_path
           when 'advertiser'
-            redirect_to client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
+            redirect_to @client_link
           else
             redirect_back_or_default root_path
           end
         end
-        
+
         format.js do
-          render :json => { :success => true, :data => render_to_string(:partial => 'menus/topnav'), :role => @user_session.user.role.title, :account_path => client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}")) }
+          render :json => { :success => true, :data => render_to_string(:partial => 'menus/topnav'), :role => @user_session.user.role.title, :account_path => @client_link }
         end
       end
     else
+      if status == 'unverified'
+        msg = fmsg ="You have not verified your account yet, did you click on the link in the email?"
+        redir = login_path
+        
+      elsif status == 'suspended'
+        msg = fmsg = "Your account seems to be suspended..."
+        redir = login_path
+        
+      elsif !@user_session.valid?
+        redir = { :action => :new }
+        fmsg = flash.now[:error] = model_errors(@user_session)
+        msg = render_to_string(:action => :new, :layout => false)
+      end
+      
       respond_to do |format|
         format.html do
-          flash[:error] = model_errors(@user_session)
-          render :action => :new
+          flash[:error] = fmsg
+          redirect_to redir
         end
-        
+
         format.js do
-          flash.now[:error] = model_errors(@user_session)
-          render :json => { :success => false, :data => render_to_string(:action => :new, :layout => false) }
+          render :json => { :success => false, :data => msg }
         end
       end
     end

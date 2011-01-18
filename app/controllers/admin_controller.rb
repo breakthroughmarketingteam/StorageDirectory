@@ -4,10 +4,12 @@ class AdminController < ApplicationController
   before_filter :ensure_secure_subdomain
   ssl_required :index
   
+  @@unwanted_resources = /(admin)|(^sizes)|(maps)|(staff_emails)|(^specials)|(predef_special)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)|(widgets)|(business_hours)/i
+  
   def index
     if current_user
       get_list_of_controllers_for_menu
-      @controllers.reject! { |c| c =~ /(admin)|(^sizes)|(maps)|(staff_emails)|(^specials)|(predef_special)|(facility_features)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)|(widgets)|(business_hours)/i }
+      @controllers.reject! { |c| c =~ @@unwanted_resources }
       @controllers.sort!
     else
       @controllers = []

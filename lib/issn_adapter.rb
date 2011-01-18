@@ -241,9 +241,10 @@ class IssnAdapter
   def self.parse_soap_hash(data)
     parsed = {}
     data.each do |name, value|
+      next if useless_keys.include? name
       # account for multidimensional hashes
       value = value['diffgr:diffgram'].blank? ? value['$'] : parse_hash_or_array(value['diffgr:diffgram']['NewDataSet'].values.first)
-      parsed.store(name, value) unless useless_keys.include? name
+      parsed.store(name, value)
     end
     parsed
   end

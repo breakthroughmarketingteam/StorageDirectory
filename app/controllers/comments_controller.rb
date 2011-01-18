@@ -33,10 +33,23 @@ class CommentsController < ApplicationController
         Notifier.deliver_comment_notification(@form.recipient, @comment, request.host)
       end
       
-      flash[:notice] = params[:target_type].blank? ? 'Thanks for the message! We\'ll get back to you soon' : "#{params[:target_type].titleize} comment created."
-      current_user ? redirect_back_or_default(comments_path) : redirect_to(:back)
+      msg = params[:target_type].blank? ? 'Thanks for the message! We\'ll get back to you soon' : "#{params[:target_type].titleize} comment created."
+      
+      respond_to do |format|
+        format.html do
+          flash[:notice] = msg
+          current_user ? redirect_back_or_default(comments_path) : redirect_to(:back)
+        end
+        
+        format.js do
+          render :json => { :success => true, :data => msg }
+        end
+      end
     else
-      render :action => 'edit'
+      respond_to do |format|
+        format.html { render :action => 'edit' }
+        format.js { render :json => { :success => false, :data => model_errors(@comment) }}
+      end
     end
   end
 
@@ -58,7 +71,7 @@ class CommentsController < ApplicationController
     @comment = @page.comments.build params[:comment]
     
     if @comment.save
-      Notifier.deliver_new_contact_alert @comment, @page
+      Notifier.delay.deliver_new_contact_alert @comment, @page
       render :json => { :success => true, :data => render_to_string(:partial => '/comments/contacted') }
     else
       render :json => { :success => false, :data => model_errors(@comment) }

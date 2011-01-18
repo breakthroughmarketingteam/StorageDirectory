@@ -1,11 +1,20 @@
 <div id="head" class="blue head">
-	<h5 class="white">Here's what other people have to say about <a href="">American International Self Storage</a>.</h5>
+	<h5 class="white">
+		<%= listing.reviews.empty? ? "Be the first one to review" : "Here's what other people have to say about" %> 
+		<a href="">American International Self Storage</a>.
+	</h5>
 </div>
 	
 </div>
 
 <div class="inner border_box">
-	<ul id="reviews_list">
-		<%= render :partial => 'comments/review', :collection => listing.reviews %>
-	</ul>
+	<% unless listing.reviews.empty? %>
+		<ul id="reviews_list">
+			<%= render :partial => 'comments/review', :collection => listing.reviews %>
+		</ul>
+	<% else %>
+		<% form_for [listing, listing.review.build] do |f| %>
+			
+		<% end %>
+	<% end %>
 </div>

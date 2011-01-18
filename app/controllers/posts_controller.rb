@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  ssl_required :index, :show, :new, :edit, :update, :destroy
+  ssl_required :index, :new, :edit, :update, :destroy
   ssl_allowed :create
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model_by_title_or_id, :only => :show
@@ -29,11 +29,11 @@ class PostsController < ApplicationController
 
   def create
     case params[:for] when nil
-      @post = current_user.posts.new(params[:post])
+      @post = current_user.posts.new params[:post]
     when 'tip'
-      @post = Post.new(params[:post])
+      @post = Post.new params[:post]
       @post.tag_list << 'tip'
-      Notifier.deliver_new_tip_alert(@post) if @post.valid?
+      Notifier.delay.deliver_new_tip_alert(@post) if @post.valid?
     end
     
     respond_to do |format|

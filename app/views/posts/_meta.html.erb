@@ -7,7 +7,7 @@
 	</div>
 	
 	<div class="comments_count left">
-		<%= link_to pluralize(post.comments.size, 'Comment'), post_path(post, :anchor => 'comments') %>
+		<%= link_to pluralize(post.comments.size, 'Comment'), model_path(post, :anchor => 'comments') %>
 	</div>
 	
 	<div class="more"><%= link_to 'Read More', url_for(post) %></div>
