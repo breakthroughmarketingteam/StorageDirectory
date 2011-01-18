@@ -4,11 +4,19 @@ module ApplicationHelper
   @@meta_tag_keys = '(keywords)|(description)|(google-site-verification)'
   def site_meta_tags
     if @page && (!@page.meta_desc.blank? || !@page.keywords.empty?)
-      "\n<meta name='keywords' content=\"#{h @page.keyword_list}\" />\n<meta name='description' content=\"#{h @page.meta_desc}\" />"
+      "\n<meta name='keywords' content=\"#{h geo_keywords(@page)}\" />\n<meta name='description' content=\"#{h @page.meta_desc}\" />"
     else
       ApplicationController.app_config.map do |name, content|
         "\n<meta name='#{name.to_s}' content=\"#{content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
       end
+    end
+  end
+  
+  def geo_keywords(page)
+    if params[:city] && @page.keyword_list.join(', ').match(/(\$CITY)|(\$STATE)/)
+      @page.keyword_list.join(', ').gsub('$CITY', params[:city].titleize).gsub('$STATE', @search.state)
+    else
+      @page.keyword_list.join ', '
     end
   end
   

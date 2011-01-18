@@ -26,14 +26,14 @@ class UserSessionsController < ApplicationController
           case current_user.role.title.downcase when 'admin'
             redirect_back_or_default admin_index_path
           when 'advertiser'
-            redirect_to client_account_url(:protocol => 'https', :host => "secure.#{$root_domain}")
+            redirect_to client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
           else
             redirect_back_or_default root_path
           end
         end
         
         format.js do
-          render :json => { :success => true, :data => render_to_string(:partial => 'menus/topnav'), :role => @user_session.user.role.title, :account_path => client_account_url(:protocol => 'https', :host => "secure.#{$root_domain}") }
+          render :json => { :success => true, :data => render_to_string(:partial => 'menus/topnav'), :role => @user_session.user.role.title, :account_path => client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}")) }
         end
       end
     else

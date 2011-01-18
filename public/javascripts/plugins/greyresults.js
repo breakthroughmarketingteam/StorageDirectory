@@ -232,22 +232,23 @@ $(function(){
 		return false;
 	});
 	
-	$('.facility_feature', '.edit_action #sl-tabs-feat').click(function(){
+	$('input', '#sl-tabs-feat-in').button();
+	$('input', '#toggle_specials').button();
+	
+	$('.facility_feature', '#sl-tabs-feat').click(function(){
 		var $this = $(this),
-			feature = encodeURIComponent($this.find('input').val().replaceAll(' ', '-')),
+			feature = encodeURIComponent($this.val().replaceAll(' ', '-')),
 			ajax_loader = $('.ajax_loader', '#sl-tabs-feat').eq(0),
 			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature;
 			
-		$this.after(ajax_loader.show()).siblings('.f').hide();
+		$this.after(ajax_loader.show());
 		path += $this.hasClass('selected') ? '/false' : '/true';
 		
 		$.post(path, function(response) {
 			$.with_json(response, function(data){
 				$this.toggleClass('selected');
-				//update_info_tab_count('Features', $this.hasClass('selected') ? 1 : -1);
 			});
 			
-			$this.siblings('.f').show();
 			ajax_loader.hide();
 		}, 'json');
 	});

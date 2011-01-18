@@ -1,4 +1,4 @@
 <li class="predef_special<%= ' checked' if @client.has_special? predefined_special %>">
-	<%= predefined_special.title %>
-	<%= hidden_field_tag 'specials[]', predefined_special.id %>
+	<%= check_box_tag 'specials[]', predefined_special.id, @client.has_special?(predefined_special), :id => "special_#{predefined_special.title.parameterize}" %>
+	<%= label_tag "special_#{predefined_special.title.parameterize}", predefined_special.title %>
 </li>

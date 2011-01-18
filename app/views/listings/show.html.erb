@@ -3,7 +3,7 @@
 <%= display_message flash %>
 
 <div id="ajax_wrap_inner" class="staticContent">
-	<h1 class="hidden">Self Storage Facility: <%= @listing.title.titleize %></h1>
+	<h1 class="hidden"><%= @listing.storage_type.titleize %> Facility: <%= @listing.title.titleize %></h1>
 	<a name="top" id="top"></a>
 
 	<div id="type-one-r-col">

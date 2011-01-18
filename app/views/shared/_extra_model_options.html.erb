@@ -6,7 +6,7 @@
   <div class="collapseable uncollapse framed round odd<%= ' hide' unless model.is_using_extra_options? %>">
     <% if model.respond_to? :process_erb %>
       <div class="left check_box_wrap">
-        <%= f.check_box :process_erb, :class => 'left_space' %>&nbsp;<%= f.label :process_erb %>
+        <%= f.check_box :process_erb, :class => 'left_space' %>&nbsp;<%= f.label :process_erb, 'Embedded Ruby' %>
       </div>
     <% end %>
   </div>

@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   
+  before_filter :ensure_secure_subdomain, :only => [:index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn
   ssl_allowed :show
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]

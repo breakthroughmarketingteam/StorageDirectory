@@ -1,32 +1,31 @@
 <div class="listing <%= listing.status %>" id="Listing_<%= listing.id %>">
-  <div class="inner">
-	
-	<%= display_logo listing, :width => '102px', :height => '77px' %>
-    
-	<div class="rslt-contact">
-      <%= edit_listing_title(listing) %>
-      <p>
-        <%= edit_listing_address(listing) %>
-        <%= edit_listing_city_state_zip(listing) %>
-      </p>
-    </div>
-    <ul class="listing_options">
-      <li class="<%= listing.new_record? ? 'new_listing_tips' : 'profile_completion' %>">
-        <% if listing.new_record? %>
-          <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
-        <% else %>
-			<div class="progressbar"></div>
-			<p>Profile Completion <span class="percent"><%= listing.percent_complete %>%</span></p>
-		<% end %>
-      </li>
-      <li class="action_btn">
-		<% if listing.new_record? %>
-			<%= link_to 'Save', listings_path, :class => 'crud_btn' %>
-			<%= link_to 'Cancel', '#', :class => 'iconOnly16 cancel_link right', :title => 'Cancel adding a new facility' %>
-		<% else %>
-			<%= link_to 'Manage', (current_user.has_role?('admin') ? edit_listing_path(listing) : profile_listing_path(listing)), :class => 'crud_btn' %>
-		<% end %>
-      </li>
-    </ul>
-  </div>
+  	<div class="inner">
+		<%= display_logo listing, :width => '102px', :height => '77px' %>
+		
+		<div class="rslt-contact">
+	      	<%= edit_listing_title(listing) %>
+	      	<p>
+	        	<%= edit_listing_address(listing) %>
+	        	<%= edit_listing_city_state_zip(listing) %>
+	      	</p>
+	    </div>
+    	<ul class="listing_options">
+      		<li class="<%= listing.new_record? ? 'new_listing_tips' : 'profile_completion' %>">
+	        <% if listing.new_record? %>
+	          <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
+	        <% else %>
+				<div class="progressbar"></div>
+				<p>Profile Completion <span class="percent"><%= listing.percent_complete %>%</span></p>
+			<% end %>
+      		</li>
+      		<li class="action_btn">
+			<% if listing.new_record? %>
+				<%= link_to 'Save', listings_path, :class => 'crud_btn' %>
+				<%= link_to 'Cancel', '#', :class => 'iconOnly16 cancel_link right', :title => 'Cancel adding a new facility' %>
+			<% else %>
+				<%= link_to 'Manage', (current_user.has_role?('admin') ? edit_listing_path(listing) : profile_listing_path(listing)), :class => 'crud_btn' %>
+			<% end %>
+      		</li>
+    	</ul>
+  	</div>
 </div>
