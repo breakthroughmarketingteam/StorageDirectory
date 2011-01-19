@@ -1,8 +1,9 @@
 class PredefinedSpecialsController < ApplicationController
   
-  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
+  ssl_required :index, :show, :new, :create, :edit, :update, :destroy, :toggle
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy, :toggle]
+  before_filter :get_parent_models, :only => :toggle
   
   def index
     render :layout => false if request.xhr?
@@ -84,6 +85,27 @@ class PredefinedSpecialsController < ApplicationController
       flash[:error] = 'Error destroying ' + @predefined_special.title
       render :action => 'edit'
     end
+  end
+  
+  def toggle
+    @predefined_special = PredefinedSpecial.find params[:id]
+    
+    if @listing.predefined_specials.include? @predefined_special
+      @listing.predefined_specials -= [@predefined_special]
+    else
+      @listing.predefined_specials << @predefined_special
+    end
+    
+    render :json => { :success => @listing.save }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
+  end
+  
+  private
+  
+  def get_parent_models
+    @client = is_admin? ? Client.find(params[:client_id]) : current_user
+    @listing = @client.listings.find params[:listing_id]
   end
   
 end

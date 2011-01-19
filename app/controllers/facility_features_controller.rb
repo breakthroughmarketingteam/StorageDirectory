@@ -1,8 +1,8 @@
 class FacilityFeaturesController < ApplicationController
   
-  ssl_required :index, :new, :create, :edit, :update, :destroy
-  before_filter :get_parent_models, :only => :update
-  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
+  ssl_required :index, :new, :create, :edit, :toggle, :destroy
+  before_filter :get_parent_models, :only => :toggle
+  before_filter :get_model, :only => [:new, :edit, :destroy]
   
   def index
     get_models_paginated
@@ -44,18 +44,6 @@ class FacilityFeaturesController < ApplicationController
     render :layout => false if request.xhr?
   end
   
-  def update
-    if params[:status] == 'true' # assign this feature to the list
-      @listing.facility_features << @facility_feature
-    else
-      @listing.facility_features -= [@facility_feature]
-    end
-    
-    render :json => { :success => @listing.save }
-  rescue => e
-    render :json => { :success => false, :data => e.message }
-  end
-  
   def destroy
     respond_to do |format|
       format.html do 
@@ -81,10 +69,24 @@ class FacilityFeaturesController < ApplicationController
     end
   end
   
+  def toggle
+    @facility_feature = FacilityFeature.find params[:id]
+    
+    if @listing.facility_features.include? @facility_feature
+      @listing.facility_features -= [@facility_feature]
+    else
+      @listing.facility_features << @facility_feature
+    end
+    
+    render :json => { :success => @listing.save }
+  rescue => e
+    render :json => { :success => false, :data => e.message }
+  end
+  
   private
   
   def get_parent_models
-    @client = Client.find params[:client_id]
+    @client = is_admin? ? Client.find(params[:client_id]) : current_user
     @listing = @client.listings.find params[:listing_id]
   end
   

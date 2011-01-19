@@ -1,0 +1,6 @@
+<% form_tag toggle_client_listing_facility_feature_path(@client, @listing, facility_feature), :class => 'facility_feature amenity' do %>
+	<div>
+		<%= check_box_tag "features[#{facility_feature.id}]", facility_feature.id, @listing.has_feature?(facility_feature), :id => "feature_#{facility_feature.id}" %>
+		<%= label_tag "feature_#{facility_feature.id}", facility_feature.title %>
+	</div>
+<% end %>

@@ -3,11 +3,7 @@ class Client < User
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
   accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
-  
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
-  
-  has_many :predef_special_assigns, :dependent => :destroy
-  has_many :predefined_specials, :through => :predef_special_assigns
   
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
   has_one :billing_info, :dependent => :destroy
@@ -59,10 +55,6 @@ class Client < User
   def active_specials
     a = self.specials | self.predefined_specials
     a.sort_by { |s| s.respond_to?(:position) ? s.position : s.get_assign(self.id).position }
-  end
-  
-  def has_special?(special)
-    self.predefined_specials.include? special
   end
   
   def listings_verified?

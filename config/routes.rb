@@ -36,13 +36,12 @@ ActionController::Routing::Routes.draw do |map|
   
   map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck Rentals'
   map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving Companies'
-  
-  map.client_activate         '/clients/activate/:code', :controller => 'clients', :action => 'activate'
-  map.tenant_activate         '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
-  map.resend_activation       '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
-  map.toggle_facility_feature '/clients/:client_id/listings/:listing_id/facility_features/:id/:status', :controller => 'facility_features', :action => 'update'
-  map.map_dirs                '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
-  
+                       
+  map.client_activate   '/clients/activate/:code', :controller => 'clients', :action => 'activate'
+  map.tenant_activate   '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
+  map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
+  map.map_dirs          '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
+                       
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
   
@@ -88,9 +87,11 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :user_stats
   end
   
-  map.resources :clients, :member => { :toggle_specials => :post, :edit_info => :get, :verify => :post } do |clients|
+  map.resources :clients, :member => { :edit_info => :get, :verify => :post } do |clients|
     clients.resources :listings, :member => { :disable => :post } do |listings|
       listings.resources :staff_emails
+      listings.resources :predefined_specials, :member => { :toggle => :post }
+      listings.resources :facility_features, :member => { :toggle => :post }
     end
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'
@@ -155,7 +156,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rentals
   map.resources :specials
   map.resources :predefined_specials
-  map.resources :predef_special_assigns
+  map.resources :predef_special_assigns, :member => { :toggle => :post }
   map.resources :info_requests
   map.resources :payments
   map.resources :facility_features

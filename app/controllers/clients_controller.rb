@@ -1,9 +1,9 @@
 class ClientsController < ApplicationController
   
-  before_filter :ensure_secure_subdomain, :only => [:edit, :edit_info, :update, :toggle_specials]
-  ssl_required :index, :show, :edit, :edit_info, :update, :toggle_specials, :verify
+  before_filter :ensure_secure_subdomain, :only => [:edit, :edit_info, :update]
+  ssl_required :index, :show, :edit, :edit_info, :update, :verify
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials, :verify]
+  before_filter :get_model, :only => [:show, :update, :destroy, :verify]
   before_filter :get_client, :only => [:edit, :edit_info]
   
   def index
@@ -114,16 +114,6 @@ class ClientsController < ApplicationController
     render :json => { :success => true }
   rescue => e
     render :json => { :success => false, :data => e.message }
-  end
-  
-  def toggle_specials
-    if params[:toggle] == 'true'
-      @client.predef_special_assigns.create :predefined_special_id => params[:predefined_special_id]
-    else
-      @client.predef_special_assigns.find_by_predefined_special_id(params[:predefined_special_id]).destroy
-    end
-    
-    render :json => { :success => true }
   end
   
   def verify

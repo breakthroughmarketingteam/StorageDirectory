@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118193056) do
+ActiveRecord::Schema.define(:version => 20110118223949) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -634,10 +634,10 @@ ActiveRecord::Schema.define(:version => 20110118193056) do
 
   create_table "predef_special_assigns", :force => true do |t|
     t.integer  "predefined_special_id"
-    t.integer  "client_id"
     t.integer  "position",              :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "listing_id"
   end
 
   create_table "predefined_sizes", :force => true do |t|
