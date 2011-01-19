@@ -2,6 +2,7 @@ class ClientsController < ApplicationController
   
   before_filter :ensure_secure_subdomain, :only => [:edit, :edit_info, :update]
   ssl_required :index, :show, :edit, :edit_info, :update, :verify
+  skip_before_filter :simple_auth, :only => :activate
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
   before_filter :get_client, :only => [:edit, :edit_info]
@@ -24,8 +25,8 @@ class ClientsController < ApplicationController
     @client = Client.new params
     
     if @client.save_without_session_maintenance
-      #Notifier.deliver_client_notification @client
-      Notifier.deliver_new_client_alert @client
+      Notifier.delay.deliver_client_notification @client
+      Notifier.delay.deliver_new_client_alert @client
       
       render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
     else

@@ -23,7 +23,7 @@
 
 	<div class="left">
 		<%= label_tag 'permissions[][resource]', '&nbsp;' %>
-		<%= select_tag 'permissions[][resource]', model.option_tags_for(_controllers(false), nil, nil, :resource, ''), :class => 'required', :title => 'Choose a resource to define the permission on', :disabled => disabled %>
+		<%= select_tag 'permissions[][resource]', model.option_tags_for(_controllers(false).sort, nil, nil, :resource, ''), :class => 'required', :title => 'Choose a resource to define the permission on', :disabled => disabled %>
 	</div>
 	
 	<div class="left check_box_wrap left_space">
