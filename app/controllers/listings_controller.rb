@@ -3,12 +3,11 @@ class ListingsController < ApplicationController
   before_filter :ensure_secure_subdomain, :only => [:index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn
   ssl_allowed :show
-  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show]
+  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request]
   before_filter :get_listing_relations, :only => [:show, :profile]
-  
+  before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show, :profile]
   geocode_ip_address :only => [:home, :locator]
   
   def index 
@@ -245,17 +244,16 @@ class ListingsController < ApplicationController
   def get_listing_relations
     @map = @listing.map
     @pictures = @listing.pictures
-    @search = Search.find_by_id session[:search_id]
     
-    if action_name == 'profile'
-      @facility_features = IssnFacilityFeature.labels
+    if in_mode? 'profile'
+      @facility_features = FacilityFeature.all.map &:title
       @specials = @listing.specials
       @hours = @listing.business_hours
     end
   end
   
   def get_client
-    @client = @listing.client
+    @client = is_admin? ? @listing.client : current_user
   end
   
   def get_map

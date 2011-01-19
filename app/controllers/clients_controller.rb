@@ -24,8 +24,8 @@ class ClientsController < ApplicationController
     @client = Client.new params
     
     if @client.save_without_session_maintenance
-      #Notifier.deliver_client_notification @client
-      Notifier.deliver_new_client_alert @client
+      Notifier.delay.deliver_client_notification @client
+      Notifier.delay.deliver_new_client_alert @client
       
       render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
     else
