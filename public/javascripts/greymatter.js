@@ -1382,7 +1382,8 @@ function get_pop_up_and_do(options, params, callback) {
 				$(this).dialog('destroy').remove();
 			}
 		});
-		if (typeof callback == 'function') callback.call(this, pop_up);
+		if (typeof callback == 'function') 
+			callback.call(this, pop_up);
 	});
 }
 
@@ -1396,7 +1397,7 @@ function get_partial_and_do(params, callback) {
 }
 
 /**************** slide show and workflow object *******************/
-// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see below: tips_show
+// Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see tips_show
 var GreyShow = function(options) {
 	var self = this;
 	this.context 	= options.context;
@@ -1411,7 +1412,8 @@ var GreyShow = function(options) {
 	}
 	
 	this.startSlide = function() {
-		if (typeof self.slides[self.current].start == 'function') self.slides[self.current].start.call(this, self);
+		if (typeof self.slides[self.current].start == 'function') 
+			self.slides[self.current].start.call(this, self);
 		
 		self.hidePrevSlide();
 		self.slide_objects = self.slides[self.current].objects;
@@ -1436,7 +1438,9 @@ var GreyShow = function(options) {
 		if (typeof o.callback == 'function')
 			o.callback.call(this, $object, self);
 		
-		$object[o.action](o.speed, function(){ self.nextObject(o) });
+		$object[o.action](o.speed, function() { 
+			self.nextObject(o);
+		});
 	}
 	
 	this.nextObject = function(o) {
@@ -1447,7 +1451,8 @@ var GreyShow = function(options) {
 				self.runObject(self.slide_objects[self.current_object]);
 			}, o.delay);
 			
-		} else {
+		} else if (typeof self.slides[self.current].end == 'function') {
+			
 			setTimeout(function(){
 				self.slides[self.current].end.call(this, self);
 			}, self.delay);

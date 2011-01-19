@@ -818,6 +818,36 @@ $(function(){
 	
 	$('form', '#rent_step1').rental_form();
 	
+	if (window.location.hash == '#write_review') {
+		var pop_up = $('<div id="pop_up" class="write_review"></div>').dialog({
+			title: 'Write a Review',
+			width: 600,
+			height: 500,
+			modal: true,
+			resizable: false,
+			close: function() { $(this).dialog('destroy').remove() }
+		});
+		
+		$('form', pop_up).submit(function() {
+			var form = $(this).runValidation(),
+				ajax_loader = $.new_ajax_loader('after', $('input[type=submit]', this));
+			
+			if (form.data('valid') && !form.data('sending')) {
+				ajax_loader.show();
+				form.data('sending', true);
+				
+				$.post(form.attr('action'), form.serialize(), function(response) {
+					$.with_json(response, function(data) {
+						pop_up.html('<div class="framed">'+ data +'</div>');
+					});
+					
+					ajax_loader.hide();
+					form.data('sending', false);
+				}, 'json');
+			}
+		});
+	}
+	
 });
 
 /*
