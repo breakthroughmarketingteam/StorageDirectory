@@ -17,9 +17,8 @@ class UserSessionsController < ApplicationController
   
   def create
     @user_session = UserSession.create params[:user_session]
-    status = current_user.status
     
-    if status == 'active' && @user_session.valid?
+    if @user_session.valid? && current_user.status
       @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
       
       respond_to do |format|
@@ -40,18 +39,18 @@ class UserSessionsController < ApplicationController
         end
       end
     else
-      if status == 'unverified'
-        msg = fmsg ="You have not verified your account yet, did you click on the link in the email?"
-        redir = login_path
-        
-      elsif status == 'suspended'
-        msg = fmsg = "Your account seems to be suspended..."
-        redir = login_path
-        
-      elsif !@user_session.valid? || status.nil?
+      if !@user_session.valid?
         redir = { :action => :new }
         fmsg = flash.now[:error] = model_errors(@user_session)
         msg = render_to_string(:action => :new, :layout => false)
+        
+      elsif current_user.status == 'unverified'
+        msg = fmsg ="You have not verified your account yet, did you click on the link in the email?"
+        redir = login_path
+      
+      elsif current_user.status == 'suspended'
+        msg = fmsg = "Your account seems to be suspended..."
+        redir = login_path
       end
       
       respond_to do |format|
