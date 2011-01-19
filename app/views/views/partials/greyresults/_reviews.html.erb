@@ -13,7 +13,7 @@
 			<%= render :partial => 'comments/review', :collection => listing.reviews %>
 		</ul>
 	<% else %>
-		<% form_for [listing, listing.review.build] do |f| %>
+		<% form_for [listing, listing.reviews.build] do |f| %>
 			
 		<% end %>
 	<% end %>
