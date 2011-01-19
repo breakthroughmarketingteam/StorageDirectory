@@ -415,8 +415,10 @@ $.option_tags_from_model = function(model_class, models, options) {
 		option_tags = select_prompt ? '<option value="">' + select_prompt + '</option>' : '';
 	
 	$.each(models, function(i) {
-		if (attribute == 'name' && !this[model_class]['name']) attribute = 'title';
-		else if (attribute == 'title' && !this[model_class]['title']) attribute = 'name';
+		if (attribute == 'name' && !this[model_class]['name']) 
+			attribute = 'title';
+		else if (attribute == 'title' && !this[model_class]['title']) 
+			attribute = 'name';
 		
 		option_tags += '<option value="' + this[model_class]['id'] + '">(' + this[model_class]['id'] +') ' + this[model_class][attribute] + '</option>';
 	});
@@ -435,7 +437,7 @@ $.option_tags_from_array = function(options, selected) {
 }
 
 $.with_json = function(response, success, error) {
-	if (response.success) success.call(this, response.data);
+	if (response.success) (success || function(){}).call(this, response.data);
 	else if (error && error.call) error.call(this, response.data)
 	else $.ajax_error(response);
 }

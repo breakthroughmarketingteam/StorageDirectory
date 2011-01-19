@@ -9,26 +9,28 @@ class Listing < ActiveRecord::Base
   has_one  :map, :dependent => :destroy
   accepts_nested_attributes_for :map
   
-  has_many :pictures       , :dependent => :destroy
-  has_many :reservations   , :dependent => :destroy
-  has_many :rentals        , :dependent => :destroy
-  has_many :info_requests  , :dependent => :destroy
-  has_many :clicks         , :dependent => :destroy
-  has_many :impressions    , :dependent => :destroy
-  has_many :reviews        , :class_name => 'Comment', :as => :commentable
-  has_many :staff_emails   , :dependent => :destroy
+  has_many :pictures,      :dependent => :destroy
+  has_many :reservations,  :dependent => :destroy
+  has_many :rentals,       :dependent => :destroy
+  has_many :info_requests, :dependent => :destroy
+  has_many :clicks,        :dependent => :destroy
+  has_many :impressions,   :dependent => :destroy
+  has_many :reviews,       :class_name => 'Comment', :as => :commentable
+  has_many :staff_emails,  :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
-  has_many :business_hours , :dependent => :destroy
-  has_many :access_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
-  has_many :office_hours, :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'office'"
+  has_many :business_hours, :dependent => :destroy
+  has_many :access_hours,   :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
+  has_many :office_hours,   :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'office'"
   
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
   end
   
-  has_many :listing_features, :dependent => :destroy
-  has_many :facility_features, :through => :listing_features
+  has_many :listing_features,       :dependent => :destroy
+  has_many :facility_features,      :through => :listing_features
+  has_many :predef_special_assigns, :dependent => :destroy
+  has_many :predefined_specials,    :through => :predef_special_assigns
   
   # OpentTech ISSN data
   has_one  :facility_info,       :dependent => :destroy
@@ -165,8 +167,7 @@ class Listing < ActiveRecord::Base
   end
   
   def specials
-    return [] if self.client.nil?
-    self.client.predefined_specials.sort_by &:overall_value
+    self.predefined_specials.sort_by &:overall_value
   end
   
   def special
@@ -408,6 +409,10 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def has_special?(special)
+    self.predefined_specials.include? special
+  end
+  
   def units_available?
     self.units.any? { |u| u.Available =~ /y/i }
   end
@@ -418,6 +423,10 @@ class Listing < ActiveRecord::Base
   
   def max_reserve_ahead_days
     self.facility_info.O_MaximumReserveAheadDays if self.facility_info
+  end
+  
+  def get_predef_special_assign(predefined_special)
+    self.predef_special_assigns.find_by_predefined_special_id predefined_special.id
   end
   
   # args: { :type_id => str:required, :unit_id => str:optional, :promo_code => str:optional, :insurance_id => str:optional }

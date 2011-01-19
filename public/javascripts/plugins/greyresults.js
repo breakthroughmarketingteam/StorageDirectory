@@ -232,33 +232,13 @@ $(function(){
 		return false;
 	});
 	
-	$('.facility_feature', '#sl-tabs-feat').button().click(function(){
-		var $this = $(this),
-			feature = encodeURIComponent($this.val().replaceAll(' ', '-')),
-			ajax_loader = $.new_ajax_loader('after', this).show(),
-			path = '/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val() +'/facility_features/'+ feature +'/'+ $this.hasClass('selected');
+	// Amenities and Specials
+	$('.amenity input', '#tab3').button().click(function(){
+		var $this = $(this), form = $this.parents('form.amenity'), 
+			ajax_loader = $.new_ajax_loader('after', this).show();
 		
-		$.post(path, function(response) {
-			$.with_json(response, function(data){
-				$this.toggleClass('selected');
-			});
-			
-			ajax_loader.hide();
-		}, 'json');
-	});
-	
-	$('.predef_special input', '#toggle_specials').button().click(function() {
-		var $this = $(this),
-			form = $this.parents('form'), 
-			ajax_loader = $.new_ajax_loader('after', this).show(),
-			id = $this.parent('li').attr('id').replace('PredefinedSpecial', '');
-		
-		// for some reason the state on the checkbox is reversed here
-		$.post(form.attr('action'), { 'predefined_special_id': id, 'toggle': !$this.hasClass('selected') }, function(response) {
-			$.with_json(response, function(data) {
-				
-			});
-			
+		$.post(form.attr('action'), function(response) {
+			$.with_json(response);
 			ajax_loader.hide();
 		}, 'json');
 	});

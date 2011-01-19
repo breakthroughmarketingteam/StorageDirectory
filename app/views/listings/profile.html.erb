@@ -84,23 +84,24 @@
 						<div id="features" class="uncollapse stack">
 							<h3 class="label">Facility Amenities:</h3>
 							<div class="inner">
-								<%= render :partial => 'features' %>
+								<%= render FacilityFeature.all %>
 							</div>
 						</div>
 						<div id="specials" class="uncollapse stack">
 							<h3 class="label">Specials:</h3>
 							<div class="inner">
-								<%= render_hints_for :specials %>
-								<p>Select one or more preset specials to make it available for this facility.</p>
-								<% form_tag toggle_specials_client_path(@client) do %>
-									<ul id="toggle_specials">
-										<%= render :partial => PredefinedSpecial.all %>
-									</ul>
-								<% end %>
+								<%= render PredefinedSpecial.all %>
 							</div>
 						</div>
-					
-						<%= submit_tag 'Save Changes', :class => 'save' %>
+						
+						<div class="uncollapse">
+							<ul id="amenity_legend">
+								<li class="active"><span></span> Enabled</li>
+								<li class="default"><span></span> Disabled</li>
+							</ul>
+						
+							<%= submit_tag 'Save Changes', :class => 'save' %>
+						</div>
 					</div>
 					<div id="unit_sizes" class="tab_content">
 						<div id="custom_sizes">

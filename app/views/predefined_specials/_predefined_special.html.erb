@@ -1,4 +1,6 @@
-<li id="PredefinedSpecial<%= predefined_special.id %>" class="predef_special">
-	<%= check_box_tag 'specials[]', predefined_special.id, @client.has_special?(predefined_special), :id => "special_#{predefined_special.id}" %>
-	<%= label_tag "special_#{predefined_special.id}", predefined_special.title %>
-</li>
+<% form_tag toggle_client_listing_predefined_special_path(@client, @listing, predefined_special), :class => 'predef_special amenity' do %>
+	<div>
+		<%= check_box_tag "specials[#{predefined_special.id}]", predefined_special.id, @listing.has_special?(predefined_special), :id => "special_#{predefined_special.id}" %>
+		<%= label_tag "special_#{predefined_special.id}", predefined_special.title %>
+	</div>
+<% end %>
