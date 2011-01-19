@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
   
   def create
     @user_session = UserSession.create params[:user_session]
-    status = @user_session.user.try :status
+    status = current_user.status
     
     if status == 'active' && @user_session.valid?
       @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
@@ -48,7 +48,7 @@ class UserSessionsController < ApplicationController
         msg = fmsg = "Your account seems to be suspended..."
         redir = login_path
         
-      elsif !@user_session.valid?
+      elsif !@user_session.valid? || status.nil?
         redir = { :action => :new }
         fmsg = flash.now[:error] = model_errors(@user_session)
         msg = render_to_string(:action => :new, :layout => false)
