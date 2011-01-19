@@ -35,6 +35,7 @@ class ListingsController < ApplicationController
         Listing.transaction do
           @listings.map { |m| m.update_stat 'impressions', request }
         end
+        # TODO: find a more efficient way to create the stats
         #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
       end
       
