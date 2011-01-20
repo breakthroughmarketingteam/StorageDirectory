@@ -475,7 +475,7 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #fac-signup ul li{list-style:disc inside none;margin:10px;}
 .tab_content{clear:both;position:relative;}
 #new_client legend{margin:10px 0px 10px 0px;background:#E1EBF5;line-height:35px;color:#555;font-size:120%;padding:3px 15px;}
-.tab_content p{color:#555;font-size:12px;line-height:18px;margin:20px 0 15px;}
+.tab_content p{font-size:12px;line-height:18px;margin:20px 0 15px;}
 .tab_content h4{font-size:18px;margin:30px 0 15px;}
 .blue-line{background-color:#4745CC;clear:both;margin:5px 0px;color:#fff;height:3em;line-height:3em;}
 .blue-line ul#bottom-nav li{display:inline;margin-right:20px;text-shadow:1px 1px 2px #000;}
@@ -762,7 +762,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-logos{border:1px solid #ccc;float:right;background:#f9f9f9;margin-bottom:15px;}
 #pop_up #new_comment{padding:0 15px 15px;overflow:hidden;font-size:80%;}
 #pop_up #new_comment label{float:left;display:block;width:65px;}
-#pop_up #new_comment .required{padding:2px 4px;width:100%;border:1px solid #ccc;font-size:100%;}
+#pop_up #new_comment .required{padding:4px;width:100%;border:1px solid #ccc;font-size:100%;}
 #pop_up #new_comment #comment_comment{height:200px;}
 #pop_up #new_comment div.left{width:83%;}
 #pop_up #new_comment div.short{width:62%;}
