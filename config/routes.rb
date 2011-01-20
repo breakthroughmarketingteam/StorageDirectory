@@ -76,6 +76,8 @@ ActionController::Routing::Routes.draw do |map|
     listing.resources :reviews
     listing.resources :facility_features
     listing.resources :business_hours
+    listing.resources :comments
+    listing.resources :reviews
   end
   
   map.resources :users, :member => { :authenticate => :post } do |user|

@@ -7,6 +7,7 @@ class Comment < ActiveRecord::Base
   
   belongs_to :user
   access_shared_methods
+  ajaxful_rateable :dimensions => [:usefulness]
   
   @@searchables    = %w(title email comment)
   cattr_accessor :searchables

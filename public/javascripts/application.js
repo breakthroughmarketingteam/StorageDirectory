@@ -52,11 +52,31 @@ $(function() {
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				if (response.success) {
-					if (response.role == 'advertiser') {
+					var ready_mem = $('#ready_member', form);
+					
+					if (response.role == 'advertiser' && ready_mem.length == 0) {
 						window.location = response.account_path;
 					} else {
 						$('#topbar').html(response.data);
 						$('#pop_up_box').fadeOutRemove();
+						
+						// when a member clicks on already a member link, they are in a form and we need to fill in their info, e.g. name and email
+						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
+						// where the context is the form, the attr are the attributes of response object, and the fields are ids of fields to input the attribute values, and the element to focus
+						if (ready_mem.length > 0) {
+							var values = ready_mem.val().split('|'),
+								context = $('#'+ values[0]),
+								attributes = values[1].split(',')
+								field_ids = values[2].split(','),
+								focus_el = values[3];
+								
+							$.each(field_ids, function(i) {
+								$('#'+ this, context).val(response[attributes[i]]);
+							});
+							
+							$('#'+ focus_el, context).focus();
+							$('#already_member', context).hide();
+						}
 					}
 				} else {
 					$('#pop_up_box').html(response.data);
@@ -91,6 +111,14 @@ $(function() {
 		}
 		
 		return false;
+	});
+	
+	$('#already_member').live('click', function() {
+		// inject a hidden input so that the login action will know what to do
+		$('#new_user_session').append('<input type="hidden" id="ready_member" value="'+ $(this).attr('data-ready_member') +'" />');
+		
+		// open login pop up
+		$('#login_link', '#topbar').click();
 	});
 	
 	// map pop up

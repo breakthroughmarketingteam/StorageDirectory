@@ -13,4 +13,9 @@ module UsersHelper
     nil
   end
   
+  def already_member(data_keys, options = {})
+    return '' if current_user
+    link_to 'I have an account', '#', options.merge(:id => 'already_member', :'data-ready_member' => data_keys, :title => 'Already have an account with us? Login quickly through here.')
+  end
+  
 end

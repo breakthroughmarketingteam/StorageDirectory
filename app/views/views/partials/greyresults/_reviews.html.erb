@@ -1,7 +1,7 @@
 <div id="head" class="blue head">
 	<h5 class="white">
-		<%= listing.reviews.empty? ? "Be the first one to review" : "Here's what other people have to say about" %> 
-		<a href="">American International Self Storage</a>.
+		<%= listing.reviews.empty? ? "Be the first one to review" : "Here's what #{listing.reviews.size > 1 ? 'other people have' : 'another person has'} to say about " %>
+		<a href="<%= facility_path_for listing %>"><%= listing.title %></a>.
 	</h5>
 </div>
 	
@@ -12,9 +12,7 @@
 		<ul id="reviews_list">
 			<%= render :partial => 'comments/review', :collection => listing.reviews %>
 		</ul>
-	<% else %>
-		<% form_for [listing, listing.reviews.build] do |f| %>
-			
-		<% end %>
 	<% end %>
+	
+	<%= write_review_link listing.id %>
 </div>

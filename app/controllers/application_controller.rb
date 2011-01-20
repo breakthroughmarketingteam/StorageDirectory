@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
   
   # hidden field hack_me must pass through empty, cheap reverse captcha trick
   def reverse_captcha_check
-    redirect_to("/#{home_page}") and return if params.has_key?(:hack_me) && !params[:hack_me].empty?
+    redirect_to(root_path) and return if params.has_key?(:hack_me) && !params[:hack_me].blank?
   end
   
   # we set some return path variables in the session, mostly for the backend.

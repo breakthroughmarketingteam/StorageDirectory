@@ -212,6 +212,10 @@ class Listing < ActiveRecord::Base
     self.storage_types.blank? ? 'self storage' : self.storage_types.split(',').first
   end
   
+  def comments
+    self.reviews
+  end
+  
   def update_description(other_listing)
     self.update_attribute :description, other_listing.description
   end

@@ -28,6 +28,10 @@ module ListingsHelper
     end
   end
   
+  def facility_path_for(listing)
+    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id
+  end
+  
   def display_location(location)
     "in #{location.city}, #{location.state}" if location.respond_to? :city
   end

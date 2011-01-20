@@ -1,0 +1,10 @@
+<div id="sl-tabs-reviews" class="tab_content">
+	<% unless @reviews.empty? %>
+		<%= render :partial => 'comments/review', :collection => @reviews %>
+		<%= will_paginate @reviews, :param_name => :review_page, :params => { :anchor => :fac_reviews } %>
+	<% else %>
+		<p id="reviews_empty">No reviews yet. Be the first!</p>
+	<% end %>
+	
+	<%= write_review_link @listing.id if in_mode? 'show' %>
+</div>

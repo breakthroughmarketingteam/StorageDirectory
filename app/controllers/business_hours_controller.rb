@@ -1,5 +1,6 @@
 class BusinessHoursController < ApplicationController
   
+  ssl_required :create
   before_filter :get_listing
   
   def create

@@ -1,15 +1,33 @@
-<% form_for Comment.new do |f| %>
-	<div class="stack">
+<% form_for [model, Comment.new] do |f| %>
+	<div class="stack uncollapse">
+		<%= f.label :name %>
+		<div class="left short">
+			<%= f.text_field :name, :value => (current_user && current_user.name), :class => 'required mb5' %>
+		</div>
+		
+		<%= already_member 'new_comment|name,email|comment_name,comment_email|comment_comment', :class => 'right' %>
+	</div>
+	
+	<div class="stack uncollapse">
 		<%= f.label :email %>
-		<%= f.text_field :email %>
+		<div class="left">
+			<%= f.text_field :email, :value => (current_user && current_user.email), :class => 'required email mb5' %>
+			<span class="note">Your email is kept private</span>
+		</div>
+	</div>
+	
+	<div class="stack uncollapse">
+		<%= f.label :comment, 'Review' %>
+		<div class="left">
+			<%= f.text_area :comment, :class => 'small_textarea required' %>
+		</div>
 	</div>
 	
 	<div class="stack">
-		<%= f.label :comment %>
-		<%= f.text_area :comment, :class => 'small_textarea' %>
-	</div>
-	
-	<div class="stack">
-		<%= f.submit %>
+		<%= hidden_field_tag 'target_type', model.class.name %>
+		<%= hidden_field_tag 'target_id', model.id %>
+		<%= hidden_field_tag 'do_review', true %>
+		<%= reverse_captcha %>
+		<%= f.submit 'Submit Review' %>
 	</div>
 <% end %>
