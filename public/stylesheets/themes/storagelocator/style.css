@@ -2069,3 +2069,9 @@ p.breadcrumb a{color:#fff;}
 #footer_btm .openDiv:hover{background:url(/images/ui/storagelocator/more-info-btn.png) no-repeat bottom;}
 
 #highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}
+
+#results_wrap .option{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;border:1px solid #e0e0e0;height:17px;margin:2px 0;padding:7px 10px 0;text-align:left;width:110px;}
+#results_wrap .option:hover{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
+#results_wrap .option:hover .price{color:#fff;}
+#results_wrap .type{}
+#results_wrap .price{float:right;}
