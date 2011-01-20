@@ -1074,6 +1074,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 /* client edit form */
 #sl-tabs-sizes{background:#fff;border-color:-moz-use-text-color #ccc;border-style:none solid;border-width:medium 1px;position:relative;}
 .review p{margin:0 0 10px;}
+#reviews_empty{margin-left:20px;}
 #write_review{margin:0 5px 0 20px;padding:1px 0 0 22px;font-size:80%;background:url(/images/ui/storagelocator/comment_small.png) no-repeat left;}
 #write_review a{font-size:100%;}
 .sizes_list_in .sl-table-wrap{overflow:hidden;}
