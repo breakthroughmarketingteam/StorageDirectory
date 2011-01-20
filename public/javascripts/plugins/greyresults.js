@@ -4,6 +4,19 @@
 // for both back end (client control panel) and front end (search results)
 
 $(function(){
+	
+	$('a', '#sl-tabs-nav').click(function() {
+		window.location.hash = this.href.split('#')[1];
+	});
+
+	if ($.on_page([['profile, show', 'listings']])) {
+		if (window.location.hash != '') {
+			setTimeout(function() { // wait for tabular_content to attach the click handler to the tabs, then trigger it
+				$('a[href="'+ window.location.hash +'"]', '#sl-tabs-nav').click();
+			}, 1);
+		}
+	}
+	
 	/*
 	 * BACK END, listing owner page methods
 	 */
@@ -162,18 +175,6 @@ $(function(){
 		
 		return false;
 	});
-	
-	$('a', '#sl-tabs-nav').click(function() {
-		window.location.hash = this.href.split('#')[1];
-	});
-	
-	if ($.on_page([['profile', 'listings']])) {
-		if (window.location.hash != '') {
-			setTimeout(function() { // wait for tabular_content to attach the click handler to the tabs, then trigger it
-				$('a[href="'+ window.location.hash +'"]', '#sl-tabs-nav').click();
-			}, 1);
-		}
-	}
 
 	// address and specials boxes, convert to form and handle ajax post
 	$('.attr_edit', '.authenticated').live('click', function(){
@@ -818,37 +819,45 @@ $(function(){
 	
 	$('form', '#rent_step1').rental_form();
 	
-	if (window.location.hash == '#write_review') {
-		var pop_up = $('<div id="pop_up" class="write_review"></div>').dialog({
-			title: 'Write a Review',
-			width: 600,
-			height: 500,
-			modal: true,
-			resizable: false,
-			close: function() { $(this).dialog('destroy').remove() }
-		});
+	// when a review request is sent the link in the email goes to the single listing page with this hash in the url
+	if (window.location.hash == '#write_review')
+		get_review_pop_up({ sub_partial: 'comments/write_review', model: 'Listing', id: $('listing_id').val() });
+	
+	$('a', '#write_review').live('click', function() {
+		var $this = $(this);
+		$.new_ajax_loader('after', $this.parent()).show().fadeOutLater('fast', 3000);
+		get_review_pop_up({ sub_partial: 'comments/write_review', model: 'Listing', id: $this.attr('data-listing_id') });
+		return false;
+	});
+	
+});
+
+function get_review_pop_up(options) {
+	get_pop_up_and_do({ title: 'Write a Review', width: 500, modal: true }, options, function(pop_up) {
+		$('#comment_name', pop_up).focus();
 		
 		$('form', pop_up).submit(function() {
 			var form = $(this).runValidation(),
 				ajax_loader = $.new_ajax_loader('after', $('input[type=submit]', this));
-			
+
 			if (form.data('valid') && !form.data('sending')) {
 				ajax_loader.show();
 				form.data('sending', true);
-				
+
 				$.post(form.attr('action'), form.serialize(), function(response) {
 					$.with_json(response, function(data) {
-						pop_up.html('<div class="framed">'+ data +'</div>');
+						pop_up.html('<div class="framed" style="text-align:center;">'+ data +'</div>');
 					});
-					
+
 					ajax_loader.hide();
 					form.data('sending', false);
 				}, 'json');
 			}
+			
+			return false;
 		});
-	}
-	
-});
+	});
+}
 
 /*
  * Google Map methods

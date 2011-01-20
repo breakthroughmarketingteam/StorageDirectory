@@ -245,6 +245,7 @@ class ListingsController < ApplicationController
   def get_listing_relations
     @map = @listing.map
     @pictures = @listing.pictures
+    @reviews = @listing.reviews.paginate :per_page => 10, :page => params[:review_page]
     
     if in_mode? 'profile'
       @facility_features = FacilityFeature.all.map &:title

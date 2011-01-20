@@ -1,10 +1,10 @@
 <div class="review">
-	<h6><%= review.title %></h6>
-	<p>By: <%= review.email %></p>
+	<h6>Reviewed on <%= "#{review.created_at.strftime('%B')} #{review.created_at.day.ordinalize}, #{review.created_at.year}" %></h6>
+	<%= "<p>By: #{review.name}</p>" unless review.name.blank? %>
 	<div class="stack"><%= review.comment %></div>
 
 	<ul>
 		<li>Rating&nbsp;&nbsp;&nbsp;</li>
-		<li class="five-star"><%= ratings_for review, :dimension => :usefulness, :small => true %></li>
+		<li class="five-star"><%#= ratings_for review, :dimension => :usefulness, :small => true %></li>
 	</ul>
 </div>

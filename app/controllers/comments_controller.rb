@@ -33,7 +33,13 @@ class CommentsController < ApplicationController
         Notifier.deliver_comment_notification(@form.recipient, @comment, request.host)
       end
       
-      msg = params[:target_type].blank? ? 'Thanks for the message! We\'ll get back to you soon' : "#{params[:target_type].titleize} comment created."
+      if params[:target_type].blank?
+        msg = 'Thanks for the message! We\'ll get back to you soon'
+      elsif params[:do_review]
+        msg = 'Thank you. We greatly appreciate the review!'
+      else
+        msg = "#{params[:target_type].titleize} comment created."
+      end
       
       respond_to do |format|
         format.html do

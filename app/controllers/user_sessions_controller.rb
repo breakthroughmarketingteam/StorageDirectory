@@ -35,7 +35,14 @@ class UserSessionsController < ApplicationController
         end
 
         format.js do
-          render :json => { :success => true, :data => render_to_string(:partial => 'menus/topnav'), :role => @user_session.user.role.title, :account_path => @client_link }
+          render :json => { 
+            :success => true, 
+            :data => render_to_string(:partial => 'menus/topnav'), 
+            :name => current_user.name,
+            :email => current_user.email,
+            :role => current_user.role.title, 
+            :account_path => @client_link 
+          }
         end
       end
     else

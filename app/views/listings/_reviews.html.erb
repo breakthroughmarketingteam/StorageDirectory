@@ -1,0 +1,5 @@
+<div id="sl-tabs-reviews" class="tab_content">
+	<%= render :partial => 'comments/review', :collection => @reviews %>
+	<%= will_paginate @reviews, :param_name => :review_page, :params => { :anchor => :fac_reviews } %>
+	<%= write_review_link @listing.id if in_mode? 'show' %>
+</div>

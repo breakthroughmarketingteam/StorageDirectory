@@ -207,7 +207,8 @@
 							<h3>Reviews</h3>
 							<% unless @listing.reviews.empty? %>
 								<p>Here's a list of all the reviews you've received for this facility.</p>
-								<%= render @listing.reviews %>
+								<%= render :partial => 'comments/review', :collection => @reviews %>
+								<%= will_paginate @reviews, :param_name => :review_page, :params => { :anchor => :reviews_tab } %>
 							<% else %>
 								<p>You have no reviews yet.</p>
 							<% end %>
