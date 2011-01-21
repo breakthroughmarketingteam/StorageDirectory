@@ -11,6 +11,10 @@ class BlogPostsController < ApplicationController
   def index
     render :layout => false if request.xhr?
   end
+  
+  def rss
+    get_models
+  end
 
   def show
     @title = "#{@blog_post.title} - #{@blog_post.tag_list.split(/,\s?/).flatten.map(&:titleize).join(', ')}"
