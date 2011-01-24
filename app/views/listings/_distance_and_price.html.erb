@@ -10,40 +10,16 @@
 		</li>
 		<li class="rslt-price">
 		  	<ul>
-				<% @upper_type_size = listing.get_upper_type_size(unit_size) %>
-				<% @indoor_type_size = listing.get_interior_type_size(unit_size) %>
-				<% @drive_up_type_size = listing.get_drive_up_type_size(unit_size) %>
-				
-				<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
+				<% [['Upper', listing.get_upper_type_size(unit_size)], ['Lower', listing.get_interior_type_size(unit_size)], ['Drive Up', listing.get_drive_up_type_size(unit_size)]].each do |types| %>
 					<% type, size = types %>
 					
-					<li class="option">
+					<li class="<%= size.nil? ? 'disabled' : 'enabled' %>">
 						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
 							<span class="type"><%= type %>:</span>
 							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "n/a" %></span>
+							<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id, nil, :class => 'unit_size hide' if size %>
 						</label>
 					</li>
-					
-					
-					
-					
-					
-					<!--><li class="radio_wrap">
-						<div class="radio">
-							<% if size && !feat %>
-								<div class="radio_select">
-									<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id %>
-								</div>
-							<% end %>
-						</div>
-						
-						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
-							<span class="type"><%= type %>:</span>
-							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "•&nbsp;&nbsp;&nbsp;&nbsp;" %></span>
-						</label>
-					</li>-->
-					
-					
 				<% end %>
 			</ul>		
 		</li>			

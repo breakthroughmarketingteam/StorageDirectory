@@ -18,7 +18,7 @@ module ListingsHelper
     return '' if params[:storage_type].blank?
     separator = ' ❯ '
     b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
-    b << "#{separator}#{link_to listing.title, facility_path(@search.storage_type.parameterize, listing.title, listing.id)}" if listing
+    b << "#{separator}#{link_to listing.title, facility_path_for(listing)}" if listing
     b << '</p>'
   end
   
@@ -134,10 +134,10 @@ module ListingsHelper
     @min_title_len = 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(secure_path_fix(listing.logo.url(:thumb)), options), facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), listing.title.parameterize, listing.id))}</div>"
+      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(secure_path_fix(listing.logo.url(:thumb)), options), facility_path_for(listing))}</div>"
       
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
-      link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path(get_storage_type, listing.title.parameterize, listing.id), :class => 'standard_logo'
+      link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path_for(listing), :class => 'standard_logo'
       
     else
       get_listing_logos
@@ -147,7 +147,7 @@ module ListingsHelper
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if !listing.new_record? && listing.title.size <= @min_title_len}'>"
       
       begin
-        link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span>", facility_path(get_storage_type, listing.title.try(:parameterize), listing.id), :class => 'dlogo_wrap' do |name|
+        link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span>", facility_path_for(listing), :class => 'dlogo_wrap' do |name|
           "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
         end
       rescue ActionController::RoutingError # for some reason even if listing.premium? return false the facility_path still gets called
@@ -305,15 +305,22 @@ module ListingsHelper
     end
   end
   
-  def display_comparison(comparison, listing)
+  def display_comparison(comparison, listing_set)
+    listing = listing_set[:listing]
+    
     case comparison when 'distance'
       "<td class='padded'><span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles</td>"
     
+    when 'monthly_rate'
+      "<td class='padded' title='Monthly rate'>#{number_to_currency listing_set[:size].dollar_price}</td>"
+    
     when /(special)/i
-      "<td class='padded' title='#{listing.special.description}'>#{listing.special.title}</td>"
+      special = listing_set[:special]
+      "<td class='padded' title='#{special.description if special}'>#{special.title if special}</td>"
     
     when /(price)/i
-      "<td class='padded'><span class='price'>#{number_to_currency listing.calculated_price[:amount]}</span><br /><span class='date'>Paid through #{listing.calculated_price[:paid_thru]}</span></td>"
+      calculation = listing.calculated_price(listing_set)
+      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid through<br />#{calculation[:paid_thru]}</span></td>"
     
     else # features
       if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison

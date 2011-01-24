@@ -94,11 +94,13 @@ class ClientsController < ApplicationController
     else
       case @client.status when 'unverified'
         @client.update_attribute :status, 'active'
+        flash[:quick_login] = [@client.email, @client.temp_password]
         flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
         redirect_to login_path
       
       when 'active'
         flash[:notice] = 'Your account is already active. Go ahead and log in.'
+        flash[:quick_login] = [@client.email, @client.temp_password]
         redirect_to login_path
       
       when 'suspended'

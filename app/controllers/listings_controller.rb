@@ -57,11 +57,16 @@ class ListingsController < ApplicationController
     @search = Search.find_by_id session[:search_id]
     
     if params[:ids] && params[:ids].match(/\d+/)
-      @listings = Listing.find(params[:ids].split(',').reject(&:blank?))
-      @location = Geokit::Geocoders::MultiGeocoder.geocode(@listings.first.map.full_address)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
+      @listing_set = params[:ids].split('-').map do |ids|
+        i = ids.split(',')
+        listing = Listing.find(i[0])
+        { :listing => listing, :size => listing.sizes.find(i[1]), :special => listing.predefined_specials.find(i[2]) }
+      end
+      
+      @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| s[:listing].map_data } }
     else
-      @listings = []
+      @listing_set = []
       @location = @search.location
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => [] }
     end

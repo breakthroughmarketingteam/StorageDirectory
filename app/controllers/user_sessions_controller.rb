@@ -23,7 +23,7 @@ class UserSessionsController < ApplicationController
       
       respond_to do |format|
         format.html do
-          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Hi #{@user_session.user.first_name}"
+          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : nil
 
           case current_user.role.title.downcase when 'admin', 'staff'
             redirect_back_or_default admin_index_path
@@ -37,11 +37,13 @@ class UserSessionsController < ApplicationController
         format.js do
           render :json => { 
             :success => true, 
-            :data => render_to_string(:partial => 'menus/topnav'), 
-            :name => current_user.name,
-            :email => current_user.email,
-            :role => current_user.role.title, 
-            :account_path => @client_link 
+            :data => { 
+              :html => render_to_string(:partial => 'menus/topnav'), 
+              :name => current_user.name,
+              :email => current_user.email,
+              :role => current_user.role.title, 
+              :account_path => @client_link
+            }
           }
         end
       end

@@ -29,7 +29,7 @@
 				-->
 
 				<div id="name">
-					<%= link_to @featured_listing.title, facility_path(get_search.storage_type.parameterize, @featured_listing.title, @featured_listing.id) %>
+					<%= link_to @featured_listing.title, facility_path_for(@featured_listing) %>
 				</div>
 	
 				<div id="address">
@@ -50,7 +50,7 @@
 				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true } %>
 	
 				<div id="more-info">
-					<%= link_to 'More Info', facility_path(@search.storage_type.parameterize, @featured_listing.title, @featured_listing.id), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
+					<%= link_to 'More Info', facility_path_for(@featured_listing), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
 				</div>
 			</div>
 		</div>

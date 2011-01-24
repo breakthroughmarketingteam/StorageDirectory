@@ -11,7 +11,7 @@ module SitemapGenerator
       :never
     ]
     
-    @@addedd_city_paths = []
+    @@added_city_paths = []
     
     attr_accessor :xml
     
@@ -29,26 +29,26 @@ module SitemapGenerator
 
       @xml.url do
         # monkey patch by d.s. for usssl
-        if model_instance.is_a? UsCity
+        case model_instance.class when UsCity
           path = "http://#{Options.domain}#{us_city_url(model_instance)}"
           
-          unless @@addedd_city_paths.include? path
-            @@addedd_city_paths << path
+          unless @@added_city_paths.include? path
+            @@added_city_paths << path
             @xml.loc path
             puts "added sitemap record: UsCity [#{path}]"
           end
         
-        elsif model_instance.is_a? Listing
-          path = "http://#{Options.domain}#{facility_path(model_instance.storage_types.split(',')[0].try(:parameterize), model_instance.title.parameterize, model_instance.id)}"
+        when Listing
+          path = "http://#{Options.domain}#{facility_path_for(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Listing [#{path}]"
           
-        elsif model_instance.is_a? Page
+        when Page
           path = "http://#{Options.domain}#{page_title(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Page [#{path}]"
         
-        elsif model_instance.is_a? Post
+        when Post
           path = "http://#{Options.domain}#{post_title(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Post [#{path}]"

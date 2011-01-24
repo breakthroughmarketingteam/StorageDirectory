@@ -3,18 +3,19 @@
 		<fieldset>
 			<h2>Login to your account</h2>
 			<%= display_message flash %>
+			
 			<div id="login-form">
 				<div class="stack i">
 					<%= f.label :email, nil, :class => 'hidden' %>
 					<div class="shadow_wrap">
-		  			<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email Address' %>
+		  				<%= f.text_field :email, :value => (flash[:quick_login][0] if flash[:quick_login]), :class => 'email hintable', :title => 'Your Email Address' %>
 					</div>
 				</div>
 	
 				<div class="stack i">
-		  		<%= f.label :password, nil, :class => 'hidden' %>
+		  			<%= f.label :password, nil, :class => 'hidden' %>
 					<div class="shadow_wrap">
-				  	<%= f.password_field :password, :class => 'required hintable', :title => 'Password' %>
+				  		<%= f.password_field :password, :value => (flash[:quick_login][1] if flash[:quick_login]), :class => 'required hintable', :title => 'Password' %>
 					</div>
 				</div>
 	
@@ -23,6 +24,7 @@
 						<%= f.check_box :remember_me %><%= f.label :remember_me, nil, :id => 'remember_me' %>
 						<%= link_to 'Forgot Password?', new_password_reset_path, :id => 'forgot_pass_link' %>
 					</div>
+					
 					<div class="right region">
 						<%= ajax_loader %>
 						<%= f.submit 'Login' %>
