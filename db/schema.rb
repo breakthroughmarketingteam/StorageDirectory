@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110119212555) do
+ActiveRecord::Schema.define(:version => 20110121171232) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -788,6 +788,7 @@ ActiveRecord::Schema.define(:version => 20110119212555) do
     t.string   "description"
     t.integer  "price"
     t.integer  "listing_id"
+    t.integer  "availability"
   end
 
   add_index "sizes", ["length"], :name => "index_sizes_on_length"

@@ -4,25 +4,28 @@
         <table cellspacing="0" cellpadding="0">
             <tbody>
                 <tr class="odd">
-                    <th id="unit_size" class="column"><span id="label">Unit Size:</span><span id="size"><%= @search.unit_size %></span></th>
-					<% @listings.each do |listing| %>
-                    	<th class="column"><%= display_logo listing %></th>
+                    <th id="unit_size" class="column">
+						<span id="label">Unit Size:</span>
+						<span id="size"><%= @search.unit_size %></span>
+					</th>
+					<% @listing_set.each do |set| %>
+                    	<th class="column"><%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}" %></th>
 					<% end %>
                 </tr>
 				
-				<% Listing.comparables.each do |comp| -%>
+				<% Listing.comparables.each do |compare| -%>
 					<tr class="<%= cycle('even', 'odd') %>">
-	                    <th id="<%= comp %>"><span class="comp_label"><%= comp.titleize %>:</span></th>
-						<% @listings.each do |listing| %>
-							<%= display_comparison(comp, listing) %>
+	                    <th id="<%= compare %>"><span class="comp_label"><%= compare.titleize %>:</span></th>
+						<% @listing_set.each do |set| %>
+							<%= display_comparison compare, set %>
 						<% end %>
 	                </tr>
 				<% end %>
 				
                 <tr>
                     <th id="usssl-special" title="We offer <%= $_usssl_discount %> the move in cost on top of the facility's own special discount!">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Rentals</th>
-                    <% @listings.each do |listing| %>
-						<td><a class="rent-btn" href="<%= facility_path listing.storage_type, listing.title, listing.id %>">Rent It!</a></td>
+                    <% @listing_set.each do |set| %>
+						<td><a class="rent-btn" href="<%= facility_path_for set[:listing] %>">Rent It!</a></td>
 					<% end %>
                 </tr>
             </tbody>

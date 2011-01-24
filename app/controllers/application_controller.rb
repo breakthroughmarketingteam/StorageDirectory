@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
   # for the geo_search methods in Listing
   $_listing_search_distance = 20
   
-  $_usssl_discount = '10% Off'
+  $_usssl_percent_off = 0.1
+  $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-305-945-7561'
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   

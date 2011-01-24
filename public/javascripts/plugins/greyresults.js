@@ -360,15 +360,25 @@ $(function(){
 	});
 	
 	$('a', '.compare').live('click', function() {
-		var $this = $(this).hide(),
-			orig_href = $this.attr('href'),
-			compares = $('input:checked', '.compare'),
-			ajax_loader = $.new_ajax_loader('after', $this).show();
+		var $this 		= $(this).hide(),
+			orig_href 	= $this.attr('href'),
+			compares 	= $('input:checked', '.compare'),
+			ajax_loader = $.new_ajax_loader('after', $this).show(),
+			size_id 	= $('input.unit_size:checked', $this.parents('.listing')).val(),
+			special_id 	= $('.the_special', $this.parents('.listing'));
 		
 		if (compares.length) {
-			compares.each(function(){ 
-				$this[0].href += this.value +',';
+			var ids = [];
+			
+			compares.each(function() {
+				var context    = $(this).parents('.listing'),
+					special_id = $('.special_txt', context).attr('id').replace('Special', ''),
+					size_id    = $('input.unit_size:checked', context).val();
+				
+				ids.push(this.value +','+ size_id +','+ special_id);
 			});
+			
+			$this[0].href += ids.join('-');
 			
 			$.getJSON(this.href, function(response) {
 				$.with_json(response, function(data) {

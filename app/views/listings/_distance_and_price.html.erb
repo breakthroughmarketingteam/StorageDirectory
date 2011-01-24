@@ -21,7 +21,7 @@
 						<div class="radio">
 							<% if size && !feat %>
 								<div class="radio_select">
-									<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id %>
+									<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id, nil, :class => 'unit_size' %>
 								</div>
 							<% end %>
 						</div>

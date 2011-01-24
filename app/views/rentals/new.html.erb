@@ -2,7 +2,7 @@
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
 	<div class="head">
-		Rent a unit from <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span> using this secure rental form.
+		Rent a unit from <span><%= link_to @listing.title, facility_path_for(@listing) %></span> using this secure rental form.
 	</div>
 	
 	<div id="rent_steps">
@@ -202,7 +202,7 @@
 					
 					<div id="rental_complete" class="hide conf">
 						<h4>Great! Your Unit Rental Has Been Submitted.</h4>
-						<p>Your rental information has been sent to <span><%= link_to @listing.title, facility_path((@search ? @search.storage_type.parameterize : 'self-storage'), @listing.title, @listing.id) %></span>. You'll be contacted by one of their representatives to complete the rental process.</p> 
+						<p>Your rental information has been sent to <span><%= link_to @listing.title, facility_path_for(@listing) %></span>. You'll be contacted by one of their representatives to complete the rental process.</p> 
 						<p>We've also sent you an email confirmation with all the details of your unit rental. Please print it and bring it in at the time of move in.</p>
 						
 						<div id="rental-info">
