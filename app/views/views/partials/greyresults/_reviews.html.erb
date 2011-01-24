@@ -1,7 +1,7 @@
 <div id="head" class="blue head">
 	<h5 class="white">
 		<%= listing.reviews.empty? ? "Be the first one to review" : "Here's what #{listing.reviews.size > 1 ? 'other people have' : 'another person has'} to say about " %>
-		<a href="<%= facility_path_for listing %>"><%= listing.title %></a>.
+		<a href="<%= facility_path_for listing %>"><%= listing.title %>.</a>
 	</h5>
 </div>
 	

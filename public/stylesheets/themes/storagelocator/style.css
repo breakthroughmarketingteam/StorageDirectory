@@ -37,7 +37,7 @@ span.blue{color:#4c4bcc;}
 #logotop{position:absolute;z-index:999;}
 #logoimg{position:relative;top:6px;}
 #logoshadow{bottom:0;margin-left:11px;position:absolute;width:60px;z-index:999;}
-#title{color:#339933;float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:87px;margin-top:38px;position:relative;width:350px;}
+#title{color:#339933;float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:10px;margin-top:38px;position:relative;width:400px;}
 #title h1{bottom:0;color:#333333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
 #a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/discount.png) no-repeat top left;}
@@ -156,7 +156,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #offset_search_box #search_query{border:2px solid #9999ff;font-size:16px;height:26px;margin-right:10px;padding:2px 10px;width:62%;}
 #offset_search_box .grn_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;position:relative;}
 .storage_info #offset_search_box{top:-58px;}
-#oldlogo{float:left;height:103px;margin-left:40px;margin-top:11px;position:relative;}
+#oldlogo{background:url(/images/ui/storagelocator/usselfstoragelocator.jpg) no-repeat;float:left;height:103px;margin-left:40px;margin-top:11px;position:relative;width:80px;}
 #oldlogo object,#oldlogo a{position:absolute;}
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
@@ -715,7 +715,6 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #outer_map .wrap1{float:left;width:46%;}
 #outer_map .wrap2{float:right;width:50%;}
 #outer_map h3{margin-bottom:10px;}
-
 #sl-tabs-map{background-color:#ccc;border:2px solid #ccc;float:left;height:340px;width:50%;}
 #sl-tabs-map-in{border:2px solid #fff;height:300px;}
 #sl-tabs-map-in #google_map{height:100%;}
@@ -926,7 +925,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .unit_detail .month_rate{}
 .panel{width:auto;overflow:hidden;display:none;cursor:default;background:#fff;position:relative;z-index:600;border-top:0 none;}
 .home_action .panel{background:none repeat scroll 0 0 #fff;border-bottom:1px solid #ccc;border-top:0 none;cursor:default;display:none;overflow:hidden;position:relative;width:auto;z-index:600;}
-.panel .inner{padding:13px 16px;overflow:hidden;position:relative;}
+.panel .inner{min-height:100px;padding:13px 16px;overflow:hidden;position:relative;}
 .panel .inner_box{padding:13px 16px;}
 .panel #map_partial{height:auto;overflow:hidden;background:#f2f5fe;}
 .panel .inner_box .office_hours{float:left;font-size:80%;margin:10px 0 10px 10px;width:45%;}
@@ -1460,7 +1459,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 .home #footer_top .divide{margin-bottom:10px;}
 #footer_top .divide .wrapper{width:938px;color:#fff;text-shadow:1px 1px 1px #333;font-size:120%;}
 #footer_mid{overflow:hidden;background:url(/images/ui/storagelocator/container-bg.png) repeat;}
-#footer_mid #bg-highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;padding:25px 0 40px;position:relative;}
 #footer_btm .usssl_adp{width:151px;height:112px;margin:0 20px;float:left;background:#fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #ad_partner_model_index .box{height:230px;}
 #footer_mid #wrapper{background:#fff;-moz-border-radius:10px;border-radius:10px;-webkit-border-radius:10px;-moz-box-shadow:1px 1px 10px #666;box-shadow:1px 1px 10px #666;-webkit-box-shadow:1px 1px 10px #666;border:3px solid #ccc;margin:0 auto;width:976px;}
@@ -2076,9 +2074,24 @@ p.breadcrumb a{color:#fff;}
 #more_info{background:#fff;margin-top:-115px;position:relative;text-align:left;}
 #more_info #more_inner{display:none;min-height:300px;margin:0 auto;width:975px;}
 #more_info #block1{padding:40px 20px 20px;}
-#more_info h2{font-size:28px;line-height:28px;margin-bottom:10px;}
+#more_info h2{color:#f63;font-size:34px;line-height:32px;margin-bottom:20px;text-shadow:1px 1px 0 #ccc;}
 #more_info h3{font-size:20px;line-height:22px;margin-bottom:10px;margin-top:30px;}
-#more_info p{font-size:12px;line-height:18px;margin-bottom:15px;}
+#more_info p{font-size:12px;line-height:18px;margin-bottom:15px;margin-left:20px;}
 #footer_btm #more-info-btn{height:40px;margin:0 auto;width:975px;}
 #footer_btm .openDiv{background:url(/images/ui/storagelocator/more-info-btn.png) no-repeat;color:#fff;display:block;float:right;font-size:16px;font-weight:bold;height:29px;margin-right:20px;padding:9px 0 0;text-decoration:none;text-shadow:1px 1px 0 #666;width:294px;}
 #footer_btm .openDiv:hover{background:url(/images/ui/storagelocator/more-info-btn.png) no-repeat bottom;}
+
+#highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}
+
+#results_wrap .option{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;border:1px solid #e0e0e0;height:17px;margin:2px 0;padding:7px 10px 0;text-align:left;width:110px;}
+#results_wrap .option:hover{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
+#results_wrap .option:hover .price{color:#fff;}
+#results_wrap .type{}
+#results_wrap .price{float:right;}
+
+#topblock1{}
+#topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 18px;text-align:left;width:265px;}
+#topblock1 img{float:right;margin-right:15px;}
+#topblock1 #inner{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;height:46px;margin:5px auto 0;width:430px;}
+#topblock1 #btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#f90;color:#fff;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin-left:4px;padding:0 3px 0 7px;width:18px;cursor:pointer;}
+#topblock1 #btn:hover{background:#3c3;}

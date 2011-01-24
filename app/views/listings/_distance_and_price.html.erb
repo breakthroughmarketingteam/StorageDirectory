@@ -17,7 +17,18 @@
 				<% [['Upper', @upper_type_size], ['Lower', @indoor_type_size], ['Drive Up', @drive_up_type_size]].each do |types| %>
 					<% type, size = types %>
 					
-					<li class="radio_wrap">
+					<li class="option">
+						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
+							<span class="type"><%= type %>:</span>
+							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "n/a" %></span>
+						</label>
+					</li>
+					
+					
+					
+					
+					
+					<!--><li class="radio_wrap">
 						<div class="radio">
 							<% if size && !feat %>
 								<div class="radio_select">
@@ -30,7 +41,9 @@
 							<span class="type"><%= type %>:</span>
 							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "•&nbsp;&nbsp;&nbsp;&nbsp;" %></span>
 						</label>
-					</li>
+					</li>-->
+					
+					
 				<% end %>
 			</ul>		
 		</li>			

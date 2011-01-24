@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
       @meta_description  = @@app_config[:description] || @meta_keywords
       @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
-      @slogan            = 'Locate, Save, <strong>Rent Self Storage</strong> Anywhere, Anytime.'
+      @slogan            = 'Locate, Save, <strong>Rent Self Storage Online</strong> Anywhere, Anytime.'
       @user_stat         = UserStat.create_from_request current_user, request if current_user && !is_admin?
     end
          
