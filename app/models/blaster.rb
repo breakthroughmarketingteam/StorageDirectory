@@ -1,5 +1,5 @@
 class Blaster < ActionMailer::Base
-  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost:3000' : $root_domain
+  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost' : $root_domain
   
   def email_blast(recipient, email_blast, content, sender = 'info@usselfselfstoragelocator.com')
     setup_email recipient, sender, email_blast.title

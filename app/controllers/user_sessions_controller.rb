@@ -23,7 +23,7 @@ class UserSessionsController < ApplicationController
       
       respond_to do |format|
         format.html do
-          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : "Hi #{@user_session.user.first_name}"
+          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : nil
 
           case current_user.role.title.downcase when 'admin', 'staff'
             redirect_back_or_default admin_index_path

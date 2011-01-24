@@ -1,5 +1,5 @@
 class Notifier < ActionMailer::Base
-  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost:3000' : 'usselfstoragelocator.com'
+  default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost' : 'usselfstoragelocator.com'
   
   def comment_notification(recipient, comment, host)
     setup_email recipient, comment.email, 'New website comment'

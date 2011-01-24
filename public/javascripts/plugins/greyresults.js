@@ -314,6 +314,16 @@ $(function(){
 		});
 	});
 	
+	$('li.enabled', 'li.rslt-price').live('click', function() {
+		var $this = $(this),
+			check = $('input.unit_size', this);
+		
+		check.attr('checked', !check.is(':checked'));
+		$('li.enabled', $this.parent()).removeClass('selected');
+		$this.addClass('selected');
+		
+	});
+	
 	$compare_btns = $('input[name=compare]', '.listing');
 	$compare_btns.live('change', function(){
 		var compare	= $(this), listing = compare.parents('.listing'),
@@ -364,8 +374,9 @@ $(function(){
 			orig_href 	= $this.attr('href'),
 			compares 	= $('input:checked', '.compare'),
 			ajax_loader = $.new_ajax_loader('after', $this).show(),
-			size_id 	= $('input.unit_size:checked', $this.parents('.listing')).val(),
-			special_id 	= $('.the_special', $this.parents('.listing'));
+			listing		= $this.parents('.listing'),
+			size_id 	= $('input.unit_size:checked', listing).val(),
+			special_id 	= $('.the_special', listing);
 		
 		if (compares.length) {
 			var ids = [];
@@ -449,7 +460,8 @@ $(function(){
 
 		return false;
 	});
-
+	
+	select_first_size_option();
 	$.activateSizeSelect('#narrow_results_form');
 	
 	// panel openers
@@ -731,6 +743,15 @@ $(function(){
 		}, 100);
 	}
 	
+	function select_first_size_option() {
+		$('li.rslt-price').each(function() {
+			var option = $('.enabled:first', this);
+			option.addClass('selected');
+			console.log($('input', option))
+			$('input', option).attr('checked', true);
+		});
+	}
+	
 	$('#narrow_results_form').submit(function() {
 		var form = $(this).runValidation(), 
 			results_page = $('#ajax_wrap_inner'),
@@ -752,6 +773,7 @@ $(function(){
 					results_page.replaceWith(data['results']);
 					$.setGmap(data['maps_data']);
 					$('a', '.rslt-features').tooltip();
+					select_first_size_option();
 					
 					$('.rslt-price', '.listing').each(function(){
 						$(':radio', this).eq(0).attr('checked', true);
@@ -784,8 +806,6 @@ $(function(){
 		form.submit();
 		return false;
 	});
-	
-	
 	
 	var main_map = $('#main_map', '#content');
 	if (main_map.length) {
@@ -829,7 +849,7 @@ $(function(){
 	
 	$('form', '#rent_step1').rental_form();
 	
-	// when a review request is sent the link in the email goes to the single listing page with this hash in the url
+	// when a review request is sent, the link in the email goes to the single listing page with this hash in the url:
 	if (window.location.hash == '#write_review')
 		get_review_pop_up({ sub_partial: 'comments/write_review', model: 'Listing', id: $('listing_id').val() });
 	

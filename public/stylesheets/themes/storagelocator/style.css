@@ -144,7 +144,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap .clogo img{width:100%;}
 #compare_wrap #unit_size #size{color:#4c4bcc;font-weight:bold;font-size:18px;}
 #compare_wrap #unit_size #label{color:#000000;display:inline-block;font-size:12px;font-weight:bold;margin-right:10px;}
-#compare_wrap #distance,#compare_wrap #monthly_rate,#compare_wrap #facility_special,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
+#compare_wrap #distance,#compare_wrap #monthly_rate,#compare_wrap #selected_special,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
 #compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;}
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
@@ -315,7 +315,6 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .radio_wrap .radio_selected{background:url(/images/ui/storagelocator/radio-select.png) no-repeat;}
 .listing ul li.rslt-price ul li.radio_wrap{background-position:125px 0;float:none;height:16px;margin-top:5px;padding-top:2px;}
 .listing ul li.rslt-price ul li.radio_wrap .radio_select{height:16px;width:16px;}
-.listing ul li.rslt-price ul li label,.listing ul li.rslt-price ul li input{cursor:pointer;}
 .rslt-price .radio_wrap label{float:left;overflow:hidden;line-height:1.7;width:81.1%;text-align:right;}
 .rslt-price .radio_wrap label .type{display:block;float:left;padding:0 0 1px;text-align:left;width:50px;}
 .listing .action_btn{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;border:1px solid #666;font-size:20px;height:44px;line-height:41px;margin:27px 10px 0 0;position:absolute;top:38px;right:0;text-align:center;text-shadow:1px 1px 0 #555;width:90px;}
@@ -2083,9 +2082,11 @@ p.breadcrumb a{color:#fff;}
 
 #highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}
 
-#results_wrap .option{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;border:1px solid #e0e0e0;height:17px;margin:2px 0;padding:7px 10px 0;text-align:left;width:110px;}
-#results_wrap .option:hover{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
-#results_wrap .option:hover .price{color:#fff;}
+#results_wrap .rslt-price .enabled,#results_wrap .rslt-price .disabled{border:1px solid #e0e0e0;height:17px;cursor:pointer;margin:1px 0;padding:7px 10px 0;text-align:left;width:110px;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;}
+#results_wrap .rslt-price .enabled:hover,#results_wrap .rslt-price .selected{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
+#results_wrap .rslt-price .enabled:hover .price,#results_wrap .rslt-price .selected .price{color:#fff;}
+#results_wrap .rslt-price .disabled{background:#fff;border-color:#ebebeb;color:#999;}
+#results_wrap .rslt-price .disabled .price{color:#999;font-weight:normal;cursor:default;}
 #results_wrap .type{}
 #results_wrap .price{float:right;}
 
@@ -2093,5 +2094,5 @@ p.breadcrumb a{color:#fff;}
 #topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 18px;text-align:left;width:265px;}
 #topblock1 img{float:right;margin-right:15px;}
 #topblock1 #inner{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;height:46px;margin:5px auto 0;width:430px;}
-#topblock1 #btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#f90;color:#fff;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin-left:4px;padding:0 3px 0 7px;width:18px;cursor:pointer;}
+#topblock1 #btn{background:#f90;color:#fff;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin:1px -4px 0 0;padding:0 3px 0 7px;width:40px;cursor:pointer;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;}
 #topblock1 #btn:hover{background:#3c3;}
