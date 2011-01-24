@@ -22,7 +22,7 @@ span.blue{color:#4c4bcc;}
 #page-ctr{width:100%;position:relative;background:url(/images/ui/storagelocator/container-bg.png) repeat bottom left;overflow:hidden;}
 #page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
-#head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;}
+#head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;z-index:20;}
 #page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
 #page-ctr-wrap{background:url(/images/ui/storagelocator/) no-repeat center;}
 
@@ -2089,9 +2089,12 @@ p.breadcrumb a{color:#fff;}
 .rslt-price .price{float:right;}
 .rslt-price .enabled:hover .price,.rslt-price .selected .price{color:#fff;}
 
-#topblock1{}
-#topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 18px;text-align:left;width:265px;}
-#topblock1 img{float:right;margin-right:15px;}
-#topblock1 #inner{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;border:1px solid #ccc;height:46px;margin:5px auto 0;width:430px;}
-#topblock1 #btn{background:#f90;color:#fff;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin:1px -4px 0 0;padding:0 3px 0 7px;width:40px;cursor:pointer;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;}
-#topblock1 #btn:hover{background:#3c3;}
+
+#topblock1{margin:0 auto;position:relative;width:975px;z-index:10;}
+#topblock1 a{color:#000;}
+#topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 10px;text-align:left;width:273px;}
+#topblock1 img{float:right;margin-right:8px;}
+#topblock1 #inner{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#fff;border:1px solid #ccc;height:46px;margin:5px 10px 0 0;position:absolute;right:0;width:422px;}
+#topblock1 #btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#f90;color:#fff;cursor:pointer;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin:1px 0 0 6px;padding:0 3px 0 7px;width:40px;}
+#topblock1:hover #btn{background:#3c3;}
+
