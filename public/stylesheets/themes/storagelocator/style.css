@@ -308,7 +308,7 @@ li.rslt-size img{margin:4px 0 0 1px;}
 li.rslt-size span.size{display:block;text-align:center;font-size:12px;}
 li.rslt-price{font-size:12px;padding:10px 7px 0;width:133px;}
 .rslt-price .radio{float:left;width:25px;height:16px;}
-.listing li.rslt-price .price{color:#3333cc;margin-left:5px;font-weight:bold;font-size:14px;}
+.rslt-price .price{color:#3333cc;margin-left:5px;font-weight:bold;font-size:14px;}
 li.rslt-miles,li.rslt-size{height:88px;}
 .radio_wrap{height:16px;position:relative;/*background:url(/images/ui/storagelocator/checkbox.png) no-repeat;*/}
 .radio_wrap .radio_select{height:16px;width:16px;}
@@ -334,7 +334,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing .compare label{cursor:pointer;font-size:80%;}
 .listing .compare .ajax_loader{margin:1px 7px 0 0;}
 #feat-list .dnp{clear:both;}
-#feat-list .dnp li.rslt-price,#feat-list .dnp li.rslt-miles,#feat-list .dnp li.rslt-size{background:none;height:auto;width:auto;float:none;}
+#feat-list .dnp li.rslt-price,#feat-list .dnp li.rslt-miles,#feat-list .dnp li.rslt-size{background:none;height:auto;width:auto;float:none;clear:both;display:block;}
 #feat-list .dnp li.rslt-miles{display:block;font-size:12px;padding:0;text-align:center;width:100%;}
 #feat-list .dnp li.rslt-miles span{color:#4c4bcc;font-weight:bold;}
 #feat-list .dnp li.rslt-miles span.shifted-text{color:#000;font-weight:normal;}
@@ -2082,13 +2082,12 @@ p.breadcrumb a{color:#fff;}
 
 #highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}
 
-#results_wrap .rslt-price .enabled,#results_wrap .rslt-price .disabled{border:1px solid #e0e0e0;height:17px;cursor:pointer;margin:1px 0;padding:7px 10px 0;text-align:left;width:110px;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;}
-#results_wrap .rslt-price .enabled:hover,#results_wrap .rslt-price .selected{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
-#results_wrap .rslt-price .enabled:hover .price,#results_wrap .rslt-price .selected .price{color:#fff;}
-#results_wrap .rslt-price .disabled{background:#fff;border-color:#ebebeb;color:#999;}
-#results_wrap .rslt-price .disabled .price{color:#999;font-weight:normal;cursor:default;}
-#results_wrap .type{}
-#results_wrap .price{float:right;}
+.rslt-price .enabled,.rslt-price .disabled{border:1px solid #e0e0e0;height:17px;cursor:pointer;margin:1px 0;padding:7px 10px 0;text-align:left;width:110px;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;}
+.rslt-price .enabled:hover,.rslt-price .selected{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
+.rslt-price .disabled{background:#fff;border-color:#ebebeb;color:#999;}
+.rslt-price .disabled .price{color:#999;font-weight:normal;cursor:default;}
+.rslt-price .price{float:right;}
+.rslt-price .enabled:hover .price,.rslt-price .selected .price{color:#fff;}
 
 #topblock1{}
 #topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 18px;text-align:left;width:265px;}
