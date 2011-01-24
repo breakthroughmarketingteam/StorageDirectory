@@ -54,13 +54,13 @@ $(function() {
 				if (response.success) {
 					var ready_mem = $('#ready_member', form);
 					
-					if (response.role == 'advertiser' && ready_mem.length == 0) {
+					if (response.data.role == 'advertiser' && ready_mem.length == 0) {
 						window.location = response.account_path;
 					} else {
-						$('#topbar').html(response.data);
+						$('#topbar').html(response.data.html);
 						$('#pop_up_box').fadeOutRemove();
 						
-						// when a member clicks on already a member link, they are in a form and we need to fill in their info, e.g. name and email
+						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
 						// where the context is the form, the attr are the attributes of response object, and the fields are ids of fields to input the attribute values, and the element to focus
 						if (ready_mem.length > 0) {
@@ -71,7 +71,7 @@ $(function() {
 								focus_el = values[3];
 								
 							$.each(field_ids, function(i) {
-								$('#'+ this, context).val(response[attributes[i]]);
+								$('#'+ this, context).val(response.data[attributes[i]]);
 							});
 							
 							$('#'+ focus_el, context).focus();

@@ -7,14 +7,14 @@
 				<div class="stack i">
 					<%= f.label :email, nil, :class => 'hidden' %>
 					<div class="shadow_wrap">
-		  			<%= f.text_field :email, :class => 'email hintable', :title => 'Your Email Address' %>
+		  			<%= f.text_field :email, :value => (@client.email if flash[:quick_login]), :class => 'email hintable', :title => 'Your Email Address' %>
 					</div>
 				</div>
 	
 				<div class="stack i">
 		  		<%= f.label :password, nil, :class => 'hidden' %>
 					<div class="shadow_wrap">
-				  	<%= f.password_field :password, :class => 'required hintable', :title => 'Password' %>
+				  	<%= f.password_field :password, :value => (@client.temp_password if flash[:quick_login]), :class => 'required hintable', :title => 'Password' %>
 					</div>
 				</div>
 	

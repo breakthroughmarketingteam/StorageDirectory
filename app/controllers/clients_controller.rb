@@ -94,6 +94,7 @@ class ClientsController < ApplicationController
     else
       case @client.status when 'unverified'
         @client.update_attribute :status, 'active'
+        flash[:quick_login] = true
         flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
         redirect_to login_path
       
