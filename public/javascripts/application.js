@@ -1052,7 +1052,7 @@ $(function() {
 	$('.all_day_check', '#hours').each(function() {
 		$this = $(this);
 		if ($this.is(':checked'))
-			$this.change()
+			$this.change();
 	});
 	
 	$('.hour_range', '#business_hours_form').each(function(){

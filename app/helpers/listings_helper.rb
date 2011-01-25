@@ -28,8 +28,8 @@ module ListingsHelper
     end
   end
   
-  def facility_path_for(listing)
-    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id
+  def facility_path_for(listing, options = {})
+    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id, options
   end
   
   def display_location(location)
@@ -320,7 +320,7 @@ module ListingsHelper
     
     when /(price)/i
       calculation = listing.calculated_price(listing_set)
-      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid through<br />#{calculation[:paid_thru]}</span></td>"
+      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{distance_of_time_in_words Time.now, calculation[:paid_thru]}<br />through #{calculation[:paid_thru]}</span></td>"
     
     else # features
       if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison

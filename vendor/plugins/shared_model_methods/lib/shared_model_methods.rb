@@ -12,7 +12,7 @@ module SharedModelMethods #:nodoc:
     end
     
     def to_controller_str
-      self.name.downcase.pluralize
+      self.name.underscore.pluralize
     end
     
   end
