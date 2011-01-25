@@ -6,7 +6,7 @@
                 <tr class="odd">
                     <th id="unit_size" class="column">
 						<span id="label">Unit Size:</span>
-						<span id="size"><%= @search.unit_size %></span>
+						<span id="size"><%= @listing_set.first[:size].try :dims %></span>
 					</th>
 					<% @listing_set.each do |set| %>
                     	<th class="column"><%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}" %></th>

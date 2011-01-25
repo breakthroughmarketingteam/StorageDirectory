@@ -377,7 +377,7 @@ $(function(){
 			listing		= $this.parents('.listing'),
 			size_id 	= $('input.unit_size:checked', listing).val(),
 			special_id 	= $('.the_special', listing);
-		
+
 		if (compares.length) {
 			var ids = [];
 			
@@ -404,7 +404,7 @@ $(function(){
 				});
 				
 				$this.show();
-				ajax_loader.remove();
+				ajax_loader.hide();
 				$this.attr('href', orig_href);
 			});
 		}  
@@ -747,7 +747,6 @@ $(function(){
 		$('li.rslt-price').each(function() {
 			var option = $('.enabled:first', this);
 			option.addClass('selected');
-			console.log($('input', option))
 			$('input', option).attr('checked', true);
 		});
 	}
