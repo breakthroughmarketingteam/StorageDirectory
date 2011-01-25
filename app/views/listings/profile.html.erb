@@ -18,8 +18,8 @@
 						<%= content_tag :li, link_to("Reviews", '#reviews_tab', :id => 'reviews', :rel => 'fac_reviews') %>
 					</ul>
 					<!-- tab content -->
-					<span id="hint">Here you can change all the details for this facility.</span>
 					<div id="tab1" class="tab_content">
+						<p class="hint">Here you can change all the details for this facility.</p>
 						<div id="details" class="left">
 							<%= render :partial => 'edit_detail' %>
 						</div>
@@ -53,6 +53,7 @@
 						</div>
 					</div>
 					<div id="tab2" class="tab_content">
+						<p class="hint">Manage your rental settings here.</p>
 						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
 							<div id="admin_fee" class="left">
 								<h3 class="label">Administrative Fee:</h3>
@@ -81,6 +82,7 @@
 						<% end %>
 					</div>
 					<div id="tab3" class="tab_content">
+						<p class="hint">Click on the boxes to enable/disable.</p>
 						<div id="features" class="uncollapse stack">
 							<h3 class="label">Facility Amenities:</h3>
 							<div class="inner">
@@ -102,6 +104,7 @@
 						</div>
 					</div>
 					<div id="unit_sizes" class="tab_content">
+						<p class="hint">Enter your unit information and availability here.</p>
 						<div id="custom_sizes">
 							<h3>My Unit Sizes</h3>
 							<% unless @listing.issn_enabled? %>
@@ -121,10 +124,12 @@
 						<% end %>
 					</div>
 					<div id="fac_pictures" class="tab_content">
+						<p class="hint">Customers like seeing pictures of your facility. Upload as many as you can.</p>
 						<p class="label">Facility Pictures:</p>
 						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
 					</div>
 					<div id="fac_reports" class="tab_content">
+						<p class="hint">See your tracking reports here.</p>
 						<div id="leads" class="left">
 							<form class="">Show:
 								<select name="type" class="right_space">

@@ -1020,26 +1020,33 @@ $(function() {
 	});
 	
 	// business hours edit form, listing page
-	$('.all_day_check').change(function(){
-		var day_check = $(this), context = day_check.parent().parent().parent();
+	$('.all_day_check', '#hours').change(function(){
+		var day_check = $(this), 
+			context = day_check.parent().parent().parent(),
+			day_closed = $('.day_closed', context);
+		
 		day_check.data('was_checked', day_check.is(':checked'));
+		
+		day_closed.each(function(){
+			var check = $(this);
+			console.log(check, check.is(':checked'), check.data('was_checked'))
+		});
 		
 		if (day_check.is(':checked')) {
 			$('select, input[type=hidden]', context).attr('disabled', true);
 			
-			$('.day_closed', context).each(function(){
+			day_closed.each(function(){
 				var check = $(this);
 				check.data('was_checked', check.is(':checked'));
+				console.log(check.is(':checked'))
 			});
 			
-			$('.day_closed', context).attr('checked', true);
+			day_closed.attr('checked', true);
 			$('select[rel=opening]', context).val('12:00 am');
-			$('select[rel=closing]', context).val('11:30 pm');
+			$('select[rel=closing]', context).val('12:00 am');
 		} else {
-			$('.day_closed', context).each(function(){
-				var check = $(this);
-				
-				$('.day_closed', context).attr('checked', false);
+			day_closed.each(function(){
+				var check = $(this).attr('checked', false).change();
 				
 				if (check.data('was_checked') && !check.is(':checked')) {
 					check.attr('checked', true);
@@ -1050,9 +1057,8 @@ $(function() {
 	});
 	
 	$('.all_day_check', '#hours').each(function() {
-		$this = $(this);
-		if ($this.is(':checked'))
-			$this.change();
+		var $this = $(this);
+		if ($this.is(':checked')) $this.change();
 	});
 	
 	$('.hour_range', '#business_hours_form').each(function(){
@@ -1484,6 +1490,17 @@ $(function() {
 		}
 		
 		return false;
+	});
+	
+	$('#siteseal').live('click', function() {
+		var pop_up = $('<div id="pop_up"><iframe id="site_seal_frame" src="https://seal.godaddy.com/verifySeal?sealID=8ytNZhcx8XXCpJlxm3tje6NHBcpK1BbPKnAgqas7k2J3yuj5Ab1"></iframe></div>').dialog({
+			title: 'Secure Site by GoDaddy.com',
+			width: 593,
+			height: 853,
+			modal: true,
+			resizable: false,
+			close: function() { $(this).dialog('destroy').remove() }
+		});
 	});
 	
 }); // END document ready
