@@ -321,7 +321,6 @@ $(function(){
 		check.attr('checked', !check.is(':checked'));
 		$('li.enabled', $this.parent()).removeClass('selected');
 		$this.addClass('selected');
-		
 	});
 	
 	$compare_btns = $('input[name=compare]', '.listing');
@@ -362,7 +361,7 @@ $(function(){
 				unhighlightMarker(marker);
 			}
 		}
-	}).autoClickFew();
+	});
 	
 	$('input[name=compare]', '.compare').each(function() {
 		var $this = $(this);
@@ -374,40 +373,33 @@ $(function(){
 			orig_href 	= $this.attr('href'),
 			compares 	= $('input:checked', '.compare'),
 			ajax_loader = $.new_ajax_loader('after', $this).show(),
-			listing		= $this.parents('.listing'),
-			size_id 	= $('input.unit_size:checked', listing).val(),
-			special_id 	= $('.special_txt', listing).attr('data-special-id');
+			ids 		= [];
 		
-		if (compares.length) {
-			var ids = [];
+		compares.each(function() {
+			var context    = $(this).parents('.listing'),
+				special_id = $('.special_txt', context).attr('data-special-id'),
+				size_id    = $('ul.dnp input.unit_size:checked', context).val();
 			
-			compares.each(function() {
-				var context    = $(this).parents('.listing'),
-					special_id = $('.special_txt', context).attr('data-special-id'),
-					size_id    = $('input.unit_size:checked', context).val();
+			ids.push(this.value +','+ size_id +','+ special_id);
+		});
+		
+		this.href += ids.join('-');
+		
+		$.getJSON(this.href, function(response) {
+			$.with_json(response, function(data) {
+				var pop_up = $('<div id="pop_up">'+ data['html'] +'</div>').dialog(default_pop_up_options({ 
+					title: 'Comparing '+ compares.length +' Facilities',
+					width: 'auto',
+					height: 'auto',
+					modal: true
+				}));
 				
-				ids.push(this.value +','+ size_id +','+ special_id);
+				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
-			$this[0].href += ids.join('-');
-			
-			$.getJSON(this.href, function(response) {
-				$.with_json(response, function(data) {
-					var pop_up = $('<div id="pop_up">'+ data['html'] +'</div>').dialog(default_pop_up_options({ 
-						title: 'Comparing '+ compares.length +' Facilities',
-						width: 'auto',
-						height: 'auto',
-						modal: true
-					}));
-					
-					$.setGmap(data['maps_data'], 'compare_map');
-				});
-				
-				$this.show();
-				ajax_loader.hide();
-				$this.attr('href', orig_href);
-			});
-		}  
+			$this.show().attr('href', orig_href);
+			ajax_loader.hide();
+		});
 		
 		return false;
 	});

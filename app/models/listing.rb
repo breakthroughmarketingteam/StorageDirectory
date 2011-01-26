@@ -411,7 +411,7 @@ class Listing < ActiveRecord::Base
       amount    = get_fixed_priced size, special, month_limit
     end
     
-    { :amount => amount, :paid_thru => "#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}" }
+    { :amount => amount, :paid_thru => paid_thru }
   end
   
   def get_prorated_multiplier(month_limit, move_date, days_in_month, half_month)

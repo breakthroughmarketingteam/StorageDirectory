@@ -14,10 +14,10 @@
 					<% type, size = types %>
 					
 					<li class="<%= size.nil? ? 'disabled' : 'enabled' %>">
-						<label title="<%= size.description || size.title if size %>" for="listing[<%= listing.id %>][unit_size]">
+						<label title="<%= size.description || size.title if size %>" for="listing_<%= context %>_<%= listing.id %>_size_<%= size.id if size %>">
 							<span class="type"><%= type %>:</span>
 							<span class="price"><%= size ? number_to_currency(size.dollar_price) : "n/a" %></span>
-							<%= radio_button_tag "listing[#{listing.id}][unit_size]", size.id, nil, :class => 'unit_size hide' if size %>
+							<%= radio_button_tag "listing[#{context}][#{listing.id}][size]", size.id, nil, :class => 'unit_size hide' if size %>
 						</label>
 					</li>
 				<% end %>

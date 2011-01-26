@@ -22,11 +22,11 @@ module ListingsHelper
     b << '</p>'
   end
   
-  def compare_link(listing)
+  def compare_link(listing, context = 'results')
 		html = '<div class="compare" title="Select 2 or more to compare">'
 			html << link_to('Click here to compare', compare_listings_path, :class => 'hide')
-			html << label_tag("compare_#{listing.id}", 'Compare')
-			html << "<input type='checkbox' value='#{listing.id}' name='compare' id='compare_#{listing.id}' />"
+			html << label_tag("compare_#{listing.id}_#{context}", 'Compare')
+			html << "<input type='checkbox' value='#{listing.id}' name='compare' id='compare_#{listing.id}_#{context}' />"
 		html << '</div>'
   end
   
@@ -328,7 +328,8 @@ module ListingsHelper
     
     when /(price)/i
       calculation = listing.calculated_price(listing_set)
-      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{distance_of_time_in_words Time.now, calculation[:paid_thru]}<br />through #{calculation[:paid_thru]}</span></td>"
+      paid_thru = calculation[:paid_thru]
+      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words Time.now, paid_thru}<br />through #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
     
     else # features
       if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison
