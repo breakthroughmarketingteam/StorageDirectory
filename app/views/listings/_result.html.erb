@@ -48,7 +48,7 @@
 					<%= claim_listing_link(result, :class => 'claim') unless result.premium? %>
 				</div>
 			
-				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false } %>
+				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results' } %>
 			
 				<div class="action_btn<%= listing_action_btn_class(result) %>">
 					<%= results_main_button(result) %>

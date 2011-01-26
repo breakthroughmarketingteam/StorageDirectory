@@ -47,8 +47,8 @@
 					<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
 				</div>
 	
-				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true } %>
-				<%= compare_link @featured_listing %>
+				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true, :context => 'featured' } %>
+				<%= compare_link @featured_listing, 'featured' %>
 				
 				<div id="more-info">
 					<%= link_to 'More Info', facility_path_for(@featured_listing), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
