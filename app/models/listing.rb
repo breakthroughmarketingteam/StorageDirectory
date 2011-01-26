@@ -397,28 +397,42 @@ class Listing < ActiveRecord::Base
   def calculated_price(options)
     size    = options[:size] || self.sizes.first.id
     special = options[:special] || self.special
-    month_limit = (special.month_limit || 1) + 1
+    month_limit = special.month_limit || 1
     
     if self.prorated?
       move_date     = 1.day.from_now
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
-      multiplier    = self.get_prorated_multiplier(month_limit, move_date, days_in_month, half_month)
-      paid_thru     = self.get_prorated_paid_thru_with_special(multiplier, move_date, days_in_month, half_month)
-      amount        = self.get_prorated_price(size, special, multiplier)
+      multiplier    = get_prorated_multiplier month_limit, move_date, days_in_month, half_month
+      paid_thru     = get_prorated_paid_thru multiplier, move_date, days_in_month, half_month
+      amount        = get_prorated_price size, special, multiplier
     else
-      paid_thru = self.get_paid_thru_with_special(month_limit)
-      amount    = self.get_fixed_priced(size, special, month_limit)
+      paid_thru = get_paid_thru month_limit
+      amount    = get_fixed_priced size, special, month_limit
     end
     
     { :amount => amount, :paid_thru => "#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}" }
   end
   
-  def get_prorated_paid_thru_with_special(multiplier, move_date, days_in_month, half_month)
-    if move_date.day > half_month
-      (multiplier.months + (days_in_month - move_date.day).days).from_now
+  def get_prorated_multiplier(month_limit, move_date, days_in_month, half_month)
+    multiplier = month_limit
+    
+    if multiplier > 1
+      multiplier -= 1
+      multiplier += (days_in_month - move_date.day) * @@proration
     else
-      multiplier.months.from_now
+      multiplier = 1 + (days_in_month - move_date.day) * @@proration
+    end
+    
+    multiplier
+  end
+  
+  def get_prorated_paid_thru(multiplier, move_date, days_in_month, half_month)
+    if multiplier == 1 && move_date.day > half_month
+      multiplier += 1
+      (multiplier.months + 1.day).from_now
+    else
+      ((multiplier - 1).months + days_in_month.days).from_now
     end
   end
   
@@ -429,7 +443,7 @@ class Listing < ActiveRecord::Base
     subtotal = subtotal + (subtotal * (self.tax_rate / 100))
   end
   
-  def get_paid_thru_with_special(month_limit)
+  def get_paid_thru(month_limit)
     month_limit.months.from_now
   end
   
@@ -438,19 +452,6 @@ class Listing < ActiveRecord::Base
     subtotal -= self.get_discount_amount(special, subtotal, size.dollar_price)
     subtotal = subtotal + self.admin_fee
     subtotal = subtotal + (subtotal * (self.tax_rate / 100.0))
-  end
-  
-  def get_prorated_multiplier(month_limit, move_date, days_in_month, half_month)
-    multiplier = month_limit
-    
-    if multiplier > 1
-      multiplier -= 1
-      multiplier += (days_in_month - move_date.day) * @@proration + (move_date.day > half_month ? 1 : 0)
-    else
-      multiplier = (days_in_month - move_date.day) * @@proration + (move_date.day > half_month ? 1 : 0)
-    end
-    
-    multiplier
   end
   
   def get_discount_amount(special, subtotal, rate, multiplier = 1)

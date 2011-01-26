@@ -8,10 +8,14 @@
 		
 		<img src="/images/ui/storagelocator/ssa-logo.png" alt="Member of Self Storage Association" />
 	</div>
+	
+	<%= ssl_seal if request.protocol == 'https://' %>
 
 	<div id="social-media">
 		<p>
-			<strong>Share This Site</strong> - We’ll be coming out with awesome specials through our social and business network pages.
+			<strong>Share This Site:</strong>
+			<br />
+			We’ll be coming out with awesome specials through our social and business network pages.
 		</p>
 		<div id="icons">
 			<a href="http://www.facebook.com/share.php?u=<%= current_path %>" target="_blank"><img src="/files/content/socialmedia/facebook.png" alt="Follow us on Facebook"></a> 

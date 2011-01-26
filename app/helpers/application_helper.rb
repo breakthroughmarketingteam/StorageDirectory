@@ -600,4 +600,8 @@ module ApplicationHelper
     request.protocol =~ /(https)/i ? url.sub('http:', 'https:') : url
   end
   
+  def ssl_seal
+		"<img id='siteseal' width='132' height='31'src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif'>"
+  end
+  
 end

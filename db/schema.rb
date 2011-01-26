@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110121171232) do
+ActiveRecord::Schema.define(:version => 20110125201648) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -480,6 +480,7 @@ ActiveRecord::Schema.define(:version => 20110121171232) do
     t.integer  "tax_rate"
     t.string   "tracked_number"
     t.string   "storage_types"
+    t.boolean  "renting_enabled"
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"
@@ -521,14 +522,6 @@ ActiveRecord::Schema.define(:version => 20110121171232) do
   add_index "maps", ["listing_id", "city", "zip", "lat", "lng"], :name => "index_maps_on_listing_id_and_city_and_zip_and_lat_and_lng"
   add_index "maps", ["lng"], :name => "index_maps_on_lng"
   add_index "maps", ["state"], :name => "index_maps_on_state"
-
-  create_table "models_modules", :force => true do |t|
-    t.string   "name"
-    t.integer  "model_id"
-    t.string   "model_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "models_views", :force => true do |t|
     t.integer  "view_id"

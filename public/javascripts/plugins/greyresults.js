@@ -325,7 +325,7 @@ $(function(){
 	});
 	
 	$compare_btns = $('input[name=compare]', '.listing');
-	$compare_btns.live('change', function(){
+	$compare_btns.live('click', function(){
 		var compare	= $(this), listing = compare.parents('.listing'),
 			blank_compare_href = $('.compare a', '.listing').eq(0).attr('href'),
 			id = compare.val(), marker, compare_links;
@@ -362,7 +362,7 @@ $(function(){
 				unhighlightMarker(marker);
 			}
 		}
-	});
+	}).autoClickFew();
 	
 	$('input[name=compare]', '.compare').each(function() {
 		var $this = $(this);
@@ -376,14 +376,14 @@ $(function(){
 			ajax_loader = $.new_ajax_loader('after', $this).show(),
 			listing		= $this.parents('.listing'),
 			size_id 	= $('input.unit_size:checked', listing).val(),
-			special_id 	= $('.the_special', listing);
-
+			special_id 	= $('.special_txt', listing).attr('data-special-id');
+		
 		if (compares.length) {
 			var ids = [];
 			
 			compares.each(function() {
 				var context    = $(this).parents('.listing'),
-					special_id = $('.special_txt', context).attr('id').replace('Special', ''),
+					special_id = $('.special_txt', context).attr('data-special-id'),
 					size_id    = $('input.unit_size:checked', context).val();
 				
 				ids.push(this.value +','+ size_id +','+ special_id);
@@ -771,8 +771,10 @@ $(function(){
 				$.with_json(response, function(data) {
 					results_page.replaceWith(data['results']);
 					$.setGmap(data['maps_data']);
-					$('a', '.rslt-features').tooltip();
+					$('a', '.rslt-features').tooltip({ predelay: 300 });
 					select_first_size_option();
+					// TODO: this doesnt cause the compare link to appear
+					//$('input[name=compare]', '.listing').autoClickFew(3);
 					
 					$('.rslt-price', '.listing').each(function(){
 						$(':radio', this).eq(0).attr('checked', true);
@@ -957,13 +959,13 @@ try {
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
+	if (typeof(marker) != 'undefined') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
 }
 
 function unhighlightMarker(id){
-	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	if (marker.GmapState == 'selected') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
-	else marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|339933|FFFFFF');
+	var marker = typeof id == 'object' ? id : getMarkerById(id), def = typeof(marker) != 'undefined';
+	if (def && marker.GmapState == 'selected') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
+	else if (def) marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|339933|FFFFFF');
 }
 
 function getMarkerById(id) {
@@ -1137,6 +1139,14 @@ $.fn.special_txt_anim = function() {
 		$(this).animate({ 'font-size': '120%' }, 150, function() { 
 			$(this).animate({ 'font-size': '100%' }, 300);
 		});
+	});
+}
+
+// first used for the compare checkboxes
+$.fn.autoClickFew = function(max) {
+	if (typeof max == 'undefined') var max = 2;
+	return this.each(function(i) {
+		if (i <= max) $(this).click();
 	});
 }
 

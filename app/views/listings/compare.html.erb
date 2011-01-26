@@ -23,9 +23,9 @@
 				<% end %>
 				
                 <tr>
-                    <th id="usssl-special" title="We offer <%= $_usssl_discount %> the move in cost on top of the facility's own special discount!">USSSL Discount<br /><%= $_usssl_discount %><br />Applied To All Rentals</th>
+                    <th id="usssl-special" title="We offer <%= $_usssl_discount %> the move in cost on top of the facility's own special discount!">Double Discount<br /><%= $_usssl_discount %> first month<br />Applied To All Rentals</th>
                     <% @listing_set.each do |set| %>
-						<td><a class="rent-btn" href="<%= facility_path_for set[:listing] %>">Rent It!</a></td>
+						<td><a class="rent-btn" href="<%= facility_path_for set.delete(:listing), set %>">Rent It!</a></td>
 					<% end %>
                 </tr>
             </tbody>
