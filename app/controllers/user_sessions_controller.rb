@@ -1,6 +1,5 @@
 class UserSessionsController < ApplicationController
   
-  before_filter :ensure_secure_subdomain, :only => :new
   ssl_required :new
   ssl_allowed :create, :destroy
   before_filter :require_no_user, :only => :new
@@ -19,7 +18,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.create params[:user_session]
     
     if @user_session.valid? && current_user.status
-      @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : "secure.#{$root_domain}"))
+      @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : $root_domain))
       
       respond_to do |format|
         format.html do
@@ -83,7 +82,7 @@ class UserSessionsController < ApplicationController
       cookies[k.to_sym] = { :value => '', :path => '/', :domain => ".#{$root_domain}", :expire => 1.day.ago } 
     end 
     
-    redirect_to root_path
+    redirect_to root_path, :protocol => 'http://'
   end
 
 end

@@ -1,6 +1,5 @@
 class ClientsController < ApplicationController
   
-  before_filter :ensure_secure_subdomain, :only => [:edit, :edit_info, :update, :activate]
   ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate
   skip_before_filter :simple_auth, :only => :activate
   before_filter :get_models_paginated, :only => :index

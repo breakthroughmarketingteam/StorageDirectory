@@ -2,7 +2,7 @@
 <% cache @featured_listing do %>
 	<div id="feat_wrap">
 	<% unless @featured_listing.nil? %>
-		<div id="feat-list" class="shimmy">
+		<div id="feat-list" class="shimmy listing">
 			<h4>Featured Listing</h4>
 			<div id="wrap">
 				<div class="facility-logo">
@@ -42,13 +42,14 @@
 					</div>
 				<% end %>
 		
-				<div id="spec">
+				<div id="spec" class="special_txt" data-special-id="<%= @featured_listing.special.id %>">
 					<p>Special</p>
 					<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
 				</div>
 	
 				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true } %>
-	
+				<%= compare_link @featured_listing %>
+				
 				<div id="more-info">
 					<%= link_to 'More Info', facility_path_for(@featured_listing), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
 				</div>

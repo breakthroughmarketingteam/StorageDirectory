@@ -55,12 +55,8 @@ class ApplicationController < ActionController::Base
 
   $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
-    redirect_to "http://#{$root_domain}" if request.env['HTTP_HOST']['www'] || (request.env['HTTP_HOST']['secure'] && request.protocol == 'http://')
-  end
-  
-  def ensure_secure_subdomain
-    return if RAILS_ENV == 'development'
-    redirect_to "https://secure.#{$root_domain}#{request.path}" unless request.env['HTTP_HOST']['secure']
+    host = request.env['HTTP_HOST']
+    redirect_to "#{request.protoco}#{$root_domain}" if host['www'] || host['secure']
   end
   
   # Pages#show, Listings#home and #locator are allowed by anonymous

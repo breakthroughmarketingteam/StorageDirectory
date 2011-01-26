@@ -281,6 +281,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:14px;display:block;position:relative;top:30px;}
 .listing ul li span.shifted-text span{display:block;}
+#feat_wrap .listing ul li span.shifted-text{position:static;}
 .progress{float:right;background:url(/images/ui/storagelocator/highlight-greenlight.png) no-repeat 0% 0%;width:79px;height:16px;margin:-16px 11px 0 0;}
 .progress.active{background-position:0 100%;}
 li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
@@ -295,6 +296,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-contact{background:url(/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;position:relative;width:159px;}
 .listing .dnp{overflow:hidden;height:100px;}
+#feat_wrap .listing .dnp{height:auto;}
 .rslt-title{background:url(/images/ui/storagelocator/listing-title-bg.png) repeat-x;height:38px;margin:0;}
 .rslt-title h3{float:left;font-size:19px;height:26px;padding:12px 0 0 20px;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
@@ -330,7 +332,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing .request{background:url(/images/ui/storagelocator/request-btn.png) repeat-x;}
 .listing .request:hover{background:url(/images/ui/storagelocator/request-btn-hover.png) repeat-x;}
 .listing .compare{float:right;}
-.listing .compare input{margin:0;cursor:pointer;}
+.listing .compare input{margin:0;cursor:pointer;margin-left:5px;}
 .listing .compare label{cursor:pointer;font-size:80%;}
 .listing .compare .ajax_loader{margin:1px 7px 0 0;}
 #feat-list .dnp{clear:both;}
@@ -340,7 +342,6 @@ li.rslt-miles,li.rslt-size{height:88px;}
 #feat-list .dnp li.rslt-miles span.shifted-text{color:#000;font-weight:normal;}
 #feat-list .dnp li.rslt-size .size{margin:35px 18px 0 0;float:right;font-size:14px;font-weight:bold;}
 #feat-list .dnp li.rslt-price li div{margin:0;float:none;}
-#feat-list .dnp li.rslt-price .price{font-weight:bold;}
 #feat-list .dnp .rslt-price .radio_wrap label{line-height:14px;width:100%;}
 #reserve_steps{min-height:380px;}
 #reserve_steps .workflow_step{width:97%;padding:11px;height:auto;}
@@ -861,12 +862,15 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #admin-box ul li a{color:#4c4bcc;cursor:pointer;display:block;font-weight:bold;padding:10px 0;text-decoration:none;width:175px;}
 #admin-box ul li a span{position:relative;left:10px;}
 #admin-box ul li a:hover, #admin-box ul li a.active{background:#f1f1f1;}
+#admin-box ul li ul{margin:0 0 0 10px;}
+#admin-box ul li ul li a{width:auto;padding:10px;font-size:70%;}
+#admin-box ul li ul li a span{display:block;margin-top:4px;position:static;color:#333;font-weight:normal;}
 /************************************************** END additions.css *********************************************************/
 /* Customizations - D.S */
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
 #ajax_wrap{float:left;padding-left:20px;width:86%;min-height:684px;}
 #ajax_wrap.loading{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
-#controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:10px 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
+#controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:0 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #controller_list li{padding:0 0 3px 5px;}
 #controller_list li a{display:block;padding:5px 7px 5px 12px;font-weight:bold;border-radius:10px 0 0 10px;-moz-border-radius:10px 0 0 10px;-webkit-border-radius:10px 0 0 10px;}
 #controller_list li a:link,#controller_list li a:visited{color:#777;}
@@ -1696,6 +1700,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list{border:1px solid #999;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #feat-list h4{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
+#feat-list .compare{margin:10px;font-size:120%;}
 #feat-list #wrap{margin-bottom:0;padding:0 10px 10px;}
 #feat-list img{float:left;margin-bottom:5px;}
 #feat-list .dlogo_wrap span{font-size:140%;padding-top:10px;}
@@ -1860,7 +1865,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
 #sl-edit-tabs #fac_name{margin:0 0 30px;}
-#sl-edit-tabs #tracking_num_req{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;cursor:pointer;}
+.blue_btn{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;cursor:pointer;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;}
@@ -2083,6 +2088,7 @@ p.breadcrumb a{color:#fff;}
 #highlight{background:url(/images/ui/storagelocator/bg-highlight.png) repeat-y center;position:relative;}
 
 .rslt-price .enabled,.rslt-price .disabled{border:1px solid #e0e0e0;height:17px;cursor:pointer;margin:1px 0;padding:7px 10px 0;text-align:left;width:110px;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/price-bg.png) repeat-x;}
+#feat_wrap .rslt-price .enabled,#feat_wrap .rslt-price .disabled{width:84%;}
 .rslt-price .enabled:hover,.rslt-price .selected{background:url(/images/ui/storagelocator/price-bg-selected.png) repeat-x;border:1px solid #4c4bcc;color:#fff;}
 .rslt-price .disabled{background:#fff;border-color:#ebebeb;color:#999;}
 .rslt-price .disabled .price{color:#999;font-weight:normal;cursor:default;}

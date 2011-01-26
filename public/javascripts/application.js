@@ -1027,18 +1027,12 @@ $(function() {
 		
 		day_check.data('was_checked', day_check.is(':checked'));
 		
-		day_closed.each(function(){
-			var check = $(this);
-			console.log(check, check.is(':checked'), check.data('was_checked'))
-		});
-		
 		if (day_check.is(':checked')) {
 			$('select, input[type=hidden]', context).attr('disabled', true);
 			
 			day_closed.each(function(){
 				var check = $(this);
 				check.data('was_checked', check.is(':checked'));
-				console.log(check.is(':checked'))
 			});
 			
 			day_closed.attr('checked', true);

@@ -22,6 +22,14 @@ module ListingsHelper
     b << '</p>'
   end
   
+  def compare_link(listing)
+		html = '<div class="compare" title="Select 2 or more to compare">'
+			html << link_to('Click here to compare', compare_listings_path, :class => 'hide')
+			html << label_tag("compare_#{listing.id}", 'Compare')
+			html << "<input type='checkbox' value='#{listing.id}' name='compare' id='compare_#{listing.id}' />"
+		html << '</div>'
+  end
+  
   def listing_distance(listing)
     if listing.respond_to? :distance
       number_with_precision(listing.distance, :precision => 1)
