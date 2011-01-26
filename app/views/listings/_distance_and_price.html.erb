@@ -5,7 +5,7 @@
 	
 	<% if listing.premium? && (unit_size = listing.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size)) %>
 		<li class="rslt-size">
-			<%= image_tag unit_size.icon.url %>
+			<%= image_tag unit_size.icon.try(:url) %>
 			<span class="size"><%= unit_size.display_dimensions %></span>
 		</li>
 		<li class="rslt-price">

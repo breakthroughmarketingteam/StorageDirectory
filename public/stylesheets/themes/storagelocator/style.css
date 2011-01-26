@@ -2100,7 +2100,7 @@ p.breadcrumb a{color:#fff;}
 #topblock1 a{color:#000;}
 #topblock1 p{display:block;float:left;font-size:12px;line-height:17px;padding:6px 0 0 10px;text-align:left;width:273px;}
 #topblock1 img{float:right;margin-right:8px;}
-#topblock1 #inner{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#fff;border:1px solid #ccc;height:46px;margin:5px 10px 0 0;position:absolute;right:0;width:422px;}
+#topblock1 .inner{background:#fff;display:block;border:1px solid #ccc;height:46px;margin:5px 10px 0 0;position:absolute;right:0;width:422px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #topblock1 #btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#f90;color:#fff;cursor:pointer;display:block;float:right;font-size:9px;height:14px;line-height:16px;margin:1px 0 0 6px;padding:0 3px 0 7px;width:40px;}
 #topblock1:hover #btn{background:#3c3;}
 
