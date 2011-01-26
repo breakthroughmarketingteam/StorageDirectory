@@ -403,6 +403,32 @@ $(function(){
 		
 		return false;
 	});
+	
+	$('.specializer', '.unit_detail').live('click', function() {
+		var $this = $(this),
+			specials = $('.more_specials', $this.parent());
+	
+		if ($this.text() == 'more') {
+			$this.text('less');
+			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.height() / 2) +'px', 'right': '-'+ (specials.width() + (specials.width() / 2)) +'px' });
+		} else {
+			$this.text('more');
+			specials.hide().css('right', 0);
+		}
+		
+		return false;
+	});
+	
+	$('.special_txt', '.more_specials').live('click', function() {
+		var $this = $(this),
+			active_special = $('.special_txt.active', $this.parent().parent()),
+			special_clone = active_special.clone().removeClass('active'),
+			more = $this.parents('.more_specials').hide().css('right', 0);;
+		
+		active_special.replaceWith($this.clone().addClass('active'));
+		$this.replaceWith(special_clone);
+		$('.specializer', more.parent()).text('more');
+	});
 
 	/* AJAX pagination, load next page results in the same page */
 	$('.more_results').live('click', function(){

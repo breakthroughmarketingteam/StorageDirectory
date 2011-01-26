@@ -71,7 +71,6 @@ class Notifier < ActionMailer::Base
   
   def password_reset_instructions(user)
     setup_email user.email, 'diego@usselfstoragelocator.com', 'Password Reset Instructions'
-    @body[:url] = edit_password_reset_url(user.perishable_token)
   end
   
   def review_request(recipient, message, listing, client)

@@ -18,32 +18,26 @@ $(function() {
 	$('#login_link').click(function() {
 		var $this = $(this);
 		if ($this.hasClass('active')) return false;
-
 		$this.addClass('active');
-		var pop_up = $('#pop_up_box').css({ top: '50px', right: '20px' });
+		
+		var pop_up = $('#pop_up').dialog({
+			title: 'Login to your account',
+			width: 347,
+			resizable: false,
+			close: function() { 
+				$this.removeClass('active');
+			}
+		}).parent('.ui-dialog').css({ top: '50px', right: '20px', left: 'auto' });
 
-		pop_up.fadeIn();
+		//pop_up.fadeIn();
 		$('input[type=text]', pop_up).eq(0).focus();
 		$.bindPlugins();
-		
-		// TODO: this is a quickfix, find out why in IE the login box closes even when clicking inside of it, good luck.
-		if (!$.browser.msie) {
-			// close login box when user clicks outside of it
-			$(document).click(function(e) {
-				if ($(e.target).parents('#pop_up_box').length == 0) {
-					pop_up.fadeOut(300, function() { 
-						$('#login_link').removeClass('active');
-						pop_up.hide();
-					});
-				}
-			});
-		}
 		
 		return false;
 	});
 	
 	// log the user in and change the topbar to the logged in links
-	$('#new_user_session', '#pop_up_box').live('submit', function() {
+	$('#new_user_session', '#pop_up.login_box').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		
@@ -58,7 +52,7 @@ $(function() {
 						window.location = response.account_path;
 					} else {
 						$('#topbar').html(response.data.html);
-						$('#pop_up_box').fadeOutRemove();
+						$('#pop_up.login_box').fadeOutRemove();
 						
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
@@ -79,8 +73,8 @@ $(function() {
 						}
 					}
 				} else {
-					$('#pop_up_box').html(response.data);
-					$('.fieldWithErrors input', '#pop_up_box').eq(0).focus();
+					$('#pop_up.login_box').html(response.data);
+					$('.fieldWithErrors input', '#pop_up.login_box').eq(0).focus();
 				}
 
 				ajax_loader.hide();
@@ -90,10 +84,29 @@ $(function() {
 		return false;
 	});
 	
-	$('#forgot_pass_link', '#pop_up_box').live('click', function() {
-		$('#pop_up_box').load(this.href, function(response, status) {
+	$('#forgot_pass_link', '#pop_up').live('click', function() {
+		var $this = $(this),
+			pop_up = $('#pop_up.login_box'),
+			ajax_loader = $.new_ajax_loader('after', this).show(),
+			orig_html = pop_up.html();
+		
+		$this.hide();
+		
+		pop_up.load(this.href, function(response, status) {
 			$('input[type=text]', this).eq(0).focus();
 			$.bindPlugins();
+			
+			$(this).dialog({
+				title: 'Enter your email',
+				close: function() {
+					pop_up.html(orig_html);
+					$('#login_link').removeClass('active');
+					$('.ajax_loader', pop_up).hide();
+					$('#forgot_pass_link', '#pop_up.login_box').show();
+				}
+			});
+			
+			ajax_loader.hide();
 		});
 		return false;
 	});

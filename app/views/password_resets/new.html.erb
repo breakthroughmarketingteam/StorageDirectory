@@ -4,8 +4,6 @@
 <div id="login_page">
 	<% form_tag '/password_resets', :method => 'post', :id => 'password_resets_form' do  %>
 		<fieldset>
-			<h2>Enter your email</h2>
-		
 			<div class="stack i">
 				<%= label_tag :email, nil, :class => 'hidden' %>
 				<div class="shadow_wrap">
@@ -13,10 +11,12 @@
 				</div>
 			</div>
 		
-			<div class="stack">
-				<%= submit_tag 'Send', :id => 'send_btn' %>
+			<div class="uncollapse">
+				<p class="left">
+					We'll send you a little email<br />with a link to reset your password. 
+				</p>
+				<%= submit_tag 'Send', :id => 'send_btn', :class => 'bigblue_btn right' %>
 			</div>
-		
 		</fieldset>
 	<% end %>
 </div>

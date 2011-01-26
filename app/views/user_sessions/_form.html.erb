@@ -1,7 +1,6 @@
 <div id="login_page">
 	<% form_for (@user_session ||= UserSession.new) do |f| %>
 		<fieldset>
-			<h2>Login to your account</h2>
 			<%= display_message flash %>
 			
 			<div id="login-form">
@@ -27,7 +26,7 @@
 					
 					<div class="right region">
 						<%= ajax_loader %>
-						<%= f.submit 'Login' %>
+						<%= f.submit 'Login', :class => 'bigblue_btn' %>
 					</div>
 				</div>
 			</div>

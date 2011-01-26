@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
       @listing_set = params[:ids].split('-').map do |ids|
         i = ids.split(',')
         listing = Listing.find(i[0])
-        { :listing => listing, :size => listing.sizes.find(i[1]), :special => listing.predefined_specials.find(i[2]) }
+        { :listing => listing, :size => listing.sizes.find(i[1]), :special => listing.predefined_specials.find_by_id(i[2]) }
       end
       
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)

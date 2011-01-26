@@ -1,7 +1,7 @@
 <div class="unit_detail_in">
 	<div class="left">
 		<% if listing.special %>
-			Special: <span class="special_txt" data-special-id="<%= listing.special.id %>" title="<%= listing.special.description %>"><%= listing.special.title %></span>
+			Special: <%= render :partial => 'predefined_specials/special_txt', :locals => { :listing => listing } %>
 		<% end %>
 	</div>
 	
