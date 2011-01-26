@@ -1554,20 +1554,22 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 
 #fac-features{margin-top:20px;}
+#fac-features a.info{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/green-btn-bg.png) repeat-x;border:1px solid #999;color:#fff;display:block;margin:8px 0 0;padding:5px 0 3px;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #666;width:100px;}
 #fac-features em{color:#4c4bcc;font-weight: bold;}
+#fac-features #feat-pop{display:none;}
 #add-fac-form-extra #fac-features ul li{font-size:14px;list-style:disc;}
 #add-fac-form-extra #fac-features ul li em{color:#4C4BCC;font-size:12px;font-weight:bold;}
 ul.desclist li p{}
 #top_fac_page h3{font-size:28px;line-height:32px;margin-bottom:20px;}
 #top_fac_page .t-span{color:#4c4bcc;font-size: 24px;}
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
-#add-fac-form-extra ul{margin:20px;}
+#add-fac-form-extra ul{margin:0 20px 0 30px}
 #add-fac-form-extra ul li{list-style:none;}
 #add-fac-form-extra ul li a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
 #add-fac-form-extra ul li a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
 #add-fac-form-extra ul.desclist a{}
 #top_fac_page #fac-features h4{margin-bottom:20px;margin-left:0;}
-#top_fac_page #fac-features strong{font-size:12px;}
+#top_fac_page #fac-features strong{color:#393;}
 #text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
 #text-box p.tb{font-size:22px;font-variant:small-caps;font-weight:bold;}
 #top_fac_page #text-box strong{font-size:18px;}
@@ -2020,9 +2022,9 @@ p.breadcrumb a{color:#fff;}
 #moving .even .marker,#moving .even .name,#moving .even .address,#moving .even .divider,#moving .even .distance{background:#f3f3f3;}
 #moving .num_icon{background:url(/images/ui/storagelocator/result-number.png) no-repeat;color:#fff;font-weight:bold;height:32px;padding:7px 0 0;text-align:center;position:static;text-shadow:1px 1px 0 #666;width:29px;}
 
-#fac-features #feats{background: url(/images/ui/storagelocator/usssl-imac.png) no-repeat right;margin: 0 20px 0 40px;}
+#fac-features #feats2{background: url(/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
 #top_fac_page #fac-features h3#heading{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:url(/images/ui/storagelocator/blue-bg2.png) repeat-x;color:#fff;font-size:24px;font-weight:normal;height:37px;padding-top:8px;text-align:center;text-shadow:1px 1px 0 #333;}
-.self_storage_advertising #hr-divider{background:url(/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:40px 0 20px;width:712px;}
+.self_storage_advertising #hr-divider{background:url(/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 20px;width:712px;}
 .self_storage_advertising #hr-divider{display:inline-block;}
 
 #modeL_search{margin:2px 0 0 0;}
@@ -2041,7 +2043,7 @@ p.breadcrumb a{color:#fff;}
 #al_auth_yourself{position:absolute;bottom:25px;right:98px;}
 
 #pms{}
-#pms ul{margin:0;width:100%;}
+#pms ul{height:215px;margin:0 0 50px;width:100%;}
 #pms li{float:left;display:block;height:70px;width:176px;}
 #subfooter{height:75px;margin:20px auto 0;width:975px;}
 
