@@ -403,6 +403,32 @@ $(function(){
 		
 		return false;
 	});
+	
+	$('.specializer', '.unit_detail').live('click', function() {
+		var $this = $(this),
+			specials = $('.more_specials', $this.parent());
+	
+		if ($this.text() == 'more') {
+			$this.text('less');
+			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.outerHeight() / 2) +'px', 'right': '-'+ (specials.outerWidth() + (specials.outerWidth() / 2)) +'px' });
+		} else {
+			$this.text('more');
+			specials.hide().css('right', 0);
+		}
+		
+		return false;
+	});
+	
+	$('.special_txt', '.more_specials').live('click', function() {
+		var $this = $(this),
+			active_special = $('.special_txt.active', $this.parent().parent()),
+			special_clone = active_special.clone().removeClass('active'),
+			more = $this.parents('.more_specials').hide().css('right', 0);;
+		
+		active_special.replaceWith($this.clone().addClass('active'));
+		$this.replaceWith(special_clone);
+		$('.specializer', more.parent()).text('more');
+	});
 
 	/* AJAX pagination, load next page results in the same page */
 	$('.more_results').live('click', function(){
@@ -1092,9 +1118,9 @@ $.activateSizeSelect = function(context) {
 	$('option', $size_select).each(function(){
 		var $this = $(this);
 
-		if ($this.attr('rel') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('rel')) return true; })) {
+		if ($this.attr('data-url') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('data-url')) return true; })) {
 			var img = new Image();
-			img.src = $this.attr('rel');
+			img.src = $this.attr('data-url');
 			pre_loaded_size_icons.push(img);
 		}
 	});
@@ -1108,14 +1134,14 @@ $.activateSizeSelect = function(context) {
 	function size_icon_change(input) {
 		var self = input[0] || this,
 			$this = $(self),
-			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('rel') : $('option:selected', self).attr('rel'),
+			selected = self.tagName.toLowerCase() == 'option' ? $this.attr('data-url') : $('option:selected', self).attr('data-url'),
 			new_img = $('<img src="'+ selected +'" alt="" />'),
 			size_details = capitalize(self.tagName.toLowerCase() == 'option' ? $this.attr('data-unit-type') : $('option:selected', self).attr('data-unit-type'));
 		
 		size_details += "&nbsp;"+ (self.tagName.toLowerCase() == 'option' ? $this.text() : $('option:selected', self).text());
 		
 		if ($size_img.attr('src') != selected) {
-			$size_img.fadeOut(100, function(){
+			$size_img.fadeOut(100, function() {
 				$size_picker.html('').append(new_img).append('<p class="size_details">'+ size_details +'</p>');
 				new_img.hide().fadeIn(120);
 				$size_img = $('img', $size_picker);

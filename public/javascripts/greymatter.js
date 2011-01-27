@@ -580,7 +580,7 @@ $.updateModels = function(e, ui, callback) {
 	$(list_items).each(function(i){ // html element id is <ModelClass>_<int ID>
 		var model_class = this.id.split('_')[0],
 			model_id 	= this.id.split('_')[1],
-			model_attr 	= $this.attr('rel'); // attribute to update
+			model_attr 	= $this.attr('data-attr'); // attribute to update
 				
 		query += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
 			     '&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';
@@ -682,7 +682,7 @@ $.open_map = function(map) {
 	map.show();
 	
 	var map_btn = $('#top_map_btn'),
-		location = map_btn.attr('rel').split(','),
+		location = map_btn.attr('data-loc').split(','),
 		lat = parseFloat(location[0]),
 		lng = parseFloat(location[1]);
 
@@ -853,7 +853,8 @@ $.setup_autocomplete = function(els, context) {
 	
 	if ($autocompleters.length > 0) {
 		$autocompleters.each(function(){
-			var $this   = $(this), rel = $this.attr('rel'),
+			var $this   = $(this), 
+				rel = $this.attr('rel'),
 				info	= rel.split('|')[0],
 				minLen	= rel.split('|')[1],
 				model   = info.split('_')[0],
