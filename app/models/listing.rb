@@ -395,20 +395,25 @@ class Listing < ActiveRecord::Base
   # Price Calculation
   #
   def calculated_price(options)
-    size    = options[:size] || self.sizes.first.id
+    size    = options[:size] || self.sizes.first
     special = options[:special] || self.special
     month_limit = special ? special.month_limit : 1
     
-    if self.prorated?
-      move_date     = 1.day.from_now
-      days_in_month = Date.civil(move_date.year, move_date.month, -1).day
-      half_month    = (days_in_month / 2).to_f.ceil
-      multiplier    = get_prorated_multiplier month_limit, move_date, days_in_month, half_month
-      paid_thru     = get_prorated_paid_thru multiplier, move_date, days_in_month, half_month, month_limit
-      amount        = get_prorated_price size, special, multiplier
+    if size
+      if self.prorated?
+        move_date     = 1.day.from_now
+        days_in_month = Date.civil(move_date.year, move_date.month, -1).day
+        half_month    = (days_in_month / 2).to_f.ceil
+        multiplier    = get_prorated_multiplier month_limit, move_date, days_in_month, half_month
+        paid_thru     = get_prorated_paid_thru multiplier, move_date, days_in_month, half_month, month_limit
+        amount        = get_prorated_price size, special, multiplier
+      else
+        paid_thru = get_paid_thru month_limit
+        amount    = get_fixed_priced size, special, month_limit
+      end
     else
-      paid_thru = get_paid_thru month_limit
-      amount    = get_fixed_priced size, special, month_limit
+      paid_thru = Time.now
+      amount = 'n/a'
     end
     
     { :amount => amount, :paid_thru => paid_thru }

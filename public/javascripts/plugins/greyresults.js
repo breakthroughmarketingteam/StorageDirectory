@@ -410,7 +410,7 @@ $(function(){
 	
 		if ($this.text() == 'more') {
 			$this.text('less');
-			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.height() / 2) +'px', 'right': '-'+ (specials.width() + (specials.width() / 2)) +'px' });
+			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.outerHeight() / 2) +'px', 'right': '-'+ (specials.outerWidth() + (specials.outerWidth() / 2)) +'px' });
 		} else {
 			$this.text('more');
 			specials.hide().css('right', 0);

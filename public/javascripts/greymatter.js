@@ -580,7 +580,7 @@ $.updateModels = function(e, ui, callback) {
 	$(list_items).each(function(i){ // html element id is <ModelClass>_<int ID>
 		var model_class = this.id.split('_')[0],
 			model_id 	= this.id.split('_')[1],
-			model_attr 	= $this.attr('rel'); // attribute to update
+			model_attr 	= $this.attr('data-attr'); // attribute to update
 				
 		query += 'models['+ i +'][model]='+ model_class + '&models['+ i +'][id]='+ model_id +
 			     '&models['+ i +'][attribute]='+ model_attr +'&models['+ i +'][value]='+ i + '&';

@@ -315,12 +315,13 @@ module ListingsHelper
   
   def display_comparison(comparison, listing_set)
     listing = listing_set[:listing]
+    size    = listing_set[:size]
     
     case comparison when 'distance'
       "<td class='padded'><span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles</td>"
     
     when 'monthly_rate'
-      "<td class='padded' title='Monthly rate'>#{number_to_currency listing_set[:size].dollar_price}</td>"
+      "<td class='padded' title='Monthly rate'>#{number_to_currency size.dollar_price if size}</td>"
     
     when /(special)/i
       special = listing_set[:special]
@@ -330,10 +331,10 @@ module ListingsHelper
       calculation = listing.calculated_price(listing_set)
       paid_thru = calculation[:paid_thru]
       
-      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />through #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
+      "<td class='padded'><span class='price'>#{size ? number_to_currency(calculation[:amount]) : calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />through #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
     
     else # features
-      if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison
+      if listing.facility_features.map {|f| f.title.underscore }.include? comparison.gsub('_', ' ')
         "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
       else
         "<td><span class='hide'>#{listing.title} does not have #{comparison.titleize}</span></td>"
