@@ -9,9 +9,11 @@
 				<%= render :partial => 'shared/edit_delete_link', :locals => { :model => model } %>
 			</div>
 			
-			<div class="left_space right note">
-				<%= pluralize model.listings.size, 'Listing' %>
-			</div>
+			<% if model.respond_to? :listings %>
+				<div class="left_space right note">
+					<%= pluralize model.listings.size, 'Listing' %>
+				</div>
+			<% end %>
 			
 			<div class="left_space right note">
 				<%= model.status %>

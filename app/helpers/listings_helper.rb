@@ -329,7 +329,8 @@ module ListingsHelper
     when /(price)/i
       calculation = listing.calculated_price(listing_set)
       paid_thru = calculation[:paid_thru]
-      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words Time.now, paid_thru}<br />through #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
+      
+      "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />through #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
     
     else # features
       if listing.facility_features.map {|f| f.title.try :underscore }.include? comparison

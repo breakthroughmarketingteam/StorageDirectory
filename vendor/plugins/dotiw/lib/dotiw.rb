@@ -39,13 +39,15 @@ module ActionView
           options.symbolize_keys!
           I18n.locale = options[:locale] if options[:locale]
 
-          time_measurements = { :years    => I18n.t(:years,   :default => "years"),
-                                :months   => I18n.t(:months,  :default => "months"),
-                                :weeks    => I18n.t(:weeks,   :default => "weeks"),
-                                :days     => I18n.t(:days,    :default => "days"),
-                                :hours    => I18n.t(:hours,   :default => "hours"),
-                                :minutes  => I18n.t(:minutes, :default => "minutes"),
-                                :seconds  => I18n.t(:seconds, :default => "seconds") }
+          time_measurements = { 
+            :years    => I18n.t(:years,   :default => "years"),
+            :months   => I18n.t(:months,  :default => "months"),
+            :weeks    => I18n.t(:weeks,   :default => "weeks"),
+            :days     => I18n.t(:days,    :default => "days"),
+            :hours    => I18n.t(:hours,   :default => "hours"),
+            :minutes  => I18n.t(:minutes, :default => "minutes"),
+            :seconds  => I18n.t(:seconds, :default => "seconds") 
+          }
 
           hash.delete(time_measurements[:seconds]) if !include_seconds && hash[time_measurements[:minutes]]
 
