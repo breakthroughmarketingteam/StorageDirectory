@@ -412,8 +412,7 @@ class Listing < ActiveRecord::Base
         amount    = get_fixed_priced size, special, month_limit
       end
     else
-      paid_thru = Time.now
-      amount = 'n/a'
+      amount, paid_thru = nil, Time.now
     end
     
     { :amount => amount, :paid_thru => paid_thru }

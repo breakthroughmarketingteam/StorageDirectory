@@ -383,7 +383,7 @@ $(function() {
 		$('#top_map_btn').live('click', function(){
 			var $this = $(this),
 				main_map = $('#main_map'),
-				location = $this.attr('rel').split(','),
+				location = $this.attr('data-loc').split(','),
 				lat = parseFloat(location[0]),
 				lng = parseFloat(location[1]);
 

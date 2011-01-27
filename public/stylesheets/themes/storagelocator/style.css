@@ -1708,7 +1708,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form div .left{float:right;}
 .virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
-#feat-list{border:1px solid #999;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
+#feat-list{border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #feat-list h4{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list .compare{margin:10px;font-size:120%;}
@@ -1924,7 +1924,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #tab2 #tax input#listing_tax_rate{text-align:right;width:15px;}
 #sl-edit-tabs #flogo{width:100%;}
 #sl-edit-tabs #flogo .dlogo_wrap{-moz-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;display:block;font-size:100%;height:137px;position:relative;text-align:center;text-decoration:none;vertical-align:middle;width:182px;}
-#sl-edit-tabs #flogo .dlogo_wrap span{color:#fff;font-size:18px;display:block;position:absolute;text-align:center;text-shadow:1px 1px 1px #333;top:20px;width:100%;z-index:2;}
+#sl-edit-tabs #flogo .dlogo_wrap span{font-size:18px;display:block;text-align:center;text-shadow:1px 1px 1px #333;width:100%;}
+.dlogo_wrap span{position:relative;top:20px;color:#fff;z-index:2;}
 #sl-edit-tabs #flogo .dlogo_wrap img{width:100%;}
 #sl-edit-tabs textarea{color:#333333;font:12px "Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;line-height:1.3;margin-bottom:10px;padding:5px;width:100%;}
 #sl-edit-tabs #descript p{margin-bottom:20px;}
