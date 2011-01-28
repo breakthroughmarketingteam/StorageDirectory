@@ -571,7 +571,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in li.feature_climate-controlled{background:url(/images/ui/storagelocator/ac-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_drive-up-access{background:url(/images/ui/storagelocator/driveup-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_truck-rental{background:url(/images/ui/storagelocator/truck-icon-g.png) no-repeat;}
-#sl-fac-detail-in li.feature_automatic-payment{background:url(/images/ui/storagelocator/auto-pay-icon-g.png) no-repeat;}
+#sl-fac-detail-in li.feature_automatic-payments{background:url(/images/ui/storagelocator/auto-pay-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_boxes-packing-supplies{background:url(/images/ui/storagelocator/boxes-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_business-center{background:url(/images/ui/storagelocator/business-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_carts-and-dollies{background:url(/images/ui/storagelocator/carts-icon-g.png) no-repeat;}
@@ -2151,7 +2151,7 @@ p.breadcrumb a{color:#fff;}
 
 #sl-tabs-reviews{min-height:400px;}
 
-#feat-pop{font-size:12px;}
-#feat-po p{margin:20px 0;}
-#feat-pop em{color:#4c4bcc;font-weight:;}
-#feat-pop h3{font-size:22px;}
+#feat-pop{padding: 10px 25px;}
+#feat-pop p{font-size:12px;margin:20px 0;line-height:16px;}
+#feat-pop em{color:#4c4bcc;font-weight:bold;}
+#feat-pop h3{font-size:26px;}
