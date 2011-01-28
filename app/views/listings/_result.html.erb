@@ -6,26 +6,15 @@
 					<h3><%= link_to_if result.premium?, result.title, facility_path_for(result), :class => "profile_link" %></h3>
 				
 					<% if result.premium? %>
-						<div class="rslt-features">
-							<a href="#" class="hours" title="24 Hours"></a>
-							<a href="#" class="security" title="Security"></a>
-							<a href="#" class="keypad" title="Keypad Access"></a>
-							<a href="#" class="ac" title="AC"></a>
-							<a href="#" class="driveup" title="Drive Up"></a>
-							<a href="#" class="climate" title="Climate Controlled"></a>
-							<a href="#" class="spanish" title="Spanish"></a>
-						</div>
+						<% @features = result.facility_features.map &:title %>
+						<% unless @features.empty? %>
+							<div class="rslt-features">
+								<% @features.each do |feature| %>
+									<a href="#" class="<%= feature.parameterize %>" title="<%= feature %>"><%= feature %></a>
+								<% end %>
+							</div>
+						<% end %>
 					<% end %>
-					<%# if result.premium? %>
-						<%# @features = result.facility_features.map(&:label).reject(&:blank?) %>
-						<%# unless @features.empty? %>
-							<!--<div class="rslt-features">
-								<%# @features.each do |feature| %>
-									<a href="#" class="<%#= feature.parameterize %>" title="<%#= feature %>"><%#= feature %></a>
-								<%# end %>
-							</div>-->
-						<%# end %>
-					<%# end %>
 				</div>
 
 				<div class="num_icon">
@@ -81,6 +70,6 @@
 				<%= link_to "Reviews#{" (#{result.reviews.size})" unless result.reviews.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
 			</li>
 		</ul>
-		<div class="highlight-green progress">&nbsp;</div>
+		<div class="highlight-green progress"></div>
 	</div>
 <% end %>
