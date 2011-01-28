@@ -1356,9 +1356,9 @@ function default_pop_up_options(options) {
 		title: 	   options.title,
 		width: 	   options.width || 785,
 		height:    options.height,
-		resizable: false,
-		modal: 	   options.modal,
-		close: 	   function() {
+		resizable: (typeof options.resizable == 'undefined' ? false : options.resizable),
+		modal: 	   (typeof options.modal == 'undefined' ? true : options.modal),
+		close: 	   options.close || function() {
 			$('.ajax_loader').hide();
 			$(this).dialog('destroy').remove();
 		}

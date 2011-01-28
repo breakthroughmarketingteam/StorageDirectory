@@ -769,6 +769,8 @@ $(function(){
 		});
 	}
 	
+	$.enableTooltips('a', '.rslt-features');
+	
 	$('#narrow_results_form').submit(function() {
 		var form = $(this).runValidation(), 
 			results_page = $('#ajax_wrap_inner'),
@@ -789,7 +791,7 @@ $(function(){
 				$.with_json(response, function(data) {
 					results_page.replaceWith(data['results']);
 					$.setGmap(data['maps_data']);
-					$('a', '.rslt-features').tooltip({ predelay: 300 });
+					$.enableTooltips('a', '.rslt-features');
 					select_first_size_option();
 					// TODO: this doesnt cause the compare link to appear
 					//$('input[name=compare]', '.listing').autoClickFew(3);
@@ -1150,6 +1152,10 @@ $.activateSizeSelect = function(context) {
 			});
 		}
 	}
+}
+
+$.enableTooltips = function(el, context, delay) {
+	$(el, context).tooltip({ predelay: (delay || 300) });
 }
 
 $.fn.special_txt_anim = function() {

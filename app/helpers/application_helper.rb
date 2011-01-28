@@ -209,10 +209,15 @@ module ApplicationHelper
     end
   end
   
-  def render_form_hidden_fields(form)
+  def render_form_hidden_fields(form, f)
     html =  hidden_field_tag(:update_element, form.field_set_id)
     html << hidden_field_tag(:fid, form.id)
     html << reverse_captcha if form.use_reverse_captcha
+    
+    if @page
+      html << f.hidden_field(:commentable_type, :value => @page.class.name)
+      html << f.hidden_field(:commentable_id, :value => @page.id)
+    end
     
     begin
       unless form.scope.blank?
