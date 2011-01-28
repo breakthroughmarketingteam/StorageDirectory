@@ -41,17 +41,18 @@ $(function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		
-		if (form.data('valid')) {
+		if (form.data('valid') && !form.data('sending')) {
 			ajax_loader.show();
+			form.data('sending', true);
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
-				if (response.success) {
+				$.with_json(response, function(data) {
 					var ready_mem = $('#ready_member', form);
 					
-					if (response.data.role == 'advertiser' && ready_mem.length == 0) {
-						window.location = response.account_path;
+					if (data.role == 'advertiser' && ready_mem.length == 0) {
+						window.location = data.account_path;
 					} else {
-						$('#topbar').html(response.data.html);
+						$('#topbar').html(data.html);
 						$('#pop_up.login_box').fadeOutRemove();
 						
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
@@ -65,18 +66,19 @@ $(function() {
 								focus_el = values[3];
 								
 							$.each(field_ids, function(i) {
-								$('#'+ this, context).val(response.data[attributes[i]]);
+								$('#'+ this, context).val(data[attributes[i]]);
 							});
 							
 							$('#'+ focus_el, context).focus();
 							$('#already_member', context).hide();
 						}
 					}
-				} else {
-					$('#pop_up.login_box').html(response.data);
+				}, function(data) {
+					$('#pop_up.login_box').html(data);
 					$('.fieldWithErrors input', '#pop_up.login_box').eq(0).focus();
-				}
-
+				});
+				
+				form.data('sending', false);
 				ajax_loader.hide();
 			}, 'json');
 		}
@@ -1500,14 +1502,17 @@ $(function() {
 	});
 	
 	$('#siteseal').live('click', function() {
-		var pop_up = $('<div id="pop_up"><iframe id="site_seal_frame" src="https://seal.godaddy.com/verifySeal?sealID=8ytNZhcx8XXCpJlxm3tje6NHBcpK1BbPKnAgqas7k2J3yuj5Ab1"></iframe></div>').dialog({
-			title: 'Secure Site by GoDaddy.com',
-			width: 593,
-			height: 853,
-			modal: true,
-			resizable: false,
-			close: function() { $(this).dialog('destroy').remove() }
-		});
+		var godaddy_url = 'https://seal.godaddy.com/verifySeal?sealID=8ytNZhcx8XXCpJlxm3tje6NHBcpK1BbPKnAgqas7k2J3yuj5Ab1';
+		
+		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
+			window.open(godaddy_url, "godaddy","status=0,toolbar=0,width=590,height=750,resizable=0");
+		} else {
+			$('<div id="pop_up"><iframe id="site_seal_frame" src="'+ godaddy_url +'"></iframe></div>').dialog(default_pop_up_options({
+				title: 'Secure Site by GoDaddy.com',
+				width: 593,
+				height: 853
+			}));
+		}
 	});
 	
 }); // END document ready

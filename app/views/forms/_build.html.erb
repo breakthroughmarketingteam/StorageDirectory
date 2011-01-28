@@ -1,7 +1,7 @@
 <% form_for virtual_form_path(form), :url => form.get_url_hash, :html => { :id => "form_#{form.controller}" } do |f| %>
 	<fieldset id="<%= form.field_set_id %>" class="virtual_form">
 		<% if form.show_title? %>
-		  <legend><%= form.name %></legend>
+			<legend><%= form.name %></legend>
 		<% end %>
 		
 		<% form.fields.each do |field| %>
@@ -10,10 +10,9 @@
 		
 		<div class="uncollapse">
 			<div class="buttons">
-				<%= render_form_hidden_fields(form) %>
+				<%= render_form_hidden_fields(form, f) %>
 				<%= f.submit 'Submit' %>
 			</div>
 		</div>
-		
 	</fieldset>
 <% end %>

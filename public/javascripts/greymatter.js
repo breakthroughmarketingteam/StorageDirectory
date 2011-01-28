@@ -407,6 +407,25 @@ $(function(){
 		
 		return false;
 	});
+	
+	$('.auto_pop_up').live('click', function() {
+		var $this = $(this),
+			div_id = $this.attr('data-div-id'),
+			div = $('#'+ div_id),
+			ops = default_pop_up_options({
+				title: $this.attr('title'),
+				width: $this.attr('data-width'),
+				height: $this.attr('data-height')
+			});
+		
+		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
+			$('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops);
+		} else {
+			get_pop_up_and_do(ops, { sub_partial: this.href });
+		}
+		
+		return false;
+	});
 });
 
 $.option_tags_from_model = function(model_class, models, options) {
@@ -1356,9 +1375,9 @@ function default_pop_up_options(options) {
 		title: 	   options.title,
 		width: 	   options.width || 785,
 		height:    options.height,
-		resizable: false,
-		modal: 	   options.modal,
-		close: 	   function() {
+		resizable: (typeof options.resizable == 'undefined' ? false : options.resizable),
+		modal: 	   (typeof options.modal == 'undefined' ? true : options.modal),
+		close: 	   options.close || function() {
 			$('.ajax_loader').hide();
 			$(this).dialog('destroy').remove();
 		}

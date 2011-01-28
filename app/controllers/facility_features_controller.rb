@@ -1,8 +1,8 @@
 class FacilityFeaturesController < ApplicationController
   
-  ssl_required :index, :new, :create, :edit, :toggle, :destroy
+  ssl_required :index, :new, :create, :edit, :update, :toggle, :destroy
   before_filter :get_parent_models, :only => :toggle
-  before_filter :get_model, :only => [:new, :edit, :destroy]
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   
   def index
     get_models_paginated
@@ -42,6 +42,31 @@ class FacilityFeaturesController < ApplicationController
   
   def edit
     render :layout => false if request.xhr?
+  end
+  
+  def update
+    respond_to do |format|
+      format.html do 
+        if @facility_feature.update_attributes params[:facility_feature]
+          flash[:notice] = @facility_feature.title + ' has been updated.'
+          redirect_back_or_default facility_features_path
+        else
+          flash[:error] = model_errors @facility_feature
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @facility_feature.destroy
+          flash.now[:notice] = @facility_feature.title + ' has been updated.'
+          get_models_paginated
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors @facility_feature
+          render :action => 'edit', :layout => false
+        end
+      end
+    end
   end
   
   def destroy

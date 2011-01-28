@@ -209,10 +209,15 @@ module ApplicationHelper
     end
   end
   
-  def render_form_hidden_fields(form)
+  def render_form_hidden_fields(form, f)
     html =  hidden_field_tag(:update_element, form.field_set_id)
     html << hidden_field_tag(:fid, form.id)
     html << reverse_captcha if form.use_reverse_captcha
+    
+    if @page
+      html << f.hidden_field(:commentable_type, :value => @page.class.name)
+      html << f.hidden_field(:commentable_id, :value => @page.id)
+    end
     
     begin
       unless form.scope.blank?
@@ -582,6 +587,10 @@ module ApplicationHelper
     else
       "Good evening"
     end
+  end
+  
+  def auto_pop_up_link(text, target, options, url = nil)
+    link_to text, (url || '#'), :class => "auto_pop_up #{options[:class]}", :title => options[:title], :'data-div-id' => target, :'data-width' => options[:width], :'data-height' => options[:height]
   end
   
   def in_production?

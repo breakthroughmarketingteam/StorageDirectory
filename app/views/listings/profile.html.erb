@@ -54,13 +54,17 @@
 					</div>
 					<div id="tab2" class="tab_content">
 						<p class="hint">Manage your rental settings here.</p>
+						
 						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
+							<a href="#<%= @listing.renting_enabled? ? 'Disable' : 'Enable' %>" class="blue_btn"><%= @listing.renting_enabled? ? 'Disable' : 'Enable' %> Renting</a>
+						
 							<div id="admin_fee" class="left">
 								<h3 class="label">Administrative Fee:</h3>
 								<div class="inner">
 									$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
 								</div>
 							</div>
+							
 							<div id="billing" class="left">
 								<h3 class="label">Billing Method:</h3>
 								<div class="inner">
@@ -70,6 +74,7 @@
 									</ul>
 								</div>
 							</div>
+							
 							<div id="tax" class="left">
 								<h3 class="label">State Tax:</h3>
 								<div class="inner">
@@ -83,12 +88,14 @@
 					</div>
 					<div id="tab3" class="tab_content">
 						<p class="hint">Click on the boxes to enable/disable.</p>
+						
 						<div id="features" class="uncollapse stack">
 							<h3 class="label">Facility Amenities:</h3>
 							<div class="inner">
 								<%= render FacilityFeature.all %>
 							</div>
 						</div>
+						
 						<div id="specials" class="uncollapse stack">
 							<h3 class="label">Specials:</h3>
 							<div class="inner">
