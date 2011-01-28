@@ -411,7 +411,7 @@ $(function(){
 	$('.auto_pop_up').live('click', function() {
 		var $this = $(this),
 			div_id = $this.attr('data-div-id'),
-			div = $('#'+ div_id),
+			div = $('#'+ div_id).clone(),
 			ops = default_pop_up_options({
 				title: $this.attr('title'),
 				width: $this.attr('data-width'),
