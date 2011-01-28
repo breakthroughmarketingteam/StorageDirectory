@@ -2150,3 +2150,8 @@ p.breadcrumb a{color:#fff;}
 #site_seal_frame{width:100%;height:100%;margin-top:-20px;overflow:hidden;background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;}
 
 #sl-tabs-reviews{min-height:400px;}
+
+#feat-pop{font-size:12px;}
+#feat-po p{margin:20px 0;}
+#feat-pop em{color:#4c4bcc;font-weight:;}
+#feat-pop h3{font-size:22px;}
