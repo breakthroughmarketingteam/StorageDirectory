@@ -589,6 +589,10 @@ module ApplicationHelper
     end
   end
   
+  def auto_pop_up_link(text, target, options, url = nil)
+    link_to text, (url || '#'), :class => 'auto_pop_up', :title => options[:title], :'data-div-id' => target, :'data-width' => options[:width], :'data-height' => options[:height]
+  end
+  
   def in_production?
     request.host =~ /(usselfstoragelocator\.com)/i 
   end
