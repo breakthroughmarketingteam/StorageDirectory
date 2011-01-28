@@ -565,8 +565,8 @@ ul#specials_list {margin:15px 10px;}
 #narrow-box #sl-fac-detail-in-edit div.address,#narrow-box #sl-fac-detail-in div.address{color:#000;line-height:16px;margin:10px 0 20px 0;font-size:12px;}
 #narrow-box #sl-fac-detail-in .access_hours{margin-bottom:20px;}
 .info_heading{border-bottom:1px dashed #ccc;color:#4c4bcc;font-size:16px;font-weight:bold;margin-bottom:10px;padding-bottom:5px;}
-#sl-fac-detail-in .facility_features li{height:19px;margin-bottom:5px;padding:8px 0 0 35px;}
 
+#sl-fac-detail-in .facility_features li{width:100%;height:19px;margin-bottom:5px;padding:8px 0 0 35px;}
 #sl-fac-detail-in li.feature_24-access{background:url(/images/ui/storagelocator/hours-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_climate-controlled{background:url(/images/ui/storagelocator/ac-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_drive-up-access{background:url(/images/ui/storagelocator/driveup-icon-g.png) no-repeat;}
