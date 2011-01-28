@@ -284,7 +284,7 @@ class Listing < ActiveRecord::Base
   def map_data
     hash = {}
     %w(id title address city state zip lat lng).each do |attribute|
-      hash.store attribute.to_sym, self.send(attribute)
+      hash.store attribute.to_sym, CGI.escape(self.send(attribute).to_s)
     end
     hash.merge :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb))
   end

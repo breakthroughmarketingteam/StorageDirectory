@@ -410,7 +410,7 @@ $(function(){
 	
 		if ($this.text() == 'more') {
 			$this.text('less');
-			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.outerHeight() / 2) +'px', 'right': '-'+ (specials.outerWidth() + (specials.outerWidth() / 2)) +'px' });
+			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.height() / 2) +'px', 'right': '-'+ (specials.width() + (specials.width() / 2)) +'px' });
 		} else {
 			$this.text('more');
 			specials.hide().css('right', 0);
@@ -1052,10 +1052,10 @@ $.setGmap = function(data, el) {
 
 	for (var i = 0, len = markers.length; i < len; i++) {
 		var photo = markers[i].thumb ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '';
-		var title = markers[i].title;
+		var title = markers[i].title.replaceAll('+', ' ');
 		var body = '<p>'+ photo + 
 						'<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span>'+ 
-						'<span class="listing_address">'+ markers[i].address +'<br/>'+ markers[i].city +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
+						'<span class="listing_address">'+ markers[i].address.replaceAll('+', ' ') +'<br/>'+ markers[i].city.replaceAll('+', ' ') +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
 					'</p>';
 		
 		var marker = addMarker(make_indexed_icon(i+1), markers[i].lat, markers[i].lng, title, body);

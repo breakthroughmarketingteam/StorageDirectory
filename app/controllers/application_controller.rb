@@ -114,8 +114,6 @@ class ApplicationController < ActionController::Base
   
   def default_url_options(options = nil)
     ops = { :host => request.host }.merge(options || {})
-    ops.merge! :port => 3000 if RAILS_ENV == 'development'
-    ops
   end
   
   # hidden field hack_me must pass through empty, cheap reverse captcha trick

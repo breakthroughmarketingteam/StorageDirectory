@@ -261,28 +261,32 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing .inner .in{height:140px;position:relative;padding:0;}
 .listing ul li{float:left;}
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
-.listing .rslt-features a {display:block;float:left;height:25px;margin-left:5px;width:25px;}
-.listing a.hours{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
-.listing a.security{background:url(/images/ui/storagelocator/security.png) no-repeat;}
-.listing a.ac{background:url(/images/ui/storagelocator/ac.png) no-repeat;}
-.listing a.driveup{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
-.listing a.spanish{background:url(/images/ui/storagelocator/spanish.png) no-repeat;}
-.listing a.climate{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
-.listing a.keypad{background:url(/images/ui/storagelocator/keypad.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.hours:hover{background:url(/images/ui/storagelocator/hours-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.security:hover{background:url(/images/ui/storagelocator/security-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.ac:hover{background:url(/images/ui/storagelocator/ac-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.driveup:hover{background:url(/images/ui/storagelocator/driveup-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.spanish:hover{background:url(/images/ui/storagelocator/spanish-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.climate:hover{background:url(/images/ui/storagelocator/climate-over.png) no-repeat;}
-#rslt-list-bg .listing .rslt-features a.keypad:hover{background:url(/images/ui/storagelocator/keypad-over.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.hours,#rslt-list-bg > div > .inner:hover a.hours{background:url(/images/ui/storagelocator/hours-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.security,#rslt-list-bg > div > .inner:hover a.security{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
+.listing .rslt-features a{display:block;float:left;height:25px;margin-left:5px;width:25px;text-indent:-99999px;}
+
+.24-hour-access{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
+.security-cameras{background:url(/images/ui/storagelocator/security.png) no-repeat;}
+.ac{background:url(/images/ui/storagelocator/ac.png) no-repeat;}
+.drive-up-access{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
+.se-habla-espanol{background:url(/images/ui/storagelocator/spanish.png) no-repeat;}
+.climate-controlled{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
+.keypad-access{background:url(/images/ui/storagelocator/keypad.png) no-repeat;}
+
+.24-hour-access:hover{background:url(/images/ui/storagelocator/hours-over.png) no-repeat;}
+.security-cameras:hover{background:url(/images/ui/storagelocator/security-over.png) no-repeat;}
+.ac:hover{background:url(/images/ui/storagelocator/ac-over.png) no-repeat;}
+.drive-up-access:hover{background:url(/images/ui/storagelocator/driveup-over.png) no-repeat;}
+.se-habla-espanol:hover{background:url(/images/ui/storagelocator/spanish-over.png) no-repeat;}
+.climate-controlled:hover{background:url(/images/ui/storagelocator/climate-over.png) no-repeat;}
+.keypad-access:hover{background:url(/images/ui/storagelocator/keypad-over.png) no-repeat;}
+
+#rslt-list-bg > div.active > .inner a.24-hour-access,#rslt-list-bg > div > .inner:hover a.24-hour-access{background:url(/images/ui/storagelocator/hours-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.security-cameras,#rslt-list-bg > div > .inner:hover a.security-cameras{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(/images/ui/storagelocator/ac-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.driveup,#rslt-list-bg > div > .inner:hover a.driveup{background:url(/images/ui/storagelocator/driveup-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.spanish,#rslt-list-bg > div > .inner:hover a.spanish{background:url(/images/ui/storagelocator/spanish-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.climate,#rslt-list-bg > div > .inner:hover a.climate{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.keypad,#rslt-list-bg > div > .inner:hover a.keypad{background:url(/images/ui/storagelocator/keypad-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.drive-up-access,#rslt-list-bg > div > .inner:hover a.drive-up-access{background:url(/images/ui/storagelocator/driveup-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.se-habla-espanol,#rslt-list-bg > div > .inner:hover a.se-habla-espanol{background:url(/images/ui/storagelocator/spanish-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.climate-controlled,#rslt-list-bg > div > .inner:hover a.climate-controlled{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.keypad-access,#rslt-list-bg > div > .inner:hover a.keypad-access{background:url(/images/ui/storagelocator/keypad-hover.png) no-repeat;}
+
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
 .listing ul li span.shifted-text{font-size:14px;display:block;position:relative;top:30px;}

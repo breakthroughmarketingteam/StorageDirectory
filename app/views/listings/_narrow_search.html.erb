@@ -45,12 +45,12 @@
 			<% unless @search.for_auxilary_listing? %>
 				<div id="unit_features" class="unitfeatures">
 					<ul id="top_features">
-						<% @top_features.each do |top_feature| -%>
+						<% @top_features.each do |feature| -%>
 							<li class="selectable_wrap auto">
 								<div class="selectable">
-									<%= check_box_tag 'search[features]', top_feature %>
+									<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 								</div>
-								<%= label_tag top_feature %>
+								<%= label_tag "sf_#{feature.underscore}", feature %>
 							</li>
 						<% end %>
 					</ul>
@@ -59,9 +59,9 @@
 						<% @unit_features.each do |feature| -%>
 						<li class="selectable_wrap auto">
 							<div class="selectable">
-								<%= check_box_tag 'search[features]', feature %>
+								<%= check_box_tag 'search[features]', feature, nil, :id => "sfi#{feature.parameterize}" %>
 							</div>
-							<%= label_tag feature %>
+							<%= label_tag "sf_#{feature.underscore}", feature %>
 						</li>
 						<% end %>
 					</ul>
