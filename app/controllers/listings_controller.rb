@@ -163,6 +163,10 @@ class ListingsController < ApplicationController
         render :action => 'edit', :layout => false
       end
       
+    when 'toggle_renting'
+      @listing.update_attribute :renting_enabled, (params[:toggle] == 'true')
+      render :json => { :success => true, :data => { :href => "#{toggle_renting_listing_path(@listing)}?from=toggle_renting&toggle=#{params[:toggle] == 'true' ? 'false' : 'true'}" } }
+      
     else # regular update
       _scrub_params
       

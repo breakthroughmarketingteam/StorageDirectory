@@ -60,6 +60,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
+  map.toggle_renting_listing '/listings/:id/update', :controller => 'listings', :action => :update, :from => 'toggle_renting'
   map.resources :listings, :member => { :profile => :get,
                                         :rate => :post,
                                         :copy_to_all => :post, 

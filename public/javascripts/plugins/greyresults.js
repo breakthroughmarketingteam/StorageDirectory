@@ -881,6 +881,36 @@ $(function(){
 		return false;
 	});
 	
+	$('#toggle_renting', '#sl-edit-tabs').click(function() {
+		var $this = $(this),
+			ajax_loader = $.new_ajax_loader('after', this),
+			toggle = $this.attr('data-toggle') == 'true',
+			toggle_html = $this.attr('data-toggle') == 'true' ? $('#toggle_renting_html', '#tab2').html() : 'Are you sure you want to disable renting?';
+		
+		$.greyConfirm(toggle_html, function() {
+			if (!$this.data('sending')) {
+				$this.data('sending', true);
+				ajax_loader.show();
+
+				$.post($this.attr('href'), function(response) {
+					$.with_json(response, function(data) {
+						$this.text((toggle ? 'Disable' : 'Enable') +' Renting').attr({ 'href': data.href, 'data-toggle': (toggle ? 'false' : 'true') });
+						
+						if (toggle) 
+							$('#listing_extra_form', '#tab2').slideDown('slow', function() { $(this).removeClass('hide').addClass('enabled') });
+						else
+							$('#listing_extra_form', '#tab2').slideUp('slow', function() { $(this).removeClass('enabled').addClass('hide') });;
+					});
+
+					ajax_loader.hide();
+					$this.data('sending', false)
+				}, 'json');
+			}
+		});
+		
+		return false;
+	});
+	
 });
 
 function get_review_pop_up(options) {

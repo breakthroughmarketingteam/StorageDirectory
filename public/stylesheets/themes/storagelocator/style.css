@@ -1905,7 +1905,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
 #sl-edit-tabs #fac_name{margin:0 0 30px;}
-.blue_btn{background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding-top:4px;text-align:center;text-shadow:1px 1px 0 #666;width:70px;cursor:pointer;}
+.blue_btn{border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding:4px 7px 0;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;background:url(/images/ui/storagelocator/sort-bg.png) repeat-x;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;}
@@ -1947,6 +1947,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #rental_fee #listing_admin_fee{width:50px;}
 #sl-edit-tabs #rental_fee #listing_tax_rate{width:50px;}
 #sl-edit-tabs #tab2 #admin_fee{width:100%;}
+#sl-edit-tabs #tab2 #toggle_renting{float:left;margin:-3px 20px 18px;}
+#sl-edit-tabs #tab2 #al_toggle_renting{margin:2px 10px 0 -10px;float:left;}
+#listing_extra_form{overflow:hidden;clear:both;}
 #sl-edit-tabs #tab2 #billing{width:100%;}
 #sl-edit-tabs #tab2 #tax{width:100%;}
 #sl-edit-tabs #tab2 #admin_fee input#listing_admin_fee{width:40px;}

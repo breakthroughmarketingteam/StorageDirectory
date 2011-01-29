@@ -53,11 +53,12 @@
 						</div>
 					</div>
 					<div id="tab2" class="tab_content">
+						<a id="toggle_renting" href="<%= toggle_renting_listing_path(@listing) %>?toggle=<%= !@listing.renting_enabled? %>&from=toggle_renting" data-toggle="<%= !@listing.renting_enabled? %>" class="blue_btn">
+							<%= @listing.renting_enabled? ? 'Disable' : 'Enable' %> Renting
+						</a>
 						<p class="hint">Manage your rental settings here.</p>
 						
-						<% form_for @listing, :html => { :id => 'listing_extra_form' } do |f| %>
-							<a href="#<%= @listing.renting_enabled? ? 'Disable' : 'Enable' %>" class="blue_btn"><%= @listing.renting_enabled? ? 'Disable' : 'Enable' %> Renting</a>
-						
+						<% form_for @listing, :html => { :id => 'listing_extra_form', :class => (@listing.renting_enabled? ? 'enabled' : 'hide') } do |f| %>
 							<div id="admin_fee" class="left">
 								<h3 class="label">Administrative Fee:</h3>
 								<div class="inner">
@@ -85,6 +86,12 @@
 							<%= f.submit 'Save Changes', :class => 'save' %>
 							<%= ajax_loader %>
 						<% end %>
+						
+						<div id="toggle_renting_html" class="hide">
+							<p class="side_framed stack">
+								By enabling our awesome renting feature you agree to pay us a commission of 50% of the first month rented, or a baker's dozen of chocolate chip cookies, no just kidding we need the monies.
+							</p>
+						</div>
 					</div>
 					<div id="tab3" class="tab_content">
 						<p class="hint">Click on the boxes to enable/disable.</p>
