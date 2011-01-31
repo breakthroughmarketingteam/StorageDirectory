@@ -26,7 +26,7 @@
         <%= javascript_include_tag 'jquery.all' -%>
         <script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= GOOGLE_APPLICATION_ID %>'></script>
 		<% unless @map_data.nil? -%><script type="text/javascript">var Gmaps_data = <%= @map_data.to_json %>;</script><% end %>
-        <%= if params[:title] == 'storage-tips' then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end -%>
+        <%= if params[:title] =~ /(storage-tips)|(blog)/i then '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' end -%>
         <%= javascript_include_tag @plugins -%>
         <%= yield :scripts -%>
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{user_user_stat_path current_user, @user_stat}';</script>" if current_user && !is_admin? -%>
