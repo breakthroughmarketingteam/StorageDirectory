@@ -397,7 +397,7 @@ class Listing < ActiveRecord::Base
   def calculated_price(options)
     size    = options[:size] || self.sizes.first
     special = options[:special] || self.special
-    month_limit = special ? special.month_limit : 1
+    month_limit = 1 + (special ? (special.month_limit || 1) : 1)
     
     if size
       if self.prorated?
@@ -432,7 +432,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_prorated_paid_thru(multiplier, move_date, days_in_month, half_month, month_limit)
-    if month_limit = 1 && move_date.day > half_month
+    if month_limit == 1 && move_date.day > half_month
       multiplier += 1
       (multiplier.months - 1.day).from_now
     else

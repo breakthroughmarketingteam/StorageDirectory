@@ -1441,14 +1441,13 @@ var GreyShow = function(options) {
 		self.runObject(self.slide_objects[0]);
 	}
 	
-	this.gotoSlide = function(n) {
-		self.current = n;
+	this.hidePrevSlide = function() {
+		var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
 		
-		if (n == self.num_slides) {
-			self.current = 0;
-			self.gotoSlide(0);
-			
-		} else self.startSlide();
+		for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
+			var $object = $('#'+ self.slides[prev].objects[i].id);
+			$object.fadeOut(900);
+		}
 	}
 	
 	this.runObject = function(o) {
@@ -1458,7 +1457,7 @@ var GreyShow = function(options) {
 		if (typeof o.callback == 'function')
 			o.callback.call(this, $object, self);
 		
-		$object[o.action](o.speed, function() { 
+		$object[o.action](o.speed, function() {
 			self.nextObject(o);
 		});
 	}
@@ -1472,20 +1471,20 @@ var GreyShow = function(options) {
 			}, o.delay);
 			
 		} else if (typeof self.slides[self.current].end == 'function') {
-			
 			setTimeout(function(){
 				self.slides[self.current].end.call(this, self);
 			}, self.delay);
 		}
 	}
 	
-	this.hidePrevSlide = function(callback) {
-		var prev = self.current == 0 ? self.num_slides-1 : self.current-1;
+	this.gotoSlide = function(n) {
+		self.current = n;
 		
-		for (var i = 0, len = self.slides[prev].objects.length; i < len; i++) {
-			var $object = $('#'+ self.slides[prev].objects[i].id);
-			$object.fadeOut(900);
-		}
+		if (n == self.num_slides) {
+			self.current = 0;
+			self.gotoSlide(0);
+			
+		} else self.startSlide();
 	}
 }
 
@@ -1502,7 +1501,7 @@ var GreyWizard = function(container, settings) {
 	self.title_bar 	= $('#ui-dialog-title-pop_up', self.workflow.parent().parent());
 	self.width	  	= self.workflow.width();
 	self.height   	= self.workflow.height();
-	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true) });
+	self.slides   	= $('.'+ self.slides_class, self.workflow).each(function(){ $(this).data('valid', true); });
 	self.spacer		= settings.spacer || 100; // to give the slides space between transitions
 	self.pad_left	= settings.pad_left || 15; // to align the slides away from the left wall of the workflow wrapper
 	self.slide_speed = settings.slide_speed || 1500,

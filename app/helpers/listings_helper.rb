@@ -298,10 +298,12 @@ module ListingsHelper
     size    = listing_set[:size]
     
     case comparison when 'distance'
-      "<td class='padded' title='From #{@search.full_location}'><span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles</td>"
+      "<td class='padded' title='From #{@search.full_location}'>"+
+        "<span class='hide'>#{listing.title} is within </span>#{sprintf '%.2f', listing.distance_from(@search.location)} Miles"+
+      "</td>"
     
     when 'monthly_rate'
-      "<td class='padded' title='Monthly rate'>#{number_to_currency size.dollar_price if size}</td>"
+      "<td class='padded' title='The monthly rate applicable to the selected unit size'>#{number_to_currency size.dollar_price if size}</td>"
     
     when /(special)/i
       special = listing_set[:special]
@@ -312,7 +314,12 @@ module ListingsHelper
       paid_thru = calculation[:paid_thru]
       
       if size
-        "<td class='padded'><span class='price'>#{number_to_currency calculation[:amount]}</span><br /><span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />thru #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}</span></td>"
+        "<td class='padded' title='This price includes tax and the administrative fee applicable to the listing'>"+
+          "<span class='price'>#{number_to_currency calculation[:amount]}</span><br />"+
+          "<span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />"+
+            "thru #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}"+
+          "</span>"+
+        "</td>"
       else
         "<td class='padded'><span>N/A for this size</span></td>"
       end

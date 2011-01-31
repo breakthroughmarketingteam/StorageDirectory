@@ -2,7 +2,7 @@
 	<h2>Rent a Unit</h2>
 	<div class="realtime">Real-Time Storage Unit Rentals</div>
 	<div class="head">
-		Rent a unit from <span><%= link_to @listing.title, facility_path_for(@listing) %></span> using this secure rental form.
+		Rent a unit from <span><%= link_to @listing.title, facility_path_for(@listing), :title => "#{@listing.title} at #{@listing.full_address}" %></span> using this secure rental form.
 	</div>
 	
 	<div id="rent_steps">
@@ -23,7 +23,9 @@
 							
 							<div>
 								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
-								<div id="price"><span>$</span><span class="rental_rate"><%= number_to_currency(@size.dollar_price).sub('$', '') %></span><span>/month</span></div>
+								<div id="price"><span>$</span><span class="rental_rate">
+									<%= number_to_currency(@size.dollar_price).sub('$', '') %></span><span>/month</span>
+								</div>
 							</div>
 			
 							<div class="calendar_wrap">

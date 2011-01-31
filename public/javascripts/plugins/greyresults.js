@@ -1392,6 +1392,7 @@ $.fn.rental_form = function() {
 			
 			if (prorated) {
 				$.getJSON('/prorater', { 'rate': rate, 'move_date': calendar.val(), 'multiplier': (has_special ? special.attr('data-special-calc').split('|')[2] : 1) }, function(data) {
+					//console.log(data.multiplier)
 					update_totals(parseFloat(data.multiplier), rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, has_special, prorated, form);
 				});
 			} else { // fixed rate
@@ -1443,5 +1444,7 @@ $.fn.rental_form = function() {
 			form.trigger('recalc');
 			return false;
 		});
+		
+		$('.avail_specials input', '#new_rental').eq(0).click();
 	});
 }

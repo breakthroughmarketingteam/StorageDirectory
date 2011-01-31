@@ -146,7 +146,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap #unit_size #size{color:#4c4bcc;font-weight:bold;font-size:18px;}
 #compare_wrap #unit_size #label{color:#000000;display:inline-block;font-size:12px;font-weight:bold;margin-right:10px;}
 #compare_wrap #distance,#compare_wrap #monthly_rate,#compare_wrap #selected_special,#compare_wrap #move_in_price{color:#000;font-weight:bold;}
-#compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;}
+#compare_wrap #usssl-special{color:#4C4BCC;font-weight:bold;height:50px;text-align:center;cursor:help;}
 #compare_wrap span.price{color:#4c4bcc;font-weight:bold;font-size:16px;}
 #compare_wrap .comp_label{margin-right:15px;}
 .ui-widget-header{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;-moz-border-radius-topright:8px;border-radius-topright:8px;-webkit-border-radius-topright:8px;-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(/images/ui/storagelocator/purple-bg.png) repeat scroll center top transparent;border:3px solid #fff;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;padding:0.5em 1em 0.3em;}
