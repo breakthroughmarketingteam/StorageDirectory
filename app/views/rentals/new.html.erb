@@ -8,7 +8,7 @@
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
-				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (@listing.prorated ? 1 : 0) } do |f| %>
+				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (@listing.prorated? ? 1 : 0) } do |f| %>
 					<div class="inner">
 						<div class="col1">
 							<div class="<%= 'hide' if params[:show_size_ops] == 'false' %>">

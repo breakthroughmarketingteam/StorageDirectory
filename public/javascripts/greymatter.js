@@ -36,6 +36,21 @@ $(function(){
 	$.preloadCssImages();
 	$.updateUserStat();
 	
+	$('#admin_index_link', '#topbar').live('click', function() {
+		var pop_up = $('<div id="pop_up" class="admin_box"></div>').dialog(default_pop_up_options({
+			title: 'Top Secret Admin Panel',
+			width: 'auto', height: 'auto'
+		}));
+		
+		$.getJSON(this.href, function(response) {
+			$.with_json(response, function(data) {
+				pop_up.html(data);
+			});
+		});
+		
+		return false;
+	});
+	
 	$('.greyConfirm').live('click', function() {
 		$.greyConfirm('Are you sure?', function() {
 			return true;

@@ -120,6 +120,7 @@ class ClientsController < ApplicationController
   
   def verify
     @client.enable_listings!
+    @client.update_attribute :verification_sent_at, Time.now
     @partial = 'activation_email'
     Blaster.delay.deliver_html_email @client.email, 'Your account is ready at USSelfStorageLocator.com', render_to_string(:layout => 'email_template')
     

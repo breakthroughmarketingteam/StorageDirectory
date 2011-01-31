@@ -151,6 +151,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #compare_wrap .comp_label{margin-right:15px;}
 .ui-widget-header{-moz-border-radius-topleft:8px;border-radius-topleft:8px;-webkit-border-radius-topleft:8px;-moz-border-radius-topright:8px;border-radius-topright:8px;-webkit-border-radius-topright:8px;-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(/images/ui/storagelocator/purple-bg.png) repeat scroll center top transparent;border:3px solid #fff;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;padding:0.5em 1em 0.3em;}
 #compare_wrap .rent-btn{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(/images/ui/storagelocator/rent-btn-bg.png) repeat scroll 0 0 transparent;border:1px solid #999;color:#fff;padding:5px 15px;text-shadow:1px 1px 0 #666;font-size:119%;}
+.profile_action #sl-tabs-sizes-in{margin-bottom:15px;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
 #offset_search_box{background:url(/images/ui/storagelocator/loupe.png) no-repeat left center;left:3px;padding-left:48px;position:absolute;top:-58px;width:510px;z-index:500;}
@@ -1066,7 +1067,7 @@ img.right{margin:0 0 10px 10px;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;}
 #tip_created{padding:0 15px 20px;text-align:center;}
 /* add size */
-.sizes_list .btn{float:right;margin:0 15px 15px 10px;}
+.sizes_list .btn{float:right;margin:0 0 15px 10px;}
 /* state page */
 #state_picker h2{font-size:20px;margin-bottom:14px;}
 #state_picker h3{font-size:14px;margin-bottom:7px;}
@@ -2028,7 +2029,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 p.breadcrumb {background:#66c;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
 p.breadcrumb a{color:#fff;}
-
+.list_view li img.veri_at{width:auto;margin:0;}
 #comments_create_2,#comments_create_8{margin-left:8px;}
 #comment_submit{background:url(/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:1px outset #666;color:#fff;cursor:pointer;font-size:14px;padding:5px 0;text-shadow:1px 1px 0 #666;width:125px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #form_comments{margin-bottom:13px}
@@ -2158,3 +2159,5 @@ p.breadcrumb a{color:#fff;}
 #feat-pop p{font-size:12px;margin:20px 0;line-height:16px;}
 #feat-pop em{color:#4c4bcc;font-weight:bold;}
 #feat-pop h3{font-size:26px;}
+
+#pop_up.admin_box{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}

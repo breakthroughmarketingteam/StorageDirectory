@@ -58,7 +58,7 @@
 						</a>
 						<p class="hint">Manage your rental settings here.</p>
 						
-						<% form_for @listing, :html => { :id => 'listing_extra_form', :class => (@listing.renting_enabled? ? 'enabled' : 'hide') } do |f| %>
+						<% form_for @listing, :html => { :id => 'listing_extra_form', :class => (@listing.renting_enabled? ? 'enabled' : 'hide') + ' edit_listing' } do |f| %>
 							<div id="admin_fee" class="left">
 								<h3 class="label">Administrative Fee:</h3>
 								<div class="inner">

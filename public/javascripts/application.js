@@ -425,14 +425,14 @@ $(function() {
 			tips = $('.blog-lock', '#tips-wrap');
 		
 		switch (sort_what) {
-			case 'Newest' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
+			case 'Newest' : $.sort_stuff($this, tips, '.share_wrap', function(a, b) {
 					var a1 = parseInt($('.updated_at', a).text()),
 						b1 = parseInt($('.updated_at', b).text());
 					
 					return a1 > b1 ? (stuff_sort_inverse ? 1 : -1) : (stuff_sort_inverse ? -1 : 1);
 				});
 			break;
-			case 'Rating' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
+			case 'Rating' : $.sort_stuff($this, tips, '.share_wrap', function(a, b) {
 					var a1 = $('.show-value', a).width(),
 						b1 = $('.show-value', b).width();
 					
@@ -440,7 +440,7 @@ $(function() {
 					return a1 == b1 ? -1 : a1 > b1 ? (stuff_sort_inverse ? -1 : 1) : (stuff_sort_inverse ? 1 : -1);
 				});
 			break;
-			case 'Title' : $.sort_stuff($this, tips, '.tip_in', function(a, b) {
+			case 'Title' : $.sort_stuff($this, tips, '.share_wrap', function(a, b) {
 					var a1 = $('h3 a', a).text(),
 						b1 = $('h3 a', b).text();
 						
@@ -461,7 +461,7 @@ $(function() {
 	
 	$('input', '#search_tips').keyup(function() {
 		var parent = function() { return $(this).parents('.blog-lock') };
-		$('.tip_in > h3 a, .tip_in > div', '.blog-lock').search(this.value, 'by substring', { remove: parent });
+		$('.share_wrap > h3 a, .share_wrap > div', '.blog-lock').search(this.value, 'by substring', { remove: parent });
 	});
 	
 	$('#create_tip').submit(function() {
@@ -494,10 +494,10 @@ $(function() {
 	// build the addThis sharing buttons for each tip
 	var sharing_buttons = ['email', 'facebook', 'twitter', 'digg', 'print'],
 		addthis_main_btn = '<a href="http://www.addthis.com/bookmark.php?v=250&username=mastermindxs" class="addthis_button_compact">Share</a><span class="addthis_separator">|</span>';
-	$('.tip_in', '#tips-wrap').each(function() {
+	$('.share_wrap').each(function() {
 		if (typeof addthis == 'object') {
 			var share_wrap = $('.addthis_toolbox', this).append(addthis_main_btn),
-				tip_link = $('h3 a', this),
+				tip_link = $('.tip_link', this),
 				share_url = tip_link.attr('href'),
 				share_title = tip_link.text();
 			
@@ -510,7 +510,7 @@ $(function() {
 	});
 	
 	$('.facebook_share', '#tips-wrap').live('click', function() {
-		var tip = $(this).parents('.tip_in'),
+		var tip = $(this).parents('.share_wrap'),
 			link = $('h3 a', tip), u = encodeURIComponent(link.attr('href')), t = encodeURIComponent(link.text());
 		
 		window.open('http://www.facebook.com/sharer.php?u='+ u, 'sharer', 'toolbar=0,status=0,width=626,height=436');
@@ -993,7 +993,7 @@ $(function() {
 	// END new listing workflow
 	
 	// the forms in the listing detail edit page
-	$('.edit_listing').live('submit', function() {
+	$('.edit_listing', '#sl-edit-tabs').live('submit', function() {
 		var form = $(this).runValidation(),
 			context = form.parent(),
 			btn = $('.save', form),
@@ -1010,10 +1010,7 @@ $(function() {
 						
 					var success_msg = $('<span class="success_msg right">Saved!</span>');
 					$('input[type=submit]', context).after(success_msg);
-
-					setTimeout(function() {
-						success_msg.fadeOutRemove(1000);
-					}, 3000);
+					success_msg.fadeOutLater('slow', 3000);
 				});
 				
 				$.activate_submit_btn(btn);
