@@ -1,7 +1,7 @@
 # Allow the metal piece to run in isolation
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
-class RentalCalc
+class Prorater
   require 'activerecord'
   dbconfig = YAML.load(File.read(File.dirname(__FILE__) + '/../../config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig['production']
