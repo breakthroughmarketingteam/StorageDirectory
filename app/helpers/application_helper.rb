@@ -592,7 +592,7 @@ module ApplicationHelper
   # makes a link that is bound to a click event that will open a jquery dialog with the target as the inner html
   def auto_pop_up_link(text, target, options, url = nil)
     link_to text, (url || '#'), {
-      :class         => "auto_pop_up#{ " #{options[:class]}" if options[:class]}", 
+      :class         => "auto_pop_up_link#{ " #{options[:class]}" if options[:class]}", 
       :title         => options[:title], 
       :'data-div-id' => target, 
       :'data-width'  => options[:width], 

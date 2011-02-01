@@ -423,7 +423,7 @@ $(function(){
 		return false;
 	});
 	
-	$('.auto_pop_up').live('click', function() {
+	$('.auto_pop_up_link').live('click', function() {
 		var $this = $(this),
 			div_id = $this.attr('data-div-id'),
 			div = $('#'+ div_id).clone(),
@@ -435,7 +435,7 @@ $(function(){
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
 			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops);
-			$('.tabular_content', pop_up).tabular_content();
+			$('.tabular_content', pop_up).tabular_content().show();
 		} else {
 			get_pop_up_and_do(ops, { sub_partial: this.href }, function(pop_up) {
 				$('.tabular_content', pop_up).tabular_content();
@@ -1170,7 +1170,7 @@ $.fn.tabular_content = function() {
 	
 	return this.each(function(){
 		var $this = $(this), // the container
-			tabs = $('.tabular'), // ul
+			tabs = $('.tabular', $this).length > 0 ? $('.tabular', $this) : $('.tabular'),//$this.attr('data-tabs-id') ? $('#'+ $this.attr('data-tabs-id')) : ($('.tabular', $this).length > 0 ? $('.tabular', $this) : $('.tabular')), // ul
 			panels = $('.tab_content', $this), // tab content divs
 			action = what_action($this);
 		
