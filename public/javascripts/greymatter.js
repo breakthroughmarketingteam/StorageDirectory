@@ -76,6 +76,7 @@ $(function(){
 		$this.addClass('active');
 	});
 	
+	
 	$('.selectable').live('click', function(){
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
@@ -94,6 +95,20 @@ $(function(){
 		$this.click(function(){
 			$this.siblings('.selectable').eq(0).click();
 		});
+	});
+	
+	$('#siteseal').live('click', function() {
+		var godaddy_url = 'https://seal.godaddy.com:443/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
+		
+		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
+			window.open(godaddy_url,'SealVerfication','location=yes,status=yes,resizable=yes,scrollbars=no,width=592,height=740');
+		} else {
+			$('<div id="pop_up"><iframe id="site_seal_frame" src="'+ godaddy_url +'"></iframe></div>').dialog(default_pop_up_options({
+				title: 'Secure Site by GoDaddy.com',
+				width: 593,
+				height: 853
+			}));
+		}
 	});
 	
 	var radios = $('.radio_wrap').each(function() {
@@ -1297,8 +1312,10 @@ $.fn.autoNext = function() {
 		$this.keyup(function() {
 			var input = $(this);
 			
-			if (input.val().length == input.attr('maxlength') && input.val() != input.attr('title'))
+			if (input.val().length == input.attr('maxlength') && input.val() != input.attr('title')) {
+				input.blur();
 				inputs.eq(inputs.index(input) + 1).focus();
+			}
 		});
 	});
 }

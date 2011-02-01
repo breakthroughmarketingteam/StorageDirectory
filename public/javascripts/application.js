@@ -1498,20 +1498,6 @@ $(function() {
 		return false;
 	});
 	
-	$('#siteseal').live('click', function() {
-		var godaddy_url = 'https://seal.godaddy.com/verifySeal?sealID=8ytNZhcx8XXCpJlxm3tje6NHBcpK1BbPKnAgqas7k2J3yuj5Ab1';
-		
-		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
-			window.open(godaddy_url, "godaddy","status=0,toolbar=0,width=590,height=750,resizable=0");
-		} else {
-			$('<div id="pop_up"><iframe id="site_seal_frame" src="'+ godaddy_url +'"></iframe></div>').dialog(default_pop_up_options({
-				title: 'Secure Site by GoDaddy.com',
-				width: 593,
-				height: 853
-			}));
-		}
-	});
-	
 }); // END document ready
 
 // NEW CLIENT Workflow (sign up through the self-storage-advertising page)

@@ -1881,7 +1881,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step2 .agree a{font-size:12px;}
 #rent_step2 .agree label{float:none;margin:0 0 0 7px;width:auto;}
 #rent_step3 .conf{padding:20px;}
-#rent_steps .remove_special img{float:none;}
+#rent_steps .remove_special img{float:none;margin-bottom:-1px;}
 
 #rent_step3 #processing_rental{font-size:22px;margin-top:120px;text-align:center;}
 #rental_complete{}

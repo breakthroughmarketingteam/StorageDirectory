@@ -15,7 +15,6 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
-  has_many :reviews,       :class_name => 'Comment', :as => :commentable
   has_many :staff_emails,  :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
@@ -25,6 +24,10 @@ class Listing < ActiveRecord::Base
   
   has_many :sizes, :dependent => :destroy do
     def sorted() all.sort_by &:sqft end
+  end
+  
+  has_many :reviews, :class_name => 'Comment', :as => :commentable do
+    def published() find_all_by_status 'published' end
   end
   
   has_many :listing_features,       :dependent => :destroy

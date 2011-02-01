@@ -1,23 +1,19 @@
 class Client < User
   
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
-  accepts_nested_attributes_for :listings
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
-  
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
   has_one :billing_info, :dependent => :destroy
   has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
-  accepts_nested_attributes_for :mailing_address, :billing_info
-  
   has_many :staff_emails, :through => :listings
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
   has_many :specials, :through => :listings
   has_many :pictures, :through => :listings
-  
   has_many :staff_emails, :through => :listings
   
+  accepts_nested_attributes_for :listings, :mailing_address, :billing_info
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
   
   def initialize(params = {})

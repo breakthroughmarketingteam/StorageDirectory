@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
   access_shared_methods
   ajaxful_rateable :dimensions => [:usefulness]
   
-  @@searchables    = %w(title email comment)
+  @@searchables    = %w(title email comment name)
   cattr_accessor :searchables
   
   # Helper class method to lookup all comments assigned to all commentable types for a given user.

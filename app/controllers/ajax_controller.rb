@@ -183,18 +183,24 @@ class AjaxController < ApplicationController
     
     @locals = { params[:model].downcase.to_sym => @model, :pretend_action => params[:pretend_action] }
     
-    if params[:sub_model]
+    if params[:sub_model] && params[:sub_model].respond_to?(:keys)
+      params[:sub_model].each_pair do |key, val|
+        sub_model_class = val.constantize
+        sub_model = params[:sub_id][key].blank? ? sub_model_class.new : sub_model_class.find(params[:sub_id][key])
+        @locals.merge!(val.underscore.to_sym => sub_model)
+      end
+    elsif params[:sub_model]
       @sub_model_class = params[:sub_model].constantize
       @sub_model = params[:sub_id].blank? ? @sub_model_class.new : @sub_model_class.find(params[:sub_id])
-      @locals.merge!(params[:sub_model].downcase.to_sym => @sub_model)
+      @locals.merge!(params[:sub_model].underscore.to_sym => @sub_model)
     end
     
     # used by the reserve partial
     @locals.merge!(:show_size_ops => params[:show_size_ops]) if params[:show_size_ops]
     
     @locals
-  rescue
-    nil
+  #rescue
+  #  nil
   end
   
   def json_response(status = true, data = nil)

@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    current_user && current_user.has_role?('Admin')
+    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin'))
   end
   
   def self.app_config
@@ -546,7 +546,7 @@ class ApplicationController < ActionController::Base
     hr = '**********************************************************************************************************************************'
     cur = Time.now
     result = yield
-    print "#{hr}\nBENCHMARK (title): #{cur = Time.now - cur} seconds"
+    print "#{hr}\nBENCHMARK (#{title}): #{cur = Time.now - cur} seconds"
     puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n#{hr}" rescue puts ""
     $last_benchmark = cur
     result

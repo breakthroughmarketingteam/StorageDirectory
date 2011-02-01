@@ -21,4 +21,4 @@
 	  	<a class="button next"\ href="#next">Next</a>
 	</div>
 </div>-->
-<%= render :partial => 'listings/rent_form', :locals => { :listing => listing, :size => (defined?(size) ? size : listing.get_searched_size(@search)), :show_size_ops => show_size_ops } %>
+<%= render :partial => 'listings/rent_form', :locals => { :listing => listing, :size => (defined?(size) ? size : listing.get_searched_size(@search)), :special => predefined_special, :show_size_ops => show_size_ops } %>
