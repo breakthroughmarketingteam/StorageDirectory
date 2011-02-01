@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <link href="/stylesheets/plugins/jquery.ui.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/common.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/themes/storagelocator/style.css" media="screen" rel="stylesheet" type="text/css" />
+        <meta charset="utf-8" />
+        <title>Rentalizer - USSelfStorageLocator.com</title>
+        <!--[if lte IE 7]>
+            <link rel="stylesheet" type="text/css" href="stylesheets/ie.css" />
+        <![endif]-->
+    </head>
+    <body id="rentals_controller" class="new_action non_page">
+       
+		<div class="rental_form">
+			<h2>Rent a Unit</h2>
+			<div class="realtime">Real-Time Storage Unit Rentals</div>
+			<div class="head">
+				Rent a unit from <span><a href="<%= "/#{listing.storage_type.parameterize}/#{listing.title.parameterize}/#{listing.id}" %>" title="<%= "#{listing.title} at #{listing.full_address}" %>"></a></span> using this secure rental form.
+			</div>
+
+			<div id="rent_steps">
+				<div class="items">
+					<div id="rent_step1" class="workflow_step">
+						<form id="rentalizer" action="/rentalizer" method="post">
+							<div class="inner">
+								<div class="col1">
+									<div class="">
+										<label class="block left" for="unit_type">Type: </label>
+										<select class="required" id="unit_type" name="unit_type">
+											<% listing.available_unit_types.each do |type| %>
+												<option<%= ' selected="selected"' if size && size.title.downcase == type.downcase %> value="<%= type %>"><%= type %></option>	
+											<% end %>
+										</select>
+									</div>
+
+									<div class="">
+										<label class="block left" for="size_id">Size: </label>
+										<select class="required sizes_select" id="size_id" name="size_id">
+											<% listing.uniq_avail_sizes.each do |usize| %>
+												<option value='<%= usize.id %>' data-unit-type='<%= usize.title.downcase %>' data-unit-price='<%= usize.dollar_price %>' data-url='<%= usize.icon(:medium).try :url %>'<%= ' selected="selected"' if size.dims == usize.dims %>><%= usize.dims %></option>
+											<% end %>
+										</select>
+									</div>
+
+									<div>
+										<label class="block left" for="Rate:_">Rate: </label>
+										<div id="price">
+											<span>$</span>
+											<span class="month_rate"><%= size.dollar_price %></span>
+											<span>/month</span>
+										</div>
+									</div>
+
+									<div class="calendar_wrap">
+										<label class="block left" for="move_in_date">Move in: </label>
+										<input class="required cal" id="move_in_date" maxlength="10" name="move_in_date" type="text" value="02/01/2011" />
+									</div>
+
+									<div id="paid_until">
+										<label class="block left">Paid until: </label>
+										<span class="paid_thru"></span>
+										<input id="listing_id" name="listing_id" type="hidden" value="<%= listing.id %>" />
+									</div>
+
+									<% unless listing.specials.empty? %>
+										<div>
+											<label class="block left" for="specials">Specials: </label>
+											<div class="avail_specials">
+												<ul>
+													<% listing.specials.each do |special| %>
+													<li>
+														<input id="special_id_<%= special.id %>" name="special_id" type="radio" value="<%= special.id %>" /> 
+														<label for="special_id_<%= special.id %>"><%= special.title %></label>
+														<a href="#" class="remove_special hide"><img alt="Remove" src="/images/ui/storagelocator/remove.png" /></a>
+													</li>
+													<% end %>
+												</ul>
+											</div>
+										</div>
+									<% end %>
+								</div>
+
+								<div class="col2">
+									<div class="size_picker">
+										<img src="<%= SizeIcon.medium_icons.first.icon.url rescue 'Missing Size Icon' %>" alt="" />
+										<p class="size_details">
+											<%= size.title %>
+											<%= size.dims %>
+										</p>
+									</div>
+								</div>
+
+								<div class="col3">
+									<ul>
+										<li>
+											Rent: 
+											<span class="grey">
+
+												(<span class="multiplier"></span> x 
+												$<span class="month_rate"></span>)
+											</span> 
+											<span class="right">
+												$<span class="subtotal"></span>
+											</span>
+										</li>
+										<li class="admin_fee_wrap">
+											Admin Fees: 
+											<span class="right">
+
+												$<span class="admin_fee"><%= listing.admin_fee %></span>
+											</span>
+										</li>
+										<% unless listing.specials.empty? %>
+											<li class="discount_wrap">Specials: 
+												<span class="right">
+													-$<span class="discount"></span>
+												</span>
+											</li>
+										<% end %>
+										<li class="usssl_discount_wrap">
+											USSSL Discount: 
+											<span class="right">
+												-$<span class="usssl_discount"></span>
+											</span>
+										</li>
+										<li class="tax_wrap">
+											Tax: 
+											<span class="right">
+												$<span class="tax_amt"></span>
+											</span>
+										</li>
+										<li><hr /></li>
+										<li class="total_wrap">
+											Move-In Total: 
+											<span class="right">
+												$<span class="total">0.00</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</form>
+
+					</div>
+
+					<div id="rent_step2" class="workflow_step">
+						<div class="inner">
+							<form action="https://<%= env['HTTP_HOST'] %>/tenants" class="silent" id="new_tenant" method="post" name="new_tenant">
+								<div class="uncollapse">
+									<h4 class="stack">
+										Renter Information
+									</h4><a href="/login" id="already_member" name="already_member">Already have an account?</a>
+								</div>
+								<div class="left">
+									<div>
+										<label class="block" for="tenant_name">Your Name:</label> 
+										<input class="required" id="tenant_name" name="tenant[name]" size="30" type="text" value=" ">
+									</div>
+									<div>
+										<label class="block" for="tenant_email">Email:</label> 
+										<input class="required email" id="tenant_email" name="tenant[email]" size="30" type="text"> <span class="note">We won't spam your email, <a href="/privacy-policy" rel="Privacy Policy" target="_blank" title="Privacy Policy">honest!</a></span>
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_phone">Phone:</label> 
+										<input class="numeric_phone auto_next" id="tenant_billing_infos_attributes_0_phone" maxlength="12" name="tenant[billing_infos_attributes][0][phone]" size="12" type="text">
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_address" id="address">Address:</label> 
+										<input class="required" id="tenant_billing_infos_attributes_0_address" name="tenant[billing_infos_attributes][0][address]" size="30" type="text">
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_city">City:</label> 
+										<input class="required autocomplete" id="tenant_billing_infos_attributes_0_city" name="tenant[billing_infos_attributes][0][city]" rel="UsCity_names|3" size="30" type="text">
+									</div>
+									<div class="uncollapse">
+										<div class="state_field">
+											<label class="block" for="tenant_billing_infos_attributes_0_state">State:</label> 
+											<select class="state required autocomplete" id="tenant_billing_infos_attributes_0_state" maxlength="2" name="tenant[billing_infos_attributes][0][state]" rel="State_abbrevs|1">
+												<% States.names.each do |state| %>
+													<option value="<%= state %>"><%= state %></option>
+												<% end %>
+											</select>
+										</div>
+										<div class="zip_field">
+											<label class="block" for="tenant_billing_infos_attributes_0_zip">Zip:</label> 
+											<input class="zip required auto_next" id="tenant_billing_infos_attributes_0_zip" maxlength="5" name="tenant[billing_infos_attributes][0][zip]" size="5" type="text">
+										</div>
+									</div>
+								</div>
+								<div class="right">
+									<div class="stack">
+										<label class="block" for="tenant_billing_infos_attributes_0_card_type">Card Type:</label> 
+										<select id="tenant_billing_infos_attributes_0_card_type" name="tenant[billing_infos_attributes][0][card_type]">
+											<% BillingInfo.credit_cards.each do |card| %>
+												<option value="<%= card %>"><%= card %></option>
+											<% end %>
+										</select>
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_card_number">Card Number:</label> 
+										<input class="required credit_card auto_next" id="tenant_billing_infos_attributes_0_card_number" maxlength="16" name="tenant[billing_infos_attributes][0][card_number]" size="16" type="text">
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_cvv">CVV:</label> 
+										<input class="cvv required auto_next" id="tenant_billing_infos_attributes_0_cvv" maxlength="4" name="tenant[billing_infos_attributes][0][cvv]" size="4" type="text">
+									</div>
+									<div>
+										<label class="block" for="tenant_billing_infos_attributes_0_expires_month">Expires:</label> 
+										<input class="month required tiny_text_field left hintable auto_next" id="tenant_billing_infos_attributes_0_expires_month" maxlength="2" name="tenant[billing_infos_attributes][0][expires_month]" size="2" title="MM" type="text">/ <input class="year required tiny_text_field hintable auto_next" id="tenant_billing_infos_attributes_0_expires_year" maxlength="2" name="tenant[billing_infos_attributes][0][expires_year]" size="2" title="YY" type="text"> mm/yy
+									</div>
+									<div class="agree">
+										<input class="required" id="agree" name="agree" type="checkbox" value="1"> 
+										<label for="agree">I agree to the <a href="#" class="tos">Terms of Service</a></label>
+									</div><input class="hide" id="tenant_submit" name="commit" type="submit" value="Save">
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div id="rent_step3" class="workflow_step">
+						<div class="inner">
+							<div id="processing_rental" class="conf">
+								<img alt="Ajax-loader-long-green" class="ajax_loader" src="/images/ui/ajax-loader-long-green.gif" />
+							</div>
+
+							<div id="rental_complete" class="hide conf">
+								<h4>Great! Your Unit Rental Has Been Submitted.</h4>
+								<p>Your rental information has been sent to <span><a href="<%= "/#{listing.storage_type.parameterize}/#{listing.title.parameterize}/#{listing.id}" %>" title="<%= "#{listing.title} at #{listing.full_address}" %>"></a></span>. You'll be contacted by one of their representatives to complete the rental process.</p> 
+								<p>We've also sent you an email confirmation with all the details of your unit rental. Please print it and bring it in at the time of move in.</p>
+
+								<div id="rental-info">
+									<p><strong>Confirmation Number:</strong><span></span></p>
+									<p>Name:<span></span></p>
+									<p>Unit Type:<span></span></p>
+									<p>Unit Size:<span></span></p>
+									<p>Move-in Date:<span></span></p>
+									<p>Special:<span></span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- /.items -->
+
+				<div id="workflow_nav">
+					<a href="#back" class="back button">Back</a>
+					<a href="#next" class="next button">Next</a>
+				</div>
+				<img height="31" width="132" src="https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif" id="siteseal">
+			</div>
+		</div>
+		
+		<script src="/javascripts/jquery.all.js" type="text/javascript"></script>
+		<script src="/javascripts/plugins/jquery.formbouncer.js" type="text/javascript"></script>
+		<script src="/javascripts/plugins/jquery.preloadCssImages.js" type="text/javascript"></script>
+		<script src="/javascripts/plugins/jquery.tools.min.js" type="text/javascript"></script>
+		<script src="/javascripts/plugins/jquery.hinty.js" type="text/javascript"></script>
+		<script src="/javascripts/greymatter.js" type="text/javascript"></script>
+		<script src="/javascripts/plugins/greyresults.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-20270920-1']);
+		  _gaq.push(['_setDomainName', 'usselfstoragelocator.com']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+		<script type="text/javascript">
+			var websiteId = 3817;
+			var httpReferer = escape(document.referrer);
+		</script>
+		<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
+    </body>
+</html>

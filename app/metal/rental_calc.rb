@@ -18,7 +18,8 @@ class RentalCalc
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
       multiplier    = special ? special.month_limit : 1
-        
+      move_date     = Time.now if move_date < Time.now
+      
       if listing.prorated? 
         days_left = (days_in_month - move_date.day) == 0 ? 1 : (days_in_month - move_date.day)
         multiplier += days_left * proration
