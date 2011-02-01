@@ -2164,7 +2164,7 @@ p.breadcrumb a{color:#fff;}
 
 #pop_up.admin_box{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
 
-#blog-side{margin:10px;}
+#blog-side{margin:7px 10px 10px;}
 #blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;}
 #blog-side li.year{font-size:14px;list-style:disc inside;}
