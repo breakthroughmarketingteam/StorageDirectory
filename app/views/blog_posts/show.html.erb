@@ -1,1 +1,15 @@
-<%= render :partial => 'shared/model_content_show', :locals => { :model => @blog_post } %>
+<div id="blog-post">
+
+	<% declare_content_for %>
+	<h2><%= @blog_post.title %></h2>
+	<div id="post-date"><%= @blog_post.updated_at.strftime "%B %d, %Y" %></div>
+	<%= @blog_post.content %>
+	
+	<div id="tags">
+		<h4>Tags:</h4>
+		<% @blog_post.tags.each do |tag| %>
+		<%= link_to tag.name, tagged_with_path(@blog_post.class.name, tag.name) %>
+		<% end %>
+	</div>
+
+</div>

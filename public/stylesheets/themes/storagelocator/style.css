@@ -2163,3 +2163,25 @@ p.breadcrumb a{color:#fff;}
 #feat-pop h3{font-size:26px;}
 
 #pop_up.admin_box{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
+
+#blog-side{margin:10px;}
+#blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
+#blog-side a{font-size:12px;}
+#blog-side li.year{font-size:14px;list-style:disc inside;}
+#blog-side li{margin:4px 0;}
+#blog-side #months li{list-style:disc inside;margin-left:20px;}
+#blog-side #tags{margin-bottom:40px;}
+#blog-side #archive{}
+#blog-side span.year{}
+
+#blog-post{margin:20px;}
+#blog-post #post-date{color:#4C4BCC;font-size:12px;margin-bottom:10px;}
+#blog-post h2{font-size:28px;line-height:32px;margin-bottom:10px;}
+#blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
+#blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
+
+#sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 20px 5px 10px;}
+#sharing #rss{background:url(/images/ui/storagelocator/rss.png) no-repeat;float:left;margin-right:20px;height:24px;width:24px;}
+#sharing #rss:hover{background:url(/images/ui/storagelocator/rss-over.png) no-repeat;}
+#sharing img{}
+#sharing .addthis_toolbox{float:left;margin-top:2px;}
