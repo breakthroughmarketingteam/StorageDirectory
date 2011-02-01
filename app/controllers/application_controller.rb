@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   $_usssl_phone = '1-305-945-7561'
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   
-  before_filter :ensure_domain
+  #before_filter :ensure_domain
   before_filter :simple_auth
   before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create

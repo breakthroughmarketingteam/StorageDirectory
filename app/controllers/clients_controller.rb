@@ -34,7 +34,7 @@ class ClientsController < ApplicationController
   end
     
   def edit
-    redirect_to client_account_path if current_user.has_role?('advertiser') && params[:id]
+    redirect_to client_account_path if params[:id] && (current_user && current_user.has_role?('advertiser'))
     
     if @client.nil?
       redirect_to new_client_path

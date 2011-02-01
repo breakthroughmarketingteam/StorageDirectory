@@ -868,7 +868,7 @@ $(function(){
 		});
 	}
 	
-	$('form', '#rent_step1').rental_form();
+	$('#rentalizer').rental_form();
 	
 	// when a review request is sent, the link in the email goes to the single listing page with this hash in the url:
 	if (window.location.hash == '#write_review')
@@ -1222,7 +1222,7 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					wizard.form_data = $('#new_rental', wizard.workflow).serialize();
+					wizard.form_data = $('#rentalizer', wizard.workflow).serialize();
 					$('.numeric_phone', wizard.workflow).formatPhoneNum();
 					
 					$('#new_tenant', wizard.workflow).unbind('submit').submit(function() {
@@ -1266,50 +1266,6 @@ $.fn.rental_form = function() {
 			wizard.workflow.parents('.panel').slideUp().removeClass('active').parents('.active').removeClass('active');
 		}
 	};
-	
-	function update_end_date(limit, calendar, multiplier, has_special, prorated, form) {
-		if (typeof limit == 'undefined') var limit = 1;
-		
-		// adjust the paid through date, the specials dictate how many months to pay
-		var paid_thru	  = $('.paid_thru', form),
-			move_date 	  = new Date(calendar.val()),
-			limit		  = parseInt(limit),
-			days_in_month = 32 - new Date(move_date.getFullYear(), move_date.getMonth(), 32).getDate(),
-			half_month 	  = Math.floor(days_in_month / 2),
-			end_date 	  = new Date(move_date.getFullYear(), move_date.getMonth() + limit, move_date.getDate() - 1);
-		
-		if (prorated) {
-			if (limit == 1 && (move_date.getDate() > half_month || has_special)) {
-				multiplier += 1.00;
-				end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit, days_in_month - 1);
-				
-			} else end_date = new Date(move_date.getFullYear(), move_date.getMonth() + limit - 1, days_in_month);
-			
-		} else {
-			multiplier = limit;
-			
-			if (limit == 1 && has_special)
-				multiplier += 1.00;
-		}
-		
-		$('#rental_duration', form).val(limit);
-		paid_thru.text(end_date.getMonth() + 1 +'/'+ end_date.getDate() +'/'+ end_date.getFullYear()).special_txt_anim();
-		return multiplier;
-	}
-	
-	function special_calc(calc, subtotal, month_rate, multiplier) {
-		if (typeof calc == 'undefined') return 0;
-		var discount = 0;
-		
-		switch (calc[1]) {
-			case 'm': discount = month_rate * parseFloat(calc[0]); break;
-			case '%': discount = subtotal * (parseFloat(calc[0]) / 100.00); break;
-			default : discount = parseFloat(calc[0]);
-		}
-		
-		if (multiplier > 0.5 && multiplier <= 1) discount *= multiplier;
-		return discount.toFixed(2);
-	}
 
 	function set_size_select(select, unit_type) {
 		var show_count = 0;
@@ -1325,56 +1281,18 @@ $.fn.rental_form = function() {
 				show_count++;
 			}
 		});
-
-		select.change();
-	}
-	
-	function calc_special_discount(rate, limit) {
-		var discount = 0.1;
-		return (rate * discount).toFixed(2);
-	}
-	
-	function update_totals(multiplier, rate, calendar, special, admin_fee, month_rate, tax_rate, tax_text, total_text, has_special, prorated, form) {
-		var subtotal = rate,
-			total 	 = subtotal,
-			limit 	 = 1,
-			discount = 0,
-			tax_amt	 = 0;
-			
-		if (special.length) {
-			var calc = special.attr('data-special-calc').split('|');
-			limit = calc[2] || 1;
-		}
-		
-		var multi2 = update_end_date(limit, calendar, multiplier, has_special, prorated, form),
-			discount = special_calc(calc, rate * multi2, parseFloat(month_rate.eq(0).text()), multi2),
-			special_discount = calc_special_discount(rate, limit);
-		
-		subtotal *= multi2;
-		total = subtotal;
-		total -= parseFloat(special_discount) + parseFloat(discount);
-		
-		if (!isNaN(admin_fee)) total += admin_fee;
-		if (!isNaN(tax_rate))  tax_amt = total * tax_rate;
-		
-		total += tax_amt;
-		
-		$('.dur', form).text(multi2.toFixed(2));
-		$('.subtotal', form).text(subtotal.toFixed(2));
-		$('.discount', form).text(discount);
-		$('.usssl_discount', form).text(special_discount);
-		tax_text.text(tax_amt.toFixed(2));
-		total_text.text(total.toFixed(2)).special_txt_anim();
 	}
 	
 	return this.each(function() {
-		var form 		 = $(this),
+		var form 		   = $(this),
+			special_btns   = $('.avail_specials input', form),
 			remove_special = $('.remove_special', form).hide(),
-			type_select  = $('select[name=unit_type]', form),
-			unit_type 	 = type_select.val().toLowerCase(),
-			sizes_select = $('select[name=size_id]', form),
-			calendar	 = $('#move_in_date', form).datepicker({
-				onSelect: function(date, ui) { form.submit() }
+			type_select    = $('select[name=unit_type]', form),
+			unit_type 	   = type_select.val().toLowerCase(),
+			sizes_select   = $('select[name=size_id]', form),
+			calendar	   = $('#move_in_date', form).datepicker({
+				onSelect: function(date, ui) { form.submit() },
+				minDate: new Date()
 			}),
 			inputs = {
 				subtotal   : $('.subtotal', form),
@@ -1392,10 +1310,9 @@ $.fn.rental_form = function() {
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					for (key in data)
-						inputs[key].text(data[key])
+						inputs[key].text(data[key]);
 				});
 			});
-			
 			return false;
 		});
 		
@@ -1419,10 +1336,9 @@ $.fn.rental_form = function() {
 			type_select.change(function() {
 				set_size_select(sizes_select, $(this).val().toLowerCase());
 			});
-			
-		}// else form.submit();
+		}
 		
-		$('input[name=special_id]', form).click(function() {
+		special_btns.click(function() {
 			var $this = $(this);
 			
 			if ($this.is(':checked')) {
@@ -1443,6 +1359,8 @@ $.fn.rental_form = function() {
 			return false;
 		});
 		
-		$('.avail_specials input', '#new_rental').eq(0).click();
+		setTimeout(function() {
+			special_btns.eq(0).attr('checked', true).click();
+		}, 100);
 	});
 }
