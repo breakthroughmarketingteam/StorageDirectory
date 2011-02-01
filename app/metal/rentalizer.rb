@@ -2,18 +2,17 @@
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
 class Rentalizer
+  %w(erb cgi activerecord).each { |lib| require lib }
+  dbconfig = YAML.load(File.read(File.dirname(__FILE__) + '/../../config/database.yml'))
+  ActiveRecord::Base.establish_connection dbconfig['production']
+  
   class << self
     def call(env)
       if env['PATH_INFO'] =~ /^\/rentalizer/
-        require 'cgi'
-        require 'activerecord'
-        dbconfig = YAML.load(File.read(File.dirname(__FILE__) + '/../../config/database.yml'))
-        ActiveRecord::Base.establish_connection dbconfig['production']
-        
         hash    = HashWithIndifferentAccess[*env['QUERY_STRING'].split(/&|=/).map { |q| CGI.unescape q }] # query string to hash
         listing = Listing.find hash[:listing_id]
         size    = listing.sizes.find hash[:size_id] if hash[:size_id]
-      
+        
         out, mime = *(hash.has_key?(:show_size_ops) ? rental_form(env, hash, listing, size) : rental_calc(hash, listing, size))
         
         [200, {'Content-Type' => mime}, [out]]
@@ -21,24 +20,22 @@ class Rentalizer
         [404, {'Content-Type' => 'text/html'}, ['Not Found']]
       end
     end
-  
+    
+    # read the rentalizer layout file, run it through erb and serve it up
     def rental_form(env, hash, listing, size)
-      require 'erb'
-      
       html = File.read(File.dirname(__FILE__) + "/../views/rentals/rentalizer.html.erb")
-      out = ERB.new(html).result(binding)
-      
-      [out, 'text/html']
+      [ERB.new(html).result(binding), 'text/html']
     end
-  
+    
+    # respond to ajax updates to the rentalizer form
     def rental_calc(hash, listing, size)
-      proration     = 0.03333
+      proration     = 0.03333 # multiply this by each day of the partial lastest month in a rental period
       special       = listing.predefined_specials.find hash[:special_id] unless hash[:special_id].blank?
       move_date     = Time.parse(CGI.unescape(hash[:move_in_date]))
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
-      multiplier    = special ? special.month_limit : 1
-      move_date     = Time.now if move_date < Time.now
+      multiplier    = special ? special.month_limit : 1 # the number of months required to rent when using this special
+      move_date     = Time.now if move_date < Time.now 
     
       if listing.prorated? 
         days_left = (days_in_month - move_date.day) == 0 ? 1 : (days_in_month - move_date.day)
@@ -49,17 +46,17 @@ class Rentalizer
       end
     
       subtotal = size.dollar_price
-      usssl_discount = 0.10 * subtotal
+      usssl_discount = subtotal * 0.10
     
       discount = if special
-  	  	case special.function when 'm' 
+  	  	case special.function when 'm' # months off
   	  	    subtotal * special.value.to_f
-    		  when '%'
+    		  when '%' # percent off
     		    (subtotal * special.month_limit) * (special.value.to_f / 100)
-    		  else 
+    		  else # fixed dollar amount off
     		    special.value.to_f
   		  end
-  	  else
+  	  else # no discount
   	    0.00
     	end
 
