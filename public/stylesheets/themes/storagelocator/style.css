@@ -2106,18 +2106,18 @@ p.breadcrumb a{color:#fff;}
 
 .claim{bottom:12px;font-size:10px;position:absolute;}
 
-.post_date{background:#66f;float:left;margin:0 10px 0 0;padding:5px;text-align:center;width:55px;}
+.post_date{background:#66f;float:left;margin:0 10px 0 0;padding:7px 5px;text-align:center;height:30px;width:55px;}
 .post_date p{font-size:140%;}
 
-#blog_page{font-size:12px;}
-#blog_page .blog_post{border-top:1px dashed #ccc;padding:30px 0;}
-#blog_page h2{font-size:28px;margin-bottom:25px;}
+#blog_page{font-size:12px;margin:20px 20px 0;padding:0;}
+#blog_page .blog_post{border-top:1px dashed #ccc;padding:25px 0;}
+#blog_page h2{font-size:28px;margin-bottom:10px;}
 #blog_page h3 a{display:block;font-size:24px;margin-bottom:6px;width:670px;}
 #blog_page a{font-size:12px;}
-#blog_page .post_date{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background: url(/images/ui/storagelocator/post-date-bg.png) repeat-x;border:1px solid #666;color:#fff;text-shadow:1px 1px 0 #333;}
+#blog_page .post_date{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background: url(/images/ui/storagelocator/post-date-bg.png) repeat-x;color:#fff;text-shadow:1px 1px 0 #333;}
 #blog_page .blog_post_info{}
-#blog_page .blog_post_content{float:left;line-height:16px;margin:20px 0 15px;width:670px;}
-#blog_page .post_metadata{float:left;width:95%;}
+#blog_page .blog_post_content{float:left;line-height:16px;margin:15px 0 15px;width:670px;}
+#blog_page .post_metadata{float:left;width:100%;}
 #blog_page .comments_count{}
 #blog_page .tags{margin-right:30px;}
 #blog_page .more{float:right;}
@@ -2175,8 +2175,10 @@ p.breadcrumb a{color:#fff;}
 #blog-side span.year{}
 
 #blog-post{margin:20px;}
-#blog-post #post-date{color:#4C4BCC;font-size:12px;margin-bottom:10px;}
-#blog-post h2{font-size:28px;line-height:32px;margin-bottom:10px;}
+#blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
+#blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
+#blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
+
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
