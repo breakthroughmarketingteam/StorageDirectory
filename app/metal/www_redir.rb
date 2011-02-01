@@ -5,7 +5,7 @@ class WwwRedir
   def self.call(env)
     host = env['HTTP_HOST']
     if host['www'] || host['secure']
-      [301, { 'Location' => request.url.sub('//www.', '//')}, self]
+      [301, { 'Location' => request.url.sub('//www.', '//')}, ['301 Permanent Redirect']]
     else
       [404, {'Content-Type' => 'text/html'}, ['Not Found']]
     end
