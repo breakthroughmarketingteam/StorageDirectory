@@ -1855,10 +1855,10 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step1  .col3 ul{display:block;float:right;margin:55px 0 0 0;width:100%;line-height:1;border:0 none;}
 #rent_step1  .col3 ul li{font-weight:bold;margin:0 0 10px;float:none;}
 #rent_step1  .col3 ul li span{font-size:14px;}
-#rent_step1  .col3 ul li.total span{font-size:18px;}
-.rental_form .col3 li.total{font-size:16px;}
-.rental_form .col3 li.discount{color:#f60;}
-.rental_form .col3 li.special_discount{color:#f60;}
+#rent_step1  .col3 ul li.total_wrap span{font-size:18px;}
+.rental_form .col3 li.total_wrap{font-size:16px;}
+.rental_form .col3 li.discount_wrap{color:#f60;}
+.rental_form .col3 li.usssl_discount{color:#f60;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
 .rental_form .col3 .grey span{float:none;color:#999;}
@@ -1875,7 +1875,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_steps .zip_field label{width:20px;}
 .rental_form .size_picker .size_details{color:#4c4bcc;font-size:13px;font-weight:bold;}
 .rental_form #paid_until{font-size:120%;height:16px;}
-.rental_form #paid_until .paid_through{display:block;padding-top:2px;}
+.rental_form #paid_until .paid_thru{display:block;padding-top:2px;letter-spacing:1px;}
 .rental_form #price{margin:3px 0 0;width:120px;}
 #rent_step2 .agree a{font-size:12px;}
 #rent_step2 .agree label{float:none;margin:0 0 0 7px;width:auto;}

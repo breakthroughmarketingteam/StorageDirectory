@@ -8,7 +8,7 @@
 	<div id="rent_steps">
 		<div class="items">
 			<div id="rent_step1" class="workflow_step">
-				<% form_for Rental.new, :url => rentals_url(:protocol => 'https'), :html => { 'data-pr' => (@listing.prorated? ? 1 : 0) } do |f| %>
+				<% form_tag '/rental_calc' do %>
 					<div class="inner">
 						<div class="col1">
 							<div class="<%= 'hide' if params[:show_size_ops] == 'false' %>">
@@ -17,38 +17,40 @@
 							</div>
 		
 							<div class="<%= 'hide' if params[:show_size_ops] == 'false' %>">
-								<%= f.label :size_id, 'Size: ', :class => 'block left' %>
-								<%= select_tag_for_facility_sizes_icons 'rental[size_id]', @listing.uniq_avail_sizes, (@size ? @size.dims : get_search.unit_size), :class => 'required sizes_select' %>
+								<%= label_tag :size_id, 'Size: ', :class => 'block left' %>
+								<%= select_tag_for_facility_sizes_icons :size_id, @listing.uniq_avail_sizes, (@size ? @size.dims : get_search.unit_size), :class => 'required sizes_select' %>
 							</div>
 							
 							<div>
 								<%= label_tag 'Rate: ', nil, :class => 'block left' %>
-								<div id="price"><span>$</span><span class="rental_rate">
-									<%= number_to_currency(@size.dollar_price).sub('$', '') %></span><span>/month</span>
+								<div id="price">
+									<span>$</span>
+									<span class="month_rate"><%= number_to_currency(@size.dollar_price).sub('$', '') %></span>
+									<span>/month</span>
 								</div>
 							</div>
 			
 							<div class="calendar_wrap">
-								<%= f.label :move_in_date, 'Move in: ', :class => 'block left' %>
-								<%= f.text_field :move_in_date, :value => Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
+								<%= label_tag :move_in_date, 'Move in: ', :class => 'block left' %>
+								<%= text_field_tag :move_in_date, Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
 							</div>
 			
 							<div id="paid_until">
 								<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
-								<span class="paid_through"></span>
-								<%= f.hidden_field :duration, :value => 1 %>
-								<%= f.hidden_field :listing_id, :value => @listing.id %>
+								<span class="paid_thru"></span>
+								<%= hidden_field_tag :duration, 1 %>
+								<%= hidden_field_tag :listing_id, @listing.id %>
 							</div>
 			
 							<% unless @listing.specials.empty? %>
 								<div>
-									<%= label_tag 'Specials: ', nil, :class => 'block left' %>
+									<%= label_tag :specials, 'Specials: ', :class => 'block left' %>
 									<div class="avail_specials">
 										<ul>
 											<% @listing.specials.each do |special| %>
 												<li>
-													<%= f.radio_button :special_id, special.id, { 'data-special-calc' => "#{special.value}|#{special.function}#{ "|#{special.month_limit}" unless special.month_limit.blank? }" } %> 
-													<%= f.label "special_id_#{special.id}", special.title %>
+													<%= radio_button_tag :special_id, special.id %> 
+													<%= label_tag "special_id_#{special.id}", special.title %>
 													<%= link_to image_tag('/images/ui/storagelocator/remove.png'), '#', :class => 'remove_special hide' %>
 												</li>
 											<% end %>
@@ -73,43 +75,43 @@
 								<li>
 									Rent: 
 									<span class="grey">
-										(<span class="dur"></span> x 
-										$<span class="rental_rate"></span>)
+										(<span class="multiplier"></span> x 
+										$<span class="month_rate"></span>)
 									</span> 
-									<span class="subtotal right">
-										$<span></span>
+									<span class="right">
+										$<span class="subtotal"></span>
 									</span>
 								</li>
-								<li class="admin_fee">
+								<li class="admin_fee_wrap">
 									Admin Fees: 
 									<span class="right">
-										$<span><%= sprintf "%.2f", @listing.admin_fee %></span>
+										$<span class="admin_fee"><%= sprintf "%.2f", @listing.admin_fee %></span>
 									</span>
 								</li>
 								<% unless @listing.specials.empty? %>
-									<li class="discount">Specials: 
+									<li class="discount_wrap">Specials: 
 										<span class="right">
-											-$<span></span>
+											-$<span class="discount"></span>
 										</span>
 									</li>
 								<% end %>
-								<li class="special_discount">
+								<li class="usssl_discount_wrap">
 									USSSL Discount: 
 									<span class="right">
-										-$<span></span>
+										-$<span class="usssl_discount"></span>
 									</span>
 								</li>
-								<li class="tax" data-tax="<%= @listing.tax_rate %>">
+								<li class="tax_wrap" data-tax="<%= @listing.tax_rate %>">
 									Tax: 
 									<span class="right">
-										$<span></span>
+										$<span class="tax_amt"></span>
 									</span>
 								</li>
 								<li><hr /></li>
-								<li class="total">
+								<li class="total_wrap">
 									Move-In Total: 
 									<span class="right">
-										$<span>0.00</span>
+										$<span class="total">0.00</span>
 									</span>
 								</li>
 							</ul>
