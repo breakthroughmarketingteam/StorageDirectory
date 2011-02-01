@@ -9,11 +9,11 @@ class Rentalizer
   class << self
     def call(env)
       if env['PATH_INFO'] =~ /^\/rentalizer/
-        hash    = HashWithIndifferentAccess[*env['QUERY_STRING'].split(/&|=/).map { |q| CGI.unescape q }] # query string to hash
-        listing = Listing.find hash[:listing_id]
-        size    = listing.sizes.find hash[:size_id] if hash[:size_id]
+        params  = HashWithIndifferentAccess[*env['QUERY_STRING'].split(/&|=/).map { |q| CGI.unescape q }] # query string to hash
+        listing = Listing.find params[:listing_id]
+        size    = listing.sizes.find params[:size_id] if params[:size_id]
         
-        out, mime = *(hash.has_key?(:show_size_ops) ? rental_form(env, hash, listing, size) : rental_calc(hash, listing, size))
+        out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size) : rental_calc(params, listing, size))
         
         [200, {'Content-Type' => mime}, [out]]
       else
@@ -22,19 +22,19 @@ class Rentalizer
     end
     
     # read the rentalizer layout file, run it through erb and serve it up
-    def rental_form(env, hash, listing, size)
+    def rental_form(env, params, listing, size)
       html = File.read(File.dirname(__FILE__) + "/../views/rentals/rentalizer.html.erb")
       [ERB.new(html).result(binding), 'text/html']
     end
     
     # respond to ajax updates to the rentalizer form
-    def rental_calc(hash, listing, size)
+    def rental_calc(params, listing, size)
       proration     = 0.03333 # multiply this by each day of the partial lastest month in a rental period
-      special       = listing.predefined_specials.find hash[:special_id] unless hash[:special_id].blank?
-      move_date     = Time.parse(CGI.unescape(hash[:move_in_date]))
+      special       = listing.predefined_specials.find params[:special_id] unless params[:special_id].blank?
+      move_date     = Time.parse(CGI.unescape(params[:move_in_date]))
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
-      multiplier    = special ? special.month_limit : 1 # the number of months required to rent when using this special
+      multiplier    = special ? special.month_limit : 1 # the number of months required to rent 
       move_date     = Time.now if move_date < Time.now 
     
       if listing.prorated? 
