@@ -2133,17 +2133,22 @@ p.breadcrumb a{color:#fff;}
 #feat-pop #feat_pop_nav a{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;display:inline-block;padding:10px 15px;text-decoration:none;width:43%;}
 #feat-pop #feat_pop_nav a.active{background:#3c3;color:#fff;text-shadow:1px 1px 0 #666;}
 #feat-pop .tabular li{display:inline;}
-#feat-pop td.label{font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:10px;text-align:left;}
-#feat-pop td.indent{padding-left:40px;}
-#feat-pop th{font-size:16px;padding-bottom:10px;text-align:center;}
+#feat-pop table{border:1px solid #ccc;display:block;padding:0 0 3px;}
+#feat-pop td.label{background:url(/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
+#feat-pop td.indent{background:url(/images/ui/storagelocator/disc.png) no-repeat 37px 11px;padding-left:50px;}
+#feat-pop th{background:#4c4bcc;color:#fff;font-size:16px;padding-bottom:10px;padding-top:9px;text-align:center;}
+
 #feat-pop th.label{text-align:left;padding-left:10px;}
 #feat-pop tr.odd{background:#fff;}
 #feat-pop tr.even{background:#eee;}
 #feat-pop .last td{padding-top:10px;}
 #feat-pop td{font-size:12px;padding:7px 0;text-align:center;}
 #feat-pop table strong{font-size:16px;color:#4c4bcc;}
+#feat-pop #feat-desc{}
 
 #pop_up.admin_box{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
+
+#blog_page #sharing{float:left;margin:15px 0 0;padding:5px 0;width:100%;}
 
 #blog-side{margin:7px 10px 10px;}
 #blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
@@ -2161,8 +2166,8 @@ p.breadcrumb a{color:#fff;}
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
-#sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 20px 5px 10px;}
-#sharing #rss{background:url(/images/ui/storagelocator/rss.png) no-repeat;float:left;margin-right:20px;height:24px;width:24px;}
+#sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
+#sharing #rss{background:url(/images/ui/storagelocator/rss.png) no-repeat;float:left;margin:0 10px;height:24px;width:24px;}
 #sharing #rss:hover{background:url(/images/ui/storagelocator/rss-over.png) no-repeat;}
 #sharing img{}
 #sharing .addthis_toolbox{float:left;margin-top:2px;}
