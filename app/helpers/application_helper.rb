@@ -617,7 +617,7 @@ module ApplicationHelper
   end
   
   def ssl_seal
-		"<img id='siteseal' width='132' height='31'src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif'>"
+		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif' />"
   end
   
 end
