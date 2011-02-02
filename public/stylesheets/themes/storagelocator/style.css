@@ -112,7 +112,7 @@ p#click-more{width:226px;position:absolute;height:35px;line-height:25px;backgrou
 p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:block;width:200px;text-decoration:none;color:#fff;margin-left:13px;}
 /* Start the results page styles here */
 #type-two-l-col,#type-one-l-col,#content_bottom{width:191px;float:left;margin-left:5px;}
-#type-one-l-col,#content_bottom{border-right:1px dotted #ccc;margin:9px 0 25px 9px;}
+#type-one-l-col,#content_bottom{margin:9px 0 25px 9px;border-right:1px solid #eee;}
 #clients_controller #content_bottom{border-right:none;}
 .new_action #content_bottom{border:none;}
 .my_account #content_bottom{margin:15px 0 25px 9px;}
@@ -406,7 +406,7 @@ li.map-plus a{width:22px;}
 #type-two-top-bar-head ul li#search_tips a{background:url("/images/ui/storagelocator/go-button.png") no-repeat left center;color:#fff;display:block;float:left;font-size:14px;height:24px;line-height:23px;margin-left:10px;position:relative;text-align:center;text-shadow:1px 1px 0 #666;width:32px;display:none;}
 #type-two-top-bar-head ul input{border:1px solid #CCCCCC;color:#777;float:left;font-size:100%;height:19px;padding:2px 10px;position:relative;width:120px;}
 #type-two-top-bar-head ul a.search-options{float:right;background:url(/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;font-size:100%;}
-#type-one-top-bar hr{border-color:#CCCCCC -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;}
+#type-one-top-bar hr{border-color:#eee -moz-use-text-color -moz-use-text-color;border-style:solid none none;border-width:1px medium medium;}
 #add-fac-head-in h2{font-size:28px;font-weight:bold;left:20px;line-height:36px;width:450px;}
 #info-in h2{font-size:28px;font-weight:bold;line-height:36px;}
 .green-head .inner p{font-size:12px;margin-top:10px;color:#333;position:relative;line-height:1.4;}
@@ -427,14 +427,14 @@ li.map-plus a{width:22px;}
 #media-box p span.quote{color:#339933;float:right;font-size:12px;font-style:normal;margin-top:15px;}
 #type-two-top-bar{position:relative;left:2px;}
 #tips-wrap{margin:0 2px 10px 3px;}
-.blog-lock,.review{font-size:80%;background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #ccc;margin:15px 20px 20px;clear:both;padding:0 20px 15px 40px;}
+.blog-lock,.review{background:url(/images/ui/storagelocator/blog-lock.png) no-repeat top left;border-bottom:1px dashed #ccc;font-size:12px;margin:25px 20px 27px;padding:0 20px 25px 40px;}
 .blog-lock a,.review a{font-size:100%;}
 .blog-lock h3,.blog-lock p{font-weight:normal;color:#555;margin:0 0 18px 0;}
-.blog-lock .stack{font-size:80%;line-height:1.3;}
+.blog-lock .stack{font-size:12px;line-height:16px;}
 .blog-lock h3{margin-bottom:10px;padding-top:3px;}
-.blog-lock h3 a{color:#000;text-decoration:none;font-size:130%;}
+.blog-lock h3 a{color:#000;text-decoration:none;font-size:20px;}
 .blog-lock ul{overflow:hidden;}
-.blog-lock li{list-style:none;display:block;float:left;color:#999;font-size:70%;}
+.blog-lock li{list-style:none;display:block;float:left;color:#999;font-size:12px;}
 .blog-lock li.share_label{margin-left:30px;}
 .blog-lock li.share{width:160px;padding-left:5px;}
 .blog-lock li.five-star{/*background:url(/images/ui/storagelocator/5-stars.png) no-repeat top left;background-position:4em 0px;*/}
@@ -1689,8 +1689,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #g-res ul{float:left;width:260px;}
 #g-res h4{color:#4c4bcc;font-size:22px;margin:0 0 35px;text-decoration:underline;width:240px;}
 
-#terms{margin-bottom:60px;min-height:600px;}
-#terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;margin:6px 10px 20px 15px;padding:10px 0 7px 15px;}
+#terms{margin-bottom:60px;min-height:600px;padding:10px 30px;}
+#terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;margin:6px 0 20px;padding:10px 0 7px 15px;}
 #terms h3{color:#4c4bcc;font-size:22px;padding-top:15px;line-height:26px;padding-top:15px;margin-bottom:15px;}
 #terms p{font-size:12px;line-height:18px;margin:0 0 15px 0;}
 #terms a{font-size:12px;}
@@ -1706,8 +1706,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box p{margin:5px 0 0;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
 
-#contact_page p{line-height:18px;margin:0 20px 20px;}
-.contact_us .block_render form{margin:20px 10px 10px;}
+#contact_page{margin:15px 30px;}
+#contact_page p{font-size:12px;line-height:16px;margin:20px 0;}
+.contact_us .block_render form{margin:30px 10px 30px 20px;}
 .virtual_form textarea,.virtual_form input{font-family:"Helvetica Neue",Helvetica,Tahoma,Verdana,Arial,sans-serif;width:95%;}
 .virtual_form input.hintable{margin:0 0 10px;padding:5px 7px;font-size:100%;border:1px solid #ccc;}
 .virtual_form textarea{margin:0 0 10px;height:150px;padding:5px 7px;font-size:100%;border:1px solid #ccc;}
@@ -2077,7 +2078,7 @@ p.breadcrumb a{color:#fff;}
 .post_date{background:#66f;float:left;margin:0 10px 0 0;padding:7px 5px;text-align:center;height:30px;width:55px;}
 .post_date p{font-size:140%;}
 
-#blog_page{font-size:12px;margin:20px 20px 0;padding:0;}
+#blog_page{font-size:12px;margin:20px 20px 0;min-height:800px;padding:0;}
 #blog_page .blog_post{border-top:1px dashed #ccc;padding:25px 0;}
 #blog_page h2{font-size:28px;margin-bottom:10px;}
 #blog_page h3 a{display:block;font-size:24px;margin-bottom:6px;width:670px;}
