@@ -43,7 +43,7 @@ Rails::Initializer.run do |config|
   require 'rack/rewrite'
   config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
     r301 /.*/,  Proc.new {|path, rack_env| "http://#{rack_env['SERVER_NAME'].gsub(/www\./i, '') }#{path}" },
-        :if =>; Proc.new {|rack_env| rack_env['SERVER_NAME'] =~ /(www\.)|(secure\.)/i}
+        :if => Proc.new {|rack_env| rack_env['SERVER_NAME'] =~ /(www\.)|(secure\.)/i}
   end
 
   
