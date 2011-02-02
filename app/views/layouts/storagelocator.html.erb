@@ -32,6 +32,7 @@
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{user_user_stat_path current_user, @user_stat}';</script>" if current_user && !is_admin? -%>
         <%= javascript_include_tag 'greymatter', 'application' -%>
 		<%= javascript_include_tag 'swfobject_modified' %>
+		<link rel="alternate" type="application/rss+xml" title="Self Storage Blog" href="http://usselfstorageloccator.com/blog.rss" />
     </head>
     <body id="<%= controller_name %>_controller" class="<%= action_name %>_action <%= page_name + (@page.nil? || @page.new_record? ? ' non_page' : '') %><%= current_user ? ' authenticated' : '' %><%= current_user && current_user.has_role?('admin') ? ' admin' : '' %>">
         <div id="topbar">
