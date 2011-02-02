@@ -507,12 +507,18 @@ $(function(){
 	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
 		var $this = $(this), 
 			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
-			unit_size = $(':radio:checked', $this.parent().parent());
+			context = $this.parents('.inner'),
+			unit_size = $(':radio:checked', context),
+			special = $('.special_txt.active', context);
 		
 		if (unit_size.length) {
-			$this.attr('href', new_href +'&sub_model=Size&sub_id='+ unit_size.val());
-			$this.attr('rel', 'reserve');
+			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
+			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
+			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
 		}
+		
+		if (special.length == 1)
+			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -1289,7 +1295,7 @@ $.fn.rental_form = function() {
 			remove_special = $('.remove_special', form).hide(),
 			type_select    = $('select[name=unit_type]', form),
 			unit_type 	   = type_select.val().toLowerCase(),
-			sizes_select   = $('select[name=size_id]', form),
+			sizes_select   = $('select[name="rental[size_id]"]', form),
 			calendar	   = $('#move_in_date', form).datepicker({
 				onSelect: function(date, ui) { form.submit() },
 				minDate: new Date()
@@ -1360,7 +1366,10 @@ $.fn.rental_form = function() {
 		});
 		
 		setTimeout(function() {
-			special_btns.eq(0).attr('checked', true).click();
+			if ((s = special_btns.filter('.chosen')).length > 0)
+				s.attr('checked', true).click();
+			else
+				special_btns.eq(0).attr('checked', true).click();
 		}, 100);
 	});
 }

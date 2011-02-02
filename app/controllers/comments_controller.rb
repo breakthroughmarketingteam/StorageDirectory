@@ -27,6 +27,7 @@ class CommentsController < ApplicationController
     end
     
     @comment.user_id = current_user.id if current_user
+    @comment.status = params[:do_review] ? 'unpublished' : 'published'
     
     if @comment.save
       if @form && @form.should_send_email?

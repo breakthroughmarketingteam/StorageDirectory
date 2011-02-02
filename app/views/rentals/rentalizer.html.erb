@@ -45,7 +45,7 @@
 
 									<div class="">
 										<label class="block left" for="size_id">Size: </label>
-										<select class="required sizes_select" id="size_id" name="size_id">
+										<select class="required sizes_select" id="size_id" name="rental[size_id]">
 											<% listing.uniq_avail_sizes.each do |avail_size| %>
 												<option<%= ' selected="selected"' if size.dims == avail_size.dims %> value='<%= avail_size.id %>' data-unit-type='<%= avail_size.title.downcase %>' data-unit-price='<%= avail_size.dollar_price %>' data-url='<%= avail_size.icon(:medium).try :url %>'>
 													<%= avail_size.dims %>
@@ -65,13 +65,13 @@
 
 									<div class="calendar_wrap">
 										<label class="block left" for="move_in_date">Move in: </label>
-										<input class="required cal" id="move_in_date" maxlength="10" name="move_in_date" type="text" value="02/01/2011" />
+										<input class="required cal" id="move_in_date" maxlength="10" name="rental[move_in_date]" type="text" value="02/01/2011" />
 									</div>
 
 									<div id="paid_until">
 										<label class="block left">Paid until: </label>
 										<span class="paid_thru"></span>
-										<input id="listing_id" name="listing_id" type="hidden" value="<%= listing.id %>" />
+										<input id="listing_id" name="rental[listing_id]" type="hidden" value="<%= listing.id %>" />
 									</div>
 
 									<% unless listing.specials.empty? %>
@@ -79,10 +79,10 @@
 											<label class="block left" for="specials">Specials: </label>
 											<div class="avail_specials">
 												<ul>
-													<% listing.specials.each do |special| %>
+													<% listing.specials.each do |spec| %>
 													<li>
-														<input id="special_id_<%= special.id %>" name="special_id" type="radio" value="<%= special.id %>" /> 
-														<label for="special_id_<%= special.id %>"><%= special.title %></label>
+														<input id="special_id_<%= spec.id %>" name="rental[special_id]" type="radio" value="<%= spec.id %>" class="<%= 'chosen' if spec == special %>" /> 
+														<label for="special_id_<%= spec.id %>"><%= spec.title %></label>
 														<a href="#" class="remove_special hide"><img alt="Remove" src="/images/ui/storagelocator/remove.png" /></a>
 													</li>
 													<% end %>
@@ -163,7 +163,7 @@
 								<div class="left">
 									<div>
 										<label class="block" for="tenant_name">Your Name:</label> 
-										<input class="required" id="tenant_name" name="tenant[name]" size="30" type="text" value=" ">
+										<input class="required" id="tenant_name" name="tenant[name]" size="30" type="text">
 									</div>
 									<div>
 										<label class="block" for="tenant_email">Email:</label> 
@@ -220,7 +220,8 @@
 									<div class="agree">
 										<input class="required" id="agree" name="agree" type="checkbox" value="1"> 
 										<label for="agree">I agree to the <a href="#" class="tos">Terms of Service</a></label>
-									</div><input class="hide" id="tenant_submit" name="commit" type="submit" value="Save">
+										<input class="hide" id="tenant_submit" name="commit" type="submit" value="Save">
+									</div>
 								</div>
 							</form>
 						</div>
@@ -261,7 +262,7 @@
 					<a href="#back" class="back button">Back</a>
 					<a href="#next" class="next button">Next</a>
 				</div>
-				<img height="31" width="132" src="https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif" id="siteseal">
+				<img width="132" height="31" src="https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_l_m.gif" id="siteseal" />
 			</div>
 		</div>
 		

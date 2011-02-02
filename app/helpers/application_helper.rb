@@ -592,7 +592,7 @@ module ApplicationHelper
   # makes a link that is bound to a click event that will open a jquery dialog with the target as the inner html
   def auto_pop_up_link(text, target, options, url = nil)
     link_to text, (url || '#'), {
-      :class         => "auto_pop_up#{ " #{options[:class]}" if options[:class]}", 
+      :class         => "auto_pop_up_link#{ " #{options[:class]}" if options[:class]}", 
       :title         => options[:title], 
       :'data-div-id' => target, 
       :'data-width'  => options[:width], 
@@ -617,7 +617,9 @@ module ApplicationHelper
   end
   
   def ssl_seal
+
 		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif' />"
+
   end
   
 end
