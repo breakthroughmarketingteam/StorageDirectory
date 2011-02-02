@@ -20,13 +20,14 @@ class SearchesController < ApplicationController
     
     unless query.blank?
       query = query.downcase.gsub(/<\/?[^>]*>/, "")
-      like_operator = RAILS_ENV == 'development' ? ') LIKE' : 'ILIKE'
+      dev = RAILS_ENV == 'development'
+      like_operator = dev ? ' LIKE' : 'ILIKE'
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "#{RAILS_ENV == 'development' ? 'LOWER(' : ''}#{@model_class.table_name}.#{field} #{like_operator} '%#{query}%'"
+          "#{dev ? 'LOWER(' : ''}#{@model_class.table_name}.#{field}#{')' if dev} #{like_operator} '%#{query}%'"
         else
-          assoc = @model_class.column_names.include?(field) ? '' : @model_class.get_assoc_prefix_for(field)
+          assoc = @model_class.get_assoc_prefix_for(field)
           "#{assoc[:prefix]}.#{field} #{like_operator} '%#{query}%'"
         end
       end.join(' OR ') if @model_class.respond_to? :searchables
@@ -36,7 +37,7 @@ class SearchesController < ApplicationController
       
       @results = @model_class.all options
     else
-      flash[:error] = 'Type something in to search for, DUH'
+      flash[:error] = 'Type something in to search for, DUH!'
     end
     
     render :layout => false if request.xhr?

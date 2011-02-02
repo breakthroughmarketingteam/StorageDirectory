@@ -31,7 +31,7 @@
 						Applied To All Rentals
 					</th>
                     <% @listing_set.each do |set| %>
-						<td><a class="rent-btn" href="<%= facility_path_for set.delete(:listing), set %>">Rent It!</a></td>
+						<td><a data-listing-id="<%= set[:listing].id %>" data-size-id="<%= set[:size].try :id %>" data-special-id="<%= set[:special].try :id %>" class="rent-btn" href="<%= facility_path_for set.delete(:listing), set %>">Rent It!</a></td>
 					<% end %>
                 </tr>
             </tbody>

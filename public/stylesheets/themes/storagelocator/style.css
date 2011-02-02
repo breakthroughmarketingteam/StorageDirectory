@@ -481,7 +481,7 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #type-one-r-col ul.tabular li.active a{background:#fff;}
 #hed{height:10px;padding:1px 0 10px;position:relative;}
 #hed #ratings{color:#ccc;float:right;padding:2px 0 0;width:125px;}
-#sl-intro .main_pic{width:100%;}
+#sl-intro .main_pic{width:100%;position:absolute;}
 #fac-signup ul{margin-left:20px;}
 #fac-signup ul li{list-style:disc inside none;margin:10px;}
 .tab_content{clear:both;position:relative;}
