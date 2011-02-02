@@ -20,7 +20,7 @@ class SearchesController < ApplicationController
     
     unless query.blank?
       query = query.downcase.gsub(/<\/?[^>]*>/, "")
-      like_operator = RAILS_ENV == 'development' ? ') LIKE' : '~*'
+      like_operator = RAILS_ENV == 'development' ? ') LIKE' : 'ILIKE'
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
