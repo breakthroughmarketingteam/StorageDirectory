@@ -1,18 +1,20 @@
 <p>
-	Thank you for signing up with USSelfStorageLocator.com. We're really excited to see the fruits of our labor after 
-	all the research and development we've done to build the best Self Storage Promotion tool money can buy. So we'll hold you up
-	no more. Below is your login information, everything else will be self explanatory (we hope). Feel free to contact us by phone or email
-	if you have any questions.
+<span style="display:inline-block;margin-bottom:10px;font-size:24px;font-weight:bold;color:#FF6633;font-family:arial;line-height:110%;">Thanks for joining our site!</span><br>
 </p>
 
-<p>Click <a href="https://usselfstoragelocator.com/clients/activate/<%= @client.activation_code %>">here to login</a> to your account, or copy the following link:
+<p>
+	
+</p>
+
+<p>Click <a href="https://usselfstoragelocator.com/clients/activate/<%= @client.activation_code %>">here to login</a> to your account, or copy the following link:<br/>
 https://secure.usselfstoragelocator.com/clients/activate/<%= @client.activation_code %></p>
 
 <p>Your account information:</p>
 <ul>
-	<li>User Name:  <%= @client.email %></li>
- 	<li>Password: <%= @client.temp_password %> </li>
- 	<li>We recommend you change your temporary password soon after you log on. </li>
+	<li>User Name: <strong><%= @client.email %></strong></li>
+ 	<li>Password: <strong><%= @client.temp_password %></strong></li>
 </ul>
+
+<p>We recommend you change your temporary password soon after you log on.</p>
 
 <p>Have a great day!</p>
