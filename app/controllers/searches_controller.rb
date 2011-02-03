@@ -19,18 +19,18 @@ class SearchesController < ApplicationController
     query = params[:query]
     
     unless query.blank?
-      query = query.downcase.gsub(/<\/?[^>]*>/, "")
+      query = query.gsub(/<\/?[^>]*>/, '').downcase
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "#{@model_class.table_name}.#{field} ILIKE '%#{query}%'"
+          "LOWER(TO_CHAR(#{@model_class.table_name}.#{field})) LIKE :q"
         else
           assoc = @model_class.get_assoc_prefix_for(field)
-          "#{assoc[:prefix]}.#{field} ILIKE '%#{query}%'"
+          "LOWER(TO_CHAR(#{assoc[:prefix]}.#{field})) LIKE :q"
         end
       end.join(' OR ') if @model_class.respond_to? :searchables
     
-      options = { :conditions => conditions }
+      options = { :conditions => [conditions, { :q => query }] }
       options.store :include, assoc[:join] if assoc
       
       @results = @model_class.all options
