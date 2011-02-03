@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203161834) do
+ActiveRecord::Schema.define(:version => 20110201224435) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -163,16 +163,16 @@ ActiveRecord::Schema.define(:version => 20110203161834) do
     t.datetime "updated_at"
   end
 
-# Could not dump table "email_blasts" because of following ActiveRecord::StatementInvalid
-#   Interrupt: :            SELECT distinct i.relname, d.indisunique, d.indkey, t.oid
-             FROM pg_class t, pg_class i, pg_index d
-           WHERE i.relkind = 'i'
-             AND d.indexrelid = i.oid
-             AND d.indisprimary = 'f'
-             AND t.oid = d.indrelid
-             AND t.relname = 'email_blasts'
-             AND i.relnamespace IN (SELECT oid FROM pg_namespace WHERE nspname IN (E'"$user"',E'public') )
-          ORDER BY i.relname
+  create_table "email_blasts", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "content"
+    t.string   "status"
+    t.datetime "blast_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "process_erb"
+  end
 
   create_table "facility_features", :force => true do |t|
     t.string   "title"
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(:version => 20110203161834) do
     t.string   "phone"
     t.integer  "admin_fee"
     t.boolean  "prorated"
-    t.float    "tax_rate",            :default => 0.0
+    t.integer  "tax_rate"
     t.string   "tracked_number"
     t.string   "storage_types"
     t.boolean  "renting_enabled"
