@@ -31,7 +31,7 @@ class Listing < ActiveRecord::Base
   end
   
   has_many :listing_features,       :dependent => :destroy
-  has_many :facility_features,      :through => :listing_features
+  has_many :facility_features,      :through => :listing_features, :order => 'title'
   has_many :predef_special_assigns, :dependent => :destroy
   has_many :predefined_specials,    :through => :predef_special_assigns
   

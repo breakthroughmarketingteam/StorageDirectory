@@ -20,15 +20,13 @@ class SearchesController < ApplicationController
     
     unless query.blank?
       query = query.downcase.gsub(/<\/?[^>]*>/, "")
-      dev = RAILS_ENV == 'development'
-      like_operator = dev ? ' LIKE' : 'ILIKE'
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "#{dev ? 'LOWER(' : ''}#{@model_class.table_name}.#{field}#{')' if dev} #{like_operator} '%#{query}%'"
+          "#{@model_class.table_name}.#{field} ILIKE '%#{query}%'"
         else
           assoc = @model_class.get_assoc_prefix_for(field)
-          "#{assoc[:prefix]}.#{field} #{like_operator} '%#{query}%'"
+          "#{assoc[:prefix]}.#{field} ILIKE '%#{query}%'"
         end
       end.join(' OR ') if @model_class.respond_to? :searchables
     

@@ -1,60 +1,60 @@
-<% @featured_listing = Listing.temp_featured_listing(get_search) #Listing.get_featured_listing get_search.results unless in_mode?('home') %>
-<% cache @featured_listing do %>
-	<div id="feat_wrap">
-	<% unless @featured_listing.nil? %>
-		<div id="feat-list" class="shimmy listing">
-			<h4>Featured Listing</h4>
-			<div id="wrap">
-				<div class="facility-logo">
-					<%= display_logo(@featured_listing, { :class => (@featured_listing.pictures.empty? ? 'full' : 'short') }) %>
-				</div>
-		
-				<!--
-				<%# unless @featured_listing.pictures.empty? %>
-					<ul id="preview">
-						<li>
-							<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
-						</li>
-						<li>
-							<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
-						</li>
-						<li>
-							<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
-						</li>
-						<li>
-							<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
-						</li>
-					</ul>
-				<%# end %>
-				-->
+<% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') #Listing.temp_featured_listing(get_search) %>
+<div id="feat_wrap">
+<% unless @featured_listing.nil? -%>
+	<div id="feat-list" class="shimmy listing">
+		<h4>Featured Listing</h4>
+		<div id="wrap">
+			<div class="facility-logo">
+				<%= display_logo(@featured_listing, { :class => (@featured_listing.pictures.empty? ? 'full' : 'short') }) %>
+			</div>
+	
+			<!--
+			<%# unless @featured_listing.pictures.empty? %>
+				<ul id="preview">
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview1.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview2.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview3.png"></a>
+					</li>
+					<li>
+						<a href=""><img src="/images/ui/storagelocator/temp-images/preview4.png"></a>
+					</li>
+				</ul>
+			<%# end %>
+			-->
 
-				<div id="name">
-					<%= link_to @featured_listing.title, facility_path_for(@featured_listing) %>
+			<div id="name">
+				<%= link_to @featured_listing.title, facility_path_for(@featured_listing) %>
+			</div>
+
+			<div id="address">
+				<%= @featured_listing.full_address %>
+			</div>
+
+			<% if @featured_listing.call_tracking_enabled? %>
+				<div id="phone">
+					<%= @featured_listing.call_tracking_num %>
 				</div>
-	
-				<div id="address">
-					<%= @featured_listing.full_address %>
-				</div>
-	
-				<% if @featured_listing.call_tracking_enabled? %>
-					<div id="phone">
-						<%= @featured_listing.call_tracking_num %>
-					</div>
-				<% end %>
+			<% end %>
 		
-				<div id="spec" class="special_txt" data-special-id="<%= @featured_listing.special.id %>">
-					<p>Special</p>
-					<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
-				</div>
-	
-				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true, :context => 'featured' } %>
-				<%= compare_link @featured_listing, 'featured' %>
-				
-				<div id="more-info">
-					<%= link_to 'More Info', facility_path_for(@featured_listing), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
-				</div>
+			<% if @featured_listing.special %>
+			<div id="spec" class="special_txt" data-special-id="<%= @featured_listing.special.id %>">
+				<p>Special</p>
+				<%= @featured_listing.premium? && @featured_listing.special ? @featured_listing.special.title : $_usssl_discount %>
+			</div>
+			<% end %>
+
+			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true, :context => 'featured' } %>
+			<%= compare_link @featured_listing, 'featured' unless @featured_listing.sizes.empty? %>
+			
+			<div id="more-info">
+				<%= link_to 'More Info', facility_path_for(@featured_listing), :class => 'btn', :title => "Read more about #{@featured_listing.title}" %>
 			</div>
 		</div>
-	<% end %>
 	</div>
-<% end %>
+<% end -%>
+</div>

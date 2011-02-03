@@ -5,6 +5,8 @@
 
 $(function(){
 	
+	$('.no_results', '#content').hide();
+	
 	$('a', '#sl-tabs-nav').click(function() {
 		window.location.hash = this.href.split('#')[1];
 	});

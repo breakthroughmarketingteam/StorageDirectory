@@ -14,8 +14,10 @@ class PagesController < ApplicationController
     @pages = Page.all_for_index_view
     render :layout => false if request.xhr?
   end
-
+  
+  #caches_action :show, :layout => false
   def show
+    response.headers['Cache-Control'] = 'public, max-age=5184000' # one day
     render :layout => false if request.xhr?
   end
 

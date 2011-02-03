@@ -35,13 +35,6 @@
 								<%= text_field_tag :move_in_date, Time.now.strftime('%m/%d/%Y'), :class => 'required cal', :maxlength => 10 %>
 							</div>
 			
-							<div id="paid_until">
-								<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
-								<span class="paid_thru"></span>
-								<%= hidden_field_tag :duration, 1 %>
-								<%= hidden_field_tag :listing_id, @listing.id %>
-							</div>
-			
 							<% unless @listing.specials.empty? %>
 								<div>
 									<%= label_tag :specials, 'Specials: ', :class => 'block left' %>
@@ -113,6 +106,12 @@
 									<span class="right">
 										$<span class="total">0.00</span>
 									</span>
+								</li>
+								<li id="paid_until">
+									<%= label_tag 'Paid until: ', nil, :class => 'block left' %>
+									<span class="paid_thru"></span>
+									<%= hidden_field_tag :duration, 1 %>
+									<%= hidden_field_tag :listing_id, @listing.id %>
 								</li>
 							</ul>
 						</div>
