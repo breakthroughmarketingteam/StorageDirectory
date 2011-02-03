@@ -2042,8 +2042,27 @@ p.breadcrumb a{color:#fff;}
 #moving .even .marker,#moving .even .name,#moving .even .address,#moving .even .divider,#moving .even .distance{background:#f3f3f3;}
 #moving .num_icon{background:url(/images/ui/storagelocator/result-number.png) no-repeat;color:#fff;font-weight:bold;height:32px;padding:7px 0 0;text-align:center;position:static;text-shadow:1px 1px 0 #666;width:29px;}
 
-#fac-features #feats2{background: url(/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
-#top_fac_page #fac-features h3#heading{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:url(/images/ui/storagelocator/blue-bg2.png) repeat-x;color:#fff;font-size:24px;font-weight:normal;height:37px;padding-top:8px;text-align:center;text-shadow:1px 1px 0 #333;}
+#fac-features #feats{background: url(/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
+#top_fac_page #fac-features #heading{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:url(/images/ui/storagelocator/blue-bg2.png) repeat-x;color:#fff;height:37px;padding:8px 10px 0 20px;}
+#top_fac_page #fac-features #heading h3{display:block;float:left;font-size:24px;font-weight:normal;line-height:30px;margin:0;text-shadow:1px 1px 0 #333;}
+#top_fac_page #fac-features ul{float:right;margin:0;width:400px;}
+#top_fac_page #fac-features ul li{display:block;float:left;text-align:center;padding:0;width:100px;}
+#top_fac_page #fac-features ul li span{display:block;font-size:12px;width:100%;}
+#top_fac_page #fac-features ul li strong{display:block;color:#fff;font-size:14px;margin-top:3px;width:100%;}
+
+
+#mem-types table{border:1px solid #ccc;display:block;padding:0 0 3px;}
+#mem-types td.label{background:url(/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
+#mem-types td.indent{background:url(/images/ui/storagelocator/disc.png) no-repeat 37px 11px;padding-left:50px;}
+#mem-types th{background:#4c4bcc;color:#fff;font-size:16px;padding-bottom:10px;padding-top:9px;text-align:center;}
+
+#mem-types th.label{text-align:left;padding-left:10px;}
+#mem-types tr.odd{background:#fff;}
+#mem-types tr.even{background:#eee;}
+#mem-types .last td{padding-top:10px;}
+#mem-types td{font-size:12px;padding:7px 0;text-align:center;}
+#mem-types table strong{font-size:16px;color:#4c4bcc;}
+
 .self_storage_advertising #hr-divider{background:url(/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 20px;width:712px;}
 .self_storage_advertising #hr-divider{display:inline-block;}
 
