@@ -1250,21 +1250,29 @@ $(function() {
 	}
 	
 	// change main_pic when thumb is hovered
-	$('#sl-tabs-pict-gall img, #sl-photos img').live('mouseover', function(){
+	$('#sl-tabs-pict-gall img, #sl-photos img').live('mouseover', function() {
 		if ($(this).hasClass('loading')) return false;
 		
 		var main_pic = $('#sl-tabs-pict .big-pic, #sl-photos .main_pic');
-		if (main_pic.length == 0) return false;
+		if (main_pic.length == 0) main_pic = $('<img class="main_pic hide" src="'+ this.src.replace('/thumb_', '/medium_') +'" alt="'+ this.alt +'" />').appendTo('#main_pic_wrap');
+		else if (main_pic.length > 1) {
+			var p = main_pic.eq(0);
+			main_pic.not(p).remove();
+			main_pic = p;
+		}
 		
 		$('img', '#sl-photos #previews, #sl-tabs-pict-gall').removeClass('active');
-		var thumb = $(this),
-			new_src = thumb.attr('src').replace('/thumb_', '/medium_');
-		
-		thumb.addClass('active');
-		main_pic.attr('src', new_src).attr('alt', thumb.attr('alt'));
-	});
+		var thumb = $(this), 
+			new_img = $('<img class="main_pic hide" src="'+ thumb.attr('src').replace('/thumb_', '/medium_') +'" alt="'+ thumb.attr('alt') +'" />');
+			
+		new_img.load(function() {
+			thumb.addClass('active');
+			main_pic.after(new_img).fadeOutRemove(900);
+			new_img.fadeIn(900);
+		});
+	}).live('click', function() { return false });
 	
-	$('.delete_link', '#sl-tabs-pict').live('click', function(){
+	$('.delete_link', '#sl-tabs-pict').live('click', function() {
 		var $this = $(this);
 		
 		if (!$this.data('deleting')) $.greyConfirm('Are you sure you want to delete this picture?', function() {

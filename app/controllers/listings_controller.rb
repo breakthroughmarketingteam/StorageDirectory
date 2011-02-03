@@ -53,8 +53,6 @@ class ListingsController < ApplicationController
   end
   
   def compare
-    @search = Search.find_by_id session[:search_id]
-    
     if params[:ids] && params[:ids].match(/\d+/)
       @listing_set = params[:ids].split('-').map do |ids|
         i = ids.split(',')
@@ -78,6 +76,7 @@ class ListingsController < ApplicationController
       @listing.update_stat 'clicks', request
       @search.update_attribute :listing_id, @listing.id
     end
+    
     
     render :layout => false if request.xhr?
   end
@@ -254,6 +253,8 @@ class ListingsController < ApplicationController
     @map = @listing.map
     @pictures = @listing.pictures
     @reviews = @listing.reviews.published.paginate :per_page => 10, :page => params[:review_page]
+    @size = params[:size] ? @listing.sizes.find(params[:size]) : @listing.get_searched_size(@search)
+    @special = @listing.predefined_specials.find params[:special] if params[:special]
     
     if in_mode? 'profile'
       @facility_features = FacilityFeature.all.map &:title

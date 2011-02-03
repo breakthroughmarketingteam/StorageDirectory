@@ -345,9 +345,9 @@ class Listing < ActiveRecord::Base
     self.client.nil? || self.client.status == 'unverified'
   end
   
-  # add up a score based on model methods
-  # when the methods return collections, calculate the size compared to the integer in the criteria,
-  # when its a single object, do the comparison and return 0 or 100
+  # add up a score based on the return values of model methods
+  # when the methods returns a collection, calculate the size compared to the integer in the criteria,
+  # when its a single object, do the comparison and return 0 or 5
   def self.criteria
     {
       :sizes             => 5,
@@ -392,88 +392,6 @@ class Listing < ActiveRecord::Base
   
   def call_tracking_num
     ''
-  end
-  
-  #
-  # Price Calculation
-  #
-  def calculated_price(options)
-    size    = options[:size] || self.sizes.first
-    special = options[:special] || self.special
-    month_limit = 1 + (special ? (special.month_limit || 1) : 1)
-    
-    if size
-      if self.prorated?
-        move_date     = 1.day.from_now
-        days_in_month = Date.civil(move_date.year, move_date.month, -1).day
-        half_month    = (days_in_month / 2).to_f.ceil
-        multiplier    = get_prorated_multiplier month_limit, move_date, days_in_month, half_month
-        paid_thru     = get_prorated_paid_thru multiplier, move_date, days_in_month, half_month, month_limit
-        amount        = get_prorated_price size, special, multiplier
-      else
-        paid_thru = get_paid_thru month_limit
-        amount    = get_fixed_priced size, special, month_limit
-      end
-    else
-      amount, paid_thru = nil, Time.now
-    end
-    
-    { :amount => amount, :paid_thru => paid_thru }
-  end
-  
-  def get_prorated_multiplier(month_limit, move_date, days_in_month, half_month)
-    multiplier = month_limit
-    
-    if multiplier > 1
-      multiplier -= 1
-      multiplier += (days_in_month - move_date.day) * @@proration
-    else
-      multiplier = 1 + (days_in_month - move_date.day) * @@proration
-    end
-    
-    multiplier
-  end
-  
-  def get_prorated_paid_thru(multiplier, move_date, days_in_month, half_month, month_limit)
-    if month_limit == 1 && move_date.day > half_month
-      multiplier += 1
-      (multiplier.months - 1.day).from_now
-    else
-      Date.new move_date.year, move_date.month + month_limit, days_in_month
-    end
-  end
-  
-  def get_prorated_price(size, special, multiplier)
-    subtotal = size.dollar_price * multiplier
-    subtotal -= (subtotal * $_usssl_percent_off) + (special ? get_discount_amount(special, subtotal, size.dollar_price, multiplier) : 0)
-    subtotal = subtotal + self.admin_fee
-    subtotal = subtotal + (subtotal * (self.tax_rate / 100))
-  end
-  
-  def get_paid_thru(month_limit)
-    month_limit.months.from_now
-  end
-  
-  def get_fixed_priced(size, special, month_limit)
-    subtotal = size.dollar_price * month_limit
-    subtotal -= self.get_discount_amount(special, subtotal, size.dollar_price)
-    subtotal = subtotal + self.admin_fee
-    subtotal = subtotal + (subtotal * (self.tax_rate / 100.0))
-  end
-  
-  def get_discount_amount(special, subtotal, rate, multiplier = 1)
-    amount = 0
-    
-    case special.function when 'm'
-      amount = rate * special.value
-    when '%'
-      amount = subtotal * (special.value / 100.0)
-    else
-      amount = special.value
-    end
-    
-    amount = amount * multiplier if multiplier > 0.5 && multiplier <= 1    
-		amount
   end
   
   #
