@@ -23,7 +23,7 @@
 				<%= link_to 'Save', listings_path, :class => 'crud_btn' %>
 				<%= link_to 'Cancel', '#', :class => 'iconOnly16 cancel_link right', :title => 'Cancel adding a new facility' %>
 			<% else %>
-				<%= link_to 'Manage', (current_user.has_role?('admin') ? edit_listing_path(listing) : profile_listing_path(listing)), :class => 'crud_btn' %>
+				<%= link_to 'Manage', (current_user && current_user.has_role?('admin') ? edit_listing_path(listing) : profile_listing_path(listing)), :class => 'crud_btn' %>
 			<% end %>
       		</li>
     	</ul>

@@ -68,12 +68,6 @@
 										<input class="required cal" id="move_in_date" maxlength="10" name="rental[move_in_date]" type="text" value="02/01/2011" />
 									</div>
 
-									<div id="paid_until">
-										<label class="block left">Paid until: </label>
-										<span class="paid_thru"></span>
-										<input id="listing_id" name="rental[listing_id]" type="hidden" value="<%= listing.id %>" />
-									</div>
-
 									<% unless listing.specials.empty? %>
 										<div>
 											<label class="block left" for="specials">Specials: </label>
@@ -145,6 +139,11 @@
 											<span class="right">
 												$<span class="total">0.00</span>
 											</span>
+										</li>
+										<li id="paid_until">
+											<label class="block left">Paid until: </label>
+											<span class="paid_thru"></span>
+											<input id="listing_id" name="rental[listing_id]" type="hidden" value="<%= listing.id %>" />
 										</li>
 									</ul>
 								</div>

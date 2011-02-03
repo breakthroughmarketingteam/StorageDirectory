@@ -1,14 +1,17 @@
 development:
-  adapter: mysql
-  encoding: utf8
-  database: usselfstoragelocator
-  username: root
-  password: 
+    encoding: unicode
+    adapter: postgresql
+    username: postgres
+    port: 5432
+    host: localhost
+    database: usselfstoragelocator
+    password: 09i-0op
 
 production:
-  adapter: mysql
-  encoding: utf8
-  database: usselfstoragelocator
-  username: root
-  password: 
-
+    encoding: unicode
+    adapter: postgresql
+    username: postgres
+    port: 5432
+    host: localhost
+    database: usselfstoragelocator
+    password: 09i-0op

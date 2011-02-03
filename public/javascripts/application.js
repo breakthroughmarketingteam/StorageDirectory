@@ -1250,7 +1250,7 @@ $(function() {
 	}
 	
 	// change main_pic when thumb is hovered
-	$('#sl-tabs-pict-gall img, #sl-photos img').live('mouseover', function() {
+	$('#sl-tabs-pict-gall img, #previews img').live('mouseover', function() {
 		if ($(this).hasClass('loading')) return false;
 		
 		var main_pic = $('#sl-tabs-pict .big-pic, #sl-photos .main_pic');
