@@ -199,8 +199,8 @@ class AjaxController < ApplicationController
     @locals.merge!(:show_size_ops => params[:show_size_ops]) if params[:show_size_ops]
     
     @locals
-  #rescue
-  #  nil
+  rescue
+    nil
   end
   
   def json_response(status = true, data = nil)
