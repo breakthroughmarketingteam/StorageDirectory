@@ -17,7 +17,6 @@ class PagesController < ApplicationController
   
   #caches_action :show, :layout => false
   def show
-    response.headers['Cache-Control'] = 'public, max-age=5184000' # one day
     render :layout => false if request.xhr?
   end
 
