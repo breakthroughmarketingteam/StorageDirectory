@@ -405,6 +405,21 @@ $(function(){
 		return false;
 	});
 	
+	// update the url of the rent it btns and recalculate price
+	$('.special_txt').live('switched', function() {
+		var spec_txt = $(this),
+			ajax_loader = $.new_ajax_loader('html', $('#calcfor_'+ spec_txt.attr('data-listing-id'))).show(),
+			btns = $('.calc_params', '#'+ spec_txt.attr('data-context'));
+		
+		btns.each(function() {
+			var special_id = spec_txt.attr('data-special-id');
+			this.href = this.href.replace(/\&special=\d+/, '&special='+ special_id);
+			$(this).attr('data-special-id', special_id);
+		});
+		
+		$.calculatePrice('#calc_params_for_'+ spec_txt.attr('data-listing-id'));
+	});
+	
 	$.calculatePrice = function(context) {
 		$.getJSON('/rentalizer', $.getCalculationParams(context), function(response) {
 			$.with_json(response, function(data) {
@@ -423,7 +438,7 @@ $(function(){
 	}
 	
 	 $.getCalculationParams = function(context) {
-		var btns = $('.rent-btn', context), params = { multi_params: [] }, d = new Date();
+		var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
 		
 		btns.each(function(i) {
 			var b = $(this), 
@@ -433,18 +448,18 @@ $(function(){
 		});
 		
 		params.multi_params = params.multi_params.join('-');
-		params.move_in_date = new Date(d.getYear(), d.getMonth(), d.getDate() + 1).format('isoDate');
+		params.move_in_date = new Date(now.getYear(), now.getMonth(), now.getDate() + 1).format('isoDate');
 		
 		return params;
 	}
 	
-	$('.specializer', '.unit_detail').live('click', function() {
+	$('.specializer', '.specializer_wrap').live('click', function() {
 		var $this = $(this),
 			specials = $('.more_specials', $this.parent());
 	
 		if ($this.text() == 'more') {
 			$this.text('less');
-			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.height() / 2) +'px', 'right': '-'+ (specials.width() + (specials.width() / 2)) +'px' });
+			specials.addClass('show_specials').show().css({ 'top': '-'+ specials.height() +'px', 'right': '-'+ (specials.outerWidth() / 2) +'px' });
 		} else {
 			$this.text('more');
 			specials.hide().css('right', 0);
@@ -455,13 +470,15 @@ $(function(){
 	
 	$('.special_txt', '.more_specials').live('click', function() {
 		var $this = $(this),
-			active_special = $('.special_txt.active', $this.parent().parent()),
+			context = $this.parents('.specializer_wrap'),
+			active_special = $('.special_txt.active', context),
 			special_clone = active_special.clone().removeClass('active'),
 			more = $this.parents('.more_specials').hide().css('right', 0);;
 		
 		active_special.replaceWith($this.clone().addClass('active'));
 		$this.replaceWith(special_clone);
 		$('.specializer', more.parent()).text('more');
+		$('.special_txt.active', context).trigger('switched');
 	});
 
 	/* AJAX pagination, load next page results in the same page */

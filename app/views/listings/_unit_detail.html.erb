@@ -1,7 +1,8 @@
 <div class="unit_detail_in">
-	<div class="left">
+	<div class="left specializer_wrap">
 		<% if listing.special %>
-			Special: <%= render :partial => 'predefined_specials/special_txt', :locals => { :listing => listing } %>
+			Special: <span class="special_txt active" data-context="listing_<%= listing.id %>" data-listing-id="<%= listing.id %>" data-special-id="<%= listing.special.id %>" title="<%= listing.special.description %>"><%= listing.special.title %></span>
+			<%= render :partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => listing.special, :context => "listing_#{listing.id}" } %>
 		<% end %>
 	</div>
 	

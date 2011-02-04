@@ -9,11 +9,10 @@ class Rentalizer
   class << self
     def call(env)
       if env['PATH_INFO'] =~ /^\/rentalizer/
-        params  = HashWithIndifferentAccess[*env['QUERY_STRING'].split(/&|=/).map { |q| CGI.unescape q }] # query string to hash
+        params = HashWithIndifferentAccess[*CGI.unescape(env['QUERY_STRING']).split(/&|=/)] # query string to hash
         
         if params[:multi_params]
-          mime = 'application/json'
-          
+          # :multi_params are built like: <listing_id>x<size_id>x<special_id>-<listing_id 2>...
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
@@ -23,11 +22,11 @@ class Rentalizer
             rental_calc params, listing, size, special, true
           end
           
-          out = { :success => true, :data => data }.to_json
+          out, mime = { :success => true, :data => data }.to_json, 'application/json'
         else  
-          listing = Listing.find params['rental[listing_id]'] || params[:listing_id]
-          size    = listing.sizes.find_by_id(params[:size_id] ? params[:size_id] : params['rental[size_id]'])
-          special = listing.predefined_specials.find params['rental[special_id]'] unless params['rental[special_id]'].blank?
+          listing = Listing.find(params['rental[listing_id]'] || params[:listing_id])
+          size    = listing.sizes.find_by_id(params[:size_id] || params['rental[size_id]'])
+          special = listing.predefined_specials.find_by_id(params[:special_id] || params['rental[special_id]'])
         
           out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
         end

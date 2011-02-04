@@ -28,19 +28,22 @@ class Search < ActiveRecord::Base
   def initialize(attributes, request, old_search = nil)
     super attributes
     self.set_request! request
-    self.set_query! if self.query.blank?
+    self.set_query! old_search if self.query.blank?
     self.set_location!((old_search && (old_search.query == self.query) ? old_search.location : nil)) # geocode when nil
+    self.set_unit_type! attributes
   end
   
   def self.create_from_geoloc(request, loc, storage_type)
-    search = self.new({ :storage_type => storage_type }, request)
+    search = self.new({ :storage_type => storage_type.try(:downcase) }, request)
     search.set_location! loc
+    search.set_query!
     search.save
     search
   end
   
   # check to see if an attribute has changed since last request
   def self.diff?(old_search, new_search)
+    #raise [old_search.comparable_attributes, new_search.comparable_attributes, old_search.comparable_attributes != new_search.comparable_attributes].pretty_inspect
     old_search.comparable_attributes != new_search.comparable_attributes
   end
   
@@ -49,7 +52,8 @@ class Search < ActiveRecord::Base
   end
   
   def comparable_attributes
-    self.attributes.select { | k, v| !['id', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
+    a = self.attributes.select { |k, v| !['id', 'referrer', 'remote_ip', 'sort_reverse', 'sorted_by', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
+    a.map { |a| v = a[1]; v.respond_to?(:downcase) ? v.downcase : v }
   end
   
   def location
@@ -60,8 +64,12 @@ class Search < ActiveRecord::Base
     "#{city}, #{state} #{zip}"
   end
   
-  def set_query!
-    self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size > 2 ? self.state.upcase : self.state)}" if self.city
+  def set_query!(old_search = nil)
+    if self.city
+      self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size > 2 ? self.state.upcase : self.state)}"
+    elsif old_search && old_search.query
+      self.query = old_search.query
+    end
   end
   
   def set_location!(location = nil)
@@ -79,7 +87,7 @@ class Search < ActiveRecord::Base
       self.set_location! GeoKit::GeoLoc.new(named_listing)
       
     else # test ip, we should only be getting here when session[:geo_location] is nil, this happens in localhost
-      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
+      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146')
     end
     self
   end
@@ -87,6 +95,11 @@ class Search < ActiveRecord::Base
   def set_request!(request)
     self.remote_ip = request.remote_ip
     self.referrer = request.referrer
+  end
+  
+  def set_unit_type!(attributes = nil)
+    self.unit_size = attributes ? (attributes[:unit_size] || '5x5') : '5x5'
+    self.within = attributes ? (attributes[:within] || '20') : '20'
   end
   
   def sort_reversal

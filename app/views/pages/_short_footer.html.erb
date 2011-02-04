@@ -1,11 +1,12 @@
 <hr />
 <div id="footer_btm">
 	<div id="wrapper1">
-		<div id="more-info-btn"><a title="Click To Find Out!" rel="more_inner" class="openDiv" href="#">Want To Know How It Works?</a></div>
+		<div id="more-info-btn">
+			<a title="Click To Find Out!" rel="more_inner" class="openDiv" href="#">Want To Know How It Works?</a>
+		</div>
+		
 		<div id="aff-box">
-			<p>
-				<strong>Affiliate Partners</strong> - Get great deals and save on your next Self Storage rental with one of our affiliate partners.
-			</p>
+			<p><strong>Affiliate Partners</strong> - Get great deals and save on your next Self Storage rental with one of our affiliate partners.</p>
 			
 			<div id="aff_scroll" class="wrapper">
 				<div class="prev"></div>
@@ -27,15 +28,15 @@
 			</div>
 		</div>
 		
-		
 		<div id="top_cities">
 			<p><strong>Most Popular Self Storage Cities <%= "in #{States.name_of @search.state}" if in_mode? 'locator' %></strong></p>
-			<% cache "Listings-#{Listing.count}" do %>
-				<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@search.state) : Map.top_cities %>
-			<% end %>
+			<div class="wrapper">
+				<% cache "Listings-#{Listing.count}" do %>
+					<%= display_top_cities in_mode?('locator') ? Map.top_cities_of(@search.state) : Map.top_cities %>
+				<% end %>
+			</div>
 		</div>
 		
 		<%= render :partial => 'pages/footer_bottom' %>
-		
 	</div>
 </div>

@@ -303,11 +303,18 @@ module ListingsHelper
       "</td>"
     
     when 'monthly_rate'
-      "<td class='padded' title='The monthly rate applicable to the selected unit size'>#{number_to_currency size.dollar_price if size}</td>"
+      "<td class='padded' title='The monthly rate applicable to the selected unit size'>"+
+        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article}"+
+      '</td>'
     
     when /(special)/i
       special = listing_set[:special]
-      "<td class='padded' title='#{special.description if special}'>#{special.title if special}</td>"
+      "<td class='padded' title='#{special.description if special}'>"+
+        '<div class="specializer_wrap">'+
+          "<span class='special_txt active' data-context='compare_wrap' data-listing-id='#{listing.id}' data-special-id='#{special.id}'>#{special.title if special}</span> "+
+          render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' })+
+        '</div>'+
+      '</td>'
     
     when /(price)/i
       if size

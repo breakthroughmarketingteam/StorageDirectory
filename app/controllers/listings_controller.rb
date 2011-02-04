@@ -77,7 +77,6 @@ class ListingsController < ApplicationController
       @search.update_attribute :listing_id, @listing.id
     end
     
-    
     render :layout => false if request.xhr?
   end
 

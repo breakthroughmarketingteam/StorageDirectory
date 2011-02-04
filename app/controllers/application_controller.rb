@@ -502,7 +502,9 @@ class ApplicationController < ActionController::Base
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
-
+      
+      #raise [@search, @new_search, @diff_search].pretty_inspect
+      
       if @diff_search
         @new_search.save
         @search.add_child @new_search

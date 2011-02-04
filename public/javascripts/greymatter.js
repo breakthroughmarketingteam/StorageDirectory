@@ -851,8 +851,8 @@ $.ajax_loaders = {};
 $.new_ajax_loader = function(where, el, img) {
 	var el = $(el);
 	
-	if (el.data('ajax_id')) {
-		return $.ajax_loaders[el.data('ajax_id')];
+	if (el.data('ajax_id') && (loader = $.ajax_loaders[el.data('ajax_id')])) {
+		return loader;
 		
 	} else {
 		el.data('ajax_id', (new Date()).getTime());

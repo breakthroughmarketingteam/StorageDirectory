@@ -34,12 +34,12 @@
 		</div>
 	</div>
 	
-	<% if @listing.renting_enabled? %>
+	<% if @listing.renting_enabled? && !@listing.sizes.empty? %>
 		<div id="rent_wrap">
 			<h2>Rent a Unit</h2>
 			<div class="realtime">Real-Time Storage Unit Rentals</div>
 			<div id="rent_inner">
-				<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @size, :special => @special, :show_size_ops => true } unless @listing.sizes.empty? %>
+				<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @size, :special => @special, :show_size_ops => true } %>
 			</div>
 		</div>
 	<% end %>
