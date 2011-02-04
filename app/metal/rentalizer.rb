@@ -10,11 +10,27 @@ class Rentalizer
     def call(env)
       if env['PATH_INFO'] =~ /^\/rentalizer/
         params  = HashWithIndifferentAccess[*env['QUERY_STRING'].split(/&|=/).map { |q| CGI.unescape q }] # query string to hash
-        listing = Listing.find params['rental[listing_id]'] || params[:listing_id]
-        size    = listing.sizes.find_by_id(params[:size_id] ? params[:size_id] : params['rental[size_id]'])
-        special = listing.predefined_specials.find params['rental[special_id]'] unless params['rental[special_id]'].blank?
         
-        out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
+        if params[:multi_params]
+          mime = 'application/json'
+          
+          data = params[:multi_params].split('-').map do |str|
+            p = str.split('x')
+            listing = Listing.find p[0].to_i
+            size    = listing.sizes.find_by_id(p[1].to_i == 0 ? nil : p[1].to_i)
+            special = listing.predefined_specials.find_by_id(p[2].to_i == 0 ? nil : p[2].to_i)
+            
+            rental_calc params, listing, size, special, true
+          end
+          
+          out = { :success => true, :data => data }.to_json
+        else  
+          listing = Listing.find params['rental[listing_id]'] || params[:listing_id]
+          size    = listing.sizes.find_by_id(params[:size_id] ? params[:size_id] : params['rental[size_id]'])
+          special = listing.predefined_specials.find params['rental[special_id]'] unless params['rental[special_id]'].blank?
+        
+          out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
+        end
         
         [200, {'Content-Type' => mime}, [out]]
       else
@@ -29,9 +45,9 @@ class Rentalizer
     end
     
     # respond to ajax updates to the rentalizer form
-    def rental_calc(params, listing, size, special)
+    def rental_calc(params, listing, size, special, multi = false)
       proration     = 0.03333 # multiply this by each day left in the lastest month in the rental period
-      move_date     = Time.parse(CGI.unescape(params['rental[move_in_date]']))
+      move_date     = Time.parse(CGI.unescape(params['rental[move_in_date]'] || params[:move_in_date]))
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day
       half_month    = (days_in_month / 2).to_f.ceil
       multiplier    = special ? special.month_limit : 1 # the number of months required to rent 
@@ -69,7 +85,7 @@ class Rentalizer
         :total          => sprintf("%.2f", total)
       }
       
-      [{ :success => true, :data => out }.to_json, 'application/json']
+      multi ? { :listing_id => listing.id, :calculation => out } : [{ :success => true, :data => out }.to_json, 'application/json']
     end
     
     def calculate_special(multiplier, special, subtotal)

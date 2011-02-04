@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin'))
+    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
   def self.app_config

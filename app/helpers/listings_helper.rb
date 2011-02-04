@@ -310,16 +310,8 @@ module ListingsHelper
       "<td class='padded' title='#{special.description if special}'>#{special.title if special}</td>"
     
     when /(price)/i
-      calculation = listing.calculated_price(listing_set)
-      paid_thru = calculation[:paid_thru]
-      
       if size
-        "<td class='padded' title='This price includes tax and the administrative fee applicable to the listing'>"+
-          "<span class='price'>#{number_to_currency calculation[:amount]}</span><br />"+
-          "<span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />"+
-            "thru #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}"+
-          "</span>"+
-        "</td>"
+        "<td id='calcfor_#{listing.id}' class='padded calculation' title='This price includes tax and the administrative fee applicable to the listing'>#{ajax_loader}</td>"
       else
         "<td class='padded'><span>N/A for this size</span></td>"
       end

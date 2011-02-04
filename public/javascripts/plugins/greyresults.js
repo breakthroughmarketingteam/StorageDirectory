@@ -3,10 +3,7 @@
 // functionality specific to the listings results of USSelfStorageLocator.com
 // for both back end (client control panel) and front end (search results)
 
-$(function(){
-	
-	$('.no_results', '#content').hide();
-	
+$(function(){	
 	$('a', '#sl-tabs-nav').click(function() {
 		window.location.hash = this.href.split('#')[1];
 	});
@@ -382,7 +379,7 @@ $(function(){
 				special_id = $('.special_txt', context).attr('data-special-id'),
 				size_id    = $('ul.dnp input.unit_size:checked', context).val();
 			
-			ids.push(this.value +','+ size_id +','+ special_id);
+			ids.push(this.value +'x'+ size_id +'x'+ special_id);
 		});
 		
 		this.href += ids.join('-');
@@ -394,8 +391,10 @@ $(function(){
 					width: 'auto',
 					height: 'auto',
 					modal: true
-				}));
+				})),
+				ajax_loader = $('.ajax_loader', pop_up).show();
 				
+				$.calculatePrice(pop_up);
 				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
@@ -405,6 +404,39 @@ $(function(){
 		
 		return false;
 	});
+	
+	$.calculatePrice = function(context) {
+		$.getJSON('/rentalizer', $.getCalculationParams(context), function(response) {
+			$.with_json(response, function(data) {
+				$.each(data, function() {
+					var calc_wrap = $('#calcfor_'+ this.listing_id), html = '',
+						paid_thru = new Date(this.calculation.paid_thru),
+						months = paid_thru.getMonth() - new Date().getMonth();
+					
+					html += '<span class="price">$'+ this.calculation.total +'</span><br />';
+					html += '<span class="date">Paid for '+ months +' month'+ (months > 1 ? 's' : '') +'<br />thru '+ paid_thru.format('longDate') +'</span>';
+					
+					calc_wrap.html(html);
+				});
+			});
+		});
+	}
+	
+	 $.getCalculationParams = function(context) {
+		var btns = $('.rent-btn', context), params = { multi_params: [] }, d = new Date();
+		
+		btns.each(function(i) {
+			var b = $(this), 
+				p = [b.attr('data-listing-id'), b.attr('data-size-id'), b.attr('data-special-id')];
+				
+			params.multi_params.push(p.join('x'));
+		});
+		
+		params.multi_params = params.multi_params.join('-');
+		params.move_in_date = new Date(d.getYear(), d.getMonth(), d.getDate() + 1).format('isoDate');
+		
+		return params;
+	}
 	
 	$('.specializer', '.unit_detail').live('click', function() {
 		var $this = $(this),
