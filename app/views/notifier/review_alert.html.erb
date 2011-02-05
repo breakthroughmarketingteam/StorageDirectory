@@ -7,6 +7,6 @@ Message: <%= @review.title %>
   <%= @review.comment %>
 -----------------------------------------------------------------------
 
-Link: <%= edit_review_path @review %>
+Link: <%= edit_review_url @review, :protocol => 'https' %>
 
 Rock on.
