@@ -42,7 +42,7 @@ module UtilityMethods
     # add a or an before the word. 
     # does not do it correctly, really depends on if a word starts with a vowel sound, rather than the actual letter as written
     def indef_article
-      %w(a e i o u).include?(self[0, 1]) ? "an #{self}" : "a #{self}"
+      %w(a e i o u).include?(self[0, 1].downcase) ? "an #{self}" : "a #{self}"
     end
     
     def to_class

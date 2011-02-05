@@ -312,7 +312,7 @@ module ListingsHelper
       "<td class='padded' title='#{special.description if special}'>"+
         '<div class="specializer_wrap">'+
           "<span class='special_txt active' data-context='compare_wrap' data-listing-id='#{listing.id}' data-special-id='#{special.id}'>#{special.title if special}</span> "+
-          render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' })+
+          (special ? render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' }) : '')+
         '</div>'+
       '</td>'
     
