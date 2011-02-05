@@ -20,10 +20,8 @@
 		</div>
 	</div>
 	
-	<div>
-		<%= f.label :status, nil, :class => 'block_label' %>
-		<div class="shadow_wrap">
-			<%= f.text_field :status, :class => 'required tiny_text_field' %>
-		</div>
+	<div class="check_box_wrap">
+		<%= f.check_box :published %>
+		<%= f.label :published, nil, :class => 'block_label' %>
 	</div>
 </fieldset>

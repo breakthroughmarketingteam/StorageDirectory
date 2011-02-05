@@ -27,7 +27,7 @@ class Listing < ActiveRecord::Base
   end
   
   has_many :reviews, :class_name => 'Comment', :as => :commentable do
-    def published() find_all_by_status 'published' end
+    def published() all(:conditions => { :published => true }) end
   end
   
   has_many :listing_features,       :dependent => :destroy

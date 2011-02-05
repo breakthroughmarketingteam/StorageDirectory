@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110201224435) do
+ActiveRecord::Schema.define(:version => 20110205000248) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20110201224435) do
     t.string   "email"
     t.text     "comment"
     t.string   "name"
-    t.string   "status"
+    t.boolean  "published"
   end
 
   add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(:version => 20110201224435) do
     t.string   "phone"
     t.integer  "admin_fee"
     t.boolean  "prorated"
-    t.integer  "tax_rate"
+    t.float    "tax_rate",            :default => 0.0
     t.string   "tracked_number"
     t.string   "storage_types"
     t.boolean  "renting_enabled"
