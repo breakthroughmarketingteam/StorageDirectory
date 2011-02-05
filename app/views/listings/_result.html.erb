@@ -1,75 +1,73 @@
-<% cache "#{result.cache_key},#{@search.cache_key}" do %>
-	<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
-		<div class="inner">
-			<div class="in">
-				<div class="rslt-title">
-					<h3><%= link_to_if result.premium?, result.title, facility_path_for(result), :class => "profile_link" %></h3>
-				
-					<% if result.premium? %>
-						<% @features = result.facility_features.map &:title %>
-						<% unless @features.empty? %>
-							<div class="rslt-features">
-								<% @features.each do |feature| %>
-									<a href="#" class="<%= feature.parameterize %>" title="<%= feature %>"><%= feature %></a>
-								<% end %>
-							</div>
-						<% end %>
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
+	<div class="inner">
+		<div class="in">
+			<div class="rslt-title">
+				<h3><%= link_to_if result.premium?, result.title, facility_path_for(result), :class => "profile_link" %></h3>
+			
+				<% if result.premium? %>
+					<% @features = result.facility_features.map &:title %>
+					<% unless @features.empty? %>
+						<div class="rslt-features">
+							<% @features.each do |feature| %>
+								<a href="#" class="<%= feature.parameterize %>" title="<%= feature %>"><%= feature %></a>
+							<% end %>
+						</div>
 					<% end %>
-				</div>
+				<% end %>
+			</div>
 
-				<div class="num_icon">
-					<%= result_index(result) %>
-				</div>
-			
-				<div class="facility-logo">
-					<%= display_logo result, :width => '102px', :height => '77px' %>
-				</div>
-			
-				<div class="rslt-contact">
-					<p>
-						<span class="rslt-address"><%= result.map.address %>,</span><br />
-						<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
-					</p>
-					<% if result.premium? && result.tracked_number %>
-						<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
-					<% end %>
-				
-					<%= claim_listing_link(result, :class => 'claim') unless result.premium? %>
-				</div>
-			
-				<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results' } %>
-			
-				<div class="action_btn<%= listing_action_btn_class(result) %>">
-					<%= results_main_button(result) %>
-				</div>
+			<div class="num_icon">
+				<%= result_index(result) %>
 			</div>
 		
-			<% if result.premium? %>
-				<div class="unit_detail">
-					<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
-				</div>
-			<% end %>
+			<div class="facility-logo">
+				<%= display_logo result, :width => '102px', :height => '77px' %>
+			</div>
+		
+			<div class="rslt-contact">
+				<p>
+					<span class="rslt-address"><%= result.map.address %>,</span><br />
+					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
+				</p>
+				<% if result.premium? && result.tracked_number %>
+					<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
+				<% end %>
+			
+				<%= claim_listing_link(result, :class => 'claim') unless result.premium? %>
+			</div>
+		
+			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results' } %>
+		
+			<div class="action_btn<%= listing_action_btn_class(result) %>">
+				<%= results_main_button(result) %>
+			</div>
 		</div>
 	
-		<div class="panel"></div>
-	
-		<ul class="tabs">
-			<li class="open_tab_li">
-				<%= link_to '+', '#', :class => 'open_tab' %>
-			</li>
-			<li class="fac-map">
-				<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
-			</li>
-			<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
-				<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
-			</li>
-			<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
-				<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
-			</li>
-			<li class="fac-reviews">
-				<%= link_to "Reviews#{" (#{result.reviews.size})" unless result.reviews.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
-			</li>
-		</ul>
-		<div class="highlight-green progress"></div>
+		<% if result.premium? %>
+			<div class="unit_detail">
+				<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
+			</div>
+		<% end %>
 	</div>
-<% end %>
+
+	<div class="panel"></div>
+
+	<ul class="tabs">
+		<li class="open_tab_li">
+			<%= link_to '+', '#', :class => 'open_tab' %>
+		</li>
+		<li class="fac-map">
+			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
+		</li>
+		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
+			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
+		</li>
+		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
+			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
+		</li>
+		<li class="fac-reviews">
+			<%= link_to "Reviews#{" (#{result.reviews.size})" unless result.reviews.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
+		</li>
+	</ul>
+	<div class="highlight-green progress"></div>
+</div>

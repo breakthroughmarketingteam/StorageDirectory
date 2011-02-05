@@ -1,8 +1,7 @@
-<span class="special_txt active" data-special-id="<%= listing.special.id %>" title="<%= listing.special.description %>"><%= listing.special.title %></span>
 <a href="#" class="specializer">more</a>
 <div class="more_specials">
-<% listing.specials.each do |special| %>
-	<% next if special == listing.special %>
-	<span class="special_txt" data-special-id="<%= special.id %>" title="<%= special.description %>"><%= special.title %></span>
-<% end %>
+<% listing.specials.each do |spec| -%>
+	<% next if spec == special %>
+	<span class="special_txt" data-context="<%= context %>" data-listing-id="<%= listing.id %>" data-special-id="<%= spec.id %>" title="<%= spec.description %>"><%= spec.title %></span>
+<% end -%>
 </div>

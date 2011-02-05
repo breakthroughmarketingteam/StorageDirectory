@@ -1,0 +1,12 @@
+A new review was posted for the facility: <%= @review.commentable.title %>
+
+From: <%= @review.email %>
+
+Message: <%= @review.title %>
+-----------------------------------------------------------------------
+  <%= @review.comment %>
+-----------------------------------------------------------------------
+
+Link: <%= edit_review_url @review, :protocol => 'https' %>
+
+Rock on.

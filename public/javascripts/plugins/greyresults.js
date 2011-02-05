@@ -3,10 +3,7 @@
 // functionality specific to the listings results of USSelfStorageLocator.com
 // for both back end (client control panel) and front end (search results)
 
-$(function(){
-	
-	$('.no_results', '#content').hide();
-	
+$(function(){	
 	$('a', '#sl-tabs-nav').click(function() {
 		window.location.hash = this.href.split('#')[1];
 	});
@@ -382,7 +379,7 @@ $(function(){
 				special_id = $('.special_txt', context).attr('data-special-id'),
 				size_id    = $('ul.dnp input.unit_size:checked', context).val();
 			
-			ids.push(this.value +','+ size_id +','+ special_id);
+			ids.push(this.value +'x'+ size_id +'x'+ special_id);
 		});
 		
 		this.href += ids.join('-');
@@ -394,8 +391,10 @@ $(function(){
 					width: 'auto',
 					height: 'auto',
 					modal: true
-				}));
+				})),
+				ajax_loader = $('.ajax_loader', pop_up).show();
 				
+				$.calculatePrice(pop_up);
 				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
@@ -406,13 +405,61 @@ $(function(){
 		return false;
 	});
 	
-	$('.specializer', '.unit_detail').live('click', function() {
+	// update the url of the rent it btns and recalculate price
+	$('.special_txt').live('switched', function() {
+		var spec_txt = $(this),
+			ajax_loader = $.new_ajax_loader('html', $('#calcfor_'+ spec_txt.attr('data-listing-id'))).show(),
+			btns = $('.calc_params', '#'+ spec_txt.attr('data-context'));
+		
+		btns.each(function() {
+			var special_id = spec_txt.attr('data-special-id');
+			this.href = this.href.replace(/\&special=\d+/, '&special='+ special_id);
+			$(this).attr('data-special-id', special_id);
+		});
+		
+		$.calculatePrice('#calc_params_for_'+ spec_txt.attr('data-listing-id'));
+	});
+	
+	$.calculatePrice = function(context) {
+		$.getJSON('/rentalizer', $.getCalculationParams(context), function(response) {
+			$.with_json(response, function(data) {
+				$.each(data, function() {
+					var calc_wrap = $('#calcfor_'+ this.listing_id), html = '',
+						paid_thru = new Date(this.calculation.paid_thru),
+						months = paid_thru.getMonth() - new Date().getMonth();
+					
+					html += '<span class="price">$'+ this.calculation.total +'</span><br />';
+					html += '<span class="date">Paid for '+ months +' month'+ (months > 1 ? 's' : '') +'<br />thru '+ paid_thru.format('longDate') +'</span>';
+					
+					calc_wrap.html(html);
+				});
+			});
+		});
+	}
+	
+	 $.getCalculationParams = function(context) {
+		var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
+		
+		btns.each(function(i) {
+			var b = $(this), 
+				p = [b.attr('data-listing-id'), b.attr('data-size-id'), b.attr('data-special-id')];
+				
+			params.multi_params.push(p.join('x'));
+		});
+		
+		params.multi_params = params.multi_params.join('-');
+		params.move_in_date = new Date(now.getYear(), now.getMonth(), now.getDate() + 1).format('isoDate');
+		
+		return params;
+	}
+	
+	$('.specializer', '.specializer_wrap').live('click', function() {
 		var $this = $(this),
 			specials = $('.more_specials', $this.parent());
 	
 		if ($this.text() == 'more') {
 			$this.text('less');
-			specials.addClass('show_specials').show().css({ 'top': '-'+ (specials.height() / 2) +'px', 'right': '-'+ (specials.width() + (specials.width() / 2)) +'px' });
+			specials.addClass('show_specials').show().css({ 'top': '-'+ specials.height() +'px', 'right': '-'+ (specials.outerWidth() / 2) +'px' });
 		} else {
 			$this.text('more');
 			specials.hide().css('right', 0);
@@ -423,13 +470,15 @@ $(function(){
 	
 	$('.special_txt', '.more_specials').live('click', function() {
 		var $this = $(this),
-			active_special = $('.special_txt.active', $this.parent().parent()),
+			context = $this.parents('.specializer_wrap'),
+			active_special = $('.special_txt.active', context),
 			special_clone = active_special.clone().removeClass('active'),
 			more = $this.parents('.more_specials').hide().css('right', 0);;
 		
 		active_special.replaceWith($this.clone().addClass('active'));
 		$this.replaceWith(special_clone);
 		$('.specializer', more.parent()).text('more');
+		$('.special_txt.active', context).trigger('switched');
 	});
 
 	/* AJAX pagination, load next page results in the same page */

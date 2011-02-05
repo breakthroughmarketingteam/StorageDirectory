@@ -55,7 +55,7 @@ class ListingsController < ApplicationController
   def compare
     if params[:ids] && params[:ids].match(/\d+/)
       @listing_set = params[:ids].split('-').map do |ids|
-        i = ids.split(',')
+        i = ids.split('x')
         listing = Listing.find_by_id(i[0].to_i)
         { :listing => listing, :size => listing.sizes.find_by_id(i[1].to_i), :special => listing.predefined_specials.find_by_id(i[2].to_i) }
       end
@@ -76,7 +76,6 @@ class ListingsController < ApplicationController
       @listing.update_stat 'clicks', request
       @search.update_attribute :listing_id, @listing.id
     end
-    
     
     render :layout => false if request.xhr?
   end

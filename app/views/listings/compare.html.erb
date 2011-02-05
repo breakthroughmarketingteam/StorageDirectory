@@ -1,40 +1,44 @@
 <div id="compare_wrap">
     <div id="compare_map"></div>
-    <div class="uncollapse">
-        <table cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr class="odd">
-                    <th id="unit_size" class="column">
-						<span id="label">Unit Size:</span>
-						<span id="size"><%= @listing_set.first[:size].try :dims %></span>
+	<table cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr class="odd">
+				<th id="unit_size" class="column">
+					<span id="label">Unit Size:</span>
+					<span id="size"><%= @listing_set.first[:size].try :dims %></span>
+				</th>
+				<% @listing_set.each do |set| %>
+					<th class="column">
+						<%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}" %>
 					</th>
-					<% @listing_set.each do |set| %>
-                    	<th class="column"><%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}" %></th>
-					<% end %>
-                </tr>
-				
-				<% Listing.comparables.each do |compare| -%>
-					<tr class="<%= cycle('even', 'odd') %>">
-	                    <th id="<%= compare %>"><span class="comp_label"><%= compare.titleize %>:</span></th>
-						<% @listing_set.each do |set| %>
-							<%= display_comparison compare, set %>
-						<% end %>
-	                </tr>
 				<% end %>
-				
-                <tr>
-                    <th id="usssl-special" title="We offer <%= $_usssl_discount %> the first month of the move in cost on top of the facility's own special discount!">
-						Double Discount
-						<br />
-						<%= $_usssl_discount %> first month
-						<br />
-						Applied To All Rentals
-					</th>
-                    <% @listing_set.each do |set| %>
-						<td><a data-listing-id="<%= set[:listing].id %>" data-size-id="<%= set[:size].try :id %>" data-special-id="<%= set[:special].try :id %>" class="rent-btn" href="<%= facility_path_for set.delete(:listing), set %>">Rent It!</a></td>
+			</tr>
+
+			<% Listing.comparables.each do |compare| -%>
+				<tr class="<%= cycle('even', 'odd') %>">
+					<th id="<%= compare %>"><span class="comp_label"><%= compare.titleize %>:</span></th>
+					<% @listing_set.each do |set| %>
+						<%= display_comparison compare, set %>
 					<% end %>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+				</tr>
+			<% end %>
+
+			<tr>
+				<th id="usssl-special" title="We offer <%= $_usssl_discount %> the first month of the move in cost on top of the facility's own special discount!">
+					Double Discount
+					<br />
+					<%= $_usssl_discount %> first month
+					<br />
+					Applied To All Rentals
+				</th>
+				<% @listing_set.each do |set| %>
+					<td id="calc_params_for_<%= set[:listing].id %>">
+						<a data-listing-id="<%= set[:listing].id %>" data-size-id="<%= set[:size].try :id %>" data-special-id="<%= set[:special].try :id %>" class="rent-btn calc_params" href="<%= facility_path_for set.delete(:listing), set %>">
+							Rent It!
+						</a>
+					</td>
+				<% end %>
+			</tr>
+		</tbody>
+	</table>
 </div>

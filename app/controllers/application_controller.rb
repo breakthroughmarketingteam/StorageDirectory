@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin'))
+    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
   def self.app_config
@@ -502,7 +502,9 @@ class ApplicationController < ActionController::Base
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
-
+      
+      #raise [@search, @new_search, @diff_search].pretty_inspect
+      
       if @diff_search
         @new_search.save
         @search.add_child @new_search

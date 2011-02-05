@@ -303,23 +303,22 @@ module ListingsHelper
       "</td>"
     
     when 'monthly_rate'
-      "<td class='padded' title='The monthly rate applicable to the selected unit size'>#{number_to_currency size.dollar_price if size}</td>"
+      "<td class='padded' title='The monthly rate applicable to the selected unit size'>"+
+        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article}"+
+      '</td>'
     
     when /(special)/i
       special = listing_set[:special]
-      "<td class='padded' title='#{special.description if special}'>#{special.title if special}</td>"
+      "<td class='padded' title='#{special.description if special}'>"+
+        '<div class="specializer_wrap">'+
+          "<span class='special_txt active' data-context='compare_wrap' data-listing-id='#{listing.id}' data-special-id='#{special.id}'>#{special.title if special}</span> "+
+          render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' })+
+        '</div>'+
+      '</td>'
     
     when /(price)/i
-      calculation = listing.calculated_price(listing_set)
-      paid_thru = calculation[:paid_thru]
-      
       if size
-        "<td class='padded' title='This price includes tax and the administrative fee applicable to the listing'>"+
-          "<span class='price'>#{number_to_currency calculation[:amount]}</span><br />"+
-          "<span class='date'>Paid for #{old_distance_of_time_in_words 1.day.from_now, paid_thru}<br />"+
-            "thru #{"#{paid_thru.strftime('%B')} #{paid_thru.day.ordinalize}, #{paid_thru.year}"}"+
-          "</span>"+
-        "</td>"
+        "<td id='calcfor_#{listing.id}' class='padded calculation' title='This price includes tax and the administrative fee applicable to the listing'>#{ajax_loader}</td>"
       else
         "<td class='padded'><span>N/A for this size</span></td>"
       end

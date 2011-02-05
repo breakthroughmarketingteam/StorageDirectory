@@ -88,6 +88,11 @@ class Notifier < ActionMailer::Base
     @body[:phone] = phone
   end
   
+  def review_alert(review)
+    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New Facility Review'
+    @body[:review] = review
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from
