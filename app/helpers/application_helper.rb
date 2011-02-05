@@ -617,8 +617,9 @@ module ApplicationHelper
   end
   
   def ssl_seal
-    #'<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz"></script><br/><a style="font-family: arial; font-size: 9px" href="http://www.godaddy.com/reseller/domain-reseller.aspx" target="_blank">GoDaddy</a></span>'
-		"<img id='siteseal' width='132' height='31' src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_l_m.gif'>"
+
+		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_d_m.gif' />"
+
   end
   
 end
