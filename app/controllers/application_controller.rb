@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-305-945-7561'
+  $_usssl_google_analytics = 'UA-20270920-1'
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   
   #before_filter :ensure_domain

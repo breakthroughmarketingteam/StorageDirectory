@@ -33,7 +33,7 @@ $(function(){
 	$('.click_sel').live('focus', function() { $(this).select() });
 	$('#auth_yourself').hide();
 	
-	$.preloadCssImages();
+	if ($.preloadCssImages) $.preloadCssImages();
 	$.updateUserStat();
 	
 	$('.greyConfirm').live('click', function() {
@@ -1671,7 +1671,7 @@ String.prototype.replaceAll = function(find, replace) {
         temp = temp.replace(find, replace);
         index = temp.indexOf(find);
     }
-    return temp;
+    return new String(temp);
 }
 
 function capitalize_addr(addr) {

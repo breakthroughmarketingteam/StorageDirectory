@@ -21,7 +21,7 @@
 				<h2><%= locator_header %></h2>
 				<p><%= friendly_sorted_by_label %></p>
 			<% else %>
-				<h2 class="no_results">Couldn't find any <%= @search.storage_type.titleize %> listings, try widening your search</h2>
+				<h2 class="no_results<%= ' hide' if in_mode?('home') %>">Couldn't find any <%= @search.storage_type.titleize %> listings, try widening your search</h2>
 			<% end %>
 		</div>
 
