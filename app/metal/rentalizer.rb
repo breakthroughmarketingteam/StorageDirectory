@@ -100,14 +100,14 @@ class Rentalizer
     end
     
     def get_paid_thru(listing, move_date, multiplier, special)
-      months = special ? multiplier : 0
-      end_month = Time.local(move_date.year, move_date.month + months)
+      months = special ? multiplier : (listing.prorated? ? 0 : multiplier)
+      end_month = Time.local move_date.year, move_date.month + months
       days_in_end_month = Date.civil(end_month.year, end_month.month, -1).day
       
       if listing.prorated?
         Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
       else
-        Time.local(move_date.year, move_date.month + months, move_date.day - 2).strftime('%m/%d/%Y')
+        Time.local(move_date.year, move_date.month + months, move_date.day - 1).strftime('%m/%d/%Y')
       end
     end
     

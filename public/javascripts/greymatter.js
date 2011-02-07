@@ -1667,10 +1667,12 @@ Ajax.Request = function(url, params) {
 
 String.prototype.replaceAll = function(find, replace) {
     var temp = this, index = temp.indexOf(find);
+
     while (index != -1) {
         temp = temp.replace(find, replace);
         index = temp.indexOf(find);
     }
+
     return new String(temp);
 }
 
