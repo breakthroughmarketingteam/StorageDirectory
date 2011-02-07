@@ -73,7 +73,7 @@ class Rentalizer
       total    += tax_amt
       
       out = {
-        :paid_thru      => get_paid_thru(listing, move_date, multiplier, days_in_month),
+        :paid_thru      => get_paid_thru(listing, move_date, multiplier, special),
         :multiplier     => sprintf("%.2f", multiplier),
         :month_rate     => sprintf("%.2f", size.dollar_price),
         :discount       => sprintf("%.2f", discount),
@@ -99,11 +99,15 @@ class Rentalizer
 		  end
     end
     
-    def get_paid_thru(listing, move_date, multiplier, days_in_month)
+    def get_paid_thru(listing, move_date, multiplier, special)
+      months = special ? multiplier : 0
+      end_month = Time.local(move_date.year, move_date.month + months)
+      days_in_end_month = Date.civil(end_month.year, end_month.month, -1).day
+      
       if listing.prorated?
-        Time.local(move_date.year, move_date.month + multiplier, days_in_month).strftime('%m/%d/%Y')
+        Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
       else
-        Time.local(move_date.year, move_date.month + multiplier, move_date.day - 2).strftime('%m/%d/%Y')
+        Time.local(move_date.year, move_date.month + months, move_date.day - 2).strftime('%m/%d/%Y')
       end
     end
     
