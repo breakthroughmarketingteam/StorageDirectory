@@ -8,8 +8,8 @@
       <div><input type="text" id="postcode" name="q" class="hintable" title="Zip, City or Address" /></div>
       <p id="ops-btns">
           <a href="#" class="search-btn">Search</a> 
-          <a href="#" id="map-btn" class="op-btn">US Map<img src="/images/ui/storagelocator/map-option-btn.png" alt="Map" /></a>
-          <a href="#" class="search-options op-btn openDiv" rel="aops">More Options<img src="/images/ui/storagelocator/more-opt-arrow-small-down.png" alt="" /></a>
+          <a href="#" id="map-btn" class="op-btn">US Map<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/map-option-btn.png" alt="Map" /></a>
+          <a href="#" class="search-options op-btn openDiv" rel="aops">More Options<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/more-opt-arrow-small-down.png" alt="" /></a>
       </p>
       
       <div id="aops" class="hidden">

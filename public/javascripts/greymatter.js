@@ -871,7 +871,7 @@ $.new_ajax_loader = function(where, el, img) {
 $.ajax_loader_tag = function(img, context) {
 	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
 	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
-	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
+	return '<img src="http://s3.amazonaws.com/storagelocator/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
 }
 
 $.setInterval = function(callback, interval) {

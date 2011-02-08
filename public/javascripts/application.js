@@ -184,7 +184,7 @@ $(function() {
 				$state_name = $('#state_name', '#map_nav');
 				
 			var add_map_overlay = function() {
-				var area = $(this), img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
+				var area = $(this), img = $('<img class="map_overlay" src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
 				$state_name.text(area.attr('alt'));
 				$map_img.before(img);
 			}; 
@@ -1161,7 +1161,7 @@ $(function() {
 	
 	// upload pics
 	$('#picture_facility_image', '#new_picture').live('change', function(){
-		var thumb = $('<li><img src="/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
+		var thumb = $('<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
 		
 		if ($('.main_pic', '#sl-tabs-pict-in').length == 0) {
 			var image = $('<img class="big-pic" src="" alt="" />');
@@ -1444,7 +1444,7 @@ $(function() {
 	
 	$('.default_logo', '#logo_choices').live('click', function() {
 		var img = $(this), index = img.attr('data-ci');
-		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
+		img.attr('src', 'http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
 		
 		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'uplogo', default_logo: index, _method: 'put' }, function(response) {
 			$('#flogo', '#tab1').html(response);
@@ -1739,7 +1739,7 @@ $.preload_us_map_imgs = function() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
-		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
+		img.src = 'http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }
 

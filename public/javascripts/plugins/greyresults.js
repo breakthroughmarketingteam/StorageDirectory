@@ -614,7 +614,7 @@ $(function(){
 			dirs = $('<div id="dirs" />');
 		
 		map_container.after(dirs);
-		map_container.parent().prepend('<img src="/images/ui/storagelocator/usselfstoragelocator-sml.png" class="dp" />');
+		map_container.parent().prepend('<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usselfstoragelocator-sml.png" class="dp" />');
 		
 		map_wrap.jmap('SearchDirections', {
 			'query': from + ' to '+ to,
@@ -1022,7 +1022,7 @@ try {
 
 	// http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000
 	
-	var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png'); // the 'you are here' icon
+	var startIcon = new GIcon(G_DEFAULT_ICON, 'http://s3.amazonaws.com/storagelocator/images/ui/map_marker.png'); // the 'you are here' icon
 	
 	//save the regular icon image url
 	var normalIconImage = normalIcon.image,
