@@ -5,657 +5,432 @@
 <a id="top"></a>
 
 <div id="type-one-r-col">
-	<div id="type-one-r-col-in">
-		<div class="green-head" id="add-fac-head">
-			<div class="inner" id="add-fac-head-in">
-				<h2>Market Your Self Storage Facility Online, and Stay on Top!</h2>
-				<p>Take advantage of all our specially tailored marketing tools for your Self Storage facility.</p>
-			</div>
-		</div>
-	</div>
-	
-	<ul id="add_fac_tabs" class="tabular">
-		<li class="active"><a href="#" rel="fac-signup">Sign Up</a></li>
-		<li><a href="#" rel="fac-features">Features</a></li>
-		<li><a href="#" rel="fac-results">Results</a></li>
-	</ul>
-	
-	<div id="type-one-top-bar">
-		<div id="top_fac_page" class="uncollapse">
-			<div id="add-fac-form-extra">
-				<div class="tabular_content fade" id="add-fac-form-extra-in">
-					<div class="tab_content active" id="fac-signup" data-tabs-id="add_fac_tabs">						
-						<div id="add-fac-txt">
-							<h3>Most Complete Self Storage Locator On The Web.</h3>
-							<p>Join our Self Storage Directory and enjoy increased online exposure. Use our simple online marketing tools to convert leads into rentals. Let your customers rent a self storage unit online 24/7/365 from anywhere.</p>
-						</div>
-					
-						<div id="add-fac-form">
-							<% form_for @client, :html => { :class => 'silent' } do |f| %>
-								<span class="sub_head">Add Your Facility and Get Started.</span>
-								<div>
-									<%= f.label :company, 'Facility Name:', :class => 'label' %>
-									<%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
-								</div>
+    <div id="type-one-r-col-in">
+        <div class="green-head" id="add-fac-head">
+            <div class="inner" id="add-fac-head-in">
+                <h2>Market Your Self Storage Facility Online, and Stay on Top!</h2>
+                <p>Take advantage of all our specially tailored marketing tools for your Self Storage facility.</p>
+            </div>
+        </div>
+    </div>
+   
+    <ul id="add_fac_tabs" class="tabular">
+        <li class="active"><a href="#" rel="fac-signup">Sign Up</a></li>
+        <li><a href="#" rel="fac-features">Features</a></li>
+        <li><a href="#" rel="fac-results">Results</a></li>
+    </ul>
+   
+    <div id="type-one-top-bar">
+        <div id="top_fac_page" class="uncollapse">
+            <div id="add-fac-form-extra">
+                <div class="tabular_content fade" id="add-fac-form-extra-in">
+                    <div class="tab_content active" id="fac-signup" data-tabs-id="add_fac_tabs">                       
+                        <div id="add-fac-txt">
+                            <h3>Most Complete Self Storage Locator On The Web.</h3>
+                            <p>Join our Self Storage Directory and enjoy increased online exposure. Use our simple online marketing tools to convert leads into rentals. Let your customers rent a self storage unit online 24/7/365 from anywhere.</p>
+                        </div>
+                   
+                        <div id="add-fac-form">
+                            <% form_for @client, :html => { :class => 'silent' } do |f| %>
+                                <span class="sub_head">Add Your Facility and Get Started.</span>
+                                <div>
+                                    <%= f.label :company, 'Facility Name:', :class => 'label' %>
+                                    <%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
+                                </div>
 
-								<div id="email_check">
-									<%= f.label :email, 'Contact Email:', :class => 'email-label' %>
-									<%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
-									<%= f.text_field :email, :class => 'email' %>
-								</div>
+                                <div id="email_check">
+                                    <%= f.label :email, 'Contact Email:', :class => 'email-label' %>
+                                    <%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
+                                    <%= f.text_field :email, :class => 'email' %>
+                                </div>
 
-								<div id="city">
-									<label class="label">City:</label>
-									<%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
-								</div>
-								<div id="state">
-									<label class="label">State:</label>
-									<%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
-								</div>
+                                <div id="city">
+                                    <label class="label">City:</label>
+                                    <%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
+                                </div>
+                                <div id="state">
+                                    <label class="label">State:</label>
+                                    <%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+                                </div>
 
-								<div id="submit_wrap">
-									<a id="signup_button" class="search-button popper" href="#">Sign Up</a>
-									<%= ajax_loader %>
-									<input type="submit" name="commit" class="hidden">
-								</div>
-							<% end %>					
-						</div>
-			
-						<div id="price-block">
-							<h4>Join the Network <br />
-								<strong>Absolutely Free!</strong>
-							</h4>
-							<p id="join-now">
-								For a limited time <br />
-								we are offering facility owners access <br />
-								to our premium features <br /><br />
-								<strong>Don't miss this opportunity!</strong>
-							</p>
-						</div>
-			
-						<div id="add-fac-txt">
-							<p>Add your self storage facility and become part of our network of successful self storage facilities across the country. Our services go far beyond a facility listing and our main focus is getting your self storage facility the most out of the web.</p>
-							<p>We've put together the best Online Marketing Tools available specifically tailored for your self storage facility needs. Sign up for Free and benefit from these easy-to-use tools and reports that increase leads, walk-ins, phone calls, and ultimately gain more unit rentals.</p>
-			
-							<div class="phone">Call <span><%= $_usssl_phone %></span> For More Information.</div>
-						</div>			
-					
-						<div id="hr-divider" class="inline"></div>
-						
-						<h3><span class="t-span">Self Storage</span><br/>Online Marketing & Unit Rentals At It's Best.</h3>
-						
-						<div id="fac-bottom">
-							<div class="feat">
-								<h4 class="box1">Create and Customize Your Self Storage Facility's Profile.</h4>
-								<p>Add all the details you'd like your customers to know about your self storage facility like: hours of operation, amenities, pictures, logo, and more.</p>
-							</div>
-							<div class="feat">
-								<h4 class="box3">Easy-to-Use Lead Tracking and Activity Graphs.</h4>
-								<p>Keep track of potential customer phone calls, messages, and reservations made through our website. All made available to you in easy to use activity logs and graphs.</p>
-							</div>
-							<div class="feat">
-								<h4 class="box2">Take Rentals and Reservations Online 24 Hours a Day, 7 Days a Week.</h4>
-								<p>Let your customers choose the unit size they need, the date they want to move in, and rent a unit online, any time, any day.</p>
-							</div>
-							<div class="feat">
-								<h4 class="box4">Sync Your Profile with Your Facility's Management System.</h4>
-								<p>Easily sync your facility's profile with your inventory and provide potential customers up to date unit size info for online reservations.</p>
-							</div>
-							<div class="feat">
-								<h4 class="box5">Always Get Notified of Potential Tenants when they're trying to reach you.</h4>
-								<p>Get email notices whenever a potential customer has contacted you through our website, and never miss the opportunity to make the sale.</p>
-							</div>
-							<div class="feat">
-								<h4 class="box6">Get The Most Out of The Web and Increase Your Rentals. </h4>
-								<p>We give your self storage facility the online exposure it deserves for just a fraction of the price of a storage facility website.</p>
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="tab_content" id="fac-features">
-						<h3>Enhanced Online Marketing For Your Self Storage.</h3>
-						
-						<p>Today's companies thrive on Internet exposure because potential customers are turning to specialized online networks like this one to find what they need. We offer lots of tools to help you promote your self storage facility online and maximize your local exposure.</p>
-						
-						<p>Have your self storage facility verified and listed for FREE.  Join our Premium Members Network for a small fee and gain access to all of our online marketing tools, including our Online Unit Rentals feature.</p>
-						
+                                <div id="submit_wrap">
+                                    <a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+                                    <%= ajax_loader %>
+                                    <input type="submit" name="commit" class="hidden">
+                                </div>
+                            <% end %>                   
+                        </div>
+           
+                        <div id="price-block">
+                            <h4>Join the Network <br />
+                                <strong>Absolutely Free!</strong>
+                            </h4>
+                            <p id="join-now">
+                                For a limited time <br />
+                                we are offering facility owners access <br />
+                                to our premium features <br /><br />
+                                <strong>Don't miss this opportunity!</strong>
+                            </p>
+                        </div>
+           
+                        <div id="add-fac-txt">
+                            <p>Add your self storage facility and become part of our network of successful self storage facilities across the country. Our services go far beyond a facility listing and our main focus is getting your self storage facility the most out of the web.</p>
+                            <p>We've put together the best Online Marketing Tools available specifically tailored for your self storage facility needs. Sign up for Free and benefit from these easy-to-use tools and reports that increase leads, walk-ins, phone calls, and ultimately gain more unit rentals.</p>
+           
+                            <div class="phone">Call <span><%= $_usssl_phone %></span> For More Information.</div>
+                        </div>           
+                   
+                        <div id="hr-divider" class="inline"></div>
+                       
+                        <h3><span class="t-span">Self Storage</span><br/>Online Marketing & Unit Rentals At It's Best.</h3>
+                       
+                        <div id="fac-bottom">
+                            <div class="feat">
+                                <h4 class="box1">Create and Customize Your Self Storage Facility's Profile.</h4>
+                                <p>Add all the details you'd like your customers to know about your self storage facility like: hours of operation, amenities, pictures, logo, and more.</p>
+                            </div>
+                            <div class="feat">
+                                <h4 class="box3">Easy-to-Use Lead Tracking and Activity Graphs.</h4>
+                                <p>Keep track of potential customer phone calls, messages, and reservations made through our website. All made available to you in easy to use activity logs and graphs.</p>
+                            </div>
+                            <div class="feat">
+                                <h4 class="box2">Take Rentals and Reservations Online 24 Hours a Day, 7 Days a Week.</h4>
+                                <p>Let your customers choose the unit size they need, the date they want to move in, and rent a unit online, any time, any day.</p>
+                            </div>
+                            <div class="feat">
+                                <h4 class="box4">Sync Your Profile with Your Facility's Management System.</h4>
+                                <p>Easily sync your facility's profile with your inventory and provide potential customers up to date unit size info for online reservations.</p>
+                            </div>
+                            <div class="feat">
+                                <h4 class="box5">Always Get Notified of Potential Tenants when they're trying to reach you.</h4>
+                                <p>Get email notices whenever a potential customer has contacted you through our website, and never miss the opportunity to make the sale.</p>
+                            </div>
+                            <div class="feat">
+                                <h4 class="box6">Get The Most Out of The Web and Increase Your Rentals. </h4>
+                                <p>We give your self storage facility the online exposure it deserves for just a fraction of the price of a storage facility website.</p>
+                            </div>
+                        </div>
+                       
+                    </div>
+                   
+                    <div class="tab_content" id="fac-features">
+                        <h3>Enhanced Online Marketing For Your Self Storage.</h3>
+                       
+                        <p>Today's companies thrive on Internet exposure because potential customers are turning to specialized online networks like this one to find what they need. We offer lots of tools to help you promote your self storage facility online and maximize your local exposure.</p>
+                       
+                        <p>Have your self storage facility verified and listed for FREE.  Join our Premium Members Network for a small fee and gain access to all of our online marketing tools, including our Online Unit Rentals feature.</p>
+                       
+                        <div id="heading">
+                            <div class="left">
+                                <h3>Free 90 Day Trial</h3>
+                                <p>Just Claim or Add your single or multiple Facilities.<br />No Credit Card needed.</p>
+                            </div>
+                            <div class="right">
+                                <img src="/images/ui/storagelocator/prices.png" alt="Membership Options"/>
+                            </div>
+                        </div>
+                       
+                        <div id="mem-types">
+                           
+                            <div id="types-inner" class="hidden">
+                                <div style="height:15px;"></div>
+                            <table>
+                                <tbody>
+                                    <tr class="odd">
+                                        <td width="279" class="label">Facility Logo</td>
+                                        <td width="123" class="yes"></td>
+                                        <td width="140" class="yes"></td>
+                                        <td width="113" class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Address</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Request Info Form</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Limited Facility Profile</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label indent">Unit Sizes</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label indent">Unit Types</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label indent">Unit Prices</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label indent">Facility Amenities</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label indent">Specials / Discounts</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Highlighted Listing</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Periodic Newsletter</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Activity Reports</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Compare Feature</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Featured Facility Banner</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Top Results Positioning</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Enhanced Facility Profile</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label indent">Pictures</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label indent">Reviews</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Email Notifications</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Preview Tabs on Search Results</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Webinars</td>
+                                        <td class="yes"></td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Tracked Phone Number w/ Call Recording</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Online Rentals 24/7 - 365</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Collect Money in advance of Move-in Date</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">Longer Term Rentals (w/Specials)</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="label">Higher Conversion Ratio than Reservations</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="label">10% Discount - USSSL Special</td>
+                                        <td class="yes"></td>
+                                        <td class="no"></td>
+                                        <td class="no"></td>
+                                    </tr>
+                                    <tr class="even last">
+                                        <td></td>
+                                        <td><strong>54.50*</strong></td>
+                                        <td><strong>54.50</strong></td>
+                                        <td><strong>Free</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-						<div id="heading">
-							<div class="left">
-								<h3>Free 90 Day Trial</h3>
-								<p>Just Claim or Add your single or multiple Facilities.<br />No Credit Card needed.</p>
-							</div>
-							<div class="right">
-								<img src="/images/ui/storagelocator/prices.png" alt="Membership Options"/>
-							</div>
-						</div>
-						
-						<div id="mem-types">
-							
-							<div id="types-inner" class="hidden">
-								<div style="height:15px;"></div>
-							<table>
-								<tbody>
-									<tr class="odd">
-										<td width="279" class="label">Facility Logo</td>
-										<td width="123" class="yes"></td>
-										<td width="140" class="yes"></td>
-										<td width="113" class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Address</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Request Info Form</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Limited Facility Profile</td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr class="odd">
-										<td class="label indent">Unit Sizes</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label indent">Unit Types</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label indent">Unit Prices</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label indent">Facility Amenities</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label indent">Specials / Discounts</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Highlighted Listing</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Periodic Newsletter</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Activity Reports</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Compare Feature</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Featured Facility Banner</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Top Results Positioning</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Enhanced Facility Profile</td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr class="odd">
-										<td class="label indent">Pictures</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label indent">Reviews</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Email Notifications</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Preview Tabs on Search Results</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Webinars</td>
-										<td class="yes"></td>
-										<td class="yes"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Tracked Phone Number w/ Call Recording</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Online Rentals 24/7 - 365</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Collect Money in advance of Move-in Date</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">Longer Term Rentals (w/Specials)</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even">
-										<td class="label">Higher Conversion Ratio than Reservations</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="odd">
-										<td class="label">10% Discount - USSSL Special</td>
-										<td class="yes"></td>
-										<td class="no"></td>
-										<td class="no"></td>
-									</tr>
-									<tr class="even last">
-										<td></td>
-										<td><strong>54.50*</strong></td>
-										<td><strong>54.50</strong></td>
-										<td><strong>Free</strong></td>
-									</tr>
-								</tbody>
-							</table>
+                            <p>*In addition to the monthly fee, Premium + members will be charged a booking fee of 50% of the first month's rent for every unit rented through USSelfStorageLocator.com</p>
+                        </div>   
+                        </div>
+                       
+                        <a id="types-btn" class="openDiv" rel="types-inner" href="#">More Info</a>
+                       
+                        <h4>Promote your self storage facility online!</h4>
 
-						<!--><h3 id="heading">Take advantage of our FREE Trial Special!</h4>-->
-						
-						<h4>What do you get with a FREE Verified Listing?</h4>
+                        <ul id="feats">
+                            <li><em>Media Enhanced Facility Profile: Logo, Address, Unit Sizes, Prices, Features, Specials, <strong>+ Reviews, Pictures, Video</strong></em></li>
+                            <li><em>Local Phone Number with Call Tracking and Call Recordings</em></li>
+                            <li><em>Compare Facilities Feature</em></li>
+                            <li><em>Email Notices: New Leads, Phone Calls, Clicks, Impressions, Coupons Printed</em></li>
+                            <li><em>Request Info Form</em></li>
+                            <li><em>Weekly/Monthly Traffic Reports</em></li>
+                            <li><em>Top Results Positioning of your listing</em></li>
+                            <li><em>Highlighted Listing for added exposure</em></li>
+                            <li><em>Featured Facility Ad/Banner</em></li>
+                            <li><em>Preview Tabs below listing (Directions, Units, Pictures, Reviews)</em></li>
+                            <li><em>Weekly News about the Self Storage Industry and Online Marketing</em></li>
+                            <li><em>Periodic Webinars (Self Storage Online Marketing)</em></li>
+                        </ul>
+                       
+                        <%= auto_pop_up_link 'Features Info', 'feat-pop', { :title => 'Features', :class => 'info', :width => 712, :height => 'auto' } %>
+                       
+                        <p>Premium listings will always have an equal chance of showing up on top of our directory search results, giving all of our network members a fair advantage.</p>
+                       
+                        <h4>How to get Real-Time Online Unit Rentals?</h4>
+                       
+                        <p>With a Premium Listing you can take advantage of our Online Unit Rentals feature, which generates guaranteed rentals. Keep your inventory updated automatically (ISSN Required), or use our simple Inventory Uploader tool. USSelfStorageLocator.com will just keep 50% of one month's rent depending on the unit size rented, up to a limit of eighty dollars.</p>
+                       
+                        <h4>Sync Your Facility Details With Your Profile.</h4>
+                       
+                        <p>Fill out your profile with your facility details manually or if you use one of the Property Management Software companies listed below you can automatically sync all your facility details like unit sizes, prices, and types.</p>
+                       
+                        <p><em>Sign up and create an account now, or simply contact us or call 1-305-945-7561, one of our friendly account managers will be happy to set up an account for you. We offer support to any size companies whether you’re looking to add one or more self storage facilities.</em></p>
+                       
+                        <div id="hr-divider"></div>
+                       
+                        <div id="pms">
+                            <h3>Synchronize Your Facility Details With Your Profile.</h3>
+                            <p>Fill out your profile with your facility details manually or if you use one of the Property Management Software companies listed below you can automatically synchronize all your facility details like unit sizes, prices, and unit types.</p>
+                            <ul>
+                                <li><img src="/images/ui/storagelocator/pms-companies/sentinel.jpg" alt="Sentinel"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/sitelink.jpg" alt="Sitelink"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/centershift.jpg" alt="Centershift"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/syrasoft.jpg" alt="Syrasoft"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/domico.jpg" alt="Domico"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/self-storage-manager.jpg" alt="Self Storage Manager"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/storage-commander.jpg" alt="Storage Commander"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/dks-doorking.jpg" alt="DKS Doorking"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/dhs-worldwide.jpg" alt="DHS Worldwide"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/quikstor.jpg" alt="Quikstor"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/chamberlain.jpg" alt="Chamberlain"/></li>
+                                <li><img src="/images/ui/storagelocator/pms-companies/emove.jpg" alt="eMove"/></li>
+                            </ul>
+                        </div>
+                   
+                    </div>
+                   
+                    <div class="tab_content" id="fac-results">
+                        <h3>
+                            <span>Increased Online Exposure Means More Rentals.</span>
+                        </h3>
+                        <p>
+                            Our team at <strong class="blue">USSelfStorageLocator.com</strong> knows how time consuming it is for a business to start an online marketing campaign, that's why we have done most of the work for you. All you have to do is <a href="">join our network of members</a>, create a facility profile, get access to all our marketing tools, and start enjoying the online exposure you self storage facility deserves. 
+                        </p>
+                        <div id="g-res">
+                            <img src="/images/ui/storagelocator/google-results.png" class="right"/>
+                            <ul>
+                                <h4>Your facility will enjoy:</h4>
+                                <li>Localized search results exposure</li>
+                                <li>A few clicks away to make an Online Reservation</li>
+                                <li>Show up in the 1st page of most mayor search engines</li>
+                            </ul>
+                        </div>
+                       
+                        <div id="alexa">
+                            <A href="http://www.alexa.com/siteinfo/www.usselfstoragelocator.com"><SCRIPT type='text/javascript' language='JavaScript' src='http://xslt.alexa.com/site_stats/js/t/a?url=www.usselfstoragelocator.com'></SCRIPT></A>
+                            <p>We'll be keeping track of our website's popularity online, and will keep you informed of how well we do.</p>
+                        </div>
+                       
+                        <p><em>By being a USSelfStorageLocator.com member you'll be leveraging our traffic to get on the first page of mayor search engines like Google, Yahoo, and Bing. Help us gain popularity by letting your friends know about us!</em>  - <a href="">Facebook</a> | <a href="">Twitter</a> | <a href="">Digg</a> | <a href="">Stumble Upon</a></p>
+                           
+                    </div>
+                </div>
+           
+                <div id="feat-pop" class="tabular_content" data-tabs-id="feat_pop_nav">
 
+                   
+                    <div class="tab_content" id="feat-desc">
 
-						<ul id="feats">
-							<li><em>Limited Facility Profile: Logo, Address, Unit Sizes, Prices, Features, Specials</em></li>
-							<li><em>Request Info Form</em></li>
-							<li><em>Weekly News about the Self Storage Industry and Online Marketing</em></li>
-						</ul>
-						
-						<%= auto_pop_up_link 'More Info', 'feat-pop', { :title => 'Features', :class => 'info', :width => 712, :height => 'auto' } %>
-						
-						<h4>What do you get with a Premium Listing for just $54.50/month?</h4>
+                        <p><em>Media Enhancements</em> - Our simple to use tools allow you to add pictures and video to your listing, allowing customers to preview your storage units and self storage facility.</p>
 
-						<ul id="feats2">
-							<li><em>Media Enhanced Facility Profile: Logo, Address, Unit Sizes, Prices, Features, Specials, <strong>+ Reviews, Pictures, Video</strong></em></li>
-							<li><em>Local Phone Number with Call Tracking and Call Recordings</em></li>
-							<li><em>Compare Facilities Feature</em></li>
-							<li><em>Email Notices: New Leads, Phone Calls, Clicks, Impressions, Coupons Printed</em></li>
-							<li><em>Request Info Form</em></li>
-							<li><em>Weekly/Monthly Traffic Reports</em></li>
-							<li><em>Top Results Positioning of your listing</em></li>
-							<li><em>Highlighted Listing for added exposure</em></li>
-							<li><em>Featured Facility Ad/Banner</em></li>
-							<li><em>Preview Tabs below listing (Directions, Units, Pictures, Reviews)</em></li>
-							<li><em>Weekly News about the Self Storage Industry and Online Marketing</em></li>
-							<li><em>Periodic Webinars (Self Storage Online Marketing)</em></li>
-						</ul>
-						
-						<%= auto_pop_up_link 'More Info', 'feat-pop', { :title => 'Features', :class => 'info', :width => 712, :height => 'auto' } %>
-						
-						<p>Premium listings will always have an equal chance of showing up on top of our directory search results, giving all of our network members a fair advantage.</p>
-						
-						<h4>How to get Real-Time Online Unit Rentals?</h4>
-						
-						<p>With a Premium Listing you can take advantage of our Online Unit Rentals feature, which generates guaranteed rentals. Keep your inventory updated automatically (ISSN Required), or use our simple Inventory Uploader tool. USSelfStorageLocator.com will just keep 50% of one month's rent depending on the unit size rented, up to a limit of eighty dollars.</p>
-						
-						<h4>Sync Your Facility Details With Your Profile.</h4>
-						
-						<p>Fill out your profile with your facility details manually or if you use one of the Property Management Software companies listed below you can automatically sync all your facility details like unit sizes, prices, and types.</p>
-						
-						<p><em>Sign up and create an account now, or simply contact us or call 1-305-945-7561, one of our friendly account managers will be happy to set up an account for you. We offer support to any size companies whether you’re looking to add one or more self storage facilities.</em></p>
-						
-						<div id="hr-divider"></div>
-						
-						<div id="pms">
-							<h3>Synchronize Your Facility Details With Your Profile.</h3>
-				        	<p>Fill out your profile with your facility details manually or if you use one of the Property Management Software companies listed below you can automatically synchronize all your facility details like unit sizes, prices, and unit types.</p>
-							<ul>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/sentinel.jpg" alt="Sentinel"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/sitelink.jpg" alt="Sitelink"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/centershift.jpg" alt="Centershift"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/syrasoft.jpg" alt="Syrasoft"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/domico.jpg" alt="Domico"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/self-storage-manager.jpg" alt="Self Storage Manager"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/storage-commander.jpg" alt="Storage Commander"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/dks-doorking.jpg" alt="DKS Doorking"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/dhs-worldwide.jpg" alt="DHS Worldwide"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/quikstor.jpg" alt="Quikstor"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/chamberlain.jpg" alt="Chamberlain"/></li>
-								<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pms-companies/emove.jpg" alt="eMove"/></li>
-							</ul>
-				        </div>
-					
-					</div>
-					
-					<div class="tab_content" id="fac-results">
-						<h3>
-							<span>Increased Online Exposure Means More Rentals.</span>
-						</h3>
-						<p>
-							Our team at <strong class="blue">USSelfStorageLocator.com</strong> knows how time consuming it is for a business to start an online marketing campaign, that's why we have done most of the work for you. All you have to do is <a href="">join our network of members</a>, create a facility profile, get access to all our marketing tools, and start enjoying the online exposure you self storage facility deserves.  
-						</p>
-						<div id="g-res">
-							<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/google-results.png" class="right"/>
-							<ul>
-								<h4>Your facility will enjoy:</h4>
-								<li>Localized search results exposure</li>
-								<li>A few clicks away to make an Online Reservation</li>
-								<li>Show up in the 1st page of most mayor search engines</li>
-							</ul>
-						</div>
-						
-						<div id="alexa">
-							<A href="http://www.alexa.com/siteinfo/www.usselfstoragelocator.com"><SCRIPT type='text/javascript' language='JavaScript' src='http://xslt.alexa.com/site_stats/js/t/a?url=www.usselfstoragelocator.com'></SCRIPT></A>
-							<p>We'll be keeping track of our website's popularity online, and will keep you informed of how well we do.</p>
-						</div>
-						
-						<p><em>By being a USSelfStorageLocator.com member you'll be leveraging our traffic to get on the first page of mayor search engines like Google, Yahoo, and Bing. Help us gain popularity by letting your friends know about us!</em>  - <a href="">Facebook</a> | <a href="">Twitter</a> | <a href="">Digg</a> | <a href="">Stumble Upon</a></p>
-							
-					</div>
-				</div>
-			
-				<div id="feat-pop" class="tabular_content" data-tabs-id="feat_pop_nav">
-					<ul id="feat_pop_nav" class="tabular">
-						<li class="active"><a class="active" href="#" rel="list-type">Feature Packages</a></li>
-						<li>&nbsp;&nbsp;&nbsp;</li>
-						<li><a href="#" rel="feat-desc">Features Description</a></li>
-					</ul>
-						
-					<div class="tab_content active" id="list-type">
-						<table>
-							<tbody>
-							<tr>
-								<th width="300" class="label">Features</th>
-								<th width="100">Premium +</th>
-								<th width="100">Premium</th>
-								<th width="100">Verified</th>
-								<th width="100">Unverified</th>
-							</tr>
-							<tr class="even">
-								<td class="label">Facility Logo</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Address</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Request Info Form</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Limited Facility Profile</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr class="even">
-								<td class="label indent">Unit Sizes</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label indent">Unit Types</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label indent">Unit Prices</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label indent">Facility Amenities</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label indent">Specials / Discounts</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Highlighted Listing</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Periodic Newsletter</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Tracked Phone Number w/ Call Recording</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Activity Reports</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Compare Feature</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Featured Facility Banner</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Top Results Positioning</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Enhanced Facility Profile</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr class="odd">
-								<td class="label indent">Pictures</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label indent">Reviews</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Email Notifications</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Preview Tabs on Search Results</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Webinars</td>
-								<td class="yes"></td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Online Rentals 24/7 - 365</td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Collect Money in advance of Move-in Date</td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">Longer Term Rentals (w/Specials)</td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd">
-								<td class="label">Higher Conversion Ratio than Reservations</td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="even">
-								<td class="label">10% Discount - USSSL Special</td>
-								<td class="yes"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-								<td class="no"></td>
-							</tr>
-							<tr class="odd last">
-								<td></td>
-								<td><strong>54.50*</strong></td>
-								<td><strong>54.50</strong></td>
-								<td><strong>Free</strong></td>
-								<td><strong>Free</strong></td>
-							</tr>
-							</tbody>
-						</table>
-						
-						<p>*In addition to the monthly fee, Premium + members will be charged a booking fee of 50% of the first month's rent for every unit rented through USSelfStorageLocator.com</p>
-					
-					</div>
-					
-					<div class="tab_content" id="feat-desc">
+                        <p><em>Local Phone Number with Call Tracking and Call Recordings</em> - Calls received via this USSelfStorageLocator.com-issued unique local phone number are all tracked and recorded. Your listing reports will tell you where inbound calls come from and allow you to listen to real customer calls.</p>
 
-						<p><em>Media Enhancements</em> - Our simple to use tools allow you to add pictures and video to your listing, allowing customers to preview your storage units and self storage facility.</p>
+                        <p><em>Compare Facilities Feature</em> - Allows a prospective client to add your facility when comparing two or more facilities.</p>
 
-						<p><em>Local Phone Number with Call Tracking and Call Recordings</em> - Calls received via this USSelfStorageLocator.com-issued unique local phone number are all tracked and recorded. Your listing reports will tell you where inbound calls come from and allow you to listen to real customer calls.</p>
+                        <p><em>E-mail Notifications</em> - All of your listing data, including Internet and call traffic, customer contact information, and online reservation requests are sent right to your inbox through simple, easy to read e-mail notices.</p>
 
-						<p><em>Compare Facilities Feature</em> - Allows a prospective client to add your facility when comparing two or more facilities.</p>
+                        <p><em>Weekly / Monthly Traffic Reports</em> - Every click to your storage facility listing page is tracked through our analytics software. You can see where your interested customers are coming from, how many are viewing your listing, and other useful statistics that can help you track the success of your listing.</p>
 
-						<p><em>E-mail Notifications</em> - All of your listing data, including Internet and call traffic, customer contact information, and online reservation requests are sent right to your inbox through simple, easy to read e-mail notices.</p>
+                        <p><em>Top Results Positioning</em> - Places your facility listing above non-network member facilities to ensure your facility always gets more exposure.</p>
 
-						<p><em>Weekly / Monthly Traffic Reports</em> - Every click to your storage facility listing page is tracked through our analytics software. You can see where your interested customers are coming from, how many are viewing your listing, and other useful statistics that can help you track the success of your listing.</p>
+                        <p><em>Highlighted Listing</em> - Your facility listing will be highlighted and will be more visible than  non-network member facilities for increased  exposure.</p>
 
-						<p><em>Top Results Positioning</em> - Places your facility listing above non-network member facilities to ensure your facility always gets more exposure.</p>
+                        <p><em>Featured Facility Ad/Banner</em> - Your facility will be randomly picked to be featured in a highly visible area of our home page when searching for your City or Zip Code.</p>
 
-						<p><em>Highlighted Listing</em> - Your facility listing will be highlighted and will be more visible than  non-network member facilities for increased  exposure.</p>
+                        <p><em>Preview Tabs</em> - We’ll add preview tabs below your listing with your facility’s Rental Form, Directions, Units Sizes & Prices, Pictures, and Reviews. This will let your prospective clients see all your facility’s info right on the results page.</p>
 
-						<p><em>Featured Facility Ad/Banner</em> - Your facility will be randomly picked to be featured in a highly visible area of our home page when searching for your City or Zip Code.</p>
+                        <p><em>Marketing Newsletters</em> - Be informed on the latest in Internet marketing and what's happening in the world of self storage with out informative monthly e-mail newsletters!</p>
 
-						<p><em>Preview Tabs</em> - We’ll add preview tabs below your listing with your facility’s Rental Form, Directions, Units Sizes & Prices, Pictures, and Reviews. This will let your prospective clients see all your facility’s info right on the results page.</p>
+                        <p><em>Create Special Offers</em> - You can easily add special offers, discounts, and promotional messages to your listing. These offers can help attract customer attention and boost response to your listing.</p>
 
-						<p><em>Marketing Newsletters</em> - Be informed on the latest in Internet marketing and what's happening in the world of self storage with out informative monthly e-mail newsletters!</p>
+                        <p><em>Periodic Webinars</em> - Free conferences and seminars broadcast to your PC with tips on web marketing for self storage facilities.
 
-						<p><em>Create Special Offers</em> - You can easily add special offers, discounts, and promotional messages to your listing. These offers can help attract customer attention and boost response to your listing.</p>
-
-						<p><em>Periodic Webinars</em> - Free conferences and seminars broadcast to your PC with tips on web marketing for self storage facilities.
-
-						<p><em>Editable Profile</em> - Keep all your listing reports, online reservations, and client contact forms in one easy profile page! Your facility profile allows you access to all your data and the ability to make real-time updates to your public listing.</p>
-				
-						<h4></h4>
-						<p><strong>Establishing or creating an account is quick and easy with either our online form or simply call us at <em><%= $_usssl_phone %></em>. We offer support to any level companies looking to add renters, as well as optimum customer service that can identify the right solutions for your self storage facility listing.</strong></p>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+                        <p><em>Editable Profile</em> - Keep all your listing reports, online reservations, and client contact forms in one easy profile page! Your facility profile allows you access to all your data and the ability to make real-time updates to your public listing.</p>
+               
+                        <h4></h4>
+                        <p><strong>Establishing or creating an account is quick and easy with either our online form or simply call us at <em><%= $_usssl_phone %></em>. We offer support to any level companies looking to add renters, as well as optimum customer service that can identify the right solutions for your self storage facility listing.</strong></p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
 </div>

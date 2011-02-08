@@ -43,7 +43,7 @@ $(function() {
 			overlay = $.applyLoadingOverlay(form.parents('#pop_up'));
 		
 		if (form.data('valid') && !form.data('sending')) {
-			ajax_loader.show();
+
 			overlay.fadeIn();
 			form.data('sending', true);
 			
@@ -82,7 +82,6 @@ $(function() {
 				});
 				
 				form.data('sending', false);
-				ajax_loader.hide();
 			}, 'json');
 		}
 		

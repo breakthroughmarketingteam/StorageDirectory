@@ -1,6 +1,4 @@
-rent_steps/* Style sheet. Created by ns-designs 2010 */
 html{overflow-x:hidden;overflow-y:scroll;margin:0;}
-/* Start by defining the main page layout */
 body{text-align:center;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#333;}
 h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
@@ -15,7 +13,6 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 span.blue{color:#4c4bcc;}
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
-/* Start complex layout styles - includes the changing background garage door etc*/
 
 #head-ctr{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/top-hdr-strip2.png) repeat-x bottom;}
 #head-ctr-in{height:225px;margin:0 auto;position:relative;text-align:left;width:980px;}
@@ -1660,13 +1657,9 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #add-fac-form-extra ul{margin:0 20px 0 30px}
 #add-fac-form-extra ul li{list-style:none;}
 
-#add-fac-form-extra ul li a.toggle_down{background:url(/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
-#add-fac-form-extra ul li a.toggle_right{background:url(/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
-#top_fac_page #fac-features h4{margin:40px 20px 20px 0;}
-
 #add-fac-form-extra ul li a.toggle_down{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
 #add-fac-form-extra ul li a.toggle_right{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
-#top_fac_page #fac-features h4{margin:40px 20px 0 0;}
+#top_fac_page #fac-features h4{margin:40px 20px 20px 0;}
 
 #top_fac_page #fac-features strong{color:#393;}
 #text-box{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
@@ -2119,15 +2112,9 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading ul li span{display:block;font-size:12px;width:100%;}
 #top_fac_page #heading ul li strong{display:block;color:#fff;font-size:14px;margin-top:3px;width:100%;}
 #top_fac_page #heading .left{width:295px;}
-
 #top_fac_page #heading .right{height:64px;margin:9px 6px 0 0;width:388px;}
-
-#top_fac_page #heading .right{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/prices.png) no-repeat;height:64px;margin:9px 6px 0 0;width:403px;}
-
-
 #top_fac_page #heading p{display:inline-block;line-height:14px;margin:2px 0 0 16px;}
 
-#mem-types{}
 #mem-types #types-inner{-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;border-color:-moz-use-text-color #ccc #ccc;border-right:1px solid #ccc;border-style:none solid solid;border-width:medium 1px 1px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
 #mem-types td.label{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
@@ -2233,24 +2220,8 @@ p.breadcrumb a{color:#fff;}
 #feat-pop #feat_pop_nav a{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;display:inline-block;padding:10px 15px;text-decoration:none;width:43%;}
 #feat-pop #feat_pop_nav a.active{background:#3c3;color:#fff;text-shadow:1px 1px 0 #666;}
 #feat-pop .tabular li{display:inline;}
-#feat-pop table{border:1px solid #ccc;display:block;padding:0 0 3px;}
-#feat-pop td.label{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
-#feat-pop td.indent{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 37px 11px;padding-left:50px;}
-#feat-pop th{background:#4c4bcc;color:#fff;font-size:16px;padding-bottom:10px;padding-top:9px;text-align:center;}
-
-
-#pop_up.admin_box{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
-
-#feat-pop th.label{text-align:left;padding-left:10px;}
-#feat-pop tr.odd{background:#fff;}
-#feat-pop tr.even{background:#eee;}
-#feat-pop .last td{padding-top:10px;}
-#feat-pop td{font-size:12px;padding:7px 0;text-align:center;}
-#feat-pop table strong{font-size:16px;color:#4c4bcc;}
-#feat-pop #feat-desc{}
 
 #pop_up.admin_box{background:url(http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
-
 
 #blog_page #sharing{float:left;margin:15px 0 0;padding:5px 0;width:100%;}
 
