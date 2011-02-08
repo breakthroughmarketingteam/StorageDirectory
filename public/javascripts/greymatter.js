@@ -33,7 +33,7 @@ $(function(){
 	$('.click_sel').live('focus', function() { $(this).select() });
 	$('#auth_yourself').hide();
 	
-	$.preloadCssImages();
+	if ($.preloadCssImages) $.preloadCssImages();
 	$.updateUserStat();
 	
 	$('.greyConfirm').live('click', function() {
@@ -871,7 +871,7 @@ $.new_ajax_loader = function(where, el, img) {
 $.ajax_loader_tag = function(img, context) {
 	if (typeof img == 'undefined') var img = 'ajax-loader-facebook.gif';
 	var id = typeof(context) == 'undefined' ? '' : 'al_'+ context.attr('id');
-	return '<img src="/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
+	return '<img src="http://s3.amazonaws.com/storagelocator/images/ui/'+ img +'" alt="Loading..." class="ajax_loader" id="'+ id +'" />';
 }
 
 $.setInterval = function(callback, interval) {
@@ -1667,11 +1667,13 @@ Ajax.Request = function(url, params) {
 
 String.prototype.replaceAll = function(find, replace) {
     var temp = this, index = temp.indexOf(find);
+
     while (index != -1) {
         temp = temp.replace(find, replace);
         index = temp.indexOf(find);
     }
-    return temp;
+
+    return new String(temp);
 }
 
 function capitalize_addr(addr) {

@@ -12,7 +12,7 @@
     	<ul class="listing_options">
       		<li class="<%= listing.new_record? ? 'new_listing_tips' : 'profile_completion' %>">
 	        <% if listing.new_record? %>
-	          <p class="new_listing_tip"><img src="/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
+	          <p class="new_listing_tip"><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
 	        <% else %>
 				<div class="progressbar"></div>
 				<p>Profile Completion <span class="percent"><%= listing.percent_complete %>%</span></p>

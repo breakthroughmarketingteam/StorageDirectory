@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-305-945-7561'
+  $_usssl_google_analytics = 'UA-20270920-1'
   $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
   
   #before_filter :ensure_domain
@@ -138,7 +139,7 @@ class ApplicationController < ActionController::Base
       @plugin_css        = plugin_css 'jquery.ui.css'
       @meta_keywords     = @@app_config[:keywords]    || @@app_config[:title]
       @meta_description  = @@app_config[:description] || @meta_keywords
-      @plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
+      #@plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
       @slogan            = 'Locate, Save, <strong>Rent Self Storage Online</strong> Anywhere, Anytime.'
       @user_stat         = UserStat.create_from_request current_user, request if current_user && !is_admin?

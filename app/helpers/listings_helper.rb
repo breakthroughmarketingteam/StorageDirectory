@@ -123,15 +123,15 @@ module ListingsHelper
 		html
   end
   
-  @@standard_logo_root = 'public/images'
-  @@standard_logo_path = 'ui/storagelocator/facility_logos'
+  @@standard_logo_root = 'public/images/'
+  @@standard_logo_path = 'ui/storagelocator/facility_logos/'
   @@standard_logo_ext = '.png'
   def standard_logos
-    @standard_logo ||= get_list_of_file_names "#{@@standard_logo_root}/#{@@standard_logo_path}", @@standard_logo_ext
+    @standard_logo ||= get_list_of_file_names "#{@@standard_logo_root}#{@@standard_logo_path}", @@standard_logo_ext
   end
   
   def standard_logo_path(logo)
-    "#{@@standard_logo_path}/#{logo}#{@@standard_logo_ext}"
+    "#{@@standard_logo_path}#{logo}#{@@standard_logo_ext}"
   end
   
   def copy_all_link(what, listing, options)
@@ -176,7 +176,7 @@ module ListingsHelper
     @listing_logos ||= begin
       logos = []
       %w(w r o g b).each_with_index do |color, i|
-        logos << { :src => "/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', 'data-ci' => i }
+        logos << { :src => "http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', 'data-ci' => i }
       end
       logos
     end
@@ -304,15 +304,15 @@ module ListingsHelper
     
     when 'monthly_rate'
       "<td class='padded' title='The monthly rate applicable to the selected unit size'>"+
-        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article}"+
+        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article} unit."+
       '</td>'
     
     when /(special)/i
       special = listing_set[:special]
       "<td class='padded' title='#{special.description if special}'>"+
         '<div class="specializer_wrap">'+
-          "<span class='special_txt active' data-context='compare_wrap' data-listing-id='#{listing.id}' data-special-id='#{special.id}'>#{special.title if special}</span> "+
-          (special ? render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' }) : '')+
+          "<span class='special_txt active' data-context='compare_wrap' data-listing-id='#{listing.id}' data-special-id='#{special.id if special}'>#{special.title if special}</span> "+
+          (special ? render(:partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => special, :context => 'compare_wrap' }) : 'N/A')+
         '</div>'+
       '</td>'
     
@@ -325,7 +325,7 @@ module ListingsHelper
     
     else # features
       if listing.facility_features.map {|f| f.title.underscore }.include? comparison.gsub('_', ' ')
-        "<td><img src='/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
+        "<td><img src='http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
       else
         "<td><span class='hide'>#{listing.title} does not have #{comparison.titleize}</span></td>"
       end

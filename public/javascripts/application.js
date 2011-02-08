@@ -20,14 +20,15 @@ $(function() {
 		if ($this.hasClass('active')) return false;
 		$this.addClass('active');
 		
-		var pop_up = $('#pop_up').dialog({
+		var pop_up = $('#pop_up').dialog(default_pop_up_options({
 			title: 'Login to your account',
 			width: 347,
-			resizable: false,
+			height: 'auto',
+			modal: false,
 			close: function() { 
 				$this.removeClass('active');
 			}
-		}).parent('.ui-dialog').css({ top: '50px', right: '20px', left: 'auto' });
+		})).parent('.ui-dialog').css({ top: '50px', right: '20px', left: 'auto' });
 
 		//pop_up.fadeIn();
 		$('input[type=text]', pop_up).eq(0).focus();
@@ -39,10 +40,11 @@ $(function() {
 	// log the user in and change the topbar to the logged in links
 	$('#new_user_session', '#pop_up.login_box').live('submit', function() {
 		var form = $(this).runValidation(),
-			ajax_loader = $('.ajax_loader', form);
+			overlay = $.applyLoadingOverlay(form.parents('#pop_up'));
 		
 		if (form.data('valid') && !form.data('sending')) {
 			ajax_loader.show();
+			overlay.fadeIn();
 			form.data('sending', true);
 			
 			$.post(form.attr('action'), form.serialize(), function(response) {
@@ -50,7 +52,8 @@ $(function() {
 					var ready_mem = $('#ready_member', form);
 					
 					if (data.role == 'advertiser' && ready_mem.length == 0) {
-						window.location = data.account_path;
+						//window.location = data.account_path;
+						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good, redirecting to your account page.</p>') })
 					} else {
 						$('#topbar').html(data.html);
 						$('#pop_up.login_box').fadeOutRemove();
@@ -85,6 +88,11 @@ $(function() {
 		
 		return false;
 	});
+	
+	$.applyLoadingOverlay = function(here) {
+		var overlay = $('<div class="overlay"><div></div></div>').appendTo(here).hide();
+		return overlay;
+	}
 	
 	$('#forgot_pass_link', '#pop_up').live('click', function() {
 		var $this = $(this),
@@ -176,7 +184,7 @@ $(function() {
 				$state_name = $('#state_name', '#map_nav');
 				
 			var add_map_overlay = function() {
-				var area = $(this), img = $('<img class="map_overlay" src="/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
+				var area = $(this), img = $('<img class="map_overlay" src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
 				$state_name.text(area.attr('alt'));
 				$map_img.before(img);
 			}; 
@@ -1153,9 +1161,9 @@ $(function() {
 	
 	// upload pics
 	$('#picture_facility_image', '#new_picture').live('change', function(){
-		var thumb = $('<li><img src="/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
+		var thumb = $('<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
 		
-		if ($('.big-pic', '#sl-tabs-pict-in').length == 0) {
+		if ($('.main_pic', '#sl-tabs-pict-in').length == 0) {
 			var image = $('<img class="big-pic" src="" alt="" />');
 			$('.gallery', '#sl-tabs-pict-in').append(image);
 		}
@@ -1253,7 +1261,7 @@ $(function() {
 	$('#sl-tabs-pict-gall img, #previews img').live('mouseover', function() {
 		if ($(this).hasClass('loading')) return false;
 		
-		var main_pic = $('#sl-tabs-pict .big-pic, #sl-photos .main_pic');
+		var main_pic = $('#sl-tabs-pict .main_pic, #sl-photos .main_pic');
 		if (main_pic.length == 0) main_pic = $('<img class="main_pic hide" src="'+ this.src.replace('/thumb_', '/medium_') +'" alt="'+ this.alt +'" />').appendTo('#main_pic_wrap');
 		else if (main_pic.length > 1) {
 			var p = main_pic.eq(0);
@@ -1287,7 +1295,7 @@ $(function() {
 						$('img:not(#'+ img.attr('id') +')', '#sl-tabs-pict').trigger('mouseover');
 					
 					if ($('img', '#sl-tabs-pict-gall').length == 1)
-						$('.big-pic', '#sl-tabs-pict').eq(0).fadeOutRemove(900);
+						$('.main_pic', '#sl-tabs-pict').eq(0).fadeOutRemove(900);
 						
 					$this.parent().fadeOutRemove(600);
 				});
@@ -1436,7 +1444,7 @@ $(function() {
 	
 	$('.default_logo', '#logo_choices').live('click', function() {
 		var img = $(this), index = img.attr('data-ci');
-		img.attr('src', '/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
+		img.attr('src', 'http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
 		
 		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'uplogo', default_logo: index, _method: 'put' }, function(response) {
 			$('#flogo', '#tab1').html(response);
@@ -1731,7 +1739,7 @@ $.preload_us_map_imgs = function() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
-		img.src = '/images/ui/storagelocator/us_map/'+ this +'.png';
+		img.src = 'http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }
 

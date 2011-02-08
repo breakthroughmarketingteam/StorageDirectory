@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110205000248) do
+ActiveRecord::Schema.define(:version => 20110207234607) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -329,6 +329,17 @@ ActiveRecord::Schema.define(:version => 20110205000248) do
   end
 
   add_index "images", ["id", "user_id", "title"], :name => "index_images_on_id_and_user_id_and_title"
+
+  create_table "img_assets", :force => true do |t|
+    t.string   "title"
+    t.text     "original"
+    t.string   "cdn_file_name"
+    t.integer  "cdn_file_size"
+    t.string   "cdn_content_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "orig_dir"
+  end
 
   create_table "impressions", :force => true do |t|
     t.integer  "listing_id"

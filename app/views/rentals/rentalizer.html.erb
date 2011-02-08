@@ -32,28 +32,34 @@
 						<form id="rentalizer" action="/rentalizer" method="post">
 							<div class="inner">
 								<div class="col1">
-									<div class="">
-										<label class="block left" for="unit_type">Type: </label>
-										<select class="required" id="unit_type" name="unit_type">
-											<% listing.available_unit_types.each do |type| %>
-												<option<%= ' selected="selected"' if size && size.title.downcase == type.downcase %> value="<%= type %>">
-													<%= type %>
-												</option>	
-											<% end %>
-										</select>
-									</div>
+									<div id="size_ops" class="<% 'hide' unless params[:show_size_ops] %>">
+										<div>
+											<% types = listing.available_unit_types %>
+											<label class="block left" for="unit_type">Type: </label>
+											<select class="required" id="unit_type" name="unit_type">
+												<% types.each do |type| %>
+													<option<%= ' selected="selected"' if size && size.title.downcase == type.downcase %> value="<%= type %>">
+														<%= type %>
+													</option>	
+												<% end %>
+											</select>
+										</div>
 
-									<div class="">
-										<label class="block left" for="size_id">Size: </label>
-										<select class="required sizes_select" id="size_id" name="rental[size_id]">
-											<% listing.uniq_avail_sizes.each do |avail_size| %>
-												<option<%= ' selected="selected"' if size.dims == avail_size.dims %> value='<%= avail_size.id %>' data-unit-type='<%= avail_size.title.downcase %>' data-unit-price='<%= avail_size.dollar_price %>' data-url='<%= avail_size.icon(:medium).try :url %>'>
-													<%= avail_size.dims %>
-												</option>
+										<div>
+											<% sizes = listing.uniq_avail_sizes %>
+											<label class="block left">Size: </label>
+											<% types.each do |type| %>
+											<select class="sizes_select" id="size_id_<%= type.downcase.gsub(/\s|-/, '_') %>" name="rental[size_id]">
+												<% sizes.select{ |s| s.title == type }.each do |s| %>
+													<option<%= ' selected="selected"' if size.dims == s.dims %> value="<%= s.id %>" data-unit-type="<%= s.title.downcase %>" data-unit-price="<%= s.dollar_price %>" data-url="<%= s.icon(:medium).try :url %>">
+														<%= s.dims %>
+													</option>
+												<% end %>
+											</select>
 											<% end %>
-										</select>
+										</div>
 									</div>
-
+									
 									<div>
 										<label class="block left" for="Rate:_">Rate: </label>
 										<div id="price">
@@ -77,7 +83,7 @@
 													<li>
 														<input id="special_id_<%= spec.id %>" name="rental[special_id]" type="radio" value="<%= spec.id %>" class="<%= 'chosen' if spec == special %>" /> 
 														<label for="special_id_<%= spec.id %>"><%= spec.title %></label>
-														<a href="#" class="remove_special hide"><img alt="Remove" src="/images/ui/storagelocator/remove.png" /></a>
+														<a href="#" class="remove_special hide"><img alt="Remove" src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/remove.png" /></a>
 													</li>
 													<% end %>
 												</ul>
@@ -141,7 +147,7 @@
 											</span>
 										</li>
 										<li id="paid_until">
-											<label class="block left">Paid until: </label>
+											<label class="block left">Paid thru: </label>
 											<span class="paid_thru"></span>
 											<input id="listing_id" name="rental[listing_id]" type="hidden" value="<%= listing.id %>" />
 										</li>
@@ -229,7 +235,7 @@
 					<div id="rent_step3" class="workflow_step">
 						<div class="inner">
 							<div id="processing_rental" class="conf">
-								<img alt="Ajax-loader-long-green" class="ajax_loader" src="/images/ui/ajax-loader-long-green.gif" />
+								<img alt="Ajax-loader-long-green" class="ajax_loader" src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-long-green.gif" />
 							</div>
 
 							<div id="rental_complete" class="hide conf">
@@ -267,14 +273,13 @@
 		
 		<script src="/javascripts/jquery.all.js" type="text/javascript"></script>
 		<script src="/javascripts/plugins/jquery.formbouncer.js" type="text/javascript"></script>
-		<script src="/javascripts/plugins/jquery.preloadCssImages.js" type="text/javascript"></script>
 		<script src="/javascripts/plugins/jquery.tools.min.js" type="text/javascript"></script>
 		<script src="/javascripts/plugins/jquery.hinty.js" type="text/javascript"></script>
 		<script src="/javascripts/greymatter.js" type="text/javascript"></script>
 		<script src="/javascripts/plugins/greyresults.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-20270920-1']);
+		  _gaq.push(['_setAccount', '<%= $_usssl_google_analytics %>']);
 		  _gaq.push(['_setDomainName', 'usselfstoragelocator.com']);
 		  _gaq.push(['_trackPageview']);
 		  (function() {
@@ -283,10 +288,5 @@
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
 		</script>
-		<script type="text/javascript">
-			var websiteId = 3817;
-			var httpReferer = escape(document.referrer);
-		</script>
-		<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
     </body>
 </html>

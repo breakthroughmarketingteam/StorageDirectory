@@ -14,7 +14,7 @@
 				<div class="stack i">
 		  			<%= f.label :password, nil, :class => 'hidden' %>
 					<div class="shadow_wrap">
-				  		<%= f.password_field :password, :value => (flash[:quick_login][1] if flash[:quick_login]), :class => 'required hintable', :title => 'Password' %>
+				  		<%= f.password_field :password, :value => (flash[:quick_login][1] if flash[:quick_login]), :class => 'required' %>
 					</div>
 				</div>
 	

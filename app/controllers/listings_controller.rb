@@ -275,7 +275,7 @@ class ListingsController < ApplicationController
   		@Gmap.markers << GoogleMap::Marker.new(
   		  :map => @Gmap, :lat => @map.lat, :lng => @map.lng,
         :html => @listing.nil? ? '<p><strong>Search distance measured from here.</strong></p>' : "<strong>#{@listing.title}</strong><p>#{@listing.description}</p>",
-        :marker_hover_text => @listing.try(:title), :marker_icon_path => '/images/ui/map_marker.png'
+        :marker_hover_text => @listing.try(:title), :marker_icon_path => 'http://s3.amazonaws.com/storagelocator/images/ui/map_marker.png'
       )
     end
   end

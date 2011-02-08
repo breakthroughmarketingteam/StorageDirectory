@@ -315,9 +315,9 @@ $(function(){
 	
 	$('li.enabled', 'li.rslt-price').live('click', function() {
 		var $this = $(this),
-			check = $('input.unit_size', this);
+			check = $('input.unit_size', $this);
 		
-		check.attr('checked', !check.is(':checked'));
+		check.attr('checked', true);
 		$('li.enabled', $this.parent()).removeClass('selected');
 		$this.addClass('selected');
 	});
@@ -419,39 +419,6 @@ $(function(){
 		
 		$.calculatePrice('#calc_params_for_'+ spec_txt.attr('data-listing-id'));
 	});
-	
-	$.calculatePrice = function(context) {
-		$.getJSON('/rentalizer', $.getCalculationParams(context), function(response) {
-			$.with_json(response, function(data) {
-				$.each(data, function() {
-					var calc_wrap = $('#calcfor_'+ this.listing_id), html = '',
-						paid_thru = new Date(this.calculation.paid_thru),
-						months = paid_thru.getMonth() - new Date().getMonth();
-					
-					html += '<span class="price">$'+ this.calculation.total +'</span><br />';
-					html += '<span class="date">Paid for '+ months +' month'+ (months > 1 ? 's' : '') +'<br />thru '+ paid_thru.format('longDate') +'</span>';
-					
-					calc_wrap.html(html);
-				});
-			});
-		});
-	}
-	
-	 $.getCalculationParams = function(context) {
-		var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
-		
-		btns.each(function(i) {
-			var b = $(this), 
-				p = [b.attr('data-listing-id'), b.attr('data-size-id'), b.attr('data-special-id')];
-				
-			params.multi_params.push(p.join('x'));
-		});
-		
-		params.multi_params = params.multi_params.join('-');
-		params.move_in_date = new Date(now.getYear(), now.getMonth(), now.getDate() + 1).format('isoDate');
-		
-		return params;
-	}
 	
 	$('.specializer', '.specializer_wrap').live('click', function() {
 		var $this = $(this),
@@ -647,7 +614,7 @@ $(function(){
 			dirs = $('<div id="dirs" />');
 		
 		map_container.after(dirs);
-		map_container.parent().prepend('<img src="/images/ui/storagelocator/usselfstoragelocator-sml.png" class="dp" />');
+		map_container.parent().prepend('<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usselfstoragelocator-sml.png" class="dp" />');
 		
 		map_wrap.jmap('SearchDirections', {
 			'query': from + ' to '+ to,
@@ -838,7 +805,7 @@ $(function(){
 						   $('#search_query', form).val() +'</span> '+ $.ajax_loader_tag();
 		
 		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
-		$('h2', results_head).removeClass('no_results').html(loading_txt);
+		$('h2', results_head).removeClass('no_results hide').html(loading_txt);
 		$('.txt_ldr', results_head).txt_loader();
 		
 		if (form.data('valid') && !form.data('loading')) {
@@ -1055,7 +1022,7 @@ try {
 
 	// http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000
 	
-	var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/map_marker.png'); // the 'you are here' icon
+	var startIcon = new GIcon(G_DEFAULT_ICON, 'http://s3.amazonaws.com/storagelocator/images/ui/map_marker.png'); // the 'you are here' icon
 	
 	//save the regular icon image url
 	var normalIconImage = normalIcon.image,
@@ -1245,6 +1212,39 @@ $.enableTooltips = function(el, context, delay) {
 	$(el, context).tooltip({ predelay: (delay || 300) });
 }
 
+$.calculatePrice = function(context) {
+	$.getJSON('/rentalizer', $.getCalculationParams(context), function(response) {
+		$.with_json(response, function(data) {
+			$.each(data, function() {
+				var calc_wrap = $('#calcfor_'+ this.listing_id), html = '',
+					paid_thru = new Date(this.calculation.paid_thru),
+					months = paid_thru.getMonth() - new Date().getMonth();
+				
+				html += '<span class="price">$'+ this.calculation.total +'</span><br />';
+				html += '<span class="date">Paid for '+ months +' month'+ (months > 1 ? 's' : '') +'<br />thru '+ paid_thru.format('longDate') +'</span>';
+				
+				calc_wrap.html(html);
+			});
+		});
+	});
+}
+
+ $.getCalculationParams = function(context) {
+	var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
+	
+	btns.each(function(i) {
+		var b = $(this), 
+			p = [b.attr('data-listing-id'), b.attr('data-size-id'), b.attr('data-special-id')];
+			
+		params.multi_params.push(p.join('x'));
+	});
+	
+	params.multi_params = params.multi_params.join('-');
+	params.move_in_date = new Date(now.getYear(), now.getMonth(), now.getDate() + 1).format('isoDate');
+	
+	return params;
+}
+
 $.fn.special_txt_anim = function() {
 	return this.each(function() {
 		$(this).animate({ 'font-size': '120%' }, 150, function() { 
@@ -1324,20 +1324,9 @@ $.fn.rental_form = function() {
 		}
 	};
 
-	function set_size_select(select, unit_type) {
-		var show_count = 0;
-
-		select.children().each(function() {
-			var $this = $(this);
-
-			if (unit_type != $this.attr('data-unit-type').toLowerCase()) 
-				$this.hide();
-			else {
-				$this.show();
-				if (show_count == 0) select.val($this.val());
-				show_count++;
-			}
-		});
+	function set_size_select(selects, unit_type, context) {
+		selects.hide();
+		selects.filter('#size_id_'+ unit_type, context).show();
 	}
 	
 	return this.each(function() {
@@ -1345,8 +1334,8 @@ $.fn.rental_form = function() {
 			special_btns   = $('.avail_specials input', form),
 			remove_special = $('.remove_special', form).hide(),
 			type_select    = $('select[name=unit_type]', form),
-			unit_type 	   = type_select.val().toLowerCase(),
-			sizes_select   = $('select[name="rental[size_id]"]', form),
+			unit_type 	   = type_select.val().toLowerCase().replaceAll(' ', '_').replaceAll('-', '_').toLowerCase(),
+			sizes_select   = $('select.sizes_select', form),
 			calendar	   = $('#move_in_date', form).datepicker({
 				onSelect: function(date, ui) { form.submit() },
 				minDate: new Date()
@@ -1383,15 +1372,15 @@ $.fn.rental_form = function() {
 			return false;
 		});
 		
-		if (sizes_select.is(':visible')) {
+		if (!$('#size_ops', form).hasClass('hide')) {
 			sizes_select.change(function() {
 				inputs.month_rate.text(sizes_select.children(':selected').attr('data-unit-price'));
 				form.submit();
 			});
-			set_size_select(sizes_select, unit_type);
+			set_size_select(sizes_select, unit_type, form);
 			
 			type_select.change(function() {
-				set_size_select(sizes_select, $(this).val().toLowerCase());
+				set_size_select(sizes_select, $(this).val().replaceAll(' ', '_').replaceAll('-', '_').toLowerCase(), form);
 			});
 		}
 		

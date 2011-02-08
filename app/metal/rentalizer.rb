@@ -59,8 +59,8 @@ class Rentalizer
         multiplier += (days_left * proration) - (special && special.month_limit > 1 ? 1 : 0)
         multiplier += 1 if special && special.month_limit == 1 && move_date.day > half_month
         discount = calculate_special multiplier, special, subtotal
-      elsif special && multiplier == 1
-        multiplier += 1
+      elsif special
+        multiplier += 1 if multiplier == 1
         discount = calculate_special special.month_limit, special, subtotal
       else
         discount = 0.00
@@ -73,7 +73,7 @@ class Rentalizer
       total    += tax_amt
       
       out = {
-        :paid_thru      => Time.local(move_date.year, move_date.month + multiplier, days_in_month - 1).strftime('%m/%d/%Y'),
+        :paid_thru      => get_paid_thru(listing, move_date, multiplier, special),
         :multiplier     => sprintf("%.2f", multiplier),
         :month_rate     => sprintf("%.2f", size.dollar_price),
         :discount       => sprintf("%.2f", discount),
@@ -88,17 +88,27 @@ class Rentalizer
     end
     
     def calculate_special(multiplier, special, subtotal)
-      if special
-  	  	case special.function when 'm' # months off
-  	  	    subtotal * special.value.to_f
-    		  when '%' # percent off
-    		    (subtotal * multiplier) * (special.value.to_f / 100)
-    		  else # fixed dollar amount off
-    		    special.value.to_f
-  		  end
-  	  else
-  	    0.00
-    	end
+      return 0.00 unless special
+    
+	  	case special.function when 'm' # months off
+	  	    subtotal * special.value.to_f
+  		  when '%' # percent off
+  		    (subtotal * multiplier) * (special.value.to_f / 100)
+  		  else # fixed dollar amount off
+  		    special.value.to_f
+		  end
+    end
+    
+    def get_paid_thru(listing, move_date, multiplier, special)
+      months = special ? multiplier : (listing.prorated? ? 0 : multiplier)
+      end_month = Time.local move_date.year, move_date.month + months
+      days_in_end_month = Date.civil(end_month.year, end_month.month, -1).day
+      
+      if listing.prorated?
+        Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
+      else
+        Time.local(move_date.year, move_date.month + months, move_date.day - 1).strftime('%m/%d/%Y')
+      end
     end
     
   end
