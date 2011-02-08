@@ -1,6 +1,4 @@
-/* Style sheet. Created by ns-designs 2010 */
 html{overflow-x:hidden;overflow-y:scroll;margin:0;}
-/* Start by defining the main page layout */
 body{text-align:center;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#333;}
 h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
@@ -15,7 +13,6 @@ span.big-text{font-family:Verdana;font-size:30px;line-height:1.1;margin-right:4p
 span.blue{color:#4c4bcc;}
 .QOverlay{background-color:#fff;z-index:9999;}
 .QLoader{background-color:#5357a6;height:19px;}
-/* Start complex layout styles - includes the changing background garage door etc*/
 
 #head-ctr{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/top-hdr-strip2.png) repeat-x bottom;}
 #head-ctr-in{height:225px;margin:0 auto;position:relative;text-align:left;width:980px;}
