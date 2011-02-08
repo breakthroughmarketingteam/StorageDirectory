@@ -434,10 +434,10 @@ $(function(){
 			});
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
-			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops);
+			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops).children().not('.hide').show();
 		} else {
 			get_pop_up_and_do(ops, { sub_partial: this.href }, function(pop_up) {
-				// do something?
+				pop_up.children().not('.hide').show();
 			});
 		}
 		
