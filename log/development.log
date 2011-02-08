@@ -49223,3 +49223,1722 @@ Rendered listings/_distance_and_price (1.0ms)
 Rendered listings/_result (125.2ms)
 Rendered listings/_paginator (8.9ms)
 Completed in 16627ms (View: 100, DB: 0) | 200 OK [http://localhost/self-storage/auto_search?_method=put&authenticity_token=a0%2FHNwXeNA9gYbUfI0F5upGqAQtqJmDO9DARKPGeo4k%3D&search%5Bquery%5D=Fort+Lauderdale%2C+FL&hack_me=&search%5Bstorage_type%5D=self+storage&search%5Bunit_size%5D=5x5&search%5Bwithin%5D=20]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET client_min_messages TO 'panic'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET client_min_messages TO 'panic'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET client_min_messages TO 'notice'[0m
+
+
+Processing ListingsController#home (for 127.0.0.1 at 2011-02-07 19:16:43) [GET]
+  Parameters: {"storage_type"=>"self storage", "action"=>"home", "controller"=>"listings"}
+  [4;36;1mSearch Load (1.4ms)[0m   [0;1mSELECT * FROM "searches" WHERE ("searches"."id" = 14887) LIMIT 1[0m
+  [4;35;1mAnalyzing Search Load Execution Time: 0.00251
+
+[0m   [0mLimit  (cost=0.00..8.27 rows=1 width=156)
+   ->  Index Scan using searches_pkey on searches  (cost=0.00..8.27 rows=1 width=156)
+         Index Cond: (id = 14887)
+[0m
+  [4;36;1mPage Load (1.9ms)[0m   [0;1mSELECT * FROM "pages" WHERE ("pages"."title" = E'Self Storage') LIMIT 1[0m
+  [4;35;1mAnalyzing Page Load Execution Time: 0.00241
+
+[0m   [0mLimit  (cost=0.00..10.75 rows=1 width=1160)
+   ->  Seq Scan on pages  (cost=0.00..10.75 rows=1 width=1160)
+         Filter: ((title)::text = 'Self Storage'::text)
+[0m
+Rendering template within layouts/storagelocator
+Rendering listings/locator
+  [4;36;1mBlock Load (1.1ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'header') [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.001595
+
+[0m   [0mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'header'::text)
+[0m
+  [4;36;1mBlock Load (2.5ms)[0m   [0;1mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'header' AND enabled IS TRUE)) [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.002914
+
+[0m   [0mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'header'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;36;1mBlock Load (0.7ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.003717
+
+[0m   [0mSeq Scan on blocks  (cost=0.00..10.30 rows=15 width=2672)
+   Filter: restful
+[0m
+  [4;36;1mBlocksModel Load (4.0ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 16)) [0m
+  [4;35;1mAnalyzing BlocksModel Load Execution Time: 0.005044
+
+[0m   [0mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 16)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 16)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 16)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (1.7ms)
+  [4;36;1mSQL (2.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 16)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.002844
+
+[0m   [0mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 16) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 16)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001788
+
+[0m   [0mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 16)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 16)
+[0m
+Rendered blocks/_block (217.9ms)
+  [4;36;1mBlock Load (0.5ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'content_bottom') [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.00081
+
+[0m   [0mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'content_bottom'::text)
+[0m
+  [4;36;1mBlock Load (1.8ms)[0m   [0;1mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'content_bottom' AND enabled IS TRUE)) [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.002243
+
+[0m   [0mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'content_bottom'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;35;1mBlocksModel Load (4.1ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 24)) [0m
+  [4;36;1mAnalyzing BlocksModel Load Execution Time: 0.012987
+
+[0m   [0;1mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 24)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 24)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 24)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (1.7ms)
+  [4;35;1mFacilityFeature Load (0.8ms)[0m   [0mSELECT title FROM "facility_features" [0m
+  [4;36;1mAnalyzing FacilityFeature Load Execution Time: 0.00166
+
+[0m   [0;1mSeq Scan on facility_features  (cost=0.00..11.30 rows=130 width=516)
+[0m
+  [4;35;1mSizeIcon Load (1.0ms)[0m   [0mSELECT * FROM "size_icons" WHERE ("size_icons"."icon_size" = E'medium') ORDER BY width, length[0m
+  [4;36;1mAnalyzing SizeIcon Load Execution Time: 0.003577
+
+[0m   [0;1mSort  (cost=10.38..10.39 rows=1 width=2128)
+   Sort Key: width, length
+   ->  Seq Scan on size_icons  (cost=0.00..10.38 rows=1 width=2128)
+         Filter: ((icon_size)::text = 'medium'::text)
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "size_icons" WHERE ("size_icons"."icon_size" = E'medium') ORDER BY width, length[0m
+Rendered listings/_narrow_search (174.6ms)
+  [4;36;1mSQL (1.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 24)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.002272
+
+[0m   [0mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 24) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 24)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001144
+
+[0m   [0mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 24)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 24)
+[0m
+Rendered blocks/_block (402.0ms)
+  [4;36;1mBlocksModel Load (3.5ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 43)) [0m
+  [4;35;1mAnalyzing BlocksModel Load Execution Time: 0.008985
+
+[0m   [0mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 43)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 43)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 43)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (1.7ms)
+Rendered listings/_featured (0.2ms)
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 43)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.002132
+
+[0m   [0mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 43) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 43)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001037
+
+[0m   [0mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 43)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 43)
+[0m
+Rendered blocks/_block (54.1ms)
+  [4;36;1mBlock Load (0.6ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'column_5') [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.000956
+
+[0m   [0mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'column_5'::text)
+[0m
+  [4;36;1mBlock Load (2.3ms)[0m   [0;1mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'column_5' AND enabled IS TRUE)) [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.002767
+
+[0m   [0mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'column_5'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;35;1mBlock Load (0.5ms)[0m   [0mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'more_info') [0m
+  [4;36;1mAnalyzing Block Load Execution Time: 0.001038
+
+[0m   [0;1mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'more_info'::text)
+[0m
+  [4;35;1mBlock Load (1.9ms)[0m   [0mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'more_info' AND enabled IS TRUE)) [0m
+  [4;36;1mAnalyzing Block Load Execution Time: 0.002234
+
+[0m   [0;1mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'more_info'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;36;1mBlocksModel Load (2.2ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 51)) [0m
+  [4;35;1mAnalyzing BlocksModel Load Execution Time: 0.002691
+
+[0m   [0mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 51)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 51)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 51)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (1.8ms)
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 51)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001003
+
+[0m   [0mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 51) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 51)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001128
+
+[0m   [0mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 51)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 51)
+[0m
+Rendered blocks/_block (23.2ms)
+  [4;36;1mBlock Load (0.7ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'footer') [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.00104
+
+[0m   [0mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'footer'::text)
+[0m
+  [4;36;1mBlock Load (2.7ms)[0m   [0;1mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'footer' AND enabled IS TRUE)) [0m
+  [4;35;1mAnalyzing Block Load Execution Time: 0.003176
+
+[0m   [0mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'footer'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;35;1mBlocksModel Load (4.8ms)[0m   [0mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 39)) [0m
+  [4;36;1mAnalyzing BlocksModel Load Execution Time: 0.014559
+
+[0m   [0;1mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 39)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 39)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 39)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (1.7ms)
+  [4;35;1mAdPartner Load (2.1ms)[0m   [0mSELECT * FROM "ad_partners" WHERE (enabled IS TRUE) [0m
+  [4;36;1mAnalyzing AdPartner Load Execution Time: 0.003261
+
+[0m   [0;1mSeq Scan on ad_partners  (cost=0.00..10.30 rows=15 width=2637)
+   Filter: (enabled IS TRUE)
+[0m
+Cached fragment hit: views/ad_partners/1-20101104184209,ad_partners/2-20101104184209,ad_partners/3-20101104184209,ad_partners/4-20101111183252,ad_partners/5-20101111183754,ad_partners/6-20101129163352 (0.0ms)
+  [4;35;1mSQL (20.2ms)[0m   [0mSELECT count(*) AS count_all FROM "listings" [0m
+  [4;36;1mAnalyzing  Execution Time: 0.020604
+
+[0m   [0;1mAggregate  (cost=1329.07..1329.08 rows=1 width=0)
+   ->  Seq Scan on listings  (cost=0.00..1212.45 rows=46645 width=0)
+[0m
+Cached fragment hit: views/Listings-46520 (0.0ms)
+Rendered pages/_footer_bottom (0.3ms)
+Rendered pages/_short_footer (48.6ms)
+  [4;35;1mSQL (0.7ms)[0m   [0mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 39)) [0m
+  [4;36;1mAnalyzing  Execution Time: 0.001064
+
+[0m   [0;1mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 39) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 39)) [0m
+  [4;36;1mAnalyzing  Execution Time: 0.00178
+
+[0m   [0;1mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 39)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 39)
+[0m
+Rendered blocks/_block (341.7ms)
+  [4;35;1mBlock Load (0.4ms)[0m   [0mSELECT * FROM "blocks" WHERE ("blocks"."show_in_all" = E'head_bar') [0m
+  [4;36;1mAnalyzing Block Load Execution Time: 0.000776
+
+[0m   [0;1mSeq Scan on blocks  (cost=0.00..10.38 rows=1 width=2672)
+   Filter: ((show_in_all)::text = 'head_bar'::text)
+[0m
+  [4;35;1mBlock Load (2.0ms)[0m   [0mSELECT "blocks".* FROM "blocks" INNER JOIN "blocks_models" ON "blocks".id = "blocks_models".block_id WHERE (("blocks_models".model_type = E'Page') AND ("blocks_models".model_id = 2) AND (place = E'head_bar' AND enabled IS TRUE)) [0m
+  [4;36;1mAnalyzing Block Load Execution Time: 0.002394
+
+[0m   [0;1mNested Loop  (cost=0.00..96.17 rows=1 width=2672)
+   ->  Seq Scan on blocks_models  (cost=0.00..87.89 rows=1 width=4)
+         Filter: ((enabled IS TRUE) AND ((model_type)::text = 'Page'::text) AND (model_id = 2) AND ((place)::text = 'head_bar'::text))
+   ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks  (cost=0.00..8.27 rows=1 width=2672)
+         Index Cond: (blocks.id = blocks_models.block_id)
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "blocks" WHERE ("blocks"."restful" = 't') [0m
+  [4;36;1mBlocksModel Load (3.0ms)[0m   [0;1mSELECT 'Block' AS polymorphic_parent_class, 'models' AS polymorphic_association_id, blocks_models.block_id AS t0_r3, blocks_models.created_at AS t0_r4, blocks_models.enabled AS t0_r7, blocks_models.id AS t0_r0, blocks_models.model_id AS t0_r1, blocks_models.model_type AS t0_r2, blocks_models.place AS t0_r6, blocks_models.position AS t0_r9, blocks_models.show_title AS t0_r8, blocks_models.updated_at AS t0_r5, links.created_at AS t1_r4, links.group_id AS t1_r6, links.id AS t1_r0, links.path AS t1_r2, links.relative AS t1_r3, links.resource AS t1_r7, links.target_id AS t1_r8, links.title AS t1_r1, links.updated_at AS t1_r5, pages.content AS t2_r7, pages.created_at AS t2_r4, pages.description AS t2_r8, pages.id AS t2_r0, pages.meta_desc AS t2_r13, pages.parent_id AS t2_r2, pages.position AS t2_r10, pages.process_erb AS t2_r11, pages.show_in_nav AS t2_r6, pages.show_title AS t2_r9, pages.title AS t2_r1, pages.updated_at AS t2_r5, pages.url AS t2_r3, pages.use_placeholders AS t2_r12, posts.comments_count AS t3_r7, posts.comments_enabled AS t3_r8, posts.content AS t3_r2, posts.created_at AS t3_r5, posts.id AS t3_r0, posts.impressions_count AS t3_r10, posts.position AS t3_r9, posts.published AS t3_r4, posts.rating_average AS t3_r11, posts.title AS t3_r1, posts.type AS t3_r12, posts.updated_at AS t3_r6, posts.user_id AS t3_r3 FROM "blocks_models" JOIN "blocks" AS polymorphic_parent ON "blocks_models".block_id = polymorphic_parent.id LEFT JOIN "pages" ON "blocks_models".model_id = "pages".id AND "blocks_models".model_type = E'Page' LEFT JOIN "posts" ON "blocks_models".model_id = "posts".id AND "blocks_models".model_type = E'Post' LEFT JOIN "links" ON "blocks_models".model_id = "links".id AND "blocks_models".model_type = E'Link' WHERE (("blocks_models".block_id = 45)) [0m
+  [4;35;1mAnalyzing BlocksModel Load Execution Time: 0.003524
+
+[0m   [0mHash Left Join  (cost=38.39..71.86 rows=12 width=3890)
+   Hash Cond: (blocks_models.model_id = pages.id)
+   Join Filter: ((blocks_models.model_type)::text = 'Page'::text)
+   ->  Hash Left Join  (cost=27.04..60.31 rows=12 width=2730)
+         Hash Cond: (blocks_models.model_id = links.id)
+         Join Filter: ((blocks_models.model_type)::text = 'Link'::text)
+         ->  Hash Left Join  (cost=15.92..48.99 rows=12 width=1153)
+               Hash Cond: (blocks_models.model_id = posts.id)
+               Join Filter: ((blocks_models.model_type)::text = 'Post'::text)
+               ->  Nested Loop  (cost=4.34..37.22 rows=12 width=40)
+                     ->  Index Scan using index_blocks_on_id_and_title_and_show_in_all_and_restful_region on blocks polymorphic_parent  (cost=0.00..8.27 rows=1 width=4)
+                           Index Cond: (id = 45)
+                     ->  Bitmap Heap Scan on blocks_models  (cost=4.34..28.84 rows=12 width=40)
+                           Recheck Cond: (blocks_models.block_id = 45)
+                           ->  Bitmap Index Scan on index_blocks_models_on_block_id_and_model_id_and_model_type  (cost=0.00..4.34 rows=12 width=0)
+                                 Index Cond: (blocks_models.block_id = 45)
+               ->  Hash  (cost=10.70..10.70 rows=70 width=1113)
+                     ->  Seq Scan on posts  (cost=0.00..10.70 rows=70 width=1113)
+         ->  Hash  (cost=10.50..10.50 rows=50 width=1577)
+               ->  Seq Scan on links  (cost=0.00..10.50 rows=50 width=1577)
+   ->  Hash  (cost=10.60..10.60 rows=60 width=1160)
+         ->  Seq Scan on pages  (cost=0.00..10.60 rows=60 width=1160)
+[0m
+Rendered shared/_model_options (2.5ms)
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM "views" INNER JOIN "models_views" ON "views".id = "models_views".view_id WHERE (("models_views".model_type = E'Block') AND ("models_views".model_id = 45)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.001816
+
+[0m   [0mAggregate  (cost=16.56..16.57 rows=1 width=0)
+   ->  Nested Loop  (cost=0.00..16.55 rows=1 width=0)
+         ->  Index Scan using index_models_views_on_model_id_and_view_id_and_model_type on models_views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: ((model_id = 45) AND ((model_type)::text = 'Block'::text))
+         ->  Index Scan using views_pkey on views  (cost=0.00..8.27 rows=1 width=4)
+               Index Cond: (views.id = models_views.view_id)
+[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "forms" INNER JOIN "block_forms" ON "forms".id = "block_forms".form_id WHERE (("block_forms".block_id = 45)) [0m
+  [4;35;1mAnalyzing  Execution Time: 0.002242
+
+[0m   [0mAggregate  (cost=24.33..24.34 rows=1 width=0)
+   ->  Hash Join  (cost=13.84..24.31 rows=6 width=0)
+         Hash Cond: (forms.id = block_forms.form_id)
+         ->  Seq Scan on forms  (cost=0.00..10.30 rows=30 width=4)
+         ->  Hash  (cost=13.76..13.76 rows=6 width=4)
+               ->  Bitmap Heap Scan on block_forms  (cost=4.30..13.76 rows=6 width=4)
+                     Recheck Cond: (block_id = 45)
+                     ->  Bitmap Index Scan on index_block_forms_on_block_id_and_form_id  (cost=0.00..4.30 rows=6 width=0)
+                           Index Cond: (block_id = 45)
+[0m
+Rendered blocks/_block (40.2ms)
+  [4;36;1mTag Load (1.5ms)[0m   [0;1mSELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags".id = "taggings".tag_id WHERE (("taggings".taggable_id = 2) AND ("taggings".taggable_type = E'Page') AND (taggings.context = E'keywords')) [0m
+  [4;35;1mAnalyzing Tag Load Execution Time: 0.002702
+
+[0m   [0mHash Join  (cost=2.84..5.15 rows=3 width=20)
+   Hash Cond: (tags.id = taggings.tag_id)
+   ->  Seq Scan on tags  (cost=0.00..1.79 rows=79 width=20)
+   ->  Hash  (cost=2.80..2.80 rows=3 width=4)
+         ->  Seq Scan on taggings  (cost=0.00..2.80 rows=3 width=4)
+               Filter: ((taggable_id = 2) AND ((taggable_type)::text = 'Page'::text) AND ((context)::text = 'keywords'::text))
+[0m
+Rendered menus/_topnav (11.1ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "pages" WHERE ("pages"."title" = E'Self Storage') LIMIT 1[0m
+Rendered pages/_home (1.6ms)
+Rendered user_sessions/_form (12.3ms)
+Completed in 2440ms (View: 1348, DB: 141) | 200 OK [http://localhost/]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+
+
+Processing ListingsController#locator (for 127.0.0.1 at 2011-02-07 19:16:51) [GET]
+  Parameters: {"hack_me"=>"", "action"=>"locator", "auto_search"=>"auto_search", "_method"=>"put", "authenticity_token"=>"a0/HNwXeNA9gYbUfI0F5upGqAQtqJmDO9DARKPGeo4k=", "controller"=>"listings", "search"=>{"within"=>"20", "storage_type"=>"self storage", "unit_size"=>"5x5", "query"=>"Fort Lauderdale, FL"}}
+  [4;35;1mSearch Load (1.8ms)[0m   [0mSELECT * FROM "searches" WHERE ("searches"."id" = 14887) LIMIT 1[0m
+  [4;36;1mAnalyzing Search Load Execution Time: 0.005157
+
+[0m   [0;1mLimit  (cost=0.00..8.27 rows=1 width=156)
+   ->  Index Scan using searches_pkey on searches  (cost=0.00..8.27 rows=1 width=156)
+         Index Cond: (id = 14887)
+[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUsCity Load (43.3ms)[0m   [0mSELECT DISTINCT name FROM "us_cities" ORDER BY name[0m
+  [4;36;1mAnalyzing UsCity Load Execution Time: 1.006335
+
+[0m   [0;1mUnique  (cost=0.00..1775.29 rows=16749 width=10)
+   ->  Index Scan using index_us_cities_on_name on us_cities  (cost=0.00..1712.42 rows=25148 width=10)
+[0m
+  [4;35;1mListing Load Including Associations (32.6ms)[0m   [0mSELECT "listings"."id" AS t0_r0, "listings"."title" AS t0_r1, "listings"."description" AS t0_r2, "listings"."enabled" AS t0_r3, "listings"."user_id" AS t0_r4, "listings"."created_at" AS t0_r5, "listings"."updated_at" AS t0_r6, "listings"."status" AS t0_r7, "listings"."clicks_count" AS t0_r8, "listings"."impressions_count" AS t0_r9, "listings"."reservations_count" AS t0_r10, "listings"."office_24_hours" AS t0_r11, "listings"."access_24_hours" AS t0_r12, "listings"."info_requests_count" AS t0_r13, "listings"."logo_file_name" AS t0_r14, "listings"."logo_file_size" AS t0_r15, "listings"."logo_content_type" AS t0_r16, "listings"."default_logo" AS t0_r17, "listings"."category" AS t0_r18, "listings"."phone" AS t0_r19, "listings"."admin_fee" AS t0_r20, "listings"."prorated" AS t0_r21, "listings"."tax_rate" AS t0_r22, "listings"."tracked_number" AS t0_r23, "listings"."storage_types" AS t0_r24, "listings"."renting_enabled" AS t0_r25, "maps"."id" AS t1_r0, "maps"."listing_id" AS t1_r1, "maps"."address" AS t1_r2, "maps"."city" AS t1_r3, "maps"."state" AS t1_r4, "maps"."zip" AS t1_r5, "maps"."created_at" AS t1_r6, "maps"."updated_at" AS t1_r7, "maps"."phone" AS t1_r8, "maps"."lat" AS t1_r9, "maps"."lng" AS t1_r10, "maps"."address2" AS t1_r11, "sizes"."id" AS t2_r0, "sizes"."title" AS t2_r1, "sizes"."width" AS t2_r2, "sizes"."length" AS t2_r3, "sizes"."unit" AS t2_r4, "sizes"."created_at" AS t2_r5, "sizes"."updated_at" AS t2_r6, "sizes"."description" AS t2_r7, "sizes"."price" AS t2_r8, "sizes"."listing_id" AS t2_r9, "sizes"."availability" AS t2_r10, "pictures"."id" AS t3_r0, "pictures"."listing_id" AS t3_r1, "pictures"."title" AS t3_r2, "pictures"."description" AS t3_r3, "pictures"."position" AS t3_r4, "pictures"."created_at" AS t3_r5, "pictures"."updated_at" AS t3_r6, "pictures"."facility_image_file_name" AS t3_r7, "pictures"."facility_image_content_type" AS t3_r8, "pictures"."facility_image_file_size" AS t3_r9 FROM "listings" LEFT OUTER JOIN "maps" ON maps.listing_id = listings.id LEFT OUTER JOIN "sizes" ON sizes.listing_id = listings.id LEFT OUTER JOIN "pictures" ON pictures.listing_id = listings.id WHERE (((listings.enabled IS TRUE) AND (maps.lat>25.8383608283508 AND maps.lat<26.4166402397652 AND maps.lng>-80.5551479637306 AND maps.lng<-79.9110538184954)) AND (
+ (ACOS(least(1,COS(0.456010909635889)*COS(-1.40033177963472)*COS(RADIANS(maps.lat))*COS(RADIANS(maps.lng))+
+ COS(0.456010909635889)*SIN(-1.40033177963472)*COS(RADIANS(maps.lat))*SIN(RADIANS(maps.lng))+
+ SIN(0.456010909635889)*SIN(RADIANS(maps.lat))))*3963.19)
+ <= 20)) [0m
+  [4;36;1mAnalyzing Listing Load Including Associations Execution Time: 0.821833
+
+[0m   [0;1mNested Loop Left Join  (cost=45.70..91.34 rows=2 width=3257)
+   ->  Nested Loop Left Join  (cost=45.70..90.19 rows=2 width=1645)
+         ->  Nested Loop  (cost=45.70..88.73 rows=2 width=1048)
+               ->  Bitmap Heap Scan on maps  (cost=45.70..72.16 rows=2 width=86)
+                     Recheck Cond: ((lat > 25.8383608283508::double precision) AND (lat < 26.4166402397652::double precision) AND (lng > (-80.5551479637306)::double precision) AND (lng < (-79.9110538184954)::double precision))
+                     Filter: ((acos(LEAST(1::double precision, ((((0.152305722130444::double precision * cos(radians(lat))) * cos(radians(lng))) + (((-0.884803423448615)::double precision * cos(radians(lat))) * sin(radians(lng)))) + (0.440370149828455::double precision * sin(radians(lat)))))) * 3963.19::double precision) <= 20::double precision)
+                     ->  BitmapAnd  (cost=45.70..45.70 rows=7 width=0)
+                           ->  Bitmap Index Scan on index_maps_on_lat  (cost=0.00..6.39 rows=213 width=0)
+                                 Index Cond: ((lat > 25.8383608283508::double precision) AND (lat < 26.4166402397652::double precision))
+                           ->  Bitmap Index Scan on index_maps_on_lng  (cost=0.00..39.07 rows=1481 width=0)
+                                 Index Cond: ((lng > (-80.5551479637306)::double precision) AND (lng < (-79.9110538184954)::double precision))
+               ->  Index Scan using listings_pkey on listings  (cost=0.00..8.27 rows=1 width=962)
+                     Index Cond: (listings.id = maps.listing_id)
+                     Filter: (listings.enabled IS TRUE)
+         ->  Index Scan using index_sizes_on_listing_id_and_price on sizes  (cost=0.00..0.53 rows=16 width=597)
+               Index Cond: (sizes.listing_id = listings.id)
+   ->  Index Scan using index_pictures_on_id_and_listing_id_and_title on pictures  (cost=0.00..0.56 rows=1 width=1612)
+         Index Cond: (pictures.listing_id = listings.id)
+[0m
+  [4;35;1mClient Load (1.4ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25246) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.002113
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25246) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mClient Load (3.1ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25242) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.003784
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25242) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25242) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mClient Load (1.0ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."id" = 25270) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;35;1mAnalyzing Client Load Execution Time: 0.001652
+
+[0m   [0mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25270) AND ((type)::text = 'Client'::text))
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."id" = 25246) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;35;1mClient Load (2.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25252) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.002316
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25252) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mClient Load (0.6ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25271) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.001252
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25271) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mClient Load (0.6ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25286) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.001218
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25286) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mClient Load (2.5ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25289) AND ( ("users"."type" = 'Client' ) ) [0m
+  [4;36;1mAnalyzing Client Load Execution Time: 0.003158
+
+[0m   [0;1mSeq Scan on users  (cost=0.00..3.58 rows=1 width=561)
+   Filter: ((id = 25289) AND ((type)::text = 'Client'::text))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 25252) AND ( ("users"."type" = 'Client' ) ) [0m
+Rendering listings/locator
+  [4;36;1mListing Load (16.0ms)[0m   [0;1mSELECT * FROM "listings" WHERE ("listings".user_id = 25242) [0m
+  [4;35;1mAnalyzing Listing Load Execution Time: 0.021067
+
+[0m   [0mSeq Scan on listings  (cost=0.00..1329.06 rows=2 width=962)
+   Filter: (user_id = 25242)
+[0m
+  [4;36;1mFacilityFeature Load (1.2ms)[0m   [0;1mSELECT "facility_features".* FROM "facility_features" INNER JOIN "listing_features" ON "facility_features".id = "listing_features".facility_feature_id WHERE (("listing_features".listing_id = 85481)) ORDER BY title[0m
+  [4;35;1mAnalyzing FacilityFeature Load Execution Time: 0.013929
+
+[0m   [0mSort  (cost=14.72..14.74 rows=8 width=568)
+   Sort Key: facility_features.title
+   ->  Hash Join  (cost=1.93..14.61 rows=8 width=568)
+         Hash Cond: (facility_features.id = listing_features.facility_feature_id)
+         ->  Seq Scan on facility_features  (cost=0.00..11.30 rows=130 width=568)
+         ->  Hash  (cost=1.83..1.83 rows=8 width=4)
+               ->  Seq Scan on listing_features  (cost=0.00..1.83 rows=8 width=4)
+                     Filter: (listing_id = 85481)
+[0m
+  [4;36;1mFacilityInfo Load (6.1ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 85481) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.010152
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 85481)
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 85481) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.006622
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=7 width=597)
+   Filter: (listing_id = 85481)
+[0m
+  [4;36;1mSizeIcon Load (0.9ms)[0m   [0;1mSELECT * FROM "size_icons" WHERE (width = 5 AND length = 5 AND icon_size = E'thumb') LIMIT 1[0m
+  [4;35;1mAnalyzing SizeIcon Load Execution Time: 0.011148
+
+[0m   [0mLimit  (cost=0.00..10.53 rows=1 width=2128)
+   ->  Seq Scan on size_icons  (cost=0.00..10.53 rows=1 width=2128)
+         Filter: ((width = 5) AND (length = 5) AND ((icon_size)::text = 'thumb'::text))
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85481) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.00712
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..5.50 rows=1 width=597)
+   Filter: ((width = 5) AND (length = 5) AND (listing_id = 85481))
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85481) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85481) [0m
+Rendered listings/_distance_and_price (340.3ms)
+  [4;36;1mPredefinedSpecial Load (1.2ms)[0m   [0;1mSELECT "predefined_specials".* FROM "predefined_specials" INNER JOIN "predef_special_assigns" ON "predefined_specials".id = "predef_special_assigns".predefined_special_id WHERE (("predef_special_assigns".listing_id = 85481)) [0m
+  [4;35;1mAnalyzing PredefinedSpecial Load Execution Time: 0.007274
+
+[0m   [0mHash Join  (cost=26.46..37.49 rows=7 width=1092)
+   Hash Cond: (predefined_specials.id = predef_special_assigns.predefined_special_id)
+   ->  Seq Scan on predefined_specials  (cost=0.00..10.70 rows=70 width=1092)
+   ->  Hash  (cost=26.38..26.38 rows=7 width=4)
+         ->  Seq Scan on predef_special_assigns  (cost=0.00..26.38 rows=7 width=4)
+               Filter: (listing_id = 85481)
+[0m
+Rendered predefined_specials/_special_txt (0.7ms)
+Rendered listings/_unit_detail (52.9ms)
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85481 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.006435
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 85481) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85481 AND "comments".commentable_type = E'Listing') [0m
+Rendered listings/_result (713.4ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "listings" WHERE ("listings".user_id = 25242) [0m
+  [4;36;1mFacilityFeature Load (5.3ms)[0m   [0;1mSELECT "facility_features".* FROM "facility_features" INNER JOIN "listing_features" ON "facility_features".id = "listing_features".facility_feature_id WHERE (("listing_features".listing_id = 85480)) ORDER BY title[0m
+  [4;35;1mAnalyzing FacilityFeature Load Execution Time: 0.010341
+
+[0m   [0mSort  (cost=14.82..14.84 rows=10 width=568)
+   Sort Key: facility_features.title
+   ->  Hash Join  (cost=1.95..14.65 rows=10 width=568)
+         Hash Cond: (facility_features.id = listing_features.facility_feature_id)
+         ->  Seq Scan on facility_features  (cost=0.00..11.30 rows=130 width=568)
+         ->  Hash  (cost=1.83..1.83 rows=10 width=4)
+               ->  Seq Scan on listing_features  (cost=0.00..1.83 rows=10 width=4)
+                     Filter: (listing_id = 85480)
+[0m
+  [4;36;1mFacilityInfo Load (1.0ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 85480) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.007727
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 85480)
+[0m
+  [4;36;1mSize Load (0.8ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 85480) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.02261
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=38 width=597)
+   Filter: (listing_id = 85480)
+[0m
+  [4;36;1mUnitType Load (2.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14725) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.00844
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14725)
+[0m
+  [4;36;1mFacilityUnit Load (1.0ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 199) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.006091
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=4 width=66)
+   Filter: (unit_type_id = 199)
+[0m
+  [4;36;1mUnitType Load (0.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14697) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.005913
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14697)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 171) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.005473
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 171)
+[0m
+  [4;36;1mUnitType Load (3.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14711) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.014213
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14711)
+[0m
+  [4;36;1mFacilityUnit Load (22.4ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 185) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.030959
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 185)
+[0m
+  [4;36;1mUnitType Load (1.2ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14724) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.017945
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14724)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 198) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00487
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 198)
+[0m
+  [4;36;1mUnitType Load (2.9ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14720) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.007382
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14720)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 194) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.012276
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=12 width=66)
+   Filter: (unit_type_id = 194)
+[0m
+  [4;36;1mUnitType Load (12.7ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14714) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.017812
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14714)
+[0m
+  [4;36;1mFacilityUnit Load (5.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 188) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.014278
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=24 width=66)
+   Filter: (unit_type_id = 188)
+[0m
+  [4;36;1mUnitType Load (1.2ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14726) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.010483
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14726)
+[0m
+  [4;36;1mFacilityUnit Load (9.3ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 200) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.022025
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=25 width=66)
+   Filter: (unit_type_id = 200)
+[0m
+  [4;36;1mUnitType Load (0.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14705) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.009162
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14705)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 179) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.01023
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=13 width=66)
+   Filter: (unit_type_id = 179)
+[0m
+  [4;36;1mUnitType Load (5.2ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14733) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.009925
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14733)
+[0m
+  [4;36;1mFacilityUnit Load (13.1ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 207) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.020567
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=13 width=66)
+   Filter: (unit_type_id = 207)
+[0m
+  [4;36;1mUnitType Load (0.8ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14704) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.020974
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14704)
+[0m
+  [4;36;1mFacilityUnit Load (4.1ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 178) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.018715
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=56 width=66)
+   Filter: (unit_type_id = 178)
+[0m
+  [4;36;1mUnitType Load (19.8ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14716) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.024603
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14716)
+[0m
+  [4;36;1mFacilityUnit Load (1.0ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 190) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.016291
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=57 width=66)
+   Filter: (unit_type_id = 190)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14707) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.013387
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14707)
+[0m
+  [4;36;1mFacilityUnit Load (0.7ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 181) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.007794
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=25 width=66)
+   Filter: (unit_type_id = 181)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14723) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.0051
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14723)
+[0m
+  [4;36;1mFacilityUnit Load (4.7ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 197) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.01214
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=20 width=66)
+   Filter: (unit_type_id = 197)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14699) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.016058
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14699)
+[0m
+  [4;36;1mFacilityUnit Load (1.0ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 173) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.009439
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=14 width=66)
+   Filter: (unit_type_id = 173)
+[0m
+  [4;36;1mUnitType Load (0.8ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14710) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.009865
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14710)
+[0m
+  [4;36;1mFacilityUnit Load (0.7ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 184) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.006769
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=16 width=66)
+   Filter: (unit_type_id = 184)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14715) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.005759
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14715)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 189) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00573
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=15 width=66)
+   Filter: (unit_type_id = 189)
+[0m
+  [4;36;1mUnitType Load (0.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14712) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.004241
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14712)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 186) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.004977
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=8 width=66)
+   Filter: (unit_type_id = 186)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14698) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.004924
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14698)
+[0m
+  [4;36;1mFacilityUnit Load (0.8ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 172) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.006789
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=8 width=66)
+   Filter: (unit_type_id = 172)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14727) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.005207
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14727)
+[0m
+  [4;36;1mFacilityUnit Load (0.7ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 201) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00581
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=8 width=66)
+   Filter: (unit_type_id = 201)
+[0m
+  [4;36;1mUnitType Load (1.9ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14728) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.012274
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14728)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 202) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.004631
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 202)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14719) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.008137
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14719)
+[0m
+  [4;36;1mFacilityUnit Load (20.8ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 193) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.026348
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=8 width=66)
+   Filter: (unit_type_id = 193)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14701) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.006553
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14701)
+[0m
+  [4;36;1mFacilityUnit Load (11.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 175) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.015791
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=4 width=66)
+   Filter: (unit_type_id = 175)
+[0m
+  [4;36;1mUnitType Load (0.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14717) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.004817
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14717)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 191) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.006123
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 191)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14706) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.014988
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14706)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 180) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00684
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 180)
+[0m
+  [4;36;1mUnitType Load (1.1ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14732) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.00585
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14732)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 206) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00715
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 206)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14731) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.207252
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14731)
+[0m
+  [4;36;1mFacilityUnit Load (9.0ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 205) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.017207
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=15 width=66)
+   Filter: (unit_type_id = 205)
+[0m
+  [4;36;1mUnitType Load (0.7ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14713) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.005359
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14713)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 187) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.012659
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=18 width=66)
+   Filter: (unit_type_id = 187)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14700) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.010447
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14700)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 174) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.005666
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 174)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14729) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.007381
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14729)
+[0m
+  [4;36;1mFacilityUnit Load (15.3ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 203) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.020097
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 203)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14696) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.006497
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14696)
+[0m
+  [4;36;1mFacilityUnit Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 170) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00601
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 170)
+[0m
+  [4;36;1mUnitType Load (1.2ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14702) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.007171
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14702)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 176) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.004935
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 176)
+[0m
+  [4;36;1mUnitType Load (5.3ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14718) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.0101
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14718)
+[0m
+  [4;36;1mFacilityUnit Load (2.3ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 192) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.00904
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 192)
+[0m
+  [4;36;1mUnitType Load (0.5ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14721) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.011079
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14721)
+[0m
+  [4;36;1mFacilityUnit Load (2.7ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 195) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.009099
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 195)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14703) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.006991
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14703)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 177) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.004724
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 177)
+[0m
+  [4;36;1mUnitType Load (0.6ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14709) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.004967
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14709)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 183) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.007443
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 183)
+[0m
+  [4;36;1mUnitType Load (1.0ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14722) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.014717
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14722)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 196) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.013443
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 196)
+[0m
+  [4;36;1mUnitType Load (2.7ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14708) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.007914
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14708)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 182) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.018898
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 182)
+[0m
+  [4;36;1mUnitType Load (1.1ms)[0m   [0;1mSELECT * FROM "unit_types" WHERE ("unit_types".size_id = 14730) LIMIT 1[0m
+  [4;35;1mAnalyzing UnitType Load Execution Time: 0.023128
+
+[0m   [0mLimit  (cost=0.00..10.12 rows=1 width=4281)
+   ->  Seq Scan on unit_types  (cost=0.00..10.12 rows=1 width=4281)
+         Filter: (size_id = 14730)
+[0m
+  [4;36;1mFacilityUnit Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_units" WHERE ("facility_units".unit_type_id = 204) [0m
+  [4;35;1mAnalyzing FacilityUnit Load Execution Time: 0.0053
+
+[0m   [0mSeq Scan on facility_units  (cost=0.00..8.91 rows=2 width=66)
+   Filter: (unit_type_id = 204)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "size_icons" WHERE (width = 5 AND length = 5 AND icon_size = E'thumb') LIMIT 1[0m
+  [4;35;1mSize Load (1.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85480) [0m
+  [4;36;1mAnalyzing Size Load Execution Time: 0.005849
+
+[0m   [0;1mSeq Scan on sizes  (cost=0.00..5.50 rows=1 width=597)
+   Filter: ((width = 5) AND (length = 5) AND (listing_id = 85480))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85480) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 85480) [0m
+Rendered listings/_distance_and_price (2890.3ms)
+  [4;35;1mPredefinedSpecial Load (0.7ms)[0m   [0mSELECT "predefined_specials".* FROM "predefined_specials" INNER JOIN "predef_special_assigns" ON "predefined_specials".id = "predef_special_assigns".predefined_special_id WHERE (("predef_special_assigns".listing_id = 85480)) [0m
+  [4;36;1mAnalyzing PredefinedSpecial Load Execution Time: 0.006179
+
+[0m   [0;1mHash Join  (cost=26.46..37.49 rows=7 width=1092)
+   Hash Cond: (predefined_specials.id = predef_special_assigns.predefined_special_id)
+   ->  Seq Scan on predefined_specials  (cost=0.00..10.70 rows=70 width=1092)
+   ->  Hash  (cost=26.38..26.38 rows=7 width=4)
+         ->  Seq Scan on predef_special_assigns  (cost=0.00..26.38 rows=7 width=4)
+               Filter: (listing_id = 85480)
+[0m
+Rendered predefined_specials/_special_txt (0.6ms)
+Rendered listings/_unit_detail (32.0ms)
+  [4;35;1mSQL (0.5ms)[0m   [0mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85480 AND "comments".commentable_type = E'Listing') [0m
+  [4;36;1mAnalyzing  Execution Time: 0.018759
+
+[0m   [0;1mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 85480) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85480 AND "comments".commentable_type = E'Listing') [0m
+Rendered listings/_result (3326.2ms)
+  [4;36;1mListing Load (13.4ms)[0m   [0;1mSELECT * FROM "listings" WHERE ("listings".user_id = 25271) [0m
+  [4;35;1mAnalyzing Listing Load Execution Time: 0.017982
+
+[0m   [0mSeq Scan on listings  (cost=0.00..1329.06 rows=2 width=962)
+   Filter: (user_id = 25271)
+[0m
+  [4;36;1mFacilityFeature Load (0.7ms)[0m   [0;1mSELECT "facility_features".* FROM "facility_features" INNER JOIN "listing_features" ON "facility_features".id = "listing_features".facility_feature_id WHERE (("listing_features".listing_id = 113022)) ORDER BY title[0m
+  [4;35;1mAnalyzing FacilityFeature Load Execution Time: 0.007143
+
+[0m   [0mSort  (cost=10.12..10.12 rows=1 width=568)
+   Sort Key: facility_features.title
+   ->  Nested Loop  (cost=0.00..10.11 rows=1 width=568)
+         ->  Seq Scan on listing_features  (cost=0.00..1.83 rows=1 width=4)
+               Filter: (listing_id = 113022)
+         ->  Index Scan using facility_features_pkey on facility_features  (cost=0.00..8.27 rows=1 width=568)
+               Index Cond: (facility_features.id = listing_features.facility_feature_id)
+[0m
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 113022) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.015353
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 113022)
+[0m
+  [4;36;1mSize Load (0.8ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 113022) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.006871
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=12 width=597)
+   Filter: (listing_id = 113022)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "size_icons" WHERE (width = 5 AND length = 5 AND icon_size = E'thumb') LIMIT 1[0m
+  [4;35;1mSize Load (0.6ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113022) [0m
+  [4;36;1mAnalyzing Size Load Execution Time: 0.039729
+
+[0m   [0;1mSeq Scan on sizes  (cost=0.00..5.50 rows=1 width=597)
+   Filter: ((width = 5) AND (length = 5) AND (listing_id = 113022))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113022) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113022) [0m
+Rendered listings/_distance_and_price (314.9ms)
+  [4;35;1mPredefinedSpecial Load (0.8ms)[0m   [0mSELECT "predefined_specials".* FROM "predefined_specials" INNER JOIN "predef_special_assigns" ON "predefined_specials".id = "predef_special_assigns".predefined_special_id WHERE (("predef_special_assigns".listing_id = 113022)) [0m
+  [4;36;1mAnalyzing PredefinedSpecial Load Execution Time: 0.006629
+
+[0m   [0;1mHash Join  (cost=26.46..37.49 rows=7 width=1092)
+   Hash Cond: (predefined_specials.id = predef_special_assigns.predefined_special_id)
+   ->  Seq Scan on predefined_specials  (cost=0.00..10.70 rows=70 width=1092)
+   ->  Hash  (cost=26.38..26.38 rows=7 width=4)
+         ->  Seq Scan on predef_special_assigns  (cost=0.00..26.38 rows=7 width=4)
+               Filter: (listing_id = 113022)
+[0m
+Rendered listings/_unit_detail (21.5ms)
+  [4;35;1mSQL (0.6ms)[0m   [0mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 113022 AND "comments".commentable_type = E'Listing') [0m
+  [4;36;1mAnalyzing  Execution Time: 0.022535
+
+[0m   [0;1mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 113022) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (628.4ms)
+  [4;35;1mListing Load (13.6ms)[0m   [0mSELECT * FROM "listings" WHERE ("listings".user_id = 25270) [0m
+  [4;36;1mAnalyzing Listing Load Execution Time: 0.0209
+
+[0m   [0;1mSeq Scan on listings  (cost=0.00..1329.06 rows=2 width=962)
+   Filter: (user_id = 25270)
+[0m
+  [4;35;1mFacilityFeature Load (3.6ms)[0m   [0mSELECT "facility_features".* FROM "facility_features" INNER JOIN "listing_features" ON "facility_features".id = "listing_features".facility_feature_id WHERE (("listing_features".listing_id = 86230)) ORDER BY title[0m
+  [4;36;1mAnalyzing FacilityFeature Load Execution Time: 0.016984
+
+[0m   [0;1mSort  (cost=10.12..10.12 rows=1 width=568)
+   Sort Key: facility_features.title
+   ->  Nested Loop  (cost=0.00..10.11 rows=1 width=568)
+         ->  Seq Scan on listing_features  (cost=0.00..1.83 rows=1 width=4)
+               Filter: (listing_id = 86230)
+         ->  Index Scan using facility_features_pkey on facility_features  (cost=0.00..8.27 rows=1 width=568)
+               Index Cond: (facility_features.id = listing_features.facility_feature_id)
+[0m
+  [4;35;1mFacilityInfo Load (0.6ms)[0m   [0mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 86230) LIMIT 1[0m
+  [4;36;1mAnalyzing FacilityInfo Load Execution Time: 0.005007
+
+[0m   [0;1mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 86230)
+[0m
+  [4;35;1mSize Load (0.5ms)[0m   [0mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 86230) [0m
+  [4;36;1mAnalyzing Size Load Execution Time: 0.009193
+
+[0m   [0;1mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 86230)
+[0m
+  [4;35;1mSize Load (0.6ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = E'5' AND length = E'5') LIMIT 1[0m
+  [4;36;1mAnalyzing Size Load Execution Time: 0.005145
+
+[0m   [0;1mLimit  (cost=0.00..1.03 rows=1 width=597)
+   ->  Seq Scan on sizes  (cost=0.00..5.14 rows=5 width=597)
+         Filter: ((width = 5) AND (length = 5))
+[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "size_icons" WHERE (width = 5 AND length = 5 AND icon_size = E'thumb') LIMIT 1[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 86230) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004761
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..5.50 rows=1 width=597)
+   Filter: ((width = 5) AND (length = 5) AND (listing_id = 86230))
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 86230) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 86230) [0m
+Rendered listings/_distance_and_price (90.3ms)
+  [4;36;1mPredefinedSpecial Load (0.6ms)[0m   [0;1mSELECT "predefined_specials".* FROM "predefined_specials" INNER JOIN "predef_special_assigns" ON "predefined_specials".id = "predef_special_assigns".predefined_special_id WHERE (("predef_special_assigns".listing_id = 86230)) [0m
+  [4;35;1mAnalyzing PredefinedSpecial Load Execution Time: 0.004895
+
+[0m   [0mHash Join  (cost=26.46..37.49 rows=7 width=1092)
+   Hash Cond: (predefined_specials.id = predef_special_assigns.predefined_special_id)
+   ->  Seq Scan on predefined_specials  (cost=0.00..10.70 rows=70 width=1092)
+   ->  Hash  (cost=26.38..26.38 rows=7 width=4)
+         ->  Seq Scan on predef_special_assigns  (cost=0.00..26.38 rows=7 width=4)
+               Filter: (listing_id = 86230)
+[0m
+Rendered listings/_unit_detail (16.4ms)
+  [4;36;1mSQL (4.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 86230 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.008487
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 86230) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (236.6ms)
+  [4;36;1mListing Load (27.6ms)[0m   [0;1mSELECT * FROM "listings" WHERE ("listings".user_id = 25286) [0m
+  [4;35;1mAnalyzing Listing Load Execution Time: 0.036018
+
+[0m   [0mSeq Scan on listings  (cost=0.00..1329.06 rows=2 width=962)
+   Filter: (user_id = 25286)
+[0m
+  [4;36;1mFacilityFeature Load (2.6ms)[0m   [0;1mSELECT "facility_features".* FROM "facility_features" INNER JOIN "listing_features" ON "facility_features".id = "listing_features".facility_feature_id WHERE (("listing_features".listing_id = 113034)) ORDER BY title[0m
+  [4;35;1mAnalyzing FacilityFeature Load Execution Time: 0.020137
+
+[0m   [0mSort  (cost=10.12..10.12 rows=1 width=568)
+   Sort Key: facility_features.title
+   ->  Nested Loop  (cost=0.00..10.11 rows=1 width=568)
+         ->  Seq Scan on listing_features  (cost=0.00..1.83 rows=1 width=4)
+               Filter: (listing_id = 113034)
+         ->  Index Scan using facility_features_pkey on facility_features  (cost=0.00..8.27 rows=1 width=568)
+               Index Cond: (facility_features.id = listing_features.facility_feature_id)
+[0m
+  [4;36;1mFacilityInfo Load (21.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 113034) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.034523
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 113034)
+[0m
+  [4;36;1mSize Load (0.7ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 113034) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.006692
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 113034)
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = E'5' AND length = E'5') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "size_icons" WHERE (width = 5 AND length = 5 AND icon_size = E'thumb') LIMIT 1[0m
+  [4;36;1mSize Load (0.7ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113034) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004926
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..5.50 rows=1 width=597)
+   Filter: ((width = 5) AND (length = 5) AND (listing_id = 113034))
+[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113034) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "sizes" WHERE (width = 5 AND length = 5) AND ("sizes".listing_id = 113034) [0m
+Rendered listings/_distance_and_price (154.7ms)
+  [4;36;1mPredefinedSpecial Load (3.3ms)[0m   [0;1mSELECT "predefined_specials".* FROM "predefined_specials" INNER JOIN "predef_special_assigns" ON "predefined_specials".id = "predef_special_assigns".predefined_special_id WHERE (("predef_special_assigns".listing_id = 113034)) [0m
+  [4;35;1mAnalyzing PredefinedSpecial Load Execution Time: 0.00766
+
+[0m   [0mHash Join  (cost=26.46..37.49 rows=7 width=1092)
+   Hash Cond: (predefined_specials.id = predef_special_assigns.predefined_special_id)
+   ->  Seq Scan on predefined_specials  (cost=0.00..10.70 rows=70 width=1092)
+   ->  Hash  (cost=26.38..26.38 rows=7 width=4)
+         ->  Seq Scan on predef_special_assigns  (cost=0.00..26.38 rows=7 width=4)
+               Filter: (listing_id = 113034)
+[0m
+Rendered listings/_unit_detail (21.3ms)
+  [4;36;1mSQL (10.8ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 113034 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.037216
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 113034) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (644.6ms)
+Rendered listings/_distance_and_price (3.2ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 71863) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.004859
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 71863)
+[0m
+  [4;36;1mSize Load (3.1ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 71863) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.00731
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 71863)
+[0m
+  [4;36;1mSQL (3.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 71863 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.013098
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 71863) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (76.1ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 82002) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.005397
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 82002)
+[0m
+  [4;36;1mSize Load (1.8ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 82002) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.006054
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 82002)
+[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 82002 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.00629
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 82002) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (96.1ms)
+Rendered listings/_distance_and_price (3.9ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 68402) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.008113
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 68402)
+[0m
+  [4;36;1mSize Load (1.3ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 68402) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.005307
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 68402)
+[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 68402 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.011217
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 68402) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (126.3ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (3.9ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 74948) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.009026
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 74948)
+[0m
+  [4;36;1mSize Load (2.8ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 74948) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.007714
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 74948)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 74948 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.005473
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 74948) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (300.6ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.7ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 78446) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.035353
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 78446)
+[0m
+  [4;36;1mSize Load (3.3ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 78446) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.007577
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 78446)
+[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 78446 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.004711
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 78446) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (134.9ms)
+Rendered listings/_distance_and_price (0.9ms)
+  [4;36;1mFacilityInfo Load (19.8ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 101666) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.025113
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 101666)
+[0m
+  [4;36;1mSize Load (1.0ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 101666) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.005378
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 101666)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 101666 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.009577
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 101666) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (109.5ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 68434) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.004957
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 68434)
+[0m
+  [4;36;1mSize Load (0.5ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 68434) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004607
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 68434)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 68434 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.013706
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 68434) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (96.7ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 85005) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.0196
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 85005)
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 85005) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.005548
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 85005)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85005 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.00518
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 85005) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (87.0ms)
+Rendered listings/_distance_and_price (1.4ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 85008) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.008704
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 85008)
+[0m
+  [4;36;1mSize Load (0.5ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 85008) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004485
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 85008)
+[0m
+  [4;36;1mSQL (22.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 85008 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.255945
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 85008) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (358.6ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 101667) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.005053
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 101667)
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 101667) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.009234
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 101667)
+[0m
+  [4;36;1mSQL (8.3ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 101667 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.032836
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 101667) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (160.2ms)
+Rendered listings/_distance_and_price (0.7ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 80848) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.004733
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 80848)
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 80848) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004972
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 80848)
+[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 80848 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.005289
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 80848) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (71.9ms)
+Rendered listings/_distance_and_price (0.8ms)
+  [4;36;1mFacilityInfo Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 93950) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.007848
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 93950)
+[0m
+  [4;36;1mSize Load (0.5ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 93950) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004507
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 93950)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 93950 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.004417
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 93950) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (93.0ms)
+Rendered listings/_distance_and_price (23.8ms)
+  [4;36;1mFacilityInfo Load (0.5ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 91663) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.005391
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 91663)
+[0m
+  [4;36;1mSize Load (0.6ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 91663) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.007354
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 91663)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 91663 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.004728
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 91663) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (151.2ms)
+Rendered listings/_distance_and_price (1.2ms)
+  [4;36;1mFacilityInfo Load (1.5ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 97384) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.013962
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 97384)
+[0m
+  [4;36;1mSize Load (0.5ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 97384) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004738
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 97384)
+[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 97384 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.006275
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 97384) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (108.0ms)
+Rendered listings/_distance_and_price (7.0ms)
+  [4;36;1mFacilityInfo Load (0.6ms)[0m   [0;1mSELECT * FROM "facility_infos" WHERE ("facility_infos".listing_id = 68323) LIMIT 1[0m
+  [4;35;1mAnalyzing FacilityInfo Load Execution Time: 0.005931
+
+[0m   [0mLimit  (cost=0.00..10.00 rows=1 width=8362)
+   ->  Seq Scan on facility_infos  (cost=0.00..10.00 rows=1 width=8362)
+         Filter: (listing_id = 68323)
+[0m
+  [4;36;1mSize Load (0.5ms)[0m   [0;1mSELECT * FROM "sizes" WHERE ("sizes".listing_id = 68323) [0m
+  [4;35;1mAnalyzing Size Load Execution Time: 0.004275
+
+[0m   [0mSeq Scan on sizes  (cost=0.00..4.79 rows=1 width=597)
+   Filter: (listing_id = 68323)
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM "comments" WHERE ("comments".commentable_id = 68323 AND "comments".commentable_type = E'Listing') [0m
+  [4;35;1mAnalyzing  Execution Time: 0.004396
+
+[0m   [0mAggregate  (cost=10.91..10.92 rows=1 width=0)
+   ->  Seq Scan on comments  (cost=0.00..10.90 rows=1 width=0)
+         Filter: ((commentable_id = 68323) AND ((commentable_type)::text = 'Listing'::text))
+[0m
+Rendered listings/_result (440.0ms)
+Rendered listings/_paginator (1.7ms)
+Completed in 13425ms (View: 70, DB: 0) | 200 OK [http://localhost/self-storage/auto_search?_method=put&authenticity_token=a0%2FHNwXeNA9gYbUfI0F5upGqAQtqJmDO9DARKPGeo4k%3D&search%5Bquery%5D=Fort+Lauderdale%2C+FL&hack_me=&search%5Bstorage_type%5D=self+storage&search%5Bunit_size%5D=5x5&search%5Bwithin%5D=20]
