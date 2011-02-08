@@ -198,7 +198,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/info-hdr-img.png) no-repeat;height:200px;}
 #info-in{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/clear-bg.png) repeat;margin:20px;padding:10px 20px 20px;width:385px;}
-#add-fac-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img.png) no-repeat;height:237px;}
+#add-fac-head{background:url(/images/ui/storagelocator/add-fclty-hdr.png) no-repeat;height:237px;}
 #add-fac-head a.try-free{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
