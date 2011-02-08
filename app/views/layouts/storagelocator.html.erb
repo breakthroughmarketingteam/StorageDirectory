@@ -14,7 +14,7 @@
 		<%= '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i -%>
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{user_user_stat_path current_user, @user_stat}';</script>" if current_user && !is_admin? -%>
 		<% unless @map_data.nil? -%><script type="text/javascript">var Gmaps_data = <%= @map_data.to_json %>;</script><% end -%>
-		<%= javascript_include_tag 'swfobject_modified', 'ckeditor/ckeditor', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application', :recursive => true, :cache => "cache/all#{RAILS_ENV == 'development' ? '' : '.min'}" %>
+		<%= javascript_include_tag 'swfobject_modified', 'ckeditor/ckeditor', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application', :recursive => true, :cache => "cache/all" %>
         <!--[if IE]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
