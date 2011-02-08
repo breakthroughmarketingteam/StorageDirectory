@@ -270,7 +270,7 @@ module ListingsHelper
   
   def friendly_sorted_by_label
     if @search.sorted_by.blank?
-      html = "Your <span id='sorted_by'>most relevant</span> #{@search.storage_type} is being displayed first"
+      html = "Your <span id='sorted_by'>most relevant</span> listing is being displayed first"
     else
       case @search.sorted_by when 'name'
         html = "Displaying results in <span id='sorted_by'>alphabetical</span> order #{@search.sort_reverse == '+' ? 'in reverse Z-A' : 'A-Z'}"
