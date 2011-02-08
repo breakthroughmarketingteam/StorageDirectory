@@ -173,12 +173,12 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #type-one-r-col-in,#sidebar{position:relative;width:774px;overflow:hidden;}
 .new_action #type-one-r-col-in{background:url(/images/ui/storagelocator/h-divider2.png) no-repeat scroll 55px bottom;}
 #listings_controller #type-one-r-col-in{background:none;}
-.rslt-head-txt{margin:15px 30px 13px 20px;overflow:hidden;}
+.rslt-head-txt{margin:15px 15px 13px 3px;overflow:hidden;}
 .rslt-head-txt .ajax_loader{margin:10px auto;}
-.rslt-head-txt > p{color:#999;float:left;font-size:12px;margin:6px 0;}
+.rslt-head-txt > p{color:#999;float:right;font-size:12px;margin:0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
-.rslt-head-txt h2{padding:1px 0;}
+.rslt-head-txt h2{float:left;font-size:12px;}
 .rslt-head-txt .ajax_loader{display:inline;margin:0;padding:2px 3px;}
 .green-head{width:745px;margin:16px 0 8px;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
