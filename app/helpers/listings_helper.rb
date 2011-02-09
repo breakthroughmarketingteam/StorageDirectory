@@ -228,7 +228,7 @@ module ListingsHelper
   def edit_listing_city_state_zip(listing)
     if listing.nil? || listing.new_record?
       (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field i', :title => 'City')
-      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :'data-autocomp-source' => 'UsCitys_abbrevs', :maxlength => 2)
+      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :'data-autocomp-source' => 'States_abbrevs', :maxlength => 2)
       html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else

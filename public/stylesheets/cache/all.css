@@ -1007,7 +1007,7 @@ z-index: 2;
 }
 
 
-html{overflow-x:hidden;overflow-y:scroll;margin:0;}
+html{margin:0;}
 body{text-align:center;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;font-size:100.01%;color:#333;}
 h5{margin-bottom:10px;}
 p,a {font-size:80%;} p a {font-size:100%;}
@@ -1411,7 +1411,7 @@ li.fac-specials a{background:url(http://s3.amazonaws.com/storagelocator/images/u
 li.fac-sizes a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sizes-icon.png) no-repeat 0 4px;}
 li.fac-pictures a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/pictures-icon.png) no-repeat 0 3px;}
 li.fac-reviews a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/reviews-icon.png) no-repeat 0 1px;}
-p.rslt-foot{text-align:right;margin-top:20px 10px 10px 0;padding-right:4px;}
+p.rslt-foot{text-align:right;margin:20px 10px 10px 0;padding-right:4px;}
 p.rslt-foot a{color:#666;text-decoration:none;}
 .exp-rslt{width:727px;border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;position:relative;left:13px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/expanded-result-bottom-bg.png) repeat-y top right;background-color:#FFFFDA;}
 .exp-rslt-in{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/expanded-result-bg.png) no-repeat top right;}
@@ -1504,7 +1504,7 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #new_client #listing_state{width:20px;}
 #add-fac-txt{float:left;width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:22px;}
-#add-fac-txt a:hover;{text-decoration:underline;}
+#add-fac-txt a:hover{text-decoration:underline;}
 #add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:0;}
 #add-fac-txt h4{font-size:14px;}
 #add-fac-form-extra{position:relative;}
@@ -1656,7 +1656,7 @@ ul#specials_list {margin:15px 10px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
 .facility-logo span.short{padding:0 5px 0;display:block;}
 .dlogo_wrap img{position:absolute;left:0;top:0;}
-.facility-logo img.default_logo{position:absolute;left:1;top:0;}
+.facility-logo img.default_logo{position:absolute;top:0px;}
 #sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;text-decoration:none;}
 #feat-list .dlogo_wrap{width:100%;}
@@ -1669,7 +1669,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in-edit .address,#sl-fac-detail-in-edit .listing_title{line-height:1.3;}
 #listings_controller #sl-fac-coup-in-edit input.title,#listings_controller #sl-fac-coup-in-edit input.description{width:96%;}
 #sl-fac-coup-in-edit input.special{width:100%;}
-#sl-fac-detail-in-edit .attr_wrap{overflow:hidden;width:;}
+#sl-fac-detail-in-edit .attr_wrap{overflow:hidden;}
 #listing_logo_form,#logo_picker{margin-top:15px;float:left;}
 #logo_picker{margin-top:10px;color:#33c;}
 #logo_picker:hover,#logo_picker:active{color:#393;}
@@ -1743,7 +1743,7 @@ div.sl-table-exp .rental_duration ul li{font-size:80%;margin-right:10px;}
 .sl-table-exp input{border:1px solid #ccc;padding:0 8px;height:24px;width:170px;font-size:100%;margin:2px 0 5px;}
 .sl-table-exp input#submit-btn{-moz-box-shadow:1px 1px 2px #999;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x center center;border:1px solid #666;color:#fff;cursor:pointer;font-size:16px;height:38px;margin:0 0 0 -7px;;padding:0;text-shadow:1px 1px 0 #666;width:140px;}
 .sl-table-exp textarea{border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;border:1px solid #ccc;width:178px;font-family:Arial,Helvetica,sans-serif;padding:5px;margin-left:5px;font-size:80%;height:97px;}
-.sl-table-exp p.move-in{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/calendar.png) no-repeat top 190px;text-align:left;position:relative;left:10px;}
+.sl-table-exp p.move-in{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/calendar.png) no-repeat 0px 190px;text-align:left;position:relative;left:10px;}
 .sl-table-exp p.zip input{width:90px;}
 .sl-table-exp p.move-in input{width:80px;}	
 .sl-table-exp p.move-in a{display:block;width:40px;height:30px;float:right;}
@@ -1862,7 +1862,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 .ov-info-cnt ul .state_zip span.value {float:left;}
 #edit_info .ov-info-cnt ul li{margin:10px 0;}
 #ov-units #rslt-list-bg{position:relative;overflow:hidden;}
-#ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc -moz-use-text-color -moz-use-text-color;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
+#ov-units #rslt-list-bg .listing .inner{background:none;border-color:#ccc;border-right:medium none;border-style:solid none none;border-width:1px medium medium;height:100%;position:relative;}
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing.unverified{background:#ebebeb;}
@@ -1888,7 +1888,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-settings-cnt table #listing_description textarea{font-size:80%;height:100px;margin:10px;width:93%;}
 #ov-settings-cnt input.text{width:96.9%;margin-bottom:3px;}
 #ov-settings-cnt textarea,#ov-settings-cnt input.text{font-family:Arial, sans-serif;padding:5px 7px;border:1px solid #ccc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
-#ov-services-cnt,#ov-specials-cnt{line-height:1.3;padding:15px 20px;overflow:hidden;posiiton:relative;}
+#ov-services-cnt,#ov-specials-cnt{line-height:1.3;padding:15px 20px;overflow:hidden;position:relative;}
 #ov-services-cnt h4,#issn_steps h4{margin-bottom:10px;}
 .specials_fields{overflow:hidden;border:1px solid #ccc;padding:5px 10px;}
 .specials_fields div{float:left;}
@@ -1904,8 +1904,6 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{bottom:10px;margin-top:15px;padding:15px 20px;position:absolute;width:88.5%;}
 #issn_status_option .left a,#issn_status_option .right a{color:#FFF;cursor:pointer;line-height:1.7;}
-#issn_status_option .left a{margin-right:15px;background:lightblue;}
-#issn_status_option .right {background:lightyellow;}
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
@@ -2142,7 +2140,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #new_client a.search-button:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
 /* client edit form */
-#sl-tabs-sizes{background:#fff;border-color:-moz-use-text-color #ccc;border-style:none solid;border-width:medium 1px;position:relative;}
+#sl-tabs-sizes{background:#fff;border:1px solid #ccc;position:relative;}
 .review p{margin:0 0 10px;}
 #reviews_empty{margin-left:20px;}
 #write_review{margin:0 5px 0 20px;padding:1px 0 0 22px;font-size:80%;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/comment_small.png) no-repeat left;}
