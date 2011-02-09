@@ -33,7 +33,7 @@
 				<div class="uncollapse">
 					<% Search.distance_options.each do |distance| -%>
 						<div class="radio_wrap auto">
-							<%= label_tag nil, "#{distance}" %>							
+							<label><%= distance %></label>						
 							<div class="radio_select">
 								<%= f.radio_button :within, distance %>
 							</div>
