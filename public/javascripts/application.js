@@ -44,6 +44,7 @@ $(function() {
 			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
 		if (form.data('valid') && !form.data('sending')) {
+
 			overlay.fadeIn();
 			form.data('sending', true);
 			

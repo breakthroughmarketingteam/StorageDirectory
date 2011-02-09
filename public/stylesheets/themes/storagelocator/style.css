@@ -38,7 +38,7 @@ span.blue{color:#4c4bcc;}
 #title a{color:#393;text-decoration:none;}
 #title h1{bottom:0;color:#333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -194,7 +194,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/info-hdr-img.png) no-repeat;height:200px;}
 #info-in{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/clear-bg.png) repeat;margin:20px;padding:10px 20px 20px;width:385px;}
-#add-fac-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img.png) no-repeat;height:237px;}
+#add-fac-head{background:url(/images/ui/storagelocator/add-fclty-hdr.png) no-repeat;height:237px;}
 #add-fac-head a.try-free{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
@@ -258,6 +258,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a{display:block;float:left;height:25px;margin-left:5px;width:25px;text-indent:-99999px;}
 
+
 .24-hour-access{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
 .climate-controlled{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
 .drive-up-access{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
@@ -309,6 +310,31 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #rslt-list-bg > div.active > .inner a.gate-access,#rslt-list-bg > div > .inner:hover a.gate-access{background:url(/images/ui/storagelocator/gate-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.perimeter-alarm-system,#rslt-list-bg > div > .inner a.perimeter-alarm-system:hover{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+
+.24-hour-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours.png) no-repeat;}
+.security-cameras{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security.png) no-repeat;}
+.ac{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac.png) no-repeat;}
+.drive-up-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup.png) no-repeat;}
+.se-habla-espanol{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish.png) no-repeat;}
+.climate-controlled{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate.png) no-repeat;}
+.keypad-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad.png) no-repeat;}
+
+.24-hour-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours-over.png) no-repeat;}
+.security-cameras:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-over.png) no-repeat;}
+.ac:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac-over.png) no-repeat;}
+.drive-up-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup-over.png) no-repeat;}
+.se-habla-espanol:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish-over.png) no-repeat;}
+.climate-controlled:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-over.png) no-repeat;}
+.keypad-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-over.png) no-repeat;}
+
+#rslt-list-bg > div.active > .inner a.24-hour-access,#rslt-list-bg > div > .inner:hover a.24-hour-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.security-cameras,#rslt-list-bg > div > .inner:hover a.security-cameras{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.drive-up-access,#rslt-list-bg > div > .inner:hover a.drive-up-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.se-habla-espanol,#rslt-list-bg > div > .inner:hover a.se-habla-espanol{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.climate-controlled,#rslt-list-bg > div > .inner:hover a.climate-controlled{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.keypad-access,#rslt-list-bg > div > .inner:hover a.keypad-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-hover.png) no-repeat;}
+
 
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
@@ -418,7 +444,7 @@ li.map-print a{width:89px;}
 li.map-plus{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
-#add-fac-head-in{background:url("/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
+#add-fac-head-in{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
 #type-two-top-bar-head ul li#tips_sort{position:relative;left:22px;width:253px;}
@@ -1290,7 +1316,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 .cvv{width:25px;}
 #rent_steps #rent_step2{font-size:12px;}
 #rent_steps #rent_step2 .month{margin:0 5px 0 0;width:20px;}
-#rent_steps #rent_step2 .year{margin-right:10px;width:20px;}
+#rent_steps #rent_step2 .year{margin-right:10px;width:20px;z-index: 1;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}

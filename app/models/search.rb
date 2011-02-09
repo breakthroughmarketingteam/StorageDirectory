@@ -52,7 +52,7 @@ class Search < ActiveRecord::Base
   end
   
   def comparable_attributes
-    a = self.attributes.select { |k, v| !['id', 'referrer', 'remote_ip', 'sort_reverse', 'sorted_by', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
+    a = self.attributes.select { |k, v| !['id', 'referrer', 'remote_ip', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
     a.map { |a| v = a[1]; v.respond_to?(:downcase) ? v.downcase : v }
   end
   
