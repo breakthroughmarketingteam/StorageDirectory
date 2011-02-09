@@ -1044,8 +1044,9 @@ span.blue{color:#4c4bcc;}
 #logotop{position:absolute;z-index:999;}
 #logoimg{position:relative;top:6px;}
 #logoshadow{bottom:0;margin-left:11px;position:absolute;width:60px;z-index:999;}
-#title{color:#339933;float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:10px;margin-top:38px;position:relative;width:400px;}
-#title h1{bottom:0;color:#333333;font-size:14px;font-weight:normal;position:absolute;}
+#title{float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:10px;margin-top:38px;position:relative;width:400px;}
+#title a{color:#393;text-decoration:none;}
+#title h1{bottom:0;color:#333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
 #a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
