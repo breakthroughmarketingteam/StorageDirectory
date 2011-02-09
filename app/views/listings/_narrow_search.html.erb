@@ -50,7 +50,7 @@
 								<div class="selectable">
 									<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 								</div>
-								<%= label_tag "sf_#{feature.parameterize}", feature %>
+								<%= label_tag "sf-#{feature.parameterize}", feature %>
 							</li>
 						<% end %>
 					</ul>
@@ -59,9 +59,9 @@
 						<% @unit_features.each do |feature| -%>
 						<li class="selectable_wrap auto">
 							<div class="selectable">
-								<%= check_box_tag 'search[features]', feature, nil, :id => "sfi#{feature.parameterize}" %>
+								<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 							</div>
-							<%= label_tag "sf_#{feature.parameterize}", feature %>
+							<%= label_tag "sf-#{feature.parameterize}", feature %>
 						</li>
 						<% end %>
 					</ul>
