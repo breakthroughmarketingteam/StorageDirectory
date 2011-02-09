@@ -4339,11 +4339,10 @@ $(function(){
 			});
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
-			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops);
-			$('.tabular_content', pop_up).tabular_content().show();
+			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops).children().not('.hide').show();
 		} else {
 			get_pop_up_and_do(ops, { sub_partial: this.href }, function(pop_up) {
-				$('.tabular_content', pop_up).tabular_content();
+				pop_up.children().not('.hide').show();
 			});
 		}
 		
@@ -7160,7 +7159,7 @@ $(function() {
 	});
 	
 	// ajaxify the login form and forgot password link
-	$('#login_link').click(function() {
+	$('#XXXlogin_link').click(function() {
 		var $this = $(this);
 		if ($this.hasClass('active')) return false;
 		$this.addClass('active');
@@ -7183,12 +7182,11 @@ $(function() {
 	});
 	
 	// log the user in and change the topbar to the logged in links
-	$('#new_user_session', '#pop_up.login_box').live('submit', function() {
+	$('#XXXnew_user_session').live('submit', function() {
 		var form = $(this).runValidation(),
-			overlay = $.applyLoadingOverlay(form.parents('#pop_up'));
+			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
 		if (form.data('valid') && !form.data('sending')) {
-			ajax_loader.show();
 			overlay.fadeIn();
 			form.data('sending', true);
 			
@@ -7197,11 +7195,12 @@ $(function() {
 					var ready_mem = $('#ready_member', form);
 					
 					if (data.role == 'advertiser' && ready_mem.length == 0) {
-						//window.location = data.account_path;
-						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good, redirecting to your account page.</p>') })
+						window.top.location.href = data.account_path;
+						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') })
 					} else {
-						$('#topbar').html(data.html);
-						$('#pop_up.login_box').fadeOutRemove();
+						//$('#topbar').html(data.html);
+						//$('#pop_up.login_box').fadeOutRemove();
+						window.top.location.href = '/admin';
 						
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
@@ -7222,12 +7221,11 @@ $(function() {
 						}
 					}
 				}, function(data) {
-					$('#pop_up.login_box').html(data);
-					$('.fieldWithErrors input', '#pop_up.login_box').eq(0).focus();
+					$('#login_page').html(data);
+					$('.fieldWithErrors input', '#login_page').eq(0).focus();
 				});
 				
 				form.data('sending', false);
-				ajax_loader.hide();
 			}, 'json');
 		}
 		

@@ -175,7 +175,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt > p{color:#999;float:right;font-size:12px;margin:0;}
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
-.rslt-head-txt h2{float:left;font-size:12px;}
+.rslt-head-txt h2{float:left;font-size:80%;}
 .rslt-head-txt .ajax_loader{display:inline;margin:0;padding:2px 3px;}
 .green-head{width:745px;margin:16px 0 8px;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
@@ -237,7 +237,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;margin-bottom:2px;padding-bottom:15px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
-#rslt-head-txt .ajax_loader{margin:4px 0;display:block;}
+#rslt-head-txt .ajax_loader{margin:4px 0 0;display:block;}
 .listing > .inner{border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
 
 #rslt-list-bg > div.active > .inner,#rslt-list-bg > .premium > .inner:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-bg-hover.png) repeat-x bottom;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
@@ -1213,25 +1213,19 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_page{margin-bottom:10px;overflow:hidden;float:left;width:100%;margin-right:20px;}
 #login_hdr{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
 #login_page .i{height:40px;position:relative;}
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
 .bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
-#pop_up.login_box .bigblue_btn{width:auto;}
 #remember_me{font-size:80%;color:#666;}
 #login_page #user_session_remember_me{width:auto;margin:2px 5px;float:left;}
-#pop_up.login_box{display:none;padding:0 15px 15px;}
-#pop_up.login_box #login_page{width:100%;}
 #pop_up #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
-#pop_up.login_box #al_forgot_pass_link{position:static;clear:both;margin:0 0 0 5px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
-#pop_up.login_box .flash{margin:12px 0 0;}
-#login-form{margin-top:15px;}
-#password_resets_form{margin-top:15px;}
+#password_resets_form{margin-top:15px;width:316px;}
 #password_resets_form .notice{font-size:100%;}
 #password_resets_form p.left{color:#666;font-size:70%;line-height:1.2;margin-top:5px;}
+#password_resets_form #send_btn{width:auto;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;padding-bottom:1px;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}
@@ -1700,9 +1694,10 @@ form .note{clear:both;display:block;font-size:80%;}
 
 /*.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #327e04;background:#46cb44;font-weight:bold;color:#ffffff;}*/
 
+#login_frame{width:103%;height:164px;overflow:hidden;background: url("http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif") no-repeat scroll 50% 50% transparent;}
 .login #page-cnt-top-bg{width:100%;}
 .login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
-.login #login-form{width:322px;}
+.login #login-form{width:317px;}
 .login #type-one-cnt-in{margin:15px 15px 0 !important;}
 .login #forgot_pass_link{color:#4c4bcc;;margin-left:24px;}
 
@@ -2135,9 +2130,8 @@ p.breadcrumb a{color:#fff;}
 #alexa p{float:left;font-size:12px;margin:24px 0 0 20px;}
 
 .claim{bottom:12px;font-size:10px;position:absolute;}
-.overlay{background:#000;opacity:.6;position:absolute;top:0;bottom:0;left:0;right:0;}
+.overlay{background:#000;opacity:.4;position:absolute;top:0;bottom:0;left:0;right:0;}
 .overlay div{position:absolute;top:0;bottom:0;left:0;right:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;}
-#pop_up .login_success{font-size:15px;padding:20px 0 1px;text-align:center;}
 .post_date{background:#66f;float:left;margin:0 10px 0 0;padding:7px 5px;text-align:center;height:30px;width:55px;}
 .post_date p{font-size:140%;}
 
