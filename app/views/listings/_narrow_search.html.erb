@@ -50,7 +50,7 @@
 								<div class="selectable">
 									<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 								</div>
-								<%= label_tag "sf_#{feature.underscore}", feature %>
+								<%= label_tag "sf_#{feature.parameterize}", feature %>
 							</li>
 						<% end %>
 					</ul>
@@ -61,7 +61,7 @@
 							<div class="selectable">
 								<%= check_box_tag 'search[features]', feature, nil, :id => "sfi#{feature.parameterize}" %>
 							</div>
-							<%= label_tag "sf_#{feature.underscore}", feature %>
+							<%= label_tag "sf_#{feature.parameterize}", feature %>
 						</li>
 						<% end %>
 					</ul>

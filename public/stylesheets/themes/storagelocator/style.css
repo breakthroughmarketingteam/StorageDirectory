@@ -116,8 +116,9 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content,#tags_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
-#listings_controller.compare_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,#blog_posts_controller.show_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
+#listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,#blog_posts_controller.show_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
+#listings_controller.edit_action #content{width:744px;}
 #clients_controller.self_storage_advertising #content{top:0;}
 #pages_controller.storage_tips #content{top:-5px;}
 #pages_controller.home #content{float:none;position:static;width:auto;}
@@ -1262,6 +1263,9 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 .error{width:auto;margin:0;padding:0;background:none;color:#c00;border:0 none;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
+#admin_panel h2.stack{float:left;margin-right:10px;}
+#model_stats{padding:3px 0 15px;font-size:80%;}
+#model_stats li{margin-right:10px;}
 #workflow_steps,#issn_steps,#rent_steps{overflow:hidden;position:relative;}
 #rent_steps{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/dir-tab-bg.png) repeat-x bottom;height:332px;}
 #rent_steps hr{border:none;}

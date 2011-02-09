@@ -1,4 +1,4 @@
-<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" data-has-res="<%= result.accepts_rentals? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
@@ -21,7 +21,7 @@
 			</div>
 		
 			<div class="facility-logo">
-				<%= display_logo result, :width => '102px', :height => '77px' %>
+				<%= display_logo result, :width => '102', :height => '77' %>
 			</div>
 		
 			<div class="rslt-contact">

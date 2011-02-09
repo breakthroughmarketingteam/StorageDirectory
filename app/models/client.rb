@@ -40,6 +40,14 @@ class Client < User
     self
   end
   
+  def self.active_count
+    self.count :conditions => { :status => 'active' }
+  end
+  
+  def self.verified_count
+    self.count :conditions => 'verification_sent_at IS NOT NULL'
+  end
+  
   def display_special
     self.special && self.special.title ? self.special.title : 'No Specials'
   end

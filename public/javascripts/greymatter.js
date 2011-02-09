@@ -98,7 +98,7 @@ $(function(){
 	});
 	
 	$('#siteseal').live('click', function() {
-		var godaddy_url = 'https://seal.godaddy.com:443/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
+		var godaddy_url = 'https://seal.godaddy.com/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
 		
 		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
 			window.open(godaddy_url,'SealVerfication','location=yes,status=yes,resizable=yes,scrollbars=no,width=592,height=740');

@@ -4003,7 +4003,7 @@ $(function(){
 	});
 	
 	$('#siteseal').live('click', function() {
-		var godaddy_url = 'https://seal.godaddy.com:443/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
+		var godaddy_url = 'https://seal.godaddy.com/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
 		
 		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
 			window.open(godaddy_url,'SealVerfication','location=yes,status=yes,resizable=yes,scrollbars=no,width=592,height=740');
@@ -6043,7 +6043,7 @@ $(function(){
 	
 	$('li.enabled', 'li.rslt-price').live('click', function() {
 		var $this = $(this),
-			check = $('input.unit_size', $this);
+			check = $('input.unit_size', $this.parent());
 		
 		check.attr('checked', true);
 		$('li.enabled', $this.parent()).removeClass('selected');
@@ -6362,7 +6362,7 @@ $(function(){
 			wrap = $this.parent('.sl-table-wrap'),
 			listing_id = wrap.attr('rel').replace('listing_', ''),
 			size_id = wrap.attr('id').replace('Size_', ''),
-			accepts_reservations = wrap.attr('has-res') == 'true' ? true : false,
+			accepts_reservations = wrap.attr('data-has-res') == 'true' ? true : false,
 			ajax_loader = $('.ajax_loader', this);
 			
 		if (rform.hasClass('active')) { // clicking on an open form, close it

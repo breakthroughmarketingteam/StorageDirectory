@@ -326,6 +326,20 @@ module ApplicationHelper
     controller_name.titleize
   end
   
+  def model_stats
+    html = '<ul id="model_stats" class="horizontal">'
+    any = false
+    
+    case controller_name when 'clients'
+      html << "<li>Total: #{Client.count}</li>"
+      html << "<li>Verified: #{Client.verified_count}</li>"
+      html << "<li>Active: #{Client.active_count}</li>"
+      any = true
+    end
+    
+    html << '</ul>' if any
+  end
+  
   # return the actual class object of a model
   def model_class(model_or_controller_name)
     # site settings isn't a model so it isn't defined
@@ -617,7 +631,7 @@ module ApplicationHelper
   end
   
   def ssl_seal
-		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com:443/images/3/siteseal_gd_3_h_l_m.gif' />"
+		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com/images/3/siteseal_gd_3_h_l_m.gif' />"
   end
   
 end

@@ -315,7 +315,7 @@ $(function(){
 	
 	$('li.enabled', 'li.rslt-price').live('click', function() {
 		var $this = $(this),
-			check = $('input.unit_size', $this);
+			check = $('input.unit_size', $this.parent());
 		
 		check.attr('checked', true);
 		$('li.enabled', $this.parent()).removeClass('selected');
@@ -634,7 +634,7 @@ $(function(){
 			wrap = $this.parent('.sl-table-wrap'),
 			listing_id = wrap.attr('rel').replace('listing_', ''),
 			size_id = wrap.attr('id').replace('Size_', ''),
-			accepts_reservations = wrap.attr('has-res') == 'true' ? true : false,
+			accepts_reservations = wrap.attr('data-has-res') == 'true' ? true : false,
 			ajax_loader = $('.ajax_loader', this);
 			
 		if (rform.hasClass('active')) { // clicking on an open form, close it

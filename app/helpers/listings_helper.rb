@@ -289,7 +289,7 @@ module ListingsHelper
   
   def claim_listing_link(listing, options = {})
     if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Claim & Verify Ownership', "/self-storage-advertising?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", options.merge(:title => 'Claim this listing if you are the verifiable owner/manager.')
+      link_to 'Claim & Verify Ownership', "/self-storage-advertising?client[company]=#{CGI.escape listing.title}&listing[city]=#{CGI.escape listing.city}&listing[state]=#{CGI.escape listing.state}&listing_id=#{listing.id}", options.merge(:title => 'Claim this listing if you are the verifiable owner/manager.')
     end
   end
   
