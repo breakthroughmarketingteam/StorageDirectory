@@ -46,11 +46,11 @@
 
                                 <div id="city">
                                     <label class="label">City:</label>
-                                    <%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :rel => 'UsCity_names|3' %>
+                                    <%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :'data-autocomp-source' => 'UsCity_names|3' %>
                                 </div>
                                 <div id="state">
                                     <label class="label">State:</label>
-                                    <%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :rel => 'States_abbrevs|1', :maxlength => 2 %>
+                                    <%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :'data-autocomp-source' => 'UsCitys_abbrevs|1', :maxlength => 2 %>
                                 </div>
 
                                 <div id="submit_wrap">

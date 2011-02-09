@@ -1,6 +1,6 @@
 <% form_for @search, :url => search_form_path('auto_search'), :html => { :id => 'goto_results_form', :class => 'silent' } do |f| %>
 	<div id="offset_search_box">
-		<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+		<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :'data-autocomp-source' => 'UsCity_namesNstate|3' %>
 		<%= reverse_captcha %>
 		<%= f.submit 'Locate', :class => 'grn_btn' %>
 	</div>

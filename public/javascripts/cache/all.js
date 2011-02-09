@@ -4795,7 +4795,7 @@ $.setup_autocomplete = function(els, context) {
 	if ($autocompleters.length > 0) {
 		$autocompleters.each(function(){
 			var $this   = $(this), 
-				rel = $this.attr('rel'),
+				rel = $this.attr('data-autocomp-source'),
 				info	= rel.split('|')[0],
 				minLen	= rel.split('|')[1],
 				model   = info.split('_')[0],
@@ -7150,6 +7150,7 @@ $(function() {
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 
 	$.translate_with(translations);
+	$.setup_autocomplete('.autocomplete', '#page-cnt');
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {

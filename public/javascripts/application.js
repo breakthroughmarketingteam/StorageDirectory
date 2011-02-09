@@ -6,6 +6,7 @@ $(function() {
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 
 	$.translate_with(translations);
+	$.setup_autocomplete('.autocomplete', '#page-cnt');
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {

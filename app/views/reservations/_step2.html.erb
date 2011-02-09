@@ -41,11 +41,11 @@
 	        <%= label_tag 'billing_info[address]', 'Address', :class => 'block' %> <%= text_field_tag 'billing_info[address]', @reserver.mailing_address.address, :class => 'required' %>
 		</p>
 		<p>
-	        <%= label_tag 'billing_info[city]', 'City', :class => 'block' %> <%= text_field_tag 'billing_info[city]', @reserver.mailing_address.city, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+	        <%= label_tag 'billing_info[city]', 'City', :class => 'block' %> <%= text_field_tag 'billing_info[city]', @reserver.mailing_address.city, :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_names|3' %>
 		</p>
 		<div class="uncollapse">
 			<p class="state_field">
-				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+				<%= label_tag 'billing_info[state]', 'State', :class => 'block' %> <%= text_field_tag 'billing_info[state]', @reserver.mailing_address.state, :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_abbrevs|1', :maxlength => 2 %>
 			</p>
 			<p class="zip_field">
 		        <%= label_tag 'billing_info[zip]', 'Zip', :class => 'block' %> <%= text_field_tag 'billing_info[zip]', @reserver.mailing_address.zip, :class => 'required', :maxlength => 5 %>

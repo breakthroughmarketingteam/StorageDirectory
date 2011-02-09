@@ -890,7 +890,7 @@ $.setup_autocomplete = function(els, context) {
 	if ($autocompleters.length > 0) {
 		$autocompleters.each(function(){
 			var $this   = $(this), 
-				rel = $this.attr('rel'),
+				rel = $this.attr('data-autocomp-source'),
 				info	= rel.split('|')[0],
 				minLen	= rel.split('|')[1],
 				model   = info.split('_')[0],
