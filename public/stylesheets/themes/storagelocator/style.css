@@ -37,7 +37,7 @@ span.blue{color:#4c4bcc;}
 #title{color:#339933;float:left;font-family:tahoma;font-size:30px;font-weight:bold;height:46px;left:10px;margin-top:38px;position:relative;width:400px;}
 #title h1{bottom:0;color:#333333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -1328,7 +1328,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 .cvv{width:25px;}
 #rent_steps #rent_step2{font-size:12px;}
 #rent_steps #rent_step2 .month{margin:0 5px 0 0;width:20px;}
-#rent_steps #rent_step2 .year{margin-right:10px;width:20px;}
+#rent_steps #rent_step2 .year{margin-right:10px;width:20px;z-index: 1;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
