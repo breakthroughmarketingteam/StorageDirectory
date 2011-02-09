@@ -35,28 +35,29 @@
                                 <span class="sub_head">Add Your Facility and Get Started.</span>
                                 <div>
                                     <%= f.label :company, 'Facility Name:', :class => 'label' %>
-                                    <%= f.text_field :company, :class => 'required param_filled focus_me', :rel => 'client[company]' %>
+                                    <%= f.text_field :company, :value => (@listing.title if @listing), :class => 'required focus_me', :rel => 'client[company]' %>
                                 </div>
 
                                 <div id="email_check">
                                     <%= f.label :email, 'Contact Email:', :class => 'email-label' %>
                                     <%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
-                                    <%= f.text_field :email, :class => 'email' %>
+                                    <%= f.text_field :email, :class => "email#{ ' focus_onload' if @listing }" %>
                                 </div>
 
                                 <div id="city">
                                     <label class="label">City:</label>
-                                    <%= text_field_tag 'listing[city]', nil, :class => 'required autocomplete param_filled', :param => 'listing[city]', :'data-autocomp-source' => 'UsCity_names|3' %>
+                                    <%= text_field_tag 'listing[city]', (@listing.city if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_names|3' %>
                                 </div>
                                 <div id="state">
                                     <label class="label">State:</label>
-                                    <%= text_field_tag 'listing[state]', nil, :class => 'required autocomplete param_filled', :param => 'listing[state]', :'data-autocomp-source' => 'UsCitys_abbrevs|1', :maxlength => 2 %>
+                                    <%= text_field_tag 'listing[state]', (@listing.state if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'UsCitys_abbrevs|1', :maxlength => 2 %>
                                 </div>
 
                                 <div id="submit_wrap">
                                     <a id="signup_button" class="search-button popper" href="#">Sign Up</a>
                                     <%= ajax_loader %>
                                     <input type="submit" name="commit" class="hidden">
+									
                                 </div>
                             <% end %>                   
                         </div>
@@ -389,15 +390,13 @@
                             <p>We'll be keeping track of our website's popularity online, and will keep you informed of how well we do.</p>
                         </div>
                        
-                        <p><em>By being a USSelfStorageLocator.com member you'll be leveraging our traffic to get on the first page of mayor search engines like Google, Yahoo, and Bing. Help us gain popularity by letting your friends know about us!</em>  - <a href="">Facebook</a> | <a href="">Twitter</a> | <a href="">Digg</a> | <a href="">Stumble Upon</a></p>
+                        <p><em>By being a USSelfStorageLocator.com member you'll be leveraging our traffic to get on the first page of mayor search engines like Google, Yahoo, and Bing. Help us gain popularity by letting your friends know about us!</em> - <a href="">Facebook</a> | <a href="">Twitter</a> | <a href="">Digg</a> | <a href="">Stumble Upon</a></p>
                            
                     </div>
                 </div>
            
-                <div id="feat-pop" class="tabular_content" data-tabs-id="feat_pop_nav">
-
-                   
-                    <div class="tab_content" id="feat-desc">
+                <div id="feat-pop">
+                    <div id="feat-desc">
 
                         <p><em>Media Enhancements</em> - Our simple to use tools allow you to add pictures and video to your listing, allowing customers to preview your storage units and self storage facility.</p>
 
@@ -415,7 +414,7 @@
 
                         <p><em>Featured Facility Ad/Banner</em> - Your facility will be randomly picked to be featured in a highly visible area of our home page when searching for your City or Zip Code.</p>
 
-                        <p><em>Preview Tabs</em> - We’ll add preview tabs below your listing with your facility’s Rental Form, Directions, Units Sizes & Prices, Pictures, and Reviews. This will let your prospective clients see all your facility’s info right on the results page.</p>
+                        <p><em>Preview Tabs</em> - We’ll add preview tabs below your listing with your facility’s Rental Form, Directions, Units Sizes &amp; Prices, Pictures, and Reviews. This will let your prospective clients see all your facility’s info right on the results page.</p>
 
                         <p><em>Marketing Newsletters</em> - Be informed on the latest in Internet marketing and what's happening in the world of self storage with out informative monthly e-mail newsletters!</p>
 

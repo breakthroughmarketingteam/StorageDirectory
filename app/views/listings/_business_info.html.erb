@@ -36,8 +36,8 @@
 						</div>
 					<% end %>
 				</li>
-			<% else %>
-				<li><%= claim_listing_link(@listing) %></li>
+			<% elsif @listing.claimable? %>
+				<li><%= claim_listing_link @listing %></li>
 			<% end %>
 	
 			<% if false#@listing.premium? %>

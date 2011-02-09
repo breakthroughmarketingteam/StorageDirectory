@@ -27,6 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
   map.facility    '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.claim_listing '/claim/:listing_id', :controller => 'clients', :action => 'new'
   
   # for building routes
   $_storage_types = ['self', 'mobile', 'cold', 'vehicle', 'car', 'boat', 'rv'].map { |t| "#{t} storage" }

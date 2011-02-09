@@ -193,16 +193,16 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page + 1
-      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state}/#{@search.city}' method='get' class='more_results_form'>" + 
-        link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
-        "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
-        "<input class='hidden' name='page' value='#{page + 1}' />" + 
-        (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
-        (@search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@search.unit_size}' />" : '') +
-        (@search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@search.storage_type}' />" : '') +
-        (@search.features ? "<input class='hidden' name='search[features]' value='#{@search.features}' />" : '') +
-        "<input class='hidden' name='search[within]' value='#{@search.within}' />" +
-      '</form>'
+      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state.parameterize}/#{@search.city.parameterize}' method='get' class='more_results_form'>" + 
+                link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
+                "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
+                "<input class='hidden' name='page' value='#{page + 1}' />" + 
+                (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
+                (@search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@search.unit_size}' />" : '') +
+                (@search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@search.storage_type}' />" : '') +
+                (@search.features ? "<input class='hidden' name='search[features]' value='#{@search.features}' />" : '') +
+                "<input class='hidden' name='search[within]' value='#{@search.within}' />" +
+              '</form>'
     end
     
     html << "<span class='results_showing'>Showing <span class='results_range'>#{range_start}-#{range_end}</span> of <span class='results_total'>#{data.total_entries}</span> results. </span>"
@@ -288,9 +288,7 @@ module ListingsHelper
   end
   
   def claim_listing_link(listing, options = {})
-    if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Claim & Verify Ownership', "#{request.protocol}#{request.host}/self-storage-advertising?client[company]=#{CGI.escape listing.title}&listing[city]=#{CGI.escape listing.city}&listing[state]=#{CGI.escape listing.state}&listing_id=#{listing.id}", options.merge(:title => 'Claim this listing if you are the verifiable owner or manager')
-    end
+    link_to 'Claim &amp; Verify Ownership', claim_listing_path(listing), options.merge(:title => 'Claim this listing if you are the verifiable owner or manager')
   end
   
   def display_comparison(comparison, listing_set)

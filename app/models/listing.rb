@@ -170,6 +170,10 @@ class Listing < ActiveRecord::Base
     self.status == 'verified'
   end
   
+  def claimable?
+    self.client.nil? || self.client.status == 'unverified'
+  end
+  
   def specials
     self.predefined_specials.sort_by &:overall_value
   end

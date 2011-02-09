@@ -15,8 +15,9 @@ class ClientsController < ApplicationController
   end
 
   def new
-    @page = Page.find_by_title_in_params params[:title]
+    @page = Page.find_by_title 'Self Storage Advertising'
     @client = Client.new
+    @listing = Listing.find params[:listing_id] if params[:listing_id]
     render :layout => false if request.xhr?
   end
   

@@ -28,7 +28,7 @@ module SharedModelMethods #:nodoc:
     end
     
     def find_by_title_in_params(title)
-      all.detect { |model| model.name_or_title.parameterize == title }
+      all.detect { |model| model.name_or_title.parameterize == title.parameterize }
     end
     
     # when a model implements an alias to a field in an associated model, we need to get the assoc table name to use in a sql condition
