@@ -172,7 +172,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
 .rslt-head-txt h2{float:left;font-size:80%;}
-.rslt-head-txt .ajax_loader{display:inline;margin:0;padding:2px 3px;}
+.rslt-head-txt .ajax_loader{display:inline;margin:0;}
 .green-head{width:745px;margin:16px 0 8px;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
 #tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:745px;}

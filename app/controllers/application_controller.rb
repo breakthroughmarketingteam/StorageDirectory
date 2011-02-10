@@ -499,25 +499,24 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
-    if @search = Search.find_by_id(session[:search_id])
+    if @search = Search.find_by_id(cookies[:sid])
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
-      
-      #raise [@search, @new_search, @diff_search].pretty_inspect
       
       if @diff_search
         @new_search.save
         @search.add_child @new_search
         @search = @new_search
       end
-    else 
+    else
+      session[:geo_location] = Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146') if RAILS_ENV == 'development'
       @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
       @diff_search = true
     end
   
-    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
-    session[:search_id] = @search.id
+    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
+    cookies[:sid] = @search.id
   end
   
   def build_search_attributes(params)

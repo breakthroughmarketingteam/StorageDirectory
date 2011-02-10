@@ -52,7 +52,7 @@ class Search < ActiveRecord::Base
   end
   
   def comparable_attributes
-    a = self.attributes.select { |k, v| !['id', 'referrer', 'remote_ip', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
+    a = self.attributes.select { |k, v| !['id', 'referrer', 'remote_ip', 'sort_reverse', 'created_at', 'updated_at', 'parent_id', 'lft', 'rgt'].include? k }
     a.map { |a| v = a[1]; v.respond_to?(:downcase) ? v.downcase : v }
   end
   
@@ -85,9 +85,6 @@ class Search < ActiveRecord::Base
       
     elsif self.query && (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
       self.set_location! GeoKit::GeoLoc.new(named_listing)
-      
-    else # test ip, we should only be getting here when session[:geo_location] is nil, this happens in localhost
-      self.set_location! Geokit::Geocoders::MultiGeocoder.geocode('65.83.183.146')
     end
     self
   end
