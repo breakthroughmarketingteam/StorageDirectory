@@ -150,7 +150,7 @@ class AjaxController < ApplicationController
   def export_csv
     if @model_class.respond_to? :to_csv
       headers['Content-Type'] = 'text/csv'
-      headers['Content-Disposition'] = "attachment;filename=#{@model_class.table_name}.csv"
+      headers['Content-Disposition'] = "attachment;filename=#{params[:model].underscore.pluralize}_#{Time.now.strftime '%Y%m%d'}.csv"
       render :text => @model_class.to_csv
     else
       render :json => { :success => false, :data => "#{params[:model]} does not support CSV export." }
