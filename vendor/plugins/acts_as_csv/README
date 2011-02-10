@@ -7,8 +7,8 @@ Add class methods to models in order to be able to call to_csv on a collection o
 Example
 =======
 
-c = Model.all
-c.to_csv # => csv string
+# this converts all of the records in a table into csv
+Model.to_csv # => "csv, string\n"
 
 
 Copyright (c) 2011 Diego Salazar, released under the MIT license
