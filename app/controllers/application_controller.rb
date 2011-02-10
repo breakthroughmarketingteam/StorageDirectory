@@ -510,7 +510,6 @@ class ApplicationController < ActionController::Base
         @search = @new_search
       end
     else
-      raise session[:geo_location].pretty_inspect
       remote_ip = request.remote_ip
       session[:geo_location] = Geokit::Geocoders::MultiGeocoder.geocode((remote_ip == '127.0.0.1' ? '65.83.183.146' : remote_ip)) if session[:geo_location].nil? || RAILS_ENV == 'development'
       @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
