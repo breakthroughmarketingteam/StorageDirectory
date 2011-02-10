@@ -18,7 +18,7 @@ module ActsAsCsv #:nodoc:
       load_csv_engine!
       
       @csv_engine.generate do |csv|
-        headers = self.column_names
+        headers = self.column_names.sort
         csv << headers
         self.find_each do |model|
           headers.each do |field|
