@@ -1047,7 +1047,7 @@ span.blue{color:#4c4bcc;}
 #title a{color:#393;text-decoration:none;}
 #title h1{bottom:0;color:#333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -1102,12 +1102,6 @@ input#postcode{border:none;margin-top:10px;width:260px;padding:6px 10px;height:1
 ul.city-list{margin:13px 0px;width:120px;float:left;line-height:1.3;position:relative;left:35px;}
 ul.city-list li{list-style:none;}
 ul.city-list li a{width:110px;display:block;}
-/* Start feature styles here */
-#feat{float:right;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/front-green-bg.png) no-repeat bottom center;width:565px;height:405px;margin-top:-18px;position:relative;left:8px;}
-#feat-pic{height:337px;}
-#feat-txt{position:relative;top:150px;background-color:#000;width:290px;text-shadow:1px 1px 2px #000;font-size:210%;padding:18px;background:rgb(0,0,0);/* RGBa with 0.5 opacity */background:rgba(0,0,0,0.5);/* For IE 5.5 - 7*/filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);/* For IE 8*/-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000)";border-radius-topright:20px;-moz-border-radius-topright:20px;-webkit-border-top-right-radius:20px;border-radius-bottomright:20px;-moz-border-radius-bottomright:20px;-webkit-border-bottom-right-radius:20px;}
-#feat-txt h2{color:#fff;}
-#feat p.tagline{text-align:center;color:#fff;font-size:190%;position:absolute;bottom:20px;left:55px;text-shadow:1px 1px 0 #666;}
 /* Start the three boxes styles here */
 #three-box{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/three-boxes-bg.png) repeat-x top left;background-color:#DBDBDB;border:1px solid #C2C2CC;width:942px;margin:20px 0 0 0;padding:8px 0;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
 .home-box{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/three-boxes-side-bg.png) no-repeat top right;width:313px;float:left;}
@@ -1209,7 +1203,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/info-hdr-img.png) no-repeat;height:200px;}
 #info-in{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/clear-bg.png) repeat;margin:20px;padding:10px 20px 20px;width:385px;}
-#add-fac-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img.png) no-repeat;height:237px;}
+#add-fac-head{background:url(/images/ui/storagelocator/add-fclty-hdr.png) no-repeat;height:237px;}
 #add-fac-head a.try-free{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
@@ -1273,6 +1267,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a{display:block;float:left;height:25px;margin-left:5px;width:25px;text-indent:-99999px;}
 
+
 .24-hour-access{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
 .climate-controlled{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
 .drive-up-access{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
@@ -1324,6 +1319,31 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #rslt-list-bg > div.active > .inner a.gate-access,#rslt-list-bg > div > .inner:hover a.gate-access{background:url(/images/ui/storagelocator/gate-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.perimeter-alarm-system,#rslt-list-bg > div > .inner a.perimeter-alarm-system:hover{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
 #rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+
+.24-hour-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours.png) no-repeat;}
+.security-cameras{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security.png) no-repeat;}
+.ac{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac.png) no-repeat;}
+.drive-up-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup.png) no-repeat;}
+.se-habla-espanol{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish.png) no-repeat;}
+.climate-controlled{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate.png) no-repeat;}
+.keypad-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad.png) no-repeat;}
+
+.24-hour-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours-over.png) no-repeat;}
+.security-cameras:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-over.png) no-repeat;}
+.ac:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac-over.png) no-repeat;}
+.drive-up-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup-over.png) no-repeat;}
+.se-habla-espanol:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish-over.png) no-repeat;}
+.climate-controlled:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-over.png) no-repeat;}
+.keypad-access:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-over.png) no-repeat;}
+
+#rslt-list-bg > div.active > .inner a.24-hour-access,#rslt-list-bg > div > .inner:hover a.24-hour-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.security-cameras,#rslt-list-bg > div > .inner:hover a.security-cameras{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.drive-up-access,#rslt-list-bg > div > .inner:hover a.drive-up-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.se-habla-espanol,#rslt-list-bg > div > .inner:hover a.se-habla-espanol{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.climate-controlled,#rslt-list-bg > div > .inner:hover a.climate-controlled{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.keypad-access,#rslt-list-bg > div > .inner:hover a.keypad-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-hover.png) no-repeat;}
+
 
 .listing ul li.new_listing_tips{position:relative;margin-left:10px;}
 .listing ul li.new_listing_tips img{float:left;margin:0 4px 0 0;}
@@ -1433,7 +1453,7 @@ li.map-print a{width:89px;}
 li.map-plus{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
-#add-fac-head-in{background:url("/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
+#add-fac-head-in{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
 #type-two-top-bar-head ul li#tips_sort{position:relative;left:22px;width:253px;}
@@ -1444,7 +1464,7 @@ li.map-plus a{width:22px;}
 #type-two-top-bar-head ul li#search_tips a{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/go-button.png") no-repeat left center;color:#fff;display:block;float:left;font-size:14px;height:24px;line-height:23px;margin-left:10px;position:relative;text-align:center;text-shadow:1px 1px 0 #666;width:32px;display:none;}
 #type-two-top-bar-head ul input{border:1px solid #CCCCCC;color:#777;float:left;font-size:100%;height:19px;padding:2px 10px;position:relative;width:120px;}
 #type-two-top-bar-head ul a.search-options{float:right;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/option-list-tall.png) no-repeat center right;text-align:left;width:130px;display:block;color:#666;text-decoration:none;position:relative;left:30px;font-size:100%;}
-#type-one-top-bar hr{border-color:#eee -moz-use-text-color -moz-use-text-color;border-style:solid none none;border-width:1px medium medium;}
+#type-one-top-bar hr{border:1px solid #eee;}
 #add-fac-head-in h2{font-size:28px;font-weight:bold;left:20px;line-height:36px;width:450px;}
 #info-in h2{font-size:28px;font-weight:bold;line-height:36px;}
 .green-head .inner p{font-size:12px;margin-top:10px;color:#333;position:relative;line-height:1.4;}
@@ -2067,7 +2087,7 @@ img.right{margin:0 0 10px 10px;}
 /* cities */
 #map_nav{position:relative;height:423px;}
 #map_nav .items{position:absolute;width:2000px;}
-#map_nav_img{opacity:0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
+#map_nav_img{opacity:0.0;filter:alpha(opacity=0);-ms-filter:"alpha(opacity=0)";-khtml-opacity:0;-moz-opacity:0;}
 #map_nav .map_overlay{position:absolute;top:0;}
 #map_nav #state_name{color:#666;font-size:20px;font-weight:bold;margin-right:20px;position:absolute;right:0;top:385px;}
 #map_nav .map_flow_step{height:395px;position:relative;overflow:visible;float:left;}
@@ -2247,14 +2267,11 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #slide_nav .slide_display{color:#fff;float:left;height:80px;padding:1.37%;border:1px solid #ccc;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/steps-bg.png) repeat-x top left;}
 #slide_nav .first{border-radius-bottomleft:15px;-moz-border-radius-bottomleft:15px;-webkit-border-bottom-left-radius:15px;}
 #slide_nav .last{border-radius-bottomright:15px;-moz-border-radius-bottomright:15px;-webkit-border-bottom-right-radius:15px;}
-#slide_nav .active{background:;}
-#slide_nav .done{}
 .ui-widget-overlay{background:#000;opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .ui-dialog{border:2px solid #fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
 .ui-widget-header{border:1px solid #FFF;}
 .ui-widget-content,.ui-dialog{background:#fff;padding:0;text-align:left;}
 .ui-dialog .ui-widget-header{-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat center top;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;}
-.ui-dialog .ui-dialog-titlebar{}
 .ui-dialog .ui-dialog-titlebar-close{margin:-8px 6px 0;padding:0;}
 .ui-dialog .ui-dialog-titlebar-close:hover{background:none;border:none;}
 .ui-menu-item{padding:5px 4px;}
@@ -2308,7 +2325,7 @@ form .error p{margin:0 0 7px 0;}
 #rent_steps #rent_step2 .cvv{width:25px;}
 #rent_steps #rent_step2{font-size:12px;}
 #rent_steps #rent_step2 .month{margin:0 5px 0 0;width:20px;}
-#rent_steps #rent_step2 .year{margin-right:10px;width:20px;}
+#rent_steps #rent_step2 .year{margin-right:10px;width:20px;z-index: 1;}
 #rent_steps #rent_step2 h4{font-size:16px;float:left;width:150px;}
 #rent_steps .agree{margin:10px 0 0 100px;}
 #rent_steps #rent_step2 #already_member{float:left;font-size:11px;line-height:19px;}
@@ -2320,7 +2337,7 @@ form .error p{margin:0 0 7px 0;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
 #signupstep_2 .small_listings{float:right;}
-#signupstep_2 .small_listings,#signupstep_4 > .left{overflow-y:auto;height:334px;width:100%;}
+#signupstep_2 .small_listings,#signupstep_4 > .left{height:334px;width:100%;overflow-y:auto;}
 #signupstep_4 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
 #workflow_steps .right,#signupstep_2 .left{width:46%;}
 #workflow_steps .left{margin:0 0 0 20px;}
@@ -2613,7 +2630,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #top_fac_page .phone span{color:#4c4bcc;}
 #top_fac_page .phone{color:#000;display:inline-block;font-size:22px;font-weight:bold;margin-top:15px;}
-#top_fac_page hr{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;display:block;float:left;margin:15px 0;width:100%;}
+#top_fac_page hr{border:1px dashed #ccc;display:block;float:left;margin:15px 0;width:100%;}
 #top_fac_page #fac-bottom{float:left;margin-bottom:20px;width:900px;}
 #top_fac_page #fac-bottom .feat{float:left;height:105px;margin:15px 30px 15px 0;width:340px;}
 #top_fac_page #fac-bottom .feat h4{color:#000;height:47px;font-size:14px;line-height:18px;margin:0;padding-left:55px;padding-top:8px;}
@@ -2766,7 +2783,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list .dlogo_wrap span{font-size:140%;padding-top:10px;}
 #feat-list .dlogo_wrap span.short{font-size:10px;line-height:14px;padding-top:10px;}
 #feat-list .full{width:100%;}
-#feat-list ul#preview {background:#fff;border-color:#ccc #ccc #ccc -moz-use-text-color;border-style:solid solid solid none;border-width:1px 1px 1px medium;float:left;height:72px;width:68px;}
+#feat-list ul#preview {background:#fff;border:1px solid #ccc;float:left;height:72px;width:68px;}
 #feat-list ul#preview li{float:left;height:27px;margin:4px 1px 3px 4px;width:27px;}
 #feat-list #name,#feat-list #address{width:100%;}
 #feat-list #name a{color:#060;font-size:14px;font-weight:bold;}
@@ -2905,7 +2922,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rental_complete #rental-info span{color:#4c4bcc;}
 #rental_complete #rental-info strong{font-size:16px;}
 
-.panel .rental_form,.sl-table-wrap .rental_form{border-color:-moz-use-text-color -moz-use-text-color #ccc;border-style:none none solid;border-width:medium medium 1px;margin-top:0;}
+.panel .rental_form,.sl-table-wrap .rental_form{border:1px solid #ccc;margin-top:0;}
 .panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
 .panel .rental_form h2,.panel .rental_form .realtime{display:none;}
 .listing .panel .rental_form .col1 ul{height:auto;line-height:1.3;border:0 none;}
@@ -2954,7 +2971,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #phone #f-phone{margin:0 10px 10px;width:90px;}
 #sl-edit-tabs #phone .inner span{color:#4c4bcc;font-weight:bold;}
 #sl-edit-tabs #rental_fee{width:100%;}
-#sl-edit-tabs #rental_fee hr{border-color:#ccc -moz-use-text-color -moz-use-text-color;border-style:dashed none none;border-width:1px medium medium;margin-bottom:15px;margin-top:15px;}
+#sl-edit-tabs #rental_fee hr{border:1px dashed #ccc;margin-bottom:15px;margin-top:15px;}
 #sl-edit-tabs #billing ul{height:18px;}
 #sl-edit-tabs #billing li{float:left;list-style:none;padding:3px 0 0 0;width:15%;}
 #sl-edit-tabs #billing li.radio_wrap{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkbox.png) no-repeat 5px 1px;float:left;list-style:none;padding:3px 0 0 0;width:20%;}
@@ -3096,7 +3113,7 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading .right{height:64px;margin:9px 6px 0 0;width:388px;}
 #top_fac_page #heading p{display:inline-block;line-height:14px;margin:2px 0 0 16px;}
 
-#mem-types #types-inner{-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;border-color:-moz-use-text-color #ccc #ccc;border-right:1px solid #ccc;border-style:none solid solid;border-width:medium 1px 1px;}
+#mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
 #mem-types td.label{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
 #mem-types td.indent{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 37px 11px;padding-left:50px;}
