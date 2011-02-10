@@ -150,12 +150,12 @@
 								</div>
 								<div>
 							        <%= bf.label :city, 'City:', :class => 'block' %> 
-									<%= bf.text_field :city, :class => 'required autocomplete', :rel => 'UsCity_names|3' %>
+									<%= bf.text_field :city, :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_names|3' %>
 								</div>
 								<div class="uncollapse">
 									<div class="state_field">
 										<%= bf.label :state, 'State:', :class => 'block' %> 
-										<%= bf.select :state, States.names, {}, :class => 'state required autocomplete', :rel => 'State_abbrevs|1', :maxlength => 2 %>
+										<%= bf.select :state, States.names, {}, :class => 'state required autocomplete', :'data-autocomp-source' => 'UsCity_abbrevs|1', :maxlength => 2 %>
 									</div>
 									<div class="zip_field">
 								        <%= bf.label :zip, 'Zip:', :class => 'block' %> 

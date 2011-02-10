@@ -64,7 +64,7 @@ class Listing < ActiveRecord::Base
   @@drive_up_types = ['drive up', 'outside']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
-  @@searchables    = %w(title address city state zip)
+  @@searchables    = %w(title address city state)
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
   @@proration      = 0.03333
   cattr_reader :top_types, :comparables, :searchables, :categories
@@ -168,6 +168,10 @@ class Listing < ActiveRecord::Base
   
   def verified?
     self.status == 'verified'
+  end
+  
+  def claimable?
+    self.client.nil? || self.client.status == 'unverified'
   end
   
   def specials

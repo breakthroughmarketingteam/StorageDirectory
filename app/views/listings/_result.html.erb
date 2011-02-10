@@ -1,4 +1,4 @@
-<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" has-res="<%= result.accepts_rentals? %>">
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" data-has-res="<%= result.accepts_rentals? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
@@ -21,7 +21,7 @@
 			</div>
 		
 			<div class="facility-logo">
-				<%= display_logo result, :width => '102px', :height => '77px' %>
+				<%= display_logo result, :width => '102', :height => '77' %>
 			</div>
 		
 			<div class="rslt-contact">
@@ -33,7 +33,7 @@
 					<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
 				<% end %>
 			
-				<%= claim_listing_link(result, :class => 'claim') unless result.premium? %>
+				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %>
 			</div>
 		
 			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results' } %>

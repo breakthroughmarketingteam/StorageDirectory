@@ -6,6 +6,7 @@ $(function() {
 /******************************************* PAGE SPECIFIC BEHAVIOR *******************************************/
 
 	$.translate_with(translations);
+	$.setup_autocomplete('.autocomplete', '#page-cnt');
 	
 	// front page
 	$('#search_submit, #search_submit2').click(function() {
@@ -15,7 +16,7 @@ $(function() {
 	});
 	
 	// ajaxify the login form and forgot password link
-	$('#login_link').click(function() {
+	$('#XXXlogin_link').click(function() {
 		var $this = $(this);
 		if ($this.hasClass('active')) return false;
 		$this.addClass('active');
@@ -38,9 +39,9 @@ $(function() {
 	});
 	
 	// log the user in and change the topbar to the logged in links
-	$('#new_user_session', '#pop_up.login_box').live('submit', function() {
+	$('#XXXnew_user_session').live('submit', function() {
 		var form = $(this).runValidation(),
-			overlay = $.applyLoadingOverlay(form.parents('#pop_up'));
+			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
 		if (form.data('valid') && !form.data('sending')) {
 
@@ -52,11 +53,12 @@ $(function() {
 					var ready_mem = $('#ready_member', form);
 					
 					if (data.role == 'advertiser' && ready_mem.length == 0) {
-						//window.location = data.account_path;
-						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good, redirecting to your account page.</p>') })
+						window.top.location.href = data.account_path;
+						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') })
 					} else {
-						$('#topbar').html(data.html);
-						$('#pop_up.login_box').fadeOutRemove();
+						//$('#topbar').html(data.html);
+						//$('#pop_up.login_box').fadeOutRemove();
+						window.top.location.href = '/admin';
 						
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
@@ -77,8 +79,8 @@ $(function() {
 						}
 					}
 				}, function(data) {
-					$('#pop_up.login_box').html(data);
-					$('.fieldWithErrors input', '#pop_up.login_box').eq(0).focus();
+					$('#login_page').html(data);
+					$('.fieldWithErrors input', '#login_page').eq(0).focus();
 				});
 				
 				form.data('sending', false);

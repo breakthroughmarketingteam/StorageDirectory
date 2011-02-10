@@ -1,6 +1,6 @@
 <% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') #Listing.temp_featured_listing(get_search) %>
 <div id="feat_wrap">
-<% unless @featured_listing.nil? -%>
+<% unless @featured_listing.nil? %>
 	<div id="feat-list" class="shimmy listing">
 		<h4>Featured Listing</h4>
 		<div id="wrap">
@@ -56,5 +56,5 @@
 			</div>
 		</div>
 	</div>
-<% end -%>
+<% end %>
 </div>

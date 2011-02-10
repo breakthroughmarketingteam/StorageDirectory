@@ -1,7 +1,7 @@
 <% form_for @search, :html => { :class => 'silent' } do |f| %>
 	<p class="hide">Enter a zip code, city, or street address to begin searching.</p>
 	<div id="search_field">
-		<%= f.text_field :query, :class => 'hintable autocomplete required focus_onload', :title => location_guess, :rel => 'UsCity_namesNstate|4' %>
+		<%= f.text_field :query, :class => 'hintable autocomplete required focus_onload', :title => location_guess, :'data-autocomp-source' => 'UsCity_namesNstate|4' %>
 		<%= reverse_captcha %>
 		<%= f.submit 'Locate', :class => 'grn_btn' %>
 		<p id="ab"><a href="#" class="openDiv" rel="advanced_opts">Advanced Options</a></p>

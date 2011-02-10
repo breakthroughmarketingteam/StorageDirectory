@@ -23,10 +23,10 @@ class SearchesController < ApplicationController
       
       conditions = @model_class.searchables.map do |field|
         if @model_class.column_names.include?(field)
-          "#{@model_class.table_name}.#{field} LIKE :q"
+          "#{@model_class.table_name}.#{field} ILIKE :q"
         else
           assoc = @model_class.get_assoc_prefix_for(field)
-          "#{assoc[:prefix]}.#{field} LIKE :q"
+          "#{assoc[:prefix]}.#{field} ILIKE :q"
         end
       end.join(' OR ') if @model_class.respond_to? :searchables
     

@@ -1,5 +1,6 @@
 class PasswordResetsController < ApplicationController
   
+  ssl_required :new, :create, :update
   before_filter :require_no_user
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   
@@ -15,7 +16,7 @@ class PasswordResetsController < ApplicationController
     
     if @user
       @user.deliver_password_reset_instructions!
-      msg = "Instructions to reset your password have been emailed to you. <br />Please check your email."
+      msg = "Instructions to reset your password have been emailed to you.<br />Please check your email."
       
       respond_to do |format|
         format.html do

@@ -1,4 +1,4 @@
-<% if is_admin? && not_on_home_page %>
+<% if user_allowed?(controller_name, 'new') && not_on_home_page %>
 	<% path = new_model_path(controller_name, :user_id => params[:user_id]) %>
 	<div class="left right_space">
 		<div class="buttons grey_buttons">

@@ -16,7 +16,7 @@ module ListingsHelper
   
   def breadcrumb(listing = nil)
     return '' if params[:storage_type].blank?
-    separator = ' ❯ '
+    separator = ' > '
     b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
     b << "#{separator}#{link_to listing.title, facility_path_for(listing)}" if listing
     b << '</p>'
@@ -193,16 +193,16 @@ module ListingsHelper
     
     # only show the More link if there are more
     if range_start < data.total_entries - per_page + 1
-      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state}/#{@search.city}' method='get' class='more_results_form'>" + 
-        link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
-        "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
-        "<input class='hidden' name='page' value='#{page + 1}' />" + 
-        (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
-        (@search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@search.unit_size}' />" : '') +
-        (@search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@search.storage_type}' />" : '') +
-        (@search.features ? "<input class='hidden' name='search[features]' value='#{@search.features}' />" : '') +
-        "<input class='hidden' name='search[within]' value='#{@search.within}' />" +
-      '</form>'
+      html << "<form action='/#{@search.storage_type.parameterize}/#{@search.state.parameterize}/#{@search.city.parameterize}' method='get' class='more_results_form'>" + 
+                link_to("#{ajax_loader}<span><span class='plus'>+</span> Show #{remaining < per_page ? remaining : per_page} more</span>", '#more', :class => 'more_results') + 
+                "<input class='hidden' name='search[query]' value='#{@search.query}' />" + 
+                "<input class='hidden' name='page' value='#{page + 1}' />" + 
+                (params[:zip] ? "<input class='hidden' name='search[zip]' value='#{params[:zip]}' />" : '') +
+                (@search.unit_size ? "<input class='hidden' name='search[unit_size]' value='#{@search.unit_size}' />" : '') +
+                (@search.storage_type ? "<input class='hidden' name='search[storage_type]' value='#{@search.storage_type}' />" : '') +
+                (@search.features ? "<input class='hidden' name='search[features]' value='#{@search.features}' />" : '') +
+                "<input class='hidden' name='search[within]' value='#{@search.within}' />" +
+              '</form>'
     end
     
     html << "<span class='results_showing'>Showing <span class='results_range'>#{range_start}-#{range_end}</span> of <span class='results_total'>#{data.total_entries}</span> results. </span>"
@@ -228,7 +228,7 @@ module ListingsHelper
   def edit_listing_city_state_zip(listing)
     if listing.nil? || listing.new_record?
       (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field i', :title => 'City')
-      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :rel => 'States_abbrevs', :maxlength => 2)
+      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :'data-autocomp-source' => 'States_abbrevs', :maxlength => 2)
       html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else
@@ -288,9 +288,7 @@ module ListingsHelper
   end
   
   def claim_listing_link(listing, options = {})
-    if listing.client.nil? || listing.client.status == 'unverified'
-      link_to 'Claim & Verify Ownership', "/self-storage-advertising?client[company]=#{listing.title}&listing[city]=#{listing.city}&listing[state]=#{listing.state}&listing_id=#{listing.id}", options.merge(:title => 'Claim this listing if you are the verifiable owner/manager.')
-    end
+    link_to 'Claim &amp; Verify Ownership', claim_listing_path(listing), options.merge(:title => 'Claim this listing if you are the verifiable owner or manager')
   end
   
   def display_comparison(comparison, listing_set)

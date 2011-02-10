@@ -6,7 +6,7 @@
 <div id="narrow-box">
 	<% form_for @search, :url => search_form_path('auto_search'), :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">
-			<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :rel => 'UsCity_namesNstate|3' %>
+			<%= f.text_field :query, :value => @search.full_location, :class => 'hintable autocomplete click_sel', :title => 'Zip Code, City, or Street Address', :'data-autocomp-source' => 'UsCity_namesNstate|3' %>
 			<%= reverse_captcha %>
 			<%= f.submit 'Locate', :class => 'grn_btn' %>
 		</div>
@@ -29,7 +29,7 @@
 			<% end %>
 		
 			<div id="distance_btns">
-				<%= f.label :within,"Distance in miles:" %>
+				<label>Distance in miles:</label>
 				<div class="uncollapse">
 					<% Search.distance_options.each do |distance| -%>
 						<div class="radio_wrap auto">
@@ -50,7 +50,7 @@
 								<div class="selectable">
 									<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 								</div>
-								<%= label_tag "sf_#{feature.underscore}", feature %>
+								<%= label_tag "sf-#{feature.parameterize}", feature %>
 							</li>
 						<% end %>
 					</ul>
@@ -59,9 +59,9 @@
 						<% @unit_features.each do |feature| -%>
 						<li class="selectable_wrap auto">
 							<div class="selectable">
-								<%= check_box_tag 'search[features]', feature, nil, :id => "sfi#{feature.parameterize}" %>
+								<%= check_box_tag 'search[features]', feature, nil, :id => "sf-#{feature.parameterize}" %>
 							</div>
-							<%= label_tag "sf_#{feature.underscore}", feature %>
+							<%= label_tag "sf-#{feature.parameterize}", feature %>
 						</li>
 						<% end %>
 					</ul>

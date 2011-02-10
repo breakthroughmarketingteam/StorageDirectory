@@ -98,7 +98,7 @@ $(function(){
 	});
 	
 	$('#siteseal').live('click', function() {
-		var godaddy_url = 'https://seal.godaddy.com:443/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
+		var godaddy_url = 'https://seal.godaddy.com/verifySeal?sealID=XHjJD1MWNJ2lR4Dt0enfWq2PGeF713whHBQcuu37sFaJRUSR37baz';
 		
 		if ($.on_page([['new', 'rentals']])) { // we're in the rental form iframe so a dialog doesn't work here. 
 			window.open(godaddy_url,'SealVerfication','location=yes,status=yes,resizable=yes,scrollbars=no,width=592,height=740');
@@ -434,10 +434,10 @@ $(function(){
 			});
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
-			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops);
+			var pop_up = $('<div id="pop_up" class="auto_pop_up '+ div_id +'"></div>').append(div).dialog(ops).children().not('.hide').show();
 		} else {
 			get_pop_up_and_do(ops, { sub_partial: this.href }, function(pop_up) {
-				// do something?
+				pop_up.children().not('.hide').show();
 			});
 		}
 		
@@ -890,7 +890,7 @@ $.setup_autocomplete = function(els, context) {
 	if ($autocompleters.length > 0) {
 		$autocompleters.each(function(){
 			var $this   = $(this), 
-				rel = $this.attr('rel'),
+				rel = $this.attr('data-autocomp-source'),
 				info	= rel.split('|')[0],
 				minLen	= rel.split('|')[1],
 				model   = info.split('_')[0],

@@ -1,6 +1,6 @@
 <div class="pagination">
-  <p class="rslt-foot">
+  <div class="rslt-foot">
     <%= more_results_link(@listings) %>
-  </p>
+  </div>
   <span id="per_page" class="hidden"><%= @listings.per_page if @listings.respond_to?(:per_page) %></span>
 </div>
