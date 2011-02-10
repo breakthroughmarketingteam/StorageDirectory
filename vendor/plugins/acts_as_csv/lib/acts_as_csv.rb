@@ -21,7 +21,7 @@ module ActsAsCsv #:nodoc:
         headers = self.column_names.sort
         csv << headers
         self.find_each do |model|
-          csv << headers.map { |field| row << "\"#{model.send field}\"" }
+          csv << headers.map { |name| "\"#{model.send name}\"" }
         end
       end
     end
