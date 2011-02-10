@@ -19,7 +19,7 @@ module ActsAsCsv #:nodoc:
       
       @csv_engine.generate do |csv|
         csv << self.column_names
-        self.find_each { |model| csv << model.attributes.values }
+        self.find_each { |model| csv << model.attributes.values.map { |v| "#{v}" } }
       end
     end
     
