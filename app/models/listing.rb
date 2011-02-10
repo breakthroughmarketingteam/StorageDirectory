@@ -26,7 +26,7 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
-  has_many :reviews, :class_name => 'Comment', :as => :commentable do
+  has_many :reviews, :class_name => 'Comment', :foreign_key => 'commentable_id' do
     def published() all(:conditions => { :published => true }) end
   end
   

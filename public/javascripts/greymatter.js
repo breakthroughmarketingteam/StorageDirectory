@@ -911,6 +911,22 @@ $.setup_autocomplete = function(els, context) {
 	}
 }
 
+$.queryToHash = function(query) {
+	var hash = {}, pair;
+	$.each(query.split('&'), function() {
+		pair = this.split('=');
+		hash[pair[0]] = pair[1];
+	});
+	return hash;
+}
+
+$.hashToQuery = function(hash) {
+	var query = [];
+	for (key in hash)
+		query.push([key, hash[key]].join('='));
+	return query.join('&');
+}
+
 // uses the jquery plugin sortElement
 var stuff_sort_inverse = false;
 $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
@@ -1107,6 +1123,7 @@ $.fn.appendParamAndGo = function() {
   				new_href = '',
   				has_param = href.indexOf('?') >= 0,
   				param = (has_param ? '&' : '?') + key +'='+ val;
+
 			if(!val) return false;
 			
 			// replace any preexisting param values if the key is present

@@ -1,0 +1,14 @@
+Acts As Csv
+===========
+
+Add class methods to models in order to be able to call to_csv on a collection of instances. Uses FasterCSV.
+
+
+Example
+=======
+
+c = Model.all
+c.to_csv # => csv string
+
+
+Copyright (c) 2011 Diego Salazar, released under the MIT license

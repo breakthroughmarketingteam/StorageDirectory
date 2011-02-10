@@ -83,7 +83,7 @@ class Rentalizer
         :tax_amt        => sprintf("%.2f", tax_amt),
         :total          => sprintf("%.2f", total)
       }
-      
+      #raise [size, out].pretty_inspect
       multi ? { :listing_id => listing.id, :calculation => out } : [{ :success => true, :data => out }.to_json, 'application/json']
     end
     

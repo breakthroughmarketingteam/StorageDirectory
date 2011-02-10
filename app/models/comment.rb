@@ -6,6 +6,7 @@ class Comment < ActiveRecord::Base
   #acts_as_voteable
   
   belongs_to :user
+  belongs_to :listing, :counter_cache => true
   access_shared_methods
   ajaxful_rateable :dimensions => [:usefulness]
   

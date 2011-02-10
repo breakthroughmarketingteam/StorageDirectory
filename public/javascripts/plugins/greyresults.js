@@ -525,18 +525,18 @@ $(function(){
 	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
 		var $this = $(this), 
 			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
-			context = $this.parents('.inner'),
-			unit_size = $(':radio:checked', context),
-			special = $('.special_txt.active', context);
+			context = $this.parents('.listing'),
+			query_hash = $.queryToHash(this.href.split('?')[1]),
+			size_id = $(':radio:checked', context).val();
 		
-		if (unit_size.length) {
-			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
-			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
-			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
-		}
+		if (size_id) this.rel = 'reserve';
 		
-		if (special.length == 1)
-			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
+		query_hash.size_id = size_id;
+		query_hash.special_id = $('.special_txt.active', context).attr('data-special-id');
+		
+		$this[0].href = $this[0].href.split('?')[0] +'?'+ $.hashToQuery(query_hash);
+		
+		return false;
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -551,55 +551,61 @@ $(function(){
 		if ($.clicked_on_different_tab($this, $listing, $panel)) {
 			$progress.addClass('active').animate({ 'margin-top': 0 }, 'fast');
 			$panel.attr('rel', this.rel);
-
-			$.getJSON(this.href, function(response) {
-				$.with_json(response, function(data){
-					$('.tab_link, .listing, .panel').removeClass('active');
-					$('li', '.tabs').removeClass('active');
-					$this.parent().addClass('active');
-
-					$this.addClass('active');
-					$listing.addClass('active');
-					$panel.addClass('active');
-
-					$('.panel:not(.active)').slideUp();
-					$panel.html(data);
-
-					$('.listing:not(.active) .open_tab').text('+');
-					$('.open_tab', $listing).data('active', true).text('-');
-
-					if ($panel.is(':hidden')) {
-						$panel.slideDown(900, function(){ if ($(window).height() < 650) $(window).scrollTo($listing, { speed: 1000 }); });
-					}
-
-					$('.progress', '.listing').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
-
-					// load the google map into an iframe
-					if ($this.attr('rel') == 'map') {
-						$('.hintable', $panel).hinty();
-						var $map_wrap = $('.map_wrap', $panel), latlng = $map_wrap.attr('rel').split(',').map(function(i) { return parseFloat(i) });
+			
+			if (this.rel == 'reserve') { // insert an iframe in the panel
+				panelSwitchin($this, $listing, $panel);
+				$panel.html('<iframe src="'+ $this.attr('href') +'" id="secure_frame"></iframe>');
+				
+			} else {
+				$.getJSON(this.href, function(response) {
+					$.with_json(response, function(data){
+						panelSwitchin($this, $listing, $panel);
+						$panel.html(data);
 						
-						$map_wrap.jmap('init', { 'mapCenter': latlng }, function(map, el, ops) {
-							$map_wrap.jmap('AddMarker', {
-								'pointLatLng': ops.mapCenter,
-								'pointHTML': $('.rslt-title', $listing).html() + $('.rslt-contact', $listing).html()
+						// load the google map into an iframe
+						if ($this.attr('rel') == 'map') {
+							$('.hintable', $panel).hinty();
+							var $map_wrap = $('.map_wrap', $panel), latlng = $map_wrap.attr('rel').split(',').map(function(i) { return parseFloat(i) });
+
+							$map_wrap.jmap('init', { 'mapCenter': latlng }, function(map, el, ops) {
+								$map_wrap.jmap('AddMarker', {
+									'pointLatLng': ops.mapCenter,
+									'pointHTML': $('.rslt-title', $listing).html() + $('.rslt-contact', $listing).html()
+								});
 							});
-						});
-						
-						setTimeout(function() {
-							$map_wrap.jmap('CheckResize');
-						}, 1000);
 
-					} else if ($this.attr('rel') == 'reserve') {
-						$('#rent_step1 form', $panel).rental_form();
-					}
+							setTimeout(function() {
+								$map_wrap.jmap('CheckResize');
+							}, 1000);
+
+						} else if ($this.attr('rel') == 'reserve') {
+							$('#rent_step1 form', $panel).rental_form();
+						}
+					});
 				});
-			});
+			}
 			
 		} else {
 			$panel.slideUp();
 			$('.tab_link, .listing, .panel').removeClass('active');
 			$('li', '.tabs').removeClass('active');
+		}
+		
+		function panelSwitchin(tab, listing, panel) {
+			$('.tab_link, .listing, .panel').removeClass('active');
+			$('li', '.tabs').removeClass('active');
+			tab.addClass('active').parent().addClass('active');
+			listing.addClass('active');
+			panel.addClass('active');
+			
+			$('.listing:not(.active) .open_tab').text('+');
+			$('.open_tab', listing).data('active', true).text('-');
+			
+			$('.progress', '.listing.active').removeClass('active').animate({ 'margin-top': '-16px' }, 'fast');
+			$('.panel:not(.active)').slideUp();
+			
+			if (panel.is(':hidden'))
+				panel.slideDown(900, function(){ if ($(window).height() < 650) $(window).scrollTo(listing, { speed: 1000 }); });
 		}
 
 		return false;
@@ -1325,8 +1331,8 @@ $.fn.rental_form = function() {
 	};
 
 	function set_size_select(selects, unit_type, context) {
-		selects.hide();
-		selects.filter('#size_id_'+ unit_type, context).show();
+		selects.hide().attr('disabled', true).removeClass('active');
+		selects.filter('#size_id_'+ unit_type, context).show().attr('disabled', false).addClass('active');
 	}
 	
 	return this.each(function() {
@@ -1381,6 +1387,7 @@ $.fn.rental_form = function() {
 			
 			type_select.change(function() {
 				set_size_select(sizes_select, $(this).val().replaceAll(' ', '_').replaceAll('-', '_').toLowerCase(), form);
+				sizes_select.filter('.active').change();
 			});
 		}
 		
