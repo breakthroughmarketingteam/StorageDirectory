@@ -11,7 +11,7 @@ module SearchesHelper
   end
   
   def get_search
-    @search ||= Search.find_by_id(cookies[:sid]) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+    @search ||= Search.find_by_id(cookies[:sid].to_i) || Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
   end
   
   def sort_status(search, sort)

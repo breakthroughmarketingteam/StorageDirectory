@@ -499,7 +499,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
-    if @search = Search.find_by_id(cookies[:sid])
+    if @search = Search.find_by_id(cookies[:sid].to_i)
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
