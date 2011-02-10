@@ -334,6 +334,7 @@ module ApplicationHelper
       html << "<li>Total: #{Client.count}</li>"
       html << "<li>Verified: #{Client.verified_count}</li>"
       html << "<li>Active: #{Client.active_count}</li>"
+      html << "<li><a class='click_thru' href='/ajax/export_csv?model=Client'>Export</a></li>"
       any = true
     end
     

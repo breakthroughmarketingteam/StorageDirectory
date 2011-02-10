@@ -18,8 +18,13 @@ module ActsAsCsv #:nodoc:
       load_csv_engine!
       
       @csv_engine.generate do |csv|
-        csv << self.column_names
-        self.find_each { |model| csv << model.attributes.values.map { |v| "\"#{v}\"" } }
+        headers = self.column_names
+        csv << headers
+        self.find_each do |model|
+          headers.each do |field|
+            csv << "\"#{model.send field}\""
+          end
+        end
       end
     end
     
