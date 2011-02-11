@@ -111,7 +111,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content,#tags_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
-#listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,#blog_posts_controller.show_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
+#listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,
+#blog_posts_controller.show_action #content,#tenants_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
 #listings_controller.edit_action #content{width:744px;}
 #clients_controller.self_storage_advertising #content{top:0;}
@@ -586,6 +587,7 @@ ul#specials_list {margin:15px 10px;}
 #foot-box-bottom-bg{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
+#clients_controller.edit_action #type-three-r-col-in{margin-top:7px;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
@@ -849,7 +851,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #pop_up #new_comment .ajax_loader{float:right;margin:9px 7px 0 0;}
 /* Starting the overview page styles here */
 #ov-page-cnt{position:relative;}
-#clients_controller #ov-header{border-bottom:1px solid #CCCCCC;margin-left:20px;}
+#clients_controller #ov-header{border-bottom:1px solid #CCCCCC;}
 #ov-header h2{float:left;font-size:28px;}
 #ov-header ul li{display:block;float:right;margin:14px 18px 0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
@@ -1667,7 +1669,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #new_client_message{margin:0 auto;width:950px;}
 form .note{clear:both;display:block;font-size:80%;}
 
-#w-msg{margin:20px;}
+#w-msg{margin:20px 12px;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
@@ -2028,7 +2030,6 @@ form .note{clear:both;display:block;font-size:80%;}
 #list_reviews .review p{line-height:1.2;margin:0 0 10px;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
-#admin-l-col{margin-top:8px;}
 #tracking_request{padding:0 20px 20px;}
 #preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #tab1{margin-bottom:20px;}

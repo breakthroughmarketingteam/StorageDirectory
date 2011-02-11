@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
                 :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
-                :is_admin?, :home_page, :get_list_of_file_names
+                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates
   
   include UtilityMethods
   include Geokit
@@ -237,6 +237,10 @@ class ApplicationController < ActionController::Base
   
   def _field_types(for_select = true)
     fetch_array_for $_field_types, for_select
+  end
+  
+  def _email_templates(for_select = true)
+    fetch_array_for get_list_of_file_names('app/views/layouts/email_templates', '.html.erb'), for_select
   end
   
   # get a list of view_types, themes, widgets, and plugins

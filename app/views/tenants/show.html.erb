@@ -5,5 +5,12 @@
 
 	<h2 class="stack"><%= user_account_title %></h2>
 
+	<pre>
+		<%= @tenant.pretty_inspect %>
+	</pre>
+	
+	<div id="tenant_rentals">
+		<% current_user.rentals %>
+	</div>
 	
 </div>

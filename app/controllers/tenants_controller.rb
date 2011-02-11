@@ -2,7 +2,7 @@ class TenantsController < ApplicationController
   
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy, :activation
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_tenant, :only => [:show, :new, :edit, :update, :destroy]
   
   def index
     render :layout => false if request.xhr?
@@ -84,5 +84,11 @@ class TenantsController < ApplicationController
   rescue => e
     render :json => { :success => false, :data => e.message }
   end
-
+  
+  private
+  
+  def get_tenant
+    @tenant = current_user && current_user.has_role?('admin', 'staff') ? Tenant.find(params[:id]) : current_user
+  end
+  
 end

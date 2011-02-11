@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110210162456) do
+ActiveRecord::Schema.define(:version => 20110211184927) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20110210162456) do
     t.string   "controller"
     t.string   "action"
     t.string   "restful_region"
+    t.string   "resource"
   end
 
   add_index "blocks", ["id", "title", "show_in_all", "restful_region"], :name => "index_blocks_on_id_and_title_and_show_in_all_and_restful_region"
@@ -172,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20110210162456) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "process_erb"
+    t.string   "email_template"
   end
 
   create_table "facility_features", :force => true do |t|

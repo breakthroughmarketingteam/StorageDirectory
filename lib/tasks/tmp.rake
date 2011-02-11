@@ -1,12 +1,10 @@
 namespace :tmp do
   namespace :assets do 
+    
     desc "Rewrites javascripts/cache and stylesheets/cache"
     task :write => :environment do
       include ActionView::Helpers
-      assets = {
-        :javascripts => ['swfobject_modified', 'ckeditor/ckeditor', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application'],
-        :stylesheets => ['plugins/jquery.ui', 'common', 'ajaxful_rating', 'themes/storagelocator/style']
-      }
+      assets = { :javascripts => JAVASCRIPT_INCLUDES, :stylesheets => STYLESHEET_INCLUDES }
       
       puts "\nWill write these assets:\n#{assets.pretty_inspect}\n"
       
@@ -22,11 +20,5 @@ namespace :tmp do
       puts "\nTotally just rewrote the bits outta those assets.\n\n"
     end
     
-    desc "Clears javascripts/cache and stylesheets/cache"
-    task :clear => :environment do      
-      FileUtils.rm(Dir['public/javascripts/cache/[^.]*'])
-      FileUtils.rm(Dir['public/stylesheets/cache/[^.]*'])
-      puts 'Booyah! Cache be gonso!'
-    end
   end
 end

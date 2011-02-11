@@ -16,8 +16,8 @@ $(function() {
 	});
 	
 	// ajaxify the login form and forgot password link
-	$('#XXXlogin_link').click(function() {
-		var $this = $(this);
+	$('#login_link.ajax', '#topbar').click(function() {
+		var $this = $(this).removeClass('ajax'); // was added by the already member link, otherwise this is a normal link
 		if ($this.hasClass('active')) return false;
 		$this.addClass('active');
 		
@@ -39,7 +39,7 @@ $(function() {
 	});
 	
 	// log the user in and change the topbar to the logged in links
-	$('#XXXnew_user_session').live('submit', function() {
+	$('#new_user_session', '#pop_up').live('submit', function() {
 		var form = $(this).runValidation(),
 			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
@@ -137,12 +137,20 @@ $(function() {
 		return false;
 	});
 	
+	$('#new_user_session', '#user_sessions_controller').live('submit', function() {
+		var form = $(this).runValidation(),
+			ajax_loader = $.new_ajax_loader('before', $('input[type=submit]', form));
+		
+		if (!form.data('valid')) return false;
+		else ajax_loader.show();
+	});
+	
 	$('#already_member').live('click', function() {
 		// inject a hidden input so that the login action will know what to do
 		$('#new_user_session').append('<input type="hidden" id="ready_member" value="'+ $(this).attr('data-ready_member') +'" />');
 		
 		// open login pop up
-		$('#login_link', '#topbar').click();
+		$('#login_link', '#topbar').addClass('ajax').click();
 	});
 	
 	// map pop up

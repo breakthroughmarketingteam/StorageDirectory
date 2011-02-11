@@ -263,7 +263,7 @@ class ListingsController < ApplicationController
   end
   
   def get_client
-    # i couldnt use #user_allowed? because one of the listing pages uses a non restful method, and the persmissions systems doesnt really support this yet.
+    # i couldnt use #user_allowed? method because one of the listing pages uses a non restful action, and the persmissions system doesnt really support this yet.
     @client = current_user && current_user.has_role?('admin', 'staff') ? @listing.client : current_user
   end
   

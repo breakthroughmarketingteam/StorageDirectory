@@ -18,4 +18,15 @@ module UsersHelper
     link_to 'I have an account', '#', options.merge(:id => 'already_member', :'data-ready_member' => data_keys, :title => 'Already have an account with us? Login quickly through here.')
   end
   
+  def get_user_path_by_role(options = {})
+    options.merge! :protocol => 'https'
+    case current_user.role.title.downcase when 'advertiser'
+      client_account_url options
+    when 'tenant'
+      tenant_url current_user, options
+    else
+      user_url current_user, options
+    end
+  end
+  
 end

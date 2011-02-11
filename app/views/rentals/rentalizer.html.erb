@@ -51,7 +51,7 @@
 											<% types.each do |type| %>
 											<select class="sizes_select" id="size_id_<%= type.downcase.gsub(/\s|-/, '_') %>" name="rental[size_id]">
 												<% sizes.select{ |s| s.title == type }.each do |s| %>
-													<option<%= ' selected="selected"' if size.dims == s.dims %> value="<%= s.id %>" data-unit-type="<%= s.title.downcase %>" data-unit-price="<%= sprintf "%.2f", s.dollar_price %>" data-url="<%= s.icon(:medium).try :url %>">
+													<option<%= ' selected="selected"' if size && size.dims == s.dims %> value="<%= s.id %>" data-unit-type="<%= s.title.downcase %>" data-unit-price="<%= sprintf "%.2f", s.dollar_price %>" data-url="<%= s.icon(:medium).try :url %>">
 														<%= s.dims %>
 													</option>
 												<% end %>
@@ -64,7 +64,7 @@
 										<label class="block left" for="Rate:_">Rate: </label>
 										<div id="price">
 											<span>$</span>
-											<span class="month_rate"><%= size.dollar_price %></span>
+											<span class="month_rate"><%= size && size.dollar_price %></span>
 											<span>/month</span>
 										</div>
 									</div>
@@ -96,8 +96,8 @@
 									<div class="size_picker">
 										<img src="<%= SizeIcon.medium_icons.first.icon.url rescue 'Missing Size Icon' %>" alt="" />
 										<p class="size_details">
-											<%= size.title %>
-											<%= size.dims %>
+											<%= size && size.title %>
+											<%= size && size.dims %>
 										</p>
 									</div>
 								</div>

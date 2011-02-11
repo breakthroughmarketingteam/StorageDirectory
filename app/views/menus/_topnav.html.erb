@@ -22,7 +22,7 @@
 <ul class="right">
 	<li>
 		<%= link_to_unless current_user, 'Log In', login_url(:protocol => 'https'), :id => 'login_link', :class => active_page(login_path) do |name|
-			path = (current_user.has_role?('advertiser') ? client_account_url(:protocol => 'https') : user_url(current_user, :protocol => 'https'))
+			path = get_user_path_by_role
 			html = link_to('My Account', path, :id => 'account_link', :class => active_page(path))
 			html += link_to('Admin', admin_index_path(:protocol => 'https', :host => request.host), :id => 'admin_index_link', :class => active_page(admin_index_path)) if has_admin_access?
 			html += link_to('Log out', logout_path)
