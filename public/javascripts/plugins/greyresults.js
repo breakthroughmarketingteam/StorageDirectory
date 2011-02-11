@@ -457,7 +457,7 @@ $(function(){
 			ajax_loader  = $('.ajax_loader', $this).show(),
 			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
 			page = $('input[name=page]', $this.parent()).eq(0).val();
-		console.log(last_index)
+		
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);
 			

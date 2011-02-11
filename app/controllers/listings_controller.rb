@@ -263,7 +263,7 @@ class ListingsController < ApplicationController
   end
   
   def get_client
-    @client = is_admin? ? @listing.client : current_user
+    @client = user_allowed?('listings', action_name) ? @listing.client : current_user
   end
   
   def get_map
