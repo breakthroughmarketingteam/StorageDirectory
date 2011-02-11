@@ -44,7 +44,11 @@ class Block < ActiveRecord::Base
   end
   
   def is_for_resource?(controller, action)
-    self.resource.match(/(#{controller})/i) && self.resource.match(/(#{action})/i)
+    if self.resource
+      self.resource.match(/(#{controller})/i) && self.resource.match(/(#{action})/i)
+    else
+      self.controller.match(/(#{controller})/i) && self.action.match(/(#{action})/i)
+    end
   end
   
   def show_title_in_this(region, global)
