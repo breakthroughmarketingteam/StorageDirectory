@@ -1,9 +1,10 @@
 <% declare_content_for %>
+<div id="ajax_wrap_inner">
+	<%= display_message flash %>
 
-<%= display_message flash %>
+	<div class="stack">
+	  <%= render :partial => @comment %>
+	</div>
 
-<div class="stack">
-  <%= render :partial => @comment %>
+	<p class="right"><%= link_to '&laquo; Back to Comments', comments_path %></p>
 </div>
-
-<p class="right"><%= link_to '&laquo; Back to Comments', comments_path %></p>

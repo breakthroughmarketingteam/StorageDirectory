@@ -146,7 +146,7 @@ class ClientsController < ApplicationController
   private
   
   def get_client
-    @client = is_admin? ? Client.find_by_id(params[:id]) : current_user
+    @client = user_allowed?('clients', action_name) ? Client.find_by_id(params[:id]) : current_user
   end
 
 end

@@ -14,13 +14,13 @@ module ActsAsCsv #:nodoc:
   
   module SingletonMethods
     
-    def to_csv
+    def to_csv(options = {})
       load_csv_engine!
       
       @csv_engine.generate do |csv|
         headers = self.column_names.sort
         csv << headers
-        self.find_each do |model|
+        self.all(options).each do |model|
           csv << headers.map { |name| model.send name }
         end
       end

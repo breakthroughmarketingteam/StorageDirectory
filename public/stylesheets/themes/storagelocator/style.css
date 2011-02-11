@@ -444,6 +444,7 @@ li.map-print a{width:89px;}
 li.map-plus{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
+#model_new_btns{clear:left;}
 #add-fac-head-in{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}

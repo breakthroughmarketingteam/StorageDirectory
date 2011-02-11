@@ -457,7 +457,7 @@ $(function(){
 			ajax_loader  = $('.ajax_loader', $this).show(),
 			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
 			page = $('input[name=page]', $this.parent()).eq(0).val();
-		
+		console.log(last_index)
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);
 			
@@ -677,56 +677,6 @@ $(function(){
 		$('input[type=text]:first', rform).focus();
 		return false;
 	});
-	
-	// used to wrap common functionality in the submit actions of step 1 and 2 in the reservation workflow
-	// returns true so the workflow can go to the next slide
-	function bool_submit_once_and_do(form, wizard, slide_num, callback) {
-		var next_slide = $(wizard.slides[slide_num-1]),
-			ajax_loader = $('.ajax_loader', next_slide);
-			
-		if (!form.data('submitted')) form.runValidation();
-		
-		if (!form.data('submitted') && form.data('valid')) {
-			form.data('submitted', true).save_state(); // in case the user clicked back and changed an input value
-			ajax_loader.show();
-			
-			submit_reservation_form(form, next_slide, ajax_loader, callback);
-			return true; // while the form is submitting, this function returns true and causes the workflow to move next
-			
-		} else if (form.data('submitted') && form.state_changed()) { // user has gone back and changed some inputs 
-			ajax_loader.show();
-			
-			if (slide_num == 2) {
-				// get the reservation id so the server can update it
-				var step2 = $('#reserve_step2', wizard.workflow).children().hide().end(),
-					reservation_id = $('form', step2).attr('action').split('/');
-
-				reservation_id = reservation_id[reservation_id.length-1];
-				form.append('<input type="hidden" name="reservation_id" value="'+ reservation_id +'" />');
-			} else if (slide_num == 3) {
-				
-			}
-			
-			form.save_state();
-			submit_reservation_form(form, next_slide, ajax_loader, callback);
-			return true;
-			
-		} else if (form.data('submitted')) return true;
-		
-		return false;
-	}
-	
-	function submit_reservation_form(form, next_slide, ajax_loader, callback) {
-		$.post(form.attr('action'), form.serialize(), function(response) {
-			$.with_json(response, function(data) {
-				callback.call(this, data, next_slide);
-			}, function(data) { // error
-				next_slide.html(data);
-			});
-			
-			ajax_loader.hide();
-		});
-	}
 	
 	// Info request: submit reserver details
 	$('form.new_listing_request').live('submit', function() {

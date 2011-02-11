@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.create params[:user_session]
     
-    if @user_session.valid? && current_user.status
+    if @user_session.valid? && current_user.status == 'active'
       @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : $root_domain))
       
       respond_to do |format|
@@ -28,6 +28,8 @@ class UserSessionsController < ApplicationController
             redirect_back_or_default admin_index_path
           when 'advertiser'
             redirect_to @client_link
+          when 'tenant'
+            redirect_to tenant_url current_user, :protocol => 'https'
           else
             redirect_back_or_default root_path
           end
@@ -53,11 +55,11 @@ class UserSessionsController < ApplicationController
         msg = render_to_string(:action => :new, :layout => false)
         
       elsif current_user.status == 'unverified'
-        msg = fmsg ="You have not verified your account yet, did you click on the link in the email?"
+        msg = fmsg = 'You have not verified your account yet, did you click on the link in the email?'
         redir = login_path
       
       elsif current_user.status == 'suspended'
-        msg = fmsg = "Your account seems to be suspended..."
+        msg = fmsg = 'Your account seems to be suspended...'
         redir = login_path
       end
       
@@ -82,7 +84,7 @@ class UserSessionsController < ApplicationController
       cookies[k.to_sym] = { :value => '', :path => '/', :domain => ".#{$root_domain}", :expire => 1.day.ago } 
     end 
     
-    redirect_to root_path, :protocol => 'http://'
+    redirect_to root_url, :protocol => 'http'
   end
 
 end

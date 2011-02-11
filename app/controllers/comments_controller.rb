@@ -66,11 +66,26 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if @comment.update_attributes(params[:comment])
-      flash[:notice] = @comment.title + ' has been updated.'
-      redirect_back_or_default(comments_path)
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      format.html do
+        if @comment.update_attributes(params[:comment])
+          flash[:notice] = @comment.title + ' has been updated.'
+          redirect_back_or_default(comments_path)
+        else
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @comment.update_attributes(params[:comment])
+          flash.now[:notice] = @comment.title + ' has been updated.'
+          get_models_paginated
+          render :action => 'index', :layout => false
+        else
+          flash.now[:error] = model_errors @comment
+          render :action => 'edit', :layout => false
+        end
+      end
     end
   end
   

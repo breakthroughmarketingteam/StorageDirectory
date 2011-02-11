@@ -3,7 +3,6 @@ class TenantsController < ApplicationController
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy, :activation
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
-  before_filter :get_model, :only => [:show, :update, :destroy, :toggle_specials]
   
   def index
     render :layout => false if request.xhr?
@@ -33,32 +32,27 @@ class TenantsController < ApplicationController
   end
     
   def edit
-    
+    render :layout => false if request.xhr?
   end
   
   def update
     respond_to do |format|
-      if @tenant.update_info params[:tenant]
-        # :upsets is a hidden field set to true in the settings partial
-        partial = params[:upsets] ? 'settings' : 'owner_info'
-        
-        format.html do
-          flash[:notice] = "#{partial.titleize} updated successfully"
-          redirect_to :action => 'edit'
+      format.html do
+        if @tenant.update_attributes(params)
+          flash[:notice] = "#{@tenant.name.possessive} account has been updated!"
+          redirect_back_or_default tenant_path(@tenant)
+        else
+          render :action => :edit
         end
-        
-        format.js do
-          render :json => { :success => true, :data => render_to_string(:partial => partial) }
-        end
-        
-      else
-        format.html do
-          flash[:error] = model_errors(@tenant)
-          redirect_to :action => 'edit'
-        end
-        
-        format.js do
-          render :json => { :success => false, :data => model_errors(@tenant) }
+      end
+      
+      format.js do
+        if @tenant.update_attributes(params)
+          flash.now[:notice] = "#{@tenant.name.possessive} account has been updated!"
+          render :action => 'edit', :layout => false
+        else
+          flash.now[:error] = model_errors @tenant
+          render :action => 'edit', :layout => false
         end
       end
     end
