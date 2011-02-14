@@ -183,7 +183,7 @@ class AjaxController < ApplicationController
   end
   
   def _get_model_class(model_str = nil)
-    @model_class ||= (model_str || @model_str || params[:model]).camelcase.constantize
+    @model_class ||= (model_str || @model_str || params[:model]).capitalize.camelcase.constantize
   end
   
   def _get_model_and_locals
