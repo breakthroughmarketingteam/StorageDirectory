@@ -15,7 +15,6 @@ class PagesController < ApplicationController
     render :layout => false if request.xhr?
   end
   
-  #caches_action :show, :layout => false
   def show
     render :layout => false if request.xhr?
   end
@@ -33,7 +32,6 @@ class PagesController < ApplicationController
           flash[:notice] = @page.title + ' has been created.'
           redirect_to root_path
         else
-          get_associations
           render :action => 'edit'
         end
       end
@@ -44,8 +42,7 @@ class PagesController < ApplicationController
           @pages = Page.all_for_index_view
           render :action => 'index', :layout => false
         else
-          flash.now[:error] = model_errors(@page)
-          get_associations
+          flash.now[:error] = model_errors @page
           render :action => 'edit', :layout => false
         end
       end
@@ -59,23 +56,21 @@ class PagesController < ApplicationController
   def update
     respond_to do |format|
       format.html do
-        if @page.update_attributes(params[:page])
+        if @page.update_attributes params[:page]
           flash[:notice] = @page.title + ' has been updated.'
           redirect_to "/#{@page.title.parameterize}"
         else
-          get_associations
           render :action => 'edit'
         end
       end
       
       format.js do
-        if @page.update_attributes(params[:page])
+        if @page.update_attributes params[:page]
           flash.now[:notice] = @page.title + ' has been updated.'
           @pages = Page.all_for_index_view
           render :action => 'index', :layout => false
         else
-          flash.now[:error] = model_errors(@page)
-          get_associations
+          flash.now[:error] = model_errors @page
           render :action => 'edit', :layout => false
         end
       end
@@ -96,7 +91,7 @@ class PagesController < ApplicationController
   
   def catch_nil_page
     if @page.nil?
-      flash[:warning] = "Page not found"
+      flash[:warning] = 'Page not found'
       redirect_to '/' and return
     end
   end

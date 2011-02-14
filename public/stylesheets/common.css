@@ -221,7 +221,7 @@ input.tiny_text_field{width:30px;}
 .field_form > div{padding:4px 0;}
 .option_group{padding:2px 4px;background-color:#ebebeb;}
 /* helptext */
-.helptext{font-size:80%;width:100%;border:2px dashed #687D39;}
+.helptext{font-size:80%;width:100%;border:2px dashed #687D39;clear:left;}
 .helptext .ajax_action{color:#687D39;padding:2px 4px;margin:-2px -1px 0 0;font-size:10px;}
 /* hide the option by using the same color as background until mouseover */
 .helptext .toggle_action{color:#333;float:right;margin-bottom:7px;clear:both;}
