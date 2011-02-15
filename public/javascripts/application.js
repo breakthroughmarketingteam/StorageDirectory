@@ -1499,7 +1499,7 @@ $(function() {
 			years_ago 	= options.years_ago  || 0,
 			force 		= options.force 	 || false;
 		
-		if (false && stats_graph.length > 0) {
+		if (stats_graph.length > 0) {
 			stats_graph.addClass('loading');
 
 			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,

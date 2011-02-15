@@ -4930,7 +4930,8 @@ $.authenticate_user_and_do = function(btn, callback, bypass) {
 		
 		$('#confirm_yes', pop_up).click(function() { $(this).parents('form').submit(); return false; });
 		$('#auth_yourself', pop_up).submit(function() {
-			var form = $('form', '#pop_up').runValidation(),
+			
+			var form = $('form', pop_up).runValidation(),
 				ajax_loader = $.new_ajax_loader('before', this),
 				text = $('p', form).show();
 			
@@ -6479,7 +6480,8 @@ $(function(){
 	});
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
-	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
+	$('.reserve_btn', '.listing').live('click', function() {
+		console.log(this)
 		var $this = $(this), 
 			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			context = $this.parents('.listing'),
@@ -6494,6 +6496,23 @@ $(function(){
 		$this[0].href = $this[0].href.split('?')[0] +'?'+ $.hashToQuery(query_hash);
 		
 		return false;
+	});
+	
+	$('.request_btn', '.listing').live('click', function() {
+		var $this = $(this), 
+			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
+			context = $this.parents('.inner'),
+			unit_size = $(':radio:checked', context),
+			special = $('.special_txt.active', context);
+
+		if (unit_size.length) {
+			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
+			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
+			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
+		}
+
+		if (special.length == 1)
+			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -6535,8 +6554,9 @@ $(function(){
 								$map_wrap.jmap('CheckResize');
 							}, 1000);
 
-						} else if ($this.attr('rel') == 'reserve') {
-							$('#rent_step1 form', $panel).rental_form();
+						} else if ($this.attr('rel') == 'request') {
+							$.activate_datepicker($panel);
+							$('.numeric_phone', $panel).formatPhoneNum();
 						}
 					});
 				});
@@ -7908,8 +7928,8 @@ $(function() {
 					state 	: $('#listing_state', signup_form).val()
 				};
 			
-			$.post('/ajax/find_listings', form_data, function(response){
-				$.with_json(response, function(data){
+			$.post('/ajax/find_listings', form_data, function(response) {
+				$.with_json(response, function(data) {
 					get_pop_up_and_do({ 'title': pop_up_title, 'height': pop_up_height, modal: true, width: '795px' }, { 'sub_partial': sub_partial }, function(pop_up) { // prepping step 2
 						var wizard = new GreyWizard($('#workflow_steps', pop_up), workflow_settings);
 						
@@ -8158,35 +8178,195 @@ $(function() {
 	
 	// Listing Edit
 	// NEW LISTING WORKFLOW
+		var searcher_settings = function() {
+			return {
+				title : 'Find Your Facilities',
+				nav_id : 'workflow_nav',
+				set_slides : false,
+				width : 500,
+				slides : [
+					{
+						div_id  : 'searcher_step1',
+						nav_vis : [
+							['next', function(btn, wizard) { function _next1() { wizard.slide_data[2].went_back = false; wizard.slide_data[1].skipped = false; }; btn.fadeIn().unbind('click', _next1).click(_next1); }],
+							['skip', 'fadeOut'],
+							['back', 'fadeOut']
+						],
+						action : function(wizard) {
+							wizard.workflow.animate({ 'height': '321px' }, 'slow');
+						},
+						validate : function(wizard) {
+							if (wizard.slide_data[1].skipped) return true;
+							
+							var form = $('form#listing_searcher', wizard.workflow).runValidation();
+							return form.data('valid');
+						}
+					},
+					{ 
+						div_id  : 'searcher_step2',
+						pop_up_title : 'Select Your Facilities',
+						nav_vis : [
+							['next', function(btn, wizard) { btn.text('Next').click(function() { wizard.slide_data[1].skipped = false; wizard.slide_data[2].went_back = false; }); }],
+							['skip', function(btn, wizard) { function _skip2() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeIn().unbind('click', _skip2).click(_skip2);  }],
+							['back', 'fadeIn']
+						],
+						action : function(wizard) {
+							if (wizard.slide_data[2].went_back) {
+								wizard.slide_data[2].went_back = false;
+								wizard.slide_data[1].skipped = false;
+								wizard.prev();
+								return false;
+							}
+							
+							var form = $("form#listing_searcher", wizard.workflow);
+							wizard.slide_data[1].data_changed = wizard.slide_data[1].form_data != form.serialize();
+							wizard.slide_data[1].found_listings = wizard.slide_data[1].data_changed;
+							wizard.slide_data[1].form_data = form.serialize();
+							
+							if (wizard.slide_data[1].skipped && !wizard.slide_data[2].went_back) {
+								wizard.next();
+								
+							} else if ((wizard.slide_data[1].data_changed && wizard.slide_data[1].found_listings) || wizard.slide_data[2].went_back) {
+								wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '460px')) }, 'slow');
+								wizard.slide_data[1].skipped = false;
+								wizard.slide_data[2].went_back = false;
+								
+								var listings_box = $('.listings_box', '#searcher_step2').html($.ajax_loader_tag('ajax-loader-lrg.gif', listings_box)).show(),
+									listing_prototype = $('.listing_div', '#searcher_step2'),
+									big_ajax_loader = $('.ajax_loader', listings_box).show();
+								
+								$.post(form.attr('action'), wizard.slide_data[1].form_data, function(response) {
+									$.with_json(response, function(data) {
+										if (data.length > 0) {
+											var len = (65 * data.length) + 65;
+											wizard.slide_data[1].slide_length = len > 460 ? '460px' : len + 'px';
+											
+											$.appendListingDataToBox(data, listing_prototype, listings_box);
+											
+											wizard.workflow.animate({ 'height': wizard.slide_data[1].slide_length }, 'fast');
+											wizard.slide_data[1].listings = $('.listing_div', listings_box).fadeIn();
+										} else {
+											wizard.workflow.animate({ 'height': '140px' }, 'fast');
+											listings_box.html('<p>No facilities were found using that information. Try using the first word of your facilities name, leave out the city and/or state too. If we still don\'t have it just click the skip button.');
+										}
+
+										form.data('sending', false);
+										big_ajax_loader.hide();
+									});
+								}, 'json');
+								
+							} else if (wizard.slide_data[1].listings) {
+								var len = (65 * wizard.slide_data[1].listings.length) + 65;
+								wizard.slide_data[1].slide_length = len > 460 ? '460px' : len + 'px';
+								wizard.workflow.animate({ 'height': wizard.slide_data[1].slide_length }, 'fast');
+							}
+						},
+						validate : function(wizard) {
+							if (!wizard.slide_data[1].skipped && $('.listing_div.selected', '#searcher_step2').length == 0) {
+								$.greyAlert('Choose at least one listing<br />or click the skip button.');
+								return false;
+								
+							} else return true
+						}
+					},
+					{ 
+						div_id  : 'searcher_step3',
+						pop_up_title : 'Confirm Your Selection',
+						nav_vis : [
+							['next', function(btn, wizard) { btn.text(wizard.slide_data[1].skipped ? 'Done' : 'Submit').data('done', false); }],
+							['skip', 'fadeOut'],
+							['back', function(btn, wizard) { function _back3() { wizard.slide_data[2].went_back = true; wizard.slide_data[1].skipped = false; wizard.prev(); return false; }; btn.fadeIn().unbind('click', _back3).click(_back3); }]
+						],
+						action : function(wizard) {
+							if (wizard.slide_data[1].skipped) {
+								wizard.slide_data[1].skipped = false;
+								$('#ui-dialog-title-pop_up', wizard.workflow.parent().parent()).text('How To Add A New Facility');
+								$('.listings_box', '#searcher_step3').hide();
+								$('#skipped_listings_find', '#searcher_step3').fadeIn();
+								wizard.workflow.animate({ 'height': '225px' }, 'fast');
+							
+							} else {
+								var checked_listings = $('.listing_div.selected', '#searcher_step2').clone();
+								wizard.slide_data[1].found_listings = false; // resetting this value to stop previous action from doing an ajax post again if user clicks back
+								$('#selected_listings', '#searcher_step3').html('').show().append(checked_listings);
+								wizard.workflow.animate({ 'height': (65 * checked_listings.length) + 65 +'px' }, 'fast');
+							}
+						}
+					},
+					{ 
+						div_id  : 'searcher_step4',
+						pop_up_title : 'Saving Your Selection',
+						nav_vis : [
+							['next', function(btn, wizard) { btn.text('Done').data('done', true); }],
+							['skip', 'fadeOut'],
+							['back', 'fadeOut']
+						],
+						action : function(wizard) {
+							if (wizard.slide_data[1].skipped) {
+								wizard.workflow.parent('#pop_up').dialog('destroy').remove();
+								$('#add_fac', '#ov-units').data('skip_find', true).click();
+
+							} else {
+								var form = $('#selected_listings', '#searcher_step3'),
+									selected_listings = $('.listing_div', '#searcher_step3').map(function() { return $('input[name=listing_id]', this).val() }),
+									ajax_loader = $('.ajax_loader', '#searcher_step4').show();
+								
+								$.post(form.attr('action'), { listing_ids: selected_listings }, function(response) {
+									$.with_json(response, function(data) {
+										wizard.workflow.animate({ 'height': '110px' }, 'fast');
+										$('#ui-dialog-title-pop_up', wizard.workflow.parent().parent()).text('Your Listings Have Been Claimed');
+										$('#claim_success_msg', '#searcher_step4').html('<p>'+ data +'</p>');
+									})
+								}, 'json');
+							}
+						}
+					}
+				],
+				finish_action : function(wizard) {
+					wizard.workflow.parent('#pop_up').dialog('destroy').remove();
+				}
+			};
+		}
+	
 		// 1). Click NEW button, get a partial from the server and prepend to the listing box
 		$('#add_fac', '#ov-units').click(function(){
 			var $this 		   = $(this),
 				listing_box    = $('#client_listing_box', $this.parent().parent()),
-				ajax_loader    = $this.prev('.ajax_loader').show();
-		
-			// GET PARTIAL
-			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
-				$.with_json(response, function(data){
-					var partial 	  = $(data).hide(),
-						title_input   = $('input[name="listing[title]"]', partial),
-						tip_text	  = $('.new_listing_tip', partial);
+				ajax_loader    = $this.prev('.ajax_loader').show(),
+				searcher_steps = $('#searcher_steps').clone();
+			
+			if ($this.data('skip_find')) { // GET PARTIAL
+				$this.data('skip_find', false);
+				
+				$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
+					$.with_json(response, function(data){
+						var partial 	  = $(data).hide(),
+							title_input   = $('input[name="listing[title]"]', partial),
+							tip_text	  = $('.new_listing_tip', partial);
 
-					// insert the new listing into either the #empty_listings box or #rslt-list-bg
-					if ($('.listing', listing_box).length == 0) listing_box.html('<div id="rslt-list-bg"></div>').find('#rslt-list-bg').append(partial);
-					else $('#rslt-list-bg', listing_box).prepend(partial);
+						// insert the new listing into either the #empty_listings box or #rslt-list-bg
+						if ($('.listing', listing_box).length == 0) listing_box.html('<div id="rslt-list-bg"></div>').find('#rslt-list-bg').append(partial);
+						else $('#rslt-list-bg', listing_box).prepend(partial);
 
-					$('.listing', listing_box).removeClass('active');
-					partial.addClass('active').slideDown(300, function() { 
-						tip_text.fadeIn(600);
-						title_input.focus();
+						$('.listing', listing_box).removeClass('active');
+						partial.addClass('active').slideDown(300, function() { 
+							tip_text.fadeIn(600);
+							title_input.focus();
+						});
+
+						bind_listing_input_events();
+						$.bindPlugins();
 					});
 
-					bind_listing_input_events();
-					$.bindPlugins();
+					ajax_loader.hide();
 				});
 				
-				ajax_loader.hide();
-			});
+			} else { // get a pop up with a listing searcher, much like the add facility workflow
+				get_pop_up_and_do({ title: 'Find Your Listings', width : '450px', height : 'auto', modal: true }, { sub_partial: 'listings/searcher_steps', model: 'Client', id: $('#client_id').text() }, function(pop_up) {
+					new GreyWizard(pop_up.children('#searcher_steps'), new searcher_settings()).begin_workflow_on(0);
+					ajax_loader.hide();
+				});
+			}
 		
 			return false;
 		});
@@ -8286,8 +8466,14 @@ $(function() {
 
 					if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
 					else input.focus().addClass('invalid');
-
 				});
+			});
+			
+			$('#listing_title', '#client_listing_box').keyup(function() {
+				var $this = $(this),
+					dlogo_txt = $('.dlogo_wrap', $this.parents('.inner')).children('span');
+				
+				dlogo_txt.text($this.val());
 			});
 			
 			// SAVE ADDRESS WHEN USER CLICKS SAVE BUTTON
@@ -8876,7 +9062,7 @@ var workflow_settings = {
 			action  : workflow_step3,
 			nav_vis : [
 				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
-				['skip', 'fadeOut'],
+				['skip', function(btn, wizard) { btn.fadeOut().unbind('click', ensure_no_listings_checked) }],
 				['back', function(btn, wizard) { btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
 			],
 			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
@@ -8920,25 +9106,15 @@ function close_pop_up_and_focus_on_fac_name(event){
 }
 
 function workflow_step2(wizard) {
-	var listings_box = $('.small_listings', arguments[0].workflow);
+	var listings_box = $('.small_listings', wizard.workflow);
 	
 	if (listings_box.children().length == 0) {
 		listings_box.hide();
 		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
 
-		$.each(wizard.slide_data[0].data, function(i){
-			var listing = this.listing,
-				listing_div = listing_prototype.clone();
-
-			$('.check input', listing_div).val(listing.id);
-			$('.num', listing_div).text(i+1);
-			$('.listing_title', listing_div).text(listing.title);
-			$('.listing_address', listing_div).html('<span class="street_address">'+ listing.address +'</span><br />'+ listing.city +', '+ listing.state +' <span class="zip">'+ listing.zip +'</span>');
-
-			listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
-		});
-
+		$.appendListingDataToBox(wizard.slide_data[0].data, listing_prototype, listings_box);
+		
 		setTimeout(function(){
 			listings_box.fadeIn(wizard.settings.fade_speed);
 			var listing_id = $.get_param_value('listing_id');
@@ -9060,6 +9236,19 @@ function workflow_step5(wizard) {
 }
 
 // HELPERS
+$.appendListingDataToBox = function(listings, listing_prototype, listings_box) {
+	$.each(listings, function(i) {
+		var listing = this.listing,
+			listing_div = listing_prototype.clone();
+
+		$('.check input', listing_div).val(listing.id);
+		$('.num', listing_div).text(i+1);
+		$('.listing_title', listing_div).text(listing.title);
+		$('.listing_address', listing_div).html('<span class="street_address">'+ listing.address +'</span><br />'+ listing.city +', '+ listing.state +' <span class="zip">'+ listing.zip +'</span>');
+
+		listing_div.attr('id', 'Listing_'+ listing.id).appendTo(listings_box);
+	});
+}
 
 $.get_checked_listings_addresses = function(wizard, address_part) {
 	if (typeof address_part == 'undefined') var address_part = 'street_address';
