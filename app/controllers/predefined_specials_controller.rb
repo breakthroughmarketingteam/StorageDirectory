@@ -104,7 +104,7 @@ class PredefinedSpecialsController < ApplicationController
   private
   
   def get_parent_models
-    @client = is_admin? ? Client.find(params[:client_id]) : current_user
+    @client = (current_user && current_user.has_role?('admin', 'staff')) ? Client.find(params[:client_id]) : current_user
     @listing = @client.listings.find params[:listing_id]
   end
   

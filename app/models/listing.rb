@@ -73,6 +73,10 @@ class Listing < ActiveRecord::Base
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
   end
   
+  def self.verified_count
+    self.count :conditions => ['status = ?', 'verified']
+  end
+  
   #
   # Search methods
   #

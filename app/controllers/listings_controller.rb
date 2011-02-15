@@ -1,10 +1,10 @@
 class ListingsController < ApplicationController
   
-  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn
+  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :claim_listings
   ssl_allowed :show
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
-  before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request]
+  before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request, :claim_listings]
   before_filter :get_listing_relations, :only => [:show, :profile]
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show, :profile]
   geocode_ip_address :only => [:home, :locator]
@@ -131,11 +131,11 @@ class ListingsController < ApplicationController
   end
   
   def update
-    @listing = is_admin? ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
+    @listing = (current_user && current_user.has_role?('admin', 'staff')) ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
     
     case params[:from]
     when 'quick_create'
-      @listing.update_attribute :enabled, true
+      @listing.update_attributes :enabled => true, :status => 'verified'
       @map = @listing.map
       
       if @map.update_attributes params[:listing][:map_attributes]
@@ -179,8 +179,8 @@ class ListingsController < ApplicationController
   
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
-    @client = Client.find params[:client_id] if is_admin?
-    @listing = params[:id] ? Listing.find(params[:id]) : (is_admin? ? @client : current_user).listings.build(:title => params[:title])
+    @client = (current_user && current_user.has_role?('admin', 'staff')) ? Client.find(params[:client_id]) : current_user
+    @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title])
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map
@@ -192,7 +192,7 @@ class ListingsController < ApplicationController
   end
   
   def disable
-    if is_admin? || @client.listings.any? { |l| l.id == @listing.id }
+    if (current_user && current_user.has_role?('admin', 'staff')) || @client.listings.any? { |l| l.id == @listing.id }
       @listing.update_attributes :enabled => false, :status => 'disabled'
       render :json => { :success => true }
     else
@@ -244,6 +244,22 @@ class ListingsController < ApplicationController
   def sync_issn
     @listing.delay.update_unit_types_and_sizes
     render :json => { :success => true }
+  end
+  
+  def claim_listings
+    listings = []
+    
+    unless params[:listing_ids].blank?
+      params[:listing_ids].values.each do |id|
+        listing = Listing.find id
+        listing.status = 'unverified'
+        listings << listing if listing.save
+      end
+      
+      Notifier.deliver_claimed_listings_alert(@client, listings)
+    end
+    
+    render :json => { :success => true, :data => "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call within 24 to 48 hours on business days. Thanks again!" }
   end
   
   private

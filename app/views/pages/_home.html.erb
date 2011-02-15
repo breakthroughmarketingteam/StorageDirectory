@@ -19,8 +19,10 @@
 		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/espanol-icon.png" alt="Español" title="Español" />
 		Spanish
 	</a>
-	<a href="/self-storage-advertising">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-facility-icon.png" alt="Self Storage Advertising" title="Self Storage Advertising" />
-		Self Storage Advertising
-	</a>
+	<% unless current_user && current_user.has_role?('advertiser') %>
+		<a href="/self-storage-advertising">
+			<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-facility-icon.png" alt="Self Storage Advertising" title="Self Storage Advertising" />
+			Self Storage Advertising
+		</a>
+	<% end %>
 </div>

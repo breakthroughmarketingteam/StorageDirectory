@@ -62,14 +62,14 @@ ActionController::Routing::Routes.draw do |map|
   map.listing_quick_create '/listings/quick_create', :controller => 'listings', :action => 'quick_create'
   map.compare_listings '/listings/compare/:ids', :controller => 'listings', :action => 'compare', :ids => nil
   map.toggle_renting_listing '/listings/:id/update', :controller => 'listings', :action => :update, :from => 'toggle_renting'
-  map.resources :listings, :member => { :profile => :get,
+  map.resources :listings, :collection => { :locator => :get, :info_requests => :post, :import => :post },
+                           :member => { :profile => :get,
                                         :rate => :post,
                                         :copy_to_all => :post, 
                                         :tracking_request => :post, 
                                         :add_predefined_size => :post, 
                                         :request_review => :post,
-                                        :sync_issn => :post }, 
-                           :collection => { :locator => :get, :info_requests => :post, :import => :post } do |listing|
+                                        :sync_issn => :post } do |listing|
     listing.resources :sizes
     listing.resources :specials
     listing.resources :maps
@@ -93,7 +93,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :clients, :member => { :edit_info => :get, :verify => :post } do |clients|
-    clients.resources :listings, :member => { :disable => :post } do |listings|
+    clients.resources :listings, :collection => { :claim_listings => :post }, :member => { :disable => :post } do |listings|
       listings.resources :staff_emails
       listings.resources :predefined_specials, :member => { :toggle => :post }
       listings.resources :facility_features, :member => { :toggle => :post }

@@ -813,7 +813,8 @@ $.authenticate_user_and_do = function(btn, callback, bypass) {
 		
 		$('#confirm_yes', pop_up).click(function() { $(this).parents('form').submit(); return false; });
 		$('#auth_yourself', pop_up).submit(function() {
-			var form = $('form', '#pop_up').runValidation(),
+			
+			var form = $('form', pop_up).runValidation(),
 				ajax_loader = $.new_ajax_loader('before', this),
 				text = $('p', form).show();
 			

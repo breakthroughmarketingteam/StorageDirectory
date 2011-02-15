@@ -37,7 +37,7 @@ module ListingsHelper
   end
   
   def facility_path_for(listing, options = {})
-    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id, options
+    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id, options unless listing.new_record?
   end
   
   def display_location(location)
@@ -58,7 +58,7 @@ module ListingsHelper
     if listing.renting_enabled? && !listing.available_sizes.empty?
       link_to 'Rent It!', rack_rental_url(listing), :class => 'tab_link reserve_btn', :rel => partial
     else
-      link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => 'reserve'
+      link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => 'request'
     end
   end
   

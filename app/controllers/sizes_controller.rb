@@ -47,7 +47,7 @@ class SizesController < ApplicationController
   private
   
   def get_listing
-    @listing = is_admin? ? Listing.find(params[:listing_id]) : current_user.listings.find(params[:listing_id])
+    @listing = (current_user && current_user.has_role?('admin', 'staff')) ? Listing.find(params[:listing_id]) : current_user.listings.find(params[:listing_id])
   end
   
   def convert_price_to_cents

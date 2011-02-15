@@ -6,6 +6,4 @@
 	<% form_tag @model.info_requests.new, :class => 'new_listing_request less_verbose' do %>
 		<%= render :partial => 'reservations/quickform', :locals => { :listing => @model, :request_type => 'info_request', :size => defined?(size) && size } %>
 	<% end %>
-	
-	<p class="verisign"><span class="hidden">Verisign Secure</span></p>
 </div>
