@@ -256,7 +256,7 @@ class ListingsController < ApplicationController
         listings << listing if listing.save
       end
       
-      Notifier.deliver_claimed_listings_alert(@client, listings)
+      Notifier.delay.deliver_claimed_listings_alert(@client, listings)
     end
     
     render :json => { :success => true, :data => "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call within 24 to 48 hours on business days. Thanks again!" }
