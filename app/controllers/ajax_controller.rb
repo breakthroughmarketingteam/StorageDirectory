@@ -2,10 +2,10 @@ class AjaxController < ApplicationController
   
   skip_before_filter :init
   ssl_required :get_client_stats, :destroy, :modeL_method
-  ssl_allowed :get_partial, :get_multipartial, :get_cities, :get_attributes
+  ssl_allowed :get_partial, :get_multipartial, :get_cities, :get_attributes, :export_csv
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
-  before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method]
+  before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv]
   
   def get_client_stats
     @client = Client.find params[:client_id]
@@ -147,6 +147,16 @@ class AjaxController < ApplicationController
     render_error e
   end
   
+  def export_csv
+    if @model_class.respond_to? :to_csv
+      headers['Content-Type'] = 'text/csv'
+      headers['Content-Disposition'] = "attachment;filename=#{params[:model].underscore.pluralize}_#{Time.now.strftime '%Y%m%d'}.csv"
+      render :text => @model_class.to_csv
+    else
+      render :json => { :success => false, :data => "#{params[:model]} does not support CSV export." }
+    end
+  end
+  
   private
   
   def authorize_and_perform_restful_action_on_model(resource, action, &block)
@@ -173,7 +183,7 @@ class AjaxController < ApplicationController
   end
   
   def _get_model_class(model_str = nil)
-    @model_class ||= (model_str || @model_str || params[:model]).camelcase.constantize
+    @model_class ||= (model_str || @model_str || params[:model]).capitalize.camelcase.constantize
   end
   
   def _get_model_and_locals

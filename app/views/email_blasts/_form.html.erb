@@ -14,6 +14,11 @@
 			<%= f.radio_button :status, 'blast' %>
 	  		<%= f.label :status, 'Blast', :class => 'small_label' %>
 	  	</div>
+	
+		<div class="left">
+			<%= f.label :email_template, 'Template' %>
+			<%= f.select :email_template, _email_templates, { :prompt => 'Choose template' }, :class => 'required', :title => 'Templates located in app/views/layouts/email_templates' %>
+		</div>
 	</div>
 	
 	<div class="stack">

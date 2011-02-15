@@ -631,6 +631,219 @@ height:200px;/*must have*/}
 .ui-progressbar .ui-progressbar-value{margin:-1px;height:100%;}
 
 
+/*rules for the plot target div.  These will be cascaded down to all plot elements according to css rules*/
+.jqplot-target {
+    position: relative;
+    color: #666666;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+/*    height: 300px;
+    width: 400px;*/
+}
+
+/*rules applied to all axes*/
+.jqplot-axis {
+    font-size: 0.75em;
+}
+
+.jqplot-xaxis {
+    margin-top: 10px;
+}
+
+.jqplot-x2axis {
+    margin-bottom: 10px;
+}
+
+.jqplot-yaxis {
+    margin-right: 10px;
+}
+
+.jqplot-y2axis, .jqplot-y3axis, .jqplot-y4axis, .jqplot-y5axis, .jqplot-y6axis, .jqplot-y7axis, .jqplot-y8axis, .jqplot-y9axis {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/*rules applied to all axis tick divs*/
+.jqplot-axis-tick, .jqplot-xaxis-tick, .jqplot-yaxis-tick, .jqplot-x2axis-tick, .jqplot-y2axis-tick, .jqplot-y3axis-tick, .jqplot-y4axis-tick, .jqplot-y5axis-tick, .jqplot-y6axis-tick, .jqplot-y7axis-tick, .jqplot-y8axis-tick, .jqplot-y9axis-tick {
+    position: absolute;
+}
+
+
+.jqplot-xaxis-tick {
+    top: 0px;
+    /* initial position untill tick is drawn in proper place */
+    left: 15px;
+/*    padding-top: 10px;*/
+    vertical-align: top;
+}
+
+.jqplot-x2axis-tick {
+    bottom: 0px;
+    /* initial position untill tick is drawn in proper place */
+    left: 15px;
+/*    padding-bottom: 10px;*/
+    vertical-align: bottom;
+}
+
+.jqplot-yaxis-tick {
+    right: 0px;
+    /* initial position untill tick is drawn in proper place */
+    top: 15px;
+/*    padding-right: 10px;*/
+    text-align: right;
+}
+
+.jqplot-y2axis-tick, .jqplot-y3axis-tick, .jqplot-y4axis-tick, .jqplot-y5axis-tick, .jqplot-y6axis-tick, .jqplot-y7axis-tick, .jqplot-y8axis-tick, .jqplot-y9axis-tick {
+    left: 0px;
+    /* initial position untill tick is drawn in proper place */
+    top: 15px;
+/*    padding-left: 10px;*/
+/*    padding-right: 15px;*/
+    text-align: left;
+}
+
+.jqplot-meterGauge-tick {
+    font-size: 0.75em;
+    color: #999999;
+}
+
+.jqplot-meterGauge-label {
+    font-size: 1em;
+    color: #999999;
+}
+.jqplot-xaxis-label {
+    margin-top: 10px;
+    font-size: 11pt;
+    position: absolute;
+}
+
+.jqplot-x2axis-label {
+    margin-bottom: 10px;
+    font-size: 11pt;
+    position: absolute;
+}
+
+.jqplot-yaxis-label {
+    margin-right: 10px;
+/*    text-align: center;*/
+    font-size: 11pt;
+    position: absolute;
+}
+
+.jqplot-y2axis-label, .jqplot-y3axis-label, .jqplot-y4axis-label, .jqplot-y5axis-label, .jqplot-y6axis-label, .jqplot-y7axis-label, .jqplot-y8axis-label, .jqplot-y9axis-label {
+/*    text-align: center;*/
+    font-size: 11pt;
+    position: absolute;
+}
+
+table.jqplot-table-legend {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+table.jqplot-table-legend, table.jqplot-cursor-legend {
+    background-color: rgba(255,255,255,0.6);
+    border: 1px solid #cccccc;
+    position: absolute;
+    font-size: 0.75em;
+}
+
+td.jqplot-table-legend {
+    vertical-align:middle;
+}
+
+td.jqplot-seriesToggle:hover, td.jqplot-seriesToggle:active {
+    cursor: pointer;
+}
+
+td.jqplot-table-legend > div {
+    border: 1px solid #cccccc;
+    padding:1px;
+}
+
+div.jqplot-table-legend-swatch {
+    width:0px;
+    height:0px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+}
+
+.jqplot-title {
+    top: 0px;
+    left: 0px;
+    padding-bottom: 0.5em;
+    font-size: 1.2em;
+}
+
+table.jqplot-cursor-tooltip {
+    border: 1px solid #cccccc;
+    font-size: 0.75em;
+}
+
+
+.jqplot-cursor-tooltip {
+    border: 1px solid #cccccc;
+    font-size: 0.75em;
+    white-space: nowrap;
+    background: rgba(208,208,208,0.5);
+    padding: 1px;
+}
+
+.jqplot-highlighter-tooltip {
+    border: 1px solid #cccccc;
+    font-size: 0.75em;
+    white-space: nowrap;
+    background: rgba(208,208,208,0.5);
+    padding: 1px;
+}
+
+.jqplot-point-label {
+    font-size: 0.75em;
+    z-index: 2;
+}
+      
+td.jqplot-cursor-legend-swatch {
+vertical-align:middle;
+text-align:center;
+}
+
+div.jqplot-cursor-legend-swatch {
+width:1.2em;
+height:0.7em;
+}
+
+.jqplot-error {
+/*   Styles added to the plot target container when there is an error go here.*/
+    text-align: center;
+}
+
+.jqplot-error-message {
+/*    Styling of the custom error message div goes here.*/
+    position: relative;
+    top: 46%;
+    display: inline-block;
+}
+
+div.jqplot-bubble-label {
+    font-size: 0.8em;
+/*    background: rgba(90%, 90%, 90%, 0.15);*/
+    padding-left: 2px;
+    padding-right: 2px;
+    color: rgb(20%, 20%, 20%);
+}
+
+div.jqplot-bubble-label.jqplot-bubble-label-highlight {
+    background: rgba(90%, 90%, 90%, 0.7);
+}
+
 /* RESET */
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,
 a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,
@@ -854,7 +1067,7 @@ input.tiny_text_field{width:30px;}
 .field_form > div{padding:4px 0;}
 .option_group{padding:2px 4px;background-color:#ebebeb;}
 /* helptext */
-.helptext{font-size:80%;width:100%;border:2px dashed #687D39;}
+.helptext{font-size:80%;width:100%;border:2px dashed #687D39;clear:left;}
 .helptext .ajax_action{color:#687D39;padding:2px 4px;margin:-2px -1px 0 0;font-size:10px;}
 /* hide the option by using the same color as background until mouseover */
 .helptext .toggle_action{color:#333;float:right;margin-bottom:7px;clear:both;}
@@ -1120,7 +1333,8 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content,#tags_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
-#listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,#blog_posts_controller.show_action #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
+#listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,
+#blog_posts_controller.show_action #content,#tenants_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
 #listings_controller.edit_action #content{width:744px;}
 #clients_controller.self_storage_advertising #content{top:0;}
@@ -1181,7 +1395,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 .rslt-head-txt .pagination{margin:6px 0;}
 .rslt-head-txt > p span{color:#4c4bcc;}
 .rslt-head-txt h2{float:left;font-size:80%;}
-.rslt-head-txt .ajax_loader{display:inline;margin:0;padding:2px 3px;}
+.rslt-head-txt .ajax_loader{display:inline;margin:0;}
 .green-head{width:745px;margin:16px 0 8px;float:left;position:relative;left:15px;}
 /* This is where you would insert your images for the header on each page You would need to define a new header id for each page though */
 #tips-head{border-radius:12px;height:190px;-moz-border-radius:12px;-webkit-border-radius:12px;background:#000;position:relative;overflow:hidden;width:745px;}
@@ -1453,6 +1667,7 @@ li.map-print a{width:89px;}
 li.map-plus{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-sign-bg.png) no-repeat center left;width:22px}
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
+#model_new_btns{clear:left;}
 #add-fac-head-in{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
@@ -1594,6 +1809,7 @@ ul#specials_list {margin:15px 10px;}
 #foot-box-bottom-bg{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
+#clients_controller.edit_action #type-three-r-col-in{margin-top:7px;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
@@ -1857,7 +2073,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #pop_up #new_comment .ajax_loader{float:right;margin:9px 7px 0 0;}
 /* Starting the overview page styles here */
 #ov-page-cnt{position:relative;}
-#clients_controller #ov-header{border-bottom:1px solid #CCCCCC;margin-left:20px;}
+#clients_controller #ov-header{border-bottom:1px solid #CCCCCC;}
 #ov-header h2{float:left;font-size:28px;}
 #ov-header ul li{display:block;float:right;margin:14px 18px 0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
@@ -2675,7 +2891,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #new_client_message{margin:0 auto;width:950px;}
 form .note{clear:both;display:block;font-size:80%;}
 
-#w-msg{margin:20px;}
+#w-msg{margin:20px 12px;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
@@ -2757,7 +2973,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #terms li{font-size:12px;list-style:disc;margin:10px 0 0 30px;}
 
 #terms ul#media-entry{margin:0;}
-#terms ul#media-entry li{border-top:1px solid #ccc;list-style:none;margin:20px 30px 0;padding:15px 0 10px;}
+#terms ul#media-entry li{border-top:1px solid #ccc;list-style:none;margin:20px 0 0;padding:15px 0 10px;}
 
 #storage-info-content .tip-box{-moz-border-radius:8px;background:#ffc;border:1px solid #ccc;float:right;margin:0 0 10px 30px;padding:10px;width:200px;}
 #storage-info-content .tip-box:hover{border:1px solid #666;}
@@ -3036,7 +3252,6 @@ form .note{clear:both;display:block;font-size:80%;}
 #list_reviews .review p{line-height:1.2;margin:0 0 10px;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
-#admin-l-col{margin-top:8px;}
 #tracking_request{padding:0 20px 20px;}
 #preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #tab1{margin-bottom:20px;}
@@ -3103,14 +3318,14 @@ p.breadcrumb a{color:#fff;}
 #moving .num_icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/result-number.png) no-repeat;color:#fff;font-weight:bold;height:32px;padding:7px 0 0;text-align:center;position:static;text-shadow:1px 1px 0 #666;width:29px;}
 
 #fac-features #feats{background: url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
-#top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/trial-bg.png) repeat-x;color:#fff;margin-top:30px;overflow:hidden;height:80px;}
+#top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/trialbg.png) repeat-x;color:#fff;margin-top:30px;overflow:hidden;height:101px;}
 #top_fac_page #fac-features #heading h3{display:block;float:left;font-size:32px;font-weight:bold;line-height:30px;margin:10px 0 0 15px;}
 #top_fac_page #heading ul{float:right;margin:0;width:384px;}
 #top_fac_page #heading ul li{display:block;float:left;text-align:center;padding:0;width:96px;}
 #top_fac_page #heading ul li span{display:block;font-size:12px;width:100%;}
 #top_fac_page #heading ul li strong{display:block;color:#fff;font-size:14px;margin-top:3px;width:100%;}
 #top_fac_page #heading .left{width:295px;}
-#top_fac_page #heading .right{height:64px;margin:9px 6px 0 0;width:388px;}
+#top_fac_page #heading .right{height:64px;margin:9px 6px 0 0;width:384px;}
 #top_fac_page #heading p{display:inline-block;line-height:14px;margin:2px 0 0 16px;}
 
 #mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}

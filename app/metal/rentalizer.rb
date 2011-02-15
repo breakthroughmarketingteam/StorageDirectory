@@ -9,25 +9,25 @@ class Rentalizer
   class << self
     def call(env)
       if env['PATH_INFO'] =~ /^\/rentalizer/
-        params = HashWithIndifferentAccess[*CGI.unescape(env['QUERY_STRING']).split(/&|=/)] # query string to hash
+        params = HashWithIndifferentAccess[*split_query(env['QUERY_STRING'])] # query string to hash
         
         if params[:multi_params]
           # :multi_params are built like: <listing_id>x<size_id>x<special_id>-<listing_id 2>...
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
-            size    = listing.sizes.find_by_id(p[1].to_i == 0 ? nil : p[1].to_i)
-            special = listing.predefined_specials.find_by_id(p[2].to_i == 0 ? nil : p[2].to_i)
+            size    = listing.sizes.find_by_id p[1].to_i
+            special = listing.predefined_specials.find_by_id p[2].to_i
             
             rental_calc params, listing, size, special, true
           end
           
           out, mime = { :success => true, :data => data }.to_json, 'application/json'
         else  
-          listing = Listing.find(params['rental[listing_id]'] || params[:listing_id])
-          size    = listing.sizes.find_by_id(params[:size_id] || params['rental[size_id]'])
-          special = listing.predefined_specials.find_by_id(params[:special_id] || params['rental[special_id]'])
-        
+          listing = Listing.find((params['rental[listing_id]'] || params[:listing_id]).to_i)
+          size    = listing.sizes.find_by_id((params[:size_id] || params['rental[size_id]']).to_i)
+          special = listing.predefined_specials.find_by_id((params[:special_id] || params['rental[special_id]']).to_i)
+          
           out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
         end
         
@@ -109,6 +109,14 @@ class Rentalizer
       else
         Time.local(move_date.year, move_date.month + months, move_date.day - 1).strftime('%m/%d/%Y')
       end
+    end
+    
+    # split the query adding blank values to the array where the query had nothing
+    def split_query(query)
+      query.split('&').map do |pairs|
+        p = pairs.split('=')
+        [CGI.unescape(p[0]), CGI.unescape(p[1] || '')]
+      end.flatten
     end
     
   end

@@ -1,4 +1,4 @@
-<div class="uncollapse">
+<div id="model_new_btns" class="uncollapse">
 	<%= render :partial => 'shared/model_new_back_buttons' %>
 	<%= render :partial => 'shared/model_search', :locals => { :data => data } if data.first.class.respond_to? :searchables %>
 	<%= render :partial => 'menus/view_type_links' unless data.blank? %>

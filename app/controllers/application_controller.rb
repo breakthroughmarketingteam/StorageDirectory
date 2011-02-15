@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
                 :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
-                :is_admin?, :home_page, :get_list_of_file_names
+                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates
   
   include UtilityMethods
   include Geokit
@@ -237,6 +237,10 @@ class ApplicationController < ActionController::Base
   
   def _field_types(for_select = true)
     fetch_array_for $_field_types, for_select
+  end
+  
+  def _email_templates(for_select = true)
+    fetch_array_for get_list_of_file_names('app/views/layouts/email_templates', '.html.erb'), for_select
   end
   
   # get a list of view_types, themes, widgets, and plugins
@@ -499,25 +503,25 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
-    if @search = Search.find_by_id(session[:search_id])
+    if @search = Search.find_by_id(cookies[:sid].to_i)
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
-      
-      #raise [@search, @new_search, @diff_search].pretty_inspect
       
       if @diff_search
         @new_search.save
         @search.add_child @new_search
         @search = @new_search
       end
-    else 
+    else
+      remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
+      session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
       @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
       @diff_search = true
     end
   
-    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '+' ? '-' : '+') if params[:search]
-    session[:search_id] = @search.id
+    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
+    cookies[:sid] = @search.id
   end
   
   def build_search_attributes(params)

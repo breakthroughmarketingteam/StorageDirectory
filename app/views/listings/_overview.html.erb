@@ -39,7 +39,7 @@
 			<h2>Rent a Unit</h2>
 			<div class="realtime">Real-Time Storage Unit Rentals</div>
 			<div id="rent_inner">
-				<%= render :partial => 'listings/rent_form', :locals => { :listing => @listing, :size => @size, :special => @special, :show_size_ops => true } %>
+				<iframe src="<%= rack_rental_url @listing, @size, @special, true %>" id="secure_frame"></iframe>
 			</div>
 		</div>
 	<% end %>

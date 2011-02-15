@@ -94,11 +94,9 @@ module ApplicationHelper
     end unless action_name == 'edit'
     
     # these blocks can be shown on regular restful pages rather than a page's or post's show action (custom page)
-    # they require a controller and action attribute, comma separated to allow the block to be in multiple routes
-    Block.find_all_by_restful(true).each do |block|
-      if block.restful_region == region.to_s && block.controller.split(/,\W?/).include?(controller_name) && block.action.split(/,\W?/).include?(action_name)
-        blocks << block 
-      end
+    # they require a resource attribute, formatted: controller_name1[action_name1, action_name2, ...], controller_name2[actions...], ...
+    Block.find_all_by_restful_region(region.to_s).each do |block|
+      blocks << block if block.is_for_resource? controller_name, action_name
     end
     
     blocks.sort_by do |b|
@@ -334,6 +332,7 @@ module ApplicationHelper
       html << "<li>Total: #{Client.count}</li>"
       html << "<li>Verified: #{Client.verified_count}</li>"
       html << "<li>Active: #{Client.active_count}</li>"
+      html << "<li><a class='click_thru' href='/ajax/export_csv?model=Client'>Export</a></li>"
       any = true
     end
     
