@@ -9,7 +9,12 @@ class TagsController < ApplicationController
   end
   
   def show
-    @models = params[:model].singularize.camelcase.constantize.tagged_with params[:tag]
+    if params[:model]
+      @models = params[:model].singularize.camelcase.constantize.tagged_with params[:tag]
+    else
+      redirect_to root_path
+    end
+    
     render :layout => false if request.xhr?
   end
   
