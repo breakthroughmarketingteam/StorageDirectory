@@ -5,7 +5,7 @@ class AjaxController < ApplicationController
   ssl_allowed :get_partial, :get_multipartial, :find_listings, :get_cities, :get_attributes, :export_csv
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
-  before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv]
+  before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv, :destroy]
   
   def get_client_stats
     @client = Client.find params[:client_id]
@@ -142,9 +142,7 @@ class AjaxController < ApplicationController
     
       json_response
     end
-    
-  rescue => e
-    render_error e
+  
   end
   
   def export_csv
@@ -183,7 +181,7 @@ class AjaxController < ApplicationController
   end
   
   def _get_model_class(model_str = nil)
-    @model_class ||= (model_str || @model_str || params[:model]).capitalize.camelcase.constantize
+    @model_class ||= ((model_str || @model_str || params[:model]).camelcase.constantize rescue (model_str || @model_str || params[:model]).capitalize.camelcase.constantize)
   end
   
   def _get_model_and_locals

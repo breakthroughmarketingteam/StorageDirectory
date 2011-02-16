@@ -52,19 +52,21 @@
                	<td class="col_label"><label for="email">Email</label></td>
                	<td>
 					<div>
-					<% @listing.staff_emails.each do |staff_email| %>
-						<% unless staff_email.new_record? %>
-							<span>
-								<%= staff_email.email %> &nbsp; 
-								[<%= link_to 'remove', "/ajax/destroy?model=StaffEmail&id=#{staff_email.id}", :class => 'rm_field post_link before_confirm', :title => "Delete #{staff_email.email}?" %>]
-								<br />
-							</span>
-						<% else %>
-							<% f.fields_for :staff_emails, staff_email do |sf| %>
-								<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+						<% @listing.staff_emails.each do |staff_email| %>
+							<% unless staff_email.new_record? %>
+								<span>
+									<%= staff_email.email %> &nbsp; 
+									[<%= link_to 'remove', "/ajax/destroy?model=StaffEmail&id=#{staff_email.id}", :class => 'rm_field post_link before_confirm', :title => "Delete #{staff_email.email}?" %>]
+									<br />
+								</span>
+							<% else %>
+								<% f.fields_for :staff_emails, staff_email do |sf| %>
+									<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+								<% end %>
 							<% end %>
 						<% end %>
-					<% end %>
+						<% email_count = @listing.staff_emails.count %>
+						<p class="note">Activity specific to this listing will be emailed to <%= "#{email_count > 1 ? 'these addresses' : 'this address'}" %>.</p>
 					</div>
                	</td>
             </tr>
