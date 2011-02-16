@@ -14,63 +14,63 @@ class Notifier < ActionMailer::Base
   end
   
   def client_notification(client)
-    setup_email client.email, 'info@usselfstoragelocator.com', 'Pending Verification'
+    setup_email client.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Pending Verification'
     @body[:client] = client
   end
   
   def client_activation(client)
-    setup_email client.email, 'info@usselfstoragelocator.com', 'Activate Your Account'
+    setup_email client.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Activate Your Account'
     @body[:client] = client
   end
   
   def tenant_notification(user, rental)
-    setup_email user.email, 'info@usselfstoragelocator.com', 'Your Self Storage Rental'
+    setup_email user.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
     @body[:user] = user
     @body[:rental] = rental
   end
   
   def new_tip_alert(tip)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New tip created in USSSL!'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New tip created in USSSL!'
     @body[:tip] = tip
   end
   
   def new_contact_alert(comment, page)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', "New Message: #{comment.title}"
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', "New Message: #{comment.title}"
     @body[:comment] = comment
   end
   
   def tenant_confirmation(reserver, reservation)
-    setup_email reserver.email, 'notifier@usselfstoragelocator.com', 'Self Storage Reservation'
+    setup_email reserver.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Self Storage Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
   end
   
   def new_client_alert(client)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New Client!'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Client!'
     @body[:client] = client
   end
   
   def new_tenant_alert(tenant, rental)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New Tenant!'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
     @body[:tenant] = tenant
     @body[:rental] = rental
   end
   
   def new_info_request_alert(listing, info_request)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New Info Request!'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Info Request!'
     @body[:listing] = listing
     @body[:info_request] = info_request
   end
   
   def admin_reservation_alert(reserver, reservation, comments)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstorageolocator.com', 'New Reservation'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
     @body[:comments]    = comments
   end
   
   def password_reset_instructions(user)
-    setup_email user.email, 'no-reply@usselfstoragelocator.com', 'Password Reset Instructions'
+    setup_email user.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Password Reset Instructions'
     @body[:user] = user
   end
   
@@ -82,15 +82,21 @@ class Notifier < ActionMailer::Base
   end
   
   def tracking_request(listing, client, phone)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'Call Tracking Request'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Call Tracking Request'
     @body[:listing] = listing
     @body[:client] = client
     @body[:phone] = phone
   end
   
   def review_alert(review)
-    setup_email 'info@usselfstoragelocator.com', 'notifier@usselfstoragelocator.com', 'New Facility Review'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Facility Review'
     @body[:review] = review
+  end
+  
+  def claimed_listings_alert(client, listings)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'A Client Has Claimed More Listings'
+    @body[:client] = client
+    @body[:listings] = listings
   end
   
   def setup_email(recipient, from, subject = '')

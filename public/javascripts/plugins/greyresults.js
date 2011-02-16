@@ -50,7 +50,7 @@ $(function(){
 			form.data('saving', true);
 			ajax_loader.show();
 			$('.cancel_link', form).hide();
-			
+			return false
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					var new_size = $(data);
@@ -522,7 +522,8 @@ $(function(){
 	});
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
-	$('.reserve_btn, .request_btn', '.listing').live('click', function(){
+	$('.reserve_btn', '.listing').live('click', function() {
+		console.log(this)
 		var $this = $(this), 
 			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			context = $this.parents('.listing'),
@@ -537,6 +538,23 @@ $(function(){
 		$this[0].href = $this[0].href.split('?')[0] +'?'+ $.hashToQuery(query_hash);
 		
 		return false;
+	});
+	
+	$('.request_btn', '.listing').live('click', function() {
+		var $this = $(this), 
+			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
+			context = $this.parents('.inner'),
+			unit_size = $(':radio:checked', context),
+			special = $('.special_txt.active', context);
+
+		if (unit_size.length) {
+			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
+			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
+			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
+		}
+
+		if (special.length == 1)
+			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -578,8 +596,9 @@ $(function(){
 								$map_wrap.jmap('CheckResize');
 							}, 1000);
 
-						} else if ($this.attr('rel') == 'reserve') {
-							$('#rent_step1 form', $panel).rental_form();
+						} else if ($this.attr('rel') == 'request') {
+							$.activate_datepicker($panel);
+							$('.numeric_phone', $panel).formatPhoneNum();
 						}
 					});
 				});

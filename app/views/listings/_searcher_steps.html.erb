@@ -1,0 +1,62 @@
+<div id="searcher_steps">
+	<div class="items">
+		<div id="searcher_step1" class="workflow_step">
+			<% form_tag '/ajax/find_listings', :id => 'listing_searcher', :class => 'silent' do %>
+				<p class="stack">We might already have your facility listed. Search for them here first and claim ownership.</p>
+				<p class="stack">Note: <span class="note">The facility name might not be spelled exactly as we have it so try just the first few words of the name or leave out the city.</span></p>
+	
+				<div class="stack">
+					<label for="search_title">Facility Name</label>
+					<input type="text" id="search_title" name="company" class="required text" />
+				</div>
+	
+				<div class="stack">
+					<label for="search_city">City</label>
+					<input type="text" id="search_city" name="city" class="text" />
+				</div>
+	
+				<div class="stack">
+					<label for="search_state">State</label>
+					<input type="text" id="search_state" name="state" class="text" />
+				</div>
+			<% end %>
+		</div> <!-- /#searcher_step1 -->
+		
+		<div id="searcher_step2" class="workflow_step">
+			<div class="listings_box hide"></div>
+			
+			<div class="hidden listing_div selectable">
+				<div class="left block num"></div>
+			  	<div class="listing_in">
+					<p class="listing_title"></p>
+					<p class="listing_address"></p>
+					<div class="check"><span><input type="checkbox" class="hidden" name="listing_id" value="" /></span></div>
+				</div>
+			</div>
+		</div> <!-- /#searcher_step2 -->
+		
+		<div id="searcher_step3" class="workflow_step">
+			<div class="listings_box">
+				<% form_tag claim_listings_client_listings_url(model, :protocol => 'https'), :id => 'selected_listings' do %>
+				<% end %>
+			</div>
+			
+			<div id="skipped_listings_find">
+				<p class="stack">A brand new facility? Great! Just click done and you'll be able to create your new listing in your facilities list. After you save it don't forget to go into your facility's profile and add your hours, features, specials, pictures and more!</p>
+				<p>Want to bulk add multiple facilities? No problem! We'd love to do it for you. Just email us a spreadsheet of your facilities information to <a href="mailto:info@usselfstoragelocator.com">info@usselfstoragelocator.com</a> and we'll upload it for you. Feel free to call us at <%= $_usssl_phone %> if you have any questions about bulk uploads.</p>
+			</div>
+		</div> <!-- /#searcher_step3 -->
+		
+		<div id="searcher_step4" class="workflow_step">
+			<div id="claim_success_msg">
+				<%= ajax_loader 'ajax-loader-lrg.gif' %>
+			</div>
+		</div> <!-- /#searcher_step4 -->
+	</div> <!-- /.items -->
+	
+	<div id="workflow_nav">
+		<a class="button back" id="back" href="#back">Back</a>
+	  	<a class="button next" id="next" href="#next">Next</a>
+		<a class="button skip" id="skip" href="#skip">Skip</a>
+	</div>
+</div>

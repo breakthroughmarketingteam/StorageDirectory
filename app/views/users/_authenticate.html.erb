@@ -1,4 +1,4 @@
-<% form_tag authenticate_user_path(is_admin? ? user : current_user), :id => 'auth_yourself' do %>
+<% form_tag authenticate_user_path((current_user && current_user.has_role?('admin', 'staff')) ? user : current_user), :id => 'auth_yourself' do %>
 	<p>For added security, please enter your password to continue.</p>
 	<div>
 		<input type="password" name="auth[password]" class="required" />

@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.create params[:user_session]
     
-    if @user_session.valid? && current_user.status == 'active'
+    if @user_session.valid? && (current_user && current_user.status == 'active')
       @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : $root_domain))
       
       respond_to do |format|
@@ -39,10 +39,10 @@ class UserSessionsController < ApplicationController
           render :json => { 
             :success => true, 
             :data => { 
-              :html => render_to_string(:partial => 'menus/topnav'), 
-              :name => current_user.name,
+              :html  => render_to_string(:partial => 'menus/topnav'), 
+              :name  => current_user.name,
               :email => current_user.email,
-              :role => current_user.role.title, 
+              :role  => current_user.role.title, 
               :account_path => @client_link
             }
           }
@@ -60,6 +60,9 @@ class UserSessionsController < ApplicationController
       
       elsif current_user.status == 'suspended'
         msg = fmsg = 'Your account seems to be suspended...'
+        redir = login_path
+      else
+        msg = fmsg = 'Your account seems to be inactive. Contact support if you think there\'s a problem.'
         redir = login_path
       end
       

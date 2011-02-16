@@ -13,13 +13,15 @@ module ApplicationHelper
   end
   
   def geo_keywords(page)
-    if params[:city] && @page.keyword_list.join(', ').match(/(\$CITY)|(\$STATE)/)
-      @page.keyword_list.join(', ').gsub('$CITY', params[:city].titleize).gsub('$STATE', @search.state)
+    keyword_list = @page.keyword_list.join ', '
+    
+    if params[:city] && keyword_list.match(/(\$CITY)|(\$STATE)/)
+      keyword_list.gsub('$CITY', params[:city].titleize).gsub('$STATE', @search.state)
     else
-      @page.keyword_list.join ', '
+      keyword_list
     end
   rescue
-    @page.keyword_list.join ', '
+    keyword_list
   end
   
   def page_name
@@ -334,6 +336,10 @@ module ApplicationHelper
       html << "<li>Active: #{Client.active_count}</li>"
       html << "<li><a class='click_thru' href='/ajax/export_csv?model=Client'>Export</a></li>"
       any = true
+    when 'listings'
+      html << "<li>Total: #{Listing.count}</li>"
+      html << "<li>Active: #{Listing.verified_count}</li>"
+      any = true
     end
     
     html << '</ul>' if any
@@ -385,7 +391,7 @@ module ApplicationHelper
   
   # for the client account pages to take account who is viewing the page, an admin or the client
   def admin_conditional_path(user, options = {})
-    is_admin? ? admin_to_client_path(user, options) : client_account_path(options)
+    (current_user && current_user.has_role?('admin', 'staff')) ? admin_to_client_path(user, options) : client_account_path(options)
   end
   
   def has_admin_access?

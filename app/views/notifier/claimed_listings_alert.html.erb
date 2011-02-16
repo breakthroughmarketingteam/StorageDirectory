@@ -1,0 +1,9 @@
+Client: <%= @client.name %> <<%= @client.email %>>
+
+Account: <%= edit_client_url @client, :protocol => 'https' %>
+
+Claimed Listings: 
+<% @listings.each do |listing| -%>
+	(<%= listing.id %>) <%= listing.title %>
+	<%= listing.full_address %>
+<% end %>
