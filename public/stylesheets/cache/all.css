@@ -1943,7 +1943,6 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .sizes_list_in ul li.st-avail{width:10%;text-align:center;}
 .sizes_list_in ul li.st-spec{width:17%;font-weight:normal;max-height:45px;overflow:hidden;}
 .sizes_list_in ul li.st-type .predef_dims{display:none;}
-#unit_sizes .sizes_list .ajax_loader{margin:7px 0 0 0;}
 #sl-tabs-sizes-in .size_form .st-size input{width:19%;}
 #predefined_sizes .sizes_list .ajax_loader{margin:15px 0 0 0;}
 .panel .sizes_list_in ul li.st-spec{width:157px;}
@@ -3266,7 +3265,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #tab1{margin-bottom:20px;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
-#sl-edit-tabs .ajax_loader{float:right;margin:7px 10px 0 0;}
+#sl-edit-tabs .ajax_loader{top:2px;}
 #sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
 #sl-edit-tabs h2,#sl-edit-tabs h3{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:11px 20px 7px;border-bottom:1px solid #ccc;}
 #flogo h3,#hours h3{margin-bottom:20px;}

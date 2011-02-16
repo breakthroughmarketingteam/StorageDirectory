@@ -50,7 +50,7 @@ $(function(){
 			form.data('saving', true);
 			ajax_loader.show();
 			$('.cancel_link', form).hide();
-			
+			return false
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					var new_size = $(data);

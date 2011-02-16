@@ -17,9 +17,7 @@
 		</ul>
 
 		<div class="uncollapse">
-			<% if in_mode?('profile') && !@listing.issn_enabled? %>
-				<%= render :partial => 'sizes/form', :locals => { :listing => @listing, :size => Size.new } %>
-			<% end %>
+			<%= render :partial => 'sizes/form', :locals => { :listing => @listing, :size => Size.new } if in_mode?('profile') && !@listing.issn_enabled? %>
 			<%= render :partial => 'sizes/size', :collection => (in_mode?('profile') ? @listing.sizes.sorted : @listing.available_sizes) %>
 		</div>
 	</div>

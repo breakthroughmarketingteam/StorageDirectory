@@ -1,4 +1,4 @@
-<% @listing ||= listing; @size ||= size || model %>
+<% @listing ||= listing; @size = size %>
 <% form_for [@listing, @size], :html => { :id => '', :class => 'size_form silent', 'data-edit' => (defined?(predef) && !predef || (!defined?(predef) && size.new_record? ? 0 : 1)) } do |f| %>
 	<div class="sl-table-wrap" rel="listing_<%= @listing.id %>" data-has-res="<%= @listing.accepts_rentals? %>">
 		<ul class="sl-table">
