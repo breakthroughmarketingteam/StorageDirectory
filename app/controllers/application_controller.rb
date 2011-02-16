@@ -55,7 +55,8 @@ class ApplicationController < ActionController::Base
   protected # -----------------------------------------------
   
   def render_optional_error_file(status_code)
-    render :template => "errors/500", :status => 500, :layout => 'storagelocator' 
+    status = interpret_status status_code
+    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'storagelocator'
   end 
   
   $root_domain = 'usselfstoragelocator.com'

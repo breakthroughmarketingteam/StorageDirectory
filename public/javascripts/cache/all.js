@@ -6481,7 +6481,6 @@ $(function(){
 	
 	// when the reserve btn is clicked check to see if there is a chosen unit type. if so, change the buttons href
 	$('.reserve_btn', '.listing').live('click', function() {
-		console.log(this)
 		var $this = $(this), 
 			new_href = $this.attr('href').replace('/sizes', ($this.hasClass('reserve_btn') ? '/reserve' : '/info_request')),
 			context = $this.parents('.listing'),
