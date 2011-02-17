@@ -1309,7 +1309,7 @@ form .error p{margin:0 0 7px 0;}
 #issn_steps{width:795px;}
 #workflow_steps{height:440px;}
 #workflow_nav,#map_flow_nav{bottom:15px;position:absolute;right:20px;}
-#rent_steps #workflow_nav{bottom:0;right:0;width:100%;}
+#rent_steps #workflow_nav{bottom:0;right:7px;width:100%;}
 #workflow_steps .items,#issn_steps .items,#rent_steps .items,#map_nav .items,#aff_scroll .items,#searcher_steps .items{position:absolute;width:2000px;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}
 #workflow_nav .button,#map_flow_nav .button,#issn_status_option a{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/blue-btn-bg.png) repeat-x;border:1px solid #666;color:#fff;display:block;float:left;font-size:14px;font-weight:bold;height:26px;line-height:1.8;margin-left:15px;padding:0 30px;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #333;z-index:551;}
@@ -1825,8 +1825,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-intro #sl-special a{text-decoration:underline;}
 #sl-intro #sl-special span{font-size:24px;line-height:30px;}
 #sl-tabs-overview #sl-photos{background:#fff;border:1px solid #ccc;float:right;width:383px;}
-#sl-tabs-overview #sl-photos #previews img{width:44px;border:1px solid #fff;}
-#sl-tabs-overview #sl-photos #previews img.active{display:inline;border-color:#ccc;}
+#sl-tabs-overview #sl-photos #previews img{width:44px;border:1px solid #eee;}
+#sl-tabs-overview #sl-photos #previews img.active{display:inline;border-color:#000;}
 #sl-tabs-overview #sl-photos #previews{margin:3px;text-align:center;}
 .get_dir{margin-top:10px;}
 .get_dir input#from_address{margin-left:3px;width:277px;}
@@ -1843,10 +1843,10 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-intro #sl-special p{text-align:left;margin:0;position:absolute;bottom:10px;left:10px;}
 #sl-intro #sl-special a{text-decoration:underline;}
 #sl-intro #sl-special span{font-size:24px;line-height:30px;}
-#sl-tabs-overview #sl-photos{background:#fff;border:1px solid #ccc;float:right;height:311px;width:383px;}
+#sl-tabs-overview #sl-photos{background:#eee;border:1px solid #ccc;float:right;height:310px;width:383px;}
 #sl-tabs-overview #sl-photos img{}
-#sl-tabs-overview #sl-photos #previews{margin:3px;text-align:center;}
-#main_pic_wrap{position:relative;height:257px;}
+#sl-tabs-overview #sl-photos #previews{margin:5px;text-align:center;}
+#main_pic_wrap{background:#000;position:relative;height:255px;}
 .get_dir{margin-top:10px;}
 #sl-tabs-map .get_dir input#from_address{margin-left:3px;width:81%;}
 #sl-tabs-map .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
