@@ -27,12 +27,12 @@
                     <div class="tab_content active" id="fac-signup" data-tabs-id="add_fac_tabs">                       
                         <div id="add-fac-txt">
                             <h3>Most Complete Self Storage Locator On The Web.</h3>
-                            <p>Join our Self Storage Directory and enjoy increased online exposure. Use our simple online marketing tools to convert leads into rentals. Let your customers rent a self storage unit online 24/7/365 from anywhere.</p>
+                            <p>Join our Self Storage Network and enjoy increased online exposure. Use our simple online marketing tools to convert leads into rentals. Let your customers rent a self storage unit online 24/7/365 from anywhere.</p>
                         </div>
                    
                         <div id="add-fac-form">
                             <% form_for @client, :html => { :class => 'silent' } do |f| %>
-                                <span class="sub_head">Add Your Facility and Get Started.</span>
+                                <span class="sub_head">Enter your Facility and Get Started.</span>
                                 <div>
                                     <%= f.label :company, 'Facility Name:', :class => 'label' %>
                                     <%= f.text_field :company, :value => (@listing.title if @listing), :class => 'required focus_me', :rel => 'client[company]' %>
@@ -63,7 +63,7 @@
                         </div>
            
                         <div id="price-block">
-                            <h4>Activate your Facility<br />
+                            <h4 class="arrow">Activate your Facility<br />
                                 <strong>Absolutely Free!</strong><br />
 								Your Already Listed!
                             </h4>
@@ -72,12 +72,15 @@
                                 we are offering facility owners access <br />
                                 to our premium features <br /><br />
                             </p>
+							
 							<p>Check out all the <br /><a href="#click-features_tab" class="aProxy">Features</a> <br /> you get for free!</p>
+							
                         </div>
            
                         <div id="add-fac-txt">
-                            <p>Add your self storage facility and become part of our network of successful self storage facilities across the country. Our services go far beyond a directory and our main focus is getting the most out of the web for your self storage facility.</p>
+                            <p>Enter your self storage facility and become part of our network of successful self storage facilities across the country. Our services go far beyond a directory and our main focus is getting the most out of the web for your self storage facility.</p>
                             <p>We've put together the best Online Marketing Tools available specifically tailored for your self storage facility needs. Sign up for Free and benefit from these easy-to-use tools and reports that increase leads, walk-ins, phone calls, and ultimately gain more unit rentals.</p>
+							<p>Today's businesses thrive on internet exposure and your potential customers are turning to specialized search engine websites like ours to find professional services.</p>
            
                             <div class="phone">Call <span><%= $_usssl_phone %></span> For More Information.</div>
                         </div>           
@@ -118,14 +121,13 @@
                     <div class="tab_content" id="fac-features">
                         <h3>Enhanced Online Marketing For Your Self Storage.</h3>
                        
-                        <p>Today's companies thrive on Internet exposure because potential customers are turning to specialized online networks like this one to find what they need. We offer lots of tools to help you promote your self storage facility online and maximize your local exposure.</p>
                        
                         <p>Have your self storage facility verified and listed for FREE.  Join our Premium Members Network for free and gain access to all of our online marketing tools, including our Online Unit Rentals feature.</p>
                        
                         <div id="heading">
                             <div class="left">
-                                <h3>Get 90 Days free Advertising!</h3>
-                                <p>Hurry! Drops to 60 days on March 16th, 2011.</p>
+                                <h3>Activation is Free! </h3>
+                                <p>Get all our premium features for a limited time. Hurry! Drops to 60 days on March 16th, 2011.</p>
                             </div>
                             <div class="right">
                                 <img src="/images/ui/storagelocator/prices.png" alt="Membership Options"/>
@@ -134,7 +136,7 @@
                        
                         <div id="mem-types">
                            
-                            <div id="types-inner" class="hidden">
+                            <div id="types-inner" class="">
                                 <div style="height:15px;"></div>
                             <table>
                                 <tbody>
@@ -302,9 +304,9 @@
                                     </tr>
                                     <tr class="even last">
                                         <td></td>
-                                        <td><strong>54.50*</strong></td>
-                                        <td><strong>54.50</strong></td>
-                                        <td><strong>Free</strong></td>
+                                        <td><strong>$54.50*</strong></td>
+                                        <td id="free"><strong>$54.50</strong></td>
+                                        <td><strong>$0.00</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -315,23 +317,7 @@
                        
                         <a id="types-btn" class="openDiv" rel="types-inner" href="#">More Info</a>
                        
-                        <h4>Promote your self storage facility online!</h4>
-
-                        <ul id="feats">
-                            <li><em>Media Enhanced Facility Profile: Logo, Address, Unit Sizes, Prices, Features, Specials, <strong>+ Reviews, Pictures, Video</strong></em></li>
-                            <li><em>Local Phone Number with Call Tracking and Call Recordings</em></li>
-                            <li><em>Compare Facilities Feature</em></li>
-                            <li><em>Email Notices: New Leads, Phone Calls, Clicks, Impressions, Coupons Printed</em></li>
-                            <li><em>Request Info Form</em></li>
-                            <li><em>Weekly/Monthly Traffic Reports</em></li>
-                            <li><em>Top Results Positioning of your listing</em></li>
-                            <li><em>Highlighted Listing for added exposure</em></li>
-                            <li><em>Featured Facility Ad/Banner</em></li>
-                            <li><em>Preview Tabs below listing (Directions, Units, Pictures, Reviews)</em></li>
-                            <li><em>Weekly News about the Self Storage Industry and Online Marketing</em></li>
-                            <li><em>Periodic Webinars (Self Storage Online Marketing)</em></li>
-                        </ul>
-                       
+                
                         <%= auto_pop_up_link 'Features Info', 'feat-pop', { :title => 'Features', :class => 'info', :width => 712, :height => 'auto' } %>
                        
                         <p>Premium listings will always have an equal chance of showing up on top of our directory search results, giving all of our network members a fair advantage.</p>
