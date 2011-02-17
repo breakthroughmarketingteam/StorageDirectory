@@ -481,7 +481,7 @@ var swfobject = function() {
 	function setVisibility(id, isVisible) {
 		var v = isVisible ? "inherit" : "hidden";
 		if (isDomLoaded) {
-			getElementById(id).style.visibility = v;
+			doc.getElementById(id).style.visibility = v;
 		}
 		else {
 			createCSS("#" + id, "visibility:" + v);
