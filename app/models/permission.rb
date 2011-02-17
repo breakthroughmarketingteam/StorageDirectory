@@ -1,8 +1,10 @@
 class Permission < ActiveRecord::Base
   
   belongs_to :role
-  
   access_shared_methods
+  
+  @@searchables = %w(resource action)
+  cattr_reader :searchables
   
   # Class Methods
   

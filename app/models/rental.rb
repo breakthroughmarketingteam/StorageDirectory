@@ -8,7 +8,7 @@ class Rental < ActiveRecord::Base
   access_shared_methods
   
   @@searchables = %w(first_name last_name email)
-  cattr_accessor :searchables
+  cattr_reader :searchables
   
   def paid_through
     t = self.move_in_date

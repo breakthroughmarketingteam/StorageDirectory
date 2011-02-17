@@ -15,7 +15,7 @@ class AdPartner < ActiveRecord::Base
 
   named_scope :all_enabled, :conditions => 'enabled IS TRUE'
   @@searchables = %w(title description)
-  cattr_accessor :searchables
+  cattr_reader :searchables
 
   def html_attributes
     to_hash(read_attribute(:html_attributes))

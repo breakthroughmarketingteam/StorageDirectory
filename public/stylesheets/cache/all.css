@@ -2401,7 +2401,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
 .ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
-#al_client_verify{margin:14px 0 0 9px;position:static;}
+#al_client_verify{margin:14px 0 0 9px;position:static;float:right;}
 .sl-table input.small_num{width:15px;padding:3px;}
 .sl-table .small_text_field{width:80%;float:left;margin-top:7px;}
 #listings_controller .sl-table a.hidden{display:none;position:relative;top:10px;}
@@ -2474,7 +2474,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
 .bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
 #remember_me{font-size:80%;color:#666;}
-#login_page #user_session_remember_me{width:auto;margin:2px 5px;float:left;}
+#login_page #user_session_remember_me{width:auto;margin:2px 5px 5px 0;float:left;}
 #pop_up #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
@@ -2586,7 +2586,6 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_2 .found_box{float:right;margin-top:16px;width:48%;}
 #signupstep_2 .found_box p.display{margin:0 0 7px 52px;}
 #signupstep_2 .found_box p.display span {color:#3333CB;font-weight:bold;}
-/*#signupstep_3{padding:20px;}*/
 #workflow_steps .intro{margin:0 0 0 20px;}
 #signupstep_3 p{font-size:12px;line-height:18px;}
 #signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 20px;width:428px;}
@@ -2707,7 +2706,6 @@ form .error p{margin:0 0 7px 0;}
 #slide_wrap #slide_bg{position:absolute;top:-1px;left:-10%;height:6px;width:119%;background:#fff;border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
 #narrow_results_form #slide_wrap #slide_bg{left:-25%;width:147%;}
 
-/* results page */
 #feature_options{font-size:80%;}
 #feature_options li{overflow:hidden;margin-bottom:5px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkbox.png) no-repeat bottom left;}
 #feature_options li span{display:block;width:17px;height:17px;margin-right:5px;float:left;}
@@ -2750,7 +2748,6 @@ transform: rotate(0);
 filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0, M12=0, M21=-0, M22=0); 
 -ms-filter:"progid:DXImageTransform.Microsoft.Matrix(M11=0, M12=0, M21=-0, M22=0, sizingMethod='auto expand')";zoom:1;}
 .home #distance_btns .uncollapse{margin:0;float:left;width:75%;}
-/*#distance_btns #slide_wrap .advanced_slider{width:45%;margin:10px 26px;}*/
 #unit_features{border-bottom:1px solid #ccc;margin-left:5px;padding:15px 0;}
 #unit_features label{font-size:100%;}
 #unit_features .selectable_wrap{overflow:hidden;padding:3px 0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkbox.png) no-repeat center left;}
@@ -2818,7 +2815,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #footer_btm a:hover{color:#fff;}
 #aff_scroll .in{position:relative;width:950px;height:129px;overflow:hidden;float:left;margin-left:5px;}
 
-
 #h-divider{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/dotted-line.png) repeat-x;margin:20px auto;height:2px;width:900px;}
 #aff-box{margin:0 auto 0;width:975px;}
 #aff-box p{margin-left:20px;text-align:left;}
@@ -2867,8 +2863,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #top_fac_page #fac-bottom .feat h4.box5{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/notify.png) no-repeat;}
 #top_fac_page #fac-bottom .feat h4.box6{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/market.png) no-repeat;}
 #top_fac_page #fac-bottom .feat p{font-size:12px;line-height:20px;margin:0;}
-
-
 #fac-features{margin-top:20px;}
 #fac-features a.info{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat-x;color:#fff;display:block;margin:8px 0 0;padding:7px 0 5px;text-align:center;text-decoration:none;width:120px;}
 #fac-features em{color:#4c4bcc;font-weight: bold;}
@@ -2879,7 +2873,6 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
 #add-fac-form-extra ul{margin:0 20px 0 30px}
 #add-fac-form-extra ul li{list-style:none;}
-
 #add-fac-form-extra ul li a.toggle_down{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
 #add-fac-form-extra ul li a.toggle_right{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
 #top_fac_page #fac-features h4{margin:40px 20px 20px 0;}
@@ -2900,12 +2893,10 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #new_client_message{margin:0 auto;width:950px;}
 form .note{clear:both;display:block;font-size:80%;}
-
 #w-msg{margin:20px 12px;}
 #w-msg p{line-height:18px;}
 #w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
-
 #hint-arrow{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
 
 #tips-box-bottom #prev_tip{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/prev-tip.png) no-repeat 10px 4px;display:block;float:left;height:22px;width:30px;}
@@ -2944,17 +2935,14 @@ form .note{clear:both;display:block;font-size:80%;}
 #green a:hover{text-decoration:underline;}
 #green-popup > h2 {font-size:28px;margin-bottom:20px;}
 #green-popup{border:20px solid #ccc;padding:30px;}
-
 .ui-dialog .ui-dialog-title{font-size:16px;}
-
-/*.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #327e04;background:#46cb44;font-weight:bold;color:#ffffff;}*/
 
 #login_frame{width:103%;height:164px;overflow:hidden;background: url("http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif") no-repeat scroll 50% 50% transparent;}
 .login #page-cnt-top-bg{width:100%;}
 .login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
-.login #login-form{width:317px;}
+.login #login-form{width:317px;margin:0 0 0 10px;}
 .login #type-one-cnt-in{margin:15px 15px 0 !important;}
-.login #forgot_pass_link{color:#4c4bcc;;margin-left:24px;}
+.login #forgot_pass_link{color:#4c4bcc;;margin-left:2px;}
 
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
 .confirm_box,.alert_box{padding-bottom:10px !important;}
@@ -2969,7 +2957,6 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #fac-results ul li{font-size:16px;list-style:disc;margin-top:22px;}
 #fac-results p em{color:#4c4bcc;}
-
 #g-res{height:370px;margin-top:40px;}
 #g-res ul{float:left;width:260px;}
 #g-res h4{color:#4c4bcc;font-size:22px;margin:0 0 35px;text-decoration:underline;width:240px;}
