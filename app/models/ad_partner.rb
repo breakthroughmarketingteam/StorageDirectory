@@ -8,7 +8,6 @@ class AdPartner < ActiveRecord::Base
     :path => ":attachment/:id/:style_:basename.:extension"
   
   validates_presence_of :title, :url
-  validates_attachment_presence :image
   validates_attachment_content_type :image, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
   
   access_shared_methods

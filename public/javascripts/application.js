@@ -857,15 +857,14 @@ $(function() {
 					pop_up_title : 'Select Your Facilities',
 					nav_vis : [
 						['next', function(btn, wizard) { btn.text('Next').click(function() { wizard.slide_data[1].skipped = false; wizard.slide_data[2].went_back = false; }); }],
-						['skip', function(btn, wizard) { function _skip2() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeIn().unbind('click', _skip2).click(_skip2);  }],
+						['skip', function(btn, wizard) { function _skip2() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeIn().unbind('click', _skip2).click(_skip2); }],
 						['back', 'fadeIn']
 					],
 					action : function(wizard) {
 						if (wizard.slide_data[2].went_back) {
 							wizard.slide_data[2].went_back = false;
 							wizard.slide_data[1].skipped = false;
-							wizard.prev();
-							return false;
+							wizard.prev(); return false;
 						}
 						
 						var form = $("form#listing_searcher", wizard.workflow);
@@ -912,11 +911,12 @@ $(function() {
 						}
 					},
 					validate : function(wizard) {
+						console.log(wizard.slide_data[1].skipped, this)
 						if (!wizard.slide_data[1].skipped && $('.listing_div.selected', '#searcher_step2').length == 0) {
 							$.greyAlert('Choose at least one listing<br />or click the skip button.');
 							return false;
 							
-						} else return true
+						} else return true;
 					}
 				},
 				{ 
