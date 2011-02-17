@@ -12,7 +12,8 @@ class AdPartner < ActiveRecord::Base
   
   access_shared_methods
 
-  named_scope :all_enabled, :conditions => 'enabled IS TRUE'
+  named_scope :all_enabled, :conditions => 'enabled IS TRUE', :order => 'position'
+  
   @@searchables = %w(title description)
   cattr_reader :searchables
 
