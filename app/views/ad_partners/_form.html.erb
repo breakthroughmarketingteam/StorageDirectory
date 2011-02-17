@@ -48,8 +48,16 @@
 			<div class="left right_space">
 				<%= f.radio_button :enabled, true %>Yes
 			</div>
+			
 			<div class="left right_space">
 				<%= f.radio_button :enabled, false %>No
+			</div>
+		</div>
+		
+		<div class="uncollapse stack">
+			<%= f.label :position %>
+			<div class="shadow_wrap">
+				<%= f.text_field :position, :class => 'tiny_text_field' %>
 			</div>
 		</div>
 		
