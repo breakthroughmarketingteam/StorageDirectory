@@ -5,7 +5,7 @@
 				<h3><%= link_to_if result.premium?, result.title, facility_path_for(result), :class => "profile_link" %></h3>
 			
 				<% if result.premium? %>
-					<% @features = result.facility_features.map &:title %>
+					<% @features = result.facility_features.map(&:title)[0, 12] %>
 					<% unless @features.empty? %>
 						<div class="rslt-features">
 							<% @features.each do |feature| %>
