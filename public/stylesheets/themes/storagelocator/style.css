@@ -1179,6 +1179,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
 .ov-item-head .ajax_loader{position:absolute;right:110px;top:14px;}
+#al_client_verify{margin:14px 0 0 9px;position:static;}
 .sl-table input.small_num{width:15px;padding:3px;}
 .sl-table .small_text_field{width:80%;float:left;margin-top:7px;}
 #listings_controller .sl-table a.hidden{display:none;position:relative;top:10px;}
