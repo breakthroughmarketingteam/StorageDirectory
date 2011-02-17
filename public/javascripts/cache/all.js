@@ -4128,6 +4128,7 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
+	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
@@ -5045,6 +5046,33 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 	stuff_sort_inverse = !stuff_sort_inverse;
 }
 
+// abstracting away a lot of common stuff ajax forms do
+$.safeSubmit = function(form, options) {
+	var ops = {
+		method 	   : 'post',
+		success    : function(){},
+		error 	   : function(){},
+		al_where   : 'before',
+		al_context : $('input[type=submit]', form),
+	};
+	$.extend(ops, options);
+	
+	var form 		= $(form).runValidation(),
+		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+	
+	if (form.data('valid') && !form.data('x')) {
+		form.data('x', true);
+		ajax_loader.show();
+		
+		$[ops.method](form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, ops.success, ops.error);
+			
+			form.data('x', false);
+			ajax_loader.fadeOutRemove();
+		}, 'json');
+	}
+}
+
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
 	var disablees = d || 'input, textarea, select, checkbox, radio';
@@ -5448,6 +5476,27 @@ $.fn.fadeOutLater = function(fade_speed, timeout, callback) {
 		setTimeout(function() {
 			$this.fadeOut(fade_speed, callback);
 		}, timeout || 1000);
+	});
+}
+
+// proxy a method to a jquery dom object from *this* jquery dom object;
+$.fn.aProxy = function() {
+	return this.each(function() {
+		var $this = $(this),
+			hash = this.href.split('#')[1];
+			
+		if (hash) {
+			var params = hash.split('-'),
+				action = params[0],
+				element = $('#'+ params[1]);
+			
+			if (element) {
+				$this[action](function(e) {
+					element.trigger(action);
+					return false;
+				});
+			}
+		}
 	});
 }
 
@@ -8544,6 +8593,18 @@ $(function() {
 		get_pop_up_and_do({ title: 'Request Tracked Number', modal: true }, { sub_partial: '/listings/tracking_request', model: 'Listing', id: $('#listing_id').val() }, function(pop_up) {
 			$('.numeric_phone', pop_up).formatPhoneNum();
 		});
+	});
+	
+	$('form#tracking_request').live('submit', function() {
+		var form = $(this);
+		
+		$.safeSubmit(this, {
+			success: function(data) {
+				form.replaceWith('<p class="framed center">'+ data +'</p>');
+			}
+		})
+		
+		return false;
 	});
 	
 	// business hours edit form, listing page

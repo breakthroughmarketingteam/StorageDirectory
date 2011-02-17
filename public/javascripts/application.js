@@ -1219,41 +1219,12 @@ $(function() {
 		
 		$.safeSubmit(this, {
 			success: function(data) {
-				form.replaceWith('<p>'+ data +'</p>')
+				form.replaceWith('<p class="framed center">'+ data +'</p>');
 			}
 		})
 		
 		return false;
 	});
-	
-	$.safeSubmit = function(form, options) {
-		var ops = {
-			method 	   : 'post',
-			success    : function(){},
-			error 	   : function(){},
-			al_where   : 'before',
-			al_context : $('input[type=submit]', form),
-		};
-		$.extend(ops, options);
-		
-		console.log(ops);
-		
-		var form 		= $(form).runValidation(),
-			ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
-		
-		if (form.data('valid') && !form.data('x')) {
-			form.data('x', true);
-			ajax_loader.show();
-			
-			$[ops.method](form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, ops.success, ops.error);
-				
-				form.data('x', false);
-				ajax_loader.fadeOutRemove();
-			}, 'json');
-		}
-	}
-	
 	
 	// business hours edit form, listing page
 	$('.all_day_check', '#hours').change(function(){
