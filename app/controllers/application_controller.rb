@@ -53,7 +53,12 @@ class ApplicationController < ActionController::Base
   layout lambda { app_config[:theme] }
   
   protected # -----------------------------------------------
-
+  
+  def render_optional_error_file(status_code)
+    status = interpret_status status_code
+    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'storagelocator'
+  end 
+  
   $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
     host = request.env['HTTP_HOST']
@@ -65,7 +70,7 @@ class ApplicationController < ActionController::Base
   # Posts#create is also allowed by anonymous (submit tip on storage-tips page)
   # kick out anonymous from doing anything else
   def simple_auth
-    return unless is_admin? && action_name == 'index'
+    return if is_admin? && action_name == 'index'
     @allowed = false
     @kickback_to = login_path
     
@@ -82,7 +87,9 @@ class ApplicationController < ActionController::Base
       @allowed = true
     elsif controller_name == 'ajax'
       @allowed = true
-    
+    elsif controller_name == 'admin'
+      @allowed = false
+      
     # restrict access to everything else by permissions
     elsif current_user
       @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
@@ -97,7 +104,8 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
+    false
+    #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
   def self.app_config
