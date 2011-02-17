@@ -16,14 +16,14 @@ class UserSessionsController < ApplicationController
   
   def create
     @user_session = UserSession.create params[:user_session]
-    
+    raise [current_user, current_user.role.title.downcase].pretty_inspect
     if @user_session.valid? && (current_user && current_user.status == 'active')
       @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : $root_domain))
       
       respond_to do |format|
         format.html do
           flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : nil
-
+          
           case current_user.role.title.downcase when 'admin', 'staff'
             redirect_back_or_default admin_index_path
           when 'advertiser'
@@ -80,6 +80,7 @@ class UserSessionsController < ApplicationController
   end
   
   def destroy
+    role = current_user.role.title.downcase
     current_user_session.destroy if current_user_session
     session.clear
     
@@ -87,7 +88,11 @@ class UserSessionsController < ApplicationController
       cookies[k.to_sym] = { :value => '', :path => '/', :domain => ".#{$root_domain}", :expire => 1.day.ago } 
     end 
     
-    redirect_to root_url, :protocol => 'http'
+    case role when 'admin', 'staff', 'advertiser'
+      redirect_to login_url, :protocol => 'http'
+    else
+      redirect_to root_url, :protocol => 'http'
+    end
   end
 
 end

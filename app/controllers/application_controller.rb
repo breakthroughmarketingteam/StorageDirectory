@@ -88,8 +88,7 @@ class ApplicationController < ActionController::Base
     elsif controller_name == 'ajax'
       @allowed = true
     elsif controller_name == 'admin'
-      @allowed = false
-      
+      @allowed = current_user && current_user.has_role?('admin', 'staff')
     # restrict access to everything else by permissions
     elsif current_user
       @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
