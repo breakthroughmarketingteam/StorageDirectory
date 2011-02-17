@@ -100,6 +100,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'
+    clients.resources :user_stats
   end
   
   map.resources :reservers do |reserver|
