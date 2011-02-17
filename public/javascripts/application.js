@@ -1527,7 +1527,7 @@ $(function() {
 								rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
 					            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
 							},
-							yaxis: { min: 0, max: parseInt(data['max']) + 1 },
+							yaxis: { min: 0, max: parseInt(data['max']) + 1 }
 						},
 						legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
 						series: [ 
