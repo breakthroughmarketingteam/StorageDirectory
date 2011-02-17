@@ -323,7 +323,7 @@ $(function() {
 	var aff_scroll = $('#aff_scroll');
 	if (aff_scroll.length) {
 		$('.items', aff_scroll).width($('.usssl_adp', aff_scroll).length * 160);
-		aff_scroll.scrollable({ speed: 1500, easing: 'swing' });
+		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
 	}
 	
 	// storage tips page
