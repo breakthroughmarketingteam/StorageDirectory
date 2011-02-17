@@ -952,7 +952,7 @@ $.safeSubmit = function(form, options) {
 		success    : function(){},
 		error 	   : function(){},
 		al_where   : 'before',
-		al_context : $('input[type=submit]', form),
+		al_context : $('input[type=submit]', form)
 	};
 	$.extend(ops, options);
 	
