@@ -1,8 +1,8 @@
-<%
+<%-
 	@unit_features = FacilityFeature.all(:select => 'title').map(&:title)
 	@top_features  = @unit_features.select { |f| ['climate controlled', 'drive-up access', '24 hour access', 'truck rental'].include? f.downcase }
 	@unit_features.reject! { |f| @top_features.map(&:downcase).include? f.downcase }
-%>
+-%>
 <div id="narrow-box">
 	<% form_for @search, :url => search_form_path('auto_search'), :html => { :id => 'narrow_results_form', :class => 'silent' } do |f| %>
 		<div id="offset_search_box">

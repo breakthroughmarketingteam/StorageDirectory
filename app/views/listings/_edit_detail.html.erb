@@ -43,7 +43,7 @@
 				<td class="col_label">Tracked Number</td>
 				<td class="track_req">
 					<%= "<span>#{@listing.tracked_number}</span>" unless @listing.tracked_number.blank? %>
-					<div class="blue_btn">Request</div>
+					<div id="tracking_num_req" class="blue_btn">Request</div>
 					<p class="note">Only your tracked number is visible in your listing.</p>
 				</td>
 			</tr>

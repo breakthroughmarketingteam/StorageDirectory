@@ -237,8 +237,18 @@ class ListingsController < ApplicationController
   
   def tracking_request
     Notifier.delay.deliver_tracking_request @listing, @client, params[:phone_number]
-    flash[:notice] = "Your request is being processed. Please allow 24 hours for setup. We will email you when it's done."
-    redirect_to client_listing_path(@listing)
+    msg = "Your request is being processed. Please allow 24 hours for setup. We will email you when it's done."
+    
+    respond_to do |format|
+      format.html do
+        flash[:notice] = msg
+        redirect_to client_listing_path(@listing)
+      end
+      
+      format.js do
+        render :json => { :success => true, :data => msg }
+      end
+    end
   end
   
   def sync_issn
@@ -252,14 +262,13 @@ class ListingsController < ApplicationController
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
         listing = Listing.find id
-        listing.status = 'unverified'
-        listings << listing if listing.save
+        listings << listing if listing
       end
       
       Notifier.delay.deliver_claimed_listings_alert(@client, listings)
     end
     
-    render :json => { :success => true, :data => "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call within 24 to 48 hours on business days. Thanks again!" }
+    render :json => { :success => true, :data => "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call from one of us within 24 to 48 hours on business days. Thanks again!" }
   end
   
   private

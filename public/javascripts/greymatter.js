@@ -27,6 +27,7 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
+	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
@@ -1347,6 +1348,27 @@ $.fn.fadeOutLater = function(fade_speed, timeout, callback) {
 		setTimeout(function() {
 			$this.fadeOut(fade_speed, callback);
 		}, timeout || 1000);
+	});
+}
+
+// proxy a method to a jquery dom object from *this* jquery dom object;
+$.fn.aProxy = function() {
+	return this.each(function() {
+		var $this = $(this),
+			hash = this.href.split('#')[1];
+			
+		if (hash) {
+			var params = hash.split('-'),
+				action = params[0],
+				element = $('#'+ params[1]);
+			
+			if (element) {
+				$this[action](function(e) {
+					element.trigger(action);
+					return false;
+				});
+			}
+		}
 	});
 }
 

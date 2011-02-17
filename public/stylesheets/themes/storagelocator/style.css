@@ -1664,9 +1664,9 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float:left;margin-top:27px;width:326px;}
-#price-block h4{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:82px;line-height:28px;margin:10px 0 15px 10px;padding:11px 0 0 6px;text-align:center;width:322px;}
+#price-block h4{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:82px;line-height:1.4;margin:10px 0 15px 10px;padding:11px 0 0 6px;text-align:center;width:322px;}
 #price-block p{color:#000;font-size:15px;margin:0;margin:0 0 0 32px;text-align:center;}
-#price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
+#price-block a{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
 #price-block span{color:#4C4BCC;}
 
 #new_client_message{margin:0 auto;width:950px;}
@@ -1930,7 +1930,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
 #sl-edit-tabs #fac_name{margin:0 0 30px;}
-.blue_btn{border:1px outset #666;color:#fff;display:inline-block;font-size:12px;height:16px;padding:4px 7px 0;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;}
+.blue_btn{border:1px outset #666;color:#fff;display:inline-block;font-size:12px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;}
@@ -1939,6 +1939,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #tracking_request label{font-size:80%;}
 #sl-edit-tabs .track_req .ajax_loader{float:none;margin:0 7px;}
 #tracking_request #phone_number{width:30%;}
+#tracking_request .blue_btn{float:right;}
 #sl-edit-tabs #email tr{display:block;}
 #sl-edit-tabs p{font-size:12px;line-height:15px;}
 #sl-edit-tabs p.note{margin:7px 0;}
