@@ -2,6 +2,7 @@ class PredefinedSpecial < ActiveRecord::Base
   
   has_many :predef_special_assigns, :dependent => :destroy
   has_many :clients, :through => :predef_special_assigns
+  has_many :rentals, :as => :special, :foreign_key => 'special_id'
   access_shared_methods
   
   @@function_types = [['Percent Off', '%'], ['Dollars Off', '$'], ['Months Free', 'm']]

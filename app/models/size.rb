@@ -31,6 +31,10 @@ class Size < ActiveRecord::Base
     "#{width}x#{length}"
   end
   
+  def full_title
+    "#{self.title} #{self.dims}"
+  end
+  
   def sqft
     width * length unless width.blank?
   end

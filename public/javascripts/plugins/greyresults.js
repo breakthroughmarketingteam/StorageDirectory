@@ -1253,7 +1253,11 @@ $.fn.rental_form = function() {
 				],
 				action : function(wizard) {
 					wizard.form_data = $('#rentalizer', wizard.workflow).serialize();
+					
+					console.log('1', wizard.form_data)
+					
 					$('.numeric_phone', wizard.workflow).formatPhoneNum();
+					$('#siteseal', '#rent_steps').animate({ right: '240px' }, 'fast');
 					
 					$('#new_tenant', wizard.workflow).unbind('submit').submit(function() {
 						wizard.next();
@@ -1274,16 +1278,23 @@ $.fn.rental_form = function() {
 					var form = $('#new_tenant', wizard.workflow),
 						ajax_loader = $('#processing_rental .ajax_loader', wizard.workflow).show();
 					
+					$('#siteseal', '#rent_steps').animate({ right: '20px' }, 'slow');
 					$('#processing_rental .flash', wizard.workflow).remove();
 					wizard.form_data += '&'+ form.serialize();
 					
+					console.log('2', wizard.form_data)
+					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
-							$('#rental_complete', wizard.workflow).show();
+							var rent_conf = $('#rental_complete', wizard.workflow).show();
 							$('#processing_rental', wizard.workflow).hide();
 							
+							for (key in data)
+								if (data[key].length > 0)
+									$('#'+ key, rent_conf).text(data[key]).parents('p').show();
+							
 						}, function(data) { // uh oh, something failed
-							$('#processing_rental', wizard.workflow).append('<div class="flash error">'+ data.join('<br />') +'</div>');
+							$('#processing_rental', wizard.workflow).html('<div class="flash error">'+ data.join('<br />') +'</div>');
 							$('.back', wizard.nav_bar).show();
 						});
 						
@@ -1328,8 +1339,14 @@ $.fn.rental_form = function() {
 		form.submit(function() {
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
-					for (key in data)
-						inputs[key].text(data[key]);
+					for (key in data) {
+						inputs[key].each(function() {
+							if (this.tagName.toLowerCase() == 'input')
+								$(this).val(data[key]);
+							else
+								$(this).text(data[key]); 
+						});
+					}
 				});
 			});
 			return false;

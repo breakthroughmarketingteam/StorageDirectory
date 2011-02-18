@@ -475,7 +475,7 @@ $.option_tags_from_array = function(options, selected) {
 
 $.with_json = function(response, success, error) {
 	if (response.success) (success || function(){}).call(this, response.data);
-	else if (error && error.call) error.call(this, response.data)
+	else if (error && error.call) error.call(this, response.data);
 	else $.ajax_error(response);
 }
 

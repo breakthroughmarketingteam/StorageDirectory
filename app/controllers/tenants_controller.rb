@@ -18,14 +18,29 @@ class TenantsController < ApplicationController
   end
   
   def create
-    @tenant = Tenant.new params[:tenant]
+    @tenant = Tenant.find_by_email(params[:tenant][:email]) || Tenant.new(params[:tenant])
+    @tenant.merge_attr_if_diff! params[:tenant] unless @tenant.new_record?
+    
     @rental = @tenant.rentals.build params[:rental]
+    @rental.apply_savings! params
     
     if @tenant.save_without_session_maintenance
+      @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
       Notifier.deliver_tenant_notification @tenant, @rental
       Notifier.deliver_new_tenant_alert @tenant, @rental
       
-      render :json => { :success => true }
+      conf_data = { 
+        :r_name         => @tenant.name,
+        :r_conf_num     => @rental.conf_num,  
+        :r_unit         => @rental.size.full_title, 
+        :r_move_in_date => @rental.nice_move_in_date, 
+        :r_paid_thru    => @rental.nice_paid_thru, 
+        :r_savings      => "$#{sprintf("%.2f", @rental.savings)}", 
+        :r_total        => "$#{sprintf("%.2f", @rental.total)}" 
+      }
+      conf_data.merge! :r_special => @rental.special.title if @rental.special
+      
+      render :json => { :success => true, :data => conf_data }
     else
       render :json => { :success => false, :data => model_errors(@tenant).uniq }
     end
