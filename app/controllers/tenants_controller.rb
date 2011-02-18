@@ -79,10 +79,12 @@ class TenantsController < ApplicationController
     
     case @tenant.status when 'unverified'
       @tenant.update_attribute :status, 'active'
+      flash[:quick_login] = [@tenant.email, @tenant.temp_password]
       flash[:notice] = 'Congratulations! Your account is now active. Go ahead and log in.'
       redirect_to login_path
       
     when 'active'
+      flash[:quick_login] = [@tenant.email, @tenant.temp_password]
       flash[:notice] = 'Your account has already been activated. Go ahead and log in.'
       redirect_to login_path
       

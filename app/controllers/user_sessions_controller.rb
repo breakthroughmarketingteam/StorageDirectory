@@ -10,7 +10,7 @@ class UserSessionsController < ApplicationController
     
     if params[:auth_token]
       @user = User.find_by_perishable_token params[:auth_token]
-      flash[:quick_login] = [@user.email, @user.temp_password]
+      flash[:quick_login] = [@user.email, @user.temp_password] if @user
     end
     
     respond_to do |format|

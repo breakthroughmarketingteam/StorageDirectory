@@ -13,7 +13,7 @@ Rental:
 	
 <% if @tenant.status == 'unverified' %>
 To activate your USSelfStorageLocator.com account click on the following link (or copy and paste it into your browser's address bar):
-http://usselfstoragelocator.com/tenants/activate/<%= @tenant.activation_code %>
+<%= tenant_activate_url :code => @tenant.activation_code, :protocol => 'https' %>
 
 Your account information:
 	User Name:  <%= @tenant.email %>
