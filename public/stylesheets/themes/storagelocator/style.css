@@ -1611,7 +1611,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #business_assoc .in{-moz-border-radius:8px;padding:10px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/transparent-bg.png) repeat;}
 #business_assoc p{margin:0 10px 5px 0;}
 #business_assoc img{float:left;height:31px;margin-right:10px;}
-
+#business_assoc img#iss{height:37px;}
 #footer_btm #wrapper2{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-bg.png) repeat-x;color:#4C4BCC;margin:0 auto;height:57px;}
 #footer_btm #wrapper2 .inner{width:975px;margin:0 auto;padding-top:27px;}
 #footer_btm #wrapper2 #footer-menu{float:right;font-size:110%;margin-right:20px;margin-top:-1px;}
