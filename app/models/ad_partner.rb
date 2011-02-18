@@ -21,7 +21,7 @@ class AdPartner < ActiveRecord::Base
     to_hash(read_attribute(:html_attributes))
   end
   
-  def image_url
+  def pp_image_url
     if self.image_file_size
       self.image.url :thumb
     else

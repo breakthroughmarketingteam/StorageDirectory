@@ -45,7 +45,7 @@ class Block < ActiveRecord::Base
   
   def is_for_resource?(controller, action)
     if self.resource
-      self.resource.match(/(#{controller})/i) && self.resource.match(/(#{action})/i)
+      self.resource.match(/(#{controller})/i) && self.resource.match(/(#{action})|(all)/i)
     else
       self.controller.match(/(#{controller})/i) && self.action.match(/(#{action})/i)
     end
