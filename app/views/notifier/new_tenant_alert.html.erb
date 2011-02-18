@@ -1,4 +1,4 @@
-<%- "This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} " if @tenant.rentals.count > 1 -%>
+<%= "This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} " if @tenant.rentals.count > 1 -%>
 Tenant: <%= @tenant.name %> <<%= @tenant.email %>
 Account: <%= edit_tenant_url @tenant %>
 

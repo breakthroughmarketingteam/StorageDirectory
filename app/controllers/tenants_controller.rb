@@ -31,6 +31,7 @@ class TenantsController < ApplicationController
       
       conf_data = { 
         :r_name         => @tenant.name,
+        :r_email        => @tenant.email,
         :r_conf_num     => @rental.conf_num,  
         :r_unit         => @rental.size.full_title, 
         :r_move_in_date => @rental.nice_move_in_date, 

@@ -1911,9 +1911,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_steps .remove_special img{float:none;margin-bottom:-1px;}
 
 #rent_step3 #processing_rental{font-size:22px;margin-top:120px;text-align:center;}
-#rental_complete h4{color:#4c4bcc;font-size:28px;margin:10px 0 15px;}
+#rental_complete h4{color:#4c4bcc;font-size:28px;margin:0 0 15px;}
 #rental_complete p{font-size:12px;line-height:1.3;}
-#rental_complete #rental-info{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;box-shadow:1px 1px 3px #999;-webkit-box-shadow:1px 1px 3px #999;background:#fff;border:2px solid #ccc;margin:15px 11px;padding:15px 20px 5px;width:50%;}
+#rental_complete #rental-info{background:#fff;border:2px solid #ccc;margin:15px 11px 0;padding:15px 20px 5px;width:50%;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;box-shadow:1px 1px 3px #999;-webkit-box-shadow:1px 1px 3px #999;}
 #rental_complete #rental-info p{margin-bottom:2px;overflow:hidden;}
 #rental_complete #rental-info p strong{margin-right:7px;}
 #rental_complete #rental-info .labe{display:block;float:left;width:105px;color:#444;}

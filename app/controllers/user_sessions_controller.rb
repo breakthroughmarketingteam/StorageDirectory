@@ -8,8 +8,13 @@ class UserSessionsController < ApplicationController
   def new
     @user_session = UserSession.new
     
+    if params[:auth_token]
+      @user = User.find_by_perishable_token params[:auth_token]
+      flash[:quick_login] = [@user.email, @user.temp_password]
+    end
+    
     respond_to do |format|
-      format.html { render :layout => 'bare' if params[:iframe] }
+      format.html {}
       format.js { render :layout => false }
     end
   end

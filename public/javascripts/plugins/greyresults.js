@@ -1254,8 +1254,6 @@ $.fn.rental_form = function() {
 				action : function(wizard) {
 					wizard.form_data = $('#rentalizer', wizard.workflow).serialize();
 					
-					console.log('1', wizard.form_data)
-					
 					$('.numeric_phone', wizard.workflow).formatPhoneNum();
 					$('#siteseal', '#rent_steps').animate({ right: '240px' }, 'fast');
 					
@@ -1281,8 +1279,6 @@ $.fn.rental_form = function() {
 					$('#siteseal', '#rent_steps').animate({ right: '20px' }, 'slow');
 					$('#processing_rental .flash', wizard.workflow).remove();
 					wizard.form_data += '&'+ form.serialize();
-					
-					console.log('2', wizard.form_data)
 					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
