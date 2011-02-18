@@ -1276,7 +1276,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .ui-dialog{border:2px solid #fff;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;box-shadow:0 4px 40px #999;-webkit-box-shadow:0 4px 40px #999;-moz-box-shadow:0 4px 40px #999;}
 .ui-widget-header{border:1px solid #FFF;}
 .ui-widget-content,.ui-dialog{background:#fff;padding:0;text-align:left;}
-.ui-dialog .ui-widget-header{-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat center top;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #666;}
+.ui-dialog .ui-widget-header{-moz-border-radius-bottomleft:0;border-radius-bottomleft:0;-webkit-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;border-radius-bottomright:0;-webkit-border-radius-bottomright:0;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat center top;color:#fff;font-size:14px;height:26px;padding-top:12px;text-shadow:1px 1px 0 #333;}
 .ui-dialog .ui-dialog-titlebar-close{margin:-8px 6px 0;padding:0;}
 .ui-dialog .ui-dialog-titlebar-close:hover{background:none;border:none;}
 .ui-menu-item{padding:5px 4px;}
@@ -1610,7 +1610,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #business_assoc{float:left;margin-left:20px;text-align:left;}
 #business_assoc .in{-moz-border-radius:8px;padding:10px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/transparent-bg.png) repeat;}
 #business_assoc p{margin:0 10px 5px 0;}
-#business_assoc img{float:left;height:50px;margin-right:10px;}
+#business_assoc img{float:left;height:31px;margin-right:10px;}
 
 #footer_btm #wrapper2{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-bg.png) repeat-x;color:#4C4BCC;margin:0 auto;height:57px;}
 #footer_btm #wrapper2 .inner{width:975px;margin:0 auto;padding-top:27px;}
