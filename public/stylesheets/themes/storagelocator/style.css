@@ -1663,11 +1663,13 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 #text-box2{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;-moz-box-shadow:1px 1px 4px #ccc;box-shadow:1px 1px 4px #ccc;-webkit-box-shadow:1px 1px 4px #ccc;background:#ffc;border:3px solid #ccc;margin:30px 0;padding:25px;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
-#price-block{float:left;margin-top:27px;width:326px;}
+#price-block{float:left;margin-top:37px;width:345px;}
 
 #price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
-#price-block p{color:#000;font-size:13px;margin:0;margin:0 0 0 60px;text-align:center;}
+#price-block a{font-weight:bold;text-decoration:none;}
+#price-block a:hover{color:orange;}
+#price-block p{color:#000;font-size:14px;font-style:italic;line-height:20px;margin:15px 0 0 85px;text-align:center;width:225px;}
 #price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
 #price-block span{font-weight:bold;}
 
