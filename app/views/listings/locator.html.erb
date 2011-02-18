@@ -13,7 +13,7 @@
 		and offer you a discount for any unit you rent through USSelfStorageLocator.com. 
 	</p>
 	
-	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' %>"></div>
+	<div id="main_map" data-latlng="<%= @search.lat_lng * ',' rescue nil %>"></div>
 
 	<div id="results_wrap">
 		<div class="rslt-head-txt">

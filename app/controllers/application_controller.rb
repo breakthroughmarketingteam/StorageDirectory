@@ -88,8 +88,7 @@ class ApplicationController < ActionController::Base
     elsif controller_name == 'ajax'
       @allowed = true
     elsif controller_name == 'admin'
-      @allowed = false
-      
+      @allowed = current_user && current_user.has_role?('admin', 'staff')
     # restrict access to everything else by permissions
     elsif current_user
       @allowed = is_admin? ? true : current_user.has_permission?(controller_name, action_name, params, get_model)
@@ -149,7 +148,7 @@ class ApplicationController < ActionController::Base
       @meta_description  = @@app_config[:description] || @meta_keywords
       #@plugins           = use_scripts(:plugins, (@@app_config[:plugins] || '').split(/,\W?/))
       #@nav_pages         = Page.nav_pages
-      @slogan            = 'Locate, Rent, <strong>Save On Self Storage Online</strong> Anywhere, Anytime.'
+      @slogan            = 'Locate, Save, <strong>Rent Self Storage Online</strong> Anywhere, Anytime.'
       @user_stat         = UserStat.create_from_request current_user, request if current_user && !is_admin?
     end
          

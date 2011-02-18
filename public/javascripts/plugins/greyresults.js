@@ -41,7 +41,6 @@ $(function(){
 		return false;
 	});
 	
-	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
@@ -50,7 +49,7 @@ $(function(){
 			form.data('saving', true);
 			ajax_loader.show();
 			$('.cancel_link', form).hide();
-			return false
+			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					var new_size = $(data);

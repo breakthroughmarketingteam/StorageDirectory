@@ -481,7 +481,22 @@ var swfobject = function() {
 	function setVisibility(id, isVisible) {
 		var v = isVisible ? "inherit" : "hidden";
 		if (isDomLoaded) {
-			getElementById(id).style.visibility = v;
+			try { doc.getElementById(id).style.visibility = v;
+			} catch (e) {
+				// IE 7 sucks (more accurately IE8 in comp mode)
+				/*
+					Webpage error details
+
+					User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3)
+					Timestamp: Thu, 17 Feb 2011 20:16:45 UTC
+
+					Message: Object required
+					Line: 484
+					Char: 4
+					Code: 0
+					URI: http://usselfstoragelocator.com/javascripts/cache/all.js?1297973498
+				*/
+			}
 		}
 		else {
 			createCSS("#" + id, "visibility:" + v);
@@ -3349,104 +3364,73 @@ function singularize(plural) {
 
 /*
  * IFrame Loader Plugin for JQuery
- * - Notifies your event handler when iframe has finished loading
- * - Your event handler receives loading duration (as well as iframe)
- * - Optionally calls your timeout handler
- *
  * http://project.ajaxpatterns.org/jquery-iframe
- *
- * The MIT License
- *
- * Copyright (c) 2009, Michael Mahemoff
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
  */
+ (function($) {
+    var timer;
 
-(function($) {
-
-  var timer;
-
-  $.fn.src = function(url, onLoad, options) {
-    setIFrames($(this), onLoad, options, function() {
-      this.src = url;
-    });
-    return $(this);
-  }
-
-  $.fn.squirt = function(content, onLoad, options) {
-
-    setIFrames($(this), onLoad, options, function() {
-      var doc = this.contentDocument || this.contentWindow.document;
-      doc.open();
-      doc.writeln(content);
-      doc.close();
-    });
-    return this;
-
-  }
-
-  function setIFrames(iframes, onLoad, options, iFrameSetter) {
-    iframes.each(function() {
-      if (this.tagName=="IFRAME") setIFrame(this, onLoad, options, iFrameSetter);
-    });
-  }
-
-  function setIFrame(iframe, onLoad, options, iFrameSetter) {
-
-    var iframe;
-    iframe.onload = null;
-    if (timer) clearTimeout(timer);
-
-    var defaults = {
-      timeoutDuration: 0,
-      timeout: null,
+    $.fn.src = function(url, onLoad, options) {
+        setIFrames($(this), onLoad, options,
+        function() {
+            this.src = url;
+        });
+        return $(this);
     }
-    var opts = $.extend(defaults, options);
-    if (opts.timeout && !opts.timeoutDuration) opts.timeoutDuration = 60000;
 
-    opts.frameactive = true;
-    var startTime = (new Date()).getTime();
-    if (opts.timeout) {
-      var timer = setTimeout(function() {
-        opts.frameactive=false; 
-        iframe.onload=null;
-        if (opts.timeout) opts.timeout(iframe, opts.timeout);
-      }, opts.timeoutDuration);
+    $.fn.squirt = function(content, onLoad, options) {
+        setIFrames($(this), onLoad, options,
+        function() {
+            var doc = this.contentDocument || this.contentWindow.document;
+            doc.open();
+            doc.writeln(content);
+            doc.close();
+        });
+        return this;
+    }
+
+    function setIFrames(iframes, onLoad, options, iFrameSetter) {
+        iframes.each(function() {
+            if (this.tagName == "IFRAME") setIFrame(this, onLoad, options, iFrameSetter);
+        });
+    }
+
+    function setIFrame(iframe, onLoad, options, iFrameSetter) {
+        var iframe;
+        iframe.onload = null;
+        if (timer) clearTimeout(timer);
+
+        var defaults = {
+            timeoutDuration: 0,
+            timeout: null
+        }
+        var opts = $.extend(defaults, options);
+        if (opts.timeout && !opts.timeoutDuration) opts.timeoutDuration = 60000;
+
+        opts.frameactive = true;
+        var startTime = (new Date()).getTime();
+        if (opts.timeout) {
+            var timer = setTimeout(function() {
+                opts.frameactive = false;
+                iframe.onload = null;
+                if (opts.timeout) opts.timeout(iframe, opts.timeout);
+            },
+            opts.timeoutDuration);
+        };
+
+        var onloadHandler = function() {
+            var duration = (new Date()).getTime() - startTime;
+            if (timer) clearTimeout(timer);
+            if (onLoad && opts.frameactive) onLoad.apply(iframe, [duration]);
+            opts.frameactive = false;
+        }
+        iFrameSetter.apply(iframe);
+        iframe.onload = onloadHandler;
+        opts.completeReadyStateChanges = 0;
+        iframe.onreadystatechange = function() { // IE ftw
+            if (++ (opts.completeReadyStateChanges) == 3) onloadHandler();
+        }
+        return iframe;
     };
-
-    var onloadHandler = function() {
-      var duration=(new Date()).getTime()-startTime;
-      if (timer) clearTimeout(timer);
-      if (onLoad && opts.frameactive) onLoad.apply(iframe,[duration]);
-      opts.frameactive=false;
-    }
-    iFrameSetter.apply(iframe);
-    iframe.onload = onloadHandler;
-    opts.completeReadyStateChanges=0;
-    iframe.onreadystatechange = function() { // IE ftw
-	    if (++(opts.completeReadyStateChanges)==3) onloadHandler();
-    }
-
-    return iframe;
-
-  };
-
 })(jQuery);
 
 
@@ -4144,6 +4128,7 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
+	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
@@ -5061,6 +5046,33 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 	stuff_sort_inverse = !stuff_sort_inverse;
 }
 
+// abstracting away a lot of common stuff ajax forms do
+$.safeSubmit = function(form, options) {
+	var ops = {
+		method 	   : 'post',
+		success    : function(){},
+		error 	   : function(){},
+		al_where   : 'before',
+		al_context : $('input[type=submit]', form),
+	};
+	$.extend(ops, options);
+	
+	var form 		= $(form).runValidation(),
+		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+	
+	if (form.data('valid') && !form.data('x')) {
+		form.data('x', true);
+		ajax_loader.show();
+		
+		$[ops.method](form.attr('action'), form.serialize(), function(response) {
+			$.with_json(response, ops.success, ops.error);
+			
+			form.data('x', false);
+			ajax_loader.fadeOutRemove();
+		}, 'json');
+	}
+}
+
 /******************************************* JQUERY PLUGINS *******************************************/
 $.fn.disabler = function(d) { // master switch checkbox, disables all form inputs when unchecked
 	var disablees = d || 'input, textarea, select, checkbox, radio';
@@ -5464,6 +5476,27 @@ $.fn.fadeOutLater = function(fade_speed, timeout, callback) {
 		setTimeout(function() {
 			$this.fadeOut(fade_speed, callback);
 		}, timeout || 1000);
+	});
+}
+
+// proxy a method to a jquery dom object from *this* jquery dom object;
+$.fn.aProxy = function() {
+	return this.each(function() {
+		var $this = $(this),
+			hash = this.href.split('#')[1];
+			
+		if (hash) {
+			var params = hash.split('-'),
+				action = params[0],
+				element = $('#'+ params[1]);
+			
+			if (element) {
+				$this[action](function(e) {
+					element.trigger(action);
+					return false;
+				});
+			}
+		}
 	});
 }
 
@@ -5999,7 +6032,6 @@ $(function(){
 		return false;
 	});
 	
-	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
@@ -6008,7 +6040,7 @@ $(function(){
 			form.data('saving', true);
 			ajax_loader.show();
 			$('.cancel_link', form).hide();
-			return false
+			
 			$.post(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					var new_size = $(data);
@@ -8206,15 +8238,14 @@ $(function() {
 					pop_up_title : 'Select Your Facilities',
 					nav_vis : [
 						['next', function(btn, wizard) { btn.text('Next').click(function() { wizard.slide_data[1].skipped = false; wizard.slide_data[2].went_back = false; }); }],
-						['skip', function(btn, wizard) { function _skip2() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeIn().unbind('click', _skip2).click(_skip2);  }],
+						['skip', function(btn, wizard) { function _skip2() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeIn().unbind('click', _skip2).click(_skip2); }],
 						['back', 'fadeIn']
 					],
 					action : function(wizard) {
 						if (wizard.slide_data[2].went_back) {
 							wizard.slide_data[2].went_back = false;
 							wizard.slide_data[1].skipped = false;
-							wizard.prev();
-							return false;
+							wizard.prev(); return false;
 						}
 						
 						var form = $("form#listing_searcher", wizard.workflow);
@@ -8261,11 +8292,12 @@ $(function() {
 						}
 					},
 					validate : function(wizard) {
+						console.log(wizard.slide_data[1].skipped, this)
 						if (!wizard.slide_data[1].skipped && $('.listing_div.selected', '#searcher_step2').length == 0) {
 							$.greyAlert('Choose at least one listing<br />or click the skip button.');
 							return false;
 							
-						} else return true
+						} else return true;
 					}
 				},
 				{ 
@@ -8561,6 +8593,18 @@ $(function() {
 		get_pop_up_and_do({ title: 'Request Tracked Number', modal: true }, { sub_partial: '/listings/tracking_request', model: 'Listing', id: $('#listing_id').val() }, function(pop_up) {
 			$('.numeric_phone', pop_up).formatPhoneNum();
 		});
+	});
+	
+	$('form#tracking_request').live('submit', function() {
+		var form = $(this);
+		
+		$.safeSubmit(this, {
+			success: function(data) {
+				form.replaceWith('<p class="framed center">'+ data +'</p>');
+			}
+		})
+		
+		return false;
 	});
 	
 	// business hours edit form, listing page
@@ -8876,7 +8920,7 @@ $(function() {
 								rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
 					            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
 							},
-							yaxis: { min: 0, max: parseInt(data['max']) + 1 },
+							yaxis: { min: 0, max: parseInt(data['max']) + 1 }
 						},
 						legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
 						series: [ 

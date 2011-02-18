@@ -4,13 +4,13 @@
            <tbody>
                <tr>
 				<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
-               	<td><%= f.text_field :title, :class => 'required', :maxlength => 32 %></td>
+               	<td><%= f.text_field :title, :class => 'required', :maxlength => 64 %></td>
                </tr>
 			
 			<% f.fields_for :map, @listing.map do |mf| %>
                	<tr>
                 	<td class="col_label"><%= mf.label :address %></td>
-                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 32 %></td>
+                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 64 %></td>
                 </tr>
 			
                 <tr>
@@ -43,7 +43,7 @@
 				<td class="col_label">Tracked Number</td>
 				<td class="track_req">
 					<%= "<span>#{@listing.tracked_number}</span>" unless @listing.tracked_number.blank? %>
-					<div class="blue_btn">Request</div>
+					<div id="tracking_num_req" class="blue_btn">Request</div>
 					<p class="note">Only your tracked number is visible in your listing.</p>
 				</td>
 			</tr>

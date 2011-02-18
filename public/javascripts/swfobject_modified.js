@@ -481,7 +481,22 @@ var swfobject = function() {
 	function setVisibility(id, isVisible) {
 		var v = isVisible ? "inherit" : "hidden";
 		if (isDomLoaded) {
-			getElementById(id).style.visibility = v;
+			try { doc.getElementById(id).style.visibility = v;
+			} catch (e) {
+				// IE 7 sucks (more accurately IE8 in comp mode)
+				/*
+					Webpage error details
+
+					User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3)
+					Timestamp: Thu, 17 Feb 2011 20:16:45 UTC
+
+					Message: Object required
+					Line: 484
+					Char: 4
+					Code: 0
+					URI: http://usselfstoragelocator.com/javascripts/cache/all.js?1297973498
+				*/
+			}
 		}
 		else {
 			createCSS("#" + id, "visibility:" + v);

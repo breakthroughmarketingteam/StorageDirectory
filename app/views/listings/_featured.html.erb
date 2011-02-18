@@ -2,7 +2,7 @@
 <div id="feat_wrap">
 <% unless @featured_listing.nil? %>
 	<div id="feat-list" class="shimmy listing">
-		<h4>Featured Listing</h4>
+		<h2>Featured Listing</h2>
 		<div id="wrap">
 			<div class="facility-logo">
 				<%= display_logo(@featured_listing, { :class => (@featured_listing.pictures.empty? ? 'full' : 'short') }) %>

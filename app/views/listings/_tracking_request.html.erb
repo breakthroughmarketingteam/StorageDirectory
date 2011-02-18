@@ -5,10 +5,10 @@
 		This service is highly recommend in order to help turn leads into tenants and be able to follow up with any interested customer.
 	</p>
 	
-	<div class="stack">
+	<div class="left">
 		<%= label_tag 'phone_number', 'Your facility\'s phone number' %>
 		<%= text_field_tag 'phone_number', model.phone, :class => 'numeric_phone required', :maxlength => 12 %>
 	</div>
 	
-	<%= submit_tag 'Submit', :class => 'save' %>
+	<%= submit_tag 'Submit', :class => 'blue_btn' %>
 <% end %>

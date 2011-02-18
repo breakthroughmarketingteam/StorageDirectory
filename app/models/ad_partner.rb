@@ -8,14 +8,14 @@ class AdPartner < ActiveRecord::Base
     :path => ":attachment/:id/:style_:basename.:extension"
   
   validates_presence_of :title, :url
-  validates_attachment_presence :image
   validates_attachment_content_type :image, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
   
   access_shared_methods
 
-  named_scope :all_enabled, :conditions => 'enabled IS TRUE'
+  named_scope :all_enabled, :conditions => 'enabled IS TRUE', :order => 'position'
+  
   @@searchables = %w(title description)
-  cattr_accessor :searchables
+  cattr_reader :searchables
 
   def html_attributes
     to_hash(read_attribute(:html_attributes))

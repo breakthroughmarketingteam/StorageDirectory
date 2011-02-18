@@ -20,7 +20,7 @@ class Post < ActiveRecord::Base
   sitemap :change_frequency => :weekly, :priority => 0.8, :order => 'updated_at DESC' 
   
   @@searchables    = %w(title content)
-  cattr_accessor :searchables
+  cattr_reader :searchables
   
   # Class Methods
   def self.all_for_index_view

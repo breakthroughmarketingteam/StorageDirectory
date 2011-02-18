@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
   sitemap :change_frequency => :monthly, :priority => 0.7, :order => 'updated_at DESC'
   
   @@searchables    = %w(title description)
-  cattr_accessor :searchables
+  cattr_reader :searchables
   
   # Class Methods
   
