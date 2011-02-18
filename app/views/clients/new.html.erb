@@ -32,7 +32,7 @@
                    
                         <div id="add-fac-form">
                             <% form_for @client, :html => { :class => 'silent' } do |f| %>
-                                <span class="sub_head">Enter your Facility and Get Started.</span>
+                                <span class="sub_head">Find your Facility and Get Started.</span>
                                 <div>
                                     <%= f.label :company, 'Facility Name:', :class => 'label' %>
                                     <%= f.text_field :company, :value => (@listing.title if @listing), :class => 'required focus_me', :rel => 'client[company]' %>
@@ -124,7 +124,7 @@
                         <div id="heading">
                             <div class="left">
                                 <h3>Activation is Free! </h3>
-                                <p>Get all our premium features for a limited time. Hurry! Drops to 60 days on March 16th, 2011.</p>
+                                <p>Get all our premium marketing tools for 90 days. Hurry! Drops to 60 days on March 16th, 2011.</p>
                             </div>
                             <div class="right">
                                 <img src="/images/ui/storagelocator/prices.png" alt="Membership Options"/>
