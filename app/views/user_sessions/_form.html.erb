@@ -1,5 +1,5 @@
 <div id="login_page">
-	<% form_for (@user_session ||= UserSession.new) do |f| %>
+	<% form_for (@user_session ||= UserSession.new), :html => { :class => 'silent' } do |f| %>
 		<fieldset>
 			<%= display_message flash %>
 			

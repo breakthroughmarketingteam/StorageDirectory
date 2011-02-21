@@ -28,4 +28,15 @@ class Tenant < User
     self.last_name = val.split(' ').last
   end
   
+  def next_to_last_rental
+    @r ||= begin
+      r = self.rentals
+      r[r.size-1]
+    end
+  end
+  
+  def merge_attr_if_diff!(params)
+    
+  end
+  
 end

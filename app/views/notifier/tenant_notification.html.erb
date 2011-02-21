@@ -1,19 +1,28 @@
-Thank you for renting a <%= @rental.listing.storage_type %> unit through USSelfStorageLocator.com. Below are your rental details. You can also see this information on our website using the information at the bottom of this email.
-
-Rental: 
-	Unit: <%= @rental.size.title %> <%= @rental.size.dims %>
-	Move In Date: <%= @rental.move_in_date.asctime %>
-	Paid Through: <%= @rental.paid_through.asctime %> (<%= @rental.duration %> months)
+Hi <%= @tenant.name %>, thank you for renting a <%= @rental.listing.storage_type %> unit through USSelfStorageLocator.com. Below are your rental details. You can also see this information on our website using the information at the bottom of this email.
 
 Facility: <%= @rental.listing.title %>
-	<%= @rental.listing.full_address %>
-
-To activate your USSelfStorageLocator.com Tenant account click on the following link (or copy and paste it into your browser's address bar):
-http://usselfstoragelocator.com/tenants/activate/<%= @user.activation_code %>
+	 <%= @rental.listing.full_address %>
+	
+Rental: 
+	Unit Type:    <%= @rental.size.title %> <%= @rental.size.dims %>
+	Move In Date: <%= @rental.nice_move_in_date %>
+	Paid Through: <%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)
+	<%= "Special:      #{@rental.special.title}" if @rental.special %>
+	Savings:      <%= @rental.savings %>
+	Total: 	      $<%= @rental.total %>
+	
+<% if @tenant.status == 'unverified' %>
+To activate your USSelfStorageLocator.com account click on the following link (or copy and paste it into your browser's address bar):
+<%= tenant_activate_url :code => @tenant.activation_code, :protocol => 'https' %>
 
 Your account information:
-	User Name:  <%= @user.email %>
-	Password: <%= @user.temp_password %>
+	User Name:  <%= @tenant.email %>
+	Password: <%= @tenant.temp_password %>
 	We recommend you change your temporary password soon after you log on. 
+	
+<% else -%>
+To login your USSelfStorageLocator.com account click on the following link (or copy and paste it into your browser's address bar):
+<%= login_url :auth_token => @tenant.perishable_token, :protocol => 'https' %>
 
+<% end -%>
 Have a great day! Contact us at admin@usselfstoragelocator.com if your have any questions or concerns.

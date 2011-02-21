@@ -113,6 +113,7 @@
 											<span class="right">
 												$<span class="subtotal"></span>
 											</span>
+											<input type="hidden" name="rental[subtotal]" class="subtotal" />
 										</li>
 										<li class="admin_fee_wrap">
 											Admin Fees: 
@@ -125,6 +126,7 @@
 												<span class="right">
 													-$<span class="discount"></span>
 												</span>
+												<input type="hidden" name="discount" class="discount" />
 											</li>
 										<% end %>
 										<li class="usssl_discount_wrap">
@@ -138,6 +140,7 @@
 											<span class="right">
 												$<span class="tax_amt"></span>
 											</span>
+											<input type="hidden" name="rental[tax_amt]" class="tax_amt" />
 										</li>
 										<li><hr /></li>
 										<li class="total_wrap">
@@ -145,11 +148,13 @@
 											<span class="right">
 												$<span class="total">0.00</span>
 											</span>
+											<input type="hidden" name="rental[total]" class="total" />
 										</li>
 										<li id="paid_until">
 											<label class="block left">Paid thru: </label>
 											<span class="paid_thru"></span>
 											<input id="listing_id" name="rental[listing_id]" type="hidden" value="<%= listing.id %>" />
+											<input type="hidden" name="rental[paid_thru]" class="paid_thru" />
 										</li>
 									</ul>
 								</div>
@@ -168,23 +173,24 @@
 								<div class="left">
 									<div>
 										<label class="block" for="tenant_name">Your Name:</label> 
-										<input class="required" id="tenant_name" name="tenant[name]" size="30" type="text">
+										<input class="required" id="tenant_name" name="tenant[name]" size="30" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_email">Email:</label> 
-										<input class="required email" id="tenant_email" name="tenant[email]" size="30" type="text"> <span class="note">We won't spam your email, <a href="/privacy-policy" rel="Privacy Policy" target="_blank" title="Privacy Policy">honest!</a></span>
+										<input class="required email" id="tenant_email" name="tenant[email]" size="30" type="text" /> 
+										<span class="note">We won't spam your email, <a href="/privacy-policy" rel="Privacy Policy" target="_blank" title="Privacy Policy">honest!</a></span>
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_phone">Phone:</label> 
-										<input class="numeric_phone auto_next" id="tenant_billing_infos_attributes_0_phone" maxlength="12" name="tenant[billing_infos_attributes][0][phone]" size="12" type="text">
+										<input class="numeric_phone auto_next" id="tenant_billing_infos_attributes_0_phone" maxlength="12" name="tenant[billing_infos_attributes][0][phone]" size="12" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_address" id="address">Address:</label> 
-										<input class="required" id="tenant_billing_infos_attributes_0_address" name="tenant[billing_infos_attributes][0][address]" size="30" type="text">
+										<input class="required" id="tenant_billing_infos_attributes_0_address" name="tenant[billing_infos_attributes][0][address]" size="30" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_city">City:</label> 
-										<input class="required autocomplete" id="tenant_billing_infos_attributes_0_city" name="tenant[billing_infos_attributes][0][city]" rel="UsCity_names|3" size="30" type="text">
+										<input class="required autocomplete" id="tenant_billing_infos_attributes_0_city" name="tenant[billing_infos_attributes][0][city]" rel="UsCity_names|3" size="30" type="text" />
 									</div>
 									<div class="uncollapse">
 										<div class="state_field">
@@ -197,7 +203,7 @@
 										</div>
 										<div class="zip_field">
 											<label class="block" for="tenant_billing_infos_attributes_0_zip">Zip:</label> 
-											<input class="zip required auto_next" id="tenant_billing_infos_attributes_0_zip" maxlength="5" name="tenant[billing_infos_attributes][0][zip]" size="5" type="text">
+											<input class="zip required auto_next" id="tenant_billing_infos_attributes_0_zip" maxlength="5" name="tenant[billing_infos_attributes][0][zip]" size="5" type="text" />
 										</div>
 									</div>
 								</div>
@@ -212,19 +218,19 @@
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_card_number">Card Number:</label> 
-										<input class="required credit_card auto_next" id="tenant_billing_infos_attributes_0_card_number" maxlength="16" name="tenant[billing_infos_attributes][0][card_number]" size="16" type="text">
+										<input class="required credit_card auto_next" id="tenant_billing_infos_attributes_0_card_number" maxlength="16" name="tenant[billing_infos_attributes][0][card_number]" size="16" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_cvv">CVV:</label> 
-										<input class="cvv required auto_next" id="tenant_billing_infos_attributes_0_cvv" maxlength="4" name="tenant[billing_infos_attributes][0][cvv]" size="4" type="text">
+										<input class="cvv required auto_next" id="tenant_billing_infos_attributes_0_cvv" maxlength="4" name="tenant[billing_infos_attributes][0][cvv]" size="4" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_expires_month">Expires:</label> 
-										<input class="month required tiny_text_field left hintable auto_next" id="tenant_billing_infos_attributes_0_expires_month" maxlength="2" name="tenant[billing_infos_attributes][0][expires_month]" size="2" title="MM" type="text">/ <input class="year required tiny_text_field hintable auto_next" id="tenant_billing_infos_attributes_0_expires_year" maxlength="2" name="tenant[billing_infos_attributes][0][expires_year]" size="2" title="YY" type="text"> mm/yy
+										<input class="month required tiny_text_field left hintable auto_next" id="tenant_billing_infos_attributes_0_expires_month" maxlength="2" name="tenant[billing_infos_attributes][0][expires_month]" size="2" title="MM" type="text">/ <input class="year required tiny_text_field hintable auto_next" id="tenant_billing_infos_attributes_0_expires_year" maxlength="2" name="tenant[billing_infos_attributes][0][expires_year]" size="2" title="YY" type="text" /> mm/yy
 									</div>
 									<div class="agree">
-										<input class="required" id="agree" name="agree" type="checkbox" value="1"> 
-										<label for="agree">I agree to the <a href="#" class="tos">Terms of Service</a></label>
+										<input class="required" id="agree" name="agree" type="checkbox" value="1" tabindex="-1" /> 
+										<label for="agree">I agree to the <a href="/terms-of-use" target="_blank" class="tos">Terms of Use</a></label>
 										<input class="hide" id="tenant_submit" name="commit" type="submit" value="Save">
 									</div>
 								</div>
@@ -240,23 +246,24 @@
 
 							<div id="rental_complete" class="hide conf">
 								<h4>Great! Your Unit Rental Has Been Submitted.</h4>
-								<p>Your rental information has been sent to 
-									<span>
-										<a href="<%= "/#{listing.storage_type.parameterize}/#{listing.title.parameterize}/#{listing.id}" %>" title="<%= "#{listing.title} at #{listing.full_address}" %>">
-											<%= listing.title %>
-										</a>
-									</span>. 
-									You'll be contacted by one of their representatives to complete the rental process.
-								</p> 
-								<p>We've also sent you an email confirmation with all the details of your unit rental. Please print it and bring it in at the time of move in.</p>
+								<p class="side_framed">
+									Your rental information has been sent to 
+									<span><a href="<%= "/#{listing.storage_type.parameterize}/#{listing.title.parameterize}/#{listing.id}" %>" title="<%= "#{listing.title} at #{listing.full_address}" %>">
+										<%= listing.title %>
+									</a></span>. 
+									You'll be contacted by one of their representatives to complete the rental process. We've also sent you an email confirmation with all the details of your unit rental. Please print it and bring it in at the time of move in.
+								</p>
 
 								<div id="rental-info">
-									<p><strong>Confirmation Number:</strong><span></span></p>
-									<p>Name:<span></span></p>
-									<p>Unit Type:<span></span></p>
-									<p>Unit Size:<span></span></p>
-									<p>Move-in Date:<span></span></p>
-									<p>Special:<span></span></p>
+									<p><strong>Confirmation Number:</strong><span id="r_conf_num"></span></p>
+									<p><span class="labe">Name:</span> <span id="r_name"></span></p>
+									<p><span class="labe">Email:</span> <span id="r_email"></span></p>
+									<p><span class="labe">Unit:</span> <span id="r_unit"></span></p>
+									<p><span class="labe">Move-in date:</span> <span id="r_move_in_date"></span></p>
+									<p><span class="labe">Paid Through:</span> <span id="r_paid_thru"></span></p>
+									<p class="hide"><span class="labe">Special:</span> <span id="r_special"></span></p>
+									<p class="hide"><span class="labe">Savings:</span> <span id="r_savings"></span></p>
+									<p><span class="labe">Total:</span> <span id="r_total"></span></p>
 								</div>
 							</div>
 						</div>

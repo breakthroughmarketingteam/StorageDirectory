@@ -1,15 +1,12 @@
 class ImagesController < ApplicationController
   
-  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
-  before_filter :get_image, :only => [:show, :edit, :update, :destroy]
+  ssl_required :new, :create, :edit, :update, :destroy
+  ssl_allowed :index, :show
+  before_filter :get_images, :only => :index
+  before_filter :get_user, :only => :index
+  before_filter :get_model, :only => [:show, :edit, :update, :destroy]
   
   def index
-    if params[:user_id].blank?
-      get_images
-    else
-      @images = User.find(params[:user_id]).images
-    end
-    
     render :layout => false if request.xhr?
   end
   
@@ -24,6 +21,7 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new params[:image]
+    @image.image_file_name ||= params[:url_to_image] unless params[:url_to_image].match(/(somedomain\.com)/i)
 
     respond_to do |format|
       format.html do 
@@ -31,7 +29,7 @@ class ImagesController < ApplicationController
           @image.add_to_gallery(params) unless params[:gallery_id].nil?
           flash[:notice] = @image.title + ' has been created.'
         else
-          flash[:error] = model_errors(@image)
+          flash[:error] = model_errors @image
         end
 
         redirect_back_or_default images_path
@@ -41,10 +39,10 @@ class ImagesController < ApplicationController
         if @image.save
           @image.add_to_gallery(params) unless params[:gallery_id].nil?
           flash.now[:notice] = @image.title + ' has been created.'
-          get_models
+          get_images
           render :action => 'index', :layout => false
         else
-          flash.now[:error] = model_errors(@image)
+          flash.now[:error] = model_errors @image
           render :action => 'edit', :layout => false
         end
       end
@@ -61,7 +59,7 @@ class ImagesController < ApplicationController
         if @image.update_attributes(params[:image])
           flash[:notice] = @image.title + ' has been updated.'
         else
-          flash[:error] = model_errors(@image)
+          flash[:error] = model_errors @image
         end
 
         redirect_back_or_default images_path
@@ -70,10 +68,10 @@ class ImagesController < ApplicationController
       format.js do
         if @image.update_attributes(params[:image])
           flash.now[:notice] = @image.title + ' has been updated.'
-          get_models
+          get_images
           render :action => 'index', :layout => false
         else
-          flash.now[:error] = model_errors(@image)
+          flash.now[:error] = model_errors @image
           render :action => 'edit', :layout => false
         end
       end
@@ -97,7 +95,7 @@ class ImagesController < ApplicationController
         if @image.destroy
           @image.image.destroy
           flash.now[:notice] = @image.title + ' has been DESTROYED!'
-          get_models
+          get_images
           render :action => 'index', :layout => false
         else
           flash.now[:error] = "Couldn't DESTROY Image: #{@image.title}"
@@ -106,15 +104,15 @@ class ImagesController < ApplicationController
       end
     end
   end
-
+  
   private
   
-  def get_images
-    @images = Image.all
+  def get_user
+    @user = User.find_by_id params[:user_id] if params[:user_id]
   end
   
-  def get_image
-    @image = Image.find(params[:id])
+  def get_images
+    @images = @user.nil? ? get_models_paginated : @user.images
   end
   
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110217184250) do
+ActiveRecord::Schema.define(:version => 20110218211005) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -715,6 +715,11 @@ ActiveRecord::Schema.define(:version => 20110217184250) do
     t.datetime "updated_at"
     t.integer  "duration"
     t.integer  "total"
+    t.datetime "paid_thru"
+    t.float    "savings"
+    t.float    "tax_amt"
+    t.float    "subtotal"
+    t.string   "conf_num"
   end
 
   create_table "reservations", :force => true do |t|

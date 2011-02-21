@@ -43,7 +43,7 @@
 	<div class="stack imgurl">
 		<%= link_to 'Or use image url', '#slideDown_.adimgurl_.imgurl', :class => 'toggle_action toggle_right' %>
 		<div class="framed adimgurl<%= ' hide' if @image.image_file_name.blank? %>">
-			<%= f.text_field :image_file_name, :class =>'hintable', :title => 'http://somedomain.com/path/to/the/img.jpg' %>
+			<%= text_field_tag :url_to_image, nil, :class =>'hintable', :title => 'http://somedomain.com/path/to/the/img.jpg' %>
 		</div>
 	</div>
 	

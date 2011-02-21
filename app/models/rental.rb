@@ -3,7 +3,10 @@ class Rental < ActiveRecord::Base
   belongs_to :tenant
   belongs_to :listing, :touch => true
   belongs_to :size
-  belongs_to :special
+  belongs_to :special, :class_name => 'PredefinedSpecial', :foreign_key => 'special_id'
+  
+  validates_presence_of :tenant_id, :listing_id, :size_id, :paid_thru, :move_in_date
+  validates_numericality_of :subtotal, :savings, :tax_amt, :total
   
   access_shared_methods
   
@@ -30,6 +33,24 @@ class Rental < ActiveRecord::Base
   
   def email
     self.tenant.email
+  end
+  
+  def nice_move_in_date
+    self.move_in_date.strftime '%B %d, %Y' if self.move_in_date
+  end
+  
+  def nice_paid_thru
+    self.paid_thru.strftime '%B %d, %Y' if self.paid_thru
+  end
+  
+  def apply_savings!(params)
+    d = (params[:discount] || 0).to_f
+    u = self.fallback_calc_discount
+    self.savings = u + d
+  end
+  
+  def fallback_calc_discount
+    self.size.dollar_price * $_usssl_percent_off
   end
   
 end

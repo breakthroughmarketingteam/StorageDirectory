@@ -29,11 +29,11 @@ class Image < ActiveRecord::Base
     self.gallery_images.build(:gallery_id => params[:gallery_id]) # join table
   end
   
-  def image_url(size = nil)
+  def pp_image_url(size = nil)
     if self.image_file_size.blank?
       self.image_file_name
     else
-      self.image.url(size)
+      self.image.url size
     end
   end
   

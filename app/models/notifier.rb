@@ -23,9 +23,9 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
-  def tenant_notification(user, rental)
-    setup_email user.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
-    @body[:user] = user
+  def tenant_notification(tenant, rental)
+    setup_email tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
+    @body[:tenant] = tenant
     @body[:rental] = rental
   end
   

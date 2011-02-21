@@ -12,11 +12,11 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by_email params[:email]
     
     if @user
-      @user.deliver_password_reset_instructions!
-      msg = "Instructions to reset your password have been emailed to you.<br />Please check your email."
+      @user.delay.deliver_password_reset_instructions!
+      msg = 'You will soon resceive an email with instructions to reset your password. Please allow a few minutes for the email to arrive.'
       
       respond_to do |format|
         format.html do
@@ -51,13 +51,13 @@ class PasswordResetsController < ApplicationController
   def update
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]
-    @user_session = UserSession.new(params[:user].merge(:email => @user.email))
+    @user_session = UserSession.new params[:user].merge(:email => @user.email)
     
     if @user.save && @user_session.save
       flash[:notice] = "Password successfully updated."
       redirect_to(@user.is_a?(Client) ? client_account_path : user_path(@user))
     else
-      flash[:error] = model_errors(@user, @user_session)
+      flash[:error] = model_errors @user, @user_session
       render :action => :edit
     end
   end

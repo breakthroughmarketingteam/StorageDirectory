@@ -99,8 +99,8 @@ class ClientsController < ApplicationController
         redirect_to login_path
       
       when 'active'
-        flash[:notice] = 'Your account is already active. Go ahead and log in.'
         flash[:quick_login] = [@client.email, @client.temp_password]
+        flash[:notice] = 'Your account is already active. Go ahead and log in.'
         redirect_to login_path
       
       when 'suspended'

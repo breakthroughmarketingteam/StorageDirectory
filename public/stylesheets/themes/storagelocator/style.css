@@ -1250,11 +1250,12 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #login_hdr{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
 #login_page .i{height:40px;position:relative;}
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
-.bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
+#login_page .bigblue_btn{width:130px;}
+.bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:38px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
 #remember_me{font-size:80%;color:#666;}
 #login_page #user_session_remember_me{width:auto;margin:2px 5px 5px 0;float:left;}
 #pop_up #login_page{width:auto;margin:0;text-align:left;}
-#new_user_session .ajax_loader{position:absolute;right:115px;top:15px;}
+#new_user_session .ajax_loader{position:absolute;right:100px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
 #password_resets_form{margin-top:15px;width:316px;}
 #password_resets_form .notice{font-size:100%;}
@@ -1770,7 +1771,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
 #feat-list{border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
-#feat-list h4{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
+#feat-list h2{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list .compare{margin:10px;font-size:120%;}
 #feat-list #wrap{margin-bottom:0;padding:0 10px 10px;}
@@ -1910,12 +1911,14 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_steps .remove_special img{float:none;margin-bottom:-1px;}
 
 #rent_step3 #processing_rental{font-size:22px;margin-top:120px;text-align:center;}
-#rental_complete h4{color:#4c4bcc;font-size:28px;margin:10px 0 15px;}
-#rental_complete p{font-size:12px;margin-bottom:10px;}
-#rental_complete #rental-info{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;box-shadow:1px 1px 3px #999;-webkit-box-shadow:1px 1px 3px #999;background:#fff;border:2px solid #ccc;margin-top:20px;padding:15px 20px 5px;width:50%;}
-#rental_complete #rental-info p{margin-bottom:10px;}
+#rental_complete h4{color:#4c4bcc;font-size:28px;margin:0 0 15px;}
+#rental_complete p{font-size:12px;line-height:1.3;}
+#rental_complete #rental-info{background:#fff;border:2px solid #ccc;margin:15px 11px 0;padding:15px 20px 5px;width:50%;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;-moz-box-shadow:1px 1px 3px #999;box-shadow:1px 1px 3px #999;-webkit-box-shadow:1px 1px 3px #999;}
+#rental_complete #rental-info p{margin-bottom:2px;overflow:hidden;}
+#rental_complete #rental-info p strong{margin-right:7px;}
+#rental_complete #rental-info .labe{display:block;float:left;width:105px;color:#444;}
 #rental_complete #rental-info span{color:#4c4bcc;}
-#rental_complete #rental-info strong{font-size:16px;}
+#rental_complete #rental-info strong,#rental_complete #rental-info #r_conf_num{font-size:16px;font-weight:bold;}
 
 .panel .rental_form,.sl-table-wrap .rental_form{border:1px solid #ccc;margin-top:0;}
 .panel .rental_form h2,.sl-table-wrap .rental_form h2,.panel .rental_form .realtime,.sl-table-wrap .rental_form .realtime{display:none;}
