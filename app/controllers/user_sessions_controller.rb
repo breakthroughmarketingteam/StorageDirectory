@@ -85,7 +85,7 @@ class UserSessionsController < ApplicationController
   end
   
   def destroy
-    role = current_user.role.title.downcase
+    role = current_user.role.title.downcase rescue nil
     current_user_session.destroy if current_user_session
     session.clear
     

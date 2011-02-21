@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218211005) do
+ActiveRecord::Schema.define(:version => 20110221163820) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -490,7 +490,7 @@ ActiveRecord::Schema.define(:version => 20110218211005) do
     t.integer  "default_logo"
     t.string   "category"
     t.string   "phone"
-    t.integer  "admin_fee"
+    t.float    "admin_fee"
     t.boolean  "prorated"
     t.float    "tax_rate",            :default => 0.0
     t.string   "tracked_number"
