@@ -2080,6 +2080,7 @@ p.breadcrumb a{color:#fff;}
 #new_listing input[type="text"]{width:80%;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/link-hover.png) no-repeat right;}
 
+
 #moving{width:100%;background:#fff;}
 #moving tr{height:55px;}
 #moving th{color:#393;text-decoration:underline;}
