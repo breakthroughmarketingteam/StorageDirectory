@@ -2080,6 +2080,7 @@ p.breadcrumb a{color:#fff;}
 #new_listing input[type="text"]{width:80%;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/link-hover.png) no-repeat right;}
 
+
 #moving{width:100%;background:#fff;}
 #moving tr{height:55px;}
 #moving th{color:#393;text-decoration:underline;}
@@ -2102,7 +2103,7 @@ p.breadcrumb a{color:#fff;}
 
 #fac-features #feats{background: url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
 #top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/trialbg.png) repeat-x;color:#fff;height:103px;margin-top:30px;overflow:hidden;}
-#top_fac_page #fac-features #heading h3{display:block;float:left;font-size:32px;font-weight:bold;line-height:30px;margin:17px 0 0 15px;text-shadow: -1px -1px 1px #333;}
+#top_fac_page #fac-features #heading h3{display:block;float:left;font-size:30px;font-weight:bold;line-height:30px;margin:17px 0 0 15px;text-shadow: -1px -1px 1px #333;}
 #top_fac_page #heading ul{float:right;margin:0;width:384px;}
 #top_fac_page #heading ul li{display:block;float:left;text-align:center;padding:0;width:96px;}
 #top_fac_page #heading ul li span{display:block;font-size:12px;width:100%;}
