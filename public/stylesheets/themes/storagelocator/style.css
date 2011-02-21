@@ -392,7 +392,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 .listing .request,.crud_btn{text-shadow:1px 1px 0 #333;}
 .listing .request{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/request-btn.png) repeat-x;}
 .listing .request:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/request-btn-hover.png) repeat-x;}
-.listing .compare{float:right;}
+.listing .compare{float:right;position:absolute;bottom:10px;right:10px;}
 .listing .compare input{margin:0;cursor:pointer;margin-left:5px;}
 .listing .compare label{cursor:pointer;font-size:80%;}
 .listing .compare .ajax_loader{margin:1px 7px 0 0;}
@@ -1011,7 +1011,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .listing .inner{padding:0;background:#fff;position:relative;}
 .listing .selected{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-check.png) no-repeat 45% 45%}
 .listing .unit_detail{position:relative;}
-.unit_detail_in{cursor:default;padding:4px 12px 10px;font-size:80%;height:14px;}
+.unit_detail_in{cursor:default;padding:4px 12px 10px;font-size:80%;height:auto;overflow:hidden;}
 .unit_detail_in .special_txt{font-weight:bold;}
 .unit_detail_in .left{margin-left:5px;}
 .unit_detail span{color:#4c4bcc;}
