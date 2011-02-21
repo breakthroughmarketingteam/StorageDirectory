@@ -860,7 +860,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units-head{border:1px solid #ccc;border-bottom:none;line-height:41px;line-height:2;position:relative;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;width:99.4%;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;}
 #ov-units-head h3,.ov-item-head h3{padding-left:20px;float:left;font-size:140%;color:#33c;text-shadow:1px 1px 1px #fff;}
 #ov-units-head p,.ov-item-head p{float:left;height:38px;margin:3px 0 0 10px;}
-.ov-item-head #add_fac,.ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:7px 6px 0 6px;}
+.ov-item-head #add_fac,.ov-item-head #client_edit_contact,#client_edit_settings{float:right;margin:8px 6px 0 6px;}
 #ov-units-head p{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/little-drop-down.png) no-repeat 150px center;background-color:#fff;width:180px;height:20px;line-height:20px;border:1px solid #ccc;position:relative;top:10px;left:47px;}
 #ov-units-head p a{display:block;position:relative;left:10px;width:160px;text-decoration:none;color:#666;}
 #ov-units .rslt-contact{background:none;margin-left:0;}
@@ -2012,7 +2012,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-tabs-pict-gall .delete_link{background:none;}
 #sl-edit-tabs #sl-tabs-pict-in li{background:#eee;float:left;height:80px;margin:0 10px 20px 0;width:29%;}
 #sl-edit-tabs #sl-tabs-pict-in li img{width:100%;}
-#sl-edit-tabs #sl-tabs-pict-in img.main_pic{background:#eee;border:1px solid #ccc;float:right;width:67%;}
+#sl-edit-tabs #sl-tabs-pict-in img.main_pic{background:#eee;border:1px solid #ccc;position:absolute;width:67%;}
+#sl-edit-tabs #sl-tabs-pict-in .region{height:317px;}
 #sl-edit-tabs #fac_pictures #sl-tabs-pict{padding:0;}
 #sl-edit-tabs #fac_reports #leads .inner{padding:0;}
 #sl-edit-tabs #fac_reports #leads table{border-collapse:collapse;border-left:1px solid #DEE8F2;margin:0;padding:0;text-align:left;width:100%;}

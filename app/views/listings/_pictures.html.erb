@@ -19,8 +19,9 @@
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>
-
-	    <%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt => '', :class => 'main_pic' unless @listing.pictures.empty? %>
+		<div class="region">
+	    	<%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt => '', :class => 'main_pic' unless @listing.pictures.empty? %>
+		</div>
 	</div>
   </div>
 </div>
