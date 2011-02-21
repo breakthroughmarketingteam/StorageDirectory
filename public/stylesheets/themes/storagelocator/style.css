@@ -2035,7 +2035,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #list_reviews .review p{line-height:1.2;margin:0 0 10px;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
-#tracking_request{padding:0 20px 20px;}
+#tracking_request{padding:0 20px 20px;overflow:hidden;}
 #preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #tab1{margin-bottom:20px;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
@@ -2052,7 +2052,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs .fac-details input#zip{width:150px;}
 #sl-edit-tabs .fac-details input#phone1{width:150px;}
 #sl-edit-tabs .fac-details span{font-size:12px;}
-#sl-edit-tabs .fac-details #facility_email{margin-top:10px;width:300px;}
+#sl-edit-tabs .fac-details #facility_email{margin-top:10px;width:258px;}
 #sl-edit-tabs #flogo #col1{float:left;width:27%;margin-left:20px;}
 #sl-edit-tabs #flogo #col2{float:left;width:70%;}
 #sl-edit-tabs #flogo #col2 p{margin:0 0 5px;}
