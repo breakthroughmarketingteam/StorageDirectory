@@ -4,7 +4,13 @@
 	  <div id="type-three-r-col-in">
    
 	    <div id="ov-header">
-	      	<h2>Account Overview</h2>
+      		<div id="w-msg">
+				<%= display_message flash %>
+
+				<h3><%= greeting %> <span id="client_name"><%= @client.name %></span></h3>
+				<%= @client_welcome %>
+			</div>
+			
 			<ul>
 	          	<li>Account #: <span id="client_id"><%= @client.id %></span></li>
 	          	<li>
@@ -13,13 +19,6 @@
 			  	</li>
 	        </ul>
 	    </div>
-
-		<div id="w-msg">
-			<%= display_message flash %>
-	
-			<h3><%= greeting %> <span id="client_name"><%= @client.name %></span></h3>
-			<%= @client_welcome %>
-		</div>
    
 	    <div id="ov-page-cnt">
 
@@ -43,6 +42,7 @@
 	      <div id="ov-units" class="hideable">
 			<div class="ov-item-head">
 				<h3><span>Facilities</span></h3>
+				
 				<% if @client.listings.size > 1 %><p id="address_sort"><a href="#">Sort by address</a></p><% end %>
 				<%= ajax_loader %>
 				<a href="#" id="add_fac" class="btn" title="Add a new facility">New</a>
@@ -54,6 +54,27 @@
 	              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true } %>
 	              <%= will_paginate @listings %>
 	            </div>
+	
+				<div id="help-prof-comp" class="hide side_framed">
+					<p>Having a profile that is more complete helps you get ahead of the competition in your area.<p>
+					<p>Here are ways you can achieve this:</p>
+					<ol class="stack">
+						<li>Add a minimum 100 word description of your facility.</li>
+						<li>Upload your facility's logo.</li>
+						<li>Request a tracked number so you can see call reports.</li>
+						<li>Enable online rentals and configure your rental settings: Admin fee, tax rate.</li>
+						<li>Include your office and access hours.</li>
+						<li>Get at least 5 customers to review your facility.</li>
+						<li>And finally, add at least 5:
+							<ul>
+								<li>Unit Types</li>
+								<li>Pictures of your facility or staff</li>
+								<li>Features/Amenities</li>
+								<li>Specials</li>
+							</ul>
+						</li>
+					</ol>
+				</div>
 	          <% end %>
 	        </div>
 	      </div>

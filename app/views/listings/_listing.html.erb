@@ -15,7 +15,10 @@
 	          <p class="new_listing_tip"><img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-arrow-left.gif" alt="Left Arrow" /><strong>Enter your facility's name.</strong></p>
 	        <% else %>
 				<div class="progressbar"></div>
-				<p>Profile Completion <span class="percent"><%= listing.percent_complete %>%</span></p>
+				<p>
+					Profile Completion <span class="percent"><%= listing.percent_complete %>%</span>
+					<%= help_pop_up_link 'help-prof-comp', :title => 'How To Complete Your Listing Profile' %>
+				</p>
 			<% end %>
       		</li>
       		<li class="action_btn">
