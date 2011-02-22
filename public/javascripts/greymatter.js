@@ -1408,7 +1408,8 @@ $.fn.displayWordCount = function(count_me) {
 			display = $('#'+ target);
 			
 		$this.keyup(function() {
-			display.text($this.text().split(' ').length +' words');
+			console.log(this, $this.text().split(' ').length)
+			display.text(this.value.split(' ').length +' words');
 		});
 	});
 }
