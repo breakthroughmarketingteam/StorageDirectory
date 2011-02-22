@@ -196,18 +196,20 @@
 						</div>
 					</div>
 					<div id="fac_reviews" class="tab_content">
+						<p class="hint">Send people you know a request to review your facility.</p>
+						
 						<div id="request_review" class="stack uncollapse">
 							<h3>Request a Review</h3>
-							<p>Send people you know a request to review your facility. Put each email on a new line.</p>
-						
+							
 							<% form_tag request_review_listing_path(@listing), :id => 'request_review_form' do %>
 								<div class="stack">
-									<%= text_area_tag 'review_request', nil, :class => 'required hintable', :title => "friend1@email.com\nfriend2@emai.com\n..." %>
+									<%= label_tag :review_request, 'Put each email on a new line', :class => 'stack' %>
+									<%= text_area_tag :review_request, nil, :class => 'required hintable', :title => "friend1@email.com\nfriend2@emai.com\n..." %>
 								</div>
 							
 								<div>
-									<%= label_tag 'message', 'Personal Message' %>
-									<%= text_area_tag 'message', nil, :class => 'required hintable', :title => "Optional message" %>
+									<%= label_tag :message, 'Personal Message', :class => 'stack' %>
+									<%= text_area_tag :message, nil, :class => 'required hintable', :title => "Optional message" %>
 								</div>
 							
 								<div>
@@ -219,7 +221,7 @@
 					
 						<div id="list_reviews">
 							<h3>Reviews</h3>
-							<% unless @listing.reviews.empty? %>
+							<% unless @listing.reviews.published.empty? %>
 								<p>Here's a list of all the reviews you've received for this facility.</p>
 								<%= render :partial => 'comments/review', :collection => @reviews %>
 								<%= will_paginate @reviews, :param_name => :review_page, :params => { :anchor => :reviews_tab } %>
