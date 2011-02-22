@@ -48,9 +48,12 @@ class Block < ActiveRecord::Base
       sets = self.resource.split(/\],?/).map { |s| s.sub /^\s?/, '' }
       
       sets.any? do |s|
-        next if s.nil?
-        set = s.split('['); c = set[0]; arr = set[1].split(/,\s?/)
-        arr.any? { |a| c == controller && (a == action || a == 'all') }
+        set = s.split('['); 
+        c   = set[0]; 
+        if set[1]
+          arr = set[1].split(/,\s?/)
+          arr.any? { |a| c == controller && (a == action || a == 'all') }
+        end
       end
     else
       self.controller.match(/(#{controller})/i) && self.action.match(/(#{action})/i)
