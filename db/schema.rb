@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218211005) do
+ActiveRecord::Schema.define(:version => 20110222161802) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -490,7 +490,7 @@ ActiveRecord::Schema.define(:version => 20110218211005) do
     t.integer  "default_logo"
     t.string   "category"
     t.string   "phone"
-    t.integer  "admin_fee"
+    t.float    "admin_fee"
     t.boolean  "prorated"
     t.float    "tax_rate",            :default => 0.0
     t.string   "tracked_number"
@@ -967,6 +967,7 @@ ActiveRecord::Schema.define(:version => 20110218211005) do
     t.text     "report_recipients"
     t.boolean  "pro_rated"
     t.datetime "verification_sent_at"
+    t.datetime "activated_at"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

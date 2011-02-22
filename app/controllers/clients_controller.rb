@@ -93,7 +93,8 @@ class ClientsController < ApplicationController
       redirect_to login_path
     else
       case @client.status when 'unverified'
-        @client.update_attribute :status, 'active'
+        @client.update_attributes :status => 'active', :activated_at => Time.now
+        @client.enable_listings!
         flash[:quick_login] = [@client.email, @client.temp_password]
         flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'
         redirect_to login_path
@@ -120,7 +121,6 @@ class ClientsController < ApplicationController
   end
   
   def verify
-    @client.enable_listings!
     @client.update_attribute :verification_sent_at, Time.now
     @partial = 'activation_email'
     Blaster.delay.deliver_html_email @client.email, 'Your account is ready at USSelfStorageLocator.com', render_to_string(:layout => 'email_template')

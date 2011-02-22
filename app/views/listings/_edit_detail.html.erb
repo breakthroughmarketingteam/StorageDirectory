@@ -61,7 +61,7 @@
 								</span>
 							<% else %>
 								<% f.fields_for :staff_emails, staff_email do |sf| %>
-									<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %> &nbsp; [<a class="add_field" href="#">add</a>]
+									<%= sf.text_field :email, :id => 'facility_email', :class => 'email' %>
 								<% end %>
 							<% end %>
 						<% end %>

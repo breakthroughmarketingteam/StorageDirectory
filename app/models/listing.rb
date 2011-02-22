@@ -194,20 +194,6 @@ class Listing < ActiveRecord::Base
     self.storage_types.downcase.split(/,\s?/)
   end
   
-  def admin_fee
-    val = read_attribute(:admin_fee) || 20
-    val /= 100 if val > 100
-    val
-  end
-  
-  def admin_fee=(val)
-    if val.is_a?(String) && val.match(/\.{1}/)
-      write_attribute :admin_fee, (val.to_f * 100)
-    else
-      super
-    end
-  end
-  
   def tax_rate
     (read_attribute(:tax_rate) || 6) / 100.0
   end
