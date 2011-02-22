@@ -628,7 +628,7 @@ module ApplicationHelper
   end
   
   def nice_output_by_type(val)
-    case val.class when ActiveSupport::TimeWithZone
+    case val.class.name when 'ActiveSupport::TimeWithZone'
       val.strftime "%I:%M%p %B, %d %Y"
     else
       val

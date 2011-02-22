@@ -132,9 +132,9 @@ class EmailBlastsController < ApplicationController
     unless params[:token] =~ /(test)/
       @model = Client.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
       
-      case @model.class when Client
+      case @model.class.name when 'Client'
         @model.update_attribute :wants_newsletter, false
-      when ListingContact
+      when 'ListingContact'
         @model.update_attribute :unsub, true if @model.is_a? ListingContact
       end
     end

@@ -31,7 +31,7 @@
 								<div class="inner">
 									<p>As stated in our USSelfStorageLocator.com <a href="terms-of-use">terms of use</a> please do not enter any contact information (phone numbers, websites, email addresses, etc) in the facility description.</p>					
 									<%= f.text_area :description, :class => 'required count_me', :rows => 6, :'data-target' => 'desc_word_count' %>
-									<span id="desc_word_count"><%= @listing.description.blank? '0' : @listing.description.split(' ').size %> words</span>
+									<span id="desc_word_count"><%= @listing.description.blank? ? '0' : @listing.description.split(' ').size %> words</span>
 								</div>
 							
 								<%= copy_all_link :description, @listing, :text => 'Copy to all listings', :title => 'Copy this description to all your other listings' %>

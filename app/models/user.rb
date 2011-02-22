@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   end
   
   def account_path_title
-    case self.class when Client
+    case self.class.name when 'Client'
       self.company
     else
       'My Account'
