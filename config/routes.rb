@@ -103,6 +103,10 @@ ActionController::Routing::Routes.draw do |map|
     clients.resources :user_stats
   end
   
+  map.resources :tenants do |tenant|
+    tenant.resources :user_stats
+  end
+  
   map.resources :reservers do |reserver|
     reserver.resources :reservations
   end
@@ -114,7 +118,7 @@ ActionController::Routing::Routes.draw do |map|
     page.resources :suggestions
   end
   
-  map.resources :posts do |post|
+  map.resources :posts, :member => { :rate => :post } do |post|
     post.resources :views
     post.resources :blocks
     post.resources :tags
@@ -141,23 +145,18 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_stats
   map.resources :permissions
   map.resources :roles
-  map.resources :pages
-  map.resources :posts, :member => { :rate => :post }
   map.resources :blog_posts, :member => { :rate => :post }
-  map.resources :blocks
   map.resources :comments
   map.resources :reviews
   map.resources :tags
   map.resources :views
   map.resources :widgets
-  map.resources :galleries
   map.resources :images
   map.resources :size_icons
   map.resources :links
   map.resources :link_groups
   map.resources :helptexts
   map.resources :forms
-  map.resources :tenants
   map.resources :suggestions
   map.resources :reservations
   map.resources :rentals
