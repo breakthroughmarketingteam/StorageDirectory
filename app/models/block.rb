@@ -44,8 +44,14 @@ class Block < ActiveRecord::Base
   end
   
   def is_for_resource?(controller, action)
-    if self.resource
-      self.resource.match(/(#{controller})/i) && self.resource.match(/(#{action})|(all)/i)
+    if self.resource # => a string that looks like: controller1[action1, action2, ...], controller2[all]
+      sets = self.resource.split(/\],?/).map { |s| s.sub /^\s?/, '' }
+      
+      sets.any? do |s|
+        next if s.nil?
+        set = s.split('['); c = set[0]; arr = set[1].split(/,\s?/)
+        arr.any? { |a| c == controller && (a == action || a == 'all') }
+      end
     else
       self.controller.match(/(#{controller})/i) && self.action.match(/(#{action})/i)
     end

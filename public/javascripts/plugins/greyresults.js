@@ -454,8 +454,8 @@ $(function(){
 			results_wrap = $('#rslt-list-bg'),
 			plus_sign 	 = $this.find('span > span').hide(),
 			ajax_loader  = $('.ajax_loader', $this).show(),
-			last_index   = parseInt($('.num_icon', '.listing:last').text()) + 1,
-			page = $('input[name=page]', $this.parent()).eq(0).val();
+			last_index   = parseInt($('.num_icon', '.listing').filter(':last').text().replace(/^\s+|\s+$/g, '')) + 1,
+			page 		 = $('input[name=page]', $this.parent()).eq(0).val();
 		
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);

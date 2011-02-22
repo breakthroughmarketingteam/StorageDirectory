@@ -1247,7 +1247,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_hdr{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
+#login_hdr,#fac_name{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
 #login_page .i{height:40px;position:relative;}
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
 #login_page .bigblue_btn{width:130px;}
@@ -1806,8 +1806,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
 
-#fac_name{border-top:1px solid #ccc;}
-#fac_name span{color:#4c4bcc;font-size:18px;font-weight:bold;}
+#fac_name span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{margin:25px 0;overflow:hidden;}
 #sl-intro .inner{float:left;}
@@ -1930,13 +1929,12 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step2 .inner .uncollapse{margin-bottom:10px;}
 #new_tenant{padding-right:20px;}
 
-#sl-edit-tabs{margin-bottom:18px;margin-top:4px;margin-left:10px;overflow:hidden;}
+#sl-edit-tabs{margin:1px 0 18px 10px;overflow:hidden;}
 #sl-edit-tabs .save{-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;-webkit-border-radius:4px 4px 4px 4px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:1px outset #666;color:#fff;float:right;font-size:12px;margin-right:10px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;}
 #sl-edit-tabs .hint{display:block;font-size:12px;margin:20px 0;}
 #sl-edit-tabs #sl-tabs-in ul.tabular{border-bottom:1px solid #ccc;padding-left:2px;height:29px;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:none;color:#fff;font-size:14px;height:14px;padding:8px 10px;text-shadow:1px 1px 0 #666;}
 #sl-edit-tabs #sl-tabs-in ul.tabular li.active a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;text-shadow:1px 1px 0 #333;}
-#sl-edit-tabs #fac_name{margin:0 0 30px;}
 .blue_btn{border:1px outset #666;color:#fff;display:inline-block;font-size:12px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
@@ -2043,6 +2041,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs .ajax_loader{top:2px;}
 #sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
 #sl-edit-tabs h2,#sl-edit-tabs h3{background:#eee;color:#4c4bcc;font-size:14px;font-weight:bold;margin:0 0 20px;padding:11px 20px 7px;border-bottom:1px solid #ccc;}
+#fac_name{float:left;}
 #flogo h3,#hours h3{margin-bottom:20px;}
 #sl-edit-tabs #details{width:100%;}
 #sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}

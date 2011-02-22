@@ -21,7 +21,7 @@
 					<%= link_to "ReVerify", verify_client_path(@client), :id => 'client_verify', :class => 'right left_space click_thru', :title => "Verification sent at: #{@client.verification_sent_at.asctime}" %>
 				<% else %>
 					<%= link_to "Verify", verify_client_path(@client), :id => 'client_verify', :class => 'right left_space click_thru', :title => 'Verify all listings and send activation email' %>
-				<% end %>
+				<% end unless @client.active? %>
 				<%= link_to 'Control Panel', admin_to_client_path(@client), :class => 'right click_thru' %>
 			</div>
 			
