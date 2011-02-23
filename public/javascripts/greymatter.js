@@ -27,6 +27,7 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
+	$('.count_me').displayWordCount();
 	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
@@ -1390,12 +1391,26 @@ $.fn.aProxy = function() {
 				element = $('#'+ params[1]);
 			
 			if (element) {
-				$this[action](function(e) {
+				$this[action](function() {
 					element.trigger(action);
 					return false;
 				});
 			}
 		}
+	});
+}
+
+// display the word count in target_span
+$.fn.displayWordCount = function(count_me) {
+	return this.each(function() {
+		var $this 	= $(this),
+			target  = $this.attr('data-target') || 'word_count',
+			display = $('#'+ target);
+			
+		$this.keyup(function() {
+			console.log(this, $this.text().split(' ').length)
+			display.text(this.value.split(' ').length +' words');
+		});
 	});
 }
 

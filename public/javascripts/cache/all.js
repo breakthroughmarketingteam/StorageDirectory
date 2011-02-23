@@ -4128,6 +4128,7 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
+	$('.count_me').displayWordCount();
 	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
@@ -5491,12 +5492,26 @@ $.fn.aProxy = function() {
 				element = $('#'+ params[1]);
 			
 			if (element) {
-				$this[action](function(e) {
+				$this[action](function() {
 					element.trigger(action);
 					return false;
 				});
 			}
 		}
+	});
+}
+
+// display the word count in target_span
+$.fn.displayWordCount = function(count_me) {
+	return this.each(function() {
+		var $this 	= $(this),
+			target  = $this.attr('data-target') || 'word_count',
+			display = $('#'+ target);
+			
+		$this.keyup(function() {
+			console.log(this, $this.text().split(' ').length)
+			display.text(this.value.split(' ').length +' words');
+		});
 	});
 }
 
@@ -8233,7 +8248,7 @@ $(function() {
 					div_id  : 'searcher_step1',
 					nav_vis : [
 						['next', function(btn, wizard) { function _next1() { wizard.slide_data[2].went_back = false; wizard.slide_data[1].skipped = false; }; btn.fadeIn().unbind('click', _next1).click(_next1); }],
-						['skip', 'fadeOut'],
+						['skip', function(btn, wizard) { function _skip1() { wizard.slide_data[1].skipped = true; wizard.slide_data[2].went_back = false; }; btn.fadeOut().unbind('click', _skip1).click(_skip1); }],
 						['back', 'fadeOut']
 					],
 					action : function(wizard) {
@@ -8305,7 +8320,6 @@ $(function() {
 						}
 					},
 					validate : function(wizard) {
-						console.log(wizard.slide_data[1].skipped, this)
 						if (!wizard.slide_data[1].skipped && $('.listing_div.selected', '#searcher_step2').length == 0) {
 							$.greyAlert('Choose at least one listing<br />or click the skip button.');
 							return false;
@@ -8319,11 +8333,10 @@ $(function() {
 					nav_vis : [
 						['next', function(btn, wizard) { btn.text(wizard.slide_data[1].skipped ? 'Done' : 'Submit').data('done', false); }],
 						['skip', 'fadeOut'],
-						['back', function(btn, wizard) { function _back3() { wizard.slide_data[2].went_back = true; wizard.slide_data[1].skipped = false; wizard.prev(); return false; }; btn.fadeIn().unbind('click', _back3).click(_back3); }]
+						['back', function(btn, wizard) { function _back3() { wizard.slide_data[2].went_back = true; wizard.prev(); return false; }; btn.fadeIn().unbind('click', _back3).click(_back3); }]
 					],
 					action : function(wizard) {
 						if (wizard.slide_data[1].skipped) {
-							wizard.slide_data[1].skipped = false;
 							$('#ui-dialog-title-pop_up', wizard.workflow.parent().parent()).text('How To Add A New Facility');
 							$('.listings_box', '#searcher_step3').hide();
 							$('#skipped_listings_find', '#searcher_step3').fadeIn();
@@ -8346,13 +8359,14 @@ $(function() {
 						['back', 'fadeOut']
 					],
 					action : function(wizard) {
-						if (wizard.slide_data[1].skipped) {
+						var selected_listings = $('.listing_div', '#searcher_step3').map(function() { return $('input[name=listing_id]', this).val() });
+						
+						if (wizard.slide_data[1].skipped || selected_listings.length == 0) {
 							wizard.workflow.parent('#pop_up').dialog('destroy').remove();
 							$('#add_fac', '#ov-units').data('skip_find', true).click();
 
 						} else {
 							var form = $('#selected_listings', '#searcher_step3'),
-								selected_listings = $('.listing_div', '#searcher_step3').map(function() { return $('input[name=listing_id]', this).val() }),
 								ajax_loader = $('.ajax_loader', '#searcher_step4').show();
 							
 							$.post(form.attr('action'), { listing_ids: selected_listings }, function(response) {

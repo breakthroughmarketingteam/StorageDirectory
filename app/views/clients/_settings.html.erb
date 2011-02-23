@@ -4,8 +4,8 @@
 			<tr>
 				<th title="Show or hide all the helpful hint boxes"><p>Hint boxes: </p></th>
 				<td id="user_hint_toggles">
-					<p><%= radio_button_tag 'user_hints', 'open', !all_hints_hidden_for?(@client) %> Show</p>
-					<p><%= radio_button_tag 'user_hints', 'hide', all_hints_hidden_for?(@client)  %> Hide</p>
+					<p><%= radio_button_tag 'user_hints', 'open', all_hints_hidden_for?(@client) %> Show</p>
+					<p><%= radio_button_tag 'user_hints', 'hide', !all_hints_hidden_for?(@client)  %> Hide</p>
 				</td>
 			</tr>
 			<tr>

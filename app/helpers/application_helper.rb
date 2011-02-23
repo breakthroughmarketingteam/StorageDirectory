@@ -619,6 +619,10 @@ module ApplicationHelper
     }
   end
   
+  def help_pop_up_link(target, options = {}, img_ops = {})
+    auto_pop_up_link image_tag('/images/ui/storagelocator/question_mark_blue.png', img_ops), target, options.merge(:class => 'help_pop_up')
+  end
+  
   def in_production?
     request.host =~ /(usselfstoragelocator\.com)/i 
   end

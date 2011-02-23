@@ -114,4 +114,12 @@ class User < ActiveRecord::Base
     Notifier.deliver_password_reset_instructions(self)
   end
   
+  def account_path_title
+    case self.class.name when 'Client'
+      self.company
+    else
+      'My Account'
+    end
+  end
+  
 end

@@ -2072,10 +2072,11 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #pop_up #new_comment .ajax_loader{float:right;margin:9px 7px 0 0;}
 /* Starting the overview page styles here */
 #ov-page-cnt{position:relative;}
-#clients_controller #ov-header{border-bottom:1px solid #CCCCCC;}
+#clients_controller #ov-header{height:auto;margin:0;padding:5px 20px 10px;}
 #ov-header h2{float:left;font-size:28px;}
-#ov-header ul li{display:block;float:right;margin:14px 18px 0 10px;}
+#ov-header ul li{display:block;float:right;margin:0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
+#desc_word_count{float:right;}
 #ov-units,#ov-reports,#ov-info,#ov-specials,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;}
 .ov-item-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
 .ov-item-head .success_msg{color:#393;position:absolute;right:110px;}
@@ -2469,7 +2470,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_hdr,#fac_name{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
+#login_hdr,#fac_name,.region_head_bar h2{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
 #login_page .i{height:40px;position:relative;}
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
 #login_page .bigblue_btn{width:130px;}
@@ -2898,9 +2899,8 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #new_client_message{margin:0 auto;width:950px;}
 form .note{clear:both;display:block;font-size:80%;}
-#w-msg{margin:20px 12px;}
+#w-msg{float:left;}
 #w-msg p{line-height:18px;}
-#w-msg h3{margin-bottom:10px;}
 #w-msg #client_name{color:#4c4bcc;}
 #hint-arrow{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/hint-arrow.png) no-repeat;bottom:-21px;height:20px;left:20px;position:absolute;width:44px;}
 
@@ -3028,7 +3028,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
 
-#fac_name span{font-size:14px;}
+#fac_name span,.region_head_bar h2 span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{margin:25px 0;overflow:hidden;}
 #sl-intro .inner{float:left;}
@@ -3046,7 +3046,13 @@ form .note{clear:both;display:block;font-size:80%;}
 .get_dir input#from_address{margin-left:3px;width:277px;}
 .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
 .get_dir a#get_dirs:hover{background:#393}
-
+.auto_pop_up > div.hide{display:block;}
+.listing_options .help_pop_up{display:inline;}
+.listing_options .help_pop_up img{float:none;vertical-align:middle;}
+.help-prof-comp{font-size:80%;line-height:1.2;}
+.help-prof-comp p{font-size:100%;}
+.help-prof-comp ol{margin-left:30px;}
+.help-prof-comp ol li ul{font-style:italic;list-style:alpha;}
 #sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
 #sl-tabs-overview  #hed h2#fac_name{border-top:none;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
