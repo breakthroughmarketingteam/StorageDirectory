@@ -281,7 +281,7 @@ class Listing < ActiveRecord::Base
   
   # create a stat record => clicks, impressions
   def update_stat stat, request
-    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}'"
+    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}', :remote_ip => '#{request.remote_ip}'"
   end
   
   def unit_sizes_options_array
