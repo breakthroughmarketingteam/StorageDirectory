@@ -78,9 +78,10 @@
 						<% Listing.categories.in_groups_of 4, false do |group| %>
 							<ul class="left right_space">
 								<% group.each do |category| %>
+									<% next if category.nil? %>
 									<li>
-										<%= check_box_tag 'listing[storage_types][]', category, @listing.categories.include?(category.downcase) unless category.nil? %>
-										<%= f.label :storage_types, category.titleize unless category.nil? %>
+										<%= check_box_tag 'listing[storage_types][]', category, @listing.categories.include?(category) %>
+										<%= f.label :storage_types, category.titleize %>
 									</li>
 								<% end %>
 							</ul>

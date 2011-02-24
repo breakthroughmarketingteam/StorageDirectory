@@ -122,6 +122,7 @@ class ListingsController < ApplicationController
       redirect_to(:action => 'edit') and return
     end
     
+    @title = "Manage #{@listing.title}"
     @listing.staff_emails.build
     
     render :layout => false if request.xhr?
@@ -181,7 +182,7 @@ class ListingsController < ApplicationController
   # when a client is adding a listing we save it with the title only and return the id for the javascript
   def quick_create
     @client = (current_user && current_user.has_role?('admin', 'staff')) ? Client.find(params[:client_id]) : current_user
-    @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title])
+    @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title], :storage_types => 'self storage')
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
       @map = @listing.build_map
@@ -202,10 +203,8 @@ class ListingsController < ApplicationController
   end
   
   def copy_to_all
-    @listing.siblings.each do |listing|
-      listing.send "update_#{params[:what]}", @listing
-    end if @listing.respond_to?(params[:what])
-    
+    Listing.delay.update_all_from_this @listing, params[:what]
+
     render :json => { :success => true }
   rescue => e
     render :json => { :success => false, :data => e.message }

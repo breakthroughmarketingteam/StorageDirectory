@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110222161802) do
+ActiveRecord::Schema.define(:version => 20110224211614) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20110222161802) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.string   "request_uri"
+    t.string   "remote_ip"
   end
 
   create_table "comments", :force => true do |t|
@@ -350,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20110222161802) do
     t.datetime "updated_at"
     t.string   "referrer"
     t.text     "request_uri"
+    t.string   "remote_ip"
   end
 
   create_table "info_requests", :force => true do |t|

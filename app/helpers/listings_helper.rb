@@ -302,7 +302,7 @@ module ListingsHelper
     
     when 'monthly_rate'
       "<td class='padded' title='The monthly rate applicable to the selected unit size'>"+
-        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article} unit."+
+        "#{number_to_currency size.dollar_price if size}<br />for #{size.title.indef_article if size} unit."+
       '</td>'
     
     when /(special)/i
