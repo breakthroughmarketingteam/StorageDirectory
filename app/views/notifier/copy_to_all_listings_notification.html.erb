@@ -1,0 +1,7 @@
+Hi <%= @client.name %>,
+Your facilities have finished updating. You chose to update the <%= @what.titleize %> from <%= @listing.title %> in <%= @listing.full_address %> to your other <% pluralize @listing.siblings.size, 'facility' %>.
+
+Here's a quick link to your facility page: <%= client_listing_url @listing, :protocol => 'https' %>
+
+Have a great day! 
+  - The USSSL Team

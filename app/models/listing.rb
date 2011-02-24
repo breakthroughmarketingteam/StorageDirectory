@@ -214,24 +214,6 @@ class Listing < ActiveRecord::Base
     self.reviews
   end
   
-  def update_description(other_listing)
-    self.update_attribute :description, other_listing.description
-  end
-  
-  def update_business_hours(other_listing)
-    if other_listing.access_24_hours?
-      self.update_attribute :access_24_hours, other_listing.access_24_hours
-    end
-    
-    if other_listing.office_24_hours?
-      self.update_attribute :office_24_hours, other_listing.office_24_hours
-    end
-    
-    other_listing.business_hours.each do |hour|
-      self.business_hours.create hour.attributes
-    end
-  end
-  
   def get_searched_size(search)
     return self.sizes.first if search.nil? || search.unit_size.nil?
     dims = search.unit_size.split('x')
@@ -386,6 +368,38 @@ class Listing < ActiveRecord::Base
   
   def call_tracking_num
     ''
+  end
+  
+  #
+  # Update methods for the copy_to_all link
+  #
+  def self.update_all_from_this(listing, what)
+    if listing.respond_to? "update_all_#{what}"
+      listing.siblings.each { |l| l.send "update_all_#{what}", listing }
+      Notifier.deliver_copy_to_all_listings_notification listing.client, listing, what if listing.siblings.size + 1 > 10
+    end
+  end
+  
+  def update_all_description(other_listing)
+    self.update_attribute :description, other_listing.description
+  end
+  
+  def update_all_business_hours(other_listing)
+    if other_listing.access_24_hours?
+      self.update_attribute :access_24_hours, other_listing.access_24_hours
+    end
+    
+    if other_listing.office_24_hours?
+      self.update_attribute :office_24_hours, other_listing.office_24_hours
+    end
+    
+    other_listing.business_hours.each do |hour|
+      self.business_hours.create hour.attributes
+    end
+  end
+  
+  def update_all_facility_logo(other_listing)
+    self.update_attribute :logo, other_listing.logo
   end
   
   #

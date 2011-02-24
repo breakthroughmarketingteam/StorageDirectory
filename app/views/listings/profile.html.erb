@@ -18,11 +18,12 @@
 					<!-- tab content -->
 					<div id="tab1" class="tab_content">
 						<p class="hint">Here you can change all the details for this facility.</p>
-						<div id="details" class="left">
-							<%= render :partial => 'edit_detail' %>
-						</div>
 						<div id="flogo" class="left">
 							<%= render :partial => 'logo_form' %>
+							<%= copy_all_link :facility_logo, @listing, :text => 'Copy to all listings', :title => 'Copy this logo to all your other listings' %>
+						</div>
+						<div id="details" class="left">
+							<%= render :partial => 'edit_detail' %>
 						</div>
 						<div id="descript" class="left">
 							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>

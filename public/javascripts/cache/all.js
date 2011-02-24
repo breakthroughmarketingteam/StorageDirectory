@@ -6272,22 +6272,24 @@ $(function(){
 		var $this = $(this).fadeTo(600, .5);
 			
 		if (!$this.data('saving')) {
-			$this.data('saving', true);
-			var ajax_loader = $.new_ajax_loader('after', $this).show().css({ 'float': 'left', 'margin': '0 10px' });
+			$.greyConfirm('Are you sure you want to copy this to your other facilities?', function() {
+				$this.data('saving', true);
+				var ajax_loader = $.new_ajax_loader('after', $this).show().css({ 'float': 'left', 'margin': '0 10px' });
 
-			$.post($this.attr('href'), function(response) {
-				$.with_json(response, function(data) {
-					$this.parent().after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
+				$.post($this.attr('href'), function(response) {
+					$.with_json(response, function(data) {
+						$this.parent().after('<span class="success_msg" style="float:left;margin:0 10px">Saved!</span>');
 
-					setTimeout(function() {
-						$('.success_msg', $this.parent()).fadeOutRemove(1000);
-					}, 2000);
-				});
+						setTimeout(function() {
+							$('.success_msg', $this.parent()).fadeOutRemove(1000);
+						}, 2000);
+					});
 
-				$this.data('saving', false)
-				$this.fadeTo(300, 1);
-				ajax_loader.hide();
-			}, 'json');
+					$this.data('saving', false)
+					$this.fadeTo(300, 1);
+					ajax_loader.hide();
+				}, 'json');
+			});
 		}
 		
 		return false;

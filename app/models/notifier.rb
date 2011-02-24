@@ -99,6 +99,13 @@ class Notifier < ActionMailer::Base
     @body[:listings] = listings
   end
   
+  def copy_to_all_listings_notification(client, listing, what)
+    setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your listings have been updated'
+    @body[:client] = client
+    @body[:listing] = listing
+    @body[:what] = what
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from
