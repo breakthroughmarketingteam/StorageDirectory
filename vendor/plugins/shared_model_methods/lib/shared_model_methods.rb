@@ -72,7 +72,7 @@ module SharedModelMethods #:nodoc:
     end
    
     def blocks_for_region(region)
-      self.blocks.find(:all, :conditions => ['place = ? AND enabled IS TRUE', region])
+      @blocks ||= self.blocks.find(:all, :conditions => ['place = ? AND enabled IS TRUE', region])
     end
     
     def enabled_blocks
