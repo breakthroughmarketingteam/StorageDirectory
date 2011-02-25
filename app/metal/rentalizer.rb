@@ -45,6 +45,8 @@ class Rentalizer
     
     # respond to ajax updates to the rentalizer form
     def rental_calc(params, listing, size, special, multi = false)
+      return 0 if size.nil?
+      
       proration     = 0.03333 # multiply this by each day left in the lastest month in the rental period
       move_date     = Time.parse(CGI.unescape(params['rental[move_in_date]'] || params[:move_in_date]))
       days_in_month = Date.civil(move_date.year, move_date.month, -1).day

@@ -704,7 +704,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .sizes_list_in ul{clear:both;height:37px;line-height:3.1;border:1px solid #ccc;background:none;text-align:left;position:relative;color:#666;}
 .sizes_list_in ul li{display:block;float:left;}
 .sizes_list_in ul.sl-table-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-top.png) repeat-x top left;border:0;line-height:1.7;height:22px;font-size:80%;color:#666;width:100%;}
-.sizes_list_in ul.sl-table{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;margin:3px 0 0;cursor:pointer;font-size: 12px;}
+.sizes_list_in ul.sl-table,#tab3 .amenity .in label{margin:3px 0 0;cursor:pointer;font-size: 12px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-inactive.png) repeat-x top left;}
 .edit_action .sizes_list_in ul.sl-table{cursor:default;}
 .sizes_list_in .rental_duration ul{border:0 none;font-size:120%;}
 .sizes_list_in ul.active,.sizes_list_in .sl-table:hover,.sizes_list_in .sl-table-wrap.active .sl-table{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg.png) repeat-x top left;color:#333;}
@@ -813,8 +813,9 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #tab3 form.amenity .ui-widget{cursor:pointer;display:block;font-size:80%;padding:7px 10px;}
 .amenity .ajax_loader{margin:8px 9px 0 0;float:right;}
 #tab3 .inner{width:97%;overflow:hidden;}
-#tab3 .amenity .ui-state-default,#amenity_legend .default span{background:url("http://s3.amazonaws.com/storagelocator/images/ui/jquery/south_street/ui-bg_highlight-hard_100_fafaf4_1x100.png") repeat-x scroll 50% 50% #FAFAF4;border:1px solid #D4CCB0;color:#459E00;}
-#tab3 .amenity .ui-state-active,#amenity_legend .active span{background:url("http://s3.amazonaws.com/storagelocator/images/ui/jquery/south_street/ui-bg_highlight-hard_15_459e00_1x100.png") repeat-x scroll 50% 50% #459E00;border:1px solid #327E04;color:#FFFFFF;}
+#tab3 .amenity .in label{border:1px solid #CCC;color:#555;font-weight:normal;margin:0;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;}
+#tab3 .amenity .in .ui-state-default,#amenity_legend .default span{border:1px solid #dadada;color:#999;}
+#tab3 .amenity .in label:hover,#tab3 .amenity .in .ui-state-active,#amenity_legend .active span{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg.png) repeat-x top left;color:#333;border:1px solid #ccc;}
 #amenity_legend{margin-left:20px;float:left;}
 #amenity_legend li{line-height:2;overflow:hidden;padding:5px 0;font-size:80%;color:#555;float:left;margin-right:15px;}
 #amenity_legend span{display:block;float:left;width:24px;height:24px;margin-right:10px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
@@ -854,7 +855,8 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-header h2{float:left;font-size:28px;}
 #ov-header ul li{display:block;float:right;margin:0 10px;}
 #ov-header ul li span{color:#4c4bcc;text-shadow:none;}
-#desc_word_count{float:right;}
+#desc_word_count{border-color:#999 #999 #FFF;border-style:solid;border-width:1px;color:#666;display:block;float:right;margin:0 -12px -2px 0;padding:4px 6px 0;position:relative;color:#a22;}
+#desc_word_count.scored{color:#393;}
 #ov-units,#ov-reports,#ov-info,#ov-specials,#ov-settings,#ov-services{border:1px solid #ccc;border-radius:20px;-moz-border-radius:8px;-webkit-border-radius:8px;margin-top:8px;margin-bottom:10px;clear:both;}
 .ov-item-head{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ov-header-bg.png) repeat-x top left;padding-right:10px;height:41px;border-bottom:1px solid #ccc;border-radius-topleft:8px;-moz-border-radius-topleft:8px;-webkit-border-top-left-radius:8px;border-radius-topright:8px;-moz-border-radius-topright:8px;-webkit-border-top-right-radius:8px;line-height:41px;position:relative;}
 .ov-item-head .success_msg{color:#393;position:absolute;right:110px;}

@@ -1,10 +1,10 @@
-<h3>Facility Details:</h3>
+<h3>Facility Details</h3>
 <% form_for @listing, :html => { :id => 'fac_detail_form', 'data-target' => 'details' } do |f| %>
 	<table cellspacing="0" cellpadding="0" class="fac-details">
            <tbody>
                <tr>
-				<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
-               	<td><%= f.text_field :title, :class => 'required', :maxlength => 64 %></td>
+					<td class="col_label"><%= f.label :title, 'Facility Name' %></td>
+	               	<td><%= f.text_field :title, :class => 'required', :maxlength => 64 %></td>
                </tr>
 			
 			<% f.fields_for :map, @listing.map do |mf| %>
