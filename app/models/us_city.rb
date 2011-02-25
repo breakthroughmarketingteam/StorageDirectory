@@ -3,11 +3,11 @@ class UsCity < ActiveRecord::Base
   sitemap :change_frequency => :weekly, :priority => 0.9
   
   def self.all_that_have_listings
-    self.find_by_sql <<-EOL
+    self.find_by_sql <<-SQL
       SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
       WHERE us_cities.name LIKE maps.city
       ORDER BY us_cities.name
-    EOL
+    SQL
   end
   
   def self.states
@@ -15,7 +15,7 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.names
-    all(:select => 'DISTINCT name', :order => 'name').map(&:name).reject(&:nil?)
+    @city_name ||= all(:select => 'DISTINCT name', :order => 'name').map(&:name).reject(&:nil?)
   end
   
   def self.namesNstate

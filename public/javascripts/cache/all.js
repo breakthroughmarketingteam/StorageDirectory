@@ -4128,7 +4128,6 @@ $(function(){
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy();
-	$('.count_me').displayWordCount();
 	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
@@ -5502,15 +5501,30 @@ $.fn.aProxy = function() {
 }
 
 // display the word count in target_span
-$.fn.displayWordCount = function(count_me) {
+$.fn.displayWordCount = function(callback) {
+	if (typeof callback != 'function') callback = function(){};
+	
+	function extract_words(str) {
+		var words = str.replace(/\s+/g, ' ').split(' ');
+		return $.map(words, function(w) { if (w != '') return w; });
+	}
+	
+	function update_display(display, count) {
+		display.text(count +' word'+ (count == 1 ? '' : 's'));
+		callback.call(this, count, display);
+	}
+	
 	return this.each(function() {
 		var $this 	= $(this),
 			target  = $this.attr('data-target') || 'word_count',
-			display = $('#'+ target);
-			
+			display = $('#'+ target),
+			count 	= extract_words(this.value).length;
+		
+		update_display(display, count);
+		
 		$this.keyup(function() {
-			console.log(this, $this.text().split(' ').length)
-			display.text(this.value.split(' ').length +' words');
+			count = extract_words(this.value).length;
+			update_display(display, count);
 		});
 	});
 }
@@ -8613,6 +8627,11 @@ $(function() {
 		}
 		
 		return false;
+	});
+	
+	$('textarea.count_me', '#descript').displayWordCount(function(count, display) {
+		if (count >= 100 && !display.hasClass('scored')) display.addClass('scored');
+		else if (count < 100 && display.hasClass('scored')) display.removeClass('scored');
 	});
 	
 	$('#tracking_num_req', '#tab1').live('click', function() {

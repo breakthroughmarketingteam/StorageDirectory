@@ -149,7 +149,7 @@ class Search < ActiveRecord::Base
   def geocode_query(query)
     if self.query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
-    elsif iself.s_address_query? query
+    elsif self.s_address_query? query
       Geokit::Geocoders::MultiGeocoder.geocode query
     elsif (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
       GeoKit::GeoLoc.new(named_listing.map)

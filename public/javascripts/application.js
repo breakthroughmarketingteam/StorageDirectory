@@ -1204,6 +1204,11 @@ $(function() {
 		return false;
 	});
 	
+	$('textarea.count_me', '#descript').displayWordCount(function(count, display) {
+		if (count >= 100 && !display.hasClass('scored')) display.addClass('scored');
+		else if (count < 100 && display.hasClass('scored')) display.removeClass('scored');
+	});
+	
 	$('#tracking_num_req', '#tab1').live('click', function() {
 		var $this = $(this),
 			ajax_loader = $.new_ajax_loader('after', $this).show();
