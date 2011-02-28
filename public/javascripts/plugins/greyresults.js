@@ -1070,9 +1070,9 @@ function make_indexed_icon(index) {
 
 function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more query params
 	var p;
-	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_size=14&offset=10x3';
-	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_size=14&offset=5x3';
-	else			  p = '/marker_maker?n='+ n +'&color=white&font_size=11&offset=5x5';
+	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=10x3';
+	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=5x3';
+	else			  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=11&offset=5x5';
 	return p;
 }
 

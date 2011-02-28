@@ -25,16 +25,17 @@ class MarkerMaker
     
     def operate(string_to_write, options = {})
       options = {
-        :alignment  => :top_left,
-        :offset     => '0x0',
-        :antialias  => true,
-        :color      => 'black',
-        :font_size  => 12,
-        :font       => nil,
-        :text_align => :left,
-        :rotate     => 0,
-        :shadow     => nil,
-        :stroke     => {
+        :alignment   => :top_left,
+        :offset      => '0x0',
+        :antialias   => true,
+        :color       => 'black',
+        :font_size   => 12,
+        :font_weight => :normal,
+        :font        => nil,
+        :text_align  => :left,
+        :rotate      => 0,
+        :shadow      => nil,
+        :stroke      => {
           :width => 0,
           :color => 'white',
         }
@@ -49,7 +50,7 @@ class MarkerMaker
       text.text_antialias = options[:antialias]
       text.pointsize      = options[:font_size].to_i
       text.rotation       = options[:rotate]
-      text.font_weight    = options[:font_weight] if options[:font_weight]
+      text.font_weight    = symbol_to_font_weight(options[:font_weight].to_sym)
 
       if options[:stroke][:width] > 0
         text.stroke_width = options[:stroke][:width]
@@ -108,7 +109,7 @@ class MarkerMaker
     end
 
     def symbol_to_gravity(gravity_name)
-      g = {
+      @gravities ||= {
         :center       => Magick::CenterGravity,
         :top          => Magick::NorthGravity,
         :top_right    => Magick::NorthEastGravity,
@@ -120,12 +121,29 @@ class MarkerMaker
         :top_left     => Magick::NorthWestGravity,
       } 
       
-      gravity = g[gravity_name]
+      gravity = @gravities[gravity_name]
 
       if gravity
         gravity
       else
         raise ArgumentError, ":#{gravity_name} is not a valid gravity name.\n\nValid names are :center, :top, :top_right, :right, :bottom_right, :bottom, :bottom_left, :left, :top_left"
+      end
+    end
+    
+    def symbol_to_font_weight(weight)
+      @font_weights = {
+        :normal  => Magick::NormalWeight,
+        :bold    => Magick::BoldWeight,
+        :bolder  => Magick::BolderWeight,
+        :lighter => Magick::LighterWeight
+      }
+      
+      font_weight = @font_weights[weight]
+
+      if font_weight
+        font_weight
+      else
+        raise ArgumentError, ":#{font_weight} is not a valid font weight.\n\nValid weights are :normal, :bold, :bolder, :lighter"
       end
     end
 
