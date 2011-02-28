@@ -37,7 +37,7 @@ Rails::Initializer.run do |config|
   config.gem 'dalli'
   config.gem 'ajaxful_rating'
   config.gem 'ssl_requirement'
-  config.gem 'rmagick'
+  config.gem 'rmagick', :lib => 'RMagick'
   config.gem 'delayed_job', :version => '~>2.0.4'
   config.gem "heroscale"
   require "heroscale"
