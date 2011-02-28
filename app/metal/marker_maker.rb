@@ -128,7 +128,7 @@ class MarkerMaker
       :bottom_left  => Magick::SouthWestGravity,
       :left         => Magick::WestGravity,
       :top_left     => Magick::NorthWestGravity,
-    } unless defined? GRAVITIES
+    } if defined?(Magick) && !defined?(GRAVITIES)
 
     # split the query adding blank values to the array where the query had nothing
     def split_query(query)
