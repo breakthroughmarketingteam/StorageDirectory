@@ -3,6 +3,7 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 
 class MarkerMaker
   class << self
+    require 'rmagick'
     # URLs for marker images by number size:
     # ------> (n < 10): /marker_maker?n=<num>&color=white&font_size=14&offset=10x3
     # ------> (n > 9 && n < 100): /marker_maker?n=<num>&color=white&offset=5x3&font_size=14
