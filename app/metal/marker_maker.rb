@@ -108,7 +108,19 @@ class MarkerMaker
     end
 
     def symbol_to_gravity(gravity_name)
-      gravity = MGRAVITIES[gravity_name]
+      g = {
+        :center       => Magick::CenterGravity,
+        :top          => Magick::NorthGravity,
+        :top_right    => Magick::NorthEastGravity,
+        :right        => Magick::EastGravity,
+        :bottom_right => Magick::SouthEastGravity,
+        :bottom       => Magick::SouthGravity,
+        :bottom_left  => Magick::SouthWestGravity,
+        :left         => Magick::WestGravity,
+        :top_left     => Magick::NorthWestGravity,
+      } 
+      
+      gravity = g[gravity_name]
 
       if gravity
         gravity
@@ -125,18 +137,5 @@ class MarkerMaker
       end.flatten
     end
   end
-  
-  # Conversion table for mapping alignment symbols to their equivalent RMagick gravity constants.
-  MGRAVITIES = {
-    :center       => ::Magick::CenterGravity,
-    :top          => ::Magick::NorthGravity,
-    :top_right    => ::Magick::NorthEastGravity,
-    :right        => ::Magick::EastGravity,
-    :bottom_right => ::Magick::SouthEastGravity,
-    :bottom       => ::Magick::SouthGravity,
-    :bottom_left  => ::Magick::SouthWestGravity,
-    :left         => ::Magick::WestGravity,
-    :top_left     => ::Magick::NorthWestGravity,
-  } unless defined? MGRAVITIES
   
 end
