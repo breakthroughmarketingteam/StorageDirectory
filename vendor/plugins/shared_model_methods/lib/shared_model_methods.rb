@@ -72,7 +72,7 @@ module SharedModelMethods #:nodoc:
     end
    
     def blocks_for_region(region)
-      @blocks ||= self.blocks.find(:all, :conditions => ['place = ? AND enabled IS TRUE', region])
+      eval "@#{region}_blocks ||= self.blocks_models.all(:conditions => ['place = ? AND enabled IS TRUE', region.to_s], :order => :position).map(&:block).flatten.reject(&:nil?)"
     end
     
     def enabled_blocks

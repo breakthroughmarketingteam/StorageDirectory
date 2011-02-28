@@ -3,7 +3,7 @@ class UsCity < ActiveRecord::Base
   sitemap :change_frequency => :weekly, :priority => 0.9
   
   def self.all_that_have_listings
-    self.find_by_sql <<-SQL
+    @all_that_have_listings ||= self.find_by_sql <<-SQL
       SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
       WHERE us_cities.name LIKE maps.city
       ORDER BY us_cities.name
@@ -11,7 +11,7 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.states
-    all(:select => 'DISTINCT state', :order => 'state').map(&:state)
+    @states ||= all(:select => 'DISTINCT state', :order => 'state').map(&:state)
   end
   
   def self.names
@@ -19,7 +19,7 @@ class UsCity < ActiveRecord::Base
   end
   
   def self.namesNstate
-    all(:select => 'DISTINCT name, state', :order => 'name, state').map { |c| "#{c.name}, #{c.state}" }.reject(&:nil?)
+    @namesNstate ||= all(:select => 'DISTINCT name, state', :order => 'name, state').map { |c| "#{c.name}, #{c.state}" }.reject(&:nil?)
   end
   
   def self.states_by_letter(a)

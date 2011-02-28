@@ -112,7 +112,6 @@ class Listing < ActiveRecord::Base
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
     unless search.unit_size.blank?
       all_premium = @listings.select(&:premium?)
-      
       kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
       
       # TODO: match unit features
