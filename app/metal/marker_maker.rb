@@ -108,7 +108,7 @@ class MarkerMaker
     end
 
     def symbol_to_gravity(gravity_name)
-      gravity = GRAVITIES[gravity_name]
+      gravity = MGRAVITIES[gravity_name]
 
       if gravity
         gravity
@@ -118,7 +118,7 @@ class MarkerMaker
     end
 
     # Conversion table for mapping alignment symbols to their equivalent RMagick gravity constants.
-    GRAVITIES = {
+    MGRAVITIES = {
       :center       => Magick::CenterGravity,
       :top          => Magick::NorthGravity,
       :top_right    => Magick::NorthEastGravity,
@@ -128,7 +128,7 @@ class MarkerMaker
       :bottom_left  => Magick::SouthWestGravity,
       :left         => Magick::WestGravity,
       :top_left     => Magick::NorthWestGravity,
-    } if defined?(Magick) && !defined?(GRAVITIES)
+    }
 
     # split the query adding blank values to the array where the query had nothing
     def split_query(query)

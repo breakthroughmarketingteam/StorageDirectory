@@ -12,4 +12,3 @@ delayed_job --version 2.0.4
 heroscale
 rack-rewrite
 fastercsv
-rmagick
