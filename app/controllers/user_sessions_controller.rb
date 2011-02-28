@@ -27,9 +27,8 @@ class UserSessionsController < ApplicationController
       
       respond_to do |format|
         format.html do
-          flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : nil
-          
           case current_user.role.title.downcase when 'admin', 'staff'
+            flash[:notice] = current_user.last_login_at ? "Welcome! Last login: #{current_user.last_login_at.asctime} " : nil
             redirect_back_or_default admin_index_path
           when 'advertiser'
             redirect_to @client_link
