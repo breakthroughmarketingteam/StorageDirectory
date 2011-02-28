@@ -2,8 +2,6 @@
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
 class MarkerMaker
-  require 'rmagick'
-  
   class << self
     # URLs for marker images by number size:
     # ------> (n < 10): /marker_maker?n=<num>&color=white&font_size=14&offset=10x3
