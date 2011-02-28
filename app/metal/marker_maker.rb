@@ -117,19 +117,6 @@ class MarkerMaker
       end
     end
 
-    # Conversion table for mapping alignment symbols to their equivalent RMagick gravity constants.
-    MGRAVITIES = {
-      :center       => ::Magick::CenterGravity,
-      :top          => ::Magick::NorthGravity,
-      :top_right    => ::Magick::NorthEastGravity,
-      :right        => ::Magick::EastGravity,
-      :bottom_right => ::Magick::SouthEastGravity,
-      :bottom       => ::Magick::SouthGravity,
-      :bottom_left  => ::Magick::SouthWestGravity,
-      :left         => ::Magick::WestGravity,
-      :top_left     => ::Magick::NorthWestGravity,
-    }
-
     # split the query adding blank values to the array where the query had nothing
     def split_query(query)
       query.split('&').map do |pairs|
@@ -138,4 +125,17 @@ class MarkerMaker
       end.flatten
     end
   end
+  
+  # Conversion table for mapping alignment symbols to their equivalent RMagick gravity constants.
+  MGRAVITIES = {
+    :center       => ::Magick::CenterGravity,
+    :top          => ::Magick::NorthGravity,
+    :top_right    => ::Magick::NorthEastGravity,
+    :right        => ::Magick::EastGravity,
+    :bottom_right => ::Magick::SouthEastGravity,
+    :bottom       => ::Magick::SouthGravity,
+    :bottom_left  => ::Magick::SouthWestGravity,
+    :left         => ::Magick::WestGravity,
+    :top_left     => ::Magick::NorthWestGravity,
+  }
 end
