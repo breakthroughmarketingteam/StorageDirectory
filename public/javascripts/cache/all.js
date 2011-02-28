@@ -7007,9 +7007,13 @@ MapIconMaker.createMarkerIcon = function(opts) {
 }
 
 try {
+	// size of /images/ui/storagelocator/result-number.png
+	G_DEFAULT_ICON.iconSize.width = 29;
+	G_DEFAULT_ICON.iconSize.height = 39;
+	
 	var iconOptions = {};
-	iconOptions.width = 32;
-	iconOptions.height = 32;
+	iconOptions.width = 29;
+	iconOptions.height = 39;
 	iconOptions.primaryColor = "#0000ff";
 	iconOptions.cornerColor = "#FFFFFF";
 	iconOptions.strokeColor = "#000000";
@@ -7023,18 +7027,17 @@ try {
 	var normalIconImage = normalIcon.image,
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
 		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
-
 } catch (e){ }
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
-	if (typeof(marker) != 'undefined') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
+	if (typeof(marker) != 'undefined') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333'); //marker.setImage(make_indexed_icon(marker.mIndex)); //
 }
 
 function unhighlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id), def = typeof(marker) != 'undefined';
 	if (def && marker.GmapState == 'selected') marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|FED747|333333');
-	else if (def) marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|339933|FFFFFF');
+	else if (def) marker.setImage(get_marker_img_path(marker.mIndex)); //marker.setImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ marker.mIndex +'|339933|FFFFFF');
 }
 
 function getMarkerById(id) {
@@ -7080,7 +7083,17 @@ function addMarker(icon, lat, lng, title, body, bind_mouse_overs) {
 }
 
 function make_indexed_icon(index) {
-	return new GIcon(G_DEFAULT_ICON, 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ index +'|339933|FFFFFF');
+	//var img_path = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ index +'|339933|FFFFFF';
+	var icon = new GIcon(G_DEFAULT_ICON, get_marker_img_path(index));
+	return icon;
+}
+
+function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more query params
+	var p;
+	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_size=14&offset=10x3';
+	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_size=14&offset=5x3';
+	else			  p = '/marker_maker?n='+ n +'&color=white&font_size=11&offset=5x5';
+	return p;
 }
 
 GmapMarkers = [];
