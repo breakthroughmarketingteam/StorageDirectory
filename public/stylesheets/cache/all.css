@@ -1737,17 +1737,16 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
 #new_client #listing_city{width:97%;}
 #new_client #listing_state{width:20px;}
-#add-fac-txt{float:left;width:705px;}
+#add-fac-txt{width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:22px;}
 #add-fac-txt a:hover{text-decoration:underline;}
 #add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:0;}
 #add-fac-txt h4{font-size:14px;}
 #add-fac-form-extra{position:relative;}
-.self_storage_advertising #type-one-r-col ul.tabular{border:none;margin-left:15px;margin-top:-40px;}
-.self_storage_advertising #type-one-r-col ul.tabular li{display:block;float:left;height:39px;margin-right:2px;position:relative;text-align:center;width:136px;}
-.self_storage_advertising #type-one-r-col ul.tabular li a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-tabs-bg-inactive.png) no-repeat scroll 0 0 transparent;color:#fff;display:block;height:39px;padding:14px 0 0;text-align:center;text-shadow:1px 1px 0 #666;width:138px;}
-.self_storage_advertising #type-one-r-col ul.tabular li.active a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-tabs-bg-active.png) no-repeat scroll 0 0 transparent;color:#fff;height:39px;padding-top:14px;}
-
+#type-one-r-col #add_fac_tabs.tabular{border:none;margin-left:15px;margin-top:-40px;}
+#type-one-r-col #add_fac_tabs.tabular li{display:block;float:left;height:39px;margin-right:2px;position:relative;text-align:center;width:136px;}
+#type-one-r-col #add_fac_tabs.tabular li a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-tabs-bg-inactive.png) no-repeat scroll 0 0 transparent;color:#fff;display:block;height:39px;padding:14px 0 0;text-align:center;text-shadow:1px 1px 0 #666;width:138px;}
+#type-one-r-col #add_fac_tabs.tabular li.active a{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-tabs-bg-active.png) no-repeat scroll 0 0 transparent;color:#fff;height:39px;padding-top:14px;}
 
 #type-one-r-col ul.tabular{border-bottom:5px solid #ccc;height:39px;}
 #type-one-r-col ul.tabular li{display:block;float:left;margin-right:5px;position:relative;text-align:center;}
@@ -3360,8 +3359,7 @@ p.breadcrumb a{color:#fff;}
 #mem-types p{margin:20px;}
 #types-btn{-moz-border-radius-bottomleft:6px;border-radius-bottomleft:6px;-webkit-border-radius-bottomleft:6px;-moz-border-radius-bottomright:6px;border-radius-bottomright:6px;-webkit-border-radius-bottomright:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat-x;color:#fff;display:block;float:right;margin-right:15px;padding:6px 0 5px;text-align:center;text-decoration:none;width:100px;}
 
-.self_storage_advertising #hr-divider{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 20px;width:712px;}
-.self_storage_advertising #hr-divider{display:inline-block;}
+.hr-divider{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 20px;width:712px;}
 
 #modeL_search{margin:2px 0 0 0;}
 #modeL_search .required{width:185px;}
@@ -3477,3 +3475,5 @@ p.breadcrumb a{color:#fff;}
 
 #list-type td.yes{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/cmark.png) no-repeat center;}
 #list-type td.no{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/xmark.png) no-repeat center;}
+
+#smpl-lstng{margin:0 0 20px -7px;}

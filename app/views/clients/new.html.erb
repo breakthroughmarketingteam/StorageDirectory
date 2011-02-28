@@ -29,48 +29,51 @@
                             <h3>Most Complete Self Storage Locator On The Web</h3>
                             <p>Join our Self Storage Network and enjoy increased online exposure. Use our simple online marketing tools to convert leads into rentals. Let your customers rent a self storage unit online 24/7/365 from anywhere.</p>
                         </div>
-                   
-                        <div id="add-fac-form">
-                            <% form_for @client, :html => { :class => 'silent' } do |f| %>
-                                <span class="sub_head">Find your Facility and Get Started.</span>
-                                <div>
-                                    <%= f.label :company, 'Facility Name:', :class => 'label' %>
-                                    <%= f.text_field :company, :value => (@listing.title if @listing), :class => 'required focus_me', :rel => 'client[company]' %>
-                                </div>
+                   	
+						<div>
+                        	<div id="add-fac-form">
+	                            <% form_for @client, :html => { :class => 'silent' } do |f| %>
+	                                <span class="sub_head">Find your Facility and Get Started.</span>
+	                                <div>
+	                                    <%= f.label :company, 'Facility Name:', :class => 'label' %>
+	                                    <%= f.text_field :company, :value => (@listing.title if @listing), :class => 'required focus_me', :rel => 'client[company]' %>
+	                                </div>
 
-                                <div id="email_check">
-                                    <%= f.label :email, 'Contact Email:', :class => 'email-label' %>
-                                    <%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
-                                    <%= f.text_field :email, :class => "email#{ ' focus_onload' if @listing }" %>
-                                </div>
+	                                <div id="email_check">
+	                                    <%= f.label :email, 'Contact Email:', :class => 'email-label' %>
+	                                    <%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
+	                                    <%= f.text_field :email, :class => "email#{ ' focus_onload' if @listing }" %>
+	                                </div>
 
-                                <div id="city">
-                                    <label class="label">City:</label>
-                                    <%= text_field_tag 'listing[city]', (@listing.city if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_names|3' %>
-                                </div>
-                                <div id="state">
-                                    <label class="label">State:</label>
-                                    <%= text_field_tag 'listing[state]', (@listing.state if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'States_abbrevs|1', :maxlength => 2 %>
-                                </div>
+	                                <div id="city">
+	                                    <label class="label">City:</label>
+	                                    <%= text_field_tag 'listing[city]', (@listing.city if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'UsCity_names|3' %>
+	                                </div>
+	                                <div id="state">
+	                                    <label class="label">State:</label>
+	                                    <%= text_field_tag 'listing[state]', (@listing.state if @listing), :class => 'required autocomplete', :'data-autocomp-source' => 'States_abbrevs|1', :maxlength => 2 %>
+	                                </div>
 
-                                <div id="submit_wrap">
-                                    <a id="signup_button" class="search-button popper" href="#">Sign Up</a>
-                                    <%= ajax_loader %>
-                                    <input type="submit" name="commit" class="hidden">
+	                                <div id="submit_wrap">
+	                                    <a id="signup_button" class="search-button popper" href="#">Sign Up</a>
+	                                    <%= ajax_loader %>
+	                                    <input type="submit" name="commit" class="hidden">
 									
-                                </div>
-                            <% end %>                   
-                        </div>
+	                                </div>
+	                            <% end %>                   
+	                        </div>
            
-                        <div id="price-block">
-                            <h4 class="arrow">Activate your Facility<br />
-                                <strong>Absolutely Free!</strong><br />
-								Your Already Listed!
-                            </h4>
-                            <p id="join-now">Check out all the <a href="#click-features_tab" class="aProxy">Features</a> you'll get for free!</p>
+	                        <div id="price-block">
+	                            <h4 class="arrow">Activate your Facility<br />
+	                                <strong>Absolutely Free!</strong><br />
+									Your Already Listed!
+	                            </h4>
+	                            <p id="join-now">Check out all the <a href="#click-features_tab" class="aProxy">Features</a> you'll get for free!</p>
 							
-                        </div>
-           
+	                        </div>
+							<br class="clear" />
+           				</div>
+
                         <div id="add-fac-txt">
                             <p>Find your self storage facility and become part of our network of successful self storage facilities across the country. Our services go far beyond a directory and our main focus is getting the most out of the web for your self storage facility.</p>
                             <p>We've put together the best Online Marketing Tools available specifically tailored for your self storage facility needs. Sign up for Free and benefit from these easy-to-use tools and reports that increase leads, walk-ins, phone calls, and ultimately gain more unit rentals.</p>
@@ -79,14 +82,14 @@
                             <div class="phone">Call <span><%= $_usssl_phone %></span> For More Information.</div>
                         </div>           
                    
-                        <div id="hr-divider" class="inline"></div>
+                        <div class="hr-divider"></div>
+						<div>
+							<h3>All About Your Facility In One Place</h3>
+							<p>We have developed a cost effective, powerful and non-conventional website. With cutting edge technology and marketing tools that apply locally and nationally.  Your facility listing will give all the necessary information to the customers who are ready to rent. The more complete your profile is, the easier the decision making will be.</p>
 						
-						<h3>All About Your Facility In One Place</h3>
-						<p>We have developed a cost effective, powerful and non-conventional website. With cutting edge technology and marketing tools that apply locally and nationally.  Your facility listing will give all the necessary information to the customers who are ready to rent. The more complete your profile is, the easier the decision making will be.</p>
-						
-						<img id="smpl-lstng"src="images/ui/storagelocator/listing-sample.jpg"/>
-						
-						<div id="hr-divider" class="inline"></div>
+							<img id="smpl-lstng"src="/images/ui/storagelocator/listing-sample.jpg"/>
+						</div>
+						<div class="hr-divider"></div>
                        
                         <h3><span class="t-span">Self Storage</span><br/>Online Marketing & Unit Rentals At It's Best</h3>
                        
@@ -334,7 +337,7 @@
                        
                         <p><em>Sign up and create an account now, or simply contact us or call 1-888-222-0225, one of our friendly account managers will be happy to set up an account for you. We offer support to any size companies whether you’re looking to add one or more self storage facilities.</em></p>
                        
-                        <div id="hr-divider"></div>
+                        <div class="hr-divider"></div>
                        
                         <div id="pms">
                             <h3>Synchronize Your Facility Details With Your Profile</h3>
