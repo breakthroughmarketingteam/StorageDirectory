@@ -2241,6 +2241,8 @@ p.breadcrumb a{color:#fff;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
+#post-image{margin:0 auto;}
+#blog-post img{border:1px solid #CCCCCC;margin:15px auto 30px;padding:10px;}
 
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
@@ -2255,3 +2257,5 @@ p.breadcrumb a{color:#fff;}
 #list-type td.no{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/xmark.png) no-repeat center;}
 
 #smpl-lstng{margin:0 0 20px -7px;}
+
+#add_helptext_link{top:30px;}
