@@ -10,7 +10,7 @@
 		<link rel="alternate" type="application/rss+xml" title="Self Storage Blog" href="http://<%= request.host %>/blog.rss" />
         <title><%= yield :title %></title>
 		
-		<%= "<script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ %>
+		<%= "<script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) %>
 		<%= '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user @user_stat}';</script>" if current_user && current_user.has_role?('advertiser', 'tenant') %>
 		<%= "<script type='text/javascript'>var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>

@@ -139,10 +139,10 @@ module ListingsHelper
   end
   
   def display_logo(listing, options = {})
-    @min_title_len = 21
+    @min_title_len ||= 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(secure_path_fix(listing.logo.url(:thumb)), options), facility_path_for(listing))}</div>"
+      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb), options), facility_path_for(listing))}</div>"
       
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
       link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path_for(listing), :class => 'standard_logo'
@@ -162,6 +162,14 @@ module ListingsHelper
         "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
       end
     end
+  end
+  
+  def map_data_for(listing, logo_options = {})
+    hash = {}
+    %w(id title address city state zip lat lng).each do |attribute|
+      hash.store attribute.to_sym, CGI.escape(listing.send(attribute).to_s)
+    end
+    hash.merge :thumb => display_logo(listing, logo_options)
   end
   
   def get_storage_type

@@ -2,8 +2,8 @@
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
-STYLESHEET_INCLUDES = ['plugins/jquery.ui', 'plugins/jquery.jqplot', 'common', 'ajaxful_rating', 'themes/storagelocator/style']
-JAVASCRIPT_INCLUDES = ['swfobject_modified', 'ckeditor/ckeditor', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", 'plugins/excanvas.min', 'plugins/jquery.jqplot.min', 'plugins/jqplot.dateAxisRenderer.min', 'plugins/jqplot.canvasTextRenderer.min', 'plugins/jqplot.canvasAxisTickRenderer.min', 'plugins/jqplot.highlighter.min', 'plugins/jqplot.cursor.min', "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application']
+STYLESHEET_INCLUDES = ['plugins/jquery.ui', 'plugins/jquery.jqplot', 'common', 'ajaxful_rating', 'plugins/ckeditor_skin', 'themes/storagelocator/style']
+JAVASCRIPT_INCLUDES = ['swfobject_modified', 'ckeditor/ckeditor', 'ckeditor/config', 'ckeditor/lang/en', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", 'plugins/excanvas.min', 'plugins/jquery.jqplot.min', 'plugins/jqplot.dateAxisRenderer.min', 'plugins/jqplot.canvasTextRenderer.min', 'plugins/jqplot.canvasAxisTickRenderer.min', 'plugins/jqplot.highlighter.min', 'plugins/jqplot.cursor.min', "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application']
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

@@ -27,8 +27,8 @@ class ListingsController < ApplicationController
       @location = @search.location
       @listings = @search.results # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect(&:map_data) }
-    
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for listing } }
+      
       # updates the impressions only for listings on current page if the search has changed
       if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
         Listing.transaction do
@@ -45,7 +45,7 @@ class ListingsController < ApplicationController
             render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
           else
             # implementing this ajax response for the search results 'Show More Results' button
-            render :json => { :success => !@listings.blank?, :data => _get_listing_partials(@listings), :maps_data => @map_data }
+            render :json => { :success => !@listings.blank?, :data => { :listings => _get_listing_partials(@listings), :maps_data => @map_data } }
           end
         end
       end
@@ -61,7 +61,7 @@ class ListingsController < ApplicationController
       end
       
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| s[:listing].map_data } }
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| @template.map_data_for s[:listing] } }
     else
       @listing_set = []
       @location = @search.location
