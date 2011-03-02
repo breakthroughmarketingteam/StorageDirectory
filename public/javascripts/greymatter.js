@@ -26,7 +26,7 @@ $(function(){
 	$('.numeric_phone').formatPhoneNum();     // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 	$('.tip_trigger').tooltip();
 	$('.txt_ldr').txt_loader();
-	$('.shimmy').shimmy();
+	$('.shimmy').shimmy('#page-cnt');
 	$('.aProxy').aProxy();
 	
 	$('.focus_onload').eq(0).focus();
@@ -1323,10 +1323,60 @@ $.fn.txt_loader = function(options) {
 	});
 }
 
-$.fn.shimmy = function() {
-	return this.each(function() {
+$.fn.shimmy = function(parent, ops) {
+	var options = {
+			anchor: 'left'
+		},
+		parent = $(parent);
+	$.extend(options, ops || {});
+	
+	function shimmy_meow(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
+		var window_offset = getScrollXY(),
+			diff = (window_offset[1] + 10) - el_offset.top;
 		
+		if (diff >= 0 && parent_height >= btm_from_top + diff) 
+			el.css({ 'position': 'fixed', 'top': 0 });
+		else if (diff >= 0 && parent_height <= btm_from_top + diff) 
+			el.css({ 'position': 'relative', 'top': (parent_height - el_pos.top - el_height - pad) +'px' });
+		else 
+			el.css('position', 'relative');
+	}
+	
+	return this.each(function() {
+		var $this = $(this).css({ 'position': 'relative', 'top': '0' }),
+			pad	  = 50,
+			this_offset	= $this.offset(),
+			this_height = $this.height(),
+			this_pos 	= $this.position(parent),
+			parent_height = parent.height(),
+			btm_from_top  = this_pos.top + this_height + pad;
+		
+		shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+		
+		$(window).scroll(function() {
+			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+		});
 	});
+}
+
+function getScrollXY() {
+	  var scrOfX = 0, scrOfY = 0;
+	
+	  if ( typeof( window.pageYOffset ) == 'number' ) {
+		    //Netscape compliant
+		    scrOfY = window.pageYOffset;
+		    scrOfX = window.pageXOffset;
+	  } else if ( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+		    //DOM compliant
+		    scrOfY = document.body.scrollTop;
+		    scrOfX = document.body.scrollLeft;
+	  } else if ( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+		    //IE6 standards compliant mode
+		    scrOfY = document.documentElement.scrollTop;
+		    scrOfX = document.documentElement.scrollLeft;
+	  }
+	
+	  return [scrOfX, scrOfY];
 }
 
 $.fn.slideUpRemove = function(speed, callback) {

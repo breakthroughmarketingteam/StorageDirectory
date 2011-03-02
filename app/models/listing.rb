@@ -259,14 +259,6 @@ class Listing < ActiveRecord::Base
   def full_address; self.map.full_address end
   def city_state_zip; self.map.city_state_zip end
   
-  def map_data
-    hash = {}
-    %w(id title address city state zip lat lng).each do |attribute|
-      hash.store attribute.to_sym, CGI.escape(self.send(attribute).to_s)
-    end
-    hash.merge :thumb => (self.pictures.empty? ? nil : self.pictures.sort_by(&:position).first.facility_image.url(:thumb))
-  end
-  
   # TODO: make this work
   def self.update_stat(listings, stat, request)
     t = Time.now

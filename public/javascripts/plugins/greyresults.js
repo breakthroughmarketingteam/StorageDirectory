@@ -457,21 +457,25 @@ $(function(){
 			plus_sign 	 = $this.find('span > span').hide(),
 			ajax_loader  = $('.ajax_loader', $this).show(),
 			last_index   = parseInt($('.num_icon', '.listing').filter(':last').text().replace(/^\s+|\s+$/g, '')) + 1,
-			page 		 = $('input[name=page]', $this.parent()).eq(0).val();
+			page 		 = parseInt($('input[name=page]', $this.parent()).eq(0).val());
 		
 		if (!this_form.data('submitting')) {
 			this_form.data('submitting', true);
 			
 			$.getJSON(this_form.attr('action'), this_form.serialize(), function(response) {
 				$.with_json(response, function(data) {
-					for (var i = 0, len = data.length; i < len; i++) {
-						var listing = $(data[i]);
+					var listings = data.listings;
+					
+					for (var i = 0, len = listings.length; i < len; i++) {
+						var listing = $(listings[i]);
 						$('.num_icon', listing).text(last_index + i);
 						results_wrap.append(listing);
 					}
-
+					
+					$.setGmap(data.maps_data, 'main_map', last_index-1);
+					
 					// this updates the page count so the next time the user clicks, we pull the correct data
-					$('input[name=page]').val(parseInt(page) + 1);
+					$('input[name=page]').val(page + 1);
 
 					var range 		= $('.results_range'),
 						range_start = parseInt(range.eq(0).text().split('-')[0]),
@@ -1070,52 +1074,56 @@ function make_indexed_icon(index) {
 
 function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more query params
 	var p;
-	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=10x3';
-	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=5x3';
-	else			  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=11&offset=5x5';
+	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=14&offset=10x3';
+	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=14&offset=5x3';
+	else			  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=11&offset=5x5';
 	return p;
 }
 
 GmapMarkers = [];
-$.setGmap = function(data, el) {
+$.setGmap = function(data, el, page) {
 	if (typeof el == 'undefined') el = 'main_map';
+	if (typeof page == 'undefined') page = 0;
 	
-	Gmap = new GMap2(document.getElementById(el));
-	Gmap.addControl(new GLargeMapControl());
-	Gmap.addControl(new GScaleControl());
-	Gmap.addControl(new GMapTypeControl());
-	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 16));
-	Gmap.enableDoubleClickZoom();
-	Gmap.disableContinuousZoom();
-	Gmap.disableScrollWheelZoom();
-	
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
+	if (typeof Gmap == 'undefined') {
+		Gmap = new GMap2(document.getElementById(el));
+		Gmap.addControl(new GLargeMapControl());
+		Gmap.addControl(new GScaleControl());
+		Gmap.addControl(new GMapTypeControl());
+		Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 16));
+		Gmap.enableDoubleClickZoom();
+		Gmap.disableContinuousZoom();
+		Gmap.disableScrollWheelZoom();
+
+		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
+	}
 
 	//add result markers
 	var markers = data.maps;
 
 	for (var i = 0, len = markers.length; i < len; i++) {
-		var photo = markers[i].thumb ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '';
-		var title = markers[i].title.replaceAll('+', ' ');
-		var body = '<p>'+ photo + 
+		var photo = markers[i].thumb,// ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '',
+			title = markers[i].title.replaceAll('+', ' '),
+			body = '<p>'+ photo + 
 						'<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span>'+ 
 						'<span class="listing_address">'+ markers[i].address.replaceAll('+', ' ') +'<br/>'+ markers[i].city.replaceAll('+', ' ') +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
-					'</p>';
+					'</p>',
+			paged_index = page + i + 1;
 		
-		var marker = addMarker(make_indexed_icon(i+1), markers[i].lat, markers[i].lng, title, body);
-		marker.mIndex = i+1;
+		var marker = addMarker(make_indexed_icon(paged_index), markers[i].lat, markers[i].lng, title, body);
+		marker.mIndex = paged_index;
 		marker.listing_id = markers[i].id;
 
-		GmapMarkers[i] = marker;
+		GmapMarkers[page + i] = marker;
 	}
 
 	//bind mouseover result row to highlight map marker
-	jQuery('.listing').live('mouseenter', function(){
+	$('.listing').live('mouseenter', function(){
 		var id = $(this).attr('id').split('_')[1];
 		highlightMarker(id);
 	});
 	
-	jQuery('.listing').live('mouseleave', function(){
+	$('.listing').live('mouseleave', function(){
 		var id = $(this).attr('id').split('_')[1];
 		unhighlightMarker(id);
 	});

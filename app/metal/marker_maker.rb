@@ -3,16 +3,16 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 
 class MarkerMaker
   class << self
-    # URLs for marker images by number size:
-    # ------> (n < 10): /marker_maker?n=<num>&color=white&font_size=14&offset=10x3
-    # ------> (n > 9 && n < 100): /marker_maker?n=<num>&color=white&offset=5x3&font_size=14
-    # ------> (n > 99): /marker_maker?n=<num>&color=white&offset=5x5&font_size=11
+    # URLs for marker images by number size, where <num> is the marker index:
+    # (n < 10): /marker_maker?n=<num>&color=white&font_size=14&offset=10x3
+    # (n > 9 && n < 100): /marker_maker?n=<num>&color=white&offset=5x3&font_size=14
+    # (n > 99): /marker_maker?n=<num>&color=white&offset=5x5&font_size=11
     
     def call(env)
       if env['PATH_INFO'] =~ /^\/marker_maker/
         params = HashWithIndifferentAccess[*split_query(env['QUERY_STRING'])] # query string to hash
-        @image = Magick::Image.read(RAILS_ROOT+ (params.delete(:base_image) || '/public/images/ui/storagelocator/result-number.png')).first
         
+        @image = Magick::Image.read(RAILS_ROOT+ (params.delete(:base_image) || '/public/images/ui/storagelocator/result-number.png')).first
         operate params.delete(:n), params.symbolize_keys
         
         [200, {'Content-Type' => 'image/png'}, [@image.to_blob]]
@@ -21,8 +21,7 @@ class MarkerMaker
       end
     end
     
-    # Code taken from Fleximage: https://github.com/Squeegy/fleximage
-    
+    # Code for #operate #symbol_to_blending_mode and #symbol_to_gravity taken from Fleximage's Operator module: https://github.com/Squeegy/fleximage
     def operate(string_to_write, options = {})
       options = {
         :alignment   => :top_left,
@@ -41,23 +40,24 @@ class MarkerMaker
         }
       }.merge(options)
       
-      options[:offset] = size_to_xy(options[:offset])
+      offset = size_to_xy options[:offset]
+      shadow = options[:shadow]
 
       # prepare drawing surface
       text = Magick::Draw.new
-      text.gravity        = symbol_to_gravity(options[:alignment])
+      text.gravity        = symbol_to_gravity options[:alignment].to_sym
       text.fill           = options[:color]
       text.text_antialias = options[:antialias]
       text.pointsize      = options[:font_size].to_i
       text.rotation       = options[:rotate]
-      text.font_weight    = symbol_to_font_weight(options[:font_weight].to_sym)
+      text.font_weight    = symbol_to_font_weight options[:font_weight].to_sym
 
       if options[:stroke][:width] > 0
         text.stroke_width = options[:stroke][:width]
         text.stroke = options[:stroke][:color]
       end
 
-      # assign font path with to rails root unless the path is absolute
+      # assign font path with rails root unless the path is absolute
       if options[:font]
         font = options[:font]
         font = "#{RAILS_ROOT}/#{font}" unless font =~ %r{^(~?|[A-Za-z]:)/}
@@ -66,15 +66,15 @@ class MarkerMaker
 
       # draw text on transparent image
       temp_image = Magick::Image.new(@image.columns, @image.rows) { self.background_color = 'none' }
-      temp_image = temp_image.annotate(text, 0, 0, options[:offset][0], options[:offset][1], string_to_write)
+      temp_image = temp_image.annotate(text, 0, 0, offset[0], offset[1], string_to_write)
 
       # add drop shadow to text image
-      if options[:shadow]
+      if shadow
         shadow_args = [2, 2, 1, 1]
-        if options[:shadow].is_a?(Hash)
+        if shadow.is_a?(Hash)
           #shadow_args[0], shadow_args[1] = size_to_xy(options[:shadow][:offset]) if options[:shadow][:offset]
-          shadow_args[2] = options[:shadow][:blur] if options[:shadow][:blur]
-          shadow_args[3] = options[:shadow][:opacity] if options[:shadow][:opacity]
+          shadow_args[2] = shadow[:blur] if shadow[:blur]
+          shadow_args[3] = shadow[:opacity] if shadow[:opacity]
         end
         shadow = temp_image.shadow(*shadow_args)
         temp_image = shadow.composite(temp_image, 0, 0, symbol_to_blending_mode(:over))
@@ -89,7 +89,7 @@ class MarkerMaker
       case when size.is_a?(Array) && size.size == 2 # [320, 240]
         size
       when size.to_s.include?('x') # "320x240"
-        size.split('x').collect(&:to_i)
+        size.split('x').map &:to_i
       else # Anything else, convert the object to an integer and assume square dimensions
         [size.to_i, size.to_i]
       end
@@ -131,7 +131,7 @@ class MarkerMaker
     end
     
     def symbol_to_font_weight(weight)
-      @font_weights = {
+      @font_weights ||= {
         :normal  => Magick::NormalWeight,
         :bold    => Magick::BoldWeight,
         :bolder  => Magick::BolderWeight,
