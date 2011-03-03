@@ -332,7 +332,7 @@ module ApplicationHelper
     
     case controller_name when 'clients'
       html << "<li>Total: #{Client.count}</li>"
-      html << "<li>Verified: #{Client.verified_count}</li>"
+      html << "<li>Unverified: #{Client.unverified_count}</li>"
       html << "<li>Active: #{Client.active_count}</li>"
       html << "<li><a class='click_thru' href='/ajax/export_csv?model=Client'>Export</a></li>"
       any = true
@@ -637,10 +637,6 @@ module ApplicationHelper
   
   def secure_path_fix(url)
     request.protocol =~ /(https)/i ? url.sub('http:', 'https:') : url
-  end
-  
-  def logged_in_as?(*roles)
-    current_user && current_user.has_role?(*roles)
   end
   
   def ssl_seal

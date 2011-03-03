@@ -16,6 +16,8 @@ class Client < User
   
   accepts_nested_attributes_for :listings, :mailing_address, :billing_info
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
+  named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
+  named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
   def initialize(params = {})
     super params[:client]
@@ -45,8 +47,8 @@ class Client < User
     self.count :conditions => { :status => 'active' }
   end
   
-  def self.verified_count
-    self.count :conditions => 'verification_sent_at IS NOT NULL'
+  def self.unverified_count
+    self.count :conditions => ['status != ?', 'active']
   end
   
   def active?

@@ -92,7 +92,8 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :user_stats
   end
   
-  map.resources :clients, :member => { :edit_info => :get, :verify => :post } do |clients|
+  map.resources :inactive_clients
+  map.resources :clients, :member => { :edit_info => :get, :verify => :post, :verify_listings => :post } do |clients|
     clients.resources :listings, :collection => { :claim_listings => :post }, :member => { :disable => :post } do |listings|
       listings.resources :staff_emails
       listings.resources :predefined_specials, :member => { :toggle => :post }

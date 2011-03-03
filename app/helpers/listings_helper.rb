@@ -145,7 +145,9 @@ module ListingsHelper
       "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb), options), facility_path_for(listing))}</div>"
       
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
-      link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path_for(listing), :class => 'standard_logo'
+      link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path_for(listing), :class => 'standard_logo' do
+        "<div class='clogo'>#{image_tag(standard_logo_path(logo), options)}</div>"
+      end
       
     else
       get_listing_logos

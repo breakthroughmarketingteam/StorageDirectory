@@ -1225,7 +1225,7 @@ $(function() {
 			success: function(data) {
 				form.replaceWith('<p class="framed center">'+ data +'</p>');
 			}
-		})
+		});
 		
 		return false;
 	});
