@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110224211614) do
+ActiveRecord::Schema.define(:version => 20110303171632) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -125,6 +125,14 @@ ActiveRecord::Schema.define(:version => 20110224211614) do
     t.boolean  "closed"
     t.integer  "listing_id"
     t.string   "hours_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "claimed_listings", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "client_id"
+    t.boolean  "verified"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

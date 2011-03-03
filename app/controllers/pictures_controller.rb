@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
   
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_models, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:show, :new, :edit, :update]
   
   def index
     render :layout => false if request.xhr?
@@ -61,6 +61,7 @@ class PicturesController < ApplicationController
   def destroy
     return if current_user.nil?
     
+    @listing = Listing.find params[:listing_id]
     @client = (current_user && current_user.has_role?('admin', 'staff')) ? @listing.client : current_user
     @listing = @client.listings.find(params[:listing_id])
     @picture = @listing.pictures.find(params[:id])

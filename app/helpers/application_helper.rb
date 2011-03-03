@@ -639,6 +639,10 @@ module ApplicationHelper
     request.protocol =~ /(https)/i ? url.sub('http:', 'https:') : url
   end
   
+  def logged_in_as?(*roles)
+    current_user && current_user.has_role?(*roles)
+  end
+  
   def ssl_seal
 		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com/images/3/siteseal_gd_3_h_l_m.gif' />"
   end

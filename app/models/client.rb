@@ -1,6 +1,7 @@
 class Client < User
   
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
+  has_many :claimed_listings, :dependent => :destroy
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
