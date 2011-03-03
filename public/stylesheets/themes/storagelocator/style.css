@@ -1811,7 +1811,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #fac_name span,.region_head_bar h2 span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{margin:25px 0;overflow:hidden;}
-#sl-intro .inner{float:left;}
+#sl-intro .inner{float:left;padding:0;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
 #sl-intro #sl-special{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;text-align:center;width:327px;}
 #sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;}
