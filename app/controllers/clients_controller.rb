@@ -144,7 +144,7 @@ class ClientsController < ApplicationController
     if @listings
       @client.save
       @claimed_listings.map &:destroy
-      Notifier.deliver_activated_listings_notification @client, @listings
+      Notifier.delay.deliver_activated_listings_notification @client, @listings
       
       respond_to do |format|
         format.html { redirect_back_or_default '/admin' }
