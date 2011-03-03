@@ -2105,6 +2105,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-units #rslt-list-bg .listing .inner > img{margin:11px 0 0 10px;}
 #ov-units .listing{margin-bottom:0;height:100px;}
 #ov-units .listing.unverified{background:#ebebeb;}
+#ov-units .listing.claimed{background:#3a3;}
 #ov-units .listing .inner .rslt-miles{width:60px;}
 #ov-units .listing .inner .profile_completion{height:86px;padding:20px 0 0 15px;position:relative;width:200px;}
 #client_listing_box .profile_completion .progress{height:30px;border:1px solid #ccc;}
@@ -2848,7 +2849,7 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #disocunt_pic{margin-top:5px;}
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
-.grn_btn{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat scroll 0 0 transparent;border:2px outset #eee;color:#fff;cursor:pointer;font-size:100%;font-weight:bold;padding:4px 25px;text-shadow:1px 1px 0 #666;text-transform:uppercase;}
+.grn_btn{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat;border:2px outset #eee;color:#fff;cursor:pointer;font-size:100%;font-weight:bold;padding:4px 25px;text-shadow:1px 1px 0 #666;text-transform:uppercase;}
 .ui-menu .ui-menu-item a{padding:2px 11px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:12px;margin-bottom:10px;}
@@ -3021,7 +3022,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .edit_action .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
 #feat-list .clogo{border:1px solid #666;}
 .show_action a.dlogo_wrap span{display:block;line-height:24px;margin-left:4px;padding:5px;top:20px;width:164px;}
-#ov-units .clogo,#ov-units .dlogo_wrap{float:left;height:77px;margin:10px;width:102px;}
+#ov-units .clogo,#ov-units .standard_logo,#ov-units .dlogo_wrap{float:left;height:77px;margin:10px;width:102px;}
 
 .show_action #sb-title h2{background:none;margin:16px 0 0 20px;padding:0;}
 .show_action #sl-header h2{font-size:20px;margin:8px 0 0 15px;}
