@@ -142,6 +142,7 @@ class ClientsController < ApplicationController
     @client.listings << @listings
     
     if @listings
+      @client.enable_listings!``
       @client.save
       @claimed_listings.map &:destroy
       Notifier.delay.deliver_activated_listings_notification @client, @listings

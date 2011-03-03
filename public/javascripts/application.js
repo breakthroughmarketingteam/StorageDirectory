@@ -1757,6 +1757,8 @@ var workflow_settings = {
 	],
 	finish_action : function(wizard){ 
 		wizard.workflow.parent().dialog('destroy').remove();
+		$('#add-fac-form', '#top_fac_page').html('<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>').css('width', '93.3%');
+		$('#price-block',  '#top_fac_page').hide();
 		$('#new_client')[0].reset();
 		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
