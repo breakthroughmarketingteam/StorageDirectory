@@ -1242,6 +1242,7 @@ span.blue{color:#4c4bcc;}
 #page-ctr-in{padding-bottom:30px;position:relative;top:-115px;}
 #head-ctr-in,#page-ctr-in{margin:0px auto;width:980px;}
 #head-ctr-in #dock{margin:0;width:476px;position:absolute;bottom:98px;right:-20px;z-index:20;}
+#head-ctr-in #dock.less{width:400px;}
 #page-cnt{background-color:#fff;border-radius-topleft:16px;-moz-border-radius-bottomleft:16px;-webkit-border-radius-bottomleft:16px;border-radius-bottomright:16px;-moz-border-radius-bottomright:16px;-webkit-border-radius-bottomright:16px;margin-top:-20px;padding-top:20px;}
 #page-ctr-wrap{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/) no-repeat center;}
 
@@ -3236,7 +3237,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_pictures .framed{margin-bottom:20px;}
 #sl-edit-tabs #fac_pictures #sl-tabs-pict-in{font-size:12px;float:left;margin-bottom:17px;position:relative;width:100%;}
 #sl-edit-tabs #fac_pictures #picture_facility_image{margin-left:10px;}
-#sl-edit-tabs #fac_pictures ul#sl-tabs-pict-gall{width:32.5%;float:left;overflow:visible;}
+#sl-edit-tabs #fac_pictures ul#sl-tabs-pict-gall{width:32.5%;float:left;position:relative;z-index:1;}
 #sl-tabs-pict-gall .delete_link{background:none;}
 #sl-edit-tabs #sl-tabs-pict-in li{background:#eee;float:left;height:80px;margin:0 10px 20px 0;width:29%;}
 #sl-edit-tabs #sl-tabs-pict-in li img{width:100%;}

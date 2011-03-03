@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  listing_id: 1
+  client_id: 1
+  verified: false
+
+two:
+  listing_id: 1
+  client_id: 1
+  verified: false

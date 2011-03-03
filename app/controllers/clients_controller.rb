@@ -2,11 +2,11 @@ class ClientsController < ApplicationController
   
   ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate
   skip_before_filter :simple_auth, :only => :activate
-  before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
   before_filter :get_client, :only => [:edit, :edit_info]
   
   def index
+    get_models_paginated
     render :layout => false if request.xhr?
   end
 
@@ -152,5 +152,5 @@ class ClientsController < ApplicationController
   def get_client
     @client = current_user && current_user.has_role?('admin', 'staff') ? Client.find_by_id(params[:id]) : current_user
   end
-
+  
 end
