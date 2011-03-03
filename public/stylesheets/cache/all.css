@@ -1886,6 +1886,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
+.gmnoprint .dlogo_wrap{height:85px;}
 .facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
 .listing .facility-logo span{font-size:12px;line-height:16px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
@@ -3463,6 +3464,8 @@ p.breadcrumb a{color:#fff;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
+#post-image{margin:0 auto;}
+#blog-post img{border:1px solid #CCCCCC;margin:15px auto 30px;padding:10px;}
 
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
@@ -3477,3 +3480,5 @@ p.breadcrumb a{color:#fff;}
 #list-type td.no{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/xmark.png) no-repeat center;}
 
 #smpl-lstng{margin:0 0 20px -7px;}
+
+#add_helptext_link{top:30px;}

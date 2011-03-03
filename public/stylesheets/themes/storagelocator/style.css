@@ -664,6 +664,7 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
+.gmnoprint .dlogo_wrap{height:85px;}
 .facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
 .listing .facility-logo span{font-size:12px;line-height:16px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
