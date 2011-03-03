@@ -51,7 +51,7 @@
 	        <div id="client_listing_box">
 	          <% unless @listings.empty? %>
 	            <div id="rslt-list-bg">
-	              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true } %>
+	              <%= render :partial => 'listings/listing', :collection => @listings, :locals => { :owned => true, :claimed => false } %>
 	              <%= will_paginate @listings %>
 	            </div>
 	
