@@ -20,6 +20,7 @@ class MigrateMapsToListing < ActiveRecord::Migration
       
         @listings.each_with_index do |listing, i|
           @@columns_to_add.each { |c| eval("listing.#{c} = (c == :zip ? prep_zip(listing.map.#{c}) : listing.map.#{c})") }
+          listing.save
           puts "-----> (#{sprintf("%.3f", ((i+1).to_f / count.to_f * 100))}% done) Migrated: Listing (#{listing.id})"
         end
       end
