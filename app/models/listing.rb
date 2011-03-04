@@ -249,13 +249,6 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  # TODO: figure this shit out
-  def address; self.map.address end
-  def city; self.map.city end
-  def state; self.map.state end
-  def zip; self.map.zip end
-  def lat; self.map.lat end
-  def lng; self.map.lng end
   def full_address; self.map.full_address end
   def city_state_zip; self.map.city_state_zip end
   

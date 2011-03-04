@@ -1497,7 +1497,7 @@ form .error p{margin:0 0 7px 0;}
 #feature_options li span.selected{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkmark.png) no-repeat 70% 62%;}
 #feature_options li span input{display:none;}
 
-#narrow_results_form #advanced_opts{background:none;border:0 none;overflow:visible;width:178px;}
+#narrow_results_form #advanced_opts{background:none;border:0 none;overflow:visible;width:178px;margin-bottom:20px;}
 #narrow_results_form #advanced_opts label{font-size:80%;}
 #type_select{margin:0 0 15px 9px;}
 #type_select select{width:72%;}
@@ -1775,7 +1775,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form div .left{float:right;}
 .virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
-#feat-list{width:172px;border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
+#feat-list{width:172px;border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:12px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #feat-list h2{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list .compare{margin:10px;font-size:120%;}
@@ -2233,7 +2233,7 @@ p.breadcrumb a{color:#fff;}
 
 #blog_page #sharing{float:left;margin:15px 0 0;padding:5px 0;width:100%;}
 
-#blog-side{margin:7px 10px 10px;}
+#blog-side{margin:7px 10px 10px;width:171px;}
 #blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;}
 #blog-side li.year{font-size:14px;list-style:disc inside;}
