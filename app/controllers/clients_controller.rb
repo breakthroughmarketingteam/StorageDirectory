@@ -1,12 +1,12 @@
 class ClientsController < ApplicationController
   
-  ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate
+  ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate, :verify_listings
   skip_before_filter :simple_auth, :only => :activate
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
-  before_filter :get_client, :only => [:edit, :edit_info]
+  before_filter :get_client, :only => [:edit, :edit_info, :verify_listings]
   
   def index
-    get_models_paginated
+    @clients = Client.activated.paginate :per_page => @per_page, :page => params[:page]
     render :layout => false if request.xhr?
   end
 
@@ -125,13 +125,32 @@ class ClientsController < ApplicationController
   end
   
   def verify
-    @client.update_attribute :verification_sent_at, Time.now
-    @partial = 'activation_email'
-    Blaster.delay.deliver_html_email @client.email, 'Your account is ready at USSelfStorageLocator.com', render_to_string(:layout => 'email_template')
+    if @client.update_attribute :verification_sent_at, Time.now
+      @partial = 'activation_email'
+      Blaster.delay.deliver_html_email @client.email, 'Your account is ready at USSelfStorageLocator.com', render_to_string(:layout => 'email_template')
     
-    respond_to do |format|
-      format.html { redirect_back_or_default '/admin' }
-      format.js { render :json => { :success => true } }
+      respond_to do |format|
+        format.html { redirect_back_or_default '/admin' }
+        format.js { render :json => { :success => true } }
+      end
+    end
+  end
+  
+  def verify_listings
+    @claimed_listings = ClaimedListing.find params[:claimed_listing_ids]
+    @listings = Listing.find @claimed_listings.map &:listing_id if @claimed_listings
+    @client.listings << @listings
+    
+    if @listings
+      @client.enable_listings!``
+      @client.save
+      @claimed_listings.map &:destroy
+      Notifier.delay.deliver_activated_listings_notification @client, @listings
+      
+      respond_to do |format|
+        format.html { redirect_back_or_default '/admin' }
+        format.js { render :json => { :success => true } }
+      end
     end
   end
   
@@ -150,7 +169,7 @@ class ClientsController < ApplicationController
   private
   
   def get_client
-    @client = current_user && current_user.has_role?('admin', 'staff') ? Client.find_by_id(params[:id]) : current_user
+    @client = user_is_a?('admin', 'staff') ? Client.find_by_id(params[:id]) : current_user
   end
   
 end

@@ -262,7 +262,11 @@ class ListingsController < ApplicationController
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
         listing = Listing.find id
-        listings << listing if listing
+        
+        if listing
+          listings << listing
+          @client.claimed_listings.create :listing_id => id
+        end
       end
       
       Notifier.delay.deliver_claimed_listings_alert(@client, listings)

@@ -31,6 +31,7 @@
 			<%= print_link '#mem_info', '#', :class => 'ps right right_space', :style => 'margin:-20px 17px 0 0' %>
 		</div>
 		
+		<%= link_to 'Activate Claimed Listings', verify_listings_client_url(@client, :claimed_listing_ids => @client.claimed_listings.map(&:id), :protocol => 'https'), :id => 'activate_listings', :class => 'click_thru grn_btn stack block left' unless @client.claimed_listings.empty? %>
 		<div id="ov-units" class="hideable">
 			<div class="ov-item-head">
 				<h3><span>Facilities</span></h3>
@@ -42,11 +43,10 @@
 			</div>
 
 			<div id="client_listing_box">
-				<% unless @client.listings.empty? %>
 				<div id="rslt-list-bg">
-					<%= render :partial => 'listings/listing', :collection => @client.listings, :locals => { :owned => true } %>
+					<%= render :partial => 'listings/listing', :collection => @client.listings, :locals => { :owned => true, :claimed => false } %>
+					<%= render :partial => 'listings/listing', :collection => @client.claimed_listings.map(&:listing), :locals => { :owned => true, :claimed => true } if user_is_a?('admin', 'staff') %>
 				</div>
-				<% end %>
 			</div>
 		</div>
 

@@ -106,6 +106,12 @@ class Notifier < ActionMailer::Base
     @body[:what] = what
   end
   
+  def activated_listings_notification(client, listings)
+    setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Facilities Have Been Activated'
+    @body[:client] = client
+    @body[:listings] = listings
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from

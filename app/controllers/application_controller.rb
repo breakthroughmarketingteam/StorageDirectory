@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
                 :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
-                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates
+                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates, :user_is_a?
   
   include UtilityMethods
   include Geokit
@@ -495,6 +495,10 @@ class ApplicationController < ActionController::Base
   # returns a boolean if the the current action matches any of the action passed in as a string or an array
   def in_mode?(*modes)
     [modes].flatten.any? { |m| action_name == m }
+  end
+  
+  def user_is_a?(*roles)
+    current_user && current_user.has_role?(*roles)
   end
   
   def scrub_blocks_model_attributes_params(attr_name = :place, param_name = :blocks_model_attributes, model_name = controller_name.singular.to_sym)

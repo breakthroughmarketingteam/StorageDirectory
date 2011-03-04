@@ -1,4 +1,4 @@
-<div id="dock"<%= ' class="less"' if logged_in_as?('advertiser', 'tenant') %>>
+<div id="dock"<%= ' class="less"' if user_is_a?('advertiser', 'tenant') %>>
 	<a href="<%= home_page %>">
 		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/self-storage-icon.png" alt="Self Storage" title="Self Storage" />
 		Self Storage
@@ -19,7 +19,7 @@
 		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/espanol-icon.png" alt="Español" title="Español" />
 		Spanish
 	</a>
-	<% unless logged_in_as?('advertiser', 'tenant') %>
+	<% unless user_is_a?('advertiser', 'tenant') %>
 		<a href="/self-storage-advertising">
 			<img src="/images/ui/storagelocator/add-facility-icon.png" alt="Self Storage Advertising" title="Self Storage Advertising" />
 			Self Storage Advertising

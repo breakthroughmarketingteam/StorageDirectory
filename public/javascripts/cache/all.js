@@ -4190,6 +4190,49 @@ $(function(){
 			return false;
 		});
 		
+		$('#activate_listings', '#ov-page-cnt').live('click', function() {
+			var $this = $(this);
+			
+			$.safeLinkPost($this, {
+				success: function(data) {
+					$this.slideUpRemove('slow');
+					$('.claimed.unverified', '#client_listing_box').removeClass('claimed unverified');
+				}, 
+				error: function() {
+					$this.data('sending', false);
+				}
+			})
+			
+			return false;
+		});
+		
+		$.safeLinkPost = function(link, options) {
+			var ops = {
+				method 	   : 'post',
+				success    : function(){},
+				error 	   : function(){},
+				al_where   : 'before',
+				al_context : link,
+				data	   : { authenticity_token: $.get_auth_token() }
+			};
+			$.extend(ops, options);
+
+			var link 		= $(link),
+				ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+
+			if (!link.data('x')) {
+				link.data('x', true);
+				ajax_loader.show();
+
+				$[ops.method](link.attr('href'), ops.data, function(response) {
+					$.with_json(response, ops.success, ops.error);
+
+					link.data('x', false);
+					ajax_loader.fadeOutRemove();
+				}, 'json');
+			}
+		}
+		
 		if ($.cookie('active_admin_link')) $('#'+ $.cookie('active_admin_link')).click();
 	}
 	
@@ -8610,7 +8653,7 @@ $(function() {
 			success: function(data) {
 				form.replaceWith('<p class="framed center">'+ data +'</p>');
 			}
-		})
+		});
 		
 		return false;
 	});
@@ -9142,6 +9185,8 @@ var workflow_settings = {
 	],
 	finish_action : function(wizard){ 
 		wizard.workflow.parent().dialog('destroy').remove();
+		$('#add-fac-form', '#top_fac_page').html('<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>').css('width', '93.3%');
+		$('#price-block',  '#top_fac_page').hide();
 		$('#new_client')[0].reset();
 		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
