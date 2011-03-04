@@ -1335,7 +1335,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,
-#blog_posts_controller.show_action #content,#tenants_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
+#blog_posts_controller.show_action #content,#tenants_controller #content,#blog_posts_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
 #listings_controller.edit_action #content{width:744px;}
 #clients_controller.self_storage_advertising #content{top:0;}
@@ -1866,7 +1866,6 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in li.feature_gate-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_perimeter-alarm-system{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-icon-g.png) no-repeat;}
 
-
 #sl-fac-detail-in #sl-phone{color:#339933;font-size:14px;font-weight:bold;line-height:18px;}
 #sl-fac-detail-in-edit p strong{font-weight:bold;color:#33c;margin-right:10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
@@ -2225,6 +2224,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.create_action #type-one-cnt-in,
 .edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in,#reservations_controller #type-one-cnt-in,
 #us_states_controller #type-one-cnt-in,#listings_controller.index_action #type-one-cnt-in{margin:15px 20px 10px 20px;}
+#blog_posts_controller.index_action #type-one-cnt-in{margin:0;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
 #listings_controller.locator_action #type-one-cnt-in,#listings_controller.home_action #type-one-cnt-in{margin:0;position:relative;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
@@ -2896,9 +2896,9 @@ filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0
 
 #price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
-#price-block a{font-weight:bold;text-decoration:none;}
+#price-block a{font-weight:bold;text-decoration:underline;}
 #price-block a:hover{color:orange;}
-#price-block p{color:#000;font-size:14px;font-style:italic;line-height:20px;margin:15px 0 0 85px;text-align:center;width:225px;}
+#price-block p{color:#000;font-size:14px;font-style:italic;line-height:20px;margin:15px 0 0 50px;text-align:center;width:280px;}
 #price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
 #price-block span{font-weight:bold;}
 
@@ -3036,7 +3036,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #fac_name span,.region_head_bar h2 span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro{margin:25px 0;overflow:hidden;}
-#sl-intro .inner{float:left;}
+#sl-intro .inner{float:left;padding:0;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
 #sl-intro #sl-special{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;text-align:center;width:327px;}
 #sl-intro #sl-special h3{color:#630;line-height:24px;padding-top:25px;}
@@ -3460,17 +3460,17 @@ p.breadcrumb a{color:#fff;}
 #blog-side a{font-size:12px;}
 #blog-side li.year{font-size:14px;list-style:disc inside;}
 #blog-side li{margin:4px 0;}
-#blog-side #months li{list-style:disc inside;margin-left:20px;}
+#blog-side .months li{list-style:disc inside;margin-left:20px;}
 #blog-side #tags{margin-bottom:40px;}
 
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
-#post-image{margin:0 auto;}
-#blog-post img{border:1px solid #CCCCCC;margin:15px auto 30px;padding:10px;}
+#post-image{text-align:center;}
+#blog-post img{border:1px solid #CCCCCC;padding:10px;}
 
-#blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
+#blog-post p{font-size:14px;line-height:20px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
 #sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
