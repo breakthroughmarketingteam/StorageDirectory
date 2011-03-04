@@ -11,7 +11,7 @@ class Post < ActiveRecord::Base
   validates_uniqueness_of :title
   validates_presence_of :title, :content
   
-  named_scope :published, :conditions =>  { :published => true }
+  named_scope :published, :conditions =>  { :published => true }, :order => 'created_at DESC'
   
   acts_as_commentable
   acts_as_taggable_on :tags, :categories
@@ -29,6 +29,28 @@ class Post < ActiveRecord::Base
   
   def self.published_tips
     self.tagged_with(:tip).select(&:published).sort_by(&:updated_at)
+  end
+  
+  def self.published_and_tagged_with(tag)
+    self.published.select do |post|
+      post.tag_list.map(&:parameterize).include? tag
+    end
+  end
+  
+  def self.published_years
+    self.published.map { |p| p.created_at.year }.uniq
+  end
+  
+  def self.published_months_for_year(year)
+    self.published.select { |p| p.created_at.year == year }.map { |p| p.created_at.strftime '%B' }.uniq
+  end
+  
+  def self.published_on(year, month)
+    self.published.select { |p| p.created_at.year == year.to_i && p.created_at.strftime('%B') == month }
+  end
+  
+  def self.count_published_on(year, month)
+    self.published_on(year, month).size
   end
   
   # Instance Methods

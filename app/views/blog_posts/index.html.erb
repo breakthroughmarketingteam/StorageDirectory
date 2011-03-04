@@ -1,1 +1,6 @@
-<%= render :partial => 'shared/model_index', :locals => { :data => @blog_posts } %>
+<% if user_is_a? 'admin', 'staff' %>
+	<%= render :partial => 'shared/model_index', :locals => { :data => @blog_posts } %>
+<% else %>
+	<% declare_content_for %>
+	<%= render :partial => 'blog_page' %>
+<% end %>

@@ -113,7 +113,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,
-#blog_posts_controller.show_action #content,#tenants_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
+#blog_posts_controller.show_action #content,#tenants_controller #content,#blog_posts_controller #content/*{width:776px;float:right;position:relative;left:2px;border-radius:24px;-moz-border-radius:24px;-webkit-border-radius:24px;}*/
 {width:772px;float:right;position:relative;left:0;top:1px;}
 #listings_controller.edit_action #content{width:744px;}
 #clients_controller.self_storage_advertising #content{top:0;}
@@ -644,7 +644,6 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-detail-in li.feature_gate-access{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-icon-g.png) no-repeat;}
 #sl-fac-detail-in li.feature_perimeter-alarm-system{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-icon-g.png) no-repeat;}
 
-
 #sl-fac-detail-in #sl-phone{color:#339933;font-size:14px;font-weight:bold;line-height:18px;}
 #sl-fac-detail-in-edit p strong{font-weight:bold;color:#33c;margin-right:10px;}
 #sl-fac-detail-in-edit p.tags strong{float:left;}
@@ -1003,6 +1002,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .home #type-one-cnt-in,.pages_1_ #type-one-cnt-in,.pages_1 #type-one-cnt-in,.index_action #type-one-cnt-in,.new_action #type-one-cnt-in,.create_action #type-one-cnt-in,
 .edit_action #type-one-cnt-in,#user_sessions_controller #type-one-cnt-in,#users_controller #type-one-cnt-in,#reservations_controller #type-one-cnt-in,
 #us_states_controller #type-one-cnt-in,#listings_controller.index_action #type-one-cnt-in{margin:15px 20px 10px 20px;}
+#blog_posts_controller.index_action #type-one-cnt-in{margin:0;}
 #clients_controller #type-one-cnt-in,#listings_controller #type-one-cnt-in{margin:2px 0 0 0;position:relative;}
 #listings_controller.locator_action #type-one-cnt-in,#listings_controller.home_action #type-one-cnt-in{margin:0;position:relative;}
 #clients_controller.index_action #type-one-cnt-in{margin:15px;}
@@ -2238,7 +2238,7 @@ p.breadcrumb a{color:#fff;}
 #blog-side a{font-size:12px;}
 #blog-side li.year{font-size:14px;list-style:disc inside;}
 #blog-side li{margin:4px 0;}
-#blog-side #months li{list-style:disc inside;margin-left:20px;}
+#blog-side .months li{list-style:disc inside;margin-left:20px;}
 #blog-side #tags{margin-bottom:40px;}
 
 #blog-post{margin:20px;}
