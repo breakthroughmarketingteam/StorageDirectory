@@ -2,7 +2,7 @@
 	<div id="tags">
 		<h4>Tags</h4>
 		<ul>
-			<% @blog_posts.map(&:tags).flatten.uniq.each do |tag| %>
+			<% BlogPost.published.map(&:tags).flatten.uniq.each do |tag| %>
 				<li><a href="<%= "/self-storage-blog/#{tag.name.parameterize}" %>"><%= tag.name %></a></li>
 			<% end %>
 		</ul>
