@@ -330,7 +330,7 @@ module ApplicationHelper
     html = '<ul id="model_stats" class="horizontal">'
     any = false
     
-    case controller_name when 'clients'
+    case controller_name when /(clients)/
       html << "<li>Total: #{Client.count}</li>"
       html << "<li>Unverified: #{Client.unverified_count}</li>"
       html << "<li>Active: #{Client.active_count}</li>"
