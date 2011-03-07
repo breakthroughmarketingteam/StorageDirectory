@@ -1572,7 +1572,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .rslt-contact,li.rslt-miles{margin-left:11px;}
 .facility-logo{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/facility-logo-reflection.png") no-repeat 0 bottom;float:left;height:88px;margin:11px 0 0 33px;padding-left:3px;width:105px;font-size:80%;position:relative;}
 #feat-list .facility-logo{background:none;height:110px;margin:0;padding:0;width:100%;}
-#feat-list .facility-logo img{height:100px;margin-bottom:0;width:97%;}
+#feat-list .facility-logo img{height:100px;margin-bottom:0;}
 .listing img.logo{margin-left:3px;}
 .listing .num_icon{background:url("http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
@@ -3059,7 +3059,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .help-prof-comp ol{margin-left:30px;}
 .help-prof-comp ol li ul{font-style:italic;list-style:alpha;}
 #sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
-#sl-tabs-overview  #hed h2#fac_name{border-top:none;}
+#sl-tabs-overview #hed h2#fac_name{border-top:medium none;color:#000000;padding:0;text-shadow:none;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
 #sl-tabs #sl-phone{color:#339933;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
@@ -3467,10 +3467,11 @@ p.breadcrumb a{color:#fff;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
-#post-image{text-align:center;}
+#post-image{text-align:center;margin:25px 0;}
 #blog-post img{border:1px solid #CCCCCC;padding:10px;}
 
-#blog-post p{font-size:14px;line-height:20px;margin-bottom:15px;}
+
+#blog-post p{font-size:14px;line-height:24px;margin-bottom:20px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
 #sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
