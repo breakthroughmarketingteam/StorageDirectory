@@ -26,7 +26,7 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
-  has_many :reviews, :class_name => 'Comment', :foreign_key => 'commentable_id' do
+  has_many :reviews, :as => :commentable, :class_name => 'Comment', :foreign_key => 'commentable_id' do
     def published() all(:conditions => { :published => true }) end
   end
   
@@ -54,7 +54,7 @@ class Listing < ActiveRecord::Base
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
-  acts_as_mappable :through => :map
+  acts_as_mappable :auto_geocode => { :field => :full_address, :error_message => 'could not be geocoded' }
   ajaxful_rateable
   sitemap :order => 'updated_at DESC'
   
@@ -64,7 +64,7 @@ class Listing < ActiveRecord::Base
   @@drive_up_types = ['drive up', 'outside']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
-  @@searchables    = %w(title address city state)
+  @@searchables    = %w(title address city state zip phone)
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
   @@proration      = 0.03333
   cattr_reader :top_types, :comparables, :searchables, :categories
@@ -81,28 +81,28 @@ class Listing < ActiveRecord::Base
   # Search methods
   #
   def self.find_by_location(search)
-    @location = search.location
+    location = search.location
     
     # build the options for the model find method
     options = {
-      :include => [:map, :sizes, :pictures],
+      :include => [:sizes, :pictures, :reviews],
       :within  => search.within,
       :origin  => search.lat_lng
     }
     
     base_conditions = 'listings.enabled IS TRUE'
-    search_type = search.storage_type.downcase
+    search_type = search.storage_type
     
     unless search_type =~ /(self storage)/i
-      base_conditions += " AND LOWER(listings.storage_types) LIKE '%#{search_type}%'"
+      base_conditions += " AND LOWER(listings.storage_types) ILIKE '%#{search_type}%'"
     end
     
     if !search.is_address_query? && !search.query.blank? # try query by name? 
-      conditions = { :conditions => ["listings.title LIKE ? OR listings.title IN (?) AND #{base_conditions}", "%#{search.query}%", search.query.split(/\s|,\s?/)] }
+      conditions = { :conditions => ["listings.title ILIKE ? AND #{base_conditions}", "%#{search.query}%"] }
       options.merge! conditions
       
-      @location = Geokit::GeoLoc.new Listing.first(conditions)
-      options.merge! :origin => @location
+      location = Geokit::GeoLoc.new Listing.first(conditions)
+      options.merge! :origin => location
     else
       options[:conditions] = base_conditions
     end
@@ -112,18 +112,18 @@ class Listing < ActiveRecord::Base
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
     unless search.unit_size.blank?
       all_premium = @listings.select(&:premium?)
-      kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from @location
+      kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from location
       
       # TODO: match unit features
       very_specific = kinda_specific.select do |p|
-        p.sizes.any? { |s| s.dims == search.unit_size }
-      end.sort_by_distance_from @location
+        p.sizes.any? { |s| s.dims == search.unit_size } || p.facility_features.map(&:title).any? { |f| search.features.split(/,\s?/).include? f } 
+      end.sort_by_distance_from location
 
-      remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from @location
+      remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from(location)
       # ordering the results
-      @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(@location)
+      @listings = very_specific | kinda_specific | remaining_premium | @listings.select(&:unverified?).sort_by_distance_from(location)
     else
-      @listings = @listings.sort_by_distance_from @location
+      @listings = @listings.sort_by_distance_from location
     end
     
     @listings = sort_listings(@listings, search) unless search.sorted_by.blank?
@@ -224,7 +224,7 @@ class Listing < ActiveRecord::Base
   end
   
   def city_and_state
-    self.map.nil? ? [] : [self.map.city, self.map.state]
+    @city_and_state ||= [self.city, self.state]
   end
   
   def get_closest_unit_size(size)
@@ -249,23 +249,21 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def full_address; self.map.full_address end
-  def city_state_zip; self.map.city_state_zip end
+  def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
+  def full_address; "#{self.address}#{ " #{self.address2}" unless self.address2.blank?}, #{self.city_state_zip}" end
   
   # TODO: make this work
-  def self.update_stat(listings, stat, request)
-    t = Time.now
-    
-    insert_sql = listings.map do |listing|
-      "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}');"
-    end.join('')
-    
-    ActiveRecord::Base.connection.execute insert_sql
+  def self.update_stat(listings, stat, referrer, request_uri, remote_ip)
+    listings.map { |listing| listing.update_stat stat, referrer, request_uri, remote_ip }
+    #insert_sql = listings.map do |listing|
+    #  "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}');"
+    #end.join('')
+    #ActiveRecord::Base.connection.execute insert_sql
   end
   
   # create a stat record => clicks, impressions
-  def update_stat stat, request
-    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}', :remote_ip => '#{request.remote_ip}'"
+  def update_stat(stat, referrer, request_uri, remote_ip)
+    eval "self.#{stat}.create :referrer => '#{referrer}', :request_uri => '#{request_uri}', :remote_ip => '#{remote_ip}'"
   end
   
   def unit_sizes_options_array
@@ -544,16 +542,14 @@ class Listing < ActiveRecord::Base
     @fi = self.facility_info
     
     transaction do
-      self.update_attributes :title =>  @fi.MS_Name, :description =>  @fi.O_FacilityName
-      
-      Map.transaction(:requires_new => true) do
-        self.map.update_attributes :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
-                                   :city    => @fi.O_City,
-                                   :state   => @fi.O_StateOrProvince,
-                                   :zip     => @fi.O_PostalCode,
-                                   :lat     => @fi.O_IssnLatitude,
-                                   :lng     => @fi.O_IssnLongitude
-      end
+      self.update_attributes :title =>  @fi.MS_Name, 
+                             :description =>  @fi.O_FacilityName,
+                             :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
+                             :city    => @fi.O_City,
+                             :state   => @fi.O_StateOrProvince,
+                             :zip     => @fi.O_PostalCode,
+                             :lat     => @fi.O_IssnLatitude,
+                             :lng     => @fi.O_IssnLongitude
     end
   end
   

@@ -162,8 +162,7 @@ class ApplicationController < ActionController::Base
   # TODO: move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }
   def set_default_view_type
     model_class = controller_name.singular.camelcase.constantize rescue nil
-    
-    
+        
     if !params[:view_type].blank?
       session[:view_type] = params[:view_type]
     elsif controller_name == 'site_settings'

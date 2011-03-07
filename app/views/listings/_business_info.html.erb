@@ -1,19 +1,15 @@
 <div id="narrow-box">
-	<div id="sl-fac-detail-in<%= '-edit' if action_name == 'edit' %>"<%= ' class="attr_editable"' if action_name == 'edit' %>>
-
+	<div id="sl-fac-detail-in">
 		<%= display_logo @listing, :id => 'listing_img' %>
 
 		<ul>
-			<li id="location_display" >
+			<li id="location_display">
 				<p class="info_heading">Location</p>
 		
 				<div class="address">
-					<span rel="address" class="block value"><%= edit_listing_address @listing %></span>
-					<% unless @listing.map.nil? %>
-						<span rel="city" class="value"><%= @listing.map.city %></span>, <span rel="state" class="value"><%= @listing.map.state %></span> <span rel="zip" class="value"><%= @listing.map.prep_zip %></span>
-					<% else %>
-						<%= edit_listing_city_state_zip @listing %>
-					<% end %>
+					<span rel="address" class="block value"><%= @listing.address %></span>
+					<span class="value"><%= @listing.city %></span>, <span class="value"><%= @listing.state %></span> <span class="value"><%= @listing.zip %></span>
+					
 					<% if @listing.tracked_number %>
 						<div id="sl-phone"><%= @listing.tracked_number %></div>
 					<% end %>
@@ -41,17 +37,15 @@
 			<% end %>
 	
 			<% if false#@listing.premium? %>
-				<div id="sl-seals">
+				<li id="sl-seals">
 					<p class="info_heading">Facility Affiliations</p>
 					<div id="wrap">
 						<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/ssam-logo.png" alt="" />
 					</div>
-				</div>
+				</li>
 			<% end %>
 		</ul>
-
-		<%= render :partial => 'info_edit', :locals => { :model => [@listing, @map], :info => 'address' } if action_name == 'edit' %>
 	</div>
 
-	<%= link_to 'Edit this listing', edit_listing_path(@listing), :class => 'left_space' if (current_user && current_user.has_role?('admin', 'staff')) %> 
+	<%= link_to 'Edit this listing', edit_listing_path(@listing), :class => 'left_space' if user_is_a?('admin', 'staff') %> 
 </div>
