@@ -66,7 +66,7 @@
 			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
 		</li>
 		<li class="fac-reviews">
-			<%= link_to "Reviews#{" (#{result.reviews.size})" unless result.reviews.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
+			<%= link_to "Reviews#{" (#{result.reviews.published.size})" unless result.reviews.published.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
 		</li>
 	</ul>
 	<div class="highlight-green progress"></div>

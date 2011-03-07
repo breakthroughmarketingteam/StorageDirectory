@@ -74,10 +74,8 @@ namespace :geocode do
     puts "Geocoding #{@total} listings"
     
     @listings.each_with_index do |listing, i|
-      map = listing.map
-      
-      if map.auto_geocode_address
-        map.save
+      if listing.auto_geocode_address
+        listing.save
         @geocoded << listing
         puts "Geocoded (#{percent_of i, @total} done) listing #{listing.title} in #{listing.city}, #{listing.state} [#{listing.lat}, #{listing.lng}]"
         
@@ -119,10 +117,10 @@ namespace :import do
         @saved += 1
         puts "Saved #{@saved} of #{@total}, #{percent_of(@count, @total)} done. (#{listing.facility_features.empty? ? listing.category : listing.facility_features.map(&:title) * ', '}) #{listing.title} in #{listing.city}, #{listing.state}"
         
-        if listing.map.auto_geocode_address && listing.map.save
+        if listing.auto_geocode_address && listing.save
           puts "Geocoded listing #{listing.title}: [#{listing.lat}, #{listing.lng}]"
         else
-          puts "Failed to Geocode #{listing.title}. Error: #{listing.map.errors.full_messages.map * '; '}"
+          puts "Failed to Geocode #{listing.title}. Error: #{listing.errors.full_messages.map * '; '}"
           @failed_rows << @filtered[:wanted_rows][i]
           puts "Waiting 30 secs and continuing..."
           do_the_waiting_thing
@@ -187,7 +185,7 @@ namespace :import do
         saved += 1
         puts "Saved (#{saved} of #{queued}; #{percent_of(i, queued)}): #{listing.title}"
         
-        if listing.map.auto_geocode_address
+        if listing.auto_geocode_address
           geocoded += 1
           puts "Geocoded (#{geocoded} of #{queued}; #{percent_of(i, queued)}) #{listing.city}, #{listing.state} [#{listing.lat}, #{listing.lng}]"
         else

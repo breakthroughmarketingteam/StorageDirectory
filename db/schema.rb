@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110304210446) do
+ActiveRecord::Schema.define(:version => 20110307182614) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -507,13 +507,6 @@ ActiveRecord::Schema.define(:version => 20110304210446) do
     t.string   "storage_types"
     t.boolean  "renting_enabled"
     t.integer  "comments_count",      :default => 0
-    t.string   "address"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.float    "lat"
-    t.float    "lng"
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"
@@ -985,6 +978,7 @@ ActiveRecord::Schema.define(:version => 20110304210446) do
     t.boolean  "pro_rated"
     t.datetime "verification_sent_at"
     t.datetime "activated_at"
+    t.integer  "num_facilities"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

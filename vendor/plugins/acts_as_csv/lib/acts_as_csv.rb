@@ -18,7 +18,7 @@ module ActsAsCsv #:nodoc:
       load_csv_engine!
       
       @csv_engine.generate do |csv|
-        headers = self.column_names.sort
+        headers = self.respond_to?(:exportables) ? self.exportables : self.column_names.sort
         csv << headers
         self.all(options).each do |model|
           csv << headers.map { |name| model.send name }

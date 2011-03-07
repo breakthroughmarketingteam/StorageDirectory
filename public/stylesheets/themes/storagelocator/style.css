@@ -1260,7 +1260,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:38px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
 #remember_me{font-size:80%;color:#666;}
 #login_page #user_session_remember_me{width:auto;margin:2px 5px 5px 0;float:left;}
-#pop_up #login_page{width:auto;margin:0;text-align:left;}
+#pop_up #login_page{width:auto;margin:0 15px 15px 20px;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:100px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
 #password_resets_form{margin-top:15px;width:316px;}
@@ -2264,3 +2264,18 @@ p.breadcrumb a{color:#fff;}
 #smpl-lstng{margin:0 0 20px -7px;}
 
 #add_helptext_link{top:30px;}
+
+/* Zendesk support tab */
+#zenbox_tab{border:solid 1px;cursor:pointer;height:108px;overflow:hidden;position:fixed;text-indent:-5000px;top:25%;width:33px;z-index:10000;}
+#zenbox_tab:hover{width:36px;}
+/* IE won't read ID-and-class selectors like #zenbox_tab.left,so we use just a class:*/
+.ZenboxTabLeft{left:0;background-position:right 0;}
+.ZenboxTabRight{right:0;background-position:left 0;}
+#zenbox_tab:hover{background-color:#444;}
+#zenbox_overlay{height:100%;left:0;position:absolute;top:0;width:100%;z-index:90000;}
+#zenbox_overlay *{color:#333;font-family:Arial,Helvetica,sans-serif;font-style:normal;font-variant:normal;font-size:12px;margin:0;padding:0;}
+#zenbox_container{height:620px;margin:0 auto;position:relative;text-align:left;width:638px;z-index:2;}
+#zenbox_container .header{position:relative;text-align:right;z-index:100;}
+#zenbox_close{cursor:pointer;height:46px;position:relative;top:10px;width:46px;}
+#zenbox_body{height:900px;margin-top:-18px;position:relative;width:615px;}
+#zenbox_scrim{background-color:#000;filter:alpha(opacity=42);-moz-opacity:0.42;left:0;position:absolute;opacity:0.42;top:0;width:100%;z-index:1;}

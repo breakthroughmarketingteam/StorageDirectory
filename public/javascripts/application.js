@@ -44,7 +44,6 @@ $(function() {
 			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
 		if (form.data('valid') && !form.data('sending')) {
-
 			overlay.fadeIn();
 			form.data('sending', true);
 			
@@ -53,13 +52,10 @@ $(function() {
 					var ready_mem = $('#ready_member', form);
 					
 					if (data.role == 'advertiser' && ready_mem.length == 0) {
+						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') });
 						window.top.location.href = data.account_path;
-						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') })
-					} else {
-						//$('#topbar').html(data.html);
-						//$('#pop_up.login_box').fadeOutRemove();
-						window.top.location.href = '/admin';
 						
+					} else {
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
 						// where the context is the form, the attr are the attributes of response object, and the fields are ids of fields to input the attribute values, and the element to focus
@@ -76,6 +72,12 @@ $(function() {
 							
 							$('#'+ focus_el, context).focus();
 							$('#already_member', context).hide();
+							
+							$('#topbar').html(data.html);
+							form.parents('#pop_up').dialog('destroy').fadeOutRemove();
+							
+						} else {
+							window.top.location.href = '/admin';
 						}
 					}
 				}, function(data) {
@@ -146,11 +148,15 @@ $(function() {
 	});
 	
 	$('#already_member').live('click', function() {
-		// inject a hidden input so that the login action will know what to do
-		$('#new_user_session').append('<input type="hidden" id="ready_member" value="'+ $(this).attr('data-ready_member') +'" />');
+		var $this = $(this);
 		
-		// open login pop up
-		$('#login_link', '#topbar').addClass('ajax').click();
+		get_pop_up_and_do({ title: 'Sign In To Your Account', width: '400px', height: 'auto' }, { sub_partial: 'user_sessions/form' }, function(pop_up) {
+			$('label.hide', pop_up).show();
+			// inject a hidden input so that the login action will know what to do
+			$('#new_user_session', pop_up).append('<input type="hidden" id="ready_member" value="'+ $this.attr('data-ready_member') +'" />');
+		});
+		
+		return false;
 	});
 	
 	// map pop up

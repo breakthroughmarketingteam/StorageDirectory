@@ -31,11 +31,10 @@ class ListingsController < ApplicationController
       
       # updates the impressions only for listings on current page if the search has changed
       if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
-        Listing.transaction do
-          @listings.map { |m| m.update_stat 'impressions', request }
-        end
-        # TODO: find a more efficient way to create the stats
-        #Listing.update_stat @listings, 'impressions', request unless current_user && current_user.has_role?('admin', 'advertiser')
+        #Listing.transaction do
+        #  @listings.map { |m| m.update_stat 'impressions', request }
+        #end
+        Listing.delay.update_stat @listings, 'impressions', request.referrer, request.request_uri, request.remote_ip unless user_is_a?('admin', 'staff', 'advertiser')
       end
       
       respond_to do |format|
@@ -118,7 +117,7 @@ class ListingsController < ApplicationController
     # when a user creates a listing, a partial pops up and they fill in the address and click edit, sending data via GET
     # we intercept those those values here and save it to the map that was created when they clicked new and typed in a title (blur event on the title input)
     unless params[:map].blank?
-      @listing.map.update_attributes params[:map]
+      @listing.update_attributes params[:map]
       redirect_to(:action => 'edit') and return
     end
     
@@ -138,12 +137,11 @@ class ListingsController < ApplicationController
     case params[:from]
     when 'quick_create'
       @listing.update_attributes :enabled => true, :status => 'verified'
-      @map = @listing.map
       
-      if @map.update_attributes params[:listing][:map_attributes]
+      if @listing.update_attributes params[:listing]
         render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
       else
-        render :json => { :success => false, :data => model_errors(@map) }
+        render :json => { :success => false, :data => model_errors(@listing) }
       end
       
     when 'uplogo'
@@ -185,8 +183,6 @@ class ListingsController < ApplicationController
     @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title], :storage_types => 'self storage')
     
     if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
-      @map = @listing.build_map
-      @map.save(false)
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
@@ -278,7 +274,6 @@ class ListingsController < ApplicationController
   private
   
   def get_listing_relations
-    @map = @listing.map
     @pictures = @listing.pictures
     @reviews = @listing.reviews.published.paginate :per_page => 10, :page => params[:review_page]
     @size = params[:size] ? @listing.sizes.find(params[:size]) : @listing.get_searched_size(@search)
@@ -298,7 +293,7 @@ class ListingsController < ApplicationController
   
   def get_map
     unless (@listing && @listing.lat.nil?) && @location.nil?
-      @map = (@listing.try(:map) || @location)
+      @map = (@listing || @location)
       @Gmap = GoogleMap::Map.new
   		@Gmap.center = GoogleMap::Point.new(@map.lat, @map.lng)
   		@Gmap.zoom = (@location.nil? ? 16 : 14)

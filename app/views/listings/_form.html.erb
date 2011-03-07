@@ -14,30 +14,28 @@
 				<%= f.text_area :description, :class => 'small_textarea' %>
 			</div>
 	
-			<% f.fields_for :map, (@listing.map.nil? ? Map.new : @listing.map) do |mf| %>
-				<div class="stack">
-					<%= mf.label :address, nil, :class => 'block left w100' %>
-					<%= mf.text_field :address, :class => 'required' %>
+			<div class="stack">
+				<%= f.label :address, nil, :class => 'block left w100' %>
+				<%= f.text_field :address, :class => 'required' %>
+			</div>
+	
+			<div class="stack">
+				<%= f.label :city, nil, :class => 'block left w100' %>
+				<%= f.text_field :city, :class => 'required' %>
+			</div>
+	
+			<div class="stack uncollapse">
+				<div class="left right_space">
+					<%= f.label :state, nil, :class => 'block left w100' %>
+					<%= f.select :state, States.names, :class => 'required' %>
 				</div>
 		
-				<div class="stack">
-					<%= mf.label :city, nil, :class => 'block left w100' %>
-					<%= mf.text_field :city, :class => 'required' %>
+				<div class="left">
+					<%= f.label :zip, nil, :class => 'block left right_space' %>
+					<%= f.text_field :zip, :class => 'required tiny_text_field' %>
 				</div>
+			</div>
 		
-				<div class="stack uncollapse">
-					<div class="left right_space">
-						<%= mf.label :state, nil, :class => 'block left w100' %>
-						<%= mf.select :state, States.names, :class => 'required' %>
-					</div>
-			
-					<div class="left">
-						<%= mf.label :zip, nil, :class => 'block left right_space' %>
-						<%= mf.text_field :zip, :class => 'required tiny_text_field' %>
-					</div>
-				</div>
-			<% end %>
-			
 			<div class="stack uncollapse">
 				<div class="left right_space">
 					<%= display_logo @listing %>

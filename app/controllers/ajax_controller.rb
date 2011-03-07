@@ -57,7 +57,7 @@ class AjaxController < ApplicationController
   def get_listing
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
       coords = [@model.lat, @model.lng]
-      data = { :listing => @model.attributes, :map => @model.map.attributes, :lat => coords.lat, :lng => coords.lng  }
+      data = { :listing => @model.attributes, :map => @model.attributes, :lat => coords.lat, :lng => coords.lng  }
       json_response true, data
     end
     

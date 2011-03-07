@@ -1,5 +1,5 @@
 <h3>Facility Details</h3>
-<% form_for @listing, :html => { :id => 'fac_detail_form', 'data-target' => 'details' } do |f| %>
+<% form_for @listing, :html => { :id => 'fac_detail_form', :'data-target' => 'details' } do |f| %>
 	<table cellspacing="0" cellpadding="0" class="fac-details">
            <tbody>
                <tr>
@@ -7,32 +7,30 @@
 	               	<td><%= f.text_field :title, :class => 'required', :maxlength => 64 %></td>
                </tr>
 			
-			<% f.fields_for :map, @listing.map do |mf| %>
                	<tr>
-                	<td class="col_label"><%= mf.label :address %></td>
-                	<td><%= mf.text_field :address, :class => 'required', :maxlength => 64 %></td>
+                	<td class="col_label"><%= f.label :address %></td>
+                	<td><%= f.text_field :address, :class => 'required', :maxlength => 64 %></td>
                 </tr>
 			
                 <tr>
-                	<td class="col_label"><%= mf.label :address2 %></td>
-                	<td><%= mf.text_field :address2 %></td>
+                	<td class="col_label"><%= f.label :address2 %></td>
+                	<td><%= f.text_field :address2 %></td>
                 </tr>
 
                 <tr>
-                	<td class="col_label"><%= mf.label :city %></td>
-                	<td><%= mf.text_field :city, :class => 'required' %></td>
+                	<td class="col_label"><%= f.label :city %></td>
+                	<td><%= f.text_field :city, :class => 'required' %></td>
                 </tr>
 
                 <tr>
-                	<td class="col_label"><%= mf.label :state %></td>
-                	<td><%= mf.text_field :state, :class => 'required' %></td>
+                	<td class="col_label"><%= f.label :state %></td>
+                	<td><%= f.text_field :state, :class => 'required' %></td>
                 </tr>
 
                 <tr>
-               		<td class="col_label"><%= mf.label :zip, 'Zip Code' %></td>
-                	<td><%= mf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+               		<td class="col_label"><%= f.label :zip, 'Zip Code' %></td>
+                	<td><%= f.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
                 </tr>
-			<% end %>
 		
 			<tr>
            		<td class="col_label"><%= f.label :phone %></td>

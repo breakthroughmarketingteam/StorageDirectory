@@ -229,26 +229,26 @@ module ListingsHelper
   
   def edit_listing_address(listing)
     if listing.nil? || listing.new_record?
-      text_field_tag 'listing[map_attributes][address]', nil, :class => 'required hintable small_text_field i', :title => 'Street Address'
+      text_field_tag 'listing[address]', nil, :class => 'required hintable small_text_field i', :title => 'Street Address'
     else
-      listing.map && !listing.map.address.blank? ? "#{listing.map.address}<br />" : ''
+      !listing.address.blank? ? "#{listing.address}<br />" : ''
     end
   end
   
   def edit_listing_city_state_zip(listing)
     if listing.nil? || listing.new_record?
-      (html ||= '') << text_field_tag('listing[map_attributes][city]', nil, :class => 'required hintable small_text_field i', :title => 'City')
-      html << text_field_tag('listing[map_attributes][state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :'data-autocomp-source' => 'States_abbrevs', :maxlength => 2)
-      html << text_field_tag('listing[map_attributes][zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
+      (html ||= '') << text_field_tag('listing[city]', nil, :class => 'required hintable small_text_field i', :title => 'City')
+      html << text_field_tag('listing[state]', nil, :class => 'required autocomplete hintable tiny_text_field i', :title => 'State', :'data-autocomp-source' => 'States_abbrevs', :maxlength => 2)
+      html << text_field_tag('listing[zip]', nil, :class => 'numeric_zip hintable tiny_text_field i', :title => 'Zip')
       html
     else
-      listing.map.city_state_zip
+      listing.city_state_zip
     end
   end
   
   def render_tab_nav
     @sizes_link    = link_to('Unit Sizes', '#', :rel => 'sl-tabs-sizes') unless @sizes.blank?
-    @map_link      = link_to('Map', '#', :rel => 'sl-tabs-map') unless @map.blank? || @map.lat.nil?
+    @map_link      = link_to('Map', '#', :rel => 'sl-tabs-map')
     @features_link = link_to('Features', '#', :rel => 'sl-tabs-feat') unless @features.blank?
     @pictures_link = link_to('Pictures', '#', :rel => 'sl-tabs-pict' ) unless @pictures.blank?
     html = ''; activated = false
@@ -294,7 +294,7 @@ module ListingsHelper
   end
   
   def if_tabs_empty_text
-    '' if @sizes.blank? && (@map.blank? || @map.lat.nil?) && @features.blank? && @pictures.blank?
+    '' if @sizes.blank? && @features.blank? && @pictures.blank?
   end
   
   def claim_listing_link(listing, options = {})
