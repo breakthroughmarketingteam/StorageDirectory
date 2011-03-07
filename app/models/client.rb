@@ -27,7 +27,7 @@ class Client < User
       self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
     
       unless params[:listings].blank?
-        params[:listings].each { |listing_id| self.claimed_listings.build :listing_id => listing_id }
+        self.listing_ids = params[:listings]
       else
         listing = self.listings.build :title => self.company, :status => 'unverified', :category => 'Storage', :storage_types => 'self storage'
         listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone

@@ -3,7 +3,7 @@
 	<% unless post.tags.empty? %>
 
     <div class="tags left post_tags">
-    	Tags:&nbsp;<%= post.tags.map { |tag| "<span>#{link_to tag.name, tagged_with_path(model_controller(post), tag.name) }</span>&nbsp;" } %>
+    	Tags:&nbsp;<%= post.tags.map { |tag| "<span>#{link_to tag.name, conditional_tagged_with_path(model_controller(post), tag.name, post) }</span>&nbsp;" } %>
 	</div>
 	
 	<div class="comments_count left">

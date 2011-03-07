@@ -137,7 +137,36 @@
             swfobject.registerObject("FlashID");
             ussslgid = '<%= GOOGLE_APPLICATION_ID %>';
         </script>
+		
 		<% if in_production? %>
+			<!-- Start of GetSatisfaction Feedback Tab Code  -->
+			<script type="text/javascript" src="//s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
+			<script type="text/javascript">
+				var feedback_widget = new GSFN.feedback_widget({
+					display   : 'overlay',
+					company   : 'usselfstoragelocator',
+					placement : 'right',
+					color 	  : '#393',
+					style 	  : 'question'
+				});
+			</script>
+			<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
+
+			<!-- Start of Zendesk Dropbox Code  -->
+			<style type="text/css" media="screen, projection">
+			  	@import url(//asset0.zendesk.com/external/zenbox/v2.1/zenbox.css);
+			</style>
+			<script type="text/javascript">
+				if (typeof(Zenbox) !== 'undefined') Zenbox.init({
+					dropboxID:   "14160",
+					url:         "https://usselfstoragelocator.zendesk.com",
+					tabID:       "support",
+					tabColor:    "#339933",
+					tabPosition: "Left"
+				});
+			</script>
+			
+			<!-- Start of Google Analytics Code  -->
 			<script type="text/javascript">
 			  var _gaq = _gaq || [];
 			  _gaq.push(['_setAccount', '<%= $_usssl_google_analytics %>']);
@@ -148,19 +177,14 @@
 			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			  })();
 			</script>
+			
+			<!-- Start of MySEOTool Code  -->
 			<script type="text/javascript">
 				var websiteId = 4623;
 				var httpReferer = escape(document.referrer);
 			</script>
 			<script type="text/javascript" src="//www.myseotool.com/members/tracker.js"></script>
-			<!-- KISSinsights for usselfstoragelocator.com -->
-			<script type="text/javascript">var _kiq = _kiq || [];</script>
-			<script type="text/javascript" src="//s3.amazonaws.com/ki.js/12495/2ec.js"></script>
-			<% if current_user %>
-			<script type="text/javascript" charset="utf-8">
-				_kiq.push(['identify', <%= current_user.id %>]);
-			</script>
-			<% end %>
+			
 			<!-- Start of HubSpot Logging Code  -->
 			<script type="text/javascript">
 				var hs_portalid = 16986; 
@@ -168,7 +192,6 @@
 				var hs_ppa = "usselfstoragelocator.app101.hubspot.com";
 				document.write(unescape("%3Cscript src='" + document.location.protocol + "//" + hs_ppa + "/salog.js.aspx' type='text/javascript'%3E%3C/script%3E"));
 			</script>
-			<!-- End of HubSpot Logging Code -->
 		<% end %>
     </body>
 </html>

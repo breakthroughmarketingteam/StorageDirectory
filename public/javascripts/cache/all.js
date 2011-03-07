@@ -5250,16 +5250,21 @@ $.fn.tabular_content = function() {
 		var $this = $(this), // the container
 			tabs = $('.tabular', $this).length > 0 ? $('.tabular', $this) : $('.tabular'),//$this.attr('data-tabs-id') ? $('#'+ $this.attr('data-tabs-id')) : ($('.tabular', $this).length > 0 ? $('.tabular', $this) : $('.tabular')), // ul
 			panels = $('.tab_content', $this), // tab content divs
-			action = what_action($this);
+			action = what_action($this),
+			hide   = action[0],
+			show   = action[1],
+			speed  = action[2];
 		
 		tabs.find('li').eq(0).addClass('active');
 		panels.eq(0).show();
 				
 		$('a', tabs).click(function(){
-			panels[action[0]](action[2]).removeClass('active');
+			panels[hide](speed).removeClass('active');
 			$('li, a', tabs).removeClass('active');
+			
 			$(this).addClass('active').parent().addClass('active');
-			$('#'+ $(this).attr('rel'), $this)[action[1]]((action[0] == 'hide' ? null : 'slow')).addClass('active');
+			$('#'+ $(this).attr('rel'), $this)[show](speed).addClass('active');
+			
 			return false;
 		});
 	});

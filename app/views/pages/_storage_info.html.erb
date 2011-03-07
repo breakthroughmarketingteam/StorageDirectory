@@ -1,0 +1,29 @@
+<h1 class="hidden">Storage Info</h1>
+<a name="top" id="top"></a>
+<div id="type-one-r-col">
+	<div id="type-one-r-col-in">
+		<div class="green-head" id="info-head">
+			<div class="inner" id="info-in">
+				<h2>Self Storage help? <br />No problem.</h2>
+				<p>We have gathered lots of useful self storage information that will help you on your next self storage rental experience.</p>
+			</div>
+		</div>
+	</div>
+	<div id="type-one-top-bar">
+		<div class="inner" id="storage-info-content">
+			<% unless (@info_posts ||= Post.tagged_with('storageinfo')).blank? %>
+				<ul class="tabular_content fade" id="info_content" data-tabs-id="info_tabs">
+					<% @info_posts.sort_by(&:position).each_with_index do |post, i| %>
+						<li id="info_<%= post.id %>" class="tab_content">
+							<h4><%= link_to post.title, post %></h4>
+							<%= post.content %>
+						</li>
+					<% end %>
+				</ul>
+			<% else %>
+				<p class="flash error">No Storage Info Available.</p>
+			<% end %>
+			
+		</div>
+	</div>
+</div>

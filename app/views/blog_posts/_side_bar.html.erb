@@ -1,0 +1,26 @@
+<div id="blog-side" class="shimmy">
+	<div id="tags">
+		<h4>Tags</h4>
+		<ul>
+			<% BlogPost.published.map(&:tags).flatten.uniq.each do |tag| %>
+				<li><a href="<%= "/self-storage-blog/#{tag.name.parameterize}" %>"><%= tag.name %></a></li>
+			<% end %>
+		</ul>
+	</div>
+	
+	<div id="archives">
+		<h4>Archives</h4>
+		<ul>
+			<% BlogPost.published_years.each do |year| %>
+				<li class="year">
+					<%= year %>
+					<ul class="months">
+						<% BlogPost.published_months_for_year(year).each do |month| %>
+							<li><a href="<%= "/self-storage-blog/archives/#{year}/#{month}" %>"><%= month %></a> <span class="note">(<%= BlogPost.count_published_on year, month %>)</span></li>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</div>
