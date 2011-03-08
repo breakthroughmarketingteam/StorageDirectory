@@ -1317,6 +1317,7 @@ form .error p{margin:0 0 7px 0;}
 #issn_steps{width:795px;}
 #workflow_steps{height:440px;}
 #workflow_nav,#map_flow_nav{bottom:15px;position:absolute;right:20px;}
+#map_flow_nav{right:auto;left:2px;}
 #rent_steps #workflow_nav{bottom:0;right:7px;width:100%;}
 #workflow_steps .items,#issn_steps .items,#rent_steps .items,#map_nav .items,#aff_scroll .items,#searcher_steps .items{position:absolute;width:2000px;}
 #clients_controller.new_action #workflow_nav{font-size:80%;}

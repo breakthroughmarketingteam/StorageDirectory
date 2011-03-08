@@ -29,8 +29,15 @@ class Client < User
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
       else
-        listing = self.listings.build :title => self.company, :status => 'unverified', :category => 'Storage', :storage_types => 'self storage'
-        listing.build_map :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
+        listing = self.listings.build :title         => self.company, 
+                                      :status        => 'unverified', 
+                                      :category      => 'Storage', 
+                                      :storage_types => 'self storage', 
+                                      :address       => ma.address, 
+                                      :city          => ma.city, 
+                                      :state         => ma.state, 
+                                      :zip           => ma.zip, 
+                                      :phone         => ma.phone
       end
     
       self.role_id = Role.get_role_id 'advertiser'
