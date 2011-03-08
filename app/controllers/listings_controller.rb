@@ -71,8 +71,8 @@ class ListingsController < ApplicationController
   end
 
   def show
-    unless current_user && current_user.has_role?('admin', 'advertiser')
-      @listing.update_stat 'clicks', request
+    unless user_is_a? 'admin', 'advertiser'
+      @listing.update_stat 'clicks', request.referrer, request.request_uri, request.remote_ip
       @search.update_attribute :listing_id, @listing.id
     end
     
