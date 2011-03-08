@@ -2078,7 +2078,8 @@ p.breadcrumb a{color:#fff;}
 
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #666;background:#393 url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;font-weight:bold;color:#ffffff;}
 .ui-corner-all{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
-.ui-widget-header .ui-icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn.png) no-repeat;margin:0;}
+.ui-datepicker-next span{}
+.ui-widget-header .ui-icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-btn.png) no-repeat;margin:0;}
 .ui-widget-header .ui-icon:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}
