@@ -34,7 +34,7 @@ class ListingsController < ApplicationController
         #Listing.transaction do
         #  @listings.map { |m| m.update_stat 'impressions', request }
         #end
-        Listing.delay.update_stat @listings, 'impressions', request.referrer, request.request_uri, request.remote_ip unless user_is_a?('admin', 'staff', 'advertiser')
+        Listing.delay.update_stats @listings, 'impressions', request.referrer, request.request_uri, request.remote_ip unless user_is_a?('admin', 'staff', 'advertiser')
       end
       
       respond_to do |format|

@@ -6799,8 +6799,8 @@ $(function(){
 			
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
-					results_page.replaceWith(data['results']);
-					$.setGmap(data['maps_data']);
+					results_page.replaceWith(data.results);
+					$.setGmap(data.maps_data);
 					$.enableTooltips('a', '.rslt-features');
 					select_first_size_option();
 					// TODO: this doesnt cause the compare link to appear
@@ -6928,6 +6928,17 @@ function get_review_pop_up(options) {
 		$('#comment_name', pop_up).focus();
 		
 		$('form', pop_up).submit(function() {
+			$.safeSubmit(this, {
+				al_where: 'after',
+				success: function(data) {
+					pop_up.html('<div class="framed" style="text-align:center;">'+ data +'</div>');
+				}
+			});
+			
+			return false;
+		});
+		
+		/*$('form', pop_up).submit(function() {
 			var form = $(this).runValidation(),
 				ajax_loader = $.new_ajax_loader('after', $('input[type=submit]', this));
 
@@ -6946,7 +6957,7 @@ function get_review_pop_up(options) {
 			}
 			
 			return false;
-		});
+		});*/
 	});
 }
 
@@ -6955,27 +6966,24 @@ function get_review_pop_up(options) {
  */
 var MapIconMaker = {};
 MapIconMaker.createMarkerIcon = function(opts) {
-	var width = opts.width || 32;
-	var height = opts.height || 32;
-	var primaryColor = opts.primaryColor || "#ff0000";
-	var strokeColor = opts.strokeColor || "#000000";
-	var cornerColor = opts.cornerColor || "#ffffff";
-
-	var baseUrl = "http://chart.apis.google.com/chart?cht=mm";
-	var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-		"&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png";
+	var width 		 = opts.width || 32,
+		height 		 = opts.height || 32,
+		primaryColor = opts.primaryColor || "#ff0000",
+		strokeColor  = opts.strokeColor || "#000000",
+		cornerColor  = opts.cornerColor || "#ffffff",
+		baseUrl 	 = "http://chart.apis.google.com/chart?cht=mm",
+		iconUrl 	 = baseUrl + "&chs=" + width + "x" + height + "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "") + "&ext=.png",
+		icon 		 = new GIcon(G_DEFAULT_ICON);
 	
-	var icon = new GIcon(G_DEFAULT_ICON);
-	icon.image = iconUrl;
-	icon.iconSize = new GSize(width, height);
-	icon.shadowSize = new GSize(Math.floor(width*1.6), height);
-	icon.iconAnchor = new GPoint(width/2, height);
+	icon.image 			  = iconUrl;
+	icon.iconSize 		  = new GSize(width, height);
+	icon.shadowSize 	  = new GSize(Math.floor(width*1.6), height);
+	icon.iconAnchor 	  = new GPoint(width/2, height);
 	icon.infoWindowAnchor = new GPoint(width/2, Math.floor(height/12));
-	icon.printImage = iconUrl + "&chof=gif";
-	icon.mozPrintImage = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
+	icon.printImage 	  = iconUrl + "&chof=gif";
+	icon.mozPrintImage    = iconUrl + "&chf=bg,s,ECECD8" + "&chof=gif";
 	
-	var iconUrl = baseUrl + "&chs=" + width + "x" + height + 
-		"&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
+	var iconUrl = baseUrl + "&chs=" + width + "x" + height + "&chco=" + cornerColor.replace("#", "") + "," + primaryColor.replace("#", "") + "," + strokeColor.replace("#", "");
 		icon.transparent = iconUrl + "&chf=a,s,ffffff11&ext=.png";
 
 	icon.imageMap = [
@@ -6990,9 +6998,9 @@ MapIconMaker.createMarkerIcon = function(opts) {
 		(11/16)*width, (7/16)*height,
 		(9/16)*width, (5/8)*height
 	];
-	for (var i = 0; i < icon.imageMap.length; i++) {
+	
+	for (var i = 0; i < icon.imageMap.length; i++)
 		icon.imageMap[i] = parseInt(icon.imageMap[i]);
-	}
 
 	return icon;
 }
@@ -7011,14 +7019,13 @@ try {
 	var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
 
 	// http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000
-	
 	var startIcon = new GIcon(G_DEFAULT_ICON, 'http://s3.amazonaws.com/storagelocator/images/ui/map_marker.png'); // the 'you are here' icon
 	
 	//save the regular icon image url
-	var normalIconImage = normalIcon.image,
+	var normalIconImage    = normalIcon.image,
 		highlightIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FBD745,000000&ext=.png',
-		selectedIconImage = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
-} catch (e){ }
+		selectedIconImage  = 'http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,FB9517,000000&ext=.png';
+} catch (e){}
 
 function highlightMarker(id){
 	var marker = typeof id == 'object' ? id : getMarkerById(id);
@@ -7036,8 +7043,7 @@ function getMarkerById(id) {
 
 	$.each(GmapMarkers, function(){
 		if (this.listing_id == id) {
-			marker = this;
-			return;
+			marker = this; return;
 		}
 	});
 
@@ -7092,22 +7098,20 @@ $.setGmap = function(data, el, page) {
 	if (typeof el == 'undefined') el = 'main_map';
 	if (typeof page == 'undefined') page = 0;
 	
-	if (typeof Gmap == 'undefined') {
-		Gmap = new GMap2(document.getElementById(el));
-		Gmap.addControl(new GLargeMapControl());
-		Gmap.addControl(new GScaleControl());
-		Gmap.addControl(new GMapTypeControl());
-		Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 16));
-		Gmap.enableDoubleClickZoom();
-		Gmap.disableContinuousZoom();
-		Gmap.disableScrollWheelZoom();
+	Gmap = new GMap2(document.getElementById(el));
+	Gmap.addControl(new GLargeMapControl());
+	Gmap.addControl(new GScaleControl());
+	Gmap.addControl(new GMapTypeControl());
+	Gmap.setCenter(new GLatLng(data.center.lat, data.center.lng), (data.center.zoom || 16));
+	Gmap.enableDoubleClickZoom();
+	Gmap.disableContinuousZoom();
+	Gmap.disableScrollWheelZoom();
 
-		addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
-	}
+	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
 
 	//add result markers
 	var markers = data.maps;
-
+	
 	for (var i = 0, len = markers.length; i < len; i++) {
 		var photo = markers[i].thumb,// ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '',
 			title = markers[i].title.replaceAll('+', ' '),
@@ -7125,12 +7129,12 @@ $.setGmap = function(data, el, page) {
 	}
 
 	//bind mouseover result row to highlight map marker
-	$('.listing').live('mouseenter', function(){
+	$('.listing', '#rslt-list-bg').live('mouseenter', function(){
 		var id = $(this).attr('id').split('_')[1];
 		highlightMarker(id);
 	});
 	
-	$('.listing').live('mouseleave', function(){
+	$('.listing', '#rslt-list-bg').live('mouseleave', function(){
 		var id = $(this).attr('id').split('_')[1];
 		unhighlightMarker(id);
 	});
@@ -7477,7 +7481,6 @@ $(function() {
 			overlay = $.applyLoadingOverlay(form.parents('#login_page'));
 		
 		if (form.data('valid') && !form.data('sending')) {
-
 			overlay.fadeIn();
 			form.data('sending', true);
 			
@@ -7486,13 +7489,10 @@ $(function() {
 					var ready_mem = $('#ready_member', form);
 					
 					if (data.role == 'advertiser' && ready_mem.length == 0) {
+						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') });
 						window.top.location.href = data.account_path;
-						overlay.fadeOut('fast', function() { form.html('<p class="login_success">Looks good!<br /> If you aren\'t redirected to your account, <a href="'+ data.account_path +'" title="Trust me, this is a link to your account!">click here</a></p>') })
-					} else {
-						//$('#topbar').html(data.html);
-						//$('#pop_up.login_box').fadeOutRemove();
-						window.top.location.href = '/admin';
 						
+					} else {
 						// when a member clicks on a "already a member" link, they are in a form and we need to fill in their info, e.g. name and email
 						// ready_member is a hidden input (injected by the already_member click, see below) whose value contains the data keys: context|attr1,attr2,...|field1,field2,...|focus_element
 						// where the context is the form, the attr are the attributes of response object, and the fields are ids of fields to input the attribute values, and the element to focus
@@ -7509,6 +7509,12 @@ $(function() {
 							
 							$('#'+ focus_el, context).focus();
 							$('#already_member', context).hide();
+							
+							$('#topbar').html(data.html);
+							form.parents('#pop_up').dialog('destroy').fadeOutRemove();
+							
+						} else {
+							window.top.location.href = '/admin';
 						}
 					}
 				}, function(data) {
@@ -7579,11 +7585,15 @@ $(function() {
 	});
 	
 	$('#already_member').live('click', function() {
-		// inject a hidden input so that the login action will know what to do
-		$('#new_user_session').append('<input type="hidden" id="ready_member" value="'+ $(this).attr('data-ready_member') +'" />');
+		var $this = $(this);
 		
-		// open login pop up
-		$('#login_link', '#topbar').addClass('ajax').click();
+		get_pop_up_and_do({ title: 'Sign In To Your Account', width: '400px', height: 'auto' }, { sub_partial: 'user_sessions/form' }, function(pop_up) {
+			$('label.hide', pop_up).show();
+			// inject a hidden input so that the login action will know what to do
+			$('#new_user_session', pop_up).append('<input type="hidden" id="ready_member" value="'+ $this.attr('data-ready_member') +'" />');
+		});
+		
+		return false;
 	});
 	
 	// map pop up
