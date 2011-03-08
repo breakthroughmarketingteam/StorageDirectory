@@ -26,8 +26,8 @@
 		
 			<div class="rslt-contact">
 				<p>
-					<span class="rslt-address"><%= result.map.address %>,</span><br />
-					<span class="rslt-citystate"><%= result.map.city_state_zip %></span>
+					<span class="rslt-address"><%= result.address %>,</span><br />
+					<span class="rslt-citystate"><%= result.city_state_zip %></span>
 				</p>
 				<% if result.premium? && result.tracked_number %>
 					<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
