@@ -116,7 +116,7 @@ class Listing < ActiveRecord::Base
       
       # TODO: match unit features
       very_specific = kinda_specific.select do |p|
-        p.sizes.any? { |s| s.dims == search.unit_size } || p.facility_features.map(&:title).any? { |f| search.features.split(/,\s?/).include? f } 
+        p.sizes.any? { |s| s.dims == search.unit_size } || p.facility_features.map(&:title).any? { |f| (search.features.nil? ? '' : search.features).split(/,\s?/).include? f } 
       end.sort_by_distance_from location
 
       remaining_premium = all_premium.reject { |p| kinda_specific.include?(p) || very_specific.include?(p) }.sort_by_distance_from(location)
