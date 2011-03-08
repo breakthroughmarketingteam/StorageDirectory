@@ -526,11 +526,11 @@ class ApplicationController < ActionController::Base
       if @diff_search
         mylogger "is diff than #{@new_search}"
         @new_search.save
-        @search.add_child @new_search.reload
+        @search.add_child @new_search
         @search = @new_search
       end
     else
-      #mylogger "Not found search, remote ip #{request.remote_ip}"
+      mylogger "Not found search, remote ip #{request.remote_ip}"
       remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
       session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
       @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
