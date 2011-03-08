@@ -67,7 +67,7 @@ module ListingsHelper
   end
   
   def listing_action_btn_class(listing)
-    if listing.accepts_rentals?
+    if listing.renting_enabled?
       ' reserve'
     elsif listing.premium?
       ' hold_unit'

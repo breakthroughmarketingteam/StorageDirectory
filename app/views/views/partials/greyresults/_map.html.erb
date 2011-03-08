@@ -12,7 +12,7 @@
 		<div id="Listing_map_<%= listing.id %>" rel="<%= "#{listing.lat},#{listing.lng}" %>" class="map_wrap"></div>
 		<ul class="get_dir">
 			<li>
-				<% form_tag '/ajax/directions', :id => 'get_dirs', 'data-container' => 'map_container', 'data-wrap' => "Listing_map_#{ listing.id }", 'data-to-addr' => listing.full_address do %>
+				<% form_tag '/ajax/directions', :id => 'get_dirs', :'data-container' => 'map_container', :'data-wrap' => "Listing_map_#{ listing.id }", :'data-to-addr' => listing.full_address do %>
 					<div>
 						<input type="text" value="" title="For directions enter your starting address and... " name="from_address" id="from_address" class="directions hintable"> 
 						<%= link_to 'Go!', "/ajax/directions", :class => 'white submit_btn', :id => 'get_dirs' %> <%= submit_tag 'Go', :class => 'hide' %>

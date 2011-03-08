@@ -25,7 +25,7 @@ class ListingsController < ApplicationController
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
       
       @location = @search.location
-      @listings = @search.results # this calls the Listing model
+      @listings = @search.results params[:strict_order] # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for listing } }
       
@@ -41,7 +41,7 @@ class ListingsController < ApplicationController
         format.html {}
         format.js do
           if params[:auto_search]
-            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
+            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data, :query => @search.city_state_and_zip } }
           else
             # implementing this ajax response for the search results 'Show More Results' button
             render :json => { :success => !@listings.blank?, :data => { :listings => _get_listing_partials(@listings), :maps_data => @map_data } }

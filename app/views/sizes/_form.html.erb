@@ -1,6 +1,6 @@
 <% @listing ||= listing; @size = size %>
 <% form_for [@listing, @size], :html => { :id => '', :class => 'size_form silent', 'data-edit' => (defined?(predef) && !predef || (!defined?(predef) && size.new_record? ? 0 : 1)) } do |f| %>
-	<div class="sl-table-wrap" rel="listing_<%= @listing.id %>" data-has-res="<%= @listing.accepts_rentals? %>">
+	<div class="sl-table-wrap" rel="listing_<%= @listing.id %>" data-renting-enabled="<%= @listing.renting_enabled? %>">
 		<ul class="sl-table">
 			<li class="st-size"><%= f.text_field :width, :class => 'required numeric', :maxlength => 2 %> x <%= f.text_field :length, :class => 'required numeric', :maxlength => 2 %></li>
 			<li class="st-type"><%= f.select :title, Size.unit_type_labels, { :prompt => 'Choose' },:class => 'required' %></li>

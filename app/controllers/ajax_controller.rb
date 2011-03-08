@@ -186,6 +186,8 @@ class AjaxController < ApplicationController
   
   def _get_model_and_locals
     @locals = {}
+    return @locals if params[:model].nil?
+    
     @model_class = params[:model].constantize 
     @model = params[:id].blank? ? @model_class.new : @model_class.find(params[:id])
     
@@ -207,8 +209,6 @@ class AjaxController < ApplicationController
     @locals.merge!(:show_size_ops => params[:show_size_ops]) if params[:show_size_ops]
     
     @locals
-  rescue
-    nil
   end
   
   def json_response(status = true, data = nil)

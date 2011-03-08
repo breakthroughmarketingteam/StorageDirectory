@@ -32,7 +32,7 @@
 						<form id="rentalizer" action="/rentalizer" method="post">
 							<div class="inner">
 								<div class="col1">
-									<div id="size_ops" class="<% 'hide' unless params[:show_size_ops] %>">
+									<div id="size_ops" class="<%= 'hide' unless params[:show_size_ops] == 'true' %>">
 										<div>
 											<% types = listing.available_unit_types %>
 											<label class="block left" for="unit_type">Type: </label>

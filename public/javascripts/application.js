@@ -1765,7 +1765,6 @@ var workflow_settings = {
 		wizard.workflow.parent().dialog('destroy').remove();
 		$('#add-fac-form', '#top_fac_page').html('<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>').css('width', '93.3%');
 		$('#price-block',  '#top_fac_page').hide();
-		$('#new_client')[0].reset();
 		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
 };
@@ -1896,17 +1895,32 @@ function workflow_step4() { // form data review
 }
 
 function workflow_step5(wizard) {
-	var nav_btns = $('.button', wizard.nav_bar).hide();
-	$('#signup_processing .ajax_loader', wizard.workflow).fadeIn();
+	var post_this_thang = function() {
+		var nav_btns = $('.button', wizard.nav_bar).hide(),
+			ajax_loader = $('#signup_processing .ajax_loader', wizard.workflow).fadeIn();
+		
+		if (!wizard.sending_data) {
+			wizard.sending_data = true;
+			
+			$.post('/clients', wizard.form_data, function(response) {
+				$.with_json(response, function(data) {
+					nav_btns.filter('.next').show();
+					$('#signup_processing', wizard.workflow).hide();
+					$('#signup_complete', wizard.workflow).show();
+					$('#resend_link', wizard.workflow).attr('href', '/resend_activation/'+ data.activation_code);
+				}, function(data) {
+					// rerun this function if they click ok on the confirm dialog
+					$.greyConfirm('Uh oh, I got an error: '+ data +"<br />Click Yes to try again.", post_this_thang);
+					$('.button.back', wizard.nav_bar).fadeIn();
+				});
+
+				ajax_loader.hide();
+				wizard.sending_data = false;
+			}, 'json');
+		}
+	}
 	
-	$.post('/clients', wizard.form_data, function(response) {
-		$.with_json(response, function(data) {
-			nav_btns.filter('.next').show();
-			$('#signup_processing', wizard.workflow).hide();
-			$('#signup_complete', wizard.workflow).show();
-			$('#resend_link', wizard.workflow).attr('href', '/resend_activation/'+ data.activation_code);
-		});
-	}, 'json');
+	post_this_thang();
 }
 
 // HELPERS

@@ -530,7 +530,7 @@ class ApplicationController < ActionController::Base
         @search = @new_search
       end
     else
-      #mylogger "Not found search, remote ip #{request.remote_ip}"
+      mylogger "Not found search, remote ip #{request.remote_ip}"
       remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
       session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
       @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
@@ -555,8 +555,10 @@ class ApplicationController < ActionController::Base
       :city         => params[:city],
       :state        => params[:state],
       :zip          => params[:zip],
-      :unit_size    => nil,
-      :within       => nil
+      :unit_size    => params[:unit_size],
+      :within       => params[:within],
+      :lat          => params[:lat],
+      :lng          => params[:lng]
     }
   end
   

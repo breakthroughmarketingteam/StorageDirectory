@@ -5,6 +5,7 @@ class Search < ActiveRecord::Base
   validates_presence_of :lat, :lng
   access_shared_methods
   acts_as_nested_set
+  acts_as_mappable :auto_geocode => { :field => :lat_lng_or_city_state_zip_or_query, :error_message => 'could not be geocoded' }
   
   def self.distance_options
     %w(5 10 15 20)
@@ -28,8 +29,8 @@ class Search < ActiveRecord::Base
   def initialize(attributes, request, old_search = nil)
     super attributes
     self.set_request! request
-    self.set_query! old_search if self.query.blank?
-    self.set_location!((old_search && (old_search.query == self.query) ? old_search.location : nil)) # geocode when nil
+    self.set_query! old_search if self.query.blank? && self.lat.blank?
+    self.set_location!((old_search && (old_search.query == self.query) && self.lat.blank? ? old_search.location : attributes)) # geocode when nil
     self.set_unit_type! attributes
   end
   
@@ -47,8 +48,8 @@ class Search < ActiveRecord::Base
     old_search.comparable_attributes != new_search.comparable_attributes
   end
   
-  def results
-    @listings ||= Listing.find_by_location(self)
+  def results(strict_order = false)
+    @listings ||= Listing.find_by_location(self, strict_order)
   end
   
   def comparable_attributes
@@ -86,6 +87,14 @@ class Search < ActiveRecord::Base
     elsif self.query && (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
       self.set_location! GeoKit::GeoLoc.new(named_listing)
     end
+    
+    if self.city.blank?
+      loc = Geokit::Geocoders::MultiGeocoder.geocode(self.lat_lng.nil? ? self.lat_lng_or_city_state_zip_or_query : (self.lat_lng * ','))
+      self.city = loc.city
+      self.state = loc.state
+      self.zip = loc.zip
+    end
+    
     self
   end
   
@@ -174,6 +183,10 @@ class Search < ActiveRecord::Base
   
   def city_and_state
     "#{self.city}#{', ' + self.state if self.state}" if self.city
+  end
+  
+  def lat_lng_or_city_state_zip_or_query
+    self.lat_lng ? self.lat_lng : (self.city ? self.city_state_and_zip : self.query)
   end
   
 end
