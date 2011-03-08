@@ -5,7 +5,7 @@ class Search < ActiveRecord::Base
   validates_presence_of :lat, :lng
   access_shared_methods
   acts_as_nested_set
-  acts_as_mappable :auto_geocode => { :field => :lat_lng_or_city_state_zip_ir_query, :error_message => 'could not be geocoded' }
+  acts_as_mappable :auto_geocode => { :field => :lat_lng_or_city_state_zip_or_query, :error_message => 'could not be geocoded' }
   
   def self.distance_options
     %w(5 10 15 20)
@@ -89,7 +89,7 @@ class Search < ActiveRecord::Base
     end
     
     if self.city.blank?
-      loc = Geokit::Geocoders::MultiGeocoder.geocode(self.lat_lng.empty? ? self.lat_lng_or_city_state_zip_ir_query : (self.lat_lng * ','))
+      loc = Geokit::Geocoders::MultiGeocoder.geocode(self.lat_lng.nil? ? self.lat_lng_or_city_state_zip_or_query : (self.lat_lng * ','))
       self.city = loc.city
       self.state = loc.state
       self.zip = loc.zip
@@ -185,8 +185,8 @@ class Search < ActiveRecord::Base
     "#{self.city}#{', ' + self.state if self.state}" if self.city
   end
   
-  def lat_lng_or_city_state_zip_ir_query
-    self.lat ? self.lat_lng : self.city ? self.city_state_and_zip : self.query
+  def lat_lng_or_city_state_zip_or_query
+    self.lat_lng ? self.lat_lng : (self.city ? self.city_state_and_zip : self.query)
   end
   
 end
