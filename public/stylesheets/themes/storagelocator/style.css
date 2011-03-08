@@ -2141,7 +2141,7 @@ p.breadcrumb a{color:#fff;}
 #mem-types p{margin:20px;}
 #types-btn{-moz-border-radius-bottomleft:6px;border-radius-bottomleft:6px;-webkit-border-radius-bottomleft:6px;-moz-border-radius-bottomright:6px;border-radius-bottomright:6px;-webkit-border-radius-bottomright:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat-x;color:#fff;display:block;float:right;margin-right:15px;padding:6px 0 5px;text-align:center;text-decoration:none;width:100px;}
 
-.hr-divider{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 20px;width:712px;}
+.hr-divider{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/h-divider.png) no-repeat center;height:30px;margin:30px 0 5px;width:712px;}
 
 #modeL_search{margin:2px 0 0 0;}
 #modeL_search .required{width:185px;}
