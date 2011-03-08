@@ -80,7 +80,7 @@ class Listing < ActiveRecord::Base
   #
   # Search methods
   #
-  def self.find_by_location(search)
+  def self.find_by_location(search, strict_order = false)
     location = search.location
     
     # build the options for the model find method
@@ -110,7 +110,7 @@ class Listing < ActiveRecord::Base
     @listings = Listing.all options
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
-    unless search.unit_size.blank?
+    unless strict_order || search.unit_size.blank?
       all_premium = @listings.select(&:premium?)
       kinda_specific = all_premium.select { |p| !p.sizes.empty? }.sort_by_distance_from location
       

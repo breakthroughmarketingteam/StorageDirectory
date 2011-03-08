@@ -992,25 +992,26 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 $.safeSubmit = function(form, options) {
 	var ops = {
 		method 	   : 'post',
-		success    : function(){},
-		error 	   : function(){},
+		success    : null,
+		error 	   : null,
 		al_where   : 'before',
-		al_context : $('input[type=submit]', form)
+		al_context : $('input[type=submit]', form),
+		ajax_loader: true,
 	};
 	$.extend(ops, options);
 	
 	var form 		= $(form).runValidation(),
-		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+		ajax_loader = ajax_loader ? $.new_ajax_loader(ops.al_where, ops.al_context) : null;
 	
 	if (form.data('valid') && !form.data('x')) {
 		form.data('x', true);
-		ajax_loader.show();
+		if (ajax_loader) ajax_loader.show();
 		
 		$[ops.method](form.attr('action'), form.serialize(), function(response) {
 			$.with_json(response, ops.success, ops.error);
 			
 			form.data('x', false);
-			ajax_loader.fadeOutRemove();
+			if (ajax_loader) ajax_loader.fadeOutRemove();
 		}, 'json');
 	}
 }

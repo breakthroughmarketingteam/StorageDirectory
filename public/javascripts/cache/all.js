@@ -4982,25 +4982,26 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 $.safeSubmit = function(form, options) {
 	var ops = {
 		method 	   : 'post',
-		success    : function(){},
-		error 	   : function(){},
+		success    : null,
+		error 	   : null,
 		al_where   : 'before',
-		al_context : $('input[type=submit]', form)
+		al_context : $('input[type=submit]', form),
+		ajax_loader: true,
 	};
 	$.extend(ops, options);
 	
 	var form 		= $(form).runValidation(),
-		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+		ajax_loader = ajax_loader ? $.new_ajax_loader(ops.al_where, ops.al_context) : null;
 	
 	if (form.data('valid') && !form.data('x')) {
 		form.data('x', true);
-		ajax_loader.show();
+		if (ajax_loader) ajax_loader.show();
 		
 		$[ops.method](form.attr('action'), form.serialize(), function(response) {
 			$.with_json(response, ops.success, ops.error);
 			
 			form.data('x', false);
-			ajax_loader.fadeOutRemove();
+			if (ajax_loader) ajax_loader.fadeOutRemove();
 		}, 'json');
 	}
 }
@@ -6794,18 +6795,36 @@ $(function(){
 	$.enableTooltips('a', '.rslt-features');
 	
 	$('#narrow_results_form').submit(function() {
-		var form = $(this).runValidation(), 
-			results_page = $('#ajax_wrap_inner'),
+		var results_page = $('#ajax_wrap_inner'),
 			results_wrap = $('#results_wrap', results_page),
 			results_head = $('.rslt-head-txt', results_wrap),
-			loading_txt  = 'Looking for '+ $('#search_storage_type', form).val() +' within <span class="hlght-text">'+ 
-						   $('input[name="search[within]"]:checked', form).val() +'</span> miles of <span class="hlght-text">'+ 
-						   $('#search_query', form).val() +'</span> '+ $.ajax_loader_tag();
+			loading_txt  = 'Looking for '+ $('#search_storage_type', this).val() +' within <span class="hlght-text">'+ 
+						   $('input[name="search[within]"]:checked', this).val() +'</span> miles of <span class="hlght-text">'+ 
+						   $('#search_query', this).val() +'</span> '+ $.ajax_loader_tag();
 		
 		$('#type-one-top-bar', results_wrap).fadeTo(500, .5);
 		$('h2', results_head).removeClass('no_results hide').html(loading_txt);
 		$('.txt_ldr', results_head).txt_loader();
 		
+		$.safeSubmit(this, {
+			ajax_loader: false,
+			success: function(data) {
+				results_page.replaceWith(data.results);
+				$.setGmap(data.maps_data);
+				$.enableTooltips('a', '.rslt-features');
+				select_first_size_option();
+				// TODO: this doesnt cause the compare link to appear
+				//$('input[name=compare]', '.listing').autoClickFew(3);
+				
+				$('.rslt-price', '.listing').each(function(){
+					$(':radio', this).eq(0).attr('checked', true);
+					$('.radio_select', this).eq(0).addClass('checked');
+				});
+				
+				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
+			}
+		})
+		/*
 		if (form.data('valid') && !form.data('loading')) {
 			form.data('loading', true);
 			
@@ -6827,7 +6846,7 @@ $(function(){
 				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
 				form.data('loading', false);
 			});
-		}
+		}*/
 		
 		return false;
 	});
@@ -6949,27 +6968,6 @@ function get_review_pop_up(options) {
 			
 			return false;
 		});
-		
-		/*$('form', pop_up).submit(function() {
-			var form = $(this).runValidation(),
-				ajax_loader = $.new_ajax_loader('after', $('input[type=submit]', this));
-
-			if (form.data('valid') && !form.data('sending')) {
-				ajax_loader.show();
-				form.data('sending', true);
-
-				$.post(form.attr('action'), form.serialize(), function(response) {
-					$.with_json(response, function(data) {
-						pop_up.html('<div class="framed" style="text-align:center;">'+ data +'</div>');
-					});
-
-					ajax_loader.hide();
-					form.data('sending', false);
-				}, 'json');
-			}
-			
-			return false;
-		});*/
 	});
 }
 
@@ -7062,7 +7060,7 @@ function getMarkerById(id) {
 	return marker;
 }
 
-function addMarker(icon, lat, lng, title, body, bind_mouse_overs) {
+function addMarker(map, icon, lat, lng, title, body, bind_mouse_overs) {
 	if (typeof bind_mouse_overs == 'undefined') var bind_mouse_overs = true;
 	
 	var point = new GLatLng(lat, lng);
@@ -7087,7 +7085,7 @@ function addMarker(icon, lat, lng, title, body, bind_mouse_overs) {
 		});
 	}
 
-	Gmap.addOverlay(marker);
+	map.addOverlay(marker);
 	return marker;
 }
 
@@ -7106,6 +7104,27 @@ function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more quer
 }
 
 GmapMarkers = [];
+$.setGmapMarkers = function(map, markers, page, resetMarkers) {
+	if (typeof resetMarkers == 'undefined') resetMarkers = false;
+	if (resetMarkers) GmapMarkers = [];
+	
+	for (var i = 0, len = markers.length; i < len; i++) {
+		var photo = markers[i].thumb,
+			title = markers[i].title.replaceAll('+', ' '),
+			body = '<p>'+ photo + 
+						'<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span>'+ 
+						'<span class="listing_address">'+ markers[i].address.replaceAll('+', ' ') +'<br/>'+ markers[i].city.replaceAll('+', ' ') +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
+					'</p>',
+			paged_index = page + i + 1;
+		
+		var marker = addMarker(Gmap, make_indexed_icon(paged_index), markers[i].lat, markers[i].lng, title, body);
+		marker.mIndex = paged_index;
+		marker.listing_id = markers[i].id;
+
+		GmapMarkers[page + i] = marker;
+	}
+}
+
 $.setGmap = function(data, el, page) {
 	if (typeof el == 'undefined') el = 'main_map';
 	if (typeof page == 'undefined') page = 0;
@@ -7119,26 +7138,8 @@ $.setGmap = function(data, el, page) {
 	Gmap.disableContinuousZoom();
 	Gmap.disableScrollWheelZoom();
 
-	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
-
-	//add result markers
-	var markers = data.maps;
-	
-	for (var i = 0, len = markers.length; i < len; i++) {
-		var photo = markers[i].thumb,// ? "<a href=\"/self-storage/show/"+ markers[i].id +"#pictures\"><img style=\"margin-right:7px;border:1px solid #ccc;\" src="+ markers[i].thumb +" width=\"80\" height=\"60\" align=\"left\" /></a>" : '',
-			title = markers[i].title.replaceAll('+', ' '),
-			body = '<p>'+ photo + 
-						'<span class="listing_title"><a href="/self-storage/show/'+ markers[i].id +'">'+ title +'</a></span>'+ 
-						'<span class="listing_address">'+ markers[i].address.replaceAll('+', ' ') +'<br/>'+ markers[i].city.replaceAll('+', ' ') +', '+ markers[i].state +' '+ markers[i].zip +'</span>'+
-					'</p>',
-			paged_index = page + i + 1;
-		
-		var marker = addMarker(make_indexed_icon(paged_index), markers[i].lat, markers[i].lng, title, body);
-		marker.mIndex = paged_index;
-		marker.listing_id = markers[i].id;
-
-		GmapMarkers[page + i] = marker;
-	}
+	addMarker(Gmap, startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
+	$.setGmapMarkers(Gmap, data.maps, page, true);
 
 	//bind mouseover result row to highlight map marker
 	$('.listing', '#rslt-list-bg').live('mouseenter', function(){
@@ -7150,8 +7151,23 @@ $.setGmap = function(data, el, page) {
 		var id = $(this).attr('id').split('_')[1];
 		unhighlightMarker(id);
 	});
+	
+	//do some nifty researching as the map drags
+	GEvent.addListener(Gmap, "dragend", function() {
+		var coords = Gmap.getCenter();
+		
+		$.getJSON('/self-storage', { auto_search: 1, lat: coords.lat(), lng: coords.lng(), within: $('input:checked', '#distance_btns').eq(0).val(), strict_order: true }, function(response) {
+			$.with_json(response, function(data) {
+				$('#results_wrap', '#content').replaceWith($(data.results).find('#results_wrap'));
+				
+				addMarker(Gmap, startIcon, parseFloat(data.maps_data.center.lat), parseFloat(data.maps_data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
+				$.setGmapMarkers(Gmap, data.maps_data.maps, page, true);
+			});
+		});
+	});
 
 } // END setGmap()
+
 
 // updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
 function update_info_tab_count(label, i) {
@@ -9214,7 +9230,6 @@ var workflow_settings = {
 		wizard.workflow.parent().dialog('destroy').remove();
 		$('#add-fac-form', '#top_fac_page').html('<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>').css('width', '93.3%');
 		$('#price-block',  '#top_fac_page').hide();
-		$('#new_client')[0].reset();
 		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
 };

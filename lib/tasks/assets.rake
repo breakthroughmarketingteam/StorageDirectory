@@ -5,18 +5,22 @@ namespace :assets do
     include ActionView::Helpers
     assets = { :javascripts => JAVASCRIPT_INCLUDES, :stylesheets => STYLESHEET_INCLUDES }
     
-    puts "\nWill write these assets:\n#{assets.pretty_inspect}\n"
+    puts "\nWill write these assets:\n#{assets.pretty_inspect}\nContinue? y/n"
     
-    assets.each_pair do |asset_name, assets|
-      joined_name = "cache/all.#{asset_name == :javascripts ? 'js' : 'css'}"
-      joined_path = File.join("public/#{asset_name}", joined_name)
+    if 'y' == STDIN.gets.chomp
+      assets.each_pair do |asset_name, assets|
+        joined_name = "cache/all.#{asset_name == :javascripts ? 'js' : 'css'}"
+        joined_path = File.join("public/#{asset_name}", joined_name)
       
-      puts "-----> Begin writing #{asset_name} in #{joined_path}"
+        puts "-----> Begin writing #{asset_name} in #{joined_path}"
       
-      write_asset_file_contents(joined_path, (asset_name == :javascripts ? compute_javascript_paths(assets, true) : compute_stylesheet_paths(assets, true)))
+        write_asset_file_contents(joined_path, (asset_name == :javascripts ? compute_javascript_paths(assets, true) : compute_stylesheet_paths(assets, true)))
+      end
+    
+      puts "\nTotally just rewrote the bits outta those assets.\n\n"
+    else
+      puts 'ok fine bye'
     end
-    
-    puts "\nTotally just rewrote the bits outta those assets.\n\n"
   end
   
   desc "Upload all images to s3 to their respective folders"

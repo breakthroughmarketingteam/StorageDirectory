@@ -25,7 +25,7 @@ class ListingsController < ApplicationController
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
       
       @location = @search.location
-      @listings = @search.results # this calls the Listing model
+      @listings = @search.results params[:strict_order] # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for listing } }
       

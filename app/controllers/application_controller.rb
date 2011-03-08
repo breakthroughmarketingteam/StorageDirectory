@@ -555,8 +555,10 @@ class ApplicationController < ActionController::Base
       :city         => params[:city],
       :state        => params[:state],
       :zip          => params[:zip],
-      :unit_size    => nil,
-      :within       => nil
+      :unit_size    => params[:unit_size],
+      :within       => params[:within],
+      :lat          => params[:lat],
+      :lng          => params[:lng]
     }
   end
   

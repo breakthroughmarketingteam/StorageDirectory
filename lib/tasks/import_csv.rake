@@ -164,9 +164,8 @@ namespace :import do
       end
       
       unless city.blank? #address.blank? || address.match(/(po box)/i) || zip.blank?
-        listing = Listing.new :title => title, :category => category
+        listing = Listing.new :title => title, :category => category, :address => address, :city => city, :state => state, :zip => zip, :phone => (phone.match(/(N\/A)/i) ? nil : phone)
         listing.facility_features.build :title => type
-        listing.build_map :address => address, :city => city, :state => state, :zip => zip, :phone => (phone.match(/(N\/A)/i) ? nil : phone)
         listing.build_contact :phone => phone2, :email => email
         
         puts "Added to queue (#{percent_of(i, total)} done): #{listing.title}"
@@ -184,7 +183,7 @@ namespace :import do
       if listing.save false
         saved += 1
         puts "Saved (#{saved} of #{queued}; #{percent_of(i, queued)}): #{listing.title}"
-        
+=begin
         if listing.auto_geocode_address
           geocoded += 1
           puts "Geocoded (#{geocoded} of #{queued}; #{percent_of(i, queued)}) #{listing.city}, #{listing.state} [#{listing.lat}, #{listing.lng}]"
@@ -192,6 +191,7 @@ namespace :import do
           not_geocoded += 1
           puts "Failed to Geocode (#{not_geocoded}) #{listing.title} #{listing.city}, #{listing.state} #{listing.zip}"
         end
+=end
       else
         failed += 1
         puts "Error saving #{listing.title} Error: #{listing.errors.full_messages.map * '; '}"
