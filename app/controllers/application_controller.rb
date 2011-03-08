@@ -526,7 +526,7 @@ class ApplicationController < ActionController::Base
       if @diff_search
         mylogger "is diff than #{@new_search}"
         @new_search.save
-        @search.add_child @new_search
+        @search.add_child @new_search.reload
         @search = @new_search
       end
     else
