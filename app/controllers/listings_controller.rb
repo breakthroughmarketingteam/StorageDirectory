@@ -41,7 +41,7 @@ class ListingsController < ApplicationController
         format.html {}
         format.js do
           if params[:auto_search]
-            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data } }
+            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data, :query => @search.city_state_and_zip } }
           else
             # implementing this ajax response for the search results 'Show More Results' button
             render :json => { :success => !@listings.blank?, :data => { :listings => _get_listing_partials(@listings), :maps_data => @map_data } }

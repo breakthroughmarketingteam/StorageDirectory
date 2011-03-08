@@ -7106,7 +7106,10 @@ function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more quer
 GmapMarkers = [];
 $.setGmapMarkers = function(map, markers, page, resetMarkers) {
 	if (typeof resetMarkers == 'undefined') resetMarkers = false;
-	if (resetMarkers) GmapMarkers = [];
+	if (resetMarkers) {
+		$.each(GmapMarkers, function() { map.removeOverlay(this) });
+		GmapMarkers = [];
+	}
 	
 	for (var i = 0, len = markers.length; i < len; i++) {
 		var photo = markers[i].thumb,
@@ -7159,6 +7162,7 @@ $.setGmap = function(data, el, page) {
 		$.getJSON('/self-storage', { auto_search: 1, lat: coords.lat(), lng: coords.lng(), within: $('input:checked', '#distance_btns').eq(0).val(), strict_order: true }, function(response) {
 			$.with_json(response, function(data) {
 				$('#results_wrap', '#content').replaceWith($(data.results).find('#results_wrap'));
+				$('#search_query', '#narrow-box').val(data.query);
 				
 				addMarker(Gmap, startIcon, parseFloat(data.maps_data.center.lat), parseFloat(data.maps_data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
 				$.setGmapMarkers(Gmap, data.maps_data.maps, page, true);
