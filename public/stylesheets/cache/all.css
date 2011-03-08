@@ -2482,7 +2482,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 .bigblue_btn{background:#4c4bcc;color:#fff;float:right;font-size:120%;font-weight:bold;height:38px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;}
 #remember_me{font-size:80%;color:#666;}
 #login_page #user_session_remember_me{width:auto;margin:2px 5px 5px 0;float:left;}
-#pop_up #login_page{width:auto;margin:0;text-align:left;}
+#pop_up #login_page{width:auto;margin:0 15px 15px 20px;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:100px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
 #password_resets_form{margin-top:15px;width:316px;}
@@ -3489,6 +3489,7 @@ p.breadcrumb a{color:#fff;}
 
 /* Zendesk support tab */
 #zenbox_tab{border:solid 1px;cursor:pointer;height:108px;overflow:hidden;position:fixed;text-indent:-5000px;top:25%;width:33px;z-index:10000;}
+#zenbox_tab:hover{width:36px;}
 /* IE won't read ID-and-class selectors like #zenbox_tab.left,so we use just a class:*/
 .ZenboxTabLeft{left:0;background-position:right 0;}
 .ZenboxTabRight{right:0;background-position:left 0;}

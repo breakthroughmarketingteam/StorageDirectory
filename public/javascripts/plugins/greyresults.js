@@ -1102,7 +1102,6 @@ $.setGmap = function(data, el, page) {
 
 	addMarker(startIcon, parseFloat(data.center.lat), parseFloat(data.center.lng), 'Origin', '<p><strong>Search distance measured from here.</strong></p>', false);
 
-
 	//add result markers
 	var markers = data.maps;
 	

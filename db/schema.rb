@@ -507,6 +507,13 @@ ActiveRecord::Schema.define(:version => 20110307182614) do
     t.string   "storage_types"
     t.boolean  "renting_enabled"
     t.integer  "comments_count",      :default => 0
+    t.string   "address"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.float    "lat"
+    t.float    "lng"
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"

@@ -167,6 +167,15 @@ class Listing < ActiveRecord::Base
                          "ORDER BY l.title LIMIT 100"
   end
   
+  def self.update_stats(listings, stat, referrer, request_uri, remote_ip)
+    listings.map { |listing| listing.update_stat stat, referrer, request_uri, remote_ip }
+  end
+  
+  # create a stat record => clicks, impressions
+  def update_stat(stat, referrer, request_uri, remote_ip)
+    eval "self.#{stat}.create :referrer => '#{referrer}', :request_uri => '#{request_uri}', :remote_ip => '#{remote_ip}'"
+  end
+  
   # Instance Methods
   
   def verified?
@@ -251,20 +260,6 @@ class Listing < ActiveRecord::Base
   
   def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
   def full_address; "#{self.address}#{ " #{self.address2}" unless self.address2.blank?}, #{self.city_state_zip}" end
-  
-  # TODO: make this work
-  def self.update_stat(listings, stat, referrer, request_uri, remote_ip)
-    listings.map { |listing| listing.update_stat stat, referrer, request_uri, remote_ip }
-    #insert_sql = listings.map do |listing|
-    #  "INSERT INTO #{stat} VALUES (#{listing.id}, '#{t}', '#{t}', '#{request.referrer}', '#{request.request_uri}');"
-    #end.join('')
-    #ActiveRecord::Base.connection.execute insert_sql
-  end
-  
-  # create a stat record => clicks, impressions
-  def update_stat(stat, referrer, request_uri, remote_ip)
-    eval "self.#{stat}.create :referrer => '#{referrer}', :request_uri => '#{request_uri}', :remote_ip => '#{remote_ip}'"
-  end
   
   def unit_sizes_options_array
     self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.id] }.uniq
