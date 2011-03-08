@@ -658,13 +658,13 @@ $(function(){
 	
 	// opens the unit size specific reserve or request form in the unit sizes tab
 	var unit_size_form_partials = {}; // cache the forms here
-	$('.open_reserve_form').live('click', function(){
+	$('.open_reserve_form').live('click', function() {
 		var $this = $(this), rform = $('.reserve_form', $this.parent()),
 			wrap = $this.parent('.sl-table-wrap'),
-			listing_id = wrap.attr('rel').replace('listing_', ''),
+			listing_id = wrap.attr('data-listing-id').replace('listing_', ''),
 			size_id = wrap.attr('id').replace('Size_', ''),
-			accepts_reservations = wrap.attr('data-has-res') == 'true' ? true : false,
-			ajax_loader = $('.ajax_loader', this);
+			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
+			ajax_loader = $.new_ajax_loader('before', $('.rsr-btn', this));
 			
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
@@ -675,23 +675,35 @@ $(function(){
 			$('.sl-table').removeClass('active');
 			$('.sl-table', rform.parent()).addClass('active');
 			
-			if (unit_size_form_partials[size_id]) rform.slideDown().addClass('active');
+			if (unit_size_form_partials[size_id]) 
+				rform.slideDown().addClass('active');
 			else {
 				ajax_loader.show();
 				
-				if (accepts_reservations) { // we must get the reserve partial that contains the reserve_steps
-					get_partial_and_do({ partial: 'views/partials/greyresults/reserve', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id, show_size_ops: false }, function(response) {
+				if (renting_enabled) { // we must get the rent form partial that contains the rent_steps
+					var special = $('.special_txt.active', wrap.parents('#listing_'+ listing_id)),
+						params = { partial: 'listings/rent_form', model: 'Listing', id: listing_id, show_size_ops: false };
+						
+					if (special.length == 1) {
+						params.sub_model = { '1': 'Size', '2': 'PredefinedSpecial' };
+						params.sub_id = { '1': size_id, '2': special.attr('data-special-id') };
+					} else {
+						params.sub_model = 'Size';
+						params.sub_id = size_id;
+					}
+					
+					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
-						ajax_loader.hide();
 						$('#rent_step1 form', rform).rental_form();
+						ajax_loader.hide();
 					});
 				} else {
 					get_partial_and_do({ partial: 'views/partials/greyresults/request_info', model: 'Listing', id: listing_id, sub_model: 'Size', sub_id: size_id }, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
-						ajax_loader.hide();
 						$('#rent_step1 form').rental_form();
+						ajax_loader.hide();
 					});
 				}
 			}

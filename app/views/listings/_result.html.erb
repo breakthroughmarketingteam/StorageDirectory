@@ -1,4 +1,4 @@
-<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" data-has-res="<%= result.accepts_rentals? %>">
+<div id="listing_<%= result.id %>" class="listing<%= ' premium' if result.premium? %>" data-renting-enabled="<%= result.renting_enabled? %>">
 	<div class="inner">
 		<div class="in">
 			<div class="rslt-title">
@@ -60,13 +60,13 @@
 			<%= link_to 'Directions', result.get_partial_link(:map), :rel => 'map', :class => 'tab_link' %>
 		</li>
 		<li class="fac-sizes<%= ' hide' if result.available_sizes.empty?%>">
-			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => "tab_link" %>
+			<%= link_to "All Sizes#{" (#{result.available_sizes.size})"}", result.get_partial_link(:sizes), :rel => 'sizes', :class => 'tab_link' %>
 		</li>
 		<li class="fac-pictures<%= ' hide' if result.pictures.empty? %>">
-			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => "tab_link" %>
+			<%= link_to "Pictures#{" (#{result.pictures.size})"}", result.get_partial_link(:pictures), :rel => 'pictures', :class => 'tab_link' %>
 		</li>
 		<li class="fac-reviews">
-			<%= link_to "Reviews#{" (#{result.reviews.published.size})" unless result.reviews.published.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => "tab_link" %>
+			<%= link_to "Reviews#{" (#{result.reviews.published.size})" unless result.reviews.published.empty?}", result.get_partial_link(:reviews), :rel => 'reviews', :class => 'tab_link' %>
 		</li>
 	</ul>
 	<div class="highlight-green progress"></div>

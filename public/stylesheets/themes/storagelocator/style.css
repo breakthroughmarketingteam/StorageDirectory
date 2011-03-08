@@ -1876,7 +1876,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form label{font-size:12px;padding-top:3px;width:69px;}
 .rental_form .avail_specials label{}
 .rental_form #rent_step2 label{float:left;font-size:12px;margin-right:15px;padding-top:4px;text-align:right;width:85px;}
-.rental_form .col1{float:left;padding:35px 0 20px 20px;width:41%;}
+.rental_form .col1{float:left;padding:35px 0 20px 20px;width:40%;}
 .rental_form .col1 div{float:left;font-weight:bold;margin:0 0 10px;width:100%;}
 .rental_form .col1 #size_ops{margin:0;}
 .rental_form .cal,.rental_form .tiny{border:1px solid #ccc;padding:1px 3px;}

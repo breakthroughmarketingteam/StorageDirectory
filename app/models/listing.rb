@@ -229,7 +229,11 @@ class Listing < ActiveRecord::Base
   end
   
   def get_partial_link(name)
-    "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}&show_size_ops=true"
+    case name when :sizes
+      "/ajax/get_partial?model=Listing&id=#{id}&partial=listings/#{name.to_s}&show_size_ops=true"
+    else
+      "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}&show_size_ops=true"
+    end
   end
   
   def city_and_state
