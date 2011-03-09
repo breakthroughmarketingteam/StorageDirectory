@@ -127,7 +127,6 @@ class BlogPostsController < ApplicationController
   
   def get_blog_posts
     @blog_posts = if user_is_a? 'admin', 'staff'
-      raise [params, get_posts].pretty_inspect
       get_posts
     else
       if params[:tag]
