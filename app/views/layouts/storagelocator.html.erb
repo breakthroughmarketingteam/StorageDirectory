@@ -13,7 +13,7 @@
 		<%= "<script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) %>
 		<%= '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
 		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin', 'staff') && (in_mode?('new', 'edit') || controller_name == 'admin') %>
-		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user @user_stat}';</script>" if current_user && current_user.has_role?('advertiser', 'tenant') %>
+		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user (@user_stat || UserStat.new)}';</script>" if user_is_a? 'advertiser', 'tenant' rescue mylogger('USER STAT ERROR: ' + $!.message) %>
 		<%= "<script type='text/javascript'>var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>
 		<%= javascript_include_tag  JAVASCRIPT_INCLUDES, :recursive => true, :cache => 'cache/all' %>
         <!--[if IE]>
@@ -139,29 +139,31 @@
         </script>
 		
 		<% if in_production? %>
-			<!-- Start of GetSatisfaction Feedback Tab Code  -->
-			<script type="text/javascript" src="//s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
-			<script type="text/javascript">
-				var feedback_widget = new GSFN.feedback_widget({
-					display   : 'overlay',
-					company   : 'usselfstoragelocator',
-					placement : 'right',
-					color 	  : '#393',
-					style 	  : 'question'
-				});
-			</script>
-			<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
+			<% unless is_admin? %>
+				<!-- Start of GetSatisfaction Feedback Tab Code  -->
+				<script type="text/javascript" src="//s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
+				<script type="text/javascript">
+					var feedback_widget = new GSFN.feedback_widget({
+						display   : 'overlay',
+						company   : 'usselfstoragelocator',
+						placement : 'right',
+						color 	  : '#393',
+						style 	  : 'question'
+					});
+				</script>
+				<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
 
-			<!-- Start of Zendesk Dropbox Code  -->
-			<script type="text/javascript">
-				if (typeof(Zenbox) !== 'undefined') Zenbox.init({
-					dropboxID:   "14160",
-					url:         "https://usselfstoragelocator.zendesk.com",
-					tabID:       "support",
-					tabColor:    "#339933",
-					tabPosition: "Left"
-				});
-			</script>
+				<!-- Start of Zendesk Dropbox Code  -->
+				<script type="text/javascript">
+					if (typeof(Zenbox) !== 'undefined') Zenbox.init({
+						dropboxID:   "14160",
+						url:         "https://usselfstoragelocator.zendesk.com",
+						tabID:       "support",
+						tabColor:    "#339933",
+						tabPosition: "Left"
+					});
+				</script>
+			<% end %>
 			
 			<!-- Start of Google Analytics Code  -->
 			<script type="text/javascript">

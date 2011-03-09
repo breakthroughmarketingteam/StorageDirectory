@@ -15,6 +15,7 @@ class UserStatsController < ApplicationController
   end
 
   def update
+    render :nothing => true and return if current_user.nil?
     @user_stat = current_user.user_stats.find params[:id]
     @user_stat.update_attributes :browser_vars => params[:browser_vars]
     render :nothing => true

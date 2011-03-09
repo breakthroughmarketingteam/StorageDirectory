@@ -1887,7 +1887,8 @@ ul#specials_list {margin:15px 10px;}
 #sl-fac-dist-in p{margin:10px;font-size:120%;font-weight:bold;color:#666;}
 #ls_top{overflow:hidden;margin-bottom:10px;padding:10px;}
 .dlogo_wrap{height:120px;position:relative;vertical-align:middle;text-align:center;font-size:100%;display:block;width:99px;}
-.gmnoprint .dlogo_wrap{height:85px;}
+.gmnoprint .dlogo_wrap,.gmnoprint .clogo{height:85px;float:left;margin-right:10px;}
+.gmnoprint .listing_address{font-size:80%;}
 .facility-logo span{position:relative;z-index:2;color:#fff;text-shadow:1px 1px 1px #333;display:inline-block;font-size:10px;line-height:14px;margin:0 10px;text-align:center;top:9px;}
 .listing .facility-logo span{font-size:12px;line-height:16px;}
 .facility-logo span.w{color:#393;text-shadow:1px 1px 1px #fff;}
@@ -2974,6 +2975,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #terms{margin-bottom:60px;min-height:600px;padding:10px 30px;}
 #terms h2,.page_title{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:#eee;color:#4c4bcc;font-size:28px;margin:6px 0 20px;padding:10px 0 7px 15px;}
+#terms h2{padding-top:2px;}
 #terms h3{color:#4c4bcc;font-size:22px;padding-top:15px;line-height:26px;padding-top:15px;margin-bottom:15px;}
 #terms p{font-size:12px;line-height:18px;margin:0 0 15px 0;}
 #terms a{font-size:12px;}
@@ -3301,7 +3303,8 @@ p.breadcrumb a{color:#fff;}
 
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #666;background:#393 url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;font-weight:bold;color:#ffffff;}
 .ui-corner-all{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
-.ui-widget-header .ui-icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn.png) no-repeat;margin:0;}
+.ui-datepicker-next span{}
+.ui-widget-header .ui-icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-btn.png) no-repeat;margin:0;}
 .ui-widget-header .ui-icon:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}

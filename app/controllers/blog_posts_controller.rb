@@ -1,19 +1,15 @@
 class BlogPostsController < ApplicationController
   
   ssl_required :new, :edit, :update, :destroy
-  ssl_allowed :index, :create
+  ssl_allowed :index, :create, :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :scrub_blocks_model_attributes_params, :only => [:create, :update]
   
   def index
-    if user_is_a? 'admin', 'staff'
-      get_models_paginated
-    else
-      @page = Page.find_by_title 'Self Storage Blog'
-      get_blog_posts
-    end
+    get_blog_posts
+    @page = Page.find_by_title 'Self Storage Blog' unless user_is_a? 'admin', 'staff'
     
     render :layout => false if request.xhr?
   end
@@ -29,7 +25,7 @@ class BlogPostsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.js do
-        render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        render :layout => false
       end
     end
   end
@@ -126,13 +122,17 @@ class BlogPostsController < ApplicationController
   private
   
   def get_blog_posts
-    @blog_posts = if params[:tag]
-      BlogPost.published_and_tagged_with(params[:tag])
-    elsif params[:year]
-      BlogPost.published_on params[:year], params[:month]
+    @blog_posts = if user_is_a? 'admin', 'staff'
+      get_posts
     else
-      BlogPost.published
-    end.paginate(:per_page => 10, :page => params[:page])
+      if params[:tag]
+        BlogPost.published_and_tagged_with params[:tag]
+      elsif params[:year]
+        BlogPost.published_on params[:year], params[:month]
+      else
+        BlogPost.published
+      end.paginate :per_page => 10, :page => params[:page]
+    end
   end
   
 end

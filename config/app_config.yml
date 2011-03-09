@@ -1,4 +1,3 @@
---- 
 production: 
   plugins: greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo
   title: US Self Storage Locator

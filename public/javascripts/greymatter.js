@@ -146,8 +146,8 @@ $(function(){
 					$.enableEditor();
 					$('.disabler', '#ajax_wrap_inner').disabler();
 					fillInFormFieldSelectLists($('#form_controller', '#FormsForm').val());
-				}
-				else $('#ajax_wrap_inner').html(response);
+					
+				} else $('#ajax_wrap_inner').html(response);
 				
 				$(this).removeClass('loading').children().hide().fadeIn('fast');
 			});

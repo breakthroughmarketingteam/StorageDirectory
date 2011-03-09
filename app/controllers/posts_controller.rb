@@ -1,14 +1,14 @@
 class PostsController < ApplicationController
   
   ssl_required :index, :new, :edit, :update, :destroy
-  ssl_allowed :create
-  before_filter :get_models_paginated, :only => :index
+  ssl_allowed :create, :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :scrub_blocks_model_attributes_params, :only => [:create, :update]
   
   def index
+    get_posts
     render :layout => false if request.xhr?
   end
 
@@ -18,7 +18,11 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.js do
-        render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        if user_is_a? 'admin', 'staff'
+          render :layout => false
+        else
+          render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        end
       end
     end
   end
@@ -58,7 +62,7 @@ class PostsController < ApplicationController
             render :json => { :success => true, :data => "Thanks for sharing your tip! We'll put it up as soon as we can." }
           else
             flash.now[:notice] = @post.title + ' has been created.'
-            get_models_paginated
+            get_posts
             render :action => 'index', :layout => false
           end
         else
@@ -87,7 +91,7 @@ class PostsController < ApplicationController
       format.js do
         if @post.update_attributes(params[:post])
           flash.now[:notice] = @post.title + ' has been updated.'
-          get_models_paginated
+          get_posts
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@post)

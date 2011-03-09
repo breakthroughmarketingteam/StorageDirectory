@@ -49,6 +49,14 @@ module SharedModelMethods #:nodoc:
       { :prefix => prefix, :join => join }
     end
     
+    def get_tags
+      @tags ||= Tagging.all(:conditions => { :taggable_type => self.name }, :include => :tag).map { |t| t.tag.name }.uniq
+    end
+    
+    def has_association?(assoc)
+      self.reflect_on_all_associations.map(&:name).include? assoc
+    end
+    
   end
   
   # This module contains instance methods

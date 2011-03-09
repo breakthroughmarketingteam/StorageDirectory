@@ -52,6 +52,8 @@ class ListingsController < ApplicationController
   end
   
   def compare
+    redirect_to :action => :locator and return unless request.xhr?
+    
     if params[:ids] && params[:ids].match(/\d+/)
       @listing_set = params[:ids].split('-').map do |ids|
         i = ids.split('x')

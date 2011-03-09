@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
                 :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
-                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates, :user_is_a?
+                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates, :user_is_a?, :current_model
   
   include UtilityMethods
   include Geokit
@@ -44,11 +44,20 @@ class ApplicationController < ActionController::Base
   
   #before_filter :ensure_domain
   before_filter :simple_auth
-  before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
   before_filter :set_session_vars, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
+  
+  @@app_config = {
+    :plugins => 'greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo',
+    :title =>  'US Self Storage Locator',
+    :theme => 'storagelocator',
+    :widgets => '', 
+    :description => "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory.",
+    :keywords => "rent self storage, rent mobile storage, advertise self storage facility"
+  }
+  cattr_reader :app_config
   
   layout lambda { app_config[:theme] }
   
@@ -107,19 +116,6 @@ class ApplicationController < ActionController::Base
   def local_request?
     false
     #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
-  end
-  
-  def self.app_config
-    @@app_config
-  end
-  
-  def self.app_config=(config)
-    @@app_config = config
-  end
-  
-  def load_app_config
-    raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
-    @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
   end
   
   def default_url_options(options = nil)
@@ -349,6 +345,14 @@ class ApplicationController < ActionController::Base
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }
   end
   
+  def get_posts # Post or BlogPost
+    @posts = case params[:filter_by] when 'tag'
+      current_model.tagged_with(CGI.unescape(params[:tag]))
+    else
+      current_model.all
+    end.paginate :conditions => { :type => 'Post' }, :per_page => @per_page, :page => params[:page]
+  end
+  
   def get_listing
     case current_user.role.title.downcase.to_sym when :admin
       @listing = Listing.find params[:listing_id]
@@ -384,6 +388,10 @@ class ApplicationController < ActionController::Base
   
   def model_errors(*models)
     models.map { |model| model.errors.full_messages.map(&:to_s) unless model.nil? }.reject(&:blank?).flatten
+  end
+  
+  def current_model
+    @current_model ||= controller_name.singularize.camelcase.constantize rescue nil
   end
   
   #--------------------- Authlogic ---------------------
