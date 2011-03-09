@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   
   ssl_required :index, :new, :edit, :update, :destroy
-  ssl_allowed :create
+  ssl_allowed :create, :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
@@ -18,7 +18,11 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.js do
-        render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        if user_is_a? 'admin', 'staff'
+          render :layout => false
+        else
+          render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        end
       end
     end
   end

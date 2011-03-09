@@ -1,7 +1,7 @@
 class BlogPostsController < ApplicationController
   
   ssl_required :new, :edit, :update, :destroy
-  ssl_allowed :index, :create
+  ssl_allowed :index, :create, :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
@@ -9,7 +9,7 @@ class BlogPostsController < ApplicationController
   
   def index
     if user_is_a? 'admin', 'staff'
-      get_models_paginated
+      get_blog_posts
     else
       @page = Page.find_by_title 'Self Storage Blog'
       get_blog_posts
@@ -29,7 +29,7 @@ class BlogPostsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.js do
-        render :json => { :success => true, :data => render_to_string(:action => 'show', :layout => false) }
+        render :layout => false
       end
     end
   end
@@ -127,15 +127,16 @@ class BlogPostsController < ApplicationController
   
   def get_blog_posts
     @blog_posts = if user_is_a? 'admin', 'staff'
+      raise [params, get_posts].pretty_inspect
       get_posts
     else
       if params[:tag]
-        BlogPost.published_and_tagged_with(params[:tag])
+        BlogPost.published_and_tagged_with params[:tag]
       elsif params[:year]
         BlogPost.published_on params[:year], params[:month]
       else
         BlogPost.published
-      end.paginate(:per_page => 10, :page => params[:page])
+      end.paginate :per_page => 10, :page => params[:page]
     end
   end
   
