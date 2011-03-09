@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
   end
   
   def self.app_config
-    @@app_config ||= load_app_config
+    @@app_config
   end
   
   def self.app_config=(config)
