@@ -109,17 +109,17 @@ class ApplicationController < ActionController::Base
     #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
+  def load_app_config
+    raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
+    @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
+  end
+  
   def self.app_config
-    @@app_config
+    @@app_config ||= load_app_config
   end
   
   def self.app_config=(config)
     @@app_config = config
-  end
-  
-  def load_app_config
-    raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
-    @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
   end
   
   def default_url_options(options = nil)
