@@ -4,5 +4,5 @@
 	<%= render :partial => 'menus/view_type_links' unless data.blank? %>
 </div>
 
-<%= render :partial => 'shared/model_filter_by_tag', :locals => { :tags => extract_tags(data.first.class) } if data && data.first.respond_to?(:tags) %>
+<%= render :partial => 'shared/model_filter_by_tag', :locals => { :tags => data.first.class.get_tags } if data && data.first.respond_to?(:tags) %>
 <%= render :partial => "#{view_types_dir}#{@default_view_type}", :locals => { :data => data } unless data.blank? %>

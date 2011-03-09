@@ -2,13 +2,13 @@ class PostsController < ApplicationController
   
   ssl_required :index, :new, :edit, :update, :destroy
   ssl_allowed :create
-  before_filter :get_models_paginated, :only => :index
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_blocks, :only => [:new, :edit]
   before_filter :scrub_blocks_model_attributes_params, :only => [:create, :update]
   
   def index
+    get_posts
     render :layout => false if request.xhr?
   end
 
@@ -58,7 +58,7 @@ class PostsController < ApplicationController
             render :json => { :success => true, :data => "Thanks for sharing your tip! We'll put it up as soon as we can." }
           else
             flash.now[:notice] = @post.title + ' has been created.'
-            get_models_paginated
+            get_posts
             render :action => 'index', :layout => false
           end
         else
@@ -87,7 +87,7 @@ class PostsController < ApplicationController
       format.js do
         if @post.update_attributes(params[:post])
           flash.now[:notice] = @post.title + ' has been updated.'
-          get_models_paginated
+          get_posts
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@post)
@@ -110,6 +110,16 @@ class PostsController < ApplicationController
   def rate
     @post = Post.find(params[:id])
     render :json => { :success => @post.rate(params[:stars], current_user, params[:dimension]) }
+  end
+  
+  private
+  
+  def get_posts
+    @posts = case params[:filter_by] when 'tag'
+      Post.tagged_with(params[:tag])
+    else
+      Post.all
+    end.paginate :conditions => { :type => 'Post' }, :per_page => @per_page, :page => params[:page]
   end
   
 end
