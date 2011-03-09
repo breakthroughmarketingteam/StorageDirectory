@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
   
   #before_filter :ensure_domain
   before_filter :simple_auth
-  #before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
   before_filter :set_session_vars, :except => [:create, :update, :delete]
   before_filter :get_content_vars
@@ -118,15 +117,6 @@ class ApplicationController < ActionController::Base
     false
     #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
-  
-  #def load_app_config
-    #raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
-    #@@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys 
-  #end
-  
-  #def self.app_config=(config)
-  #  @@app_config = config
-  #end
   
   def default_url_options(options = nil)
     ops = { :host => request.host }.merge(options || {})
