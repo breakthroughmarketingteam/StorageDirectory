@@ -112,7 +112,6 @@ class ApplicationController < ActionController::Base
   def load_app_config
     raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
     @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
-    raise [RAILS_ROOT, RAILS_ENV, raw_config, @@app_config].inspect
   end
   
   def self.app_config
