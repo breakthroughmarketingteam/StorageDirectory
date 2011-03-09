@@ -44,11 +44,21 @@ class ApplicationController < ActionController::Base
   
   #before_filter :ensure_domain
   before_filter :simple_auth
-  before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
+  #before_filter :load_app_config # loads website title and theme, meta info, widgets and plugins
   before_filter :reverse_captcha_check, :only => :create
   before_filter :set_session_vars, :except => [:create, :update, :delete]
   before_filter :get_content_vars
   before_filter :set_default_view_type
+  
+  @@app_config = {
+    :plugins => 'greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo',
+    :title =>  'US Self Storage Locator',
+    :theme => 'storagelocator',
+    :widgets => '', 
+    :description => "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory.",
+    :keywords => "rent self storage, rent mobile storage, advertise self storage facility"
+  }
+  cattr_reader :app_config
   
   layout lambda { app_config[:theme] }
   
@@ -109,22 +119,10 @@ class ApplicationController < ActionController::Base
     #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
-  def load_app_config
+  #def load_app_config
     #raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
-    #@@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
-    @@app_config = {
-      :plugins => 'greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo',
-      :title =>  'US Self Storage Locator',
-      :theme => 'storagelocator',
-      :widgets => '', 
-      :description => "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory.",
-      :keywords => "rent self storage, rent mobile storage, advertise self storage facility"
-    }
-  end
-  
-  def self.app_config
-    @@app_config
-  end
+    #@@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys 
+  #end
   
   #def self.app_config=(config)
   #  @@app_config = config
