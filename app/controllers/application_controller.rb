@@ -395,7 +395,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_model
-    @current_model ||= controller_name.singularize.camelcase.constantize
+    @current_model ||= controller_name.singularize.camelcase.constantize rescue nil
   end
   
   #--------------------- Authlogic ---------------------
