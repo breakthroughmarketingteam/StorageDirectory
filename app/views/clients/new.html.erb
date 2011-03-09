@@ -41,7 +41,7 @@
 
 	                                <div id="email_check">
 	                                    <%= f.label :email, 'Contact Email:', :class => 'email-label' %>
-	                                    <%= ajax_loader %><%= link_to 'Confirm Availability', '#', :id => 'chk_avail', :class => 'hide'  %>
+	                                    <%= ajax_loader %><span id="chk_avail" class="hide">Confirm Availability</span>
 	                                    <%= f.text_field :email, :class => "email required#{ ' focus_onload' if @listing }" %>
 	                                </div>
 

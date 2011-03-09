@@ -37,7 +37,8 @@ class Client < User
                                       :city          => ma.city, 
                                       :state         => ma.state, 
                                       :zip           => ma.zip, 
-                                      :phone         => ma.phone
+                                      :phone         => ma.phone,
+                                      :renting_enabled => self.rental_agree?
       end
     
       self.role_id = Role.get_role_id 'advertiser'
@@ -96,11 +97,11 @@ class Client < User
   end
 
   def enable_listings!
-    self.listings.each { |listing| listing.update_attributes :enabled => true, :status => 'verified' }
+    self.listings.each { |listing| listing.update_attributes :enabled => true, :status => 'verified', :renting_enabled => self.rental_agree? }
   end
   
   def ensure_listings_unverified!
-    self.listings.each { |listing| listing.update_attributes :status => 'unverified' }
+    self.listings.each { |listing| listing.update_attribute :status, 'unverified' }
   end
   
   # a simple listing search for the add your facility page

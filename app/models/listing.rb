@@ -90,12 +90,9 @@ class Listing < ActiveRecord::Base
       :origin  => search.lat_lng
     }
     
-    base_conditions = 'listings.enabled IS TRUE'
     search_type = search.storage_type
-    
-    unless search_type =~ /(self storage)/i
-      base_conditions += " AND LOWER(listings.storage_types) ILIKE '%#{search_type}%'"
-    end
+    base_conditions = 'listings.enabled IS TRUE'
+    base_conditions += " AND LOWER(listings.storage_types) ILIKE '%#{search_type}%'" unless search_type =~ /(self storage)/i
     
     if !search.is_address_query? && !search.query.blank? # try query by name? 
       conditions = { :conditions => ["listings.title ILIKE ? AND #{base_conditions}", "%#{search.query}%"] }

@@ -75,7 +75,7 @@
 			
 				</div>
 				<p class="opt_in">
-					<input type="checkbox" name="wants_newsletter" id="wants_newsletter" value="1" />
+					<input type="checkbox" name="wants_newsletter" id="wants_newsletter" value="1" checked="checked" />
 					<label for="wants_newsletter">Send me the latest news.</label>
 				</p>
 			</form>
@@ -92,15 +92,46 @@
 					Thanks for signing up. You are that much closer to reducing vacancies and increasing revenue!
 				</p>
 			</div>
+			
 			<div class="wraped">
 				<div class="inner hidden"></div>
 			</div>
 			<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/step4.png"/>
 			
-			<p id="terms_use">
-				<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" class="required" checked="checked" />
-				<label for="terms_of_use">I have read and agree to the <a href="/terms-of-use-facility-owners" target="_blank">Terms of Use</a>.</label>
-			</p>
+			<div id="signup_agree_btns">
+				<p id="terms_use_check" class="agree_check">
+					<input type="checkbox" name="terms_of_use" id="terms_of_use" value="1" class="required" checked="checked" />
+					<label for="terms_of_use">I agree to the <a href="/terms-of-use-facility-owners" target="_blank">Terms of Use</a>.</label>
+				</p>
+			
+				<p class="agree_check">
+					<input type="checkbox" name="client[rental_agree]" id="rental_agree" value="1" />
+					<label for="rental_agree"><%= auto_pop_up_link 'I Want Online Rentals!', 'rent-pop', { :title => 'Activate Online Rentals', :width => '500px', :height => 'auto', :modal => false } %></label>
+				</p>
+			</div>
+			<div id="rent-pop" class="hide">
+				<p>
+					By offering customers the ability to rent storage online we make their decision easier and more economical to make. Plus, this makes it more likely that the customers we bring you are more serious about paying. We handle the transactions including credit card validation and refunds up to the move in date. 
+				</p>
+				
+				<p>
+					This is awesome! You say. Where's the catch? Well, all we need is 50% of one month of the move in cost. That's it. Cheap huh? We'll even throw in the first rental commission free! 
+				</p>
+				
+				<p>This is how it works: </p>
+				<ul class="stack">
+					<li id="cust_locates">A customer locates your facility on USSSL</li>
+					<li id="cust_rents">They rent one of your units using our Secure Rental Form</li>
+					<li id="cust_pays">We bill them on the day they move in and transfer the funds to you.</li>
+				</ul>
+				
+				<p>Do you want to enable Online Rentals?</p>
+				
+				<div class="stack uncollapse">
+					<a href="#" id="rent_no" class="rent_continue white left blue_btn">No, maybe later.</a>
+					<a href="#" id="rent_yes" class="rent_continue white right grn_btn">Yes of course!</a>
+				</div>
+			</div>
 			
 		</div> <!-- END step 4 -->
 		
