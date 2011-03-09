@@ -139,29 +139,31 @@
         </script>
 		
 		<% if in_production? %>
-			<!-- Start of GetSatisfaction Feedback Tab Code  -->
-			<script type="text/javascript" src="//s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
-			<script type="text/javascript">
-				var feedback_widget = new GSFN.feedback_widget({
-					display   : 'overlay',
-					company   : 'usselfstoragelocator',
-					placement : 'right',
-					color 	  : '#393',
-					style 	  : 'question'
-				});
-			</script>
-			<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
+			<% unless is_admin? %>
+				<!-- Start of GetSatisfaction Feedback Tab Code  -->
+				<script type="text/javascript" src="//s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
+				<script type="text/javascript">
+					var feedback_widget = new GSFN.feedback_widget({
+						display   : 'overlay',
+						company   : 'usselfstoragelocator',
+						placement : 'right',
+						color 	  : '#393',
+						style 	  : 'question'
+					});
+				</script>
+				<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
 
-			<!-- Start of Zendesk Dropbox Code  -->
-			<script type="text/javascript">
-				if (typeof(Zenbox) !== 'undefined') Zenbox.init({
-					dropboxID:   "14160",
-					url:         "https://usselfstoragelocator.zendesk.com",
-					tabID:       "support",
-					tabColor:    "#339933",
-					tabPosition: "Left"
-				});
-			</script>
+				<!-- Start of Zendesk Dropbox Code  -->
+				<script type="text/javascript">
+					if (typeof(Zenbox) !== 'undefined') Zenbox.init({
+						dropboxID:   "14160",
+						url:         "https://usselfstoragelocator.zendesk.com",
+						tabID:       "support",
+						tabColor:    "#339933",
+						tabPosition: "Left"
+					});
+				</script>
+			<% end %>
 			
 			<!-- Start of Google Analytics Code  -->
 			<script type="text/javascript">
