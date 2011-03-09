@@ -112,14 +112,4 @@ class PostsController < ApplicationController
     render :json => { :success => @post.rate(params[:stars], current_user, params[:dimension]) }
   end
   
-  private
-  
-  def get_posts
-    @posts = case params[:filter_by] when 'tag'
-      Post.tagged_with(CGI.unescape(params[:tag]))
-    else
-      Post.all
-    end.paginate :conditions => { :type => 'Post' }, :per_page => @per_page, :page => params[:page]
-  end
-  
 end

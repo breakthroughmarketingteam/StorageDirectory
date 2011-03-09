@@ -349,6 +349,14 @@ class ApplicationController < ActionController::Base
     @blocks ||= Block.find :all, :conditions => { :show_in_all => '' }
   end
   
+  def get_posts # Post or BlogPost
+    @posts = case params[:filter_by] when 'tag'
+      current_model.tagged_with(CGI.unescape(params[:tag]))
+    else
+      current_model.all
+    end.paginate :conditions => { :type => 'Post' }, :per_page => @per_page, :page => params[:page]
+  end
+  
   def get_listing
     case current_user.role.title.downcase.to_sym when :admin
       @listing = Listing.find params[:listing_id]

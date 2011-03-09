@@ -126,13 +126,17 @@ class BlogPostsController < ApplicationController
   private
   
   def get_blog_posts
-    @blog_posts = if params[:tag]
-      BlogPost.published_and_tagged_with(params[:tag])
-    elsif params[:year]
-      BlogPost.published_on params[:year], params[:month]
+    @blog_posts = if user_is_a? 'admin', 'staff'
+      get_posts
     else
-      BlogPost.published
-    end.paginate(:per_page => 10, :page => params[:page])
+      if params[:tag]
+        BlogPost.published_and_tagged_with(params[:tag])
+      elsif params[:year]
+        BlogPost.published_on params[:year], params[:month]
+      else
+        BlogPost.published
+      end.paginate(:per_page => 10, :page => params[:page])
+    end
   end
   
 end
