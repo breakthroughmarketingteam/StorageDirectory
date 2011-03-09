@@ -386,6 +386,10 @@ class ApplicationController < ActionController::Base
     models.map { |model| model.errors.full_messages.map(&:to_s) unless model.nil? }.reject(&:blank?).flatten
   end
   
+  def current_model
+    controller_name.singularize.camelcase.constantize
+  end
+  
   #--------------------- Authlogic ---------------------
   
   def return_or_back(params)
