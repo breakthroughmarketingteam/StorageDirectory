@@ -110,17 +110,25 @@ class ApplicationController < ActionController::Base
   end
   
   def load_app_config
-    raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
-    @@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
+    #raw_config   = File.read(RAILS_ROOT + "/config/app_config.yml")
+    #@@app_config = YAML.load(raw_config)[RAILS_ENV].symbolize_keys
+    @@app_config = {
+      :plugins => 'greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo',
+      :title =>  'US Self Storage Locator',
+      :theme => 'storagelocator',
+      :widgets => '', 
+      :description => "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory.",
+      :keywords => "rent self storage, rent mobile storage, advertise self storage facility"
+    }
   end
   
   def self.app_config
     @@app_config
   end
   
-  def self.app_config=(config)
-    @@app_config = config
-  end
+  #def self.app_config=(config)
+  #  @@app_config = config
+  #end
   
   def default_url_options(options = nil)
     ops = { :host => request.host }.merge(options || {})
