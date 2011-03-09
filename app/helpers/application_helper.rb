@@ -411,7 +411,7 @@ module ApplicationHelper
   end
   
   def tag_filter_path(tag)
-    "/#{controller_name}?filter_by=tag&tag=#{tag}"
+    "/#{controller_name}?filter_by=tag&tag=#{CGI.escape tag}"
   end
   
   def extract_tags(data_class)
@@ -470,10 +470,6 @@ module ApplicationHelper
   # check if we're on the index path of a resource
   def current_controller?(path)
     "/#{controller_name}" == path
-  end
-  
-  def current_model
-    @current_model ||= eval "@#{controller_name.singularize}"
   end
   
   def is_ignored_attribute?(attribute) # skip these when printing out a model's attributes

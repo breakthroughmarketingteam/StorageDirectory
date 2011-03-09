@@ -116,7 +116,7 @@ class PostsController < ApplicationController
   
   def get_posts
     @posts = case params[:filter_by] when 'tag'
-      Post.tagged_with(params[:tag])
+      Post.tagged_with(CGI.unescape(params[:tag]))
     else
       Post.all
     end.paginate :conditions => { :type => 'Post' }, :per_page => @per_page, :page => params[:page]
