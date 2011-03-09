@@ -8,12 +8,8 @@ class BlogPostsController < ApplicationController
   before_filter :scrub_blocks_model_attributes_params, :only => [:create, :update]
   
   def index
-    if user_is_a? 'admin', 'staff'
-      get_blog_posts
-    else
-      @page = Page.find_by_title 'Self Storage Blog'
-      get_blog_posts
-    end
+    get_blog_posts
+    @page = Page.find_by_title 'Self Storage Blog' unless user_is_a? 'admin', 'staff'
     
     render :layout => false if request.xhr?
   end
