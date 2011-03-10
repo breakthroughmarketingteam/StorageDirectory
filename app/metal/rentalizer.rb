@@ -16,8 +16,8 @@ class Rentalizer
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
-            size    = listing.sizes.find_by_id p[1].to_i
-            special = listing.predefined_specials.find_by_id p[2].to_i
+            size    = listing.sizes.find_by_id p[1].to_iunless p[1] == 'undefined'
+            special = listing.predefined_specials.find_by_id p[2].to_i unless p[2] == 'undefined'
             
             rental_calc params, listing, size, special, true
           end
