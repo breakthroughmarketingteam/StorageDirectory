@@ -1,5 +1,5 @@
 <% declare_content_for -%>
-<div class="staticContent">
+<div id="ajax_wrap_inner" class="staticContent">
 	<div id="type-one-r-col">
 		<div id="type-three-r-col-in">
 			<div id="sl-edit-tabs">
@@ -120,7 +120,7 @@
 						<div id="custom_sizes">
 							<h3>My Unit Sizes</h3>
 							<% unless @listing.issn_enabled? %>
-								<p>Create a custom unit size...</p>
+								<p>Create a custom unit size by filling out the quick unit size creation form...</p>
 							<% else %>
 								<p class="left">These are your units that were synchronized with your facility management software...</p>
 							<% end %>
@@ -130,7 +130,7 @@
 						<% unless @listing.issn_enabled? %>
 							<div id="predefined_sizes">
 								<h3>Standard Sizes</h3>
-								<p>Or choose from these common unit sizes</p>
+								<p>Or choose from these common unit sizes. Click Select and they will appear in your list above where you can finish editing it.</p>
 								<%= render :partial => 'predefined_sizes/predefined_sizes', :locals => { :sizes => PredefinedSize.all } %>
 							</div>
 						<% end %>

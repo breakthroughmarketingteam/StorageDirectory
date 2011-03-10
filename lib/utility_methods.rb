@@ -74,7 +74,11 @@ module UtilityMethods
   end
 
   Hash.class_eval do
-    
+    def except(*keys)
+      new_hash = {}
+      self.each_pair { |key, val| new_hash.store key, val unless keys.include? key  }
+      new_hash
+    end
   end
   
   Array.class_eval do

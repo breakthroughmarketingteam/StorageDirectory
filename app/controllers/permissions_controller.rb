@@ -19,8 +19,10 @@ class PermissionsController < ApplicationController
   end
 
   def create
-    results = Permission.create_or_update_many(params[:permissions])
-    @permissions = results[:permissions]
+    if params[:permissions]
+      results = Permission.create_or_update_many(params[:permissions])
+      @permissions = results[:permissions]
+    end
     
     respond_to do |format|
       format.html do

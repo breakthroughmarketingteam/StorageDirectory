@@ -22,6 +22,8 @@
 				<p><%=h @listing.description %></p>
 			</div>
 		</div>
+
+		<% unless @listing.pictures.empty? %>
 		<div id="sl-photos">
 			<div id="main_pic_wrap">
 				<%= image_tag @listing.pictures.first.image.url(:medium), :class => 'main_pic' unless @listing.pictures.empty? %>
@@ -32,6 +34,7 @@
 				<% end %>
 			</div>
 		</div>
+		<% end %>
 	</div>
 	
 	<% if @listing.renting_enabled? && !@listing.sizes.empty? %>

@@ -33,8 +33,8 @@
 				</th>
 				<% @listing_set.each do |set| %>
 					<td id="calc_params_for_<%= set[:listing].id %>">
-						<a data-listing-id="<%= set[:listing].id %>" data-size-id="<%= set[:size].try :id %>" data-special-id="<%= set[:special].try :id %>" class="rent-btn calc_params" href="<%= facility_path_for set.delete(:listing), set %>">
-							<%= set[:listing].renting_enabled? ? 'Rent It!' : 'More Info' rescue raise set.pretty_inspect %>
+						<a data-listing-id="<%= set[:listing].id %>" data-size-id="<%= set[:size].try :id %>" data-special-id="<%= set[:special].try :id %>" class="rent-btn calc_params" href="<%= facility_path_for set[:listing], set.except(:listing) %>">
+							<%= set[:listing].renting_enabled? ? 'Rent It!' : 'More Info' %>
 						</a>
 					</td>
 				<% end %>

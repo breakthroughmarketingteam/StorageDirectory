@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     
     if @comment.save
       if @form && @form.should_send_email?
-        Notifier.deliver_comment_notification(@form.recipient, @comment, request.host)
+        Notifier.deliver_comment_notification(@form.recipient, @comment, request.host, @form)
       end
       
       if params[:target_type].blank?

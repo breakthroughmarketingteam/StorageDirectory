@@ -611,7 +611,8 @@ module ApplicationHelper
       :title         => options[:title], 
       :'data-div-id' => target, 
       :'data-width'  => options[:width], 
-      :'data-height' => options[:height]
+      :'data-height' => options[:height],
+      :'data-modal'  => options[:modal]
     }
   end
   

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110309163701) do
+ActiveRecord::Schema.define(:version => 20110309233000) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -793,7 +793,7 @@ ActiveRecord::Schema.define(:version => 20110309163701) do
     t.float    "lng"
     t.string   "city"
     t.string   "state"
-    t.integer  "zip"
+    t.string   "zip"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "listing_id"
@@ -986,6 +986,7 @@ ActiveRecord::Schema.define(:version => 20110309163701) do
     t.datetime "verification_sent_at"
     t.datetime "activated_at"
     t.integer  "num_facilities"
+    t.boolean  "rental_agree"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

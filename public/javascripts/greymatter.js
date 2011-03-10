@@ -474,7 +474,8 @@ $(function(){
 			ops = default_pop_up_options({
 				title: $this.attr('title'),
 				width: $this.attr('data-width'),
-				height: $this.attr('data-height')
+				height: $this.attr('data-height'),
+				modal: $this.attr('data-modal') == 'true'
 			});
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document

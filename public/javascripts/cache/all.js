@@ -4464,7 +4464,8 @@ $(function(){
 			ops = default_pop_up_options({
 				title: $this.attr('title'),
 				width: $this.attr('data-width'),
-				height: $this.attr('data-height')
+				height: $this.attr('data-height'),
+				modal: $this.attr('data-modal') == 'true'
 			});
 		
 		if (this.href.split('#')[1].length == 0) { // has an empty hash, so we want to load a div thats already in the document
@@ -8075,9 +8076,7 @@ $(function() {
 		return false;
 	});
 	
-	$('#chk_avail').click(function(){ return false; });
 	$('#client_email', '#new_client').blur(function() { check_client_email_avail($(this)); });
-	
 	function check_client_email_avail(email_input) {
 		var form = $('#new_client').data('saving', true), // will prevent the form from submitting
 			chk_avail = $('#chk_avail', email_input.parent()).removeClass('avail').removeClass('not_avail'), email = email_input.val(),
@@ -8091,8 +8090,8 @@ $(function() {
 			$.getJSON('/ajax/find?model=Client&by=email&value='+ email, function(response) {
 				$.with_json(response, function(data) {
 					if (data.length) {
-						email_input.addClass('invalid').focus();
-						chk_avail.text('Already Taken').attr('title', 'You may have already signed up in the past. Try logging in.').removeClass('avail').addClass('not_avail').show();
+						email_input.addClass('invalid')//.focus();
+						chk_avail.html('<a href="/login?email='+ email_input.val() +'">Sign In Instead</a>').attr('title', 'You\'ve already signed up with this email before. Try to sign in, or recover your password.').removeClass('avail').addClass('not_avail').show();
 					} else {
 						email_input.removeClass('invalid');
 						form.data('saving', false);
@@ -8121,6 +8120,17 @@ $(function() {
 		
 		return all_filled;
 	}
+	
+	// Sing up steps rent enable pop up
+	$('a.rent_continue', '#pop_up.rent-pop').live('click', function() {
+		var $this = $(this);
+		$this.parents('.rent-pop').dialog('destroy');
+		
+		if ($this.attr('id') == 'rent_yes') $('#rental_agree', '#signupstep_4').attr('checked', true);
+		else $('#rental_agree', '#signupstep_4').attr('checked', false);
+		
+		return false;
+	});
 	
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
@@ -9195,7 +9205,7 @@ var workflow_settings = {
 			nav_vis : [
 				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
 				['skip', function(btn, wizard) { btn.fadeIn().bind('click', ensure_no_listings_checked) }],
-				['back', function(btn, wizard) { btn.show().bind('click', close_pop_up_and_focus_on_fac_name) }]
+				['back', function(btn, wizard) { btn.show().unbind('click', close_pop_up_and_focus_on_fac_name).bind('click', close_pop_up_and_focus_on_fac_name) }]
 			]
 		},
 		{ 
@@ -9217,7 +9227,7 @@ var workflow_settings = {
 				['back', 'fadeIn']
 			],
 			validate : function(wizard) {
-				return $('#terms_use', wizard.workflow).runValidation().data('valid');
+				return $('#terms_use_check', wizard.workflow).runValidation().data('valid');
 			}
 		},
 		{ 
@@ -9243,7 +9253,7 @@ function ensure_no_listings_checked() {
 }
 
 function close_pop_up_and_focus_on_fac_name(event){
-	$('#pop_up').dialog('close');
+	$('#pop_up').dialog('close').remove();
 	$('#client_company', '#new_client').focus();
 }
 
@@ -9366,10 +9376,14 @@ function workflow_step4() { // form data review
 function workflow_step5(wizard) {
 	var post_this_thang = function() {
 		var nav_btns = $('.button', wizard.nav_bar).hide(),
-			ajax_loader = $('#signup_processing .ajax_loader', wizard.workflow).fadeIn();
+			ajax_loader = $('#signup_processing .ajax_loader', wizard.workflow).fadeIn(),
+			rent_check = $('#rental_agree', wizard.workflow);
 		
 		if (!wizard.sending_data) {
 			wizard.sending_data = true;
+			
+			if (rent_check.is(':checked')) 
+				wizard.form_data[rent_check.attr('name')] = rent_check.val();
 			
 			$.post('/clients', wizard.form_data, function(response) {
 				$.with_json(response, function(data) {
