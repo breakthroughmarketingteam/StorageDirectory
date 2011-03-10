@@ -9,7 +9,7 @@
 					<% unless @features.empty? %>
 						<div class="rslt-features">
 							<% @features.each do |feature| %>
-								<a href="#" class="<%= feature.parameterize %>" title="<%= feature %>"><%= feature %></a>
+								<a href="#" class="<%= feature.match(/^(24)/) ? 'all-hour-access' : feature.parameterize %>" title="<%= feature %>"><%= feature %></a>
 							<% end %>
 						</div>
 					<% end %>
