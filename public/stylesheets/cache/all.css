@@ -1724,12 +1724,12 @@ li.share a.socialmediathree{background:url(http://s3.amazonaws.com/storagelocato
 /* Start the add facility page styles here */
 #add-fac-form{border:3px solid #ccc;float:left;margin-top:10px;padding:15px;width:330px;position:relative;background:repeat #4C4BCC;-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;}
 form#new_client{height:255px;}
-form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
+form#new_client .ajax_loader{top:12px;left:12px;position:absolute;}
 #add-fac-form .label{color:#99f;display:block;font-size:12px;margin-bottom:5px;}
 #add-fac-form .email-label{color:#99f;display:inline-block;font-size:12px;margin-bottom:4px;}
 #add-fac-form #city{float:left;margin-right:30px;width:263px;}
 #add-fac-form #state{margin-bottom:0;}
-#add-fac-form #submit_wrap{margin-top:15px;float:right;}
+#add-fac-form #submit_wrap{margin-top:15px;float:right;position:relative;}
 #add-fac-form span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:8px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
@@ -2386,7 +2386,8 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 .datepicker_wrap{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/cal-icon.png) no-repeat 48% 78%;cursor:pointer;}
 #new_client #email_check{overflow:hidden;position:relative;margin-bottom:8px;}
 #new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
-#chk_avail{color:#ddd;float:right;font-size:11px;margin:2px 6px 0 0;padding:2px 0;text-transform:uppercase;}
+#chk_avail,#chk_avail a{color:#ddd;font-size:11px;text-transform:uppercase;}
+#chk_avail{float:right;margin:2px 6px 0 0;padding:2px 0;}
 #chk_avail.avail{padding-right:24px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkmark.png) no-repeat right center;}
 #chk_avail.not_avail{padding-right:18px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/cancel_icon.png) no-repeat right center;}
 #new_client a.search-button{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;border:2px solid #ddd;color:#fff;float:right;font-size:16px;height:31px;line-height:1.9;margin-bottom:0;margin-top:0;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #666;width:130px;}
@@ -2628,9 +2629,10 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_4 #review_contact p{line-height:20px;}
 #signupstep_4 p.opt_in{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-yes.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
 #signupstep_4 p.opt_out{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-no.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
-#signupstep_4 #terms_use{float:right;margin-top:20px;width:200px;}
-#signupstep_4 #terms_use a{color:#4c4bcc;}
-#signupstep_4 #terms_use input{float:left;margin:0 10px 20px 0;}
+#signup_agree_btns{margin-top:10px;}
+#signupstep_4 .agree_check{float:right;width:175px;}
+#signupstep_4 .agree_check a{color:#4c4bcc;}
+#signupstep_4 .agree_check input{float:left;margin:0 10px 20px 0;}
 #signupstep_4 img{margin:30px 0 0 30px;}
 #review_contact .listing_title{font-size:14px;margin-bottom:0;}
 #review_contact .listing_address{font-size:70%;}
@@ -2643,6 +2645,9 @@ form .error p{margin:0 0 7px 0;}
 .new_action #workflow_nav .next{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}
+#rent-pop{margin:0 20px 15px;line-height:1.1;}
+#rent-pop p{margin-bottom:10px;}
+#rent-pop ul{list-style-position:inside;margin-left:20px;font-size:80%;}
 
 #body{width:872px;margin:0 auto;text-align:left;}
 #topbar{min-width:965px;border-bottom:1px solid #c0bedf;height:27px;background:#fff;}
@@ -3121,7 +3126,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step1  .col3 ul li.total_wrap span{font-size:18px;}
 .rental_form .col3 li.total_wrap{font-size:16px;}
 .rental_form .col3 li.discount_wrap{color:#f60;}
-.rental_form .col3 li.usssl_discount{color:#f60;}
+.rental_form .col3 li.usssl_discount_wrap{color:#f60;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
 .rental_form .col3 .grey span{float:none;color:#999;}
@@ -3304,7 +3309,7 @@ p.breadcrumb a{color:#fff;}
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus{border:1px solid #666;background:#393 url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;font-weight:bold;color:#ffffff;}
 .ui-corner-all{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 .ui-datepicker-next span{}
-.ui-widget-header .ui-icon{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-btn.png) no-repeat;margin:0;}
+.ui-widget-header .ui-icon{margin:0;/*background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/plus-btn.png) no-repeat;*/}
 .ui-widget-header .ui-icon:hover{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}
@@ -3488,7 +3493,8 @@ p.breadcrumb a{color:#fff;}
 #list-type td.no{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/xmark.png) no-repeat center;}
 
 #smpl-lstng{margin:0 0 20px -7px;}
-
+#rent-pop .rent_continue{text-transform:none;}
+#rent_no{margin-top:8px}
 #add_helptext_link{top:30px;}
 
 /* Zendesk support tab */
