@@ -1380,7 +1380,27 @@ $.fn.shimmy = function(parent, ops) {
 		parent = $(parent);
 	$.extend(options, ops || {});
 	
-	function shimmy_meow(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
+	var getScrollXY = function() {
+		var scrOfX = 0, scrOfY = 0;
+
+		if (typeof window.pageYOffset == 'number') {
+			//Netscape compliant
+			scrOfY = window.pageYOffset;
+			scrOfX = window.pageXOffset;
+		} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+			//DOM compliant
+			scrOfY = document.body.scrollTop;
+			scrOfX = document.body.scrollLeft;
+		} else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
+			//IE6 standards compliant mode
+			scrOfY = document.documentElement.scrollTop;
+			scrOfX = document.documentElement.scrollLeft;
+		}
+
+		return [scrOfX, scrOfY];
+	}
+	
+	var shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
 		var window_offset = getScrollXY(),
 			diff = (window_offset[1] + 10) - el_offset.top;
 		
@@ -1398,35 +1418,14 @@ $.fn.shimmy = function(parent, ops) {
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
 			this_pos 	= $this.position(parent),
-			parent_height = parent.height(),
 			btm_from_top  = this_pos.top + this_height + pad;
 		
-		shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		
 		$(window).scroll(function() {
-			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+			shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		});
 	});
-}
-
-function getScrollXY() {
-	  var scrOfX = 0, scrOfY = 0;
-	
-	  if ( typeof( window.pageYOffset ) == 'number' ) {
-		    //Netscape compliant
-		    scrOfY = window.pageYOffset;
-		    scrOfX = window.pageXOffset;
-	  } else if ( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
-		    //DOM compliant
-		    scrOfY = document.body.scrollTop;
-		    scrOfX = document.body.scrollLeft;
-	  } else if ( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
-		    //IE6 standards compliant mode
-		    scrOfY = document.documentElement.scrollTop;
-		    scrOfX = document.documentElement.scrollLeft;
-	  }
-	
-	  return [scrOfX, scrOfY];
 }
 
 $.fn.slideUpRemove = function(speed, callback) {

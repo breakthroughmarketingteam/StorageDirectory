@@ -150,7 +150,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 .profile_action #sl-tabs-sizes-in{margin-bottom:15px;}
 /* Customizations - D.S */
 #narrow_results_form{position:relative;}
-#offset_search_box{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/loupe.png) no-repeat left center;left:20px;padding-left:35px;position:absolute;top:10px;width:510px;z-index:500;}
+#offset_search_box{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/loupe.png) no-repeat left center;padding-left:52px;position:absolute;top:-59px;width:510px;z-index:500;}
 #offset_search_box #search_query{border:2px solid #9999ff;font-size:16px;margin-right:10px;padding:6px 10px;width:62%;background-color: #FFF;}
 #offset_search_box .grn_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;position:relative;}
 #oldlogo{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/usselfstoragelocator.jpg) no-repeat;float:left;height:103px;margin-left:40px;margin-top:11px;position:relative;width:80px;}
@@ -347,7 +347,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listing img{float:left;list-style:none;display:inline;}
 .rslt-contact,li.rslt-miles{margin-left:11px;}
 .facility-logo{background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/facility-logo-reflection.png") no-repeat 0 bottom;float:left;height:88px;margin:11px 0 0 33px;padding-left:3px;width:105px;font-size:80%;position:relative;}
-#feat-list .facility-logo{background:none;height:110px;margin:0;padding:0;width:100%;}
+#feat-list .facility-logo{background:none;height:auto;margin:0 0 13px 0;padding:0;width:100%;}
 #feat-list .facility-logo img{height:100px;margin-bottom:0;width:97%;}
 .listing img.logo{margin-left:3px;}
 .listing .num_icon{background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/result-number.png") no-repeat 1px 0;color:#fff;font-weight:bold;height:39px;padding-top:5px;position:absolute;text-align:center;left: 0px;text-shadow:1px 1px 0 #333;top:50%;width:30px;}
@@ -672,7 +672,7 @@ ul#specials_list {margin:15px 10px;}
 .facility-logo img.default_logo{position:absolute;top:0px;}
 #sl-fac-detail-in-edit .dlogo_wrap,#sl-fac-detail-in-edit .clogo{width:128px;height:94px;font-size:80%;float:left;margin-right:12px;}
 .listing .dlogo_wrap{width:90%;height:auto;padding:0 3px;text-decoration:none;}
-#feat-list .dlogo_wrap{width:100%;}
+#feat-list .dlogo_wrap{width:100%;height:100px;float:none;}
 .listing .dlogo_wrap span{display:inline-block;font-size:12px;line-height:16px;margin:0 10px;text-align:center;top:9px;}
 #ov-units .dlogo_wrap span{position:relative;color:#fff;font-size:70%;}
 #sl-fac-dist-in-edit p.sl-phone,#sl-fac-dist-in p.sl-phone,#ls_top .sl-phone{font-weight:bold;font-size:140%;}
@@ -1571,7 +1571,7 @@ form .error p{margin:0 0 7px 0;}
 #red_tab{display:block;width:142px;height:52px;margin:5px auto 20px;color:#fff;font-size:100%;text-shadow:1px 1px 0px #666;line-height:2.2;position:relative;z-index:0;text-align:center;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/pull-tab.png) no-repeat;}
 #red_tab:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/pull-tab-hover.png) no-repeat;}
 
-#footer_btm{color:#ccccff;font-size:90%;background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple_bg.png) repeat;height: 100%;width: 100%;}
+#footer_btm{color:#ccccff;font-size:90%;background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat;height: 100%;width: 100%;}
 #footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:10px;width:954px;height:129px;padding:0px 7px 0px 14px;position: relative;}
 #footer_btm .usssl_adp{width:140px;height:110px;margin:10px 9px 10px 9px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
 
@@ -1758,7 +1758,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form div .left{float:right;}
 .virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
-#feat-list{border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
+#feat-list{width:172px;border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #feat-list h2{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list .compare{margin:10px;font-size:120%;}
@@ -1781,7 +1781,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #storage-info-content .tip-box span{color:#4c4bcc;font-weight:bold;}
 .edit_action img#listing_img, .show_action img#listing_img{border:4px solid #fff;height:129px;width:174px;}
 .edit_action .clogo{border:1px solid #ccc;height:138px;margin-bottom:15px;width:182px;}
-#feat-list .clogo{border:1px solid #666;}
+#feat-list .clogo{width:100%;float:none;}
 .show_action a.dlogo_wrap span{display:block;line-height:24px;margin-left:4px;padding:5px;top:20px;width:164px;}
 #ov-units .clogo,#ov-units .dlogo_wrap{float:left;height:77px;margin:10px;width:102px;}
 .show_action #sb-title h2{background:none;margin:16px 0 0 20px;padding:0;}
@@ -2101,7 +2101,7 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading .left{width:295px;}
 #top_fac_page #heading .right{height:64px;margin:6px 8px 0 0;width:404px;}
 #top_fac_page #heading p{display:inline-block;line-height:17px;margin:6px 0 0 16px;}
-
+a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
 #mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
 #mem-types td.label{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}

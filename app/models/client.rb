@@ -38,7 +38,7 @@ class Client < User
                                       :state         => ma.state, 
                                       :zip           => ma.zip, 
                                       :phone         => ma.phone,
-                                      :renting_enabled => self.rental_agree?
+                                      :renting_enabled => params[:client][:rental_agree]
       end
     
       self.role_id = Role.get_role_id 'advertiser'

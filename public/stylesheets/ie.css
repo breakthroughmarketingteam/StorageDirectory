@@ -30,7 +30,7 @@ body { position:relative; text-align:center; }
 
 /* Fix for Italic bug in IE6 */
 * html body * { overflow:visible; }
-* html iframe, * html frame { overflow:auto; } 
+* html iframe, * html frame { overflow:auto; }
 * html frameset { overflow:hidden; }
 
 /* Display and CSS fix */
@@ -68,7 +68,11 @@ section[id*=column-] { display:inline; }
 sup { vertical-align:text-top; }
 sub { vertical-align:text-bottom; }
 sup, sub { font-size: 1.2em; }
-html > body p code { *white-space:normal; }
+html > body p code { white-space:normal; }
 a abbr, a acronym { text-decoration: underline; }
 
 #ie_warn{padding:10px 20px;border:1px solid #ebebeb;font-size:140%;text-align:center;color:#ccc;}
+#offset_search_box{padding-left: 22px;}
+input[type='submit'].grn_btn{padding: 3px 0px;margin-bottom: -1px;}
+#sl-edit-tabs #tab2 #toggle_renting{margin-top: 16px;}
+.sizes_list_in .sl-table .st-size.ex{width: 85px;margin-left: 8px;}
