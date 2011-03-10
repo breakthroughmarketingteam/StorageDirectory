@@ -2099,7 +2099,8 @@ p.breadcrumb a{color:#fff;}
 #unsub_wrap{background:none repeat scroll 0 0 #FFFFFF;color:#555555;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;margin-left:-10px;padding:20px 35px;width:110%;}
 #new_listing input[type="text"]{width:80%;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/link-hover.png) no-repeat right;}
-
+#rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover a.profile_info_link{color:#fff;}
+a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
 
 #moving{width:100%;background:#fff;}
 #moving tr{height:55px;}
@@ -2271,6 +2272,8 @@ p.breadcrumb a{color:#fff;}
 #list-type td.no{background:url(http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/xmark.png) no-repeat center;}
 
 #smpl-lstng{margin:0 0 20px -7px;}
+#smpl-rentals{margin:0 0 20px -11px;}
+
 #rent-pop .rent_continue{text-transform:none;}
 #rent_no{margin-top:8px}
 #add_helptext_link{top:30px;}
