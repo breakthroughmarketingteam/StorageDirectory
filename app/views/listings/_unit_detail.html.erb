@@ -2,7 +2,7 @@
 	<div class="left specializer_wrap">
 		<% if listing.special %>
 			Special: <span class="special_txt active" data-context="listing_<%= listing.id %>" data-listing-id="<%= listing.id %>" data-special-id="<%= listing.special.id %>" title="<%= listing.special.description %>"><%= listing.special.title %></span>
-			<%= render :partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => listing.special, :context => "listing_#{listing.id}" } %>
+			<%= render :partial => 'predefined_specials/special_txt', :locals => { :listing => listing, :special => listing.special, :context => "listing_#{listing.id}" } if listing.predefined_specials.count > 1 %>
 		<% end %>
 	</div>
 	
