@@ -39,9 +39,10 @@ Rails::Initializer.run do |config|
   config.gem 'ssl_requirement'
   config.gem 'rmagick', :lib => 'RMagick'
   config.gem 'delayed_job', :version => '~>2.0.4'
-  config.gem "heroscale"
-  require "heroscale"
-  config.middleware.use "Heroscale::Middleware"
+  # TODO: does heroscale work? their site is down as of feb 2011
+  #config.gem "heroscale"
+  #require "heroscale"
+  #config.middleware.use "Heroscale::Middleware"
   config.gem 'rack-rewrite', '~> 1.0.2'
   require 'rack/rewrite'
   config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
