@@ -26,7 +26,7 @@
 							<p class="info_heading">Features</p>
 							<ul class="greylist">
 								<% @facility_features.each do |feature| %>
-									<li class="feature_<%= feature.match(/^(24)/) ? 'all-hour-access' : feature.parameterize %>"><%= feature %></li>
+									<li class="feature_<%= feature.match(/^(24)/i) ? 'all-hour-access' : feature.parameterize %>"><%= feature %></li>
 								<% end %>
 							</ul>
 						</div>

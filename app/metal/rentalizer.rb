@@ -16,10 +16,15 @@ class Rentalizer
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
-            size    = listing.sizes.find_by_id p[1].to_i if p[1] || p[1] != 'undefined'
-            special = listing.predefined_specials.find_by_id p[2].to_i if p[2] || p[2] != 'undefined'
+            size    = listing.sizes.find_by_id p[1].to_i
+            special = listing.predefined_specials.find_by_id p[2].to_i
             
-            rental_calc params, listing, size, special, true
+            begin
+              rental_calc params, listing, size, special, true
+            rescue => e
+              puts mylogger(e.message)
+              rental_calc params, listing, nil, nil, true
+            end
           end
           
           out, mime = { :success => true, :data => data }.to_json, 'application/json'
