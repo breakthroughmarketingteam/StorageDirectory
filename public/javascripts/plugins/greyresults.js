@@ -659,13 +659,16 @@ $(function(){
 	// opens the unit size specific reserve or request form in the unit sizes tab
 	var unit_size_form_partials = {}; // cache the forms here
 	$('.open_reserve_form').live('click', function() {
-		var $this = $(this), rform = $('.reserve_form', $this.parent()),
-			wrap = $this.parent('.sl-table-wrap'),
-			listing_id = wrap.attr('data-listing-id').replace('listing_', ''),
-			size_id = wrap.attr('id').replace('Size_', ''),
+		var $this 	   		= $(this), 
+			rform 	   		= $('.reserve_form', $this.parent()),
+			wrap 	   		= $this.parent('.sl-table-wrap'),
+			listing_id 		= wrap.attr('data-listing-id').replace('listing_', ''),
+			size_id    		= wrap.attr('id').replace('Size_', ''),
 			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
-			ajax_loader = $.new_ajax_loader('before', $('.rsr-btn', this));
-			
+			ajax_loader 	= $.new_ajax_loader('before', $('.rsr-btn', this));
+		
+		console.log(wrap, wrap.attr('id'), size_id)
+		
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -691,7 +694,7 @@ $(function(){
 						params.sub_model = 'Size';
 						params.sub_id = size_id;
 					}
-					
+					console.log(params)
 					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
@@ -1376,7 +1379,8 @@ $.fn.rental_form = function() {
 			sizes_select   = $('select.sizes_select', form),
 			calendar	   = $('#move_in_date', form).datepicker({
 				onSelect: function(date, ui) { form.submit() },
-				minDate: new Date()
+				minDate: new Date(),
+				maxDate: '+2w'
 			}),
 			inputs = {
 				subtotal   : $('.subtotal', form),
