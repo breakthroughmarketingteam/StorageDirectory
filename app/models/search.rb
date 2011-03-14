@@ -182,7 +182,7 @@ class Search < ActiveRecord::Base
   end
   
   def city_and_state
-    "#{self.city}#{', ' + self.state if self.state}" if self.city
+    self.city ? "#{self.city}#{', ' + self.state if self.state}" : ''
   end
   
   def lat_lng_or_city_state_zip_or_query
