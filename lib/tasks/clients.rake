@@ -9,10 +9,10 @@ namespace :clients  do
     puts "Preparing to activate #{@clients.size} clients\n"
     
     @clients.each do |c|
-      #c.status = 'active'
-      #c.activated_at = Time.now
-      #c.enable_listings!
-      #c.save
+      c.status = 'active'
+      c.activated_at = Time.now
+      c.enable_listings!
+      c.save
       puts "-----> Activated client #{c.name}. Email: #{c.email} Password: #{c.temp_password}"
     end
     
