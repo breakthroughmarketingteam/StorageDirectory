@@ -13,6 +13,7 @@ namespace :clients  do
       c.activated_at = Time.now
       c.enable_listings!
       c.save
+      Notifier.deliver_client_activation c
       puts "-----> Activated client #{c.name}. Email: #{c.email} Password: #{c.temp_password}"
     end
     
