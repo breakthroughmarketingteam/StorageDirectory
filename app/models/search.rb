@@ -90,9 +90,9 @@ class Search < ActiveRecord::Base
     
     if self.city.blank?
       loc = Geokit::Geocoders::MultiGeocoder.geocode(self.lat_lng.nil? ? self.lat_lng_or_city_state_zip_or_query : (self.lat_lng * ','))
-      self.city = loc.city
+      self.city  = loc.city
       self.state = loc.state
-      self.zip = loc.zip
+      self.zip   = loc.zip
     end
     
     self

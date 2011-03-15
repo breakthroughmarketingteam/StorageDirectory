@@ -31,9 +31,6 @@ class ListingsController < ApplicationController
       
       # updates the impressions only for listings on current page if the search has changed
       if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
-        #Listing.transaction do
-        #  @listings.map { |m| m.update_stat 'impressions', request }
-        #end
         Listing.delay.update_stats @listings, 'impressions', request.referrer, request.request_uri, request.remote_ip unless user_is_a?('admin', 'staff', 'advertiser')
       end
       
