@@ -5370,7 +5370,27 @@ $.fn.shimmy = function(parent, ops) {
 		parent = $(parent);
 	$.extend(options, ops || {});
 	
-	function shimmy_meow(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
+	var getScrollXY = function() {
+		var scrOfX = 0, scrOfY = 0;
+
+		if (typeof window.pageYOffset == 'number') {
+			//Netscape compliant
+			scrOfY = window.pageYOffset;
+			scrOfX = window.pageXOffset;
+		} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+			//DOM compliant
+			scrOfY = document.body.scrollTop;
+			scrOfX = document.body.scrollLeft;
+		} else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
+			//IE6 standards compliant mode
+			scrOfY = document.documentElement.scrollTop;
+			scrOfX = document.documentElement.scrollLeft;
+		}
+
+		return [scrOfX, scrOfY];
+	}
+	
+	var shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
 		var window_offset = getScrollXY(),
 			diff = (window_offset[1] + 10) - el_offset.top;
 		
@@ -5388,35 +5408,14 @@ $.fn.shimmy = function(parent, ops) {
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
 			this_pos 	= $this.position(parent),
-			parent_height = parent.height(),
 			btm_from_top  = this_pos.top + this_height + pad;
 		
-		shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		
 		$(window).scroll(function() {
-			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
+			shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		});
 	});
-}
-
-function getScrollXY() {
-	  var scrOfX = 0, scrOfY = 0;
-	
-	  if ( typeof( window.pageYOffset ) == 'number' ) {
-		    //Netscape compliant
-		    scrOfY = window.pageYOffset;
-		    scrOfX = window.pageXOffset;
-	  } else if ( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
-		    //DOM compliant
-		    scrOfY = document.body.scrollTop;
-		    scrOfX = document.body.scrollLeft;
-	  } else if ( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
-		    //IE6 standards compliant mode
-		    scrOfY = document.documentElement.scrollTop;
-		    scrOfX = document.documentElement.scrollLeft;
-	  }
-	
-	  return [scrOfX, scrOfY];
 }
 
 $.fn.slideUpRemove = function(speed, callback) {
@@ -6668,13 +6667,16 @@ $(function(){
 	// opens the unit size specific reserve or request form in the unit sizes tab
 	var unit_size_form_partials = {}; // cache the forms here
 	$('.open_reserve_form').live('click', function() {
-		var $this = $(this), rform = $('.reserve_form', $this.parent()),
-			wrap = $this.parent('.sl-table-wrap'),
-			listing_id = wrap.attr('data-listing-id').replace('listing_', ''),
-			size_id = wrap.attr('id').replace('Size_', ''),
+		var $this 	   		= $(this), 
+			rform 	   		= $('.reserve_form', $this.parent()),
+			wrap 	   		= $this.parent('.sl-table-wrap'),
+			listing_id 		= wrap.attr('data-listing-id').replace('listing_', ''),
+			size_id    		= wrap.attr('id').replace('Size_', ''),
 			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
-			ajax_loader = $.new_ajax_loader('before', $('.rsr-btn', this));
-			
+			ajax_loader 	= $.new_ajax_loader('before', $('.rsr-btn', this));
+		
+		console.log(wrap, wrap.attr('id'), size_id)
+		
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -6700,7 +6702,7 @@ $(function(){
 						params.sub_model = 'Size';
 						params.sub_id = size_id;
 					}
-					
+					console.log(params)
 					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
@@ -7385,7 +7387,8 @@ $.fn.rental_form = function() {
 			sizes_select   = $('select.sizes_select', form),
 			calendar	   = $('#move_in_date', form).datepicker({
 				onSelect: function(date, ui) { form.submit() },
-				minDate: new Date()
+				minDate: new Date(),
+				maxDate: '+2w'
 			}),
 			inputs = {
 				subtotal   : $('.subtotal', form),

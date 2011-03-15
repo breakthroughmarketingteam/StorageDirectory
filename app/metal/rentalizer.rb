@@ -19,7 +19,12 @@ class Rentalizer
             size    = listing.sizes.find_by_id p[1].to_i
             special = listing.predefined_specials.find_by_id p[2].to_i
             
-            rental_calc params, listing, size, special, true
+            begin
+              rental_calc params, listing, size, special, true
+            rescue => e
+              puts mylogger(e.message)
+              rental_calc params, listing, nil, nil, true
+            end
           end
           
           out, mime = { :success => true, :data => data }.to_json, 'application/json'

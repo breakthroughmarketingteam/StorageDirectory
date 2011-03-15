@@ -51,7 +51,7 @@
 											<% types.each do |type| %>
 											<select class="sizes_select" id="size_id_<%= type.downcase.gsub(/\s|-/, '_') %>" name="rental[size_id]">
 												<% sizes.select{ |s| s.title == type }.each do |s| %>
-													<option<%= ' selected="selected"' if size && size.dims == s.dims %> value="<%= s.id %>" data-unit-type="<%= s.title.downcase %>" data-unit-price="<%= sprintf "%.2f", s.dollar_price %>" data-url="<%= s.icon(:medium).try :url %>">
+													<option<%= ' selected="selected"' if size && size.id == s.id %> value="<%= s.id %>" data-unit-type="<%= s.title.downcase %>" data-unit-price="<%= sprintf "%.2f", s.dollar_price %>" data-url="<%= s.icon(:medium).try :url %>">
 														<%= s.dims %>
 													</option>
 												<% end %>

@@ -1,4 +1,6 @@
-<a href="#" class="specializer">more</a>
+<% if listing.predefined_specials.count > 1 %>
+	<a href="#" class="specializer">more</a>
+<% end %>
 <div class="more_specials">
 <% listing.specials.each do |spec| -%>
 	<% next if spec == special %>

@@ -111,7 +111,7 @@ class FacilityFeaturesController < ApplicationController
   private
   
   def get_parent_models
-    @client = user_is_a? 'admin', 'staff' ? Client.find(params[:client_id]) : current_user
+    @client = user_is_a?('admin', 'staff') ? Client.find(params[:client_id]) : current_user
     @listing = @client.listings.find params[:listing_id]
   end
   

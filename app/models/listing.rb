@@ -104,7 +104,12 @@ class Listing < ActiveRecord::Base
       options[:conditions] = base_conditions
     end
     
-    @listings = Listing.all options
+    # TODO: figure out why sometimes we get error: "Unknown key(s): within", geocoding problem?
+    @listings = begin
+      Listing.all options
+    rescue ArgumentError 
+      Listing.all options.except(:within)
+    end
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
     unless strict_order || search.unit_size.blank?
