@@ -135,10 +135,8 @@ class ListingsController < ApplicationController
     
     case params[:from]
     when 'quick_create'
-      @listing.update_attributes :enabled => true, :status => 'verified'
-      @listing.auto_geocode_address if @listing.lat.nil?
-      
-      if @listing.update_attributes params[:listing]
+      if @listing.update_attributes params[:listing].merge(:enabled => true, :status => 'verified')
+        @listing.auto_geocode_address and @listing.save if @listing.lat.nil?
         render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
       else
         render :json => { :success => false, :data => model_errors(@listing) }
