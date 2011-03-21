@@ -256,8 +256,8 @@ class ListingsController < ApplicationController
     
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
-        next unless id
-        listing = Listing.find id
+        next if id.nil?
+        listing = Listing.find_by_id id
         
         if listing
           listings << listing
