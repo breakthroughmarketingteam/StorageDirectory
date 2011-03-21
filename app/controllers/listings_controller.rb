@@ -256,6 +256,7 @@ class ListingsController < ApplicationController
     
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
+        next unless id
         listing = Listing.find id
         
         if listing
