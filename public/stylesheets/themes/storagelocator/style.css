@@ -2102,6 +2102,7 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading .right{height:64px;margin:6px 8px 0 0;width:404px;}
 #top_fac_page #heading p{display:inline-block;line-height:17px;margin:6px 0 0 16px;}
 a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
+#rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover a.profile_info_link{color:#fff;}
 #mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
 #mem-types td.label{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/disc.png) no-repeat 12px 11px;font-size:12px;color:#4c4bcc;font-weight:bold;padding-left:25px;text-align:left;}
