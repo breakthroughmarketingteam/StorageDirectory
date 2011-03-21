@@ -287,7 +287,7 @@ class ListingsController < ApplicationController
   
   def get_client
     # i couldnt use #user_allowed? method because one of the listing pages uses a non restful action, and the persmissions system doesnt really support this yet.
-    @client = current_user && current_user.has_role?('admin', 'staff') ? @listing.client : current_user
+    @client = user_is_a?('admin', 'staff') ? (params[:client_id] ? Client.find(params[:client_id]) : @listing.client) : current_user
   end
   
   def get_map

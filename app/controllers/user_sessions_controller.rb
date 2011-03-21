@@ -89,12 +89,8 @@ class UserSessionsController < ApplicationController
     current_user_session.destroy if current_user_session
     session.clear
     
-    cookies.to_hash.each_pair do |k, v| 
-      cookies[k.to_sym] = { :value => '', :path => '/', :domain => ".#{$root_domain}", :expire => 1.day.ago } 
-    end 
-    
     case role when 'admin', 'staff', 'advertiser'
-      redirect_to login_url, :protocol => 'http'
+      redirect_to login_url, :protocol => 'https'
     else
       redirect_to root_url, :protocol => 'http'
     end

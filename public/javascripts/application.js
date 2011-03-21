@@ -952,7 +952,11 @@ $(function() {
 							var checked_listings = $('.listing_div.selected', '#searcher_step2').clone();
 							wizard.slide_data[1].found_listings = false; // resetting this value to stop previous action from doing an ajax post again if user clicks back
 							$('#selected_listings', '#searcher_step3').html('').show().append(checked_listings);
-							wizard.workflow.animate({ 'height': (65 * checked_listings.length) + 65 +'px' }, 'fast');
+							$('#skipped_listings_find', '#searcher_step3').hide();
+							
+							var boxheight = (65 * checked_listings.length) + 65;
+							if (boxheight > 460) boxheight = 460;
+							wizard.workflow.animate({ 'height': boxheight +'px' }, 'fast');
 						}
 					}
 				},
