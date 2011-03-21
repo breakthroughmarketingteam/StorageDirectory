@@ -818,30 +818,7 @@ $(function(){
 				
 				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
 			}
-		})
-		/*
-		if (form.data('valid') && !form.data('loading')) {
-			form.data('loading', true);
-			
-			$.getJSON(form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, function(data) {
-					results_page.replaceWith(data.results);
-					$.setGmap(data.maps_data);
-					$.enableTooltips('a', '.rslt-features');
-					select_first_size_option();
-					// TODO: this doesnt cause the compare link to appear
-					//$('input[name=compare]', '.listing').autoClickFew(3);
-					
-					$('.rslt-price', '.listing').each(function(){
-						$(':radio', this).eq(0).attr('checked', true);
-						$('.radio_select', this).eq(0).addClass('checked');
-					});
-				});
-				
-				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
-				form.data('loading', false);
-			});
-		}*/
+		});
 		
 		return false;
 	});
@@ -943,6 +920,14 @@ $(function(){
 				}, 'json');
 			}
 		});
+		
+		return false;
+	});
+	
+	$('#select_all', '#searcher_step2').live('click', function() {
+		var $this = $(this);
+		$('.listing_div', $this.parent()).click();
+		$this.text($this.text() == 'Select All' ? 'Clear All' : 'Select All');
 		
 		return false;
 	});

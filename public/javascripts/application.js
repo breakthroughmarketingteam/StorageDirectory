@@ -891,7 +891,7 @@ $(function() {
 							wizard.next();
 							
 						} else if ((wizard.slide_data[1].data_changed && wizard.slide_data[1].found_listings) || wizard.slide_data[2].went_back) {
-							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '460px')) }, 'slow');
+							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '470px')) }, 'slow');
 							wizard.slide_data[1].skipped = false;
 							wizard.slide_data[2].went_back = false;
 							
@@ -909,8 +909,10 @@ $(function() {
 										
 										wizard.workflow.animate({ 'height': wizard.slide_data[1].slide_length }, 'fast');
 										wizard.slide_data[1].listings = $('.listing_div', listings_box).fadeIn();
+										$('#select_all', wizard.workflow).show();
 									} else {
 										wizard.workflow.animate({ 'height': '140px' }, 'fast');
+										$('#select_all', wizard.workflow).hide();
 										listings_box.html('<p>No facilities were found using that information. Try using the first word of your facilities name, leave out the city and/or state too. If we still don\'t have it just click the skip button.');
 									}
 
@@ -952,7 +954,11 @@ $(function() {
 							var checked_listings = $('.listing_div.selected', '#searcher_step2').clone();
 							wizard.slide_data[1].found_listings = false; // resetting this value to stop previous action from doing an ajax post again if user clicks back
 							$('#selected_listings', '#searcher_step3').html('').show().append(checked_listings);
-							wizard.workflow.animate({ 'height': (65 * checked_listings.length) + 65 +'px' }, 'fast');
+							$('#skipped_listings_find', '#searcher_step3').hide();
+							
+							var boxheight = (65 * checked_listings.length) + 65;
+							if (boxheight > 460) boxheight = 460;
+							wizard.workflow.animate({ 'height': boxheight +'px' }, 'fast');
 						}
 					}
 				},
@@ -993,7 +999,7 @@ $(function() {
 	}
 
 	// 1). Click NEW button, get a partial from the server and prepend to the listing box
-	$('#add_fac', '#ov-units').click(function(){
+	$('#add_fac', '#ov-units').live('click', function(){
 		var $this 		   = $(this),
 			listing_box    = $('#client_listing_box', $this.parent().parent()),
 			ajax_loader    = $this.prev('.ajax_loader').show(),
@@ -1125,8 +1131,8 @@ $(function() {
 			var input_name = this[0], blur_msg = this[1], done_action = this[2],
 				tip_text   = $('.new_listing_tip', '.listing:eq(0)');
 			
-			$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
-				var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+			$('input[name="listing['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+				var input = $('input[name="listing['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
 
 				if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
 				else input.focus().addClass('invalid');
@@ -1152,14 +1158,14 @@ $(function() {
 
 				var listing_id = partial.attr('id').replace('Listing_', ''),
 					attributes = {
-						address : $('input[name="listing[map_attributes][address]"]', partial).val(),
-						city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
-						state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
-						zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+						address : $('input[name="listing[address]"]', partial).val(),
+						city 	: $('input[name="listing[city]"]', partial).val(),
+						state 	: $('input[name="listing[state]"]', partial).val(),
+						zip 	: $('input[name="listing[zip]"]', partial).val()
 					};
 
 				// SAVE ADDRESS WHEN USER CLICKS SAVE
-				$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+				$.post('/listings/'+ listing_id, { _method: 'put', listing: attributes , from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
 					$.with_json(response, function(data){
 						button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 						

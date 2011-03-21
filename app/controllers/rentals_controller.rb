@@ -10,7 +10,7 @@ class RentalsController < ApplicationController
   
   # this methods renders the secure form in an iframe
   def new
-    @search = Search.find_by_id cookies[:sid].to_i
+    @search = Search.find_by_id session[:sid]
     @listing = Listing.find params[:listing_id]
     @size = @listing.sizes.find params[:size_id]
     

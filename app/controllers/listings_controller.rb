@@ -131,13 +131,12 @@ class ListingsController < ApplicationController
   end
   
   def update
-    @listing = (current_user && current_user.has_role?('admin', 'staff')) ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
+    @listing = user_is_a?('admin', 'staff') ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
     
     case params[:from]
     when 'quick_create'
-      @listing.update_attributes :enabled => true, :status => 'verified'
-      
-      if @listing.update_attributes params[:listing]
+      if @listing.update_attributes params[:listing].merge(:enabled => true, :status => 'verified')
+        @listing.auto_geocode_address and @listing.save if @listing.lat.nil?
         render :json => { :success => true, :data => render_to_string(:partial => 'listing', :locals => { :owned => true, :listing => @listing }) }
       else
         render :json => { :success => false, :data => model_errors(@listing) }
@@ -181,7 +180,7 @@ class ListingsController < ApplicationController
     @client = (current_user && current_user.has_role?('admin', 'staff')) ? Client.find(params[:client_id]) : current_user
     @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title], :storage_types => 'self storage')
     
-    if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
+    if (@listing.new_record? ? @listing.save(false) : @listing.update_attribute(:title, params[:title]))
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
@@ -256,7 +255,8 @@ class ListingsController < ApplicationController
     
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
-        listing = Listing.find id
+        next if id.nil?
+        listing = Listing.find_by_id id
         
         if listing
           listings << listing
@@ -287,7 +287,7 @@ class ListingsController < ApplicationController
   
   def get_client
     # i couldnt use #user_allowed? method because one of the listing pages uses a non restful action, and the persmissions system doesnt really support this yet.
-    @client = current_user && current_user.has_role?('admin', 'staff') ? @listing.client : current_user
+    @client = user_is_a?('admin', 'staff') ? (params[:client_id] ? Client.find(params[:client_id]) : @listing.client) : current_user
   end
   
   def get_map

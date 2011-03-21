@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
   
   def render_optional_error_file(status_code)
     status = interpret_status status_code
-    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'storagelocator'
+    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'error'
   end 
   
   $root_domain = 'usselfstoragelocator.com'
@@ -116,8 +116,7 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    false
-    #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
+    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
   def default_url_options(options = nil)
@@ -525,10 +524,10 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
-    #mylogger "before get or create search: cookie sid: #{cookies[:sid]}"
+    mylogger "before get or create search: session sid: #{session[:sid]}"
     
-    if @search = Search.find_by_id(cookies[:sid].to_i)
-      #mylogger "found search #{@search}"
+    if @search = Search.find_by_id(session[:sid])
+      mylogger "found search #{@search}"
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
       @diff_search = Search.diff? @search, @new_search
@@ -543,14 +542,14 @@ class ApplicationController < ActionController::Base
       mylogger "Not found search, remote ip #{request.remote_ip}"
       remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
       session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
-      @search = Search.create_from_geoloc(request, session[:geo_location], params[:storage_type])
+      @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
       @diff_search = true
     end
     
     #mylogger "final search #{@search}"
     
     @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
-    cookies[:sid] = @search.id
+    session[:sid] = @search.id
   end
   
   def build_search_attributes(params)

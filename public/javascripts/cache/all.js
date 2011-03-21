@@ -5290,26 +5290,18 @@ $.fn.clickOnLoad = function() {
 
 // as the user types in numbers, the input is formated as XXX-XXX-XXXX
 $.fn.formatPhoneNum = function() {
-	if ($.browser.msie) return;
-	
+	//if ($.browser.msie) return;
 	return this.each(function(){
-		$(this).keyup(function(e){
-			var input = $(this),
-				allowed_keys = [9, 8, 46]; // 9 = tab, 8 = backspace, 46 = delete
-			
-			if (e.which == 189 || e.which == 109) { // dash or substract
-				input.val(input.val().substring(0, input.val().length - 1));
-			}
-			
-			if (allowed_keys.indexOf(e.which) < 0 && isNaN(input.val().replace('-', '').replace('-', ''))) {
-				input.val(input.val().substring(0, input.val().length - 1));
+		var $this = $(this);
+		
+		$this.keyup(function(e){
+			var curchr = $this.val().length,
+				curval = $this.val();
 				
-			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 3 && input.val().length < 7 && input.val().indexOf('-') < 0) {
-				input.val(input.val().substring(0, 3) + '-' + input.val().substring(3));
-				
-			} else if (allowed_keys.indexOf(e.which) < 0 && input.val().length >= 7 && input.val().indexOf('-') < 7) {
-				input.val(input.val().substring(0, 7) + '-' + input.val().substring(8));
-			}
+			if (curchr == 3)
+				$this.val(curval + "-");
+			else if (curchr == 7)
+				$this.val(curval + "-");
 		});
 	});
 }
@@ -6826,30 +6818,7 @@ $(function(){
 				
 				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
 			}
-		})
-		/*
-		if (form.data('valid') && !form.data('loading')) {
-			form.data('loading', true);
-			
-			$.getJSON(form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, function(data) {
-					results_page.replaceWith(data.results);
-					$.setGmap(data.maps_data);
-					$.enableTooltips('a', '.rslt-features');
-					select_first_size_option();
-					// TODO: this doesnt cause the compare link to appear
-					//$('input[name=compare]', '.listing').autoClickFew(3);
-					
-					$('.rslt-price', '.listing').each(function(){
-						$(':radio', this).eq(0).attr('checked', true);
-						$('.radio_select', this).eq(0).addClass('checked');
-					});
-				});
-				
-				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
-				form.data('loading', false);
-			});
-		}*/
+		});
 		
 		return false;
 	});
@@ -6951,6 +6920,14 @@ $(function(){
 				}, 'json');
 			}
 		});
+		
+		return false;
+	});
+	
+	$('#select_all', '#searcher_step2').live('click', function() {
+		var $this = $(this);
+		$('.listing_div', $this.parent()).click();
+		$this.text($this.text() == 'Select All' ? 'Clear All' : 'Select All');
 		
 		return false;
 	});
@@ -8364,7 +8341,7 @@ $(function() {
 							wizard.next();
 							
 						} else if ((wizard.slide_data[1].data_changed && wizard.slide_data[1].found_listings) || wizard.slide_data[2].went_back) {
-							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '460px')) }, 'slow');
+							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '470px')) }, 'slow');
 							wizard.slide_data[1].skipped = false;
 							wizard.slide_data[2].went_back = false;
 							
@@ -8382,8 +8359,10 @@ $(function() {
 										
 										wizard.workflow.animate({ 'height': wizard.slide_data[1].slide_length }, 'fast');
 										wizard.slide_data[1].listings = $('.listing_div', listings_box).fadeIn();
+										$('#select_all', wizard.workflow).show();
 									} else {
 										wizard.workflow.animate({ 'height': '140px' }, 'fast');
+										$('#select_all', wizard.workflow).hide();
 										listings_box.html('<p>No facilities were found using that information. Try using the first word of your facilities name, leave out the city and/or state too. If we still don\'t have it just click the skip button.');
 									}
 
@@ -8425,7 +8404,11 @@ $(function() {
 							var checked_listings = $('.listing_div.selected', '#searcher_step2').clone();
 							wizard.slide_data[1].found_listings = false; // resetting this value to stop previous action from doing an ajax post again if user clicks back
 							$('#selected_listings', '#searcher_step3').html('').show().append(checked_listings);
-							wizard.workflow.animate({ 'height': (65 * checked_listings.length) + 65 +'px' }, 'fast');
+							$('#skipped_listings_find', '#searcher_step3').hide();
+							
+							var boxheight = (65 * checked_listings.length) + 65;
+							if (boxheight > 460) boxheight = 460;
+							wizard.workflow.animate({ 'height': boxheight +'px' }, 'fast');
 						}
 					}
 				},
@@ -8466,7 +8449,7 @@ $(function() {
 	}
 
 	// 1). Click NEW button, get a partial from the server and prepend to the listing box
-	$('#add_fac', '#ov-units').click(function(){
+	$('#add_fac', '#ov-units').live('click', function(){
 		var $this 		   = $(this),
 			listing_box    = $('#client_listing_box', $this.parent().parent()),
 			ajax_loader    = $this.prev('.ajax_loader').show(),
@@ -8598,8 +8581,8 @@ $(function() {
 			var input_name = this[0], blur_msg = this[1], done_action = this[2],
 				tip_text   = $('.new_listing_tip', '.listing:eq(0)');
 			
-			$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
-				var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+			$('input[name="listing['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+				var input = $('input[name="listing['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
 
 				if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
 				else input.focus().addClass('invalid');
@@ -8625,14 +8608,14 @@ $(function() {
 
 				var listing_id = partial.attr('id').replace('Listing_', ''),
 					attributes = {
-						address : $('input[name="listing[map_attributes][address]"]', partial).val(),
-						city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
-						state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
-						zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+						address : $('input[name="listing[address]"]', partial).val(),
+						city 	: $('input[name="listing[city]"]', partial).val(),
+						state 	: $('input[name="listing[state]"]', partial).val(),
+						zip 	: $('input[name="listing[zip]"]', partial).val()
 					};
 
 				// SAVE ADDRESS WHEN USER CLICKS SAVE
-				$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+				$.post('/listings/'+ listing_id, { _method: 'put', listing: attributes , from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
 					$.with_json(response, function(data){
 						button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 						
