@@ -1131,8 +1131,8 @@ $(function() {
 			var input_name = this[0], blur_msg = this[1], done_action = this[2],
 				tip_text   = $('.new_listing_tip', '.listing:eq(0)');
 			
-			$('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
-				var input = $('input[name="listing[map_attributes]['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
+			$('input[name="listing['+ input_name +']"]', '.listing:eq(0)').live('blur', function(){
+				var input = $('input[name="listing['+ input_name +']"]', '.listing:eq(0)').removeClass('invalid');
 
 				if (input.val() != '' && input.val() != input.attr('title')) done_action.call(this, tip_text, blur_msg);
 				else input.focus().addClass('invalid');
@@ -1158,14 +1158,14 @@ $(function() {
 
 				var listing_id = partial.attr('id').replace('Listing_', ''),
 					attributes = {
-						address : $('input[name="listing[map_attributes][address]"]', partial).val(),
-						city 	: $('input[name="listing[map_attributes][city]"]', partial).val(),
-						state 	: $('input[name="listing[map_attributes][state]"]', partial).val(),
-						zip 	: $('input[name="listing[map_attributes][zip]"]', partial).val()
+						address : $('input[name="listing[address]"]', partial).val(),
+						city 	: $('input[name="listing[city]"]', partial).val(),
+						state 	: $('input[name="listing[state]"]', partial).val(),
+						zip 	: $('input[name="listing[zip]"]', partial).val()
 					};
 
 				// SAVE ADDRESS WHEN USER CLICKS SAVE
-				$.post('/listings/'+ listing_id, { _method: 'put', listing: { map_attributes: attributes }, from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
+				$.post('/listings/'+ listing_id, { _method: 'put', listing: attributes , from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
 					$.with_json(response, function(data){
 						button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
 						
