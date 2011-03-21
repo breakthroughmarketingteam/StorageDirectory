@@ -909,8 +909,10 @@ $(function() {
 										
 										wizard.workflow.animate({ 'height': wizard.slide_data[1].slide_length }, 'fast');
 										wizard.slide_data[1].listings = $('.listing_div', listings_box).fadeIn();
+										$('#select_all', wizard.workflow).show();
 									} else {
 										wizard.workflow.animate({ 'height': '140px' }, 'fast');
+										$('#select_all', wizard.workflow).hide();
 										listings_box.html('<p>No facilities were found using that information. Try using the first word of your facilities name, leave out the city and/or state too. If we still don\'t have it just click the skip button.');
 									}
 

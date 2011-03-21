@@ -181,7 +181,7 @@ class ListingsController < ApplicationController
     @client = (current_user && current_user.has_role?('admin', 'staff')) ? Client.find(params[:client_id]) : current_user
     @listing = params[:id] ? Listing.find(params[:id]) : @client.listings.build(:title => params[:title], :storage_types => 'self storage')
     
-    if (@listing.new_record? ? @listing.save : @listing.update_attribute(:title, params[:title]))
+    if (@listing.new_record? ? @listing.save(false) : @listing.update_attribute(:title, params[:title]))
       render :json => { :success => true, :data => { :listing_id => @listing.id } }
     else
       render :json => { :success => false, :data => model_errors(@listing) }
