@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
   
   def render_optional_error_file(status_code)
     status = interpret_status status_code
-    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'storagelocator'
+    render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'error'
   end 
   
   $root_domain = 'usselfstoragelocator.com'
@@ -116,8 +116,7 @@ class ApplicationController < ActionController::Base
   
   # display full error message when logged in as an Admin
   def local_request?
-    false
-    #request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
+    request.remote_ip == '127.0.0.1' || (current_user && current_user.has_role?('admin')) || RAILS_ENV == 'development'
   end
   
   def default_url_options(options = nil)
