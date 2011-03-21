@@ -891,7 +891,7 @@ $(function() {
 							wizard.next();
 							
 						} else if ((wizard.slide_data[1].data_changed && wizard.slide_data[1].found_listings) || wizard.slide_data[2].went_back) {
-							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '460px')) }, 'slow');
+							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '470px')) }, 'slow');
 							wizard.slide_data[1].skipped = false;
 							wizard.slide_data[2].went_back = false;
 							
@@ -993,7 +993,7 @@ $(function() {
 	}
 
 	// 1). Click NEW button, get a partial from the server and prepend to the listing box
-	$('#add_fac', '#ov-units').click(function(){
+	$('#add_fac', '#ov-units').live('click', function(){
 		var $this 		   = $(this),
 			listing_box    = $('#client_listing_box', $this.parent().parent()),
 			ajax_loader    = $this.prev('.ajax_loader').show(),

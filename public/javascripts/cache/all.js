@@ -6826,30 +6826,7 @@ $(function(){
 				
 				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
 			}
-		})
-		/*
-		if (form.data('valid') && !form.data('loading')) {
-			form.data('loading', true);
-			
-			$.getJSON(form.attr('action'), form.serialize(), function(response) {
-				$.with_json(response, function(data) {
-					results_page.replaceWith(data.results);
-					$.setGmap(data.maps_data);
-					$.enableTooltips('a', '.rslt-features');
-					select_first_size_option();
-					// TODO: this doesnt cause the compare link to appear
-					//$('input[name=compare]', '.listing').autoClickFew(3);
-					
-					$('.rslt-price', '.listing').each(function(){
-						$(':radio', this).eq(0).attr('checked', true);
-						$('.radio_select', this).eq(0).addClass('checked');
-					});
-				});
-				
-				$('body').attr('id', 'listings_controller').addClass('locator_action'); // this is only needed cuz the layout is kinda fucked up and not consistent across pages
-				form.data('loading', false);
-			});
-		}*/
+		});
 		
 		return false;
 	});
@@ -6951,6 +6928,14 @@ $(function(){
 				}, 'json');
 			}
 		});
+		
+		return false;
+	});
+	
+	$('#select_all', '#searcher_step2').live('click', function() {
+		var $this = $(this);
+		$('.listing_div', $this.parent()).click();
+		$this.text($this.text() == 'Select All' ? 'Clear All' : 'Select All');
 		
 		return false;
 	});
@@ -8364,7 +8349,7 @@ $(function() {
 							wizard.next();
 							
 						} else if ((wizard.slide_data[1].data_changed && wizard.slide_data[1].found_listings) || wizard.slide_data[2].went_back) {
-							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '460px')) }, 'slow');
+							wizard.workflow.animate({ 'height': (wizard.slide_data[1].found_listings ? '140px' : (wizard.slide_data[1].slide_length || '470px')) }, 'slow');
 							wizard.slide_data[1].skipped = false;
 							wizard.slide_data[2].went_back = false;
 							
@@ -8466,7 +8451,7 @@ $(function() {
 	}
 
 	// 1). Click NEW button, get a partial from the server and prepend to the listing box
-	$('#add_fac', '#ov-units').click(function(){
+	$('#add_fac', '#ov-units').live('click', function(){
 		var $this 		   = $(this),
 			listing_box    = $('#client_listing_box', $this.parent().parent()),
 			ajax_loader    = $this.prev('.ajax_loader').show(),

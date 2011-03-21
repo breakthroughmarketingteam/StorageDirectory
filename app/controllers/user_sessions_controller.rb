@@ -73,6 +73,7 @@ class UserSessionsController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:error] = fmsg
+          flash[:quick_login] = [params[:user_session][:email]]
           redirect_to redir
         end
 

@@ -17,7 +17,13 @@ module ListingsHelper
   def breadcrumb(listing = nil)
     return '' if params[:storage_type].blank?
     separator = ' > '
-    b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
+    
+    if listing
+      b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{listing.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{listing.state}/#{listing.city}'>#{listing.city}</a>"
+    else
+      b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
+    end
+    
     b << "#{separator}#{link_to listing.title, facility_path_for(listing)}" if listing
     b << '</p>'
   end
