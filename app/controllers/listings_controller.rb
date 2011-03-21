@@ -131,7 +131,7 @@ class ListingsController < ApplicationController
   end
   
   def update
-    @listing = (current_user && current_user.has_role?('admin', 'staff')) ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
+    @listing = user_is_a?('admin', 'staff') ? Listing.find(params[:id]) : current_user.listings.find(params[:id])
     
     case params[:from]
     when 'quick_create'
