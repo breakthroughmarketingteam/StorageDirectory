@@ -2230,7 +2230,8 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
-
+#blog-post #post-image{text-align:center;}
+#blog-post img{padding:10px;border:1px solid #bbb;margin:20px;}
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
@@ -2266,3 +2267,5 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #zenbox_close{cursor:pointer;height:46px;position:relative;top:10px;width:46px;}
 #zenbox_body{height:900px;margin-top:-18px;position:relative;width:615px;}
 #zenbox_scrim{background-color:#000;filter:alpha(opacity=42);-moz-opacity:0.42;left:0;position:absolute;opacity:0.42;top:0;width:100%;z-index:1;}
+
+#blog-post
