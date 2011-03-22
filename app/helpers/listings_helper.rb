@@ -43,7 +43,7 @@ module ListingsHelper
   end
   
   def facility_path_for(listing, options = {})
-    facility_path listing.storage_type.parameterize, listing.title.parameterize, listing.id, options unless listing.new_record?
+    facility_path listing.storage_type.parameterize, listing.state.parameterize, listing.city.parameterize, listing.title.parameterize, listing.id, options unless listing.new_record?
   end
   
   def display_location(location)

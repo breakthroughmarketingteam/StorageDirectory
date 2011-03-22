@@ -7,7 +7,7 @@
 			<%= f.file_field :facility_image, :size => 30 %>
 			<%= f.hidden_field :listing_id, :value => @listing.id %>
 			<%= hidden_field_tag 'format', 'js' %>
-			<input type="submit" name="commit" class="ie_only" />
+			<input type="submit" name="commit" class="ie_only" value="Upload" />
 		</div>
 	<% end if in_mode?('profile') && user_allowed?('pictures', 'create', params) %>
 	

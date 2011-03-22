@@ -47,7 +47,10 @@ class PicturesController < ApplicationController
     @picture = @listing.pictures.build params[:picture]
     
     respond_to do |format|
-      format.html
+      format.html do
+        redirect_to profile_listing_path(@listing, :anchor => 'fac_pictures_tab')
+      end
+      
       format.js do
         if @picture.save
           render :json => { :success => true, :data => { :thumb => @picture.facility_image.url(:thumb), :image => @picture.facility_image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
