@@ -17,15 +17,25 @@ class PicturesController < ApplicationController
   end
 
   def create
-    @picture = Picture.new(params[:picture])
+    @listing = Listing.find(params[:picture][:listing_id])
+    @picture = @listing.pictures.build params[:picture]
     
-    if @picture.save
-      flash[:notice] = 'Pciture has been created.'
-      redirect_to root_path
-    else
-      get_associations
-      render :action => 'edit'
-    end    
+    respond_to do |format|
+      format.html do
+        mylogger('pic create html')
+        flash[:error] = model_errors @picture if !@picture.save
+        redirect_to profile_listing_path(@listing, :anchor => 'fac_pictures_tab')
+      end
+      
+      format.js do
+        mylogger('pic create js')
+        if @picture.save
+          render :json => { :success => true, :data => { :thumb => @picture.facility_image.url(:thumb), :image => @picture.facility_image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
+        else
+          render :json => { :success => false, :data => model_errors(@picture) }
+        end
+      end
+    end
   end
 
   def edit
@@ -39,25 +49,6 @@ class PicturesController < ApplicationController
     else
       get_associations
       render :action => 'edit'
-    end
-  end
-  
-  def create
-    @listing = Listing.find(params[:picture][:listing_id])
-    @picture = @listing.pictures.build params[:picture]
-    
-    respond_to do |format|
-      format.html do
-        redirect_to profile_listing_path(@listing, :anchor => 'fac_pictures_tab')
-      end
-      
-      format.js do
-        if @picture.save
-          render :json => { :success => true, :data => { :thumb => @picture.facility_image.url(:thumb), :image => @picture.facility_image.url(:medium), :id => @picture.id, :listing_id => @listing.id } }
-        else
-          render :json => { :success => false, :data => model_errors(@picture) }
-        end
-      end
     end
   end
 
