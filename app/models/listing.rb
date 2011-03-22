@@ -71,6 +71,7 @@ class Listing < ActiveRecord::Base
   
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
+    self.profile_completion = self.percent_complete
   end
   
   def self.verified_count
@@ -201,7 +202,7 @@ class Listing < ActiveRecord::Base
   end
   
   def categories
-    self.storage_types.downcase.split(/,\s?/)
+    self.storage_types.downcase.split(/,\s?/) rescue []
   end
   
   def tax_rate

@@ -2176,6 +2176,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #girl-pic{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/girl.png) no-repeat center 70px ;height:435px;width:169px;position:relative;left:15px;margin-bottom:20px;}
 #admin-box ul{border-top:1px solid #ccc;}
 #admin-box ul li{border-bottom:1px solid #ccc;list-style:none;}
+#admin-box ul li.last{border:0 none;}
 #admin-box ul li a{color:#4c4bcc;cursor:pointer;display:block;font-weight:bold;padding:10px 0;text-decoration:none;width:175px;}
 #admin-box ul li a span{position:relative;left:10px;}
 #admin-box ul li a:hover, #admin-box ul li a.active{background:#f1f1f1;}
