@@ -71,6 +71,7 @@ class Listing < ActiveRecord::Base
   
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
+    self.profile_completion = self.percent_complete
   end
   
   def self.verified_count

@@ -266,7 +266,7 @@ class ListingsController < ApplicationController
   end
   
   def claim_listings
-    listings = []
+    listings = []; msg = 'No listing ids'
     
     unless params[:listing_ids].blank?
       params[:listing_ids].values.each do |id|
@@ -275,14 +275,24 @@ class ListingsController < ApplicationController
         
         if listing
           listings << listing
-          @client.claimed_listings.create :listing_id => id
+          
+          if user_is_a? 'admin', 'staff'
+            @client.listings << listing
+          else
+            @client.claimed_listings.create :listing_id => id
+          end
         end
       end
       
-      Notifier.delay.deliver_claimed_listings_alert(@client, listings)
+      if user_is_a? 'admin', 'staff'
+        msg = "#{pluralize listings.size, 'Listing'} added to #{@client.name.possessive} account"
+      else
+        msg = "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call from one of us within 24 to 48 hours on business days. Thanks again!"
+        Notifier.delay.deliver_claimed_listings_alert(@client, listings)
+      end
     end
     
-    render :json => { :success => true, :data => "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call from one of us within 24 to 48 hours on business days. Thanks again!" }
+    render :json => { :success => true, :data => msg }
   end
   
   private
