@@ -202,7 +202,7 @@ class Listing < ActiveRecord::Base
   end
   
   def categories
-    self.storage_types.downcase.split(/,\s?/)
+    self.storage_types.downcase.split(/,\s?/) rescue []
   end
   
   def tax_rate

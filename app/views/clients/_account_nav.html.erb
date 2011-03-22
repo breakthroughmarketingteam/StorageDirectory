@@ -13,8 +13,8 @@
 
 				<% unless c || @client.listings.size == 1 %>
 					<ul>
-						<% @client.listings.each do |listing| %>
-							<li>
+						<% @client.listings.each_with_index do |listing, i| %>
+							<li<%= ' class="last"' if @client.listings.count == i+1 %>>
 								<%= link_to "#{listing.title}<span>#{listing.address} #{listing.zip}</span>", profile_listing_path(listing), :class => active_page(profile_listing_path(listing)), :title => listing.city_state_zip %>
 							</li>
 						<% end %>
