@@ -9,7 +9,7 @@ namespace :assets do
     
     if 'y' == STDIN.gets.chomp
       assets.each_pair do |asset_name, assets|
-        joined_name = "cache/all.#{asset_name == :javascripts ? 'js' : 'css'}"
+        joined_name = "cache/motherlode.#{asset_name == :javascripts ? 'js' : 'css'}"
         joined_path = File.join("public/#{asset_name}", joined_name)
       
         puts "-----> Begin writing #{asset_name} in #{joined_path}"
