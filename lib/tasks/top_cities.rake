@@ -2,7 +2,7 @@ namespace :counts do
   
   desc "returns a list with the cities that have the most active listings"
   task :top_active_cities => :environment do
-    l = Listing.all :conditions => 'user_id IS NOT NULL', :select => 'id, city, state, status'
+    l = Listing.all :conditions => { :status => 'verified' }, :select => 'id, city, state, status'
     c = l.map { |i| "#{i.city.titleize},#{i.state.upcase}" }.uniq
     m = c.map { |i| cs = i.split(','); l.select { |x| x.city =~ /(#{cs[0]})/i && x.state =~ /(#{cs[1]})/i } }.map { |i| i.select { |n| n.status == 'verified' } }.reject &:empty?
     
