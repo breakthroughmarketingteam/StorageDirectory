@@ -15,7 +15,7 @@
 		</div>
 		
 		<% if blog_post.attributes.keys.include?('content') %>
-			<div class="blog_post_content stack"><%= blog_post.content_teaser %></div>
+			<div class="blog_post_content stack"><%= blog_post.content %></div>
 		<% end %>
 			
 		<%= render :partial => 'posts/meta', :locals => { :post => blog_post } %>

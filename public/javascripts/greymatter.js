@@ -33,6 +33,7 @@ $(function(){
 	// highlight text within a text field or area when focused
 	$('.click_sel').live('focus', function() { $(this).select() });
 	$('#auth_yourself').hide();
+	$('.ie_only').ieOnly();
 	
 	if ($.preloadCssImages) $.preloadCssImages();
 	$.updateUserStat();
@@ -1532,6 +1533,12 @@ $.fn.displayWordCount = function(callback) {
 			count = extract_words(this.value).length;
 			update_display(display, count);
 		});
+	});
+}
+
+$.fn.ieOnly = function() {
+	return this.each(function() {
+		if (!$.browser.msie) $(this).hide();
 	});
 }
 

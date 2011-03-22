@@ -45,5 +45,9 @@
 				<iframe src="<%= rack_rental_url @listing, @size, @special, true %>" id="secure_frame"></iframe>
 			</div>
 		</div>
+	<% else %>
+		<div id="req_wrap">
+			<%= render :partial => 'views/partials/greyresults/request_info', :locals => { :model => @listing } %>
+		</div>
 	<% end %>
 </div>

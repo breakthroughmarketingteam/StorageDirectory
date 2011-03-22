@@ -19,7 +19,7 @@ module ListingsHelper
     separator = ' > '
     
     if listing
-      b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{listing.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{listing.state}/#{listing.city}'>#{listing.city}</a>"
+      b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{listing.state.titleize}</span>#{separator}<a href='/#{params[:storage_type]}/#{listing.state}/#{listing.city}'>#{listing.city}</a>"
     else
       b = "<p class='breadcrumb'><span>#{params[:storage_type].titleize}</span>#{separator}<span>#{@search.state}</span>#{separator}<a href='/#{params[:storage_type]}/#{@search.state}/#{@search.city}'>#{@search.city}</a>"
     end
