@@ -77,9 +77,10 @@ class Search < ActiveRecord::Base
     if location.respond_to?(:lat) || location.is_a?(Hash)
       self.lat   = location.respond_to?(:lat)   ? location.lat   : location[:lat]
       self.lng   = location.respond_to?(:lng)   ? location.lng   : location[:lng]
-      self.city  = location.respond_to?(:city)  ? location.city  : location[:city]
+      self.city  = (location.respond_to?(:city)  ? location.city  : location[:city]).titleize
       self.state = location.respond_to?(:state) ? location.state : location[:state]
       self.zip   = location.respond_to?(:zip)   ? location.zip   : location[:zip] if self.zip.nil?
+      self.fix_zip!
       
     elsif self.is_address_query?
       self.set_location! Geokit::Geocoders::MultiGeocoder.geocode(self.query)
@@ -96,6 +97,10 @@ class Search < ActiveRecord::Base
     end
     
     self
+  end
+  
+  def fix_zip! # idk why the zips are coming in like this: --- \n- - - :state\n    - nv\n- - - :storage_type\n    - self storage\n- - - :lat\n    - \n- - - :lng\n    - \n- - - :zip\n    - \n- - - :city\n    - las-vegas\n- - - :within\n    - \n- - - :unit_size\n    - \n
+    self.zip = self.geocode_query(self.lat_lng * ',').zip[0, 5] if self.zip.size > 5 rescue nil
   end
   
   def set_request!(request)
@@ -158,7 +163,7 @@ class Search < ActiveRecord::Base
   def geocode_query(query)
     if self.query.blank?
       Geokit::Geocoders::MultiGeocoder.geocode('99.157.198.126')
-    elsif self.s_address_query? query
+    elsif self.is_address_query?
       Geokit::Geocoders::MultiGeocoder.geocode query
     elsif (named_listing = Listing.first(:conditions => ['listings.title LIKE ?', "%#{self.query}%"]))
       GeoKit::GeoLoc.new(named_listing)

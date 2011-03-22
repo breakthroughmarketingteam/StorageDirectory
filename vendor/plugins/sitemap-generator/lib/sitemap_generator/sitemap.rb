@@ -30,7 +30,7 @@ module SitemapGenerator
       @xml.url do
         # monkey patch by d.s. for usssl
         case model_instance.class when UsCity
-          path = "http://#{Options.domain}#{us_city_url(model_instance)}"
+          path = "http://#{Options.domain}#{get_us_city_url(model_instance)}"
           
           unless @@added_city_paths.include? path
             @@added_city_paths << path
@@ -75,7 +75,7 @@ module SitemapGenerator
     end
     
     # monkey patches by d.s. for usssl
-    def us_city_url(city)
+    def get_us_city_url(city)
       self_storage_path :state => city.state.parameterize.to_s, :city => city.name.parameterize.to_s
     end
     

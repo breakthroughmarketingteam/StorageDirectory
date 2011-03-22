@@ -15,6 +15,8 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
+  has_many :comparisons, :dependent => :destroy
+  has_many :compares, :through => :comparisons
   has_many :staff_emails,  :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
@@ -223,6 +225,10 @@ class Listing < ActiveRecord::Base
   
   def comments
     self.reviews
+  end
+  
+  def listings_compared_with
+    self.comparisons.map { |comparison| comparison.compare.listings.reject { |listing| listing == self } }
   end
   
   def get_searched_size(search)

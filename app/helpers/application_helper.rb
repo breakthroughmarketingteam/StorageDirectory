@@ -584,7 +584,7 @@ module ApplicationHelper
     columns.times do |i|
       lists << '<ul>'
       cities[i*rows, rows].each do |city|
-        lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", self_storage_path(city.state, city.name)) +'</li>'
+        lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.map_count})", self_storage_path(city.state.parameterize, city.name.parameterize)) +'</li>'
       end if cities[i*rows, rows]
       lists << '</ul>'
     end

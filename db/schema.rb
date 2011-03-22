@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110322160307) do
+ActiveRecord::Schema.define(:version => 20110322202344) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -160,6 +160,21 @@ ActiveRecord::Schema.define(:version => 20110322160307) do
 
   add_index "comments", ["title", "commentable_id", "user_id"], :name => "index_comments_on_title_and_commentable_id_and_user_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
+
+  create_table "compares", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "referrer"
+    t.string   "request_uri"
+    t.string   "remote_ip"
+  end
+
+  create_table "comparisons", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "compare_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
