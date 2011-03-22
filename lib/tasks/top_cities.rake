@@ -14,6 +14,8 @@ namespace :counts do
     totes = 0
     m.each { |i| totes += i.size }
     
+    out << "\n#{totes}"
+    Notifier.deliver_top_cities_list out
     puts out
     puts totes
   end

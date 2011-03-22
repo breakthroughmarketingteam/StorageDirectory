@@ -113,6 +113,11 @@ class Notifier < ActionMailer::Base
     @body[:listings] = listings
   end
   
+  def top_cities_list(list)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Our Top Active Cities'
+    @body[:list] = list
+  end
+  
   def setup_email(recipient, from, subject = '')
     @recipients = recipient
     @from       = from
