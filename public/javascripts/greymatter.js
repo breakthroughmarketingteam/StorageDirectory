@@ -139,6 +139,8 @@ $(function(){
 				$this.addClass('active');
 			}
 			
+			//window.location.href = window.location.href.split('#')[0] + '#' + $this.attr('href');
+			
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
 				if (status == 'success') {
@@ -156,7 +158,6 @@ $(function(){
 		});
 		
 		// ajaxify form submissions
-		// TODO: respond_to blocks for all the controllers
 		$('form', '#ajax_wrap').live('submit', function() {
 			var form = $(this);
 			
@@ -211,40 +212,28 @@ $(function(){
 				error: function() {
 					$this.data('sending', false);
 				}
-			})
+			});
 			
 			return false;
 		});
 		
-		$.safeLinkPost = function(link, options) {
-			var ops = {
-				method 	   : 'post',
-				success    : function(){},
-				error 	   : function(){},
-				al_where   : 'before',
-				al_context : link,
-				data	   : { authenticity_token: $.get_auth_token() }
-			};
-			$.extend(ops, options);
-
-			var link 		= $(link),
-				ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
-
-			if (!link.data('x')) {
-				link.data('x', true);
-				ajax_loader.show();
-
-				$[ops.method](link.attr('href'), ops.data, function(response) {
-					$.with_json(response, ops.success, ops.error);
-
-					link.data('x', false);
-					ajax_loader.fadeOutRemove();
-				}, 'json');
-			}
-		}
-		
 		if ($.cookie('active_admin_link')) $('#'+ $.cookie('active_admin_link')).click();
-	}
+	} // index/admin
+	
+	$('.delete_listing', '#client_listing_box').live('click', function() {
+		var $this = $(this);
+		
+		$.greyConfirm('Delete this listing, really?', function() {
+			$.safeLinkPost($this, {
+				data: { _method: 'delete' },
+				success: function(data) {
+					$this.parents('.listing').slideUpRemove();
+				}
+			});
+		});
+		
+		return false;
+	});
 	
 	// helpers
 	$('.unique_checkbox').live('click', function() {
@@ -1013,6 +1002,33 @@ $.safeSubmit = function(form, options) {
 			
 			form.data('x', false);
 			if (ajax_loader) ajax_loader.fadeOutRemove();
+		}, 'json');
+	}
+}
+
+$.safeLinkPost = function(link, options) {
+	var ops = {
+		method 	   : 'post',
+		success    : function(){},
+		error 	   : function(){},
+		al_where   : 'before',
+		al_context : link,
+		data	   : { authenticity_token: $.get_auth_token() }
+	};
+	$.extend(ops, options);
+
+	var link 		= $(link),
+		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
+
+	if (!link.data('x')) {
+		link.data('x', true);
+		ajax_loader.show();
+
+		$[ops.method](link.attr('href'), ops.data, function(response) {
+			$.with_json(response, ops.success, ops.error);
+
+			link.data('x', false);
+			ajax_loader.fadeOutRemove();
 		}, 'json');
 	}
 }

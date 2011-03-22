@@ -3,7 +3,7 @@ class Listing < ActiveRecord::Base
   belongs_to :client, :foreign_key => 'user_id', :touch => true
   
   # contact info from the csv file, internal use only
-  has_one :contact, :class_name => 'ListingContact'
+  has_one :contact, :class_name => 'ListingContact', :dependent => :destroy
   accepts_nested_attributes_for :contact
   
   has_one  :map, :dependent => :destroy
@@ -26,7 +26,7 @@ class Listing < ActiveRecord::Base
     def sorted() all.sort_by &:sqft end
   end
   
-  has_many :reviews, :as => :commentable, :class_name => 'Comment', :foreign_key => 'commentable_id' do
+  has_many :reviews, :as => :commentable, :class_name => 'Comment', :foreign_key => 'commentable_id', :dependent => :destroy do
     def published() all(:conditions => { :published => true }) end
   end
   

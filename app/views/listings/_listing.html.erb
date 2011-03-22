@@ -32,6 +32,7 @@
 				<%= link_to 'Cancel', '#', :class => 'iconOnly16 cancel_link right', :title => 'Cancel adding a new facility' %>
 			<% else %>
 				<%= link_to 'Manage', profile_listing_path(listing), :class => 'crud_btn' %>
+				<%= link_to 'Delete', listing_url(listing, :protocol => 'https'), :class => 'iconOnly16 delete_link delete_listing click_thru' if user_is_a?('admin', 'staff') %>
 			<% end %>
       		</li>
     	</ul>

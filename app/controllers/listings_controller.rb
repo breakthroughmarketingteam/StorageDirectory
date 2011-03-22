@@ -1,9 +1,9 @@
 class ListingsController < ApplicationController
   
-  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :claim_listings
+  ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :claim_listings, :destroy
   ssl_allowed :show
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:new, :show, :profile, :edit, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
+  before_filter :get_model, :only => [:new, :show, :profile, :edit, :destroy, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request, :claim_listings]
   before_filter :get_listing_relations, :only => [:show, :profile]
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show, :profile]
@@ -171,6 +171,21 @@ class ListingsController < ApplicationController
         render :json => { :success => true, :data => (params[:listing_detail] ? render_to_string(:partial => 'edit_detail') : nil) }
       else
         render :json => { :success => false, :data => model_errors(@listing) }
+      end
+    end
+  end
+  
+  def destroy
+    @listing.destroy
+    
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'Listing DESTROYED!'
+        redirect_to listings_url(:protocol => 'https')
+      end
+      
+      format.js do
+        render :json => { :success => true }
       end
     end
   end
