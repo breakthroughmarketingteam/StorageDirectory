@@ -4,6 +4,7 @@
 */
 
 var swfobject = function() {
+	
 	var UNDEF = "undefined",
 		OBJECT = "object",
 		SHOCKWAVE_FLASH = "Shockwave Flash",
