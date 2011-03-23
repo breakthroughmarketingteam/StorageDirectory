@@ -2260,7 +2260,9 @@ jQuery.fn.hinty = function() {
 
 jQuery.fn.formBouncer = function(){
 	return this.each(function(){
-		jQuery(this).live('submit', function() {
+		var $this = $(this);
+		
+		$this.live('submit', function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			

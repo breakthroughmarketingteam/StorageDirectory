@@ -33,7 +33,7 @@ $(function(){
 	// highlight text within a text field or area when focused
 	$('.click_sel').live('focus', function() { $(this).select() });
 	$('#auth_yourself').hide();
-	$('.ie_only').ieOnly();
+	$('.ie_only').ieOnly(); // hidden unless ie
 	
 	if ($.preloadCssImages) $.preloadCssImages();
 	$.updateUserStat();
@@ -1555,7 +1555,7 @@ $.toggleHelptext = function(clickedLink) {
 // used to rebind the plugin to elements loaded into the DOM dynamically or through AJAX
 $.bindPlugins = function() {
 	$('.hintable').hinty(); // all matched inputs will display their title attribute
-	$('form').formBouncer(); // form validation, fields with supported validation classes will be processed
+	$('form:not(.ie_no_xhr)').formBouncer(); // form validation, fields with supported validation classes will be processed
 }
 
 /**************** some utility functions ****************/

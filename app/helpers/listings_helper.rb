@@ -37,9 +37,7 @@ module ListingsHelper
   end
   
   def listing_distance(listing)
-    if listing.respond_to? :distance
-      number_with_precision(listing.distance, :precision => 1)
-    end
+    number_with_precision(listing.distance, :precision => 1) if listing.respond_to? :distance
   end
   
   def facility_path_for(listing, options = {})
@@ -151,7 +149,7 @@ module ListingsHelper
     @min_title_len ||= 21
     
     if listing.logo.exists?
-      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb), options), facility_path_for(listing))}</div>"
+      "<div class='clogo'>#{link_to_if(listing.premium?, image_tag(listing.logo.url(:thumb).sub('http://', request.protocol), options), facility_path_for(listing))}</div>"
       
     elsif (logo = standard_logos.detect { |s| listing.title =~ /(#{s.gsub '-', ' '})/i })
       link_to_if listing.premium?, image_tag(standard_logo_path(logo), options), facility_path_for(listing), :class => 'standard_logo' do

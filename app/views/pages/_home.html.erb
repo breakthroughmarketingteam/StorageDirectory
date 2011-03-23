@@ -1,22 +1,22 @@
 <div id="dock"<%= ' class="less"' if user_is_a?('advertiser', 'tenant') %>>
 	<a href="<%= home_page %>">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/self-storage-icon.png" alt="Self Storage" title="Self Storage" />
+		<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/self-storage-icon.png" alt="Self Storage" title="Self Storage" />
 		Self Storage
 	</a>
 	<a id="map_nav_btn" href="#us-map">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us-states-icon.png" alt="US States" title="US States" />
+		<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/us-states-icon.png" alt="US States" title="US States" />
 		US Map
 	</a> 
 	<a href="/storage-info">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/storage-info-icon.png" alt="Storage Info" title="Storage Info" />
+		<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/storage-info-icon.png" alt="Storage Info" title="Storage Info" />
 		Storage Info
 	</a>
 	<a href="/storage-tips">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/storage-tips-icon.png" alt="Storage Tips" title="Storage Tips" />
+		<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/storage-tips-icon.png" alt="Storage Tips" title="Storage Tips" />
 		Storage Tips
 	</a>
 	<a href="/spanish">
-		<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/espanol-icon.png" alt="Español" title="Español" />
+		<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/espanol-icon.png" alt="Español" title="Español" />
 		Spanish
 	</a>
 	<% unless user_is_a?('advertiser', 'tenant') %>

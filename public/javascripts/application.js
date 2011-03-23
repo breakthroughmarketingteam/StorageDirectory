@@ -1374,7 +1374,6 @@ $(function() {
 	// upload pics
 	$('#picture_facility_image', '#new_picture').live('change', function(){
 		if ($.browser.msie) return true;
-		
 		var thumb = $('<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
 		
 		if ($('.main_pic', '#sl-tabs-pict-in').length == 0) {
