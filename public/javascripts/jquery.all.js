@@ -2261,7 +2261,6 @@ jQuery.fn.hinty = function() {
 jQuery.fn.formBouncer = function(){
 	return this.each(function(){
 		var $this = $(this);
-		if ($this.hasClass('ie_no_xhr')) return true;
 		
 		$this.live('submit', function() {
 			$('.invalid', this).removeClass('invalid');
