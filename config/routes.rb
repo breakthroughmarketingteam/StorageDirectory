@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
-  map.facility    '/:storage_type/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :id => /\d+/ }
+  map.facility    '/:storage_type/:state/:city/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :state => /\w+/, :city => /\w+/, :title => /\w|-/, :id => /\d+/ }
   map.claim_listing '/claim/:listing_id', :controller => 'clients', :action => 'new'
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
   

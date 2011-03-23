@@ -980,7 +980,6 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 .ui-datepicker .ui-datepicker-title{line-height:1.3;}
 .ui-datepicker table{font-size:80%;}
 .new_listing_request input.mini_calendar,#reservation_form1 input.mini_calendar{width:34%;}
-
 .wysiwyg,.shadow_wrap textarea,input[type="text"]{width:98%;}
 .wysiwyg{height:400px;}
 .model_options{position:absolute;z-index:9999;}

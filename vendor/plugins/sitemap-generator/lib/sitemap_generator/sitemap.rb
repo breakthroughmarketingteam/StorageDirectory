@@ -29,7 +29,7 @@ module SitemapGenerator
 
       @xml.url do
         # monkey patch by d.s. for usssl
-        case model_instance.class when UsCity
+        case model_instance.class.name when 'UsCity'
           path = "http://#{Options.domain}#{get_us_city_url(model_instance)}"
           
           unless @@added_city_paths.include? path
@@ -38,17 +38,17 @@ module SitemapGenerator
             puts "added sitemap record: UsCity [#{path}]"
           end
         
-        when Listing
+        when 'Listing'
           path = "http://#{Options.domain}#{facility_path_for(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Listing [#{path}]"
           
-        when Page
+        when 'Page'
           path = "http://#{Options.domain}#{page_title(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Page [#{path}]"
         
-        when Post
+        when 'Post'
           path = "http://#{Options.domain}#{post_title(model_instance)}"
           @xml.loc path
           puts "added sitemap record: Post [#{path}]"
@@ -58,6 +58,7 @@ module SitemapGenerator
           @xml.loc path
           puts "added sitemap record: #{model_instance.class.name} [#{path}]"
         end
+        
         @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
         @xml.changefreq change_freq.to_s if change_freq
         @xml.priority priority if priority
@@ -76,7 +77,11 @@ module SitemapGenerator
     
     # monkey patches by d.s. for usssl
     def get_us_city_url(city)
-      self_storage_path :state => city.state.parameterize.to_s, :city => city.name.parameterize.to_s
+      self_storage_path :state => city.state.parameterize, :city => city.name.parameterize
+    end
+    
+    def facility_path_for(listing, options = {})
+      facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options
     end
     
     def page_title(page)
