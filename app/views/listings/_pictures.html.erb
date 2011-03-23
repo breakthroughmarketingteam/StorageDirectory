@@ -1,10 +1,10 @@
 <% @listing = (@listing || @model) %>
 <div id="sl-tabs-pict" class="inner">
   <div id="sl-tabs-pict-in">
-	<% form_for Picture.new, :html => { :multipart => true } do |f| %>
+	<% form_for Picture.new, :html => { :multipart => true, :class => 'ie_no_xhr' } do |f| %>
 		<div class="stack">
 			<%= f.label :facility_image, 'Upload an image from your computer:' %>
-			<%= f.file_field :facility_image, :size => 30 %>
+			<%= f.file_field :facility_image, :size => 30, :class => 'required' %>
 			<%= f.hidden_field :listing_id, :value => @listing.id %>
 			<%= hidden_field_tag 'format', 'js' %>
 			<input type="submit" name="commit" class="ie_only" value="Upload" />

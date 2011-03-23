@@ -2946,7 +2946,10 @@ jQuery.fn.hinty = function() {
 
 jQuery.fn.formBouncer = function(){
 	return this.each(function(){
-		jQuery(this).live('submit', function() {
+		var $this = $(this);
+		if ($this.hasClass('ie_no_xhr')) return true;
+		
+		$this.live('submit', function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
@@ -8846,9 +8849,7 @@ $(function() {
 	
 	// upload pics
 	$('#picture_facility_image', '#new_picture').live('change', function(){
-		alert('b')
 		if ($.browser.msie) return true;
-		alert('a')
 		var thumb = $('<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
 		
 		if ($('.main_pic', '#sl-tabs-pict-in').length == 0) {
