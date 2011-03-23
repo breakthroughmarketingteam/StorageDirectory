@@ -15,13 +15,13 @@
 	    <ul id="sl-tabs-pict-gall">
 	      <% @listing.pictures.sort_by(&:position).each_with_index do |picture, i| %>
 	        <li>
-				<%= image_tag picture.facility_image.url(:thumb), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
+				<%= image_tag picture.facility_image.url(:thumb).sub('http://', request.protocol), :id => "Picture_#{picture.id}", :class => ('active' if i == 0), :alt =>"" %>
 				<%= link_to 'Delete', listing_picture_path(@listing, picture), :class => 'right delete_link', :title => 'Delete this picture' if in_mode?('profile')  %>
 			</li>
 	      <% end unless @listing.pictures.empty? %>
 	    </ul>
 		<div class="region">
-	    	<%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium), :alt => '', :class => 'main_pic' unless @listing.pictures.empty? %>
+	    	<%= image_tag @listing.pictures.sort_by(&:position).first.facility_image.url(:medium).sub('http://', request.protocol), :alt => '', :class => 'main_pic' unless @listing.pictures.empty? %>
 		</div>
 	</div>
   </div>

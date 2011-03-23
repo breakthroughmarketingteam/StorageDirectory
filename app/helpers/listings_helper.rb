@@ -40,13 +40,6 @@ module ListingsHelper
     number_with_precision(listing.distance, :precision => 1) if listing.respond_to? :distance
   end
   
-  def facility_path_for(listing, options = {})
-    #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
-    l = "/#{listing.storage_type.parameterize}/#{listing.state.parameterize}/#{listing.city.parameterize}/#{listing.title.parameterize}/#{listing.id}"
-    l << "?#{options.to_query}" unless options.values.empty?
-    l
-  end
-  
   def display_location(location)
     "in #{location.city}, #{location.state}" if location.respond_to? :city
   end
@@ -146,6 +139,7 @@ module ListingsHelper
   end
   
   def display_logo(listing, options = {})
+    request ||= options.delete(:request) # calling @template.map_data_for in the controller, apparently request is not available to the map_data_for method when used like this
     @min_title_len ||= 21
     
     if listing.logo.exists?
@@ -157,7 +151,7 @@ module ListingsHelper
       end
       
     else
-      get_listing_logos
+      get_listing_logos(request)
       img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
       img_hash[:alt] = listing.title
       img = image_tag img_hash[:src], img_hash.merge(options)
@@ -189,11 +183,11 @@ module ListingsHelper
     get_listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
   end
   
-  def get_listing_logos
+  def get_listing_logos(request = nil)
     @listing_logos ||= begin
       logos = []
       %w(w r o g b).each_with_index do |color, i|
-        logos << { :src => "http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', 'data-ci' => i }
+        logos << { :src => "#{request.protocol}s3.amazonaws.com/storagelocator/images/ui/storagelocator/df-logo-#{color}.png", :class => 'default_logo', :alt => '', :'data-ci' => i }
       end
       logos
     end

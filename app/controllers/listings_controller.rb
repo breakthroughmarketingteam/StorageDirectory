@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
   ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :claim_listings, :destroy
   ssl_allowed :show
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:new, :show, :profile, :edit, :destroy, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn]
+  before_filter :get_model, :only => [:new, :show, :profile, :edit, :destroy, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :redir]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request, :claim_listings]
   before_filter :get_listing_relations, :only => [:show, :profile]
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show, :profile]
@@ -27,7 +27,7 @@ class ListingsController < ApplicationController
       @location = @search.location
       @listings = @search.results params[:strict_order] # this calls the Listing model
       @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for listing } }
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
       # updates the impressions only for listings on current page if the search has changed
       if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
@@ -293,6 +293,12 @@ class ListingsController < ApplicationController
     end
     
     render :json => { :success => true, :data => msg }
+  end
+  
+  # redirect old facility paths to the new one
+  def redir
+    raise params.pretty_inspect
+    redirect_to facility_path_for(@listing), :status => 301
   end
   
   private
