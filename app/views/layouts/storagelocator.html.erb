@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <%= stylesheet_link_tag STYLESHEET_INCLUDES, :recursive => true, :cache => 'cache/motherlode' %>
+        <%= stylesheet_link_tag STYLESHEET_INCLUDES, :recursive => true, :cache => 'cache/all' %>
         <%= stylesheet_link_tag 'print', :media => 'print' %>
 		
         <meta charset="utf-8" />
@@ -15,7 +15,7 @@
 		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin', 'staff') && (in_mode?('new', 'edit') || controller_name == 'admin') %>
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user (@user_stat || UserStat.new)}';</script>" if user_is_a? 'advertiser', 'tenant' rescue $!.message %>
 		<%= "<script type='text/javascript'>var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>
-		<%= javascript_include_tag  JAVASCRIPT_INCLUDES, :recursive => true, :cache => 'cache/motherlode' %>
+		<%= javascript_include_tag  JAVASCRIPT_INCLUDES, :recursive => true, :cache => 'cache/all' %>
         <!--[if IE]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
