@@ -3,4 +3,4 @@
 Message:
 <%= @message %>
 
-Click here to go directly to their page: <%= facility_url @listing.storage_type.parameterize, @listing.title.parameterize, @listing.id, :anchor => 'write_review' %>
+Click here to go directly to their page: <%= facility_url @listing.storage_type.parameterize.to_s, @listing.state.parameterize.to_s, @listing.city.parameterize.to_s, @listing.title.parameterize.to_s, @listing.id, :anchor => 'write_review' %>
