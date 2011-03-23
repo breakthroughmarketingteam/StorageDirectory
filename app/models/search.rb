@@ -77,7 +77,7 @@ class Search < ActiveRecord::Base
     if location.respond_to?(:lat) || location.is_a?(Hash)
       self.lat   = location.respond_to?(:lat)   ? location.lat   : location[:lat]
       self.lng   = location.respond_to?(:lng)   ? location.lng   : location[:lng]
-      self.city  = (location.respond_to?(:city)  ? location.city  : location[:city]).titleize
+      self.city  = (location.respond_to?(:city)  ? location.city  : location[:city]).try :titleize
       self.state = location.respond_to?(:state) ? location.state : location[:state]
       self.zip   = location.respond_to?(:zip)   ? location.zip   : location[:zip] if self.zip.nil?
       self.fix_zip!
