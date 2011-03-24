@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,
                 :reject_blocks_enabled_on_this, :reject_views_enabled_on_this, :reject_forms_enabled_on_this, :use_scripts, :get_coords, 
-                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates, :user_is_a?, :current_model
+                :is_admin?, :home_page, :get_list_of_file_names, :_email_templates, :user_is_a?, :current_model, :facility_path_for
   
   include UtilityMethods
   include Geokit
@@ -577,6 +577,14 @@ class ApplicationController < ActionController::Base
     else
       login_url
     end
+  end
+  
+  # TODO: ytf doesnt facility_url work?!
+  def facility_path_for(listing, options = {})
+    #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
+    l = "/#{listing.storage_type.parameterize}/#{listing.state.parameterize}/#{listing.city.parameterize}/#{listing.title.parameterize}/#{listing.id}"
+    l << "?#{options.to_query}" unless options.values.empty?
+    l
   end
   
   def benchmark(title = "#{controller_name}##{action_name}")
