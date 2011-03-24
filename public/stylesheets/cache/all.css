@@ -3379,15 +3379,15 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 .claim{bottom:12px;font-size:10px;position:absolute;}
 .overlay{background:#000;opacity:.4;position:absolute;top:0;bottom:0;left:0;right:0;}
 .overlay div{position:absolute;top:0;bottom:0;left:0;right:0;background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;}
-.post_date{background:#66f;float:left;margin:0 10px 0 0;padding:7px 5px;text-align:center;height:30px;width:55px;}
+.post_date{float:left;height:43px;margin:0 10px 0 0;padding:16px 0 0 2px;text-align:center;width:75px;}
 .post_date p{font-size:140%;}
 
 #blog_page{font-size:12px;margin:15px 20px 0;padding:0;}
 #blog_page .blog_post{border-bottom:1px dashed #ccc;padding:0 0 25px;margin-bottom:25px;}
 #blog_page h2{font-size:28px;margin-bottom:10px;}
-#blog_page h3 a{display:block;font-size:24px;margin-bottom:8px;width:670px;text-decoration:none;}
+#blog_page h3 a{display:block;font-size:24px;line-height:28px;margin:3px 0 8px;text-decoration:none;width:670px;}
 #blog_page a{font-size:12px;}
-#blog_page .post_date{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) repeat-x;color:#fff;text-shadow:1px 1px 0 #666;}
+#blog_page .post_date{background: url(/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
 #blog_page .blog_post_info{}
 #blog_page .blog_post_content{float:left;line-height:16px;margin:15px 0 15px;}
 #blog_page .post_metadata{float:left;width:100%;}
@@ -3448,9 +3448,10 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-side{margin:7px 10px 10px;width: 171px;}
 #blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;text-decoration: underline;}
-#blog-side li.year{font-size:14px;list-style:disc inside;}
-#blog-side li{margin:4px 0;display: inline;}
-#blog-side .months li{list-style:disc inside;margin-left:20px;}
+#blog-side li.year{font-size:14px;margin-left:5px;}
+#blog-side li{margin:4px 0;}
+#blog-side #tags li{display: inline;}
+#blog-side .months li{margin-left:20px;}
 #blog-side #tags{margin-bottom:40px;}
 
 #blog-post{margin:20px;}
