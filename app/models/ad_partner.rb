@@ -3,7 +3,7 @@ class AdPartner < ActiveRecord::Base
   has_attached_file :image, 
     :storage => :s3, 
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :styles => { :thumb => '80x80>' },
+    :styles => { :thumb => '80x80' },
     :url => ":s3_domain_url",
     :path => ":attachment/:id/:style_:basename.:extension"
   
