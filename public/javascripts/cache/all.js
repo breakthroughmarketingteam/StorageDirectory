@@ -2952,6 +2952,15 @@ jQuery.fn.formBouncer = function(){
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
+			if ($(this).runValidation().data('valid')) {
+				// clear any values that are the same as the title attr, caused by hinty
+				$('input, textarea', this).each(function() {
+					var field = $(this);
+					if (field.val() == field.attr('title'))
+						field.val('');
+				});
+			}
+			
 			return $(this).runValidation().data('valid');
 		});
 	});

@@ -28,15 +28,15 @@ ActionController::Routing::Routes.draw do |map|
   
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
-  map.old_facility '/self-storage/:title/:id', :controller => 'listings', :action => 'redir', :requirements => { :title => /\w+|-?/, :id => /\d+/ }
-  #map.facility    '/:storage_type/:state/:city/:title/:id', :controller => 'listings', :action => 'show', :title => /[a-z]/, :storage_type => /(storage)/, :id => /[0-9]/
+  map.old_facility '/self-storage/:title/:id', :controller => 'listings', :action => 'redir', :requirements => { :title => /\w+-?/, :id => /\d+/ }
+  map.facility    '/:storage_type/:state/:city/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
   map.claim_listing '/claim/:listing_id', :controller => 'clients', :action => 'new'
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
   
   # for building routes
   $_storage_types = ['self', 'mobile', 'cold', 'vehicle', 'car', 'boat', 'rv'].map { |t| "#{t} storage" }
   $_storage_types.each do |type|
-    map.connect "/:storage_type/:state/:city/:title/:id", :controller => 'listings', :action => 'show', :storage_type => type, :requirements => { :id => /[0-9]/ }
+    #map.connect "/#{type.parameterize}/:state/:city/:title/:id", :controller => 'listings', :action => 'show', :requirements => { :title => /[a-z]-?/, :id => /[0-9]/ }
     eval "map.#{type.gsub(' ', '_').downcase}_home '/#{type.parameterize}', :controller => 'listings', :action => 'locator', :storage_type => '#{type}'"
     eval "map.#{type.gsub(' ', '_').downcase} '/#{type.parameterize}/:state/:city/:zip', :controller => 'listings', :action => 'locator', :zip => nil, :storage_type => '#{type}'"
   end
