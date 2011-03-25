@@ -1,7 +1,7 @@
 <% form_for @listing, :html => { :id => 'logo_form', :class => 'logo_form', :multipart => true } do |f| %>
 	<h3 class="label">Logo</h3>
 	<div id="col1">
-		<%= display_logo @listing, :id => 'listing_img' %>
+		<%= display_logo @listing, :id => 'listing_img', :request => request %>
 	</div>
 	<div id="col2">
 		<div class="stack">
