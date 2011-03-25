@@ -2219,6 +2219,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page .post_date p{font-size:18px;}
 #blog_page p{font-size: 12px;line-height: 22px;margin: 0 0 20px;}
 #post-image p.src{color:#bbb;font-size:10px;margin:0 10px 0 0;text-align:right;}
+#post-image .src a{color:#bbb;}
 
 #post-image{text-align:center;margin:5px 20px 20px;}
 #post-image img{padding:10px;border:1px solid #bbb;}
