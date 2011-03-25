@@ -179,8 +179,8 @@ module ListingsHelper
     @search ? @search.storage_type.parameterize : 'self-storage'
   end
   
-  def display_default_logo_choices
-    get_listing_logos.map { |logo| image_tag logo.delete(:src), logo }.join
+  def display_default_logo_choices(request = nil)
+    get_listing_logos(request).map { |logo| image_tag logo.delete(:src), logo }.join
   end
   
   def get_listing_logos(request = nil)

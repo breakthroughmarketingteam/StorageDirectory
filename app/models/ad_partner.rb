@@ -16,7 +16,8 @@ class AdPartner < ActiveRecord::Base
   
   @@searchables = %w(title description)
   cattr_reader :searchables
-
+  
+  
   def html_attributes
     to_hash(read_attribute(:html_attributes))
   end
