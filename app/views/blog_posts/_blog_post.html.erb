@@ -9,9 +9,6 @@
 				<span> by <%= link_to blog_post.user.name, blog_post.user %></span>
 			<% end %>
 			
-			<% unless blog_post.timestamp.nil? %>
-				<span> on <%= blog_post.created_at.strftime '%A %d %B, %Y' %></span>
-			<% end %>
 		</div>
 		
 		<% if blog_post.attributes.keys.include?('content') %>
