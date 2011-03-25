@@ -9,7 +9,7 @@
 				</th>
 				<% @listing_set.each do |set| %>
 					<th class="column">
-						<%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}" %>
+						<%= display_logo set[:listing], :title => "#{set[:listing].title} in #{set[:listing].full_address}", :request => request %>
 					</th>
 				<% end %>
 			</tr>
