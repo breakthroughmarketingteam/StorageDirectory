@@ -2954,7 +2954,7 @@ jQuery.fn.formBouncer = function(){
 			
 			if ($(this).runValidation().data('valid')) {
 				// clear any values that are the same as the title attr, caused by hinty
-				$('input[type="text"], textarea', this).each(function() {
+				$('input, textarea', this).each(function() {
 					var field = $(this);
 					if (field.val() == field.attr('title'))
 						field.val('');
