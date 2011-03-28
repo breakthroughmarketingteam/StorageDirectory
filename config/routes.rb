@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   # clean paths for searches
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
   map.old_facility '/self-storage/:title/:id', :controller => 'listings', :action => 'redir', :requirements => { :title => /\w+-?/, :id => /\d+/ }
-  map.facility    '/:storage_type/:state/:city/:title/:id', :controller => 'listings', :action => 'show', :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
+  map.facility    '/:storage_type/:state/:city/:title/:id', :controller => 'listings', :action => 'show'#, :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
   map.claim_listing '/claim/:listing_id', :controller => 'clients', :action => 'new'
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
   
