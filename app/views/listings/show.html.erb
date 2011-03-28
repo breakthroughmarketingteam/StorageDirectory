@@ -7,26 +7,23 @@
 
 	<div id="type-one-r-col">
 	  <div id="type-three-r-col-in">
-	    <% unless in_mode?('show') %>
-			
-	        <div id="sl-tabs">
-	          <div id="sl-tabs-in" class="tabular_content" data-tabs-id="sl-tabs-nav">
-	            <ul id="sl-tabs-nav" class="tabular">
-	                <%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
-	                <%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless @listing.available_sizes.empty? %>
-					<%= content_tag :li, link_to("Reviews#{" (#{@listing.reviews.published.size})" unless @listing.reviews.published.empty?}", '#fac_reviews', :id => 'tab_Reviews', :rel => 'sl-tabs-reviews')  %>
-	                
-					<% if @listing.tracked_number %>
-						<div id="sl-phone"><%= "Call #{@listing.tracked_number}" %></div>
-					<% end %>
-	            </ul>
-	            <!-- tab content -->
-	            <%= render :partial => 'overview' %>
-	            <%= render :partial => 'sizes' unless @listing.available_sizes.empty? %>
-				<%= render :partial => 'reviews' %>
-	          </div>
-	        </div>
-	    <% end %>    
+        <div id="sl-tabs">
+          <div id="sl-tabs-in" class="tabular_content" data-tabs-id="sl-tabs-nav">
+            <ul id="sl-tabs-nav" class="tabular">
+                <%= content_tag :li, link_to("Overview", '#overview', :id => 'tab_Overview', :rel => 'sl-tabs-overview') %>
+                <%= content_tag :li, link_to("Unit Sizes#{" (#{@listing.available_sizes.size})"}", '#unit_sizes', :id => 'tab_Unit_Sizes', :rel => 'sl-tabs-sizes') unless @listing.available_sizes.empty? %>
+				<%= content_tag :li, link_to("Reviews#{" (#{@listing.reviews.published.size})" unless @listing.reviews.published.empty?}", '#fac_reviews', :id => 'tab_Reviews', :rel => 'sl-tabs-reviews')  %>
+                
+				<% if @listing.tracked_number %>
+					<div id="sl-phone"><%= "Call #{@listing.tracked_number}" %></div>
+				<% end %>
+            </ul>
+            <!-- tab content -->
+            <%= render :partial => 'overview' %>
+            <%= render :partial => 'sizes' unless @listing.available_sizes.empty? %>
+			<%= render :partial => 'reviews' %>
+          </div>
+        </div>
 
         <div id="outer_map">
 			<div id="pl" class="dp">
