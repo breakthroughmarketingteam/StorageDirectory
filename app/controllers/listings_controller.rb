@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
       end
       
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| @template.map_data_for s[:listing] } }
+      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| @template.map_data_for s[:listing], :request => request } }
     else
       @listing_set = []
       @location = @search.location
