@@ -5430,6 +5430,7 @@ $.fn.shimmy = function(parent, ops) {
 			this_pos 	= $this.position(parent),
 			btm_from_top  = this_pos.top + this_height + pad;
 		
+		//console.log(this_offset, this_pos, $this)
 		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		
 		$(window).scroll(function() {
@@ -8492,7 +8493,7 @@ $(function() {
 		if ($this.data('skip_find')) { // GET PARTIAL
 			$this.data('skip_find', false);
 			
-			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
+			$.getJSON('/ajax/get_partial?model=Listing&partial=listings/listing', function(response){
 				$.with_json(response, function(data){
 					var partial 	  = $(data).hide(),
 						title_input   = $('input[name="listing[title]"]', partial),

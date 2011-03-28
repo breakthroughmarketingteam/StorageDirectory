@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
       @allowed = true
     elsif controller_name == 'ajax'
       @allowed = true
-    elsif controller_name == 'admin' || action_name == 'index'
+    elsif %w(admin searches).include?(controller_name) || action_name == 'index'
       @allowed = current_user && current_user.has_role?('admin', 'staff')
     # restrict access to everything else by permissions
     elsif current_user
@@ -581,6 +581,7 @@ class ApplicationController < ActionController::Base
   
   # TODO: ytf doesnt facility_url work?!
   def facility_path_for(listing, options = {})
+    return '' if listing.new_record?
     #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
     l = "/#{listing.storage_type.parameterize}/#{listing.state.parameterize}/#{listing.city.parameterize}/#{listing.title.parameterize}/#{listing.id}"
     l << "?#{options.to_query}" unless options.values.empty?
