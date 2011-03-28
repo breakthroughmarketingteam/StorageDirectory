@@ -47,7 +47,7 @@
 		</div>
 	<% else %>
 		<div id="req_wrap">
-			<%= render :partial => 'views/partials/greyresults/request_info', :locals => { :model => @listing } %>
+			<%= render :partial => 'views/partials/greyresults/request_info', :locals => { :model => @listing, :size => (@size || @listing.sizes.first) } %>
 		</div>
 	<% end %>
 </div>
