@@ -3115,7 +3115,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .col3 hr{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/price-hr.png) repeat-x;border:none;height:11px;margin:0 0 5px;}
 #rent_steps .button{position:absolute;bottom:20px;left:20px;text-align:center;text-decoration:none;}
 #rent_steps .back{line-height:28px;}
-#rent_steps .next{width:182px;color:#fff;font-size:16px;height:20px;line-height:22px;padding:6px;left:auto;right:20px;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn.png) repeat-x;}
+#rent_steps .next{width:182px;color:#fff;font-size:16px;height:20px;line-height:22px;padding:6px;left:auto;right:10px;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn.png) repeat-x;}
 #rent_step1{font-size:12px;}
 #rent_step2 .inner{padding:15px 20px;}
 #rent_step2 .inner .left{width:45%;margin-right:20px;}

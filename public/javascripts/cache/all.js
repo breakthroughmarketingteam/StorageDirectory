@@ -6407,14 +6407,16 @@ $(function(){
 		var $this 		= $(this).hide(),
 			orig_href 	= $this.attr('href'),
 			compares 	= $('input:checked', '.compare'),
-			ajax_loader = $.new_ajax_loader('after', $this).show(),
+			ajax_loaders = [],
 			ids 		= [];
 		
 		compares.each(function() {
 			var context    = $(this).parents('.listing'),
 				special_id = $('.special_txt', context).attr('data-special-id'),
-				size_id    = $('ul.dnp input.unit_size:checked', context).val();
+				size_id    = $('ul.dnp input.unit_size:checked', context).val(),
+				cmp_text   = $('.compare a', context).hide();
 			
+			ajax_loaders.push($.new_ajax_loader('after', cmp_text).show());
 			ids.push(this.value +'x'+ size_id +'x'+ special_id);
 		});
 		
@@ -6434,8 +6436,9 @@ $(function(){
 				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
-			$this.show().attr('href', orig_href);
-			ajax_loader.hide();
+			$('a', '.compare').show();
+			$this.attr('href', orig_href);
+			$.each(ajax_loaders, function() { $(this).hide() });
 		});
 		
 		return false;
@@ -7283,7 +7286,7 @@ $.calculatePrice = function(context) {
 	});
 }
 
- $.getCalculationParams = function(context) {
+$.getCalculationParams = function(context) {
 	var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
 	
 	btns.each(function(i) {
