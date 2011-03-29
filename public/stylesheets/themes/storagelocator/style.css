@@ -2242,6 +2242,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
+#blog_page li, #blog-post li{list-style:disc;margin-left: 40px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
 #sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
