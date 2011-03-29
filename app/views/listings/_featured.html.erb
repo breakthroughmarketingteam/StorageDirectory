@@ -1,5 +1,5 @@
 <% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') %>
-<div class="shimmy">
+<div class="shimmy uncollapse">
 	<div id="feat_wrap">
 	<% unless @featured_listing.nil? %>
 		<div id="feat-list" class="listing">

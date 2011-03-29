@@ -1423,13 +1423,12 @@ $.fn.shimmy = function(parent, ops) {
 	
 	return this.each(function() {
 		var $this = $(this).css({ 'position': 'relative', 'top': '0' }),
-			pad	  = 50,
+			pad	  = 30,
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
 			this_pos 	= $this.position(parent),
 			btm_from_top  = this_pos.top + this_height + pad;
 		
-		//console.log(this_offset, this_pos, $this)
 		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		
 		$(window).scroll(function() {
@@ -1508,7 +1507,7 @@ $.fn.aProxy = function() {
 	});
 }
 
-// display the word count in target_span
+// display the word count in target_span of a text field or area
 $.fn.displayWordCount = function(callback) {
 	if (typeof callback != 'function') callback = function(){};
 	
