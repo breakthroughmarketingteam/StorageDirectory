@@ -442,7 +442,7 @@ li.map-plus{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelo
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
 #model_new_btns{clear:left;}
-#admin_controller #model_new_btns{clear:left;margin-bottom:20px;}
+#admin_controller #model_new_btns{clear:left;}
 #add-fac-head-in{background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
@@ -582,7 +582,7 @@ ul#specials_list {margin:15px 10px;}
 #city-box-in{width:165px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
-#media-box{width:175px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
+#media-box{width:175px;overflow:hidden;margin-bottom:20px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 #foot-box-bottom-bg{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
@@ -591,7 +591,7 @@ ul#specials_list {margin:15px 10px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
 .locator_action #results_header{width:96.3%;}
-
+#add-fac-side{width:191px;margin-left:5px;}
 #top_map_btn{display:block;float:right;margin:17px 25px 0 0;color:#fff;text-decoration:none;cursor: pointer;}
 #top_map_btn span{display:block;float:left;height:20px;margin:3px 7px 0 0;}
 #main_map,#compare_map{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-long-green.gif) no-repeat 50% 50%;border:1px solid #ccc;height:226px;margin:0 0 0 1px;width:97.7%;}
@@ -2224,7 +2224,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page p{font-size: 12px;line-height: 22px;margin: 0 0 20px;}
 #post-image p.src{color:#bbb;font-size:10px;margin:0 10px 0 0;text-align:right;}
 #post-image .src a{color:#bbb;font-size:10px;}
-
 #post-image{text-align:center;margin:5px 20px 20px;}
 #post-image img{padding:10px;border:1px solid #bbb;}
 
@@ -2236,7 +2235,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-side #tags li{display: inline;}
 #blog-side .months li{margin-left:20px;}
 #blog-side #tags{margin-bottom:40px;}
-
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
@@ -2257,7 +2255,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #feat-list .dnp li.rslt-miles.ex{width: 150px;}
 #smpl-lstng{margin:0 0 20px -7px;}
 #smpl-rentals{margin:0 0 20px -11px;}
-#social_box{overflow:hidden;}
+#social_box{overflow:hidden;padding-top:2px;}
 #rent-pop .rent_continue{text-transform:none;}
 #rent_no{margin-top:8px}
 #add_helptext_link{right:40px;top:47px;}
