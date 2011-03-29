@@ -1008,7 +1008,7 @@ $(function() {
 		if ($this.data('skip_find')) { // GET PARTIAL
 			$this.data('skip_find', false);
 			
-			$.getJSON('/ajax/get_partial?model=Listing&partial=/listings/listing', function(response){
+			$.getJSON('/ajax/get_partial?model=Listing&partial=listings/listing', function(response){
 				$.with_json(response, function(data){
 					var partial 	  = $(data).hide(),
 						title_input   = $('input[name="listing[title]"]', partial),

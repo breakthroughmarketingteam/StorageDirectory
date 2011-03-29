@@ -1042,7 +1042,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel .sl-table-exp .size_icon{margin-left:10px;width:100px;}
 .panel .sl-table-exp textarea{width:202px;font-size:90%;}
 .listing:hover .inner{border-color:#aaa;}
-.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:100%;}
+.listing .rslt-contact p{margin-bottom:5px;font-size:12px;line-height:1.2;width:112%;}
 
 #client_listing_box .listing .rslt-contact{width: 170px;padding-right: 0px;}
 .panel #head{padding-bottom:15px;}
@@ -1178,7 +1178,9 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
 #clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
 #clients_controller #ov-units .rslt-contact p .small_text_field{width:93.5%;}
-#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:18%;}
+#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:24%;}
+.rslt-contact #listing_city{float:left;margin-right:3px;width:38%;}
+.rslt-contact #listing_city{margin-right:3px;width:15%;}
 #listings_controller .st-type input.small_text_field{font-size:100%;}
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
@@ -1575,7 +1577,7 @@ form .error p{margin:0 0 7px 0;}
 .home #handle{margin-top:42px;margin-bottom:0;}
 #red_tab{display:block;width:142px;height:52px;margin:5px auto 20px;color:#fff;font-size:100%;text-shadow:1px 1px 0px #666;line-height:2.2;position:relative;z-index:0;text-align:center;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/pull-tab.png) no-repeat;}
 #red_tab:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/pull-tab-hover.png) no-repeat;}
-
+#social_box #twitter_share{float:right;margin:-2px 13px 0 0;}
 #footer_btm{color:#ccccff;font-size:90%;background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat;height: 100%;width: 100%;}
 #footer_btm .wrapper{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/transparent-bg.png) repeat;overflow:hidden;margin-top:10px;width:954px;height:129px;padding:0px 7px 0px 14px;position: relative;}
 #footer_btm .usssl_adp{width:140px;height:110px;margin:10px 9px 10px 9px;float:left;background:#fff;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:1px 1px 2px #666;-moz-box-shadow:1px 1px 2px #666;-webkit-box-shadow:1px 1px 2px #666;}
@@ -2002,7 +2004,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_pictures .framed{margin-bottom:20px;}
 #sl-edit-tabs #fac_pictures #sl-tabs-pict-in{font-size:12px;float:left;margin-bottom:17px;position:relative;width:100%;}
 #sl-edit-tabs #fac_pictures #picture_facility_image{margin-left:10px;}
-#sl-edit-tabs #fac_pictures ul#sl-tabs-pict-gall{width:32.5%;float:left;overflow:visible;}
+#sl-edit-tabs #fac_pictures ul#sl-tabs-pict-gall{width:32.5%;float:left;overflow:visible;position:relative;z-index:1;}
 #sl-tabs-pict-gall .delete_link{background:none;}
 #sl-edit-tabs #sl-tabs-pict-in li{background:#eee;float:left;height:80px;margin:0 10px 20px 0;width:29%;}
 #sl-edit-tabs #sl-tabs-pict-in li img{width:100%;}

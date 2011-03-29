@@ -139,6 +139,7 @@ module ListingsHelper
   end
   
   def display_logo(listing, options = {})
+    
     request ||= options.delete(:request) # calling @template.map_data_for in the controller, apparently request is not available to the map_data_for method when used like this
     @min_title_len ||= 21
     
