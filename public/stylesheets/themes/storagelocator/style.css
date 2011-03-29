@@ -2257,7 +2257,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #feat-list .dnp li.rslt-miles.ex{width: 150px;}
 #smpl-lstng{margin:0 0 20px -7px;}
 #smpl-rentals{margin:0 0 20px -11px;}
-
+#social_box{overflow:hidden;}
 #rent-pop .rent_continue{text-transform:none;}
 #rent_no{margin-top:8px}
 #add_helptext_link{right:40px;top:47px;}
@@ -2277,6 +2277,3 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #zenbox_close{cursor:pointer;height:46px;position:relative;top:10px;width:46px;}
 #zenbox_body{height:900px;margin-top:-18px;position:relative;width:615px;}
 #zenbox_scrim{background-color:#000;filter:alpha(opacity=42);-moz-opacity:0.42;left:0;position:absolute;opacity:0.42;top:0;width:100%;z-index:1;}
-
-#blog-post{}
-

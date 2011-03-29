@@ -7817,6 +7817,10 @@ $(function() {
 	if (aff_scroll.length) {
 		$('.items', aff_scroll).width($('.usssl_adp', aff_scroll).length * 160);
 		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
+		
+		$.setInterval(function() {
+			$('.next', aff_scroll);
+		}, 7000);
 	}
 	
 	// storage tips page
