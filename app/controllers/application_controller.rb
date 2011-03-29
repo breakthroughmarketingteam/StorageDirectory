@@ -586,6 +586,8 @@ class ApplicationController < ActionController::Base
     l = "/#{listing.storage_type.parameterize}/#{listing.state.parameterize}/#{listing.city.parameterize}/#{listing.title.parameterize}/#{listing.id}"
     l << "?#{options.to_query}" unless options.values.empty?
     l
+  rescue
+    $!
   end
   
   def benchmark(title = "#{controller_name}##{action_name}")
