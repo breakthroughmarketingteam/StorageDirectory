@@ -1666,6 +1666,7 @@ li.map-plus{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelo
 li.map-plus a{width:22px;}
 #pages_controller.admin #column_5{float:left;}
 #model_new_btns{clear:left;}
+#admin_controller #model_new_btns{clear:left;}
 #add-fac-head-in{background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-hdr-img-girl.png") no-repeat 575px 15px;float:left;height:100%;padding:15px 20px;width:100%;}
 #add-fac-head-in p{font-size:12px;line-height:1.4;margin-top:10px;width:300px;}
 #type-two-top-bar-head ul{height:26px;line-height:26px;color:#555;position:relative;top:-2px;font-size:80%;}
@@ -1805,7 +1806,7 @@ ul#specials_list {margin:15px 10px;}
 #city-box-in{width:165px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/city-list-box-bg.png) no-repeat top center;position:relative;left:18px;top:17px;background-color:#fff;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #city-box ul{text-align:left;position:relative;left:5px;}
 #city-box ul li a span{float:right;color:#3333CB;position:relative;right:10px;}
-#media-box{width:175px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
+#media-box{width:175px;overflow:hidden;margin-bottom:20px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/media-header.png) no-repeat center 1px;position:relative;background-color:#fff;}
 #foot-box-bottom-bg{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
@@ -1814,7 +1815,7 @@ ul#specials_list {margin:15px 10px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}
 #results_header{margin-top:5px;width:97.5%;}
 .locator_action #results_header{width:96.3%;}
-
+#add-fac-side{width:191px;margin-left:5px;}
 #top_map_btn{display:block;float:right;margin:17px 25px 0 0;color:#fff;text-decoration:none;cursor: pointer;}
 #top_map_btn span{display:block;float:left;height:20px;margin:3px 7px 0 0;}
 #main_map,#compare_map{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-long-green.gif) no-repeat 50% 50%;border:1px solid #ccc;height:226px;margin:0 0 0 1px;width:97.7%;}
@@ -2033,8 +2034,8 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #tab3 form.amenity .ui-widget{cursor:pointer;display:block;font-size:80%;padding:7px 10px;}
 .amenity .ajax_loader{margin:8px 9px 0 0;float:right;}
 #tab3 .inner{width:97%;overflow:hidden;}
-#tab3 .amenity .ui-state-default,#amenity_legend .default span{background:url("//s3.amazonaws.com/storagelocator/images/ui/jquery/south_street/ui-bg_highlight-hard_100_fafaf4_1x100.png") repeat-x scroll 50% 50% #FAFAF4;border:1px solid #D4CCB0;color:#459E00;}
-#tab3 .amenity .ui-state-active,#amenity_legend .active span{background:url("//s3.amazonaws.com/storagelocator/images/ui/jquery/south_street/ui-bg_highlight-hard_15_459e00_1x100.png") repeat-x scroll 50% 50% #459E00;border:1px solid #327E04;color:#FFFFFF;}
+#tab3 .amenity .ui-state-default,#amenity_legend .default span{background:#fff;border:1px solid #ddd;color:#666;font-weight:normal;}
+#tab3 .amenity .ui-state-active,#amenity_legend .active span{background:#393;border:1px solid #327e04;color:#fff;}
 #amenity_legend{margin-left:20px;float:left;}
 #amenity_legend li{line-height:2;overflow:hidden;padding:5px 0;font-size:80%;color:#555;float:left;margin-right:15px;}
 #amenity_legend span{display:block;float:left;width:24px;height:24px;margin-right:10px;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
@@ -2109,7 +2110,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #client_listing_box .profile_completion p{margin-top:10px;}
 #client_listing_box .profile_completion p span{font-weight:bold;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
-#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-6px;}
+#ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-10px;}
 #ov-services ul li{list-style:none;display:inline;}
 #ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;text-decoration:none;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
@@ -2476,7 +2477,8 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
 #info-accordion h4{font-size:22px;margin-bottom:10px;line-height:25px;}
 #new_client .error{text-align:right;}
-#login_hdr,#fac_name,.region_head_bar h2{color:#fff;font-size:120%;;padding:17px 0 0 23px;text-shadow:1px 1px 0 #666;text-align:left;}
+#login_hdr,.region_head_bar h2{background:#66c;border:1px solid #4c4bcc;color:#fff;display:inline-block;float:left;font-size:14px;font-weight:normal;margin:17px 0 0 21px;padding:4px 8px 2px;text-align:left;text-shadow:1px 1px 0 #333;}
+
 #login_page .i{height:40px;position:relative;}
 #login_page input,.bigblue_btn{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;border:1px solid #CCC;font-size:100%;padding:5px 10px;width:93%;}
 #login_page .bigblue_btn{width:130px;}
@@ -3023,7 +3025,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #fac_name span,.region_head_bar h2 span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
-#sl-intro{margin:25px 0;overflow:hidden;}
+#sl-intro{margin:0 0 25px;overflow:hidden;}
 #sl-intro .inner{float:left;}
 #sl-intro #sl-descript{padding:0 5px;width:317px;}
 #sl-intro #sl-special{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/web-special-bg.png) no-repeat;height:151px;margin-top:-3px;text-align:center;width:327px;}
@@ -3113,7 +3115,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .rental_form .col3 hr{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/price-hr.png) repeat-x;border:none;height:11px;margin:0 0 5px;}
 #rent_steps .button{position:absolute;bottom:20px;left:20px;text-align:center;text-decoration:none;}
 #rent_steps .back{line-height:28px;}
-#rent_steps .next{width:182px;color:#fff;font-size:16px;height:20px;line-height:22px;padding:6px;left:auto;right:20px;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn.png) repeat-x;}
+#rent_steps .next{width:182px;color:#fff;font-size:16px;height:20px;line-height:22px;padding:6px;left:auto;right:10px;text-shadow:1px 1px 0 #666;border:1px solid #666;-moz-box-shadow:1px 1px 2px #999;box-shadow:1px 1px 2px #999;-webkit-box-shadow:1px 1px 2px #999;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn.png) repeat-x;}
 #rent_step1{font-size:12px;}
 #rent_step2 .inner{padding:15px 20px;}
 #rent_step2 .inner .left{width:45%;margin-right:20px;}
@@ -3255,7 +3257,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #request_review form label{font-size:80%;color:#555;}
 #request_review textarea{width:99%;height:80px;}
 #tracking_request{padding:0 20px 20px;overflow:hidden;}
-#preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
+#preview_btn{margin:12px 24px 0 0;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;padding-top:6px;text-decoration:none;}
 #tab1{margin-bottom:20px;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
 #sl-edit-tabs .ajax_loader{top:2px;}
@@ -3298,7 +3300,6 @@ p.breadcrumb a{color:#fff;}
 .edit_rental label{font-weight:bold;}
 #unsub_wrap{background:none repeat scroll 0 0 #FFFFFF;color:#555555;font-family:"Helvetica ",Helvetica,Tahoma,Verdana,Arial,sans-serif;margin-left:-10px;padding:20px 35px;width:110%;}
 #new_listing input[type="text"]{width:80%;}
-#rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover .rslt-title h3 .profile_link{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/link-hover.png) no-repeat right;}
 
 #moving{width:100%;background:#fff;}
 #moving tr{height:55px;}
@@ -3447,7 +3448,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page p{font-size: 12px;line-height: 22px;margin: 0 0 20px;}
 #post-image p.src{color:#bbb;font-size:10px;margin:0 10px 0 0;text-align:right;}
 #post-image .src a{color:#bbb;font-size:10px;}
-
 #post-image{text-align:center;margin:5px 20px 20px;}
 #post-image img{padding:10px;border:1px solid #bbb;}
 
@@ -3459,12 +3459,12 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-side #tags li{display: inline;}
 #blog-side .months li{margin-left:20px;}
 #blog-side #tags{margin-bottom:40px;}
-
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
 #blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
 #blog-post p{font-size:12px;line-height:16px;margin-bottom:15px;}
+#blog_page li, #blog-post li{list-style:disc;margin-left: 40px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
 #sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
@@ -3479,10 +3479,10 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #feat-list .dnp li.rslt-miles.ex{width: 150px;}
 #smpl-lstng{margin:0 0 20px -7px;}
 #smpl-rentals{margin:0 0 20px -11px;}
-
+#social_box{overflow:hidden;padding-top:2px;}
 #rent-pop .rent_continue{text-transform:none;}
 #rent_no{margin-top:8px}
-#add_helptext_link{top:30px;}
+#add_helptext_link{right:40px;top:47px;}
 #signup_agree_btns{float:right;width:30%;}
 
 /* Zendesk support tab */
@@ -3499,5 +3499,3 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #zenbox_close{cursor:pointer;height:46px;position:relative;top:10px;width:46px;}
 #zenbox_body{height:900px;margin-top:-18px;position:relative;width:615px;}
 #zenbox_scrim{background-color:#000;filter:alpha(opacity=42);-moz-opacity:0.42;left:0;position:absolute;opacity:0.42;top:0;width:100%;z-index:1;}
-
-#blog-post

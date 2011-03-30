@@ -71,7 +71,7 @@
 
 									<div class="calendar_wrap">
 										<label class="block left" for="move_in_date">Move in: </label>
-										<input class="required cal" id="move_in_date" maxlength="10" name="rental[move_in_date]" type="text" value="02/01/2011" />
+										<input class="required cal" id="move_in_date" maxlength="10" name="rental[move_in_date]" type="text" value="<%= Time.now.strftime "%m/%d/%Y" %>" />
 									</div>
 
 									<% unless listing.specials.empty? %>

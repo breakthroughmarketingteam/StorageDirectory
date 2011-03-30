@@ -5424,13 +5424,12 @@ $.fn.shimmy = function(parent, ops) {
 	
 	return this.each(function() {
 		var $this = $(this).css({ 'position': 'relative', 'top': '0' }),
-			pad	  = 50,
+			pad	  = 30,
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
 			this_pos 	= $this.position(parent),
 			btm_from_top  = this_pos.top + this_height + pad;
 		
-		//console.log(this_offset, this_pos, $this)
 		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
 		
 		$(window).scroll(function() {
@@ -5509,7 +5508,7 @@ $.fn.aProxy = function() {
 	});
 }
 
-// display the word count in target_span
+// display the word count in target_span of a text field or area
 $.fn.displayWordCount = function(callback) {
 	if (typeof callback != 'function') callback = function(){};
 	
@@ -6407,14 +6406,16 @@ $(function(){
 		var $this 		= $(this).hide(),
 			orig_href 	= $this.attr('href'),
 			compares 	= $('input:checked', '.compare'),
-			ajax_loader = $.new_ajax_loader('after', $this).show(),
+			ajax_loaders = [],
 			ids 		= [];
 		
 		compares.each(function() {
 			var context    = $(this).parents('.listing'),
 				special_id = $('.special_txt', context).attr('data-special-id'),
-				size_id    = $('ul.dnp input.unit_size:checked', context).val();
+				size_id    = $('ul.dnp input.unit_size:checked', context).val(),
+				cmp_text   = $('.compare a', context).hide();
 			
+			ajax_loaders.push($.new_ajax_loader('after', cmp_text).show());
 			ids.push(this.value +'x'+ size_id +'x'+ special_id);
 		});
 		
@@ -6434,8 +6435,9 @@ $(function(){
 				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
-			$this.show().attr('href', orig_href);
-			ajax_loader.hide();
+			$('a', '.compare').show();
+			$this.attr('href', orig_href);
+			$.each(ajax_loaders, function() { $(this).hide() });
 		});
 		
 		return false;
@@ -7283,7 +7285,7 @@ $.calculatePrice = function(context) {
 	});
 }
 
- $.getCalculationParams = function(context) {
+$.getCalculationParams = function(context) {
 	var btns = $('.calc_params', context), params = { multi_params: [] }, now = new Date();
 	
 	btns.each(function(i) {
@@ -7815,6 +7817,10 @@ $(function() {
 	if (aff_scroll.length) {
 		$('.items', aff_scroll).width($('.usssl_adp', aff_scroll).length * 160);
 		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
+		
+		$.setInterval(function() {
+			$('.next', aff_scroll);
+		}, 7000);
 	}
 	
 	// storage tips page
