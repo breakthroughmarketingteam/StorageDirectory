@@ -228,7 +228,18 @@ class Listing < ActiveRecord::Base
   end
   
   def listings_compared_with
-    self.comparisons.map { |comparison| comparison.compare.listings.reject { |listing| listing == self } }
+    self.comparisons.map do |comparison|
+      comparison.compare.listings.reject { |listing| listing == self }
+    end
+  end
+  
+  def create_comparison_with(other_ids)
+    ids = extract_compare_ids_from other_ids
+    
+  end
+  
+  def extract_compare_ids_from(ids)
+    #raise ids.pretty_inspect
   end
   
   def get_searched_size(search)

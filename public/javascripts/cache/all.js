@@ -6435,8 +6435,8 @@ $(function(){
 				$.setGmap(data.maps_data, 'compare_map');
 			});
 			
-			$('a', '.compare').show();
 			$this.attr('href', orig_href);
+			compares.each(function() { $('a', $(this).parent()).show() });
 			$.each(ajax_loaders, function() { $(this).hide() });
 		});
 		
