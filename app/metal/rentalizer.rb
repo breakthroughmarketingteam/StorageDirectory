@@ -116,7 +116,9 @@ class Rentalizer
       if listing.prorated?
         Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
       else
-        Time.local(move_date.year, move_date.month + months, move_date.day - 1).strftime('%m/%d/%Y')
+        d = move_date.day - 1
+        d = d < 1 ? 1 : d
+        Time.local(move_date.year, move_date.month + months, d).strftime('%m/%d/%Y')
       end
     end
     
