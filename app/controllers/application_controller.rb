@@ -355,7 +355,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_listing
-    case current_user.role.title.downcase.to_sym when :admin
+    case current_user.role.title.downcase.to_sym when :admin, :staff
       @listing = Listing.find params[:listing_id]
     when :advertiser
       @listing = current_user.listings.find params[:listing_id]

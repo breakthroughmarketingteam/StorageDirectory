@@ -2186,7 +2186,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #admin-box ul li ul li a span{display:block;margin-top:4px;position:static;color:#333;font-weight:normal;}
 #fac-side-list{max-height:1100px;overflow:auto;}
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
-#ajax_wrap{float:left;padding-left:20px;width:86%;min-height:684px;}
+#ajax_wrap{float:left;padding-left:20px;width:86%;}
 #ajax_wrap.loading{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:0 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #pop_up #controller_list{margin:0;}
