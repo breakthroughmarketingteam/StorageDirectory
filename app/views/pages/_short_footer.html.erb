@@ -13,7 +13,7 @@
 				<div class="in">
 					<div class="items">
 						<% @ad_partners = AdPartner.all_enabled %>
-						<% cache @ad_partners.map{ |a| "ap-#{id}" }.join(',') do %>
+
 							<% @ad_partners.in_groups_of 6, false do |group| %>
 								<div class="left">
 									<% group.each do |ad_partner| %>
@@ -21,7 +21,7 @@
 									<% end %>
 								</div>
 							<% end %>
-						<% end %>
+
 					</div>
 				</div>
 				<div class="next"></div>

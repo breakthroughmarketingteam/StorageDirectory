@@ -1,0 +1,34 @@
+package_assets: on
+compress_assets: on
+gzip_assets: on
+
+javascripts:
+  motherlode:
+    - public/javascripts/swfobject_modified.js
+    - public/javascripts/jquery.all.js
+    - public/javascripts/plugins/inflector.js
+    - public/javascripts/plugins/jquery.iframe.js
+    - public/javascripts/plugins/jquery.jqDock.min.js
+    - public/javascripts/plugins/jquery.inline-search.js
+    - public/javascripts/plugins/jquery.tools.min.js
+    - public/javascripts/plugins/excanvas.min.js
+    - public/javascripts/plugins/jquery.jqplot.min.js
+    - public/javascripts/plugins/jqplot.dateAxisRenderer.min.js
+    - public/javascripts/plugins/jqplot.canvasTextRenderer.min.js
+    - public/javascripts/plugins/jqplot.canvasAxisTickRenderer.min.js
+    - public/javascripts/plugins/jqplot.highlighter.min.js
+    - public/javascripts/plugins/jqplot.cursor.min.js
+    - public/javascripts/plugins/jquery.jmap.min.js
+    - public/javascripts/plugins/jquery.preloadCssImages.js
+    - public/javascripts/plugins/binfo.js
+    - public/javascripts/greymatter.js
+    - public/javascripts/plugins/greyresults.js
+    - public/javascripts/application.js
+
+stylesheets:
+  motherlode:
+    - public/stylesheets/plugins/jquery.ui.css
+    - public/stylesheets/plugins/jquery.jqplot.css
+    - public/stylesheets/common.css
+    - public/stylesheets/ajaxful_rating.css
+    - public/stylesheets/themes/storagelocator/style.css
