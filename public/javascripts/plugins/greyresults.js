@@ -537,7 +537,7 @@ $(function(){
 			query_hash = $.queryToHash(this.href.split('?')[1]),
 			size_id = $(':radio:checked', context).val();
 		
-		if (size_id) this.rel = 'reserve';
+		this.rel = 'reserve';
 		
 		query_hash.size_id = size_id;
 		query_hash.special_id = $('.special_txt.active', context).attr('data-special-id');

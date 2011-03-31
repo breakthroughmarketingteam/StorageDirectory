@@ -264,20 +264,20 @@ class Listing < ActiveRecord::Base
   end
   
   def get_upper_type_size(size)
-    @upper_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@upper_types.any? { |type| size.title =~ /(#{type})/i }
+    @upper_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@upper_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
   end
   
   def get_drive_up_type_size(size)
-    @drive_up_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@drive_up_types.any? { |type| size.title =~ /(#{type})/i }
+    @drive_up_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@drive_up_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
   end
   
   def get_interior_type_size(size)
-    @interior_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@lower_types.any? { |type| size.title =~ /(#{type})/i }
+    @interior_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@lower_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
   end
   

@@ -332,7 +332,7 @@ $(function() {
 		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
 		
 		$.setInterval(function() {
-			$('.next', aff_scroll);
+			$('.next', aff_scroll).click();
 		}, 7000);
 	}
 	
