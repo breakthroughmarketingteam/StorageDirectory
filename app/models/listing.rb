@@ -15,8 +15,8 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
-  has_many :comparisons, :dependent => :destroy
-  has_many :compares, :through => :comparisons
+  has_many :comparisons,   :dependent => :destroy
+  has_many :compares,      :through => :comparisons
   has_many :staff_emails,  :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
@@ -227,19 +227,18 @@ class Listing < ActiveRecord::Base
     self.reviews
   end
   
-  def listings_compared_with
-    self.comparisons.map do |comparison|
-      comparison.compare.listings.reject { |listing| listing == self }
+  # TODO: fix this
+  def create_comparison_with(params_ids, request)
+    extract_other_compare_ids_from(params_ids).each do |id|
+      compare = Compare.create :referrer => request.referrer, :request_uri => request.request_uri, :remote_ip => request.remote_ip
+      compare.comparisons.create :listing_id => id
+      self.comparisons.create :compare_id => compare.id
     end
   end
   
-  def create_comparison_with(other_ids)
-    ids = extract_compare_ids_from other_ids
-    
-  end
-  
-  def extract_compare_ids_from(ids)
-    #raise ids.pretty_inspect
+  # ids is a params string containing listing_id size_id and special_id => 85481x14748x4-85480x14711x4-113022x14796xundefined
+  def extract_other_compare_ids_from(ids)
+    ids.split('-').map { |i| i.split('x').first }
   end
   
   def get_searched_size(search)

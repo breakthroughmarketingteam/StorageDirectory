@@ -12,7 +12,7 @@
 				<a href="<%= c ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-units') %>" class="<%= 'selective_hider' if c %>" rel="ov-units"><span>My Facilities</span></a>
 
 				<% unless c || @client.listings.size == 1 %>
-					<ul>
+					<ul id="fac-side-list">
 						<% @client.listings.each_with_index do |listing, i| %>
 							<li<%= ' class="last"' if @client.listings.count == i+1 %>>
 								<%= link_to "#{listing.title}<span>#{listing.address} #{listing.zip}</span>", profile_listing_path(listing), :class => active_page(profile_listing_path(listing)), :title => listing.city_state_zip %>

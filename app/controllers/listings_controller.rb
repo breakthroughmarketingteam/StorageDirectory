@@ -55,7 +55,7 @@ class ListingsController < ApplicationController
       @listing_set = params[:ids].split('-').map do |ids|
         i = ids.split('x')
         listing = Listing.find_by_id(i[0].to_i)
-        listing.create_comparison_with params[:ids]
+        listing.create_comparison_with params[:ids], request
         { :listing => listing, :size => listing.sizes.find_by_id(i[1].to_i), :special => listing.predefined_specials.find_by_id(i[2].to_i) }
       end
       

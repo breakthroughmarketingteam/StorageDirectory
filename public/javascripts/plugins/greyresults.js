@@ -1049,7 +1049,7 @@ function addMarker(map, icon, lat, lng, title, body, bind_mouse_overs) {
 	var point = new GLatLng(lat, lng);
 	var marker = new GMarker(point, { 'title': title, 'icon': icon, width: '25px' });
 	
-	GEvent.addListener(marker, 'click', function(){
+	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(body);
 		$('.listing').removeClass('active');
 		$('#listing_'+ marker.listing_id).addClass('active');
