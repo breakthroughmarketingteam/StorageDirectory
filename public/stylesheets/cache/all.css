@@ -3499,3 +3499,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #zenbox_close{cursor:pointer;height:46px;position:relative;top:10px;width:46px;}
 #zenbox_body{height:900px;margin-top:-18px;position:relative;width:615px;}
 #zenbox_scrim{background-color:#000;filter:alpha(opacity=42);-moz-opacity:0.42;left:0;position:absolute;opacity:0.42;top:0;width:100%;z-index:1;}
+
+#sec-menu a{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x #339933;border-bottom-left-radius:6px;border-bottom-right-radius:6px;color:#FFFFFF;float:right;font-size:11px;margin-right:20px;padding:4px 15px;text-decoration:none;text-shadow:1px 1px 0 #666666;}
+#sec-menu a:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn-hover.png) repeat-x transparent;}
