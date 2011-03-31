@@ -39,7 +39,6 @@ Rails::Initializer.run do |config|
   config.gem 'ssl_requirement'
   config.gem 'rmagick', :lib => 'RMagick'
   config.gem 'delayed_job', :version => '~>2.0.4'
-  #config.gem 'jammit'
   # TODO: does heroscale work? their site is down as of feb 2011
   #config.gem "heroscale"
   #require "heroscale"
