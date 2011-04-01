@@ -5,7 +5,7 @@
 			<li class="st-size"><%= f.text_field :width, :class => 'required numeric', :maxlength => 2 %> x <%= f.text_field :length, :class => 'required numeric', :maxlength => 2 %></li>
 			<li class="st-type"><%= f.select :title, Size.unit_type_labels, { :prompt => 'Choose' },:class => 'required' %></li>
 			<li class="st-desc"><%= f.text_field :description, :class => 'hintable', :title => 'Give a friendly description to this new unit' %></li>
-			<li class="st-pric">$<%= f.text_field :price, :class => 'required numeric' %></li>
+			<li class="st-pric">$<%= f.text_field :price, :class => 'numeric' %></li>
 			<li class="st-rese">
 				<%= link_to 'Save', listing_sizes_path(@listing), :class => 'submit_btn' %>
 				<%= f.submit 'Save', :class => 'hide' %>

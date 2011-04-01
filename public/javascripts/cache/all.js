@@ -2948,20 +2948,19 @@ jQuery.fn.formBouncer = function(){
 	return this.each(function(){
 		var $this = $(this);
 		
-		$this.live('submit', function() {
+		$this.submit(function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
-			if ($(this).runValidation().data('valid')) {
+			if ($this.runValidation().data('valid')) {
 				// clear any values that are the same as the title attr, caused by hinty
 				$('input, textarea', this).each(function() {
 					var field = $(this);
-					if (field.val() == field.attr('title'))
-						field.val('');
+					if (field.val() == field.attr('title')) field.val('');
 				});
 			}
 			
-			return $(this).runValidation().data('valid');
+			return $this.data('valid');
 		});
 	});
 }
@@ -4555,7 +4554,7 @@ $.enableEditor = function() {
 	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
 	$('textarea.wysiwyg').each(function(i) {
 		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+			toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
 		
 		textarea.parent().parent().prepend(toggle);
 		
@@ -6076,7 +6075,7 @@ $(function(){
 	});
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
-		var form = $(this).runValidation(),
+		var form = $(this),
 			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
@@ -6704,8 +6703,6 @@ $(function(){
 			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
 			ajax_loader 	= $.new_ajax_loader('before', $('.rsr-btn', this));
 		
-		console.log(wrap, wrap.attr('id'), size_id)
-		
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -6731,7 +6728,7 @@ $(function(){
 						params.sub_model = 'Size';
 						params.sub_id = size_id;
 					}
-					console.log(params)
+					
 					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');

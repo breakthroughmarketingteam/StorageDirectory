@@ -2262,20 +2262,19 @@ jQuery.fn.formBouncer = function(){
 	return this.each(function(){
 		var $this = $(this);
 		
-		$this.live('submit', function() {
+		$this.submit(function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
-			if ($(this).runValidation().data('valid')) {
+			if ($this.runValidation().data('valid')) {
 				// clear any values that are the same as the title attr, caused by hinty
 				$('input, textarea', this).each(function() {
 					var field = $(this);
-					if (field.val() == field.attr('title'))
-						field.val('');
+					if (field.val() == field.attr('title')) field.val('');
 				});
 			}
 			
-			return $(this).runValidation().data('valid');
+			return $this.data('valid');
 		});
 	});
 }

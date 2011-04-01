@@ -554,7 +554,7 @@ $.enableEditor = function() {
 	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
 	$('textarea.wysiwyg').each(function(i) {
 		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+			toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
 		
 		textarea.parent().parent().prepend(toggle);
 		

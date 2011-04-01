@@ -42,7 +42,7 @@ $(function(){
 	});
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
-		var form = $(this).runValidation(),
+		var form = $(this),
 			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
@@ -670,8 +670,6 @@ $(function(){
 			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
 			ajax_loader 	= $.new_ajax_loader('before', $('.rsr-btn', this));
 		
-		console.log(wrap, wrap.attr('id'), size_id)
-		
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -697,7 +695,7 @@ $(function(){
 						params.sub_model = 'Size';
 						params.sub_id = size_id;
 					}
-					console.log(params)
+					
 					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
