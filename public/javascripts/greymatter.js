@@ -1411,14 +1411,19 @@ $.fn.shimmy = function(parent, ops) {
 	
 	var shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
 		var window_offset = getScrollXY(),
-			diff = (window_offset[1] + 10) - el_offset.top;
+			diff 		  = (window_offset[1] + 10) - el_offset.top,
+			btm_plus_diff = btm_from_top + diff,
+			btm_pos;
 		
-		if (diff >= 0 && parent_height >= btm_from_top + diff) 
+		if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
 			el.css({ 'position': 'fixed', 'top': 0 });
-		else if (diff >= 0 && parent_height <= btm_from_top + diff) 
-			el.css({ 'position': 'relative', 'top': (parent_height - el_pos.top - el_height - pad) +'px' });
-		else 
+			
+		} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
+			btm_pos = parent_height - el_pos.top - el_height - pad;
+			el.css({ 'position': 'relative', 'top': btm_pos +'px' });
+		} else { 														// resting up top like normal
 			el.css('position', 'relative');
+		}
 	}
 	
 	return this.each(function() {
@@ -1426,14 +1431,23 @@ $.fn.shimmy = function(parent, ops) {
 			pad	  = 30,
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
+			parent_height = parent.height(),
 			this_pos 	= $this.position(parent),
-			btm_from_top  = this_pos.top + this_height + pad;
+			btm_from_top = this_pos.top + this_height + pad;
 		
-		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
+		shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		
 		$(window).scroll(function() {
-			shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
+			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		});
+		
+		// watch out for the advanced features box opening, it will change <this> offset, and others
+		$.setInterval(function() {
+			//this_offset	 = $this.offset();
+			//this_pos 	 = $this.position(parent);
+			//parent_height = parent.height();
+			//btm_from_top = this_pos.top + this_height + pad;
+		}, 2011);
 	});
 }
 
