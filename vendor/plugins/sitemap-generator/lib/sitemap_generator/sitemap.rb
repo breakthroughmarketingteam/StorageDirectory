@@ -11,7 +11,7 @@ module SitemapGenerator
       :never
     ]
     
-    @@added_city_paths = []
+    @@added_cities = []
     @@skip = false;
     
     attr_accessor :xml
@@ -68,10 +68,10 @@ module SitemapGenerator
     def add_city_to_skipped(model)
       @path = "http://#{Options.domain}#{get_us_city_url(model)}"
 
-      puts [@path, @@added_city_paths.include?(@path), !Listing.top_cities.include?(model.name.downcase)].pretty_inspect
+      puts [@path, @@added_cities.include?(model.name), !Listing.top_cities.include?(model.name.downcase)].inspect
       
-      unless @@added_city_paths.include?(@path) || !Listing.top_cities.include?(model.name.downcase)
-        @@added_city_paths << @path
+      unless @@added_cities.include?(model.name) || !Listing.top_cities.include?(model.name.downcase)
+        @@added_cities << model.name
         @@skip = true
       else
         @@skip = false
