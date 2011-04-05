@@ -4,24 +4,26 @@
         <div id="ratings">Rating: <%= ratings_for @listing %></div>
     </div>
 	<div id="sl-intro">
-		<div class="inner">
-			<% if @listing.special %>
-				<div id="special_wrap">
-					<div class="dp">
-						<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usselfstoragelocator-sml.png" />
-						<h3><%= @listing.title.titleize %></h3>
-						<p><%= @listing.full_address %></p>
+		<% if @listing.premium? %>
+			<div class="inner">
+				<% if @listing.special %>
+					<div id="special_wrap">
+						<div class="dp">
+							<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/usselfstoragelocator-sml.png" />
+							<h3><%= @listing.title.titleize %></h3>
+							<p><%= @listing.full_address %></p>
+						</div>
+						<div id="sl-special">
+							<h3><%= @listing.special.title %></h3>
+							<p class="np"><%= print_link '#special_wrap' %> and bring it, or select it if you <a href="#">Rent Online</a>.</p>
+						</div>
 					</div>
-					<div id="sl-special">
-						<h3><%= @listing.special.title %></h3>
-						<p class="np"><%= print_link '#special_wrap' %> and bring it, or select it if you <a href="#">Rent Online</a>.</p>
-					</div>
+				<% end %>
+				<div id="sl-descript">
+					<p><%=h @listing.description %></p>
 				</div>
-			<% end %>
-			<div id="sl-descript">
-				<p><%=h @listing.description %></p>
 			</div>
-		</div>
+		<% end %>
 
 		<% unless @listing.pictures.empty? %>
 		<div id="sl-photos">

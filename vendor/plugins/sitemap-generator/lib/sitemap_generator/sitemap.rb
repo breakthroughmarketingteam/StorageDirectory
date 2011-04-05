@@ -12,6 +12,7 @@ module SitemapGenerator
     ]
     
     @@added_city_paths = []
+    @@skip = false;
     
     attr_accessor :xml
     
@@ -28,7 +29,6 @@ module SitemapGenerator
       end
       
       @path = ''
-      @skip = false;
       add_city_to_skipped model_instance if model_instance.class.name == 'UsCity'
       
       @xml.url do
@@ -62,17 +62,19 @@ module SitemapGenerator
         @xml.changefreq change_freq.to_s if change_freq
         @xml.priority priority if priority
         
-      end unless @skip && (model_instance.class.name == 'Listing' && model_instance.premium?)
+      end unless @@skip || (model_instance.class.name == 'Listing' && !model_instance.premium?)
     end
     
     def add_city_to_skipped(model)
       @path = "http://#{Options.domain}#{get_us_city_url(model)}"
+
+      puts [@path, @@added_city_paths.include?(@path), !Listing.top_cities.include?(model.name.downcase)].pretty_inspect
       
-      unless @@added_city_paths.include? @path
+      unless @@added_city_paths.include?(@path) || !Listing.top_cities.include?(model.name.downcase)
         @@added_city_paths << @path
-        @skip = true
+        @@skip = true
       else
-        @skip = false
+        @@skip = false
       end
     end
     
@@ -88,7 +90,7 @@ module SitemapGenerator
     
     # monkey patches by d.s. for usssl
     def get_us_city_url(city)
-      self_storage_path :state => city.state.parameterize, :city => city.name.parameterize
+      self_storage_path :state => States.name_of(city.state).parameterize, :city => city.name.parameterize
     end
     
     def facility_path_for(listing, options = {})

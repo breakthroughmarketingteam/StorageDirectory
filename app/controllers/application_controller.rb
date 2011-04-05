@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     # public areas
     if controller_name =~ /(pages)|(email_blasts)/ && action_name == 'show'
       @allowed = true
-    elsif controller_name =~/(user_sessions)/
+    elsif controller_name =~/(user_sessions)|(password_resets)/
       @allowed = true
     elsif controller_name =~/(blog_posts)/ && action_name == 'index'
       @allowed = true

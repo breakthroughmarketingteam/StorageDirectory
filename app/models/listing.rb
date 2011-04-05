@@ -45,6 +45,8 @@ class Listing < ActiveRecord::Base
   has_many :facility_insurances, :dependent => :destroy
   has_many :issn_facility_unit_features, :dependent => :destroy
   
+  named_scope :verified, :conditions => ['status = ?', 'verified']
+  
   has_attached_file :logo,
     :storage => :s3, 
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
@@ -172,13 +174,27 @@ class Listing < ActiveRecord::Base
                          "ORDER BY l.title LIMIT 100"
   end
   
-  def self.update_stats(listings, stat, referrer, request_uri, remote_ip)
-    listings.map { |listing| listing.update_stat stat, referrer, request_uri, remote_ip }
+  #
+  # Helpers
+  #
+  
+  def self.top_cities
+    @@top_cities ||= begin
+      self.verified.map do |listing|
+        listing.premium? ? listing.city.downcase : nil
+      end.reject(&:nil?).uniq
+    end
+  end
+  
+  def self.update_stats(listings, stat, request, user)
+    listings.each do |listing|
+      listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+    end
   end
   
   # create a stat record => clicks, impressions
-  def update_stat(stat, referrer, request_uri, remote_ip)
-    eval "self.#{stat}.create :referrer => '#{referrer}', :request_uri => '#{request_uri}', :remote_ip => '#{remote_ip}'"
+  def update_stat(stat, request)
+    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}', :remote_ip => '#{request.remote_ip}'"
   end
   
   # Instance Methods

@@ -55,7 +55,7 @@ class States
   
   def self.all
     # reverse the items within the states array to put the abbrev first
-    NAMES.map(&:reverse)
+    @@all ||= NAMES.map(&:reverse)
   end
   
   def self.names
@@ -67,26 +67,28 @@ class States
   end
   
   def self.state_abbrev_hash
-    hash = {}
-    NAMES.each { |name| hash.store(name[0], name[1]) }
-    hash
+    @@state_abbrev_hash ||= begin
+      hash = {}
+      NAMES.each { |name| hash.store name[0], name[1] }
+      hash
+    end
   end
   
   def self.state_name_hash
-    hash = {}
-    NAMES.each { |name| hash.store(name[1], name[0]) }
-    hash
+    @@state_name_hash ||= begin
+      hash = {}
+      NAMES.each { |name| hash.store name[1], name[0] }
+      hash
+    end
   end
   
   def self.abbrev_of(name)
     return '' if name.nil?
-    return name if name.size == 2
-    state_abbrev_hash[name]
+    (state_abbrev_hash[name.to_s] || name).titleize
   end
   
   def self.name_of(abbrev)
     return '' if abbrev.nil?
-    return abbrev if abbrev.size > 2
-    state_name_hash[abbrev]
+    (state_name_hash[abbrev.to_s] || abbrev).upcase
   end
 end
