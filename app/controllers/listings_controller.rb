@@ -30,7 +30,7 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
       # updates the impressions only for listings on current page if the search has changed
-      Listing.delay.update_stats @listings, :impressions, request, current_user if @diff_search
+      Listing.delay.update_stats(@listings, :impressions, request, current_user) if @diff_search
       
       respond_to do |format|
         format.html {}

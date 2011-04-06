@@ -1290,10 +1290,7 @@ $.fn.rental_form = function() {
 				nav_vis : [
 					['next', function(btn, wizard) { btn.text('Next').fadeIn() }],
 					['back', 'fadeOut'] 
-				],
-				action : function(wizard) {
-					$('#tenant_name', wizard.workflow).focus();
-				}
+				]
 			}, // END slide 1
 			{
 				div_id  : 'rent_step2',
@@ -1302,6 +1299,7 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
+					$('#tenant_name', wizard.workflow).focus();
 					wizard.form_data = $('#rentalizer', wizard.workflow).serialize();
 					
 					$('.numeric_phone', wizard.workflow).formatPhoneNum();
