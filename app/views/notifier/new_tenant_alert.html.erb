@@ -1,11 +1,16 @@
-<%= "This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} " if @tenant.rentals.count > 1 %>
-Tenant: <%= @tenant.name %> <<%= @tenant.email %>
-Account: <%= edit_tenant_url @tenant %>
+<%= "<p>This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} </p>" if @tenant.rentals.count > 1 %>
 
-Rental:
-	Move In Date: <%= @rental.move_in_date.asctime %>
-	Paid Through: <%= @rental.paid_through.asctime %> (<%= @rental.duration %> months)
-	Unit Size: <%= @rental.size.title %> <%= @rental.size.dims %>
-	Listing: (<%= @rental.listing.id %>) <%= @rental.listing.title %>
-		 <%= @rental.listing.full_address %>
+<p>
+	<strong>Tenant:</strong> <%= @tenant.name %> <<%= @tenant.email %><br>
+	<strong>Account:</strong> <%= edit_tenant_url @tenant %><br>
+</p>
+
+<p>
+	<strong>Rental:</strong><br>
+	<strong>Move In Date:</strong> <%= @rental.move_in_date.asctime %><br>
+	<strong>Paid Through:</strong> <%= @rental.paid_through.asctime %> (<%= @rental.duration %> months)<br>
+	<strong>Unit Size:</strong> <%= @rental.size.title %> <%= @rental.size.dims %><br>
+	<strong>Listing:</strong> (<%= @rental.listing.id %>) <%= @rental.listing.title %><br>
+		 <%= @rental.listing.full_address %><br>
 		 <%= edit_listing_url @rental.listing %>
+</p>

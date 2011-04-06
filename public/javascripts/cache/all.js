@@ -6600,15 +6600,16 @@ $(function(){
 			context = $this.parents('.inner'),
 			unit_size = $(':radio:checked', context),
 			special = $('.special_txt.active', context);
-
+		
 		if (unit_size.length) {
 			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
 			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
-			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
+			//$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
 		}
 
 		if (special.length == 1)
 			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
+			
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link

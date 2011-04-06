@@ -16,7 +16,7 @@
 					<strong>Email:</strong> <%= @info_request.email %>
 				</p>
 				<p>
-					<strong>Unit:</strong> <%= @info_request.unit_type_size %>
+					<strong>Unit:</strong> <%= @info_request.size ? @info_request.size.full_title : @info_request.unit_type_size %>
 				</p>
 				
 				<p>

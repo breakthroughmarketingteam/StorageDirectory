@@ -1,6 +1,8 @@
-<%= @client.name %> would like it if you reviewed their facility "<%= @listing.title %>" on USSelfStorageLocator.com
+<p><%= @client.name %> would like it if you reviewed their facility "<%= @listing.title %>" on USSelfStorageLocator.com</p>
 
-Message:
-<%= @message %>
+<p><strong>Message:</strong></p>
+<div>
+	<%= @message %>
+</div>
 
-Click here to go directly to their page: <%= facility_url @listing.storage_type.parameterize.to_s, @listing.state.parameterize.to_s, @listing.city.parameterize.to_s, @listing.title.parameterize.to_s, @listing.id, :anchor => 'write_review' %>
+<p>Click here to go directly to their page: <%= facility_url @listing.storage_type.parameterize.to_s, @listing.state.parameterize.to_s, @listing.city.parameterize.to_s, @listing.title.parameterize.to_s, @listing.id, :anchor => 'write_review' %></p>

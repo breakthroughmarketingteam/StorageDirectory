@@ -24,6 +24,10 @@ class Rental < ActiveRecord::Base
     t = Time.gm t.year, t.month
     t + self.duration.to_i.months
   end
+
+  def conf_num
+    "#{self.id}-#{self.tenant.id}"
+  end
   
   def title
     self.tenant.name

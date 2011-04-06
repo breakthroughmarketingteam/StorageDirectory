@@ -1,9 +1,8 @@
 <p>A person has requested info from the following listing. <%= ' This listing is a premium member, they were sent a notification.' if @listing.premium? %></p>
 
 <p><strong>Listing:</strong>
-	<%= @listing.title %><br>
-	<%= @listing.full_address %><br>
-	<%= edit_listing_url @listing %>
+	<a href="<%= edit_listing_url @listing %>"><%= @listing.title %></a><br>
+	<%= @listing.full_address %>
 </p>
 
 <p><strong>New Info Request:</strong>
