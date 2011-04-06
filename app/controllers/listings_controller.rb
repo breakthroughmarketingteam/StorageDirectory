@@ -70,7 +70,7 @@ class ListingsController < ApplicationController
 
   def show
     unless user_is_a? 'admin', 'advertiser'
-      @listing.update_stat 'clicks', request.referrer, request.request_uri, request.remote_ip
+      @listing.update_stat 'clicks', request unless current_user.respond_to?(:listings) && current_user.listings.include?(@listing)
       @search.update_attribute :listing_id, @listing.id
     end
     
