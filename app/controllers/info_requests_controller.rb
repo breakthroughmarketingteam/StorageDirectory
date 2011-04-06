@@ -21,7 +21,7 @@ class InfoRequestsController < ApplicationController
     @info_request = @listing.info_requests.build params[:info_request].merge(:status => 'pending').merge(params[:reserver]).merge(params[:mailing_address])
     
     if @listing.save
-      Notifier.delay.deliver_new_info_request_alert @listing, @info_request
+      @info_request.deliver_emails
       render :json => { :success => true, :data => render_to_string(:partial => 'info_requests/done') }
     else
       render :json => { :success => false, :data => model_errors(@info_request) }

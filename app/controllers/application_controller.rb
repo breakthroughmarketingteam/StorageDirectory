@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
       @allowed = true
     elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true
-    elsif controller_name =~ /(posts)|(comments)/ && %w(show create rss).include?(action_name)
+    elsif controller_name =~ /(posts)|(comments)|(info_requests)/ && %w(show create rss).include?(action_name)
       @allowed = true
     elsif controller_name =~ /(rentals)|(tenants)|(clients)/ && %w(new create activate).include?(action_name)
       @allowed = true

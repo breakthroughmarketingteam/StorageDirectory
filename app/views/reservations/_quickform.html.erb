@@ -3,7 +3,7 @@
         <%= label_tag 'reserver[name]', 'Your Name', :class => 'block' %> <%= text_field_tag 'reserver[name]', nil, :class => 'required' %>
 	</p>
 	<p>
-        <%= label_tag 'mailing_address[phone]', 'Phone', :class => 'block' %> <%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone', :maxlength => 12 %>
+        <%= label_tag 'mailing_address[phone]', 'Phone', :class => 'block' %> <%= text_field_tag 'mailing_address[phone]', nil, :class => 'numeric_phone auto_next', :maxlength => 12 %>
 	</p>
 	<p>
         <%= label_tag 'reserver[email]', 'Email', :class => 'block' %> <%= text_field_tag 'reserver[email]', nil, :class => 'required email' %>

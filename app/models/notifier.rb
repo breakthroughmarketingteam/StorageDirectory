@@ -71,6 +71,18 @@ class Notifier < ActionMailer::Base
     @body[:info_request] = info_request
   end
   
+  def info_request_user_notification(listing, info_request)
+    setup_email info_request.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'We Received Your Request'
+    @body[:listing] = listing
+    @body[:info_request] = info_request
+  end
+  
+  def info_request_client_notification(listing, info_request)
+    setup_email listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'You Received a Request on USSSL'
+    @body[:listing] = listing
+    @body[:info_request] = info_request
+  end
+  
   def admin_reservation_alert(reserver, reservation, comments)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Reservation'
     @body[:user]        = reserver
