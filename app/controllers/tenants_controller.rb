@@ -27,8 +27,7 @@ class TenantsController < ApplicationController
       
       if @rental.save
         @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
-        Notifier.delay.deliver_tenant_notification @tenant, @rental
-        Notifier.delay.deliver_new_tenant_alert @tenant, @rental
+        @rental.delay.deliver_emails
       
         conf_data = { 
           :r_name         => @tenant.name,

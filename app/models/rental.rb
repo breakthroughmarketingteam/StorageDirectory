@@ -13,6 +13,12 @@ class Rental < ActiveRecord::Base
   @@searchables = %w(first_name last_name email)
   cattr_reader :searchables
   
+  def deliver_emails
+    Notifier.deliver_tenant_notification self.tenant, self # to the tenant
+    Notifier.deliver_new_tenant_alert self.tenant, self    # to info@usselfstoragelocator.com
+    Notifier.deliver_rental_notification self.tenant, self # to the facility
+  end
+  
   def paid_through
     t = self.move_in_date
     t = Time.gm t.year, t.month

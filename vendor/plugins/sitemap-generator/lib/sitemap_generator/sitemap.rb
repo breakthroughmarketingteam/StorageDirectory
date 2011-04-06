@@ -29,7 +29,11 @@ module SitemapGenerator
       end
       
       @path = ''
-      add_city_to_skipped model_instance if model_instance.class.name == 'UsCity'
+      if model_instance.class.name == 'UsCity'
+        add_city_to_skipped model_instance
+      else
+        @@skip = false
+      end
       
       @xml.url do
         # monkey patch by d.s. for usssl
@@ -68,12 +72,14 @@ module SitemapGenerator
     def add_city_to_skipped(model)
       @path = "http://#{Options.domain}#{get_us_city_url(model)}"
 
-      puts [@path, @@added_cities.include?(model.name), !Listing.top_cities.include?(model.name.downcase)].inspect
+      #puts [@path, @@added_cities.include?(model.name), !Listing.top_cities.include?(model.name.downcase)].inspect
       
-      unless @@added_cities.include?(model.name) || !Listing.top_cities.include?(model.name.downcase)
-        @@added_cities << model.name
+      if @@added_cities.include?(model.name) || !Listing.top_cities.include?(model.name.downcase)
+        puts "Skipped: #{model.name}"
         @@skip = true
       else
+        puts "Added #{model.name} to skip list"
+        @@added_cities << model.name
         @@skip = false
       end
     end

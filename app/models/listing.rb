@@ -271,10 +271,6 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def city_and_state
-    @city_and_state ||= [self.city, self.state]
-  end
-  
   def get_closest_unit_size(size)
     @unit_size ||= self.available_sizes.detect { |s| s.dims == size } || self.available_sizes.first
   end
@@ -295,6 +291,10 @@ class Listing < ActiveRecord::Base
     @interior_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
       @@lower_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
+  end
+  
+  def city_and_state
+    @city_and_state ||= [self.city, self.state]
   end
   
   def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
@@ -335,6 +335,10 @@ class Listing < ActiveRecord::Base
   
   def unverified?
     self.client.nil? || self.client.status == 'unverified'
+  end
+  
+  def notify_email
+    self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
   end
   
   # add up a score based on the return values of model methods

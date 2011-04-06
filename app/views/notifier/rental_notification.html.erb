@@ -1,0 +1,67 @@
+<p>
+	A customer has rented a unit at: <a href="https://usselfstorageleft.com/my_account/listings<%= @listing.id %>/profile" target="_blank" style="color:green;"><%= @listing.title %>.</a><br>
+	<a href="https://usselfstoragelocator.com/login?email=<%= @listing.client.email %>" target="_blank">Sign in</a> to view the details of the unit rental.
+</p>
+<div style="width:340px;">
+	<table>
+		<tr>
+			<td width="170" valign="top" halign="left">
+				<p>
+					<strong>Customer Name:</strong><br>
+					<%= @tenant.name %>
+				</p>
+				<p>
+					<strong>Address:</strong><br>
+					<%= @tenant.billing_info.address %><br>
+					<%= @tenant.billing_info.city_state_zip %>
+				</p>
+			</td>
+			<td width="170">
+				<p>
+					<strong>Email:</strong><br>
+					<%= @tenant.email %>
+				</p>
+				<p>
+					<strong>Phone Number:</strong><br>
+					<%= @tenant.billing_info.phone %>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	<table>
+		<tr>
+			<td width="170" valign="top" halign="left">
+				<p>
+					<strong>Unit Size:</strong><br>
+					<%= @rental.size.dims %>
+				</p>
+				<p>
+					<strong>Move-In Date:</strong><br>
+					<%= @rental.nice_move_in_date %>
+				</p>
+				<p>
+					<strong>Special:</strong><br>
+					<%= @rental.special.title %>
+				</p>
+			</td>
+			<td width="170">
+				<p>
+					<strong>Unit Type:</strong><br>
+					<%= @rental.size.title %>
+				</p>
+				<p>
+					<strong>Rental Duration:</strong><br>
+					<%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)
+				</p>
+				<p>
+					<strong>Move-In Total:</strong><br>
+					<%= number_to_currency @rental.total %>
+				</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<p>
+	For more information about our Rental process please visit: <a href="#" target="_blank">http://usselfstoragelocator.com/help/renting</a>
+</p>

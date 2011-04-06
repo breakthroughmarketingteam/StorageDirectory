@@ -1,5 +1,6 @@
 class Notifier < ActionMailer::Base
   default_url_options[:host] = RAILS_ENV == 'development' ? 'localhost' : 'usselfstoragelocator.com'
+  layout 'simple_mailer'
   
   def comment_notification(recipient, comment, host, form)
     setup_email recipient, comment.email, 'New website comment'
@@ -55,6 +56,13 @@ class Notifier < ActionMailer::Base
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
     @body[:tenant] = tenant
     @body[:rental] = rental
+  end
+  
+  def rental_notification(tenant, rental)
+    setup_email rental.listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
+    @body[:tenant] = tenant
+    @body[:rental] = rental
+    @body[:listing] = rental.listing
   end
   
   def new_info_request_alert(listing, info_request)
@@ -123,6 +131,7 @@ class Notifier < ActionMailer::Base
     @from       = from
     @subject    = subject
     @sent_on    = Time.now.utc
+    content_type  'text/html'
   end
   
 end

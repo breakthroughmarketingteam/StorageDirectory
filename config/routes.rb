@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.blog                    '/self-storage-blog/:tag',  :controller => 'blog_posts', :action => 'index', :tag => nil
   map.blog_archives           '/self-storage-blog/archives/:year/:month', :controller => 'blog_posts', :action => 'index'
   map.blog_rss                '/blog.rss',                :controller => 'blog_posts', :action => 'rss', :format => 'rss'
+  map.tips_rss                '/storage-tips.rss',        :controller => 'posts', :action => 'rss', :format => 'rss'
   map.email_blast_web_version '/look/:title',             :controller => 'email_blasts', :action => 'show'
   map.unsub_from_email_blast  '/unsubscribe/:token',      :controller => 'email_blasts', :action => 'unsub'
   map.client_account          '/my_account',              :controller => 'clients', :action => 'edit'
