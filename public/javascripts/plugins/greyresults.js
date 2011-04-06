@@ -1299,7 +1299,6 @@ $.fn.rental_form = function() {
 					['back', 'fadeIn']
 				],
 				action : function(wizard) {
-					$('#tenant_name', wizard.workflow).focus();
 					wizard.form_data = $('#rentalizer', wizard.workflow).serialize();
 					
 					$('.numeric_phone', wizard.workflow).formatPhoneNum();
