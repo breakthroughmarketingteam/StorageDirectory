@@ -2,15 +2,14 @@
 
 <p>
 	<strong>Tenant:</strong> <%= @tenant.name %> <<%= @tenant.email %><br>
-	<strong>Account:</strong> <%= edit_tenant_url @tenant %><br>
+	<strong>Account:</strong> <a href="<%= edit_tenant_url @tenant %>">click here</a> <%= edit_tenant_url @tenant %><br>
 </p>
 
 <p>
 	<strong>Rental:</strong><br>
-	<strong>Move In Date:</strong> <%= @rental.move_in_date.asctime %><br>
-	<strong>Paid Through:</strong> <%= @rental.paid_through.asctime %> (<%= @rental.duration %> months)<br>
+	<strong>Move In Date:</strong> <%= @rental.nice_move_in_date %><br>
+	<strong>Paid Through:</strong> <%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)<br>
 	<strong>Unit Size:</strong> <%= @rental.size.title %> <%= @rental.size.dims %><br>
-	<strong>Listing:</strong> (<%= @rental.listing.id %>) <%= @rental.listing.title %><br>
+	<strong>Listing:</strong> (<%= @rental.listing.id %>) <a href="<%= edit_listing_url @rental.listing, :protocol => 'https' %>"><%= @rental.listing.title %></a><br>
 		 <%= @rental.listing.full_address %><br>
-		 <%= edit_listing_url @rental.listing %>
 </p>
