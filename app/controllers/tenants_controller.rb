@@ -30,7 +30,7 @@ class TenantsController < ApplicationController
 
           if @rental.save
             @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
-            @rental.deliver_emails
+            @rental.delay.deliver_emails
 
             conf_data = { 
               :r_name         => @tenant.name,

@@ -18,9 +18,9 @@ class Rental < ActiveRecord::Base
   end
   
   def deliver_emails
-    Notifier.deliver_tenant_notification self.tenant, self # to the tenant
-    Notifier.deliver_new_tenant_alert    self.tenant, self # to info@usselfstoragelocator.com
-    Notifier.deliver_rental_notification self.tenant, self # to the facility
+    Notifier.deliver_tenant_notification self # to the tenant
+    Notifier.deliver_new_tenant_alert    self # to info@usselfstoragelocator.com
+    Notifier.deliver_rental_notification self # to the facility
   end
   
   def paid_through

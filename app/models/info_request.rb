@@ -11,9 +11,9 @@ class InfoRequest < ActiveRecord::Base
   end
   
   def deliver_emails
-    Notifier.deliver_new_info_request_alert         self.listing, self # to info@usselfstoragelocator.com
-    Notifier.deliver_info_request_user_notification self.listing, self # to requester
-    Notifier.deliver_info_request_client_notification(self.listing, self) if self.listing.premium? # to facility
+    Notifier.deliver_new_info_request_alert         self # to info@usselfstoragelocator.com
+    Notifier.deliver_info_request_user_notification self # to requester
+    Notifier.deliver_info_request_client_notification(self) if self.listing.premium? # to facility
   end
   
   def title
