@@ -1,11 +1,33 @@
-<%= "This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} " if @tenant.rentals.count > 1 %>
-Tenant: <%= @tenant.name %> <<%= @tenant.email %>
-Account: <%= edit_tenant_url @tenant %>
+<%= "<p>This is a repeat renter! Has rented #{pluralize((@tenant.rentals.count - 1), 'unit')} before. Last time was for #{@tenant.next_to_last_rental.listing.title} on #{@tenant.next_to_last_rental.created_at.asctime} </p>" if @tenant.rentals.count > 1 %>
 
-Rental:
-	Move In Date: <%= @rental.move_in_date.asctime %>
-	Paid Through: <%= @rental.paid_through.asctime %> (<%= @rental.duration %> months)
-	Unit Size: <%= @rental.size.title %> <%= @rental.size.dims %>
-	Listing: (<%= @rental.listing.id %>) <%= @rental.listing.title %>
-		 <%= @rental.listing.full_address %>
-		 <%= edit_listing_url @rental.listing %>
+<table>
+	<tr>
+		<th>Tenant:</th>
+		<td><%= @tenant.name %> <<%= @tenant.email %></td>
+	</tr>
+	<tr>
+		<th>Account:</th>
+		<td><a href="<%= edit_tenant_url @tenant %>">click here</a> <%= edit_tenant_url @tenant %></td>
+	</tr>
+	<tr>
+		<th>Move In Date:</th>
+		<td><%= @rental.nice_move_in_date %></td>
+	</tr>
+	<tr>
+		<th>Paid Through:</th>
+		<td><%= @rental.nice_paid_thru %> <%= "(#{distance_of_time_in_words @rental.move_in_date, @rental.paid_thru})" rescue '' %></td>
+	</tr>
+	<tr>
+		<th>Unit Size:</th>
+		<td><%= @rental.size.title %> <%= @rental.size.dims %></td>
+	</tr>
+	<tr>
+		<th>Listing:</th>
+		<td>
+			(<%= @rental.listing.id %>) <a href="<%= edit_listing_url @rental.listing, :protocol => 'https' %>"><%= @rental.listing.title %></a><br>
+			 <%= @rental.listing.full_address %>
+		</td>
+	</tr>
+</table>
+
+<p>KA team!</p>

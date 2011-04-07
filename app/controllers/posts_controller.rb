@@ -116,4 +116,8 @@ class PostsController < ApplicationController
     render :json => { :success => @post.rate(params[:stars], current_user, params[:dimension]) }
   end
   
+  def rss
+    @tips = Post.tagged_with(:tip).sort_by(&:created_at).reverse
+  end
+  
 end

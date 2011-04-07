@@ -1,8 +1,8 @@
-New message sent from the form on the "<%= @comment.commentable.name_or_title %>" page.
+<p>New message sent from the form on the "<%= @comment.commentable.name_or_title %>" page.</p>
 
-When: <%= @comment.created_at.asctime %>
-
-From: <%= @comment.title %> <<%= @comment.email %>
-
-Message: 
-<%= @comment.comment %>
+<p>
+	<strong>When:</strong> <%= @comment.created_at.asctime %><br>
+	<strong>From:</strong> <%= @comment.title %> <<%= @comment.email %><br>
+	<strong>Message:</strong> <br>
+	<%= @comment.comment %>
+</p>

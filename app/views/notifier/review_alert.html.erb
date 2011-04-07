@@ -1,12 +1,14 @@
-A new review was posted for the facility: <%= @review.commentable.title %>
+<p>A new review was posted for the facility: <%= @review.commentable.title %></p>
 
-From: <%= @review.email %>
+<p><strong>From:</strong></p> <%= @review.email %></p>
 
-Message: <%= @review.title %>
+<p><strong>Message:</strong> <%= @review.title %></p>
+<div>
+-----------------------------------------------------------------------<br>
+  <%= @review.comment %><br>
 -----------------------------------------------------------------------
-  <%= @review.comment %>
------------------------------------------------------------------------
+</div>
 
-Link: <%= edit_review_url @review, :protocol => 'https' %>
+<p><strong>Link:</strong> <%= edit_review_url @review, :protocol => 'https' %></p>
 
-Rock on.
+<p>- Rock on.</p>

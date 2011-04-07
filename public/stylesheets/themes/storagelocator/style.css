@@ -960,8 +960,9 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #admin-box ul li ul{margin:0 0 0 10px;}
 #admin-box ul li ul li a{width:auto;padding:10px;font-size:70%;}
 #admin-box ul li ul li a span{display:block;margin-top:4px;position:static;color:#333;font-weight:normal;}
+#fac-side-list{max-height:1100px;overflow:auto;}
 #tos{height:400px;overflow-y:scroll;overflow-x:hidden;}
-#ajax_wrap{float:left;padding-left:20px;width:86%;min-height:684px;}
+#ajax_wrap{float:left;padding-left:20px;width:86%;}
 #ajax_wrap.loading{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 312px;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:0 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #pop_up #controller_list{margin:0;}
@@ -1765,7 +1766,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .virtual_form div .left{float:right;}
 .virtual_form div .left input{color:#FFF;font-size:120%;font-weight:bold;height:40px;text-shadow:1px 1px 0 #666;width:150px;cursor:pointer;border:1px solid #CCC;padding:5px 10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
 
-#feat-list{width:172px;border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:20px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
+#feat-list{width:172px;border:1px solid #ccc;background:#f2f5fe;overflow:hidden;font-size:12px;margin:12px 12px 20px 5px;-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;}
 #feat-list h2{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/orange-bg.png) repeat-x;color:#fff;font-size:14px;height:20px;margin-bottom:10px;padding-top:10px;text-align:center;text-shadow:1px 1px 0 #666;}
 #feat-list div{float:left;margin-bottom:10px;}
 #feat-list .compare{margin:10px;font-size:120%;}

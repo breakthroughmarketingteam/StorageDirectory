@@ -1,6 +1,8 @@
-A new message was posted on <%= @host %> from <%= @comment.email %> using comment form <%= @form.name %> (<%= @form.id %>)
+<p>A new message was posted on <%= @host %> from <%= @comment.email %> using comment form <%= @form.name %> (<%= @form.id %>)</p>
 
-Message: <%= @comment.title %>
+<p><strong>Message:</strong> <%= @comment.title %></p>
+<div>
+-----------------------------------------------------------------------<br>
+  <%= @comment.comment %><br>
 -----------------------------------------------------------------------
-  <%= @comment.comment %>
------------------------------------------------------------------------
+</div>

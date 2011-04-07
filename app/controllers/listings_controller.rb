@@ -30,9 +30,7 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
       # updates the impressions only for listings on current page if the search has changed
-      if @diff_search || (current_user && !current_user.has_role?('admin', 'advertiser'))
-        Listing.delay.update_stats @listings, 'impressions', request.referrer, request.request_uri, request.remote_ip unless user_is_a?('admin', 'staff', 'advertiser')
-      end
+      Listing.delay.update_stats(@listings, :impressions, simple_request_obj, current_user) if @diff_search
       
       respond_to do |format|
         format.html {}
@@ -55,12 +53,19 @@ class ListingsController < ApplicationController
       @listing_set = params[:ids].split('-').map do |ids|
         i = ids.split('x')
         listing = Listing.find_by_id(i[0].to_i)
-        listing.create_comparison_with params[:ids]
+        listing.create_comparison_with params[:ids], request
         { :listing => listing, :size => listing.sizes.find_by_id(i[1].to_i), :special => listing.predefined_specials.find_by_id(i[2].to_i) }
       end
       
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| @template.map_data_for s[:listing], :request => request } }
+      @map_data = { 
+        :maps => @listing_set.map { |s| @template.map_data_for s[:listing], :request => request },
+        :center => { 
+          :lat => @location.lat, 
+          :lng => @location.lng, 
+          :zoom => 12
+        }
+      }
     else
       @listing_set = []
       @location = @search.location
@@ -71,11 +76,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    unless user_is_a? 'admin', 'advertiser'
-      @listing.update_stat 'clicks', request.referrer, request.request_uri, request.remote_ip
-      @search.update_attribute :listing_id, @listing.id
-    end
-    
+    @listing.delay.update_listing_click_and_search(:clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
     render :layout => false if request.xhr?
   end
 

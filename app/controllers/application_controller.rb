@@ -86,13 +86,13 @@ class ApplicationController < ActionController::Base
     # public areas
     if controller_name =~ /(pages)|(email_blasts)/ && action_name == 'show'
       @allowed = true
-    elsif controller_name =~/(user_sessions)/
+    elsif controller_name =~/(user_sessions)|(password_resets)/
       @allowed = true
     elsif controller_name =~/(blog_posts)/ && action_name == 'index'
       @allowed = true
     elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true
-    elsif controller_name =~ /(posts)|(comments)/ && %w(show create rss).include?(action_name)
+    elsif controller_name =~ /(posts)|(comments)|(info_requests)/ && %w(show create rss).include?(action_name)
       @allowed = true
     elsif controller_name =~ /(rentals)|(tenants)|(clients)/ && %w(new create activate).include?(action_name)
       @allowed = true
@@ -355,7 +355,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_listing
-    case current_user.role.title.downcase.to_sym when :admin
+    case current_user.role.title.downcase.to_sym when :admin, :staff
       @listing = Listing.find params[:listing_id]
     when :advertiser
       @listing = current_user.listings.find params[:listing_id]
@@ -563,6 +563,10 @@ class ApplicationController < ActionController::Base
       :lat          => params[:lat],
       :lng          => params[:lng]
     }
+  end
+  
+  def simple_request_obj
+    @req ||= { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
   end
   
   def kick_back_path

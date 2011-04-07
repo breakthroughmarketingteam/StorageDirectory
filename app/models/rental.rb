@@ -13,10 +13,26 @@ class Rental < ActiveRecord::Base
   @@searchables = %w(first_name last_name email)
   cattr_reader :searchables
   
+  def validate
+  	errors.add(:move_in_date, 'is out of range. Must be within 15 days.') unless move_in_date.between? 1.day.ago, 15.days.from_now
+  end
+  
+  # TODO: find out why i would get the following error when using the delay method outside of this method on an instance of rental
+  # Rental#deliver_emails failed with ActionView::TemplateError: undefined method `minmax' for #<Array:0x2b5a1d9ee060>
+  def deliver_emails
+    Notifier.deliver_tenant_notification self # to the tenant
+    Notifier.deliver_new_tenant_alert    self # to info@usselfstoragelocator.com
+    Notifier.deliver_rental_notification self # to the facility
+  end
+  
   def paid_through
     t = self.move_in_date
     t = Time.gm t.year, t.month
     t + self.duration.to_i.months
+  end
+
+  def conf_num
+    "#{self.id}-#{self.tenant.id}"
   end
   
   def title

@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<style type="text/css">
+			.headerTop { background-color:#35ac35; border-top:0px solid #000000; border-bottom:1px solid #FFFFFF; text-align:center; }
+			.adminText { font-size:10px; color:#996600; line-height:200%; font-family:verdana; text-decoration:none; }
+			.headerBar { background-color:#FFFFFF; border-top:0px solid #333333; border-bottom:10px solid #FFFFFF; }
+			.title { font-size:20px; font-weight:bold; color:#FF6633; font-family:arial; line-height:110%; }
+			.subTitle { font-size:11px; font-weight:normal; color:#666666; font-style:italic; font-family:arial; }
+			td { font-size:12px; color:#000000; line-height:150%; font-family:trebuchet ms;vertical-align: top; }
+			.sideColumn { background-color:#FFFFFF; border-right:1px dashed #CCCCCC; text-align:left; }
+			.sideColumnText { font-size:11px; font-weight:normal; color:#999999; font-family:arial; line-height:150%; }
+			.sideColumnTitle { font-size:15px; font-weight:bold; color:#333333; font-family:arial; line-height:150%; }
+			.footerRow { background-color:#FFFFCC; border-top:10px solid #FFFFFF; }
+			.footerText { font-size:10px; color:#996600; line-height:100%; font-family:verdana; }
+			a { color:#4c4bcc; color:#4c4bcc; color:#4c4bcc; }
+			hr{border-left:medium none;border-right:medium none;border-style:none none dashed;border-top:medium none;margin:15px 0;width:300px;}
+		</style>
+	</head>
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor='#FFFFFF'>
+		<table width="100%" cellpadding="10" cellspacing="0" bgcolor='#FFFFFF'>
+			<tr>
+				<td valign="top" align="center">
+					<table width="600" cellpadding="0" cellspacing="0">
+						<tr>
+							<td style="text-align:right;" align="right">
+								<span style="font-size:10px;color:#000;line-height:200%;font-family:verdana;text-decoration:none;">Email not displaying correctly? <a href="*|ARCHIVE|*" style="font-size:10px;color:#000;line-height:200%;font-family:verdana;text-decoration:underline;">View it in your browser.</a></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="left" valign="middle" style="-moz-border-radius-topleft: 12px; border-radius: 12px;-webkit-border-radius: 12px; -moz-border-radius: 12px; border-radius: 12px; -webkit-border-radius: 12px; background-color:#FFFFFF;border-top:0px solid #333333;">
+								<center>
+									<a href=""><img src="http://<%= $root_domain %>/images/ui/storagelocator/usselfstoragelocator-logo.jpg" border="0" title="USSelfStorageLocator.com" alt="USSelfStorageLocator.com" align="center" ></a>
+								</center>
+							</td>
+						</tr>
+					</table>
+					<table width="600" height="51" cellpadding="0" cellspacing="0">
+						<tr>
+							<td style="font-size:24px">
+								<% if @header_img_name %>
+									<img src="http://usselfstoragelocator.com/images/email/<%= @header_img_name %>.jpg" alt="<%= @header_img_name.titleize %>" />
+								<% else %>
+									<%= @email_title %>
+								<% end %>
+							</td>
+						</tr>
+					</table>
+					<table width="600" cellpadding="20" cellspacing="0" bgcolor="#FFFFFF" style="border-left:1px solid #ccc;border-right:1px solid #ccc;">
+						<tr>
+							<td bgcolor="#FFFFFF" valign="top" width="400" style="-moz-border-radius: 12px; border-radius: 12px;-webkit-border-radius: 12px; font-size:12px;color:#000000; line-height:150%;font-family:trebuchet ms;">
+								<%= yield %>
+							</td>
+						</tr>
+					</table>
+					<table width="600" heigth="40" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								<img src="http://<%= $root_domain %>/images/email/footer2.jpg">
+							</td>
+						</tr>
+					</table>
+					<table width="600" cellpadding="10" cellspacing="0">
+						<tr>
+							<td style="text-align:center;">
+								&copy; 2011 - <a href="http://<%= $root_domain %>">USSelfStorageLocator.com</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

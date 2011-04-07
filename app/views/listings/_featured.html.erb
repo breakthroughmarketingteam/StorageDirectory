@@ -41,5 +41,5 @@
 	<% end %>
 	</div>
 
-	<%= render :partial => 'shared/social_box' %>
+	<%= render :partial => 'shared/social_box' unless request.xhr? %>
 </div>

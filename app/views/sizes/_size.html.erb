@@ -4,7 +4,7 @@
 		<li class="st-size"><%= size.display_dimensions %></li>
 		<li class="st-type" input-type="select"><%= size.title %></li>
 		<li class="st-desc" title="<%= size.description %>"><%= size.description %></li>
-		<li class="st-pric"><%= number_to_currency size.dollar_price %></li>
+		<li class="st-pric"><%= size.price > 0 ? number_to_currency(size.dollar_price) : 'n/a' %></li>
 		
 		<% if in_mode?('profile') && @listing.issn_enabled? %>
 			<li class="st-avail"><%= size.unit_type.units_available? ? 'Yes' : 'No' %></li>

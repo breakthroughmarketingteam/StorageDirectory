@@ -1,10 +1,13 @@
-New Info Request:
-	<%= @info_request.name %> <<%= @info_request.email %>>
-	<%= @info_request.phone %>
-	Move in date: <%= @info_request.move_in_date %>
-	Duration: <%= @info_request.duration %>
-	
-Listing:
-	<%= @listing.title %>
+<p>A person has requested info from the following listing. <%= ' This listing is a premium member, they were sent a notification.' if @listing.premium? %></p>
+
+<p><strong>Listing:</strong>
+	<a href="<%= edit_listing_url @listing %>"><%= @listing.title %></a><br>
 	<%= @listing.full_address %>
-	<%= edit_listing_url @listing %>
+</p>
+
+<p><strong>New Info Request:</strong>
+	<%= @info_request.name %> &lt;<%= @info_request.email %>&gt;<br>
+	<%= @info_request.phone %><br>
+	Move in date: <%= @info_request.move_in_date %><br>
+	Duration: <%= @info_request.duration %>
+</p>

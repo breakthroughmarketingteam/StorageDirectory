@@ -15,8 +15,8 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
-  has_many :comparisons, :dependent => :destroy
-  has_many :compares, :through => :comparisons
+  has_many :comparisons,   :dependent => :destroy
+  has_many :compares,      :through => :comparisons
   has_many :staff_emails,  :dependent => :destroy
   accepts_nested_attributes_for :staff_emails
   
@@ -44,6 +44,8 @@ class Listing < ActiveRecord::Base
   has_many :promos,              :dependent => :destroy
   has_many :facility_insurances, :dependent => :destroy
   has_many :issn_facility_unit_features, :dependent => :destroy
+  
+  named_scope :verified, :conditions => ['status = ?', 'verified']
   
   has_attached_file :logo,
     :storage => :s3, 
@@ -172,13 +174,32 @@ class Listing < ActiveRecord::Base
                          "ORDER BY l.title LIMIT 100"
   end
   
-  def self.update_stats(listings, stat, referrer, request_uri, remote_ip)
-    listings.map { |listing| listing.update_stat stat, referrer, request_uri, remote_ip }
+  #
+  # Helpers
+  #
+  
+  def self.top_cities
+    @@top_cities ||= begin
+      self.verified.map do |listing|
+        listing.premium? ? listing.city.downcase : nil
+      end.reject(&:nil?).uniq
+    end
+  end
+  
+  def self.update_stats(listings, stat, request, user)
+    listings.each do |listing|
+      listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+    end
+  end
+  
+  def update_listing_click_and_search(stat, search, request, user)
+    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
+    search.update_attribute :listing_id, self.id
   end
   
   # create a stat record => clicks, impressions
-  def update_stat(stat, referrer, request_uri, remote_ip)
-    eval "self.#{stat}.create :referrer => '#{referrer}', :request_uri => '#{request_uri}', :remote_ip => '#{remote_ip}'"
+  def update_stat(stat, request)
+    self.send(stat).create request
   end
   
   # Instance Methods
@@ -227,19 +248,18 @@ class Listing < ActiveRecord::Base
     self.reviews
   end
   
-  def listings_compared_with
-    self.comparisons.map do |comparison|
-      comparison.compare.listings.reject { |listing| listing == self }
+  # TODO: fix this
+  def create_comparison_with(params_ids, request)
+    extract_other_compare_ids_from(params_ids).each do |id|
+      compare = Compare.create :referrer => request.referrer, :request_uri => request.request_uri, :remote_ip => request.remote_ip
+      compare.comparisons.create :listing_id => id
+      self.comparisons.create :compare_id => compare.id
     end
   end
   
-  def create_comparison_with(other_ids)
-    ids = extract_compare_ids_from other_ids
-    
-  end
-  
-  def extract_compare_ids_from(ids)
-    #raise ids.pretty_inspect
+  # ids is a params string containing listing_id size_id and special_id => 85481x14748x4-85480x14711x4-113022x14796xundefined
+  def extract_other_compare_ids_from(ids)
+    ids.split('-').map { |i| i.split('x').first }
   end
   
   def get_searched_size(search)
@@ -256,37 +276,37 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def city_and_state
-    @city_and_state ||= [self.city, self.state]
-  end
-  
   def get_closest_unit_size(size)
     @unit_size ||= self.available_sizes.detect { |s| s.dims == size } || self.available_sizes.first
   end
   
   def get_upper_type_size(size)
-    @upper_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@upper_types.any? { |type| size.title =~ /(#{type})/i }
+    @upper_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@upper_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
   end
   
   def get_drive_up_type_size(size)
-    @drive_up_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@drive_up_types.any? { |type| size.title =~ /(#{type})/i }
+    @drive_up_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@drive_up_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
   end
   
   def get_interior_type_size(size)
-    @interior_type_size ||= self.sizes.all(:conditions => ['width = ? AND length = ?', size.width, size.length]).detect do |size|
-      @@lower_types.any? { |type| size.title =~ /(#{type})/i }
+    @interior_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@lower_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
     end
+  end
+  
+  def city_and_state
+    @city_and_state ||= [self.city, self.state]
   end
   
   def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
   def full_address; "#{self.address}#{ " #{self.address2}" unless self.address2.blank?}, #{self.city_state_zip}" end
   
   def unit_sizes_options_array
-    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.id] }.uniq
+    self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
   end
   
   def available_sizes
@@ -320,6 +340,10 @@ class Listing < ActiveRecord::Base
   
   def unverified?
     self.client.nil? || self.client.status == 'unverified'
+  end
+  
+  def notify_email
+    self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
   end
   
   # add up a score based on the return values of model methods

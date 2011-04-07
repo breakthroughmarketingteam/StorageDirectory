@@ -16,7 +16,7 @@ class Rentalizer
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
-            size    = listing.sizes.find_by_id p[1].to_i
+            size    = p[1] ? listing.sizes.find_by_id(p[1].to_i) : listing.sizes.first
             special = listing.predefined_specials.find_by_id p[2].to_i
             
             begin
@@ -30,7 +30,7 @@ class Rentalizer
           out, mime = { :success => true, :data => data }.to_json, 'application/json'
         else  
           listing = Listing.find((params['rental[listing_id]'] || params[:listing_id]).to_i)
-          size    = listing.sizes.find_by_id((params[:size_id] || params['rental[size_id]']).to_i)
+          size    = listing.sizes.find_by_id((params[:size_id] || params['rental[size_id]']).to_i) || listing.sizes.first
           special = listing.predefined_specials.find_by_id((params[:special_id] || params['rental[special_id]']).to_i)
           
           out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
@@ -116,7 +116,9 @@ class Rentalizer
       if listing.prorated?
         Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
       else
-        Time.local(move_date.year, move_date.month + months, move_date.day - 1).strftime('%m/%d/%Y')
+        d = move_date.day - 1
+        d = d < 1 ? 1 : d
+        Time.local(move_date.year, move_date.month + months, d).strftime('%m/%d/%Y')
       end
     end
     

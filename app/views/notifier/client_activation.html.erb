@@ -1,9 +1,14 @@
-YOUR USSelfStorageLocator Advertiser account IS READY, click on the following link (or copy and paste it into your browser's address bar):
-https://<%= $root_domain %>/clients/activate/<%= @client.activation_code %>
+</p>Your USSelfStorageLocator.com premium account is ready, <a href="https://<%= $root_domain %>/clients/activate/<%= @client.activation_code %>">click here</a> or copy the following link into your browser's address bar: https://<%= $root_domain %>/clients/activate/<%= @client.activation_code %></p>
 
-Your account information:
-  User Name: <%= @client.email %>
-  Password: <%= @client.temp_password %>
-  We recommend you change your temporary password soon after you log on. 
+<p><strong>Your account information:</strong></p>
+<ul style="list-style-position:inside;margin-left:10px">
+ 	<li><strong>User Name:</strong> <%= @client.email %></li>
+  	<li><strong>Password:</strong> <%= @client.temp_password %></li>
+</ul>
 
-Have a great day!
+<p style="font-style:italic;">We recommend you change your temporary password soon after you log on. </p>
+
+<p>
+	Have a great day!<br>
+	&nbps;&nbps;&nbps;- The USSSL Team
+</p>

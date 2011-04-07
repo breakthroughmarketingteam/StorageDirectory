@@ -2948,20 +2948,19 @@ jQuery.fn.formBouncer = function(){
 	return this.each(function(){
 		var $this = $(this);
 		
-		$this.live('submit', function() {
+		$this.submit(function() {
 			$('.invalid', this).removeClass('invalid');
 			$('.error', this).remove();
 			
-			if ($(this).runValidation().data('valid')) {
+			if ($this.runValidation().data('valid')) {
 				// clear any values that are the same as the title attr, caused by hinty
 				$('input, textarea', this).each(function() {
 					var field = $(this);
-					if (field.val() == field.attr('title'))
-						field.val('');
+					if (field.val() == field.attr('title')) field.val('');
 				});
 			}
 			
-			return $(this).runValidation().data('valid');
+			return $this.data('valid');
 		});
 	});
 }
@@ -3099,7 +3098,8 @@ jQuery.fn.runValidation = function(silent) {
 	errors != '' ? form.data('valid', false) : form.data('valid', true);
 	
 	return form;
-}
+};
+jQuery.extend(jQuery.browser, { SafariMobile : navigator.userAgent.toLowerCase().match(/iP(hone|ad)/i) });
 
 var Inflector = function(){};
 
@@ -4510,7 +4510,10 @@ $.option_tags_from_array = function(options, selected) {
 
 $.with_json = function(response, success, error) {
 	if (response.success) (success || function(){}).call(this, response.data);
-	else if (error && error.call) error.call(this, response.data);
+	else if (error && error.call) {
+		console.log(response, response.data, response['data'], error)
+		error.call(this, response.data);
+	}
 	else $.ajax_error(response);
 }
 
@@ -4555,7 +4558,7 @@ $.enableEditor = function() {
 	// TODO: fix the toggle button, it doesn't turn off the editor, find out where the editor remove function is
 	$('textarea.wysiwyg').each(function(i) {
 		var textarea = jQuery(this),
-				toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
+			toggle = jQuery('<a href="#" class="toggle right" id="toggle_' + i + '">Toggle Editor</a>');
 		
 		textarea.parent().parent().prepend(toggle);
 		
@@ -5412,14 +5415,23 @@ $.fn.shimmy = function(parent, ops) {
 	
 	var shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
 		var window_offset = getScrollXY(),
-			diff = (window_offset[1] + 10) - el_offset.top;
+			diff 		  = (window_offset[1] + 10) - el_offset.top,
+			btm_plus_diff = btm_from_top + diff,
+			btm_pos;
 		
-		if (diff >= 0 && parent_height >= btm_from_top + diff) 
-			el.css({ 'position': 'fixed', 'top': 0 });
-		else if (diff >= 0 && parent_height <= btm_from_top + diff) 
-			el.css({ 'position': 'relative', 'top': (parent_height - el_pos.top - el_height - pad) +'px' });
-		else 
+		if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
+			if ($.browser.SafariMobile) {
+				el.css({ 'position': 'absolute', 'top': diff });
+			} else {
+				el.css({ 'position': 'fixed', 'top': 0 });
+			}
+			
+		} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
+			btm_pos = parent_height - el_pos.top - el_height - pad;
+			el.css({ 'position': 'relative', 'top': btm_pos +'px' });
+		} else { 														// resting up top like normal
 			el.css('position', 'relative');
+		}
 	}
 	
 	return this.each(function() {
@@ -5427,14 +5439,23 @@ $.fn.shimmy = function(parent, ops) {
 			pad	  = 30,
 			this_offset	= $this.offset(),
 			this_height = $this.height(),
+			parent_height = parent.height(),
 			this_pos 	= $this.position(parent),
-			btm_from_top  = this_pos.top + this_height + pad;
+			btm_from_top = this_pos.top + this_height + pad;
 		
-		shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
+		shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		
 		$(window).scroll(function() {
-			shimmy_meow($this, this_offset, this_pos, this_height, parent.height(), btm_from_top, pad);
+			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		});
+		
+		// watch out for the advanced features box opening, it will change <this> offset, and others
+		$.setInterval(function() {
+			//this_offset	 = $this.offset();
+			//this_pos 	 = $this.position(parent);
+			//parent_height = parent.height();
+			//btm_from_top = this_pos.top + this_height + pad;
+		}, 2011);
 	});
 }
 
@@ -6076,7 +6097,7 @@ $(function(){
 	});
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
-		var form = $(this).runValidation(),
+		var form = $(this),
 			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
@@ -6571,7 +6592,7 @@ $(function(){
 			query_hash = $.queryToHash(this.href.split('?')[1]),
 			size_id = $(':radio:checked', context).val();
 		
-		if (size_id) this.rel = 'reserve';
+		this.rel = 'reserve';
 		
 		query_hash.size_id = size_id;
 		query_hash.special_id = $('.special_txt.active', context).attr('data-special-id');
@@ -6587,15 +6608,16 @@ $(function(){
 			context = $this.parents('.inner'),
 			unit_size = $(':radio:checked', context),
 			special = $('.special_txt.active', context);
-
+		
 		if (unit_size.length) {
 			var ar = (special.length == 1 ? '[0]' : ''); // make the sub_model param an array if a special is present
 			$this.attr('href', new_href +'&sub_model'+ ar +'=Size&sub_id'+ ar +'='+ unit_size.val());
-			$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
+			//$this.attr('rel', 'reserve'); // makes the panel open with the rental form instead of the sizes list
 		}
 
 		if (special.length == 1)
 			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
+			
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -6704,8 +6726,6 @@ $(function(){
 			renting_enabled = wrap.attr('data-renting-enabled') == 'true' ? true : false,
 			ajax_loader 	= $.new_ajax_loader('before', $('.rsr-btn', this));
 		
-		console.log(wrap, wrap.attr('id'), size_id)
-		
 		if (rform.hasClass('active')) { // clicking on an open form, close it
 			rform.slideUp().removeClass('active');
 			$('.sl-table').removeClass('active');
@@ -6731,7 +6751,7 @@ $(function(){
 						params.sub_model = 'Size';
 						params.sub_id = size_id;
 					}
-					console.log(params)
+					
 					get_partial_and_do(params, function(response) {
 						unit_size_form_partials[size_id] = response.data;
 						rform.html(response.data).slideDown().addClass('active');
@@ -6893,6 +6913,7 @@ $(function(){
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);
+				$('#feat_wrap').parent().parent('.shimmy').shimmy('#page-cnt');
 			});
 		});
 	}
@@ -7083,7 +7104,7 @@ function addMarker(map, icon, lat, lng, title, body, bind_mouse_overs) {
 	var point = new GLatLng(lat, lng);
 	var marker = new GMarker(point, { 'title': title, 'icon': icon, width: '25px' });
 	
-	GEvent.addListener(marker, 'click', function(){
+	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(body);
 		$('.listing').removeClass('active');
 		$('#listing_'+ marker.listing_id).addClass('active');
@@ -7378,7 +7399,7 @@ $.fn.rental_form = function() {
 						});
 						
 						ajax_loader.hide();
-					});
+					}, 'json');
 				}
 			}, // END slide 1
 		],
@@ -7819,7 +7840,7 @@ $(function() {
 		aff_scroll.scrollable({ speed: 1500, circular: true, easing: 'swing' });
 		
 		$.setInterval(function() {
-			$('.next', aff_scroll);
+			$('.next', aff_scroll).click();
 		}, 7000);
 	}
 	

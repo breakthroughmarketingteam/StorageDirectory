@@ -1,0 +1,34 @@
+<p>
+	A customer has requested info for your storage facility: <a href="https://<%= $root_domain %>/my_account" target="_blank" style="color:green;"><%= @listing.title %>.</a><br>
+	<a href="https://<%= $root_domain %>/login?email=<%= @listing.client.email %>" target="_blank">Sign in</a> to listen to this recording.
+</p>
+<div style="width:340px;">
+	<table>
+		<tr>
+			<td width="170" valign="top" halign="left">
+				<p>
+					<strong>Caller Name:</strong> <%= @info_request.name %>
+				</p>
+				<p>
+					<strong>Caller Number:</strong> <%= @info_request.phone %>
+				</p>
+				<p>
+					<strong>Email:</strong> <%= @info_request.email %>
+				</p>
+				<p>
+					<strong>Unit:</strong> <%= @info_request.size ? @info_request.size.full_title : @info_request.unit_type_size %>
+				</p>
+				
+				<p>
+					<strong>Move in date:</strong> <%= @info_request.nice_move_in_date %>
+				</p>
+				<p>
+					<strong>Duration:</strong> <%= @info_request.duration %> months
+				</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<p>
+	For tips on how to best respond to an Info Request visit: <a href="http://usselfstoragelocator.com/help/responding-to-info-requests" target="_blank">http://usselfstoragelocator.com/help/responding-to-info-requests</a>
+</p>

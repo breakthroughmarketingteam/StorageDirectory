@@ -1,0 +1,42 @@
+<% facility_url_text = "#{$root_domain}/#{@listing.storage_type.parameterize}/#{@listing.state.parameterize}/#{@listing.city.parameterize}/#{@listing.title.parameterize}/#{@listing.id}" %>
+<p>
+	Thank you for your interest in <a href="http://<%= facility_url_text %>" target="_blank" style="color:green;"><%= @listing.title %>.</a><br>
+	The storage facility will contact you within the next 24-48 hours to complete your request.
+</p>
+<div style="width:340px;">
+	<table>
+		<tr>
+			<td width="340" valign="top" halign="left">
+				<h2>
+					You requested info from the following facility:
+				</h2>
+				<p>
+					<a href="<%= facility_url_text %>" target="_blank" style="color:green;"><%= @listing.title %></a><br>
+					<%= @listing.address %><br>
+					<%= @listing.city_state_zip %><br>
+					<strong>Phone:</strong> <%= @listing.tracked_number ? @listing.tracked_number : @listing.phone %><br>
+					<strong>Email:</strong> <%= @listing.notify_email %>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	<table>
+		<tr>
+			<td width="340" valign="top" halign="left">
+				<h2>
+					Unit Details:
+				</h2>
+				<p>
+					<strong>Size:</strong> <%= "#{@info_request.size ? @info_request.size.full_title : @info_request.unit_type_size}" %><br>
+					<strong>Move In Date:</strong> <%= @info_request.nice_move_in_date %><br>
+					<strong>Estimated Rental Duration:</strong> <%= @info_request.duration %> months<br>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<hr>
+</div>
+<p>
+	For more information about our Reservation process please visit: <a href="http://usselfstoragelocator.com/help/reserve" target="_blank">http://usselfstoragelocator.com/help/reserve</a>
+</p>

@@ -15,9 +15,12 @@ class Tenant < User
     self.billing_infos.last
   end
   
-  def full_address
-    self.billing_info.full_address
+  def city_and_state
+    @city_and_state ||= [self.billing_info.city, self.billing_info.state]
   end
+  
+  def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
+  def full_address; "#{self.billing_info.address}#{ " #{self.billing_info.address2}" unless self.billing_info.address2.blank?}, #{self.city_state_zip}" end
   
   def name
     "#{self.first_name} #{self.last_name}"

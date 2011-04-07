@@ -1,9 +1,13 @@
-Client: <%= @client.name %> <<%= @client.email %>>
+<p><strong>Client:</strong> <%= @client.name %> &lt;<%= @client.email %>&gt;</p>
 
-Account: <%= edit_client_url @client, :protocol => 'https' %>
+<p><strong>Account:</strong> <%= edit_client_url @client, :protocol => 'https' %></p>
 
-Listings: 
-<% @client.listings.each do |listing| -%>
-	(<%= listing.id %>) <%= listing.title %>
+<p><strong>Listings:</strong> </p>
+<ul style="list-style-position:inside;margin-left:10px">
+<% @client.listings.each do |listing| %>
+	<li>
+	(<%= listing.id %>) <%= listing.title %><br>
 	<%= listing.full_address %>
-<% end -%>
+	</li>
+<% end %>
+</ul>

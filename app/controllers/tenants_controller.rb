@@ -21,31 +21,37 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find_by_email(params[:tenant][:email]) || Tenant.new(params[:tenant])
     @tenant.merge_attr_if_diff! params[:tenant] unless @tenant.new_record?
     
-    if @tenant.save_without_session_maintenance
-      @rental = @tenant.rentals.build params[:rental]
-      @rental.apply_savings! params
-      
-      if @rental.save
-        @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
-        Notifier.delay.deliver_tenant_notification @tenant, @rental
-        Notifier.delay.deliver_new_tenant_alert @tenant, @rental
-      
-        conf_data = { 
-          :r_name         => @tenant.name,
-          :r_email        => @tenant.email,
-          :r_conf_num     => @rental.conf_num,  
-          :r_unit         => @rental.size.full_title, 
-          :r_move_in_date => @rental.nice_move_in_date, 
-          :r_paid_thru    => @rental.nice_paid_thru, 
-          :r_savings      => "$#{sprintf("%.2f", @rental.savings)}", 
-          :r_total        => "$#{sprintf("%.2f", @rental.total)}" 
-        }
-        conf_data.merge! :r_special => @rental.special.title if @rental.special
-      
-        render :json => { :success => true, :data => conf_data }
+    respond_to do |format|
+      format.html {}
+      format.js do
+        if @tenant.save_without_session_maintenance
+          @rental = @tenant.rentals.build params[:rental]
+          @rental.apply_savings! params
+
+          if @rental.save
+            @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
+            @rental.deliver_emails
+
+            conf_data = { 
+              :r_name         => @tenant.name,
+              :r_email        => @tenant.email,
+              :r_conf_num     => @rental.conf_num,  
+              :r_unit         => @rental.size.full_title, 
+              :r_move_in_date => @rental.nice_move_in_date, 
+              :r_paid_thru    => @rental.nice_paid_thru, 
+              :r_savings      => "$#{sprintf("%.2f", @rental.savings)}", 
+              :r_total        => "$#{sprintf("%.2f", @rental.total)}" 
+            }
+            conf_data.merge! :r_special => @rental.special.title if @rental.special
+
+            render :json => { :success => true, :data => conf_data }
+          else
+            render :json => { :success => false, :data => model_errors(@rental) }
+          end
+        else
+          render :json => { :success => false, :data => model_errors(@tenant).uniq }
+        end
       end
-    else
-      render :json => { :success => false, :data => model_errors(@tenant).uniq }
     end
   end
     
@@ -98,7 +104,7 @@ class TenantsController < ApplicationController
   
   def resend_activation
     @tenant = Tenant.find_by_activation_code params[:code]
-    Notifier.deliver_tenant_notification @tenant, @tenant.rentals.last
+    Notifier.delay.deliver_tenant_notification @tenant, @tenant.rentals.last
     
     render :json => { :success => true }
   rescue => e
