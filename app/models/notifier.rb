@@ -40,20 +40,17 @@ class Notifier < ActionMailer::Base
     @body[:rental] = rental
   end
   
-  def rental_notification(tenant, rental)
-    setup_email rental.listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
-    @body[:tenant] = tenant
-    @body[:rental] = rental
-    @body[:listing] = rental.listing
-  end
-  
   def new_info_request_alert(listing, info_request)
+    @header_img_name = 'info_request'
+    
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Info Request!'
     @body[:listing] = listing
     @body[:info_request] = info_request
   end
   
   def admin_reservation_alert(reserver, reservation, comments)
+    @header_img_name = 'reserve_request'
+    
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
@@ -61,6 +58,8 @@ class Notifier < ActionMailer::Base
   end
   
   def tracking_request(listing, client, phone)
+    @header_img_name = 'tracking_number_request'
+    
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Call Tracking Request'
     @body[:listing] = listing
     @body[:client] = client
@@ -97,7 +96,18 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
+  def rental_notification(tenant, rental)
+    @header_img_name = 'unit_rental'
+    
+    setup_email rental.listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
+    @body[:tenant] = tenant
+    @body[:rental] = rental
+    @body[:listing] = rental.listing
+  end
+  
   def info_request_client_notification(listing, info_request)
+    @header_img_name = 'reserve_request'
+    
     setup_email listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'You Received a Request on USSSL'
     @body[:listing] = listing
     @body[:info_request] = info_request
@@ -121,18 +131,24 @@ class Notifier < ActionMailer::Base
   #
   
   def tenant_notification(tenant, rental)
+    @header_img_name = 'rental_confirm'
+    
     setup_email tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
     @body[:tenant] = tenant
     @body[:rental] = rental
   end
   
   def tenant_confirmation(reserver, reservation)
+    @header_img_name = 'reservation'
+    
     setup_email reserver.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Self Storage Reservation'
     @body[:user]        = reserver
     @body[:reservation] = reservation
   end
   
   def info_request_user_notification(listing, info_request)
+    @header_img_name = 'info_request'
+    
     setup_email info_request.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'We Received Your Request'
     @body[:listing] = listing
     @body[:info_request] = info_request
