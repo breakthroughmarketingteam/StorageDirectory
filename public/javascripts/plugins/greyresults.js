@@ -1344,7 +1344,7 @@ $.fn.rental_form = function() {
 						});
 						
 						ajax_loader.hide();
-					});
+					}, 'json');
 				}
 			}, // END slide 1
 		],
