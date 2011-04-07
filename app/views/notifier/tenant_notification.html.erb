@@ -4,37 +4,43 @@
 </p>
 <table width="400" cellpadding="0" cellspacing="0">
 	<tr>
+		<th>
+			<h2>Customer:</h2>
+		</th>
 		<td>
-			<h2>
-				Customer:
-			</h2><%= @tenant.name %>
+			<%= @tenant.name %>
 		</td>
 	</tr>
 	<tr>
+		<th>
+			<h2>Confirmation Number:</h2>
+		</th>
 		<td>
-			<h2>
-				Confirmation Number:
-			</h2><%= @rental.conf_num %>
+			<span style="font-size:24px;color:#339933;font-weight:bold;"><%= @rental.conf_num %></span>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<% if @tenant.status == 'unverified' %>
+	<% if @tenant.status == 'unverified' %>
+		<tr>
+			<th>
 				<h2>Your account information:</h2>
+			</th>
+			<td>
 				<p>
 					<strong>User Name: </strong><%= @tenant.email %><br>
 					<strong>Password: </strong><%= @tenant.temp_password %><br>
 					We recommend you change your temporary password soon after you log on. 
 				</p>
-				
+			
 				<p>To activate your USSelfStorageLocator.com account <a href="<%= tenant_activate_url :code => @tenant.activation_code, :protocol => 'https' %>">click here</a> or copy the following link into your browser's address bar: <%= tenant_activate_url :code => @tenant.activation_code, :protocol => 'https' %></p>
-				
-			<% else %>
-				<p>To login your USSelfStorageLocator.com account <a href="<%= login_url :auth_token => @tenant.perishable_token, :protocol => 'https' %>">click here</a> or copy the following link into your browser's address bar: <%= login_url :auth_token => @tenant.perishable_token, :protocol => 'https' %></p>
-				
-			<% end %>
-		</td>
+			</td>
 	</tr>
+	<% else %>
+		<tr>
+			<td colspan="2">
+				<p>To login your USSelfStorageLocator.com account <a href="<%= login_url :auth_token => @tenant.perishable_token, :protocol => 'https' %>">click here</a> or copy the following link into your browser's address bar: <%= login_url :auth_token => @tenant.perishable_token, :protocol => 'https' %></p>
+			</td>
+		</tr>
+	<% end %>
 </table>
 <hr>
 <div style="width:340px;">
