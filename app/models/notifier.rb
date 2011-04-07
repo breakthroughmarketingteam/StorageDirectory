@@ -48,8 +48,6 @@ class Notifier < ActionMailer::Base
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Info Request!'
     @body[:listing] = info_request.listing
     @body[:info_request] = info_request
-  rescue ActionView::TemplateError
-    mylogger $!
   end
   
   def admin_reservation_alert(reserver, reservation, comments)
@@ -107,8 +105,6 @@ class Notifier < ActionMailer::Base
     @body[:tenant] = rental.tenant
     @body[:rental] = rental
     @body[:listing] = rental.listing
-  rescue ActionView::TemplateError
-    mylogger $!
   end
   
   def info_request_client_notification(info_request)
@@ -142,8 +138,6 @@ class Notifier < ActionMailer::Base
     setup_email rental.tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
     @body[:tenant] = rental.tenant
     @body[:rental] = rental
-  rescue ActionView::TemplateError
-    mylogger $!
   end
   
   def tenant_confirmation(reserver, reservation)

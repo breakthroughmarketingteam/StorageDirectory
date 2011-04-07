@@ -20,9 +20,9 @@ class Rental < ActiveRecord::Base
   # TODO: find out why i would get the following error when using the delay method outside of this method on an instance of rental
   # Rental#deliver_emails failed with ActionView::TemplateError: undefined method `minmax' for #<Array:0x2b5a1d9ee060>
   def deliver_emails
-    Notifier.delay.deliver_tenant_notification self # to the tenant
-    Notifier.delay.deliver_new_tenant_alert    self # to info@usselfstoragelocator.com
-    Notifier.delay.deliver_rental_notification self # to the facility
+    Notifier.deliver_tenant_notification self # to the tenant
+    Notifier.deliver_new_tenant_alert    self # to info@usselfstoragelocator.com
+    Notifier.deliver_rental_notification self # to the facility
   end
   
   def paid_through
