@@ -1881,10 +1881,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step1  .col3 ul{display:block;float:right;margin:20px 0 0 0;width:100%;line-height:1;border:0 none;}
 #rent_step1  .col3 ul li{font-weight:bold;margin:0 0 10px;float:none;}
 #rent_step1  .col3 ul li span{font-size:14px;}
-#rent_step1  .col3 ul li.total_wrap span{font-size:18px;}
-.rental_form .col3 li.total_wrap{font-size:16px;}
-.rental_form .col3 li.discount_wrap{color:#f60;}
-.rental_form .col3 li.usssl_discount{color:#f60;}
+#rent_step1  .col3 ul li.total_wrap span{}
+.rental_form .col3 li.total_wrap{}
+.rental_form .col3 li.usssl_discount_wrap, .rental_form .col3 li.discount_wrap{color:red;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
 .rental_form .col3 .grey span{float:none;color:#999;}
