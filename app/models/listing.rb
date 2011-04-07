@@ -192,7 +192,7 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def update_listing_click_and_search(listing, stat, search, request, user)
+  def self.update_listing_click_and_search(listing, stat, search, request, user)
     listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
     search.update_attribute :listing_id, listing.id
   end
