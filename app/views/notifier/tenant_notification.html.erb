@@ -41,7 +41,7 @@
 					Facility Details:
 				</h2>
 				<p>
-					<a href="#" target="_blank" style="color:green;"><%= @rental.listing.title %></a><br>
+					<a href="http://<%= "#{$root_domain}/#{@rental.listing.storage_type.parameterize}/#{@rental.listing.state.parameterize}/#{@rental.listing.city.parameterize}/#{@rental.listing.title.parameterize}" %>" target="_blank" style="color:green;"><%= @rental.listing.title %></a><br>
 					<%= @rental.listing.address %><br />
 					<%= @rental.listing.city_state_zip %>
 					<strong>Phone:</strong> <%= @rental.listing.tracked_number || @rental.listing.phone %><br>

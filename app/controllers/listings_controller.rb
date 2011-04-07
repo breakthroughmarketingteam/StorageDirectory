@@ -76,7 +76,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    Listing.delay.update_listing_click_and_search(@listing, :clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
+    @listing.delay.update_listing_click_and_search(:clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
     render :layout => false if request.xhr?
   end
 
