@@ -52,10 +52,12 @@
 				</h2>
 				<p>
 					<a href="http://<%= "#{$root_domain}/#{@rental.listing.storage_type.parameterize}/#{@rental.listing.state.parameterize}/#{@rental.listing.city.parameterize}/#{@rental.listing.title.parameterize}" %>" target="_blank" style="color:green;"><%= @rental.listing.title %></a><br>
-					<%= @rental.listing.address %><br />
+					<%= @rental.listing.address %><br>
 					<%= @rental.listing.city_state_zip %>
+				</p>
+				<p>
 					<strong>Phone:</strong> <%= @rental.listing.tracked_number || @rental.listing.phone %><br>
-					<strong>Email:</strong> <%= @rental.listing.staff_emails.empty? ? @rental.listing.client.email : @rental.listing.staff_emails.map(&:email).to_sentence %>
+					<strong>Email:</strong> <%= @rental.listing.staff_emails.empty? ? @rental.listing.client.email : @rental.listing.staff_emails.map(&:email).to_sentence %>	
 				</p>
 			</td>
 		</tr>
@@ -71,7 +73,7 @@
 					<strong>Unit:</strong> <%= @rental.size.title %> <%= @rental.size.dims %><br>
 					<strong>Move In Date:</strong> <%= @rental.nice_move_in_date %><br>
 					<strong>Savings: </strong> <%= @rental.savings %><br>
-					<strong>Rental Duration:</strong> <%= @rental.nice_paid_thru %> (<%= "#{distance_of_time_in_words @rental.move_in_date, @rental.paid_thru})" rescue '' %><br>
+					<strong>Paid Through:</strong> <%= @rental.nice_paid_thru %> <%= "#{distance_of_time_in_words @rental.move_in_date, @rental.paid_thru})" rescue '' %><br>
 					<strong>Move In Total:</strong> <%= number_to_currency @rental.total %>
 				</p>
 			</td>
