@@ -37,7 +37,9 @@ class Notifier < ActionMailer::Base
   end
   
   def new_tenant_alert(rental)
-   setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
+    @header_img_name = 'unit_rental'
+    
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
     @body[:tenant] = rental.tenant
     @body[:rental] = rental
   end
