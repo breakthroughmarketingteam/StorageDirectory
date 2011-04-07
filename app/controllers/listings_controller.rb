@@ -30,8 +30,7 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
       # updates the impressions only for listings on current page if the search has changed
-      req = { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
-      Listing.delay.update_stats(@listings, :impressions, req, current_user) if @diff_search
+      Listing.delay.update_stats(@listings, :impressions, simple_request_obj, current_user) if @diff_search
       
       respond_to do |format|
         format.html {}
@@ -59,7 +58,14 @@ class ListingsController < ApplicationController
       end
       
       @location = Geokit::Geocoders::MultiGeocoder.geocode(@listing_set.first[:listing].zip.to_s)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listing_set.map { |s| @template.map_data_for s[:listing], :request => request } }
+      @map_data = { 
+        :maps => @listing_set.map { |s| @template.map_data_for s[:listing], :request => request },
+        :center => { 
+          :lat => @location.lat, 
+          :lng => @location.lng, 
+          :zoom => 12
+        }
+      }
     else
       @listing_set = []
       @location = @search.location
@@ -70,8 +76,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    req = { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
-    Listing.delay.update_listing_click_and_search(@listing, :clicks, @search, req, current_user) unless user_is_a? 'admin', 'advertiser'
+    Listing.delay.update_listing_click_and_search(@listing, :clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
     render :layout => false if request.xhr?
   end
 

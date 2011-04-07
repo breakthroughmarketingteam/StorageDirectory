@@ -97,7 +97,7 @@ class TenantsController < ApplicationController
   
   def resend_activation
     @tenant = Tenant.find_by_activation_code params[:code]
-    Notifier.deliver_tenant_notification @tenant, @tenant.rentals.last
+    Notifier.delay.deliver_tenant_notification @tenant, @tenant.rentals.last
     
     render :json => { :success => true }
   rescue => e

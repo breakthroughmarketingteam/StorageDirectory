@@ -3098,7 +3098,8 @@ jQuery.fn.runValidation = function(silent) {
 	errors != '' ? form.data('valid', false) : form.data('valid', true);
 	
 	return form;
-}
+};
+jQuery.extend(jQuery.browser, { SafariMobile : navigator.userAgent.toLowerCase().match(/iP(hone|ad)/i) });
 
 var Inflector = function(){};
 
@@ -5416,7 +5417,11 @@ $.fn.shimmy = function(parent, ops) {
 			btm_pos;
 		
 		if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
-			el.css({ 'position': 'fixed', 'top': 0 });
+			if ($.browser.SafariMobile) {
+				el.css({ 'position': 'absolute', 'top': diff });
+			} else {
+				el.css({ 'position': 'fixed', 'top': 0 });
+			}
 			
 		} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
 			btm_pos = parent_height - el_pos.top - el_height - pad;
@@ -6905,6 +6910,7 @@ $(function(){
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);
+				$('#feat_wrap').parent().parent('.shimmy').shimmy('#page-cnt');
 			});
 		});
 	}

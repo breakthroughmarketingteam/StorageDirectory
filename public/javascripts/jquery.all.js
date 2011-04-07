@@ -2412,4 +2412,5 @@ jQuery.fn.runValidation = function(silent) {
 	errors != '' ? form.data('valid', false) : form.data('valid', true);
 	
 	return form;
-}
+};
+jQuery.extend(jQuery.browser, { SafariMobile : navigator.userAgent.toLowerCase().match(/iP(hone|ad)/i) });

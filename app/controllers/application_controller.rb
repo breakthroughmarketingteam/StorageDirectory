@@ -565,6 +565,10 @@ class ApplicationController < ActionController::Base
     }
   end
   
+  def simple_request_obj
+    @req ||= { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
+  end
+  
   def kick_back_path
     if current_user
       case current_user.role.title when /(admin)/i

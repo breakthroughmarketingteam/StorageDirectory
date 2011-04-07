@@ -306,7 +306,7 @@ class Listing < ActiveRecord::Base
   def full_address; "#{self.address}#{ " #{self.address2}" unless self.address2.blank?}, #{self.city_state_zip}" end
   
   def unit_sizes_options_array
-    self.available_sizes.empty? ? SizeIcon.labels : self.available_sizes.map { |s| ["#{s.display_dimensions} #{s.title}", s.id] }.uniq
+    self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
   end
   
   def available_sizes

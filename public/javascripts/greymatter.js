@@ -1416,7 +1416,11 @@ $.fn.shimmy = function(parent, ops) {
 			btm_pos;
 		
 		if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
-			el.css({ 'position': 'fixed', 'top': 0 });
+			if ($.browser.SafariMobile) {
+				el.css({ 'position': 'absolute', 'top': diff });
+			} else {
+				el.css({ 'position': 'fixed', 'top': 0 });
+			}
 			
 		} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
 			btm_pos = parent_height - el_pos.top - el_height - pad;

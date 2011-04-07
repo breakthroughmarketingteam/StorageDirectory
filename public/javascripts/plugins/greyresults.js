@@ -858,6 +858,7 @@ $(function(){
 		get_partial_and_do({ partial: 'listings/featured' }, function(response) {
 			$.with_json(response, function(partial) {
 				featured_listing.replaceWith(partial);
+				$('#feat_wrap').parent().parent('.shimmy').shimmy('#page-cnt');
 			});
 		});
 	}
