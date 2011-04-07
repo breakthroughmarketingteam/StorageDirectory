@@ -8,7 +8,7 @@
 		<% end %>
 	</div>
 	
-	<% form_tag @model.info_requests.new, :class => 'new_listing_request less_verbose' do %>
+	<% form_tag listing.info_requests.build, :class => 'new_listing_request less_verbose' do %>
 		<div class="sl-table-exp-form-l">
 			<p>
 		        <%= label_tag 'reserver[name]', 'Your Name', :class => 'block' %> <%= text_field_tag 'reserver[name]', nil, :class => 'required' %>
