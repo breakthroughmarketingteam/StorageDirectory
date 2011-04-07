@@ -192,9 +192,14 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def update_listing_click_and_search(listing, stat, search, request, user)
+    listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+    search.update_attribute :listing_id, listing.id
+  end
+  
   # create a stat record => clicks, impressions
   def update_stat(stat, request)
-    eval "self.#{stat}.create :referrer => '#{request.referrer}', :request_uri => '#{request.request_uri}', :remote_ip => '#{request.remote_ip}'"
+    eval "self.#{stat}.create :referrer => '#{request[:referrer]}', :request_uri => '#{request[:request_uri]}', :remote_ip => '#{request[:remote_ip]}'"
   end
   
   # Instance Methods

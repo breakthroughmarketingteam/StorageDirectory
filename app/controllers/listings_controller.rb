@@ -30,7 +30,8 @@ class ListingsController < ApplicationController
       @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
       # updates the impressions only for listings on current page if the search has changed
-      Listing.delay.update_stats(@listings, :impressions, request, current_user) if @diff_search
+      req = { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
+      Listing.delay.update_stats(@listings, :impressions, req, current_user) if @diff_search
       
       respond_to do |format|
         format.html {}
@@ -69,11 +70,8 @@ class ListingsController < ApplicationController
   end
 
   def show
-    unless user_is_a? 'admin', 'advertiser'
-      @listing.update_stat 'clicks', request unless current_user.respond_to?(:listings) && current_user.listings.include?(@listing)
-      @search.update_attribute :listing_id, @listing.id
-    end
-    
+    req = { :request_uri => request.request_uri, :referrer => request.referrer, :remote_ip => request.remote_ip }
+    Listing.delay.update_listing_click_and_search(@listing, :clicks, @search, req, current_user) unless user_is_a? 'admin', 'advertiser'
     render :layout => false if request.xhr?
   end
 
