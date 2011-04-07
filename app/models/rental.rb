@@ -13,6 +13,10 @@ class Rental < ActiveRecord::Base
   @@searchables = %w(first_name last_name email)
   cattr_reader :searchables
   
+  def validate
+  	errors.add(:move_in_date, 'is out of range. Must be within 15 days.') unless move_in_date.between? Time.now, 15.days.from_now
+  end
+  
   def deliver_emails
     Notifier.deliver_tenant_notification self.tenant, self # to the tenant
     Notifier.deliver_new_tenant_alert    self.tenant, self # to info@usselfstoragelocator.com
