@@ -52,7 +52,7 @@
 				</p>
 				<p>
 					<strong>Rental Duration:</strong><br>
-					<%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)
+					<%= @rental.nice_paid_thru %> <%= "(#{distance_of_time_in_words @rental.move_in_date, @rental.paid_thru})" rescue '' %>
 				</p>
 				<p>
 					<strong>Move-In Total:</strong><br>

@@ -8,7 +8,7 @@
 <p>
 	<strong>Rental:</strong><br>
 	<strong>Move In Date:</strong> <%= @rental.nice_move_in_date %><br>
-	<strong>Paid Through:</strong> <%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)<br>
+	<strong>Paid Through:</strong> <%= @rental.nice_paid_thru %> <%= "(#{distance_of_time_in_words @rental.move_in_date, @rental.paid_thru})" rescue '' %><br>
 	<strong>Unit Size:</strong> <%= @rental.size.title %> <%= @rental.size.dims %><br>
 	<strong>Listing:</strong> (<%= @rental.listing.id %>) <a href="<%= edit_listing_url @rental.listing, :protocol => 'https' %>"><%= @rental.listing.title %></a><br>
 		 <%= @rental.listing.full_address %><br>
