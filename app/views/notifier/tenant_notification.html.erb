@@ -61,7 +61,8 @@
 					<strong>Unit:</strong> <%= @rental.size.title %> <%= @rental.size.dims %><br>
 					<strong>Move In Date:</strong> <%= @rental.nice_move_in_date %><br>
 					<strong>Savings: </strong> <%= @rental.savings %><br>
-					<strong>Rental Duration:</strong> <%= @rental.nice_paid_thru %> (<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)<br>
+					<strong>Rental Duration:</strong> <%= @rental.nice_paid_thru %> 
+					(<%= distance_of_time_in_words @rental.move_in_date, @rental.paid_thru %>)<br>
 					<strong>Move In Total:</strong> <%= number_to_currency @rental.total %>
 				</p>
 			</td>
