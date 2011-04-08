@@ -1873,10 +1873,10 @@ function log() {
  * @desc Scroll relatively to the actual position
  * @example $('div').scrollTo( '+=340px', { axis:'y' } );
  *
- * @dec Scroll using a selector (relative to the scrolled element)
+ * @desc Scroll using a selector (relative to the scrolled element)
  * @example $('div').scrollTo( 'p.paragraph:eq(2)', 500, { easing:'swing', queue:true, axis:'xy' } );
  *
- * @ Scroll to a DOM element (same for jQuery object)
+ * @desc Scroll to a DOM element (same for jQuery object)
  * @example var second_child = document.getElementById('container').firstChild.nextSibling;
  *			$('#container').scrollTo( second_child, { duration:500, axis:'x', onAfter:function(){
  *				alert('scrolled!!');																   
