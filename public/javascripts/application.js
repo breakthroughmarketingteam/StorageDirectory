@@ -1979,7 +1979,7 @@ $.preload_us_map_imgs = function() {
 	var states = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	$.each(states, function(){
 		var img = new Image();
-		img.src = 'http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ this +'.png';
+		img.src = 'http'+ (window.location.href.substring(0, 5) == 'https' ? 's' : '') +'://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ this +'.png';
 	});
 }
 
