@@ -13,4 +13,4 @@ heroscale
 rack-rewrite
 fastercsv
 rmagick
-jammit --source https://github.com/documentcloud/jammit.git
+jammit --source http://github.com/documentcloud/jammit.git
