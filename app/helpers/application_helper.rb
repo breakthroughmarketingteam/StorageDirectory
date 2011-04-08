@@ -642,12 +642,8 @@ module ApplicationHelper
     $!
   end
   
-  def secure_path_fix(url)
-    request.protocol =~ /(https)/i ? url.sub('http:', 'https:') : url
-  end
-  
   def ssl_seal
-		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='https://seal.godaddy.com/images/3/siteseal_gd_3_h_l_m.gif' />"
+		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='#{request.protocol}seal.godaddy.com/images/3/siteseal_gd_3_h_l_m.gif' />"
   end
   
 end

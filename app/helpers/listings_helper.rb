@@ -333,7 +333,7 @@ module ListingsHelper
     
     else # features
       if listing.facility_features.map {|f| f.title.underscore }.include? comparison.gsub('_', ' ')
-        "<td><img src='http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
+        "<td><img src='#{request.protocol}s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-checkmark.png' width='18' height='17' alt='#{listing.title} does have #{comparison.titleize}' /></td>"
       else
         "<td><span class='hide'>#{listing.title} does not have #{comparison.titleize}</span></td>"
       end
