@@ -57,6 +57,14 @@ namespace :assets do
     puts file_names.pretty_inspect
   end
   
+  desc "Package with Jammit"
+  task :jammit => :environment do
+    require 'jammit'
+    Jammit.package!
+  end
+  
+  private
+  
   def percent_of(is, of)
     "#{sprintf("%.2f", (is.to_f / of.to_f * 100))}%"
   end
