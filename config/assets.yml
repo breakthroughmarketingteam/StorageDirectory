@@ -2,6 +2,7 @@ embed_assets: on
 package_assets: on
 compress_assets: on
 gzip_assets: on
+javascript_compressor: closure
 
 javascripts:
   motherlode:
