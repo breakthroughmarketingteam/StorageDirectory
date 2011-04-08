@@ -3,6 +3,9 @@ package_assets: on
 compress_assets: on
 gzip_assets: on
 javascript_compressor: closure
+compressor_options: 
+    compilation_level:
+        ADVANCED_OPTIMIZATIONS
 
 javascripts:
   motherlode:

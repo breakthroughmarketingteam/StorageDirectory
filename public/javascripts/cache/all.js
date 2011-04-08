@@ -2524,52 +2524,12 @@ function log() {
  * Dual licensed under MIT and GPL.
  * Date: 9/11/2008
  *
- * @projectDescription Easy element scrolling using jQuery.
+ * Easy element scrolling using jQuery.
  * http://flesler.blogspot.com/2007/10/jqueryscrollto.html
  * Tested with jQuery 1.2.6. On FF 2/3, IE 6/7, Opera 9.2/5 and Safari 3. on Windows.
  *
  * @author Ariel Flesler
  * @version 1.4
- *
- * @id jQuery.scrollTo
- * @id jQuery.fn.scrollTo
- * @param {String, Number, DOMElement, jQuery, Object} target Where to scroll the matched elements.
- *	  The different options for target are:
- *		- A number position (will be applied to all axes).
- *		- A string position ('44', '100px', '+=90', etc ) will be applied to all axes
- *		- A jQuery/DOM element ( logically, child of the element to scroll )
- *		- A string selector, that will be relative to the element to scroll ( 'li:eq(2)', etc )
- *		- A hash { top:x, left:y }, x and y can be any kind of number/string like above.
- * @param {Number} duration The OVERALL length of the animation, this argument can be the settings object instead.
- * @param {Object,Function} settings Optional set of settings or the onAfter callback.
- *	 @option {String} axis Which axis must be scrolled, use 'x', 'y', 'xy' or 'yx'.
- *	 @option {Number} duration The OVERALL length of the animation.
- *	 @option {String} easing The easing method for the animation.
- *	 @option {Boolean} margin If true, the margin of the target element will be deducted from the final position.
- *	 @option {Object, Number} offset Add/deduct from the end position. One number for both axes or { top:x, left:y }.
- *	 @option {Object, Number} over Add/deduct the height/width multiplied by 'over', can be { top:x, left:y } when using both axes.
- *	 @option {Boolean} queue If true, and both axis are given, the 2nd axis will only be animated after the first one ends.
- *	 @option {Function} onAfter Function to be called after the scrolling ends. 
- *	 @option {Function} onAfterFirst If queuing is activated, this function will be called after the first scrolling ends.
- * @return {jQuery} Returns the same jQuery object, for chaining.
- *
- * @desc Scroll to a fixed position
- * @example $('div').scrollTo( 340 );
- *
- * @desc Scroll relatively to the actual position
- * @example $('div').scrollTo( '+=340px', { axis:'y' } );
- *
- * @dec Scroll using a selector (relative to the scrolled element)
- * @example $('div').scrollTo( 'p.paragraph:eq(2)', 500, { easing:'swing', queue:true, axis:'xy' } );
- *
- * @ Scroll to a DOM element (same for jQuery object)
- * @example var second_child = document.getElementById('container').firstChild.nextSibling;
- *			$('#container').scrollTo( second_child, { duration:500, axis:'x', onAfter:function(){
- *				alert('scrolled!!');																   
- *			}});
- *
- * @desc Scroll on both axes, to different values
- * @example $('div').scrollTo( { top: 300, left:'+=200' }, { axis:'xy', offset:-20 } );
  */
 (function( $ ){
 	
@@ -4975,7 +4935,6 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 	
 	elements.sortElements(function(a, b) {
 		return sortFunc(a, b);
-
 	}, function() {
 		return $(this).children(selector)[0];
 	});
@@ -7382,7 +7341,7 @@ $.fn.rental_form = function() {
 					
 					$('#siteseal', '#rent_steps').animate({ right: '20px' }, 'slow');
 					$('#processing_rental .flash', wizard.workflow).remove();
-					wizard.form_data += '&'+ form.serialize();
+					wizard.form_data += ('&'+ form.serialize());
 					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
@@ -7401,7 +7360,7 @@ $.fn.rental_form = function() {
 						ajax_loader.hide();
 					}, 'json');
 				}
-			}, // END slide 1
+			} // END slide 1
 		],
 		finish_action : function(wizard) {
 			wizard.workflow.parents('.panel').slideUp().removeClass('active').parents('.active').removeClass('active');
@@ -7707,7 +7666,7 @@ $(function() {
 				$state_name = $('#state_name', '#map_nav');
 				
 			var add_map_overlay = function() {
-				var area = $(this), img = $('<img class="map_overlay" src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
+				var area = $(this), img = $('<img class="map_overlay" src="http'+ (window.location.href.substring(0, 5) == 'https' ? 's' : '') +'://s3.amazonaws.com/storagelocator/images/ui/storagelocator/us_map/'+ area.attr('rel') +'.png" alt="" />');
 				$state_name.text(area.attr('alt'));
 				$map_img.before(img);
 			}; 
@@ -8886,10 +8845,10 @@ $(function() {
 	// upload pics
 	$('#picture_facility_image', '#new_picture').live('change', function(){
 		if ($.browser.msie) return true;
-		var thumb = $('<li><img src="http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
+		var thumb = $('<li><img src="http'+ (window.location.href.substring(0, 5) == 'https' ? 's' : '') +'://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif" class="loading" alt="" /><a class="iconOnly16 delete_link right" title="Delete this picture">Delete</a></li>');;
 		
 		if ($('.main_pic', '#sl-tabs-pict-in').length == 0) {
-			var image = $('<img class="big-pic" src="" alt="" />');
+			var image = $('<img class="big-pic" />');
 			$('.gallery', '#sl-tabs-pict-in').append(image);
 		}
 		
@@ -9169,7 +9128,7 @@ $(function() {
 	
 	$('.default_logo', '#logo_choices').live('click', function() {
 		var img = $(this), index = img.attr('data-ci');
-		img.attr('src', 'http://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
+		img.attr('src', 'http'+ (window.location.href.substring(0, 5) == 'https' ? 's' : '') +'://s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif').css({ 'height': '44px', 'border-color': '#fff' });
 		
 		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ $('#listing_id').val(), { authenticity_token: $.get_auth_token(), from: 'uplogo', default_logo: index, _method: 'put' }, function(response) {
 			$('#flogo', '#tab1').html(response);

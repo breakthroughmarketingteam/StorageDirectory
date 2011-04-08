@@ -1327,7 +1327,7 @@ $.fn.rental_form = function() {
 					
 					$('#siteseal', '#rent_steps').animate({ right: '20px' }, 'slow');
 					$('#processing_rental .flash', wizard.workflow).remove();
-					wizard.form_data += '&'+ form.serialize();
+					wizard.form_data += ('&'+ form.serialize());
 					
 					$.post(form.attr('action'), wizard.form_data, function(response) {
 						$.with_json(response, function(data) {
@@ -1346,7 +1346,7 @@ $.fn.rental_form = function() {
 						ajax_loader.hide();
 					}, 'json');
 				}
-			}, // END slide 1
+			} // END slide 1
 		],
 		finish_action : function(wizard) {
 			wizard.workflow.parents('.panel').slideUp().removeClass('active').parents('.active').removeClass('active');

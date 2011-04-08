@@ -974,7 +974,6 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 	
 	elements.sortElements(function(a, b) {
 		return sortFunc(a, b);
-
 	}, function() {
 		return $(this).children(selector)[0];
 	});
