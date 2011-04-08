@@ -11,11 +11,11 @@
 		<link rel="apple-touch-icon" href="/usssl-iphone-icon.png" />
 		<link rel="alternate" type="application/rss+xml" title="Self Storage Blog" href="http://<%= request.host %>/blog.rss" />
 		<link rel="alternate" type="application/rss+xml" title="Self Storage Tips" href="http://<%= request.host %>/storage-tips.rss" />
-		<link rel="image_src" href="http://<%= $root_domain %>/images/ui/storagelocator/rental-form.png" />
+		<link rel="image_src" href="<%= $root_domain %>/images/ui/storagelocator/rental-form.png" />
         <title><%= yield :title %></title>
 		
-		<%= "<script type='text/javascript' src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) || params[:title] == 'Storage Tips' %>
-		<%= '<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
+		<%= "<script type='text/javascript' src='//maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) || params[:title] == 'Storage Tips' %>
+		<%= '<script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
 		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin', 'staff') && (in_mode?('new', 'edit') || controller_name == 'admin') %>
 		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user (@user_stat || UserStat.new)}';</script>" if user_is_a? 'advertiser', 'tenant' rescue $!.message %>
 		<%= "<script type='text/javascript'>var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>
