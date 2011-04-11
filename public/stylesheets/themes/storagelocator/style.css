@@ -1047,10 +1047,10 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 
 #client_listing_box .listing .rslt-contact{width: 170px;padding-right: 0px;}
 .panel #head{padding-bottom:15px;}
-.panel #head.blue{background-color:#4c4bcc;position:relative;}
-.panel #head a{text-decoration:underline;color:#fff;font-size:18px;}
+.panel #head.blue{background-color:#F2F5FE;border-bottom: 1px solid #ddd;position:relative;}
+.panel #head a{text-decoration:underline;color:#393;font-size:18px;}
 .panel .facility-intro{margin:10px;}
-.panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
+.panel h5{color:#4c4bcc;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
 .panel h5 a{text-decoration:none;}
 .panel .dir-head h5{width:320px;}
 .panel #map_partial h5{height:75px;width:43%;padding:2px 0 0 19px;}
@@ -1248,7 +1248,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #client_settings .note{display:block;font-size:80%;margin-top:5px;}
 #client_listing_box .rslt-contact h3{font-size:80%;margin:2px 0 5px;}
 .hidden_form{display:none;}
-#listings_controller .flash{background:none;border:none}
+#listings_controller .flash{box-shadow:none;background:none;border:none}
 #listings_controller .error, #listings_controller .error p{color:#f00;overflow:visible;}
 #info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
