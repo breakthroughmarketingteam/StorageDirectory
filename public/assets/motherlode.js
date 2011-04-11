@@ -7464,6 +7464,11 @@ $(function() {
 		return $(this).parents('form').runValidation().data('valid');
 	});
 	
+	$('#TwitterCounter').click(function(e) {
+		if (e.target.tagName.toLowerCase() == 'div')
+			$('a', this).trigger('click');
+	});
+	
 	// ajaxify the login form and forgot password link
 	$('#login_link.ajax', '#topbar').click(function() {
 		var $this = $(this).removeClass('ajax'); // was added by the already member link, otherwise this is a normal link
@@ -7546,7 +7551,15 @@ $(function() {
 		return overlay;
 	}
 	
-	$('#forgot_pass_link', '#pop_up').live('click', function() {
+	$('#forgot_pass_link').live('click', function() {
+		var $this = $(this),
+			email = $('#user_session_email', '#login-form'),
+			href = $this.attr('href');
+		
+		if (email.val() && email.val() != '' && email.val() != email.attr('title')) {
+			$this.attr('href', href +'?email='+ email.val());
+		}
+		/*
 		var $this = $(this),
 			pop_up = $('#pop_up.login_box'),
 			ajax_loader = $.new_ajax_loader('after', this).show(),
@@ -7570,7 +7583,7 @@ $(function() {
 			
 			ajax_loader.hide();
 		});
-		return false;
+		return false;*/
 	});
 	
 	$('#password_resets_form').live('submit', function() {

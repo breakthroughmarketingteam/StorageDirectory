@@ -11,6 +11,13 @@ class Search < ActiveRecord::Base
     %w(5 10 15 20)
   end
   
+  def self.save_new_search(new_search, old_search, session)
+    new_search.save
+    session[:sid] = new_search.id
+    old_search.add_child new_search
+    new_search
+  end
+  
   def before_create
     # because mysql default values don't seem to work for this model
     if self.storage_type.blank? then self.storage_type = 'self storage' end

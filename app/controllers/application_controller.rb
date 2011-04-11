@@ -534,8 +534,9 @@ class ApplicationController < ActionController::Base
   
   def get_or_create_search
     mylogger "before get or create search: session sid: #{session[:sid]}"
+    @search = Search.find_by_id(session[:sid])
     
-    if @search = Search.find_by_id(session[:sid])
+    if @search
       mylogger "found search #{@search}"
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
@@ -543,22 +544,25 @@ class ApplicationController < ActionController::Base
       
       if @diff_search
         mylogger "is diff than #{@new_search}"
-        @new_search.save
-        @search.add_child @new_search
+        # delay the saving of the search models because the add_child method take almost a second to execute a sql query
+        # store the search model in the session to be able to access current attributes
+        if RAILS_ENV == 'development'
+          Search.save_new_search @new_search, @search, session
+        else
+          Search.delay.save_new_search @new_search, @search, session
+        end
         @search = @new_search
       end
     else
-      mylogger "Not found search, remote ip #{request.remote_ip}"
+      mylogger "No search found, remote ip #{request.remote_ip}"
       remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
       session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
       @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
       @diff_search = true
     end
     
-    #mylogger "final search #{@search}"
-    
+    mylogger "final search #{@search}"
     @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
-    session[:sid] = @search.id
   end
   
   def build_search_attributes(params)

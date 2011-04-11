@@ -62,6 +62,8 @@ class Listing < ActiveRecord::Base
   ajaxful_rateable
   sitemap :order => 'updated_at DESC'
   
+  named_scope :enabled, :conditions => { :enabled => true }
+  
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
@@ -114,7 +116,7 @@ class Listing < ActiveRecord::Base
     @listings = begin
       Listing.all options
     rescue ArgumentError 
-      Listing.all options.except(:within)
+      Listing.enabled.find options.except(:within)
     end
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
