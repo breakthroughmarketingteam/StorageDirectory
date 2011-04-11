@@ -308,8 +308,8 @@ class ListingsController < ApplicationController
   def get_listing_relations
     @pictures = @listing.pictures
     @reviews = @listing.reviews.published.paginate :per_page => 10, :page => params[:review_page]
-    @size = params[:size] ? @listing.sizes.find(params[:size]) : @listing.get_searched_size(@search)
-    @special = @listing.predefined_specials.find params[:special] if params[:special]
+    @size = params[:size].blank? ? @listing.get_searched_size(@search) : @listing.sizes.find(params[:size])
+    @special = @listing.predefined_specials.find params[:special] unless params[:special].blank?
     
     if in_mode? 'profile'
       @facility_features = FacilityFeature.all.map &:title
