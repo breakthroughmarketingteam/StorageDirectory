@@ -1,6 +1,8 @@
+embed_assets: on
 package_assets: on
-compress_assets: on
+compress_assets: off
 gzip_assets: on
+javascript_compressor: closure
 
 javascripts:
   motherlode:

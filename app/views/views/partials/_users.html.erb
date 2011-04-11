@@ -24,7 +24,7 @@
 			</div>
 			
 			<% unless model.verification_sent_at.nil? %>
-				<img class="veri_at right" src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkmark.png" alt="Verification sent at: <%= model.verification_sent_at.asctime %>" title="Verification sent at: <%= model.verification_sent_at.asctime %>">
+				<img class="veri_at right" src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkmark.png" alt="Verification sent at: <%= model.verification_sent_at.asctime %>" title="Verification sent at: <%= model.verification_sent_at.asctime %>">
 			<% end %>
 			
 			<span class="title">

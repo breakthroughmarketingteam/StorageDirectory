@@ -961,8 +961,9 @@ $.queryToHash = function(query) {
 
 $.hashToQuery = function(hash) {
 	var query = [];
-	for (key in hash)
+	for (key in hash) {
 		query.push([key, hash[key]].join('='));
+	}
 	return query.join('&');
 }
 
@@ -974,7 +975,6 @@ $.sort_stuff = function(sort_link, elements, selector, sortFunc) {
 	
 	elements.sortElements(function(a, b) {
 		return sortFunc(a, b);
-
 	}, function() {
 		return $(this).children(selector)[0];
 	});
@@ -990,7 +990,7 @@ $.safeSubmit = function(form, options) {
 		error 	   : null,
 		al_where   : 'before',
 		al_context : $('input[type=submit]', form),
-		ajax_loader: true,
+		ajax_loader: true
 	};
 	$.extend(ops, options);
 	
