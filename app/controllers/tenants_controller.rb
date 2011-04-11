@@ -30,6 +30,7 @@ class TenantsController < ApplicationController
 
           if @rental.save
             @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
+            # TODO: why do we get an ActionView error when we use delay here?
             @rental.deliver_emails
 
             conf_data = { 
