@@ -313,12 +313,14 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
+    @sort_by = session[:model_sort_by] = params[:sort]
+    
     if params[:filter_by] == 'tag'
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
       
-    elsif params[:sort] && current_model && current_model.column_names.include?(params[:sort])
-      session[:model_sort_dir] = !session[:model_sort_dir]
-      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{params[:sort]} #{session[:model_sort_dir] ? 'ASC' : 'DESC'}'"
+    elsif @sort_by && current_model && current_model.column_names.include?(@sort_by)
+      session[:model_sort_dir] = params[:sort].blank? ? true : !session[:model_sort_dir]
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{@sort_by} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
       
     else
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"

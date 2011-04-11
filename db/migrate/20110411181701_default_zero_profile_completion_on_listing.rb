@@ -7,7 +7,7 @@ class DefaultZeroProfileCompletionOnListing < ActiveRecord::Migration
     
     listings.each_with_index do |listing, i|
       listing.update_attribute :profile_completion, 0 if listing.profile_completion.blank?
-      puts "-----> #{sprintf("%.2f", i.to_f, count.to_f}% done. updated listing #{listing.id}"
+      puts "-----> #{sprintf("%.2f", (i.to_f / count.to_f * 100))}% done. updated listing #{listing.id}"
     end
     
     puts "DONE"
