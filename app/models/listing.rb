@@ -70,8 +70,9 @@ class Listing < ActiveRecord::Base
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
   @@searchables    = %w(title address city state zip phone)
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
+  @@sortables      = %w(profile_completion state city clicks_count impressions_count info_requests_count)
   @@proration      = 0.03333
-  cattr_reader :top_types, :comparables, :searchables, :categories
+  cattr_reader :top_types, :comparables, :searchables, :categories, :sortables
   
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)

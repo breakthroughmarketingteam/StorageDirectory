@@ -172,6 +172,8 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'gallery'
     elsif controller_name =~ /(users)$|(clients)|(tenants)/
       session[:view_type] = 'users'
+    elsif controller_name == 'listings'
+      session[:view_type] = 'listings'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('image_file_name')
@@ -311,8 +313,13 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
-    case params[:filter_by] when 'tag'
+    if params[:filter_by] == 'tag'
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+      
+    elsif params[:sort] && current_model && current_model.column_names.include?(params[:sort])
+      session[:model_sort_dir] = !session[:model_sort_dir]
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{params[:sort]} #{session[:model_sort_dir] ? 'ASC' : 'DESC'}'"
+      
     else
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
     end

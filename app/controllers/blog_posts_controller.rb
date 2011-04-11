@@ -15,7 +15,7 @@ class BlogPostsController < ApplicationController
   end
   
   def rss
-    get_models
+    @blog_posts = BlogPost.published.sort_by(&:created_at).reverse
   end
 
   def show
