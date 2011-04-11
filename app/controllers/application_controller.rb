@@ -544,13 +544,8 @@ class ApplicationController < ActionController::Base
       
       if @diff_search
         mylogger "is diff than #{@new_search}"
-        # delay the saving of the search models because the add_child method take almost a second to execute a sql query
-        # store the search model in the session to be able to access current attributes
-        if RAILS_ENV == 'development'
-          Search.save_new_search @new_search, @search, session
-        else
-          Search.delay.save_new_search @new_search, @search, session
-        end
+        @new_search.save
+        @search.delay.add_child @new_search # takes almost 1 second
         @search = @new_search
       end
     else
@@ -563,6 +558,7 @@ class ApplicationController < ActionController::Base
     
     mylogger "final search #{@search}"
     @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
+    session[:sid] = @search.id
   end
   
   def build_search_attributes(params)
