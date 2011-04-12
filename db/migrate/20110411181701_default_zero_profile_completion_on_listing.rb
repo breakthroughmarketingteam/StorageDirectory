@@ -1,7 +1,7 @@
 class DefaultZeroProfileCompletionOnListing < ActiveRecord::Migration
   def self.up
     puts '-----> Caching listings with no profile completion'
-    listings = Listing.all :conditions => { :profile_completion => nil }
+    listings = Listing.all :conditions => { :profile_completion => nil }, :limit => 10_000
     count = listings.size
     puts "-----> Cached #{count} listings"
     
