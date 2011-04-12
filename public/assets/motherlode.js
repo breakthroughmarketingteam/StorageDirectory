@@ -7461,11 +7461,6 @@ $(function() {
 		return $(this).parents('form').runValidation().data('valid');
 	});
 	
-	$('#TwitterCounter').click(function(e) {
-		if (e.target.tagName.toLowerCase() == 'div')
-			$('a', this).trigger('click');
-	});
-	
 	// ajaxify the login form and forgot password link
 	$('#login_link.ajax', '#topbar').click(function() {
 		var $this = $(this).removeClass('ajax'); // was added by the already member link, otherwise this is a normal link

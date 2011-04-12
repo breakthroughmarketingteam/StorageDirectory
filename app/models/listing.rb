@@ -191,13 +191,8 @@ class Listing < ActiveRecord::Base
   
   def self.update_stats(listings, stat, request, user)
     listings.each do |listing|
-      listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+      listing.update_stat(stat, request) unless user.respond_to?(:listings) && user.listing_ids.include?(listing.id)
     end
-  end
-  
-  def update_listing_click_and_search(stat, search, request, user)
-    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
-    search.update_attribute :listing_id, self.id
   end
   
   # create a stat record => clicks, impressions
@@ -205,7 +200,10 @@ class Listing < ActiveRecord::Base
     self.send(stat).create request
   end
   
-  # Instance Methods
+  def update_search_and_listing_stat(stat, search, request, user)
+    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
+    search.update_attribute :listing_id, self.id
+  end
   
   def verified?
     self.status == 'verified'
