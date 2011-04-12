@@ -43,3 +43,4 @@ Disallow: /users/
 Disallow: /views/
 Disallow: /login/
 Disallow: /logout/
+Disallow: /claim/
