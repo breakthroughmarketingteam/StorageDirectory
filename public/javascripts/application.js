@@ -97,7 +97,15 @@ $(function() {
 		return overlay;
 	}
 	
-	$('#forgot_pass_link', '#pop_up').live('click', function() {
+	$('#forgot_pass_link').live('click', function() {
+		var $this = $(this),
+			email = $('#user_session_email', '#login-form'),
+			href = $this.attr('href');
+		
+		if (email.val() && email.val() != '' && email.val() != email.attr('title')) {
+			$this.attr('href', href +'?email='+ email.val());
+		}
+		/*
 		var $this = $(this),
 			pop_up = $('#pop_up.login_box'),
 			ajax_loader = $.new_ajax_loader('after', this).show(),
@@ -121,7 +129,7 @@ $(function() {
 			
 			ajax_loader.hide();
 		});
-		return false;
+		return false;*/
 	});
 	
 	$('#password_resets_form').live('submit', function() {

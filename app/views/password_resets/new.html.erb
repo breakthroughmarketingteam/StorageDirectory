@@ -7,7 +7,7 @@
 			<div class="stack i">
 				<%= label_tag :email, nil, :class => 'hidden' %>
 				<div class="shadow_wrap">
-	  			<%= text_field_tag :email, nil, :class => 'email hintable required', :title => 'Your Email Address' %>
+	  			<%= text_field_tag :email, params[:email], :class => 'email hintable required', :title => 'Your Email Address' %>
 				</div>
 			</div>
 		

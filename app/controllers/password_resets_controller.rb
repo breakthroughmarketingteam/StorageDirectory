@@ -16,7 +16,7 @@ class PasswordResetsController < ApplicationController
     
     if @user
       @user.delay.deliver_password_reset_instructions!
-      msg = 'You will soon resceive an email with instructions to reset your password. Please allow a few minutes for the email to arrive.'
+      msg = 'We\'ve sent you an email with instructions to reset your password. Please allow a few minutes for the email to arrive.'
       
       respond_to do |format|
         format.html do

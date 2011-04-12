@@ -1,0 +1,31 @@
+<ul class="listings_view list_view plain">
+	<% data.each do |model| %>
+		<li id="<%= model_class_and_id(model) %>" class="medium_round <%= cycle('odd', 'even') %>">
+			<div class="buttons left_space right">
+				<%= render :partial => 'shared/edit_delete_link', :locals => { :model => model } %>
+			</div>
+			
+			<div class="left_space right note" style="width:52px;">
+				<%= model.status %>
+			</div>
+			
+			<span class="profile_completion right" style="width:40px;">
+				<%= number_to_percentage model.profile_completion, :precision => 2 %>
+			</span>
+			
+			<% if model.respond_to?(:client) && model.client %>
+				<span class="listing_client right" style="width:60px;">
+					<a href="/clients/<%= model.client.id %>/edit"><%= model.client.name %></a>
+				</span>
+			<% end %>
+			
+			<span class="title">
+				<span class="note">(<%= model.id %>)</span>
+				<%= link_to model_name_or_title(model), model_path(model) %>
+			</span>
+			
+		</li>
+	<% end %>
+</ul>
+
+<%= render :partial => 'views/paginate', :locals => { :data => data } %>

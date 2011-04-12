@@ -62,6 +62,8 @@ class Listing < ActiveRecord::Base
   ajaxful_rateable
   sitemap :order => 'updated_at DESC'
   
+  named_scope :enabled, :conditions => { :enabled => true }
+  
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
@@ -70,8 +72,9 @@ class Listing < ActiveRecord::Base
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
   @@searchables    = %w(title address city state zip phone)
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
+  @@sortables      = %w(profile_completion state city clicks_count impressions_count info_requests_count)
   @@proration      = 0.03333
-  cattr_reader :top_types, :comparables, :searchables, :categories
+  cattr_reader :top_types, :comparables, :searchables, :categories, :sortables
   
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
@@ -113,7 +116,7 @@ class Listing < ActiveRecord::Base
     @listings = begin
       Listing.all options
     rescue ArgumentError 
-      Listing.all options.except(:within)
+      Listing.enabled.find options.except(:within)
     end
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
@@ -188,13 +191,8 @@ class Listing < ActiveRecord::Base
   
   def self.update_stats(listings, stat, request, user)
     listings.each do |listing|
-      listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+      listing.update_stat(stat, request) unless user.respond_to?(:listings) && user.listing_ids.include?(listing.id)
     end
-  end
-  
-  def update_listing_click_and_search(stat, search, request, user)
-    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
-    search.update_attribute :listing_id, self.id
   end
   
   # create a stat record => clicks, impressions
@@ -202,7 +200,10 @@ class Listing < ActiveRecord::Base
     self.send(stat).create request
   end
   
-  # Instance Methods
+  def update_search_and_listing_stat(stat, search, request, user)
+    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
+    search.update_attribute :listing_id, self.id
+  end
   
   def verified?
     self.status == 'verified'

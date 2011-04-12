@@ -172,6 +172,8 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'gallery'
     elsif controller_name =~ /(users)$|(clients)|(tenants)/
       session[:view_type] = 'users'
+    elsif controller_name == 'listings'
+      session[:view_type] = 'listings'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('image_file_name')
@@ -311,8 +313,15 @@ class ApplicationController < ActionController::Base
   
   def get_models_paginated
     @paginated = true
-    case params[:filter_by] when 'tag'
+    @sort_by = session[:model_sort_by] = params[:sort]
+    
+    if params[:filter_by] == 'tag'
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.tagged_with(params[:tag]).paginate :all, :per_page => #{@per_page}, :page => params[:page], :order => 'id desc'"
+      
+    elsif @sort_by && current_model && current_model.column_names.include?(@sort_by)
+      session[:model_sort_dir] = params[:sort].blank? ? true : !session[:model_sort_dir]
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{@sort_by} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
+      
     else
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
     end
@@ -525,8 +534,9 @@ class ApplicationController < ActionController::Base
   
   def get_or_create_search
     mylogger "before get or create search: session sid: #{session[:sid]}"
+    @search = Search.find_by_id(session[:sid])
     
-    if @search = Search.find_by_id(session[:sid])
+    if @search
       mylogger "found search #{@search}"
       # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
       @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
@@ -535,19 +545,18 @@ class ApplicationController < ActionController::Base
       if @diff_search
         mylogger "is diff than #{@new_search}"
         @new_search.save
-        @search.add_child @new_search
+        @search.delay.add_child @new_search # takes almost 1 second
         @search = @new_search
       end
     else
-      mylogger "Not found search, remote ip #{request.remote_ip}"
+      mylogger "No search found, remote ip #{request.remote_ip}"
       remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
       session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
       @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
       @diff_search = true
     end
     
-    #mylogger "final search #{@search}"
-    
+    mylogger "final search #{@search}"
     @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
     session[:sid] = @search.id
   end

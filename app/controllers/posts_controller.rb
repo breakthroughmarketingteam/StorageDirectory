@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @post ||= Post.published.first
     @title = "#{@post.title} - #{@post.tag_list.split(/,\s?/).flatten.map(&:titleize).join(', ')}"
     
     respond_to do |format|

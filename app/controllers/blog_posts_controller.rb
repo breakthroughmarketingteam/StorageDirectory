@@ -11,11 +11,15 @@ class BlogPostsController < ApplicationController
     get_blog_posts
     @page = Page.find_by_title 'Self Storage Blog' unless user_is_a? 'admin', 'staff'
     
-    render :layout => false if request.xhr?
+    respond_to do |format|
+      format.html {}
+      format.js { render :layout => false }
+      format.rss { render :action => :rss }
+    end
   end
   
   def rss
-    get_models
+    @blog_posts = BlogPost.published.sort_by(&:created_at).reverse
   end
 
   def show

@@ -2267,10 +2267,10 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 
 #client_listing_box .listing .rslt-contact{width: 170px;padding-right: 0px;}
 .panel #head{padding-bottom:15px;}
-.panel #head.blue{background-color:#4c4bcc;position:relative;}
-.panel #head a{text-decoration:underline;color:#fff;font-size:18px;}
+.panel #head.blue{background-color:#F2F5FE;border-bottom: 1px solid #ddd;position:relative;}
+.panel #head a{text-decoration:underline;color:#393;font-size:18px;}
 .panel .facility-intro{margin:10px;}
-.panel h5{color:#fff;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
+.panel h5{color:#4c4bcc;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
 .panel h5 a{text-decoration:none;}
 .panel .dir-head h5{width:320px;}
 .panel #map_partial h5{height:75px;width:43%;padding:2px 0 0 19px;}
@@ -2468,7 +2468,7 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #client_settings .note{display:block;font-size:80%;margin-top:5px;}
 #client_listing_box .rslt-contact h3{font-size:80%;margin:2px 0 5px;}
 .hidden_form{display:none;}
-#listings_controller .flash{background:none;border:none}
+#listings_controller .flash{box-shadow:none;background:none;border:none}
 #listings_controller .error, #listings_controller .error p{color:#f00;overflow:visible;}
 #info-accordion h3{color:#4c4bcc;font-size:28px;margin-bottom:10px;line-height:34px;}
 #sl-tabs .flash,.sl-table-exp .flash{margin-right:20px;width:auto;}
@@ -3101,10 +3101,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step1  .col3 ul{display:block;float:right;margin:20px 0 0 0;width:100%;line-height:1;border:0 none;}
 #rent_step1  .col3 ul li{font-weight:bold;margin:0 0 10px;float:none;}
 #rent_step1  .col3 ul li span{font-size:14px;}
-#rent_step1  .col3 ul li.total_wrap span{font-size:18px;}
-.rental_form .col3 li.total_wrap{font-size:16px;}
-.rental_form .col3 li.discount_wrap{color:#f60;}
-.rental_form .col3 li.usssl_discount{color:#f60;}
+#rent_step1  .col3 ul li.total_wrap span{}
+.rental_form .col3 li.total_wrap{}
+.rental_form .col3 li.usssl_discount_wrap, .rental_form .col3 li.discount_wrap{color:red;}
 .rental_form .col3 span{color:#4c4bcc;}
 .rental_form .col3 .grey{color:#999;float:none;}
 .rental_form .col3 .grey span{float:none;color:#999;}
@@ -3316,7 +3315,11 @@ p.breadcrumb a{color:#fff;}
 #moving td.distance{color:#4c4bcc;font-weight:bold;}
 #moving .even .marker,#moving .even .name,#moving .even .address,#moving .even .divider,#moving .even .distance{background:#f3f3f3;}
 #moving .num_icon{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/result-number.png) no-repeat;color:#fff;font-weight:bold;height:32px;padding:7px 0 0;text-align:center;position:static;text-shadow:1px 1px 0 #666;width:29px;}
-
+#model_sort{clear:both;overflow:hidden;}
+#model_sort li{float:left;}
+#model_sort li span{font-size:80%;}
+#model_sort li a{padding:0 5px;}
+.listings_view .profile_completion{font-size:80%;}
 #fac-features #feats{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
 #top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/trialbg.png?1297708320) repeat-x;color:#fff;height:103px;margin-top:30px;overflow:hidden;}
 #top_fac_page #fac-features #heading h3{display:block;float:left;font-size:30px;font-weight:bold;line-height:30px;margin:17px 0 0 15px;text-shadow: -1px -1px 1px #333;}
@@ -3498,3 +3501,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 
 #sec-menu a{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x #339933;border-bottom-left-radius:6px;border-bottom-right-radius:6px;color:#FFFFFF;float:right;font-size:11px;margin-right:20px;padding:4px 15px;text-decoration:none;text-shadow:1px 1px 0 #666666;}
 #sec-menu a:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn-hover.png) repeat-x transparent;}
+
+#social_box #TwitterCounter{background:url(/images/ui/twitter-count.gif?1302556177) no-repeat center;border:2px solid #ebebeb;float:right;cursor:pointer;font-family:Myriad,arial,sans-serif;text-align:center;font-size:20px;font-weight:bold;height:56px;margin-right:10px;width:69px;}
+#TwitterCounter a{color:#FFF;text-decoration:none;display:block;padding-top:5px;width:100%;height:50px;}
