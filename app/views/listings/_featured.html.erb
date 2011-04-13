@@ -2,6 +2,7 @@
 	<% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') %>
 	<div class="shimmy">
 		<div id="feat_wrap">
+		
 		<% unless @featured_listing.nil? %>
 			<div id="feat-list" class="listing">
 				<h2>Featured Listing</h2>
@@ -31,7 +32,8 @@
 					</div>
 					<% end %>
 
-					<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true, :context => 'featured' } %>
+					<% unit_size = @featured_listing.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size) %>
+					<%= render :partial => 'listings/distance_and_price', :locals => { :listing => @featured_listing, :feat => true, :context => 'featured', :unit_size => unit_size } %>
 					<%= compare_link @featured_listing, 'featured' unless @featured_listing.sizes.empty? %>
 			
 					<div id="more-info">

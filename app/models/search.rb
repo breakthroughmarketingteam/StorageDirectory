@@ -27,11 +27,25 @@ class Search < ActiveRecord::Base
   
   # always start with a fat healthy search model, only geocode if query different from last search
   def initialize(attributes, request, old_search = nil)
-    super attributes
-    self.set_request! request
-    self.set_query! old_search if self.query.blank? && self.lat.blank?
-    self.set_location!((old_search && (old_search.query == self.query) && self.lat.blank? ? old_search.location : attributes)) # geocode when nil
-    self.set_unit_type! attributes
+    self.class.benchmark 'super attributes' do
+      super attributes
+    end
+  
+    self.class.benchmark 'self.set_request!' do
+      self.set_request! request
+    end
+
+    self.class.benchmark 'self.set_query!' do
+      self.set_query! old_search if self.query.blank? && self.lat.blank?
+    end
+  
+    self.class.benchmark 'self.set_location!' do
+      self.set_location!((old_search && (old_search.query == self.query) && self.lat.blank? ? old_search.location : attributes)) # geocode when nil
+    end
+  
+    self.class.benchmark 'self.set_unit_type!' do
+      self.set_unit_type! attributes
+    end
   end
   
   def self.create_from_geoloc(request, loc, storage_type)

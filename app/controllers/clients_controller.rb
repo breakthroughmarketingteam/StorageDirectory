@@ -6,7 +6,8 @@ class ClientsController < ApplicationController
   before_filter :get_client, :only => [:edit, :edit_info, :verify_listings]
   
   def index
-    @clients = Client.activated.paginate :per_page => @per_page, :page => params[:page]
+    options = ops_with_sort(:conditions => { :status => 'active' }, :per_page => @per_page, :page => params[:page])
+    @clients = Client.paginate :all, options
     render :layout => false if request.xhr?
   end
 

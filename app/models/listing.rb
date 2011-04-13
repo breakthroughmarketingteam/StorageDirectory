@@ -1,6 +1,6 @@
 class Listing < ActiveRecord::Base
   
-  belongs_to :client, :foreign_key => 'user_id', :touch => true
+  belongs_to :client, :foreign_key => 'user_id', :touch => true, :counter_cache => true
   
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact', :dependent => :destroy

@@ -397,7 +397,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 #feat-list .dnp li.rslt-miles{display:block;font-size:12px;padding:0;text-align:center;width:100%;}
 #feat-list .dnp li.rslt-miles span{color:#4c4bcc;font-weight:bold;}
 #feat-list .dnp li.rslt-miles span.shifted-text{color:#000;font-weight:normal;}
-#feat-list .dnp li.rslt-size .size{margin:35px 18px 0 0;float:right;font-size:14px;font-weight:bold;}
+#feat-list .dnp li.rslt-size .size{font-size:14px;font-weight:bold;}
 #feat-list .dnp li.rslt-price li div{margin:0;float:none;}
 #feat-list .dnp .rslt-price .radio_wrap label{line-height:14px;width:100%;}
 #reserve_steps{min-height:380px;}
@@ -1772,6 +1772,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list .compare{margin:10px;font-size:120%;}
 #feat-list #wrap{margin-bottom:0;padding:0 10px 10px;}
 #feat-list img{float:left;margin-bottom:5px;}
+#feat-list li.rslt-size{text-align:center;}
+#feat-list li.rslt-size img{float:none;margin:0;}
 #feat-list .dlogo_wrap span{font-size:140%;padding-top:10px;}
 #feat-list .dlogo_wrap span.short{font-size:10px;line-height:14px;padding-top:10px;}
 #feat-list .full{width:100%;}
