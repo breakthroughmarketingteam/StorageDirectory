@@ -2992,6 +2992,8 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list .compare{margin:10px;font-size:120%;}
 #feat-list #wrap{margin-bottom:0;padding:0 10px 10px;}
 #feat-list img{float:left;margin-bottom:5px;}
+#feat-list li.rslt-size{text-align:center;}
+#feat-list li.rslt-size img{float:none;margin:0;}
 #feat-list .dlogo_wrap span{font-size:140%;padding-top:10px;}
 #feat-list .dlogo_wrap span.short{font-size:10px;line-height:14px;padding-top:10px;}
 #feat-list .full{width:100%;}

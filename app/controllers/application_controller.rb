@@ -170,9 +170,9 @@ class ApplicationController < ActionController::Base
       session[:view_type] = 'list'
     elsif controller_name =~ /(images)|(galleries)|(pictures)|(size_icons)|(ad_partners)/
       session[:view_type] = 'gallery'
-    elsif controller_name =~ /(users)$|(clients)|(tenants)/
+    elsif controller_name =~ /(users)$|(clients)|(tenants)|(#{params[:model_class] || '0'})/i
       session[:view_type] = 'users'
-    elsif controller_name == 'listings'
+    elsif controller_name == 'listings' || (params[:model_class] && params[:model_class] =~ /(listing)/i)
       session[:view_type] = 'listings'
     elsif model_class.respond_to?('column_names') && model_class.column_names.include?('content')
       session[:view_type] = 'table'
