@@ -563,7 +563,7 @@ class ApplicationController < ActionController::Base
         mylogger "No search found, remote ip #{request.remote_ip}"
         remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
         
-        benchmark "search create #{session[:geo_location].values.empty? ? 'and geocode' : 'no geocode needed'}" do
+        benchmark "search create #{session[:geo_location] ? 'no geocode needed' : 'and geocode'}" do
           session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
           @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
           @diff_search = true
