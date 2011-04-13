@@ -610,6 +610,20 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def ops_with_sort ops
+    if params[:sort]
+      session[:model_sort_dir] =  (params[:sort] == session[:model_sort_by]) ? !session[:model_sort_dir] : true
+      session[:model_sort_by] = params[:sort].dup
+      ops[:order] = params[:sort].dup
+    else
+      session[:model_sort_dir] ||= true
+      ops[:order] = session[:model_sort_by] = 'created_at'
+    end
+    
+    ops[:order] << (session[:model_sort_dir] ? ' DESC' : ' ASC')
+    ops
+  end
+  
   # TODO: ytf doesnt facility_url work?!
   def facility_path_for(listing, options = {})
     return '' if listing.new_record?

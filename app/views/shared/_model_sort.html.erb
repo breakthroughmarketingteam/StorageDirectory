@@ -1,6 +1,6 @@
 <ul id="model_sort">
 	<li><span>Sort by: </span></li>
 	<% model_class.sortables.each do |sortable| %>
-		<li><a href="<%= "/#{model_class.to_controller_str}?sort=#{sortable}" %>"><%= sortable.titleize %></a></li>
+		<li><a href="<%= "/#{model_class.to_controller_str}?sort=#{sortable}" %>" <%= " class='active'" if params[:sort] %>><%= sortable.titleize %></a></li>
 	<% end %>
 </ul>
