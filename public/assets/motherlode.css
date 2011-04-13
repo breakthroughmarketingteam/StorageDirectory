@@ -1617,7 +1617,7 @@ li.rslt-miles,li.rslt-size{height:88px;}
 #feat-list .dnp li.rslt-miles{display:block;font-size:12px;padding:0;text-align:center;width:100%;}
 #feat-list .dnp li.rslt-miles span{color:#4c4bcc;font-weight:bold;}
 #feat-list .dnp li.rslt-miles span.shifted-text{color:#000;font-weight:normal;}
-#feat-list .dnp li.rslt-size .size{margin:35px 18px 0 0;float:right;font-size:14px;font-weight:bold;}
+#feat-list .dnp li.rslt-size .size{font-size:14px;font-weight:bold;}
 #feat-list .dnp li.rslt-price li div{margin:0;float:none;}
 #feat-list .dnp .rslt-price .radio_wrap label{line-height:14px;width:100%;}
 #reserve_steps{min-height:380px;}

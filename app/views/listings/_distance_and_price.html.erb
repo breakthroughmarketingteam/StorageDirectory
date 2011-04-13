@@ -22,6 +22,11 @@
 					</li>
 				<% end %>
 			</ul>		
-		</li>			
+		</li>
+	<% else %>	
+		<li class="rslt-size">
+			<%= image_tag unit_size.icon.url %>
+			<span class="size"><%= unit_size.full_title %></span>
+		</li>
 	<% end %>
 </ul>

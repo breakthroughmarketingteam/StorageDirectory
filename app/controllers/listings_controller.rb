@@ -7,7 +7,10 @@ class ListingsController < ApplicationController
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request, :claim_listings]
   before_filter :get_listing_relations, :only => [:show, :profile]
   before_filter :get_or_create_search, :only => [:home, :locator, :compare, :show, :profile]
-  geocode_ip_address :only => [:home, :locator]
+  
+  benchmark 'Calling geocode_ip_address in class body' do
+    geocode_ip_address :only => [:home, :locator]
+  end
   
   def index 
     render :layout => false if request.xhr?
@@ -20,29 +23,40 @@ class ListingsController < ApplicationController
   end
   
   def locator
-    benchmark do
+    benchmark 'Locator Action Wrap' do
       # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
       
       @location = @search.location
-      @listings = @search.results params[:strict_order] # this calls the Listing model
-      @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
-      @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
       
-      # updates the impressions only for listings on current page if the search has changed
-      Listing.delay.update_stats(@listings, :impressions, simple_request_obj, current_user) if @diff_search
+      benchmark 'Calling @search.results' do
+        @listings = @search.results params[:strict_order] # this calls the Listing model
+      end
       
-      respond_to do |format|
-        format.html {}
-        format.js do
-          if params[:auto_search]
-            render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data, :query => @search.city_state_and_zip } }
-          else
-            # implementing this ajax response for the search results 'Show More Results' button
-            render :json => { :success => !@listings.blank?, :data => { :listings => _get_listing_partials(@listings), :maps_data => @map_data } }
+      benchmark 'Calling listings.paginate and putting @map_data together' do
+        @listings = @listings.paginate :page => params[:page], :per_page => (params[:per_page] || @listings_per_page)
+        @map_data = { :center => { :lat => @location.lat, :lng => @location.lng, :zoom => 12 }, :maps => @listings.collect { |listing| @template.map_data_for(listing, :request => request) } }
+      end
+      
+      benchmark 'calling Listing.delay.update_stats' do
+        # updates the impressions only for listings on current page if the search has changed
+        Listing.delay.update_stats(@listings, :impressions, simple_request_obj, current_user) if @diff_search
+      end
+      
+      benchmark 'respond_to block wrap' do
+        respond_to do |format|
+          format.html {}
+          format.js do
+            if params[:auto_search]
+              render :json => { :success => true, :data => { :results => render_to_string(:action => 'locator', :layout => false), :maps_data => @map_data, :query => @search.city_state_and_zip } }
+            else
+              # implementing this ajax response for the search results 'Show More Results' button
+              render :json => { :success => !@listings.blank?, :data => { :listings => _get_listing_partials(@listings), :maps_data => @map_data } }
+            end
           end
         end
       end
+      
     end
   end
   

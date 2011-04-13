@@ -534,31 +534,49 @@ class ApplicationController < ActionController::Base
   
   def get_or_create_search
     mylogger "before get or create search: session sid: #{session[:sid]}"
-    @search = Search.find_by_id(session[:sid])
     
-    if @search
-      mylogger "found search #{@search}"
-      # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
-      @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
-      @diff_search = Search.diff? @search, @new_search
-      
-      if @diff_search
-        mylogger "is diff than #{@new_search}"
-        @new_search.save
-        @search.delay.add_child @new_search # takes almost 1 second
-        @search = @new_search
+    benchmark 'get_or_create_search Method Wrap' do
+      @search = Search.find_by_id(session[:sid])
+    
+      if @search
+        mylogger "found search #{@search}"
+        
+        benchmark 'getting new search' do
+          # we want to create a new search everytime to keep track of the progression of a user's habits, but only if they changed some parameter
+          @new_search = Search.new((params[:search] || build_search_attributes(params)), request, @search)
+        end
+        
+        benchmark 'calling diff?' do
+          @diff_search = Search.diff? @search, @new_search
+        end
+        
+        if @diff_search
+          mylogger "is diff than #{@new_search}"
+          
+          benchmark 'new_search save and delay.add_child' do
+            @new_search.save
+            @search.delay.add_child @new_search # takes almost 1 second
+            @search = @new_search
+          end
+        end
+      else
+        mylogger "No search found, remote ip #{request.remote_ip}"
+        remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
+        
+        benchmark "search create #{session[:geo_location].values.empty? ? 'and geocode' : 'no geocode needed'}" do
+          session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
+          @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
+          @diff_search = true
+        end
       end
-    else
-      mylogger "No search found, remote ip #{request.remote_ip}"
-      remote_ip = (RAILS_ENV == 'development') ? '65.83.183.146' : request.remote_ip
-      session[:geo_location] ||= Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
-      @search = Search.create_from_geoloc request, session[:geo_location], params[:storage_type]
-      @diff_search = true
-    end
     
-    mylogger "final search #{@search}"
-    @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
-    session[:sid] = @search.id
+      mylogger "final search #{@search}"
+      
+      benchmark 'Search update sort' do
+        @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
+        session[:sid] = @search.id
+      end
+    end
   end
   
   def build_search_attributes(params)
@@ -601,22 +619,6 @@ class ApplicationController < ActionController::Base
     l
   rescue
     $!
-  end
-  
-  def benchmark(title = "#{controller_name}##{action_name}")
-    hr = '**********************************************************************************************************************************'
-    cur = Time.now
-    result = yield
-    print "#{hr}\nBENCHMARK (#{title}): #{cur = Time.now - cur} seconds"
-    puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n#{hr}" rescue puts ""
-    $last_benchmark = cur
-    result
-  end
-  
-  def mylogger(text)
-    puts "\n********************************************************************************* MY LOGGER **************************************************************************************\n"
-    puts "-----> #{text}\n"
-    puts "**********************************************************************************************************************************************************************************\n"
   end
   
 end

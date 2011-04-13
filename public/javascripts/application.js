@@ -15,6 +15,14 @@ $(function() {
 		return $(this).parents('form').runValidation().data('valid');
 	});
 	
+	var twitcount = $("#TwitterCounter");
+	if (twitcount.length > 0) {
+		$.getJSON('http://api.twitter.com/1/users/show.json', { screen_name: 'StorageLocator' }, function(data) {
+			console.log(data)
+			twitcount.children('span').html(data.followers_count);
+	    });
+	}
+	
 	// ajaxify the login form and forgot password link
 	$('#login_link.ajax', '#topbar').click(function() {
 		var $this = $(this).removeClass('ajax'); // was added by the already member link, otherwise this is a normal link

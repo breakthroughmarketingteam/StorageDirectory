@@ -57,6 +57,22 @@ module SharedModelMethods #:nodoc:
       self.reflect_on_all_associations.map(&:name).include? assoc
     end
     
+    def benchmark(title = "#{controller_name}##{action_name}")
+      cur = Time.now
+      result = yield
+      out = "BENCHMARK (#{title}): #{cur = Time.now - cur} seconds"
+      out << " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n" rescue ""
+      mylogger out
+      $last_benchmark = cur
+      result
+    end
+
+    def mylogger(text)
+      puts "\n********************************************************************************* MY LOGGER **************************************************************************************\n"
+      puts "-----> #{text}\n"
+      puts "**********************************************************************************************************************************************************************************\n"
+    end
+    
   end
   
   # This module contains instance methods
