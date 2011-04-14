@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  listing_id: 1
+  referrer: MyText
+  request_uri: MyText
+  remote_ip: MyString
+
+two:
+  listing_id: 1
+  referrer: MyText
+  request_uri: MyText
+  remote_ip: MyString

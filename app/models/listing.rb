@@ -15,6 +15,7 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
+  has_many :phone_views,   :dependent => :destroy
   has_many :comparisons,   :dependent => :destroy
   has_many :compares,      :through => :comparisons
   has_many :staff_emails,  :dependent => :destroy
