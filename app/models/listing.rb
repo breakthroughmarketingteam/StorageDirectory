@@ -196,7 +196,6 @@ class Listing < ActiveRecord::Base
   
   def self.top_cities_of(state, limit = 50)
     cities = self.find_by_sql "SELECT city AS name, full_state AS state, COUNT(id) AS count FROM listings WHERE state ILIKE '#{States.abbrev_of state}' OR state ILIKE '#{States.name_of state}' GROUP BY name, state ORDER BY count DESC LIMIT #{limit}"
-    
     cities.sort_by &:name
   end
   
