@@ -81,7 +81,7 @@ class Search < ActiveRecord::Base
   
   def set_query!(old_search = nil)
     if self.city
-      self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size > 2 ? self.state.upcase : self.state)}"
+      self.query = "#{self.city.titleize}#{self.state && ', ' + (self.state.size == 2 ? self.state.upcase : self.state.titleize)}"
     elsif old_search && old_search.query
       self.query = old_search.query
     end
@@ -93,13 +93,13 @@ class Search < ActiveRecord::Base
         self.lat   = location.lat
         self.lng   = location.lng
         self.city  = location.city
-        self.state = location.state
+        self.state = location.state.try :titleize
         self.zip   = location.zip if self.zip.nil?
       when 'Hash'
         self.lat   = location[:lat]
         self.lng   = location[:lng]
         self.city  = location[:city].try :titleize
-        self.state = location[:state]
+        self.state = location[:state].try :titleize
         self.zip   = location[:zip] if self.zip.nil?
       end
       

@@ -29,52 +29,48 @@ module SitemapGenerator
       end
       
       @path = ''
-      if model_instance.class.name == 'UsCity'
+      
+      # monkey patch by d.s. for usssl
+      case model_instance.class.name when 'UsCity'
         add_city_to_skipped model_instance
+        @xml.url { @xml.loc(@path); add_xml } unless @@skip
+        puts "added sitemap record: UsCity [#{@path}]"
+      
+      when 'Listing'
+        @path = "http://#{Options.domain}#{facility_path_for(model_instance)}"
+        @xml.url { @xml.loc(@path); add_xml }
+        puts "added sitemap record: Listing [#{@path}]"
+        
+      when 'Page'
+        @path = "http://#{Options.domain}#{page_title(model_instance)}"
+        @xml.url { @xml.loc(@path); add_xml }
+        puts "added sitemap record: Page [#{@path}]"
+      
+      when 'Post'
+        @path = "http://#{Options.domain}#{post_title(model_instance)}"
+        @xml.url { @xml.loc(@path); add_xml }
+        puts "added sitemap record: Post [#{@path}]"
+      
       else
-        @@skip = false
+        @path = "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
+        @xml.url { @xml.loc(@path); add_xml }
+        puts "added sitemap record: #{model_instance.class.name} [#{@path}]"
       end
       
-      @xml.url do
-        # monkey patch by d.s. for usssl
-        case model_instance.class.name when 'UsCity'
-          @xml.loc @path
-          puts "added sitemap record: UsCity [#{@path}]"
-        
-        when 'Listing'
-          @path = "http://#{Options.domain}#{facility_path_for(model_instance)}"
-          @xml.loc @path
-          puts "added sitemap record: Listing [#{@path}]"
-          
-        when 'Page'
-          @path = "http://#{Options.domain}#{page_title(model_instance)}"
-          @xml.loc @path
-          puts "added sitemap record: Page [#{@path}]"
-        
-        when 'Post'
-          @path = "http://#{Options.domain}#{post_title(model_instance)}"
-          @xml.loc @path
-          puts "added sitemap record: Post [#{@path}]"
-        
-        else
-          @path = "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
-          @xml.loc @path
-          puts "added sitemap record: #{model_instance.class.name} [#{@path}]"
-        end
-        
-        @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
-        @xml.changefreq change_freq.to_s if change_freq
-        @xml.priority priority if priority
-        
-      end unless @@skip || (model_instance.class.name == 'Listing' && !model_instance.premium?)
+    end
+    
+    def add_xml
+      @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
+      @xml.changefreq change_freq.to_s if change_freq
+      @xml.priority priority if priority
     end
     
     def add_city_to_skipped(model)
       @path = "http://#{Options.domain}#{get_us_city_url(model)}"
 
-      #puts [@path, @@added_cities.include?(model.name), !Listing.top_cities.include?(model.name.downcase)].inspect
+      #puts [@path, @@added_cities.include?(model.name), !Listing.top_active_cities.include?(model.name.downcase)].inspect
       
-      if @@added_cities.include?(model.name) || !Listing.top_cities.include?(model.name.downcase)
+      if @@added_cities.include?(model.name) || !Listing.top_active_cities.include?(model.name.downcase)
         puts "Skipped: #{model.name}"
         @@skip = true
       else
@@ -100,7 +96,11 @@ module SitemapGenerator
     end
     
     def facility_path_for(listing, options = {})
-      facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options
+      facility_path listing.storage_type.parameterize.to_s, listing.city.parameterize.to_s, state_abreev_to_full(listing.state).parameterize.to_s, listing.title.parameterize.to_s, listing.id, options
+    end
+    
+    def state_abreev_to_full(a)
+      a.size == 2 ? States.name_of(a) : a.try(:titleize)
     end
     
     def page_title(page)

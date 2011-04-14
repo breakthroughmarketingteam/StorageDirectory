@@ -4,8 +4,8 @@ class UsCity < ActiveRecord::Base
   
   def self.all_that_have_listings
     @all_that_have_listings ||= self.find_by_sql <<-SQL
-      SELECT DISTINCT us_cities.name, us_cities.state, maps.updated_at FROM us_cities, maps
-      WHERE us_cities.name LIKE maps.city
+      SELECT DISTINCT us_cities.name, us_cities.state, listings.updated_at FROM us_cities, listings
+      WHERE us_cities.name LIKE listings.city
       ORDER BY us_cities.name
     SQL
   end

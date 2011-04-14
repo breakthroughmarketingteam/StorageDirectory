@@ -628,11 +628,15 @@ class ApplicationController < ActionController::Base
   def facility_path_for(listing, options = {})
     return '' if listing.new_record?
     #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
-    l = "/#{listing.storage_type.parameterize}/#{listing.state.parameterize}/#{listing.city.parameterize}/#{listing.title.parameterize}/#{listing.id}"
+    l = "/#{listing.storage_type.parameterize}/#{listing.city.parameterize}/#{state_abreev_to_full(listing.state).parameterize}/#{listing.title.parameterize}/#{listing.id}"
     l << "?#{options.to_query}" unless options.values.empty?
     l
   rescue
     $!
+  end
+  
+  def state_abreev_to_full(a)
+    a.size == 2 ? States.name_of(a) : a.try(:titleize)
   end
   
 end
