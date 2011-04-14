@@ -31,9 +31,9 @@
 		<div id="top_cities">
 			<p><strong>Most Popular <%= params[:storage_type] ? params[:storage_type].titleize : 'Self Storage' %> Cities <%= "in #{States.name_of @search.state}" if params[:state] %></strong></p>
 			<div class="wrapper">
-				
+				<% cache "Listings-#{Listing.count}" do %>
 					<%= display_top_cities(params[:state] ? Listing.top_cities_of(@search.state) : Listing.top_cities) %>
-
+				<% end %>
 			</div>
 		</div>
 		

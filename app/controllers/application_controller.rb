@@ -533,6 +533,8 @@ class ApplicationController < ActionController::Base
   end
   
   def get_or_create_search
+    fix_old_city_state_param_order
+    
     mylogger "before get or create search: session sid: #{session[:sid]}"
     
     benchmark 'get_or_create_search Method Wrap' do
@@ -576,6 +578,16 @@ class ApplicationController < ActionController::Base
         @search.update_attribute :sort_reverse, (params[:search][:sort_reverse] == '-' ? '+' : '-') if params[:search]
         session[:sid] = @search.id
       end
+    end
+  end
+  
+  # I changed the param order and put city in front of state, teehee
+  def fix_old_city_state_param_order
+    if States.is_state?(params[:city])
+      state = params[:city].dup
+      city = params[:state].dup
+      params[:state] = params[:city].dup
+      params[:city] = city
     end
   end
   

@@ -3972,6 +3972,7 @@ $(function(){
 	$('.txt_ldr').txt_loader();
 	$('.shimmy').shimmy('#page-cnt');
 	$('.aProxy').aProxy();
+	$('.click_to_view').phoneNumHider();
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
@@ -4956,24 +4957,33 @@ $.safeLinkPost = function(link, options) {
 		method 	   : 'post',
 		success    : function(){},
 		error 	   : function(){},
+		use_loader : true,
+		reset	   : true,
 		al_where   : 'before',
 		al_context : link,
 		data	   : { authenticity_token: $.get_auth_token() }
 	};
 	$.extend(ops, options);
 
-	var link 		= $(link),
+	var link 		= $(link);
+	
+	if (ops.use_loader)
 		ajax_loader = $.new_ajax_loader(ops.al_where, ops.al_context);
 
 	if (!link.data('x')) {
 		link.data('x', true);
-		ajax_loader.show();
+
+		if (ops.use_loader) 
+			ajax_loader.show();
 
 		$[ops.method](link.attr('href'), ops.data, function(response) {
 			$.with_json(response, ops.success, ops.error);
-
-			link.data('x', false);
-			ajax_loader.fadeOutRemove();
+			
+			if (ops.reset)
+				link.data('x', false);
+			
+			if (ops.use_loader) 
+				ajax_loader.fadeOut();
 		}, 'json');
 	}
 }
@@ -5330,49 +5340,48 @@ $.fn.shimmy = function(parent, ops) {
 	var options = {
 			anchor: 'left'
 		},
-		parent = $(parent);
-	$.extend(options, ops || {});
-	
-	var getScrollXY = function() {
-		var scrOfX = 0, scrOfY = 0;
+		parent = $(parent),
+		getScrollXY = function() {
+			var scrOfX = 0, scrOfY = 0;
 
-		if (typeof window.pageYOffset == 'number') {
-			//Netscape compliant
-			scrOfY = window.pageYOffset;
-			scrOfX = window.pageXOffset;
-		} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
-			//DOM compliant
-			scrOfY = document.body.scrollTop;
-			scrOfX = document.body.scrollLeft;
-		} else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
-			//IE6 standards compliant mode
-			scrOfY = document.documentElement.scrollTop;
-			scrOfX = document.documentElement.scrollLeft;
-		}
-
-		return [scrOfX, scrOfY];
-	}
-	
-	var shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
-		var window_offset = getScrollXY(),
-			diff 		  = (window_offset[1] + 10) - el_offset.top,
-			btm_plus_diff = btm_from_top + diff,
-			btm_pos;
-		
-		if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
-			if ($.browser.SafariMobile) {
-				el.css({ 'position': 'absolute', 'top': diff });
-			} else {
-				el.css({ 'position': 'fixed', 'top': 0 });
+			if (typeof window.pageYOffset == 'number') {
+				//Netscape compliant
+				scrOfY = window.pageYOffset;
+				scrOfX = window.pageXOffset;
+			} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+				//DOM compliant
+				scrOfY = document.body.scrollTop;
+				scrOfX = document.body.scrollLeft;
+			} else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
+				//IE6 standards compliant mode
+				scrOfY = document.documentElement.scrollTop;
+				scrOfX = document.documentElement.scrollLeft;
 			}
+
+			return [scrOfX, scrOfY];
+		},
+		shimmy_meow = function(el, el_offset, el_pos, el_height, parent_height, btm_from_top, pad) {
+			var window_offset = getScrollXY(),
+				diff 		  = (window_offset[1] + 10) - el_offset.top,
+				btm_plus_diff = btm_from_top + diff,
+				btm_pos;
+		
+			if (diff >= 0 && parent_height >= btm_plus_diff) {		// moving with the window
+				if ($.browser.SafariMobile) {
+					el.css({ 'position': 'absolute', 'top': diff });
+				} else {
+					el.css({ 'position': 'fixed', 'top': 0 });
+				}
 			
-		} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
-			btm_pos = parent_height - el_pos.top - el_height - pad;
-			el.css({ 'position': 'relative', 'top': btm_pos +'px' });
-		} else { 														// resting up top like normal
-			el.css('position', 'relative');
+			} else if (diff >= 0 && parent_height <= btm_plus_diff) { // hit the bottom of the container
+				btm_pos = parent_height - el_pos.top - el_height - pad;
+				el.css({ 'position': 'relative', 'top': btm_pos +'px' });
+			} else { 														// resting up top like normal
+				el.css('position', 'relative');
+			}
 		}
-	}
+	
+	$.extend(options, ops || {});
 	
 	return this.each(function() {
 		var $this = $(this).css({ 'position': 'relative', 'top': '0' }),
@@ -5389,13 +5398,6 @@ $.fn.shimmy = function(parent, ops) {
 			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		});
 		
-		// watch out for the advanced features box opening, it will change <this> offset, and others
-		$.setInterval(function() {
-			//this_offset	 = $this.offset();
-			//this_pos 	 = $this.position(parent);
-			//parent_height = parent.height();
-			//btm_from_top = this_pos.top + this_height + pad;
-		}, 2011);
 	});
 }
 
@@ -5494,6 +5496,26 @@ $.fn.displayWordCount = function(callback) {
 		$this.keyup(function() {
 			count = extract_words(this.value).length;
 			update_display(display, count);
+		});
+	});
+}
+
+$.fn.phoneNumHider = function() {
+	return this.each(function() {
+		var $this = $(this);
+			num = $this.text(),
+			hide = 'View Phone Number';
+		
+		$this.text(hide).click(function() {
+			$.safeLinkPost($this, {
+				reset	   : false,
+				use_loader : false,
+				success    : function(data) {
+					$this.text($(this).text() == hide ? num : hide).data('x', true);
+				}
+			});
+			
+			return false;
 		});
 	});
 }

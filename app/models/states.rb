@@ -91,4 +91,10 @@ class States
     return '' if abbrev.nil?
     (state_name_hash[abbrev.to_s.upcase] || abbrev).titleize
   end
+  
+  def self.is_state?(s)
+    return false if s.nil?
+    NAMES.any? { |ss| ss[0].downcase == s.downcase || ss[1].downcase == s.downcase }
+  end
+  
 end
