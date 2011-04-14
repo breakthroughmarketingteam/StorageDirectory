@@ -34,7 +34,9 @@
 					<% if result.premium? && result.tracked_number %>
 						<%= result.tracked_number %>
 					<% elsif !result.phone.blank? %>
-						<span class="click_to_view" data-update="/ajax/update?model_class=Listing&id=<%= result.id %>"><%= result.phone %></span>
+						<a class="click_to_view" href="/ajax/update_stat?model_class=Listing&id=<%= result.id %>&stat=phone_views_count">
+							<%= result.phone %>
+						</a>
 					<% end %>
 				</span></p>
 				

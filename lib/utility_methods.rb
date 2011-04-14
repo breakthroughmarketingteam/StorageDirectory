@@ -95,7 +95,7 @@ module UtilityMethods
     cur = Time.now
     result = yield
     out = "BENCHMARK (#{title}): #{cur = Time.now - cur} seconds"
-    out << " (#{(cur / $last_benchmark * 100).to_i - 100}% change)\n" rescue ""
+    out << "\n(#{(cur / $last_benchmark * 100).to_i - 100}% change)\n" rescue ""
     mylogger out
     $last_benchmark = cur
     result

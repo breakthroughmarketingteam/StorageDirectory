@@ -93,7 +93,7 @@ class Search < ActiveRecord::Base
         self.lat   = location.lat
         self.lng   = location.lng
         self.city  = location.city
-        self.state = location.state.try :titleize
+        self.state = location.state
         self.zip   = location.zip if self.zip.nil?
       when 'Hash'
         self.lat   = location[:lat]

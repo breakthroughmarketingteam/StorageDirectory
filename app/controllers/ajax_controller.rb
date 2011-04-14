@@ -4,7 +4,7 @@ class AjaxController < ApplicationController
   ssl_required :get_client_stats, :destroy, :modeL_method
   ssl_allowed :get_partial, :get_multipartial, :find_listings, :get_cities, :get_attributes, :export_csv
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
-  before_filter :_get_model, :only => [:get_model, :get_listing, :update, :destroy, :get_multipartial, :model_method]
+  before_filter :_get_model, :only => [:get_model, :get_listing, :update, :update_stat, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv, :destroy]
   
   def get_client_stats
@@ -75,7 +75,7 @@ class AjaxController < ApplicationController
   end
   
   def model_method
-    authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
+    authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'update' do
       data = (@model || @model_class).send(params[:model_method])
       json_response
     end
@@ -135,6 +135,10 @@ class AjaxController < ApplicationController
     json_response errors.empty?, "#{errors * ', '}"
   end
   
+  def update_stat
+    @model.update_stat params[:stat], request if @model.respond_to?(:update_stat) && @model.respond_to?(params[:stat])
+  end
+  
   def destroy
     authorize_and_perform_restful_action_on_model @model.class.to_controller_str, 'destroy' do
       @model.destroy
@@ -157,7 +161,7 @@ class AjaxController < ApplicationController
   
   private
   
-  def authorize_and_perform_restful_action_on_model(resource, action, &block)
+  def authorize_and_perform_restful_action_on_model(resource, action)
     if current_user && current_user.has_permission?(resource, action, params, (@model || _get_model))
       yield
     else
