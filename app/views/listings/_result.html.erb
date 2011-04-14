@@ -29,10 +29,15 @@
 					<span class="rslt-address"><%= result.address %>,</span><br />
 					<span class="rslt-citystate"><%= result.city_state_zip %></span>
 				</p>
-				<% if result.premium? && result.tracked_number %>
-					<p><span class="rslt-phone"><%= result.tracked_number %></span></p>
-				<% end %>
-			
+				
+				<p><span class="rslt-phone">
+					<% if result.premium? && result.tracked_number %>
+						<%= result.tracked_number %>
+					<% elsif !result.phone.blank? %>
+						<span class="click_to_view" data-update="/ajax/update?model_class=Listing&id=<%= result.id %>"><%= result.phone %></span>
+					<% end %>
+				</span></p>
+				
 				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %>
 			</div>
 		

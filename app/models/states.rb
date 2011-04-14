@@ -84,11 +84,11 @@ class States
   
   def self.abbrev_of(name)
     return '' if name.nil?
-    (state_abbrev_hash[name.to_s] || name).titleize
+    (state_abbrev_hash[name.to_s.titleize] || name).upcase
   end
   
   def self.name_of(abbrev)
     return '' if abbrev.nil?
-    (state_name_hash[abbrev.to_s] || abbrev).upcase
+    (state_name_hash[abbrev.to_s.upcase] || abbrev).titleize
   end
 end

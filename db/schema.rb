@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110413213507) do
+ActiveRecord::Schema.define(:version => 20110414172909) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -530,6 +530,7 @@ ActiveRecord::Schema.define(:version => 20110413213507) do
     t.float    "lat"
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
+    t.string   "full_state"
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"

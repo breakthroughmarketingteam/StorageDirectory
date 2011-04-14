@@ -175,9 +175,7 @@ class AjaxController < ApplicationController
   
   def _get_model(model_str = nil, id = nil)
     @model_str = model_str unless model_str.blank?
-    @model = _get_model_class(model_str).find(id || params[:id]) if _get_model_class.exists?(id || params[:id])
-  rescue
-    nil
+    @model = _get_model_class(model_str).find_by_id(id || params[:id])
   end
   
   def _get_model_class(model_str = nil)
