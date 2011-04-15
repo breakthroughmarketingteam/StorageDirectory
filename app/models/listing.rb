@@ -80,6 +80,7 @@ class Listing < ActiveRecord::Base
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
+    self.ensure_both_state_fields_present!
   end
   
   def self.verified_count
@@ -285,6 +286,14 @@ class Listing < ActiveRecord::Base
       "/ajax/get_partial?model=Listing&id=#{id}&partial=listings/#{name.to_s}&show_size_ops=true"
     else
       "/ajax/get_partial?model=Listing&id=#{id}&partial=views/partials/greyresults/#{name.to_s}&show_size_ops=true"
+    end
+  end
+  
+  def ensure_both_state_fields_present!
+    if self.state.blank?
+      self.state = States.abbrev_of(self.full_state)
+    elsif self.full_state.blank?
+      self.state = States.name_of(self.state)
     end
   end
   

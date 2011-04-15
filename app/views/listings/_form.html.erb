@@ -26,8 +26,8 @@
 	
 			<div class="stack uncollapse">
 				<div class="left right_space">
-					<%= f.label :state, nil, :class => 'block left w100' %>
-					<%= f.select :state, States.names, :class => 'required' %>
+					<%= f.label :full_state, 'State', :class => 'block left w100' %>
+					<%= f.select :full_state, States.names, :class => 'required' %>
 				</div>
 		
 				<div class="left">
@@ -54,7 +54,7 @@
 	
 		<div class="framed shorter">
 			<div class="stack uncollapse">
-				<div class="left right_space">
+				<div class="left right_space stack">
 					<%= f.check_box :enabled %>
 					<%= f.label :enabled %>
 				</div>
@@ -83,7 +83,7 @@
 				
 				<div class="left">
 					<%= f.label :tracked_number, nil, :class => 'block left w80' %>
-					<%= f.text_field :tracked_number, :class => 'required tiny_text_field' %>
+					<%= f.text_field :tracked_number, :class => 'tiny_text_field' %>
 				</div>
 			</div>
 		</div>

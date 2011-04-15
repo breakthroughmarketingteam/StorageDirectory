@@ -6825,6 +6825,7 @@ $(function(){
 				results_page.replaceWith(data.results);
 				$.setGmap(data.maps_data);
 				$.enableTooltips('a', '.rslt-features');
+				$('.click_to_view').phoneNumHider();
 				select_first_size_option();
 				// TODO: this doesnt cause the compare link to appear
 				//$('input[name=compare]', '.listing').autoClickFew(3);
