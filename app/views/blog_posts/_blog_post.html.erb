@@ -3,7 +3,7 @@
 	<div class="blog_post uncollapse">
 		<%= render :partial => 'posts/post_date', :locals => { :post => blog_post } %>
 		
-		<h3><%= link_to blog_post.name_or_title, blog_post %></h3>
+		<h2><%= link_to blog_post.name_or_title, blog_post %></h2>
 		<div class="blog_post_info">
 			<% if blog_post.respond_to?('user') && blog_post.user %>
 				<span> by <%= link_to blog_post.user.name, blog_post.user %></span>
