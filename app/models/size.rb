@@ -19,8 +19,19 @@ class Size < ActiveRecord::Base
     self.first :conditions => ['width = ? AND length = ?', unit_size.split('x')[0], unit_size.split('x')[1]]
   end
   
+  def self.sqft_from_dims_str(dims)
+    return 0 if dims['x'].nil?
+    d = dims.split('x').map &:to_i
+    d[0] * d[1]
+  end
+  
   def display_dimensions
     "#{width} x #{length}"
+  end
+  
+  def is_close_to?(size, threshold = 3)
+    sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size
+    self.sqft.between? sq - threshold, sq + threshold
   end
   
   def dollar_price

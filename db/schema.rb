@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414201240) do
+ActiveRecord::Schema.define(:version => 20110414214426) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -643,6 +643,15 @@ ActiveRecord::Schema.define(:version => 20110414201240) do
   end
 
   add_index "permissions", ["id", "role_id"], :name => "index_permissions_on_id_and_role_id"
+
+  create_table "phone_views", :force => true do |t|
+    t.integer  "listing_id"
+    t.text     "referrer"
+    t.text     "request_uri"
+    t.string   "remote_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pictures", :force => true do |t|
     t.integer  "listing_id"

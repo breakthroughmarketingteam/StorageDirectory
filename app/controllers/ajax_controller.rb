@@ -89,7 +89,7 @@ class AjaxController < ApplicationController
   end
   
   def get_multipartial
-    render :partial => (params[:partial] || '/shared/pop_up'), :locals => { :sub_partial => params[:sub_partial], :locals => { :model => @model } }
+    render :partial => (params[:partial] || '/shared/pop_up'), :locals => { :sub_partial => params[:sub_partial], :locals => _get_model_and_locals }
     
   rescue => e
     render_error e
@@ -136,7 +136,8 @@ class AjaxController < ApplicationController
   end
   
   def update_stat
-    @model.update_stat params[:stat], request if @model.respond_to?(:update_stat) && @model.respond_to?(params[:stat])
+    @model.update_stat params[:stat], simple_request_obj if @model.respond_to?(:update_stat) && @model.respond_to?(params[:stat])
+    render :nothing => true
   end
   
   def destroy
@@ -180,10 +181,14 @@ class AjaxController < ApplicationController
   def _get_model(model_str = nil, id = nil)
     @model_str = model_str unless model_str.blank?
     @model = _get_model_class(model_str).find_by_id(id || params[:id])
+  rescue
+    mylogger $!
   end
   
   def _get_model_class(model_str = nil)
     @model_class ||= ((model_str || @model_str || params[:model]).camelcase.constantize rescue (model_str || @model_str || params[:model]).capitalize.camelcase.constantize)
+  rescue
+    mylogger $!
   end
   
   def _get_model_and_locals

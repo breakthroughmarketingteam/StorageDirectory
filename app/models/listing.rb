@@ -15,6 +15,7 @@ class Listing < ActiveRecord::Base
   has_many :info_requests, :dependent => :destroy
   has_many :clicks,        :dependent => :destroy
   has_many :impressions,   :dependent => :destroy
+  has_many :phone_views,   :dependent => :destroy
   has_many :comparisons,   :dependent => :destroy
   has_many :compares,      :through => :comparisons
   has_many :staff_emails,  :dependent => :destroy
@@ -79,6 +80,7 @@ class Listing < ActiveRecord::Base
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
+    self.ensure_both_state_fields_present!
   end
   
   def self.verified_count
@@ -287,8 +289,16 @@ class Listing < ActiveRecord::Base
     end
   end
   
+  def ensure_both_state_fields_present!
+    if self.state.blank?
+      self.state = States.abbrev_of(self.full_state)
+    elsif self.full_state.blank?
+      self.state = States.name_of(self.state)
+    end
+  end
+  
   def get_closest_unit_size(size)
-    @unit_size ||= self.available_sizes.detect { |s| s.dims == size } || self.available_sizes.first
+    @unit_size ||= self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
   end
   
   def get_upper_type_size(size)
@@ -347,6 +357,10 @@ class Listing < ActiveRecord::Base
   
   def premium?
     self.client && self.client.status == 'active' && !self.new_record?
+  end
+  
+  def any_phone
+    self.phone.blank? ? (self.contact && self.contact.phone) : self.phone
   end
   
   def unverified?
