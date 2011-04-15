@@ -1564,7 +1564,8 @@ $.fn.phoneNumHider = function() {
 			hide  = $this.attr('title');
 		
 		$this.text(hide).click(function() {
-			$this.text($(this).text() == hide ? num : hide);
+			if ($this.text() == num) return false;
+			$this.text(num);
 			
 			$.safeLinkPost($this, {
 				reset	   : false,

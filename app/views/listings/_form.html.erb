@@ -81,6 +81,11 @@
 					<%= f.text_field :storage_types, :class => 'required tiny_text_field hintable', :title => 'Separate by comma' %>
 				</div>
 				
+				<div class="left right_space">
+					<%= f.label :phone, nil, :class => 'block left w80' %>
+					<%= f.text_field :phone, :class => 'tiny_text_field' %>
+				</div>
+				
 				<div class="left">
 					<%= f.label :tracked_number, nil, :class => 'block left w80' %>
 					<%= f.text_field :tracked_number, :class => 'tiny_text_field' %>
