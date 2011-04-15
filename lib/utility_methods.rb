@@ -92,6 +92,14 @@ module UtilityMethods
     end
   end
   
+  Object.class_eval do
+    def to_phone
+      case self.class.name when 'String'
+        
+      end
+    end
+  end
+  
   def benchmark(title = "#{controller_name}##{action_name}")
     cur = Time.now
     result = yield
