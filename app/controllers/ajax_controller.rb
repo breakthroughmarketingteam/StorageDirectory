@@ -184,6 +184,8 @@ class AjaxController < ApplicationController
   
   def _get_model_class(model_str = nil)
     @model_class ||= ((model_str || @model_str || params[:model]).camelcase.constantize rescue (model_str || @model_str || params[:model]).capitalize.camelcase.constantize)
+  rescue
+    mylogger $!
   end
   
   def _get_model_and_locals
@@ -211,8 +213,6 @@ class AjaxController < ApplicationController
     @locals.merge!(:show_size_ops => params[:show_size_ops]) if params[:show_size_ops]
     
     @locals
-  rescue
-    mylogger $!
   end
   
   def json_response(status = true, data = nil)
