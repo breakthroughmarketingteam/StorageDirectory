@@ -180,6 +180,8 @@ class AjaxController < ApplicationController
   def _get_model(model_str = nil, id = nil)
     @model_str = model_str unless model_str.blank?
     @model = _get_model_class(model_str).find_by_id(id || params[:id])
+  rescue
+    mylogger $!
   end
   
   def _get_model_class(model_str = nil)
