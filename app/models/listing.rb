@@ -359,6 +359,10 @@ class Listing < ActiveRecord::Base
     self.client && self.client.status == 'active' && !self.new_record?
   end
   
+  def any_phone
+    self.phone.blank? ? (self.contact && self.contact.phone) : self.phone
+  end
+  
   def unverified?
     self.client.nil? || self.client.status == 'unverified'
   end
