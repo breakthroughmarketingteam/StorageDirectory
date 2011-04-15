@@ -136,7 +136,8 @@ class AjaxController < ApplicationController
   end
   
   def update_stat
-    @model.update_stat params[:stat], request if @model.respond_to?(:update_stat) && @model.respond_to?(params[:stat])
+    @model.update_stat params[:stat], simple_request_obj if @model.respond_to?(:update_stat) && @model.respond_to?(params[:stat])
+    render :nothing => true
   end
   
   def destroy

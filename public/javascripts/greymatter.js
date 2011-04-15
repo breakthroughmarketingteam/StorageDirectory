@@ -1564,12 +1564,11 @@ $.fn.phoneNumHider = function() {
 			hide  = $this.attr('title');
 		
 		$this.text(hide).click(function() {
+			$this.text($(this).text() == hide ? num : hide);
+			
 			$.safeLinkPost($this, {
 				reset	   : false,
-				use_loader : false,
-				success    : function(data) {
-					$this.text($(this).text() == hide ? num : hide).data('x', true);
-				}
+				use_loader : false
 			});
 			
 			return false;

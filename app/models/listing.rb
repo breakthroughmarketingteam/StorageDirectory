@@ -298,7 +298,7 @@ class Listing < ActiveRecord::Base
   end
   
   def get_closest_unit_size(size)
-    @unit_size ||= self.available_sizes.detect { |s| s.dims == size } || self.available_sizes.first
+    @unit_size ||= self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
   end
   
   def get_upper_type_size(size)
