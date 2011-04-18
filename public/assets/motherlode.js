@@ -5503,11 +5503,10 @@ $.fn.displayWordCount = function(callback) {
 // implements a "click to view number" link 
 $.fn.phoneNumHider = function() {
 	return this.each(function() {
-		var $this = $(this);
-			num   = $this.text(),
-			hide  = $this.attr('title');
-		
-		$this.text(hide).click(function() {
+		$(this).click(function() {
+			var $this = $(this),
+				num = $this.attr('data-num');
+				
 			if ($this.text() == num) return false;
 			$this.text(num);
 			

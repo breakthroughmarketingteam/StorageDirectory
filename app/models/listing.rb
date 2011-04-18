@@ -360,10 +360,8 @@ class Listing < ActiveRecord::Base
   end
   
   def any_phone
-    (self.phone.blank? ? (self.contact && self.contact.phone) : self.phone).to_phone
+    @any_phone ||= (self.phone.blank? ? (self.contact && self.contact.phone) : self.phone).try :to_phone
   end
-  
-  
   
   def unverified?
     self.client.nil? || self.client.status == 'unverified'

@@ -71,6 +71,11 @@ module UtilityMethods
   	    string.length <= count ? string : (splitted[0, words-1] || []).join(" ") + ' ...'
       end
     end
+    
+    def to_phone # 555-555-5555
+      return self unless self['-'].blank?
+      "#{self[0,3]}-#{self[3,3]}-#{self[6,6]}"
+    end
 
   end
 
@@ -89,14 +94,6 @@ module UtilityMethods
 
     def mean 
       sum_all / size
-    end
-  end
-  
-  Object.class_eval do
-    def to_phone
-      case self.class.name when 'String'
-        
-      end
     end
   end
   
