@@ -323,7 +323,7 @@ class ApplicationController < ActionController::Base
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{@sort_by} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
       
     else
-      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{session[:model_sort_by] ? session[:model_sort_by] : 'id'} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
     end
   end
   

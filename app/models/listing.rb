@@ -6,9 +6,6 @@ class Listing < ActiveRecord::Base
   has_one :contact, :class_name => 'ListingContact', :dependent => :destroy
   accepts_nested_attributes_for :contact
   
-  #has_one  :map, :dependent => :destroy
-  #accepts_nested_attributes_for :map
-  
   has_many :pictures,      :dependent => :destroy
   has_many :reservations,  :dependent => :destroy
   has_many :rentals,       :dependent => :destroy
