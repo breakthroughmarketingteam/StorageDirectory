@@ -54,7 +54,7 @@ class PicturesController < ApplicationController
 
   def destroy
     return if current_user.nil?
-    
+
     @listing = Listing.find params[:listing_id]
     @client = (current_user && current_user.has_role?('admin', 'staff')) ? @listing.client : current_user
     @listing = @client.listings.find(params[:listing_id])

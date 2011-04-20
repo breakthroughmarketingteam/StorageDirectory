@@ -19,12 +19,7 @@ class Rentalizer
             size    = p[1] ? listing.sizes.find_by_id(p[1].to_i) : listing.sizes.first
             special = listing.predefined_specials.find_by_id p[2].to_i
             
-            begin
-              rental_calc params, listing, size, special, true
-            rescue => e
-              puts mylogger(e.message)
-              rental_calc params, listing, nil, nil, true
-            end
+            rental_calc params, listing, (size.nil? ? nil : size), (special.nil? ? nil : special), true
           end
           
           out, mime = { :success => true, :data => data }.to_json, 'application/json'
@@ -110,15 +105,19 @@ class Rentalizer
     
     def get_paid_thru(listing, move_date, multiplier, special)
       months = special ? multiplier : (listing.prorated? ? 0 : multiplier)
-      end_month = Time.local move_date.year, move_date.month + months
-      days_in_end_month = Date.civil(end_month.year, end_month.month, -1).day
+      
+      end_date = (move_date.month + months).months.from_now
+      days_in_end_month = Date.civil(end_date.year, end_date.month, -1).day
       
       if listing.prorated?
         Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
       else
+        m = move_date.month + months
+        end_month = m > 12 ? 1 : m
+        end_year = m > 12 ? move_date.year + 1 : move_date.year
         d = move_date.day - 1
         d = d < 1 ? 1 : d
-        Time.local(move_date.year, move_date.month + months, d).strftime('%m/%d/%Y')
+        Time.local(end_year, end_month, d).strftime('%m/%d/%Y')
       end
     end
     

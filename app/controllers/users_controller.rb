@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  
+
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   ssl_allowed :authenticate
   skip_before_filter :simple_auth, :only => :authenticate

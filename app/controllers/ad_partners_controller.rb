@@ -1,5 +1,5 @@
 class AdPartnersController < ApplicationController
-  
+
   ssl_required :index, :show, :new, :create, :edit, :update, :destroy
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
@@ -13,6 +13,7 @@ class AdPartnersController < ApplicationController
   end
 
   def new
+    @ad_partner = AdPartner.new
     render :layout => false if request.xhr?
   end
 

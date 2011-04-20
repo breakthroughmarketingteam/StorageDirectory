@@ -36,7 +36,6 @@ ActionController::Routing::Routes.draw do |map|
   map.tenant_activate   '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
   map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
   map.map_dirs          '/directions/:from/:to', :controller => 'ajax', :action => 'dirs'
-                       
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
   

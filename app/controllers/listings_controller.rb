@@ -56,7 +56,6 @@ class ListingsController < ApplicationController
           end
         end
       end
-      
     end
   end
   

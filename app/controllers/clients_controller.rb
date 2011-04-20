@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
     @page = Page.find_by_title 'Self Storage Advertising'
     @client = Client.new
     @listing = Listing.find params[:listing_id] if params[:listing_id]
+
     render :layout => false if request.xhr?
   end
   

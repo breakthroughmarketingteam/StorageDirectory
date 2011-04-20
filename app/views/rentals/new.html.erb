@@ -122,7 +122,6 @@
 			<div id="rent_step2" class="workflow_step">
 				<div class="inner">
 					<% form_for Tenant.new, :url => tenants_url(:protocol => 'https'), :html => { :class => 'silent' } do |f| %>
-						
 						<div class="uncollapse">
 							<h4 class="stack">Renter Information</h4>
 							<%= link_to 'Already have an account?', login_path(), :id => 'already_member' %>
@@ -190,9 +189,7 @@
 							
 							<%= f.submit 'Save', :class => 'hide' %>
 						</div>
-				
 					<% end %>
-
 				</div>
 			</div>
 			

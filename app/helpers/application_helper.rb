@@ -580,16 +580,16 @@ module ApplicationHelper
   end
   
   def display_top_cities(cities, columns = 5, rows = 10)
-      lists = ''
-      columns.times do |i|
-        lists << '<ul>'
-        cities[i*rows, rows].each do |city|
-          lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.count})", self_storage_path(city.name.parameterize, city.full_state.parameterize)) +'</li>'
-        end if cities[i*rows, rows]
-        lists << '</ul>'
-      end
-      lists
+    lists = ''
+    columns.times do |i|
+      lists << '<ul>'
+      cities[i*rows, rows].each do |city|
+        lists << '<li>'+ link_to("#{city.name} <span class='hhh'>Self Storage</span>(#{city.count})", self_storage_path(city.name.parameterize, city.full_state.parameterize)) +'</li>'
+      end if cities[i*rows, rows]
+      lists << '</ul>'
     end
+    lists
+  end
   
   def greeting
     time = Time.now

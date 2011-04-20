@@ -58,6 +58,7 @@ class AjaxController < ApplicationController
     authorize_and_perform_restful_action_on_model @model_class.to_controller_str, 'index' do
       coords = [@model.lat, @model.lng]
       data = { :listing => @model.attributes, :map => @model.attributes, :lat => coords.lat, :lng => coords.lng  }
+      
       json_response true, data
     end
     
@@ -147,7 +148,6 @@ class AjaxController < ApplicationController
     
       json_response
     end
-  
   end
   
   def export_csv
@@ -179,7 +179,7 @@ class AjaxController < ApplicationController
   end
   
   def _get_model(model_str = nil, id = nil)
-    @model_str = model_str unless model_str.blank?
+    @model_str = model_str unless model_str.blank?\
     @model = _get_model_class(model_str).find_by_id(id || params[:id])
   rescue
     mylogger $!

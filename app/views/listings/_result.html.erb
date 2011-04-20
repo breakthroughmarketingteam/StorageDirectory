@@ -50,7 +50,7 @@
 				<%= results_main_button(result, unit_size) %>
 			</div>
 		</div>
-	
+		
 		<% if result.premium? %>
 			<div class="unit_detail">
 				<%= render :partial => 'unit_detail', :locals => { :listing => result } %>
@@ -59,7 +59,7 @@
 	</div>
 
 	<div class="panel"></div>
-
+	
 	<ul class="tabs">
 		<li class="open_tab_li">
 			<%= link_to '+', '#', :class => 'open_tab' %>
