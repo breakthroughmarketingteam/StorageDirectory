@@ -39,7 +39,7 @@ namespace :counts do
       }
     end
     
-    puts counts.pretty_inspect
+    puts counts.inspect.gsub(/,\s?/, ",\n")
   end
 
   
