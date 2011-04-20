@@ -22,7 +22,6 @@ namespace :counts do
   
   desc "returns a list with the cities that have the most active listings"
   task :stats => :environment do
-    require 'PP'
     counts = {}; out = "\n"
     stats_classes = [PhoneView, Click, Impression]
     
