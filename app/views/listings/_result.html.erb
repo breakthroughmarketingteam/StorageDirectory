@@ -40,7 +40,7 @@
 					<% end %>
 				</span></p>
 				
-				<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https') if user_is_a? 'admin', 'staff' %>
+				<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %>
 				
 				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %>
 			</div>
