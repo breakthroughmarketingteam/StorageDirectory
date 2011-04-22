@@ -33,7 +33,7 @@ ul{margin-left:10px;}
 
 /* map panel directions */
 #map_partial.inner_box{padding:13px 16px;}
-#map_partial{height:auto;overflow:hidden;background:url("/images/ui/storagelocator/blue-strip.gif") repeat-x top #F2F5FE;}
+#map_partial{height:auto;overflow:hidden;background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/blue-strip.gif") repeat-x top #F2F5FE;}
 #map_partial .left{width:40%;float:left;}
 #map_partial .office_hours{font-size:80%;margin:10px 0 10px 10px;}
 #map_partial .access_hours{font-size:80%;margin:10px 0 10px 10px;}
@@ -44,7 +44,7 @@ ul{margin-left:10px;}
 #map_partial .get_dir{display:none;}
 .google_map{background:#fff;padding:10px 10px 13px;margin:0 0 3px 0;float:right;width:50%;z-index:1000;}
 #dirs{padding:10px;float:left;background:#fff;margin:10px 0 0 -2px;width:99%;}
-.map_wrap,#google_map{background:url(/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border:3px solid #999;height:260px;width:340px;float:right;}
+.map_wrap,#google_map{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border:3px solid #999;height:260px;width:340px;float:right;}
 #street_view{display:none;}
 #google_map{margin-top:20px;}
 #pl{float:left;width:40%;}

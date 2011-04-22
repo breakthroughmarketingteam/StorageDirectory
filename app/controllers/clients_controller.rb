@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
     @page = Page.find_by_title 'Self Storage Advertising'
     @client = Client.new
     @listing = Listing.find params[:listing_id] if params[:listing_id]
+
     render :layout => false if request.xhr?
   end
   
@@ -42,7 +43,7 @@ class ClientsController < ApplicationController
     if @client.nil?
       redirect_to new_client_path
     else
-      @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 10, :page => params[:page], :order => 'id DESC', :include => :map)
+      @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 10, :page => params[:page], :order => 'id DESC')
       @settings = @client.settings || @client.build_settings
       @client_welcome = Post.tagged_with('client welcome').last.content if !is_admin? && @client.login_count == 1
       

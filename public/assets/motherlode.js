@@ -2838,7 +2838,7 @@ jQuery.fn.sortElements = (function(){
     };
 })();
 
-jQuery.ajaxSetup({ 
+jQuery.ajaxSetup({
   beforeSend: function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });
 
@@ -3059,6 +3059,7 @@ jQuery.fn.runValidation = function(silent) {
 	return form;
 };
 jQuery.extend(jQuery.browser, { SafariMobile : navigator.userAgent.toLowerCase().match(/iP(hone|ad)/i) });
+
 var Inflector = function(){};
 
 Inflector.prototype = {
@@ -3357,6 +3358,7 @@ g;v[i]={Img:o,src:g,altsrc:q,Title:o.attr("title")||m.attr("title")||"",Label:{m
   $.search.version = '1.0.0'
   
 })(jQuery);
+
 /*
  * jQuery Tools 1.2.5 - The missing UI library for the Web
  * 
@@ -4023,7 +4025,6 @@ $(function(){
 		$this.addClass('active');
 	});
 	
-	
 	$('.selectable').live('click', function(){
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
@@ -4086,7 +4087,7 @@ $(function(){
 			}
 			
 			//window.location.href = window.location.href.split('#')[0] + '#' + $this.attr('href');
-			
+
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
 				if (status == 'success') {
@@ -5168,7 +5169,7 @@ $.fn.appendParamAndGo = function() {
   				new_href = '',
   				has_param = href.indexOf('?') >= 0,
   				param = (has_param ? '&' : '?') + key +'='+ val;
-
+			
 			if(!val) return false;
 			
 			// replace any preexisting param values if the key is present
@@ -5195,6 +5196,7 @@ $.fn.openDiv = function() {
 			$('#'+div_to_open).slideToggle(600);
 			$this.parent('.bg').toggleClass('expanded');
 			if ($this.hasClass('toggle_right')) $this.toggleClass('toggle_down');
+
 			return false;
 		});
 	});
@@ -5397,7 +5399,6 @@ $.fn.shimmy = function(parent, ops) {
 		$(window).scroll(function() {
 			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		});
-		
 	});
 }
 
@@ -5615,6 +5616,7 @@ function get_pop_up_and_do(options, params, callback) {
 				$(this).dialog('destroy').remove();
 			}
 		});
+		
 		if (typeof callback == 'function') 
 			callback.call(this, pop_up);
 	});
@@ -5630,6 +5632,7 @@ function get_partial_and_do(params, callback) {
 }
 
 /**************** slide show and workflow object *******************/
+
 // Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see tips_show
 var GreyShow = function(options) {
 	var self = this;
@@ -5860,7 +5863,7 @@ Ajax.Request = function(url, params) {
 
 String.prototype.replaceAll = function(find, replace) {
     var temp = this, index = temp.indexOf(find);
-
+	
     while (index != -1) {
         temp = temp.replace(find, replace);
         index = temp.indexOf(find);
@@ -6013,7 +6016,6 @@ Date.prototype.format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
 
-
 // Greyresults 
 // Diego Salazar, Grey Robot, Inc. April, 2010
 // functionality specific to the listings results of USSelfStorageLocator.com
@@ -6058,7 +6060,7 @@ $(function(){
 	});
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
-		var form = $(this),
+		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
@@ -6104,7 +6106,7 @@ $(function(){
 				size.after(form);
 				size.hide();
 				
-				$('#size_price', form).val(parseInt($('#size_price', form).val()))
+				$('#size_price', form).val(parseInt($('#size_price', form).val()));
 				
 				$('.cancel_link', form).click(function() {
 					ajax_loader.hide();
@@ -6578,7 +6580,6 @@ $(function(){
 
 		if (special.length == 1)
 			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
-			
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -7172,7 +7173,6 @@ $.setGmap = function(data, el, page) {
 
 } // END setGmap()
 
-
 // updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
 function update_info_tab_count(label, i) {
 	var	tab = $('#tab_'+ label, '#sl-tabs'),
@@ -7212,7 +7212,7 @@ $.activateSizeSelect = function(context) {
 	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){
 		var $this = $(this);
-
+		
 		if ($this.attr('data-url') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('data-url')) return true; })) {
 			var img = new Image();
 			img.src = $this.attr('data-url');
@@ -9290,7 +9290,6 @@ function workflow_step2(wizard) {
 		listings_box.hide();
 		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
-
 		$.appendListingDataToBox(wizard.slide_data[0].data, listing_prototype, listings_box);
 		
 		setTimeout(function(){
@@ -9299,7 +9298,6 @@ function workflow_step2(wizard) {
 			
 			if (listing_id) 
 				$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
-				
 		}, 350);
 	}
 	
@@ -9512,7 +9510,6 @@ $.translate_with = function(translations) {
 		
 		$.each(this.elements, function() {
 			var element = $(this.element, page);
-			
 			if (element.length > 0)
 				element[this.method](this.translation);
 		});

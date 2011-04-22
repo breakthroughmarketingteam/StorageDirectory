@@ -1821,7 +1821,6 @@ function workflow_step2(wizard) {
 		listings_box.hide();
 		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
 		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
-
 		$.appendListingDataToBox(wizard.slide_data[0].data, listing_prototype, listings_box);
 		
 		setTimeout(function(){
@@ -1830,7 +1829,6 @@ function workflow_step2(wizard) {
 			
 			if (listing_id) 
 				$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
-				
 		}, 350);
 	}
 	
@@ -2043,7 +2041,6 @@ $.translate_with = function(translations) {
 		
 		$.each(this.elements, function() {
 			var element = $(this.element, page);
-			
 			if (element.length > 0)
 				element[this.method](this.translation);
 		});

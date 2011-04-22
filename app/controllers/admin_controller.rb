@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
-  
-  ssl_required :index
-  
+
+  ssl_required :index  
   @@unwanted_resources = /(admin)|(^sizes)|(maps)|(staff_emails)|(^specials)|(predef_special)|(links)|(suggestions)|(virtual_models)|(password_resets)|(us_states)|(widgets)|(business_hours)/i
   
   def index

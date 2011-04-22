@@ -11,7 +11,7 @@ class AdPartner < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => ['image/png', 'image/jpg', 'image/jpeg',  'image/gif']
   
   access_shared_methods
-
+  
   named_scope :all_enabled, :conditions => 'enabled IS TRUE', :order => 'position'
   
   @@searchables = %w(title description)

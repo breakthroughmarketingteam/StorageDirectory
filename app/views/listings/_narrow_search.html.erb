@@ -33,6 +33,7 @@
 				<label>Distance in miles:</label>
 				<div class="uncollapse">
 					<% Search.distance_options.each do |distance| -%>
+
 						<div class="radio_wrap auto">
 							<%= f.label "within_#{distance}", "#{distance}" %>							
 							<div class="radio_select">

@@ -36,7 +36,7 @@ span.blue{color:#4c4bcc;}
 #title a{color:#393;text-decoration:none;}
 #title h1{bottom:0;color:#333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -154,7 +154,6 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 .home #content,.home #content_bottom,.pages_1_ #content,.pages_1_ #content_bottom,.pages_1 #content,.pages_1 #content_bottom,#user_sessions_controller #content,#users_controller #content{float:none;width:auto;margin:0;position:static;}
 #type-two-r-col{width:776px;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;float:right;margin-bottom:10px;}
 #listings_controller.edit_action #narrow-box{overflow:hidden;}
-#sb-title{}
 #narrow-box h2{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/loupe-icon.png) no-repeat;color:#4C4BCC;height:42px;margin:4px 0 0 7px;padding:2px 0 0 54px;}
 #narrow-box p,#add-fac-box p{margin-top:5px;text-align:left;}
 #narrow-box a.search-opt{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/option-list-widest.png) no-repeat center right;height:38px;text-align:left;line-height:38px;width:125px;margin-left:10px;display:block;color:#666;text-decoration:none;}
@@ -192,7 +191,7 @@ input#narrow{border:1px solid #ccc;border-radius:8px;-moz-border-radius:8px;-web
 #tips-head #bub3{width:456px;height:188px;bottom:0;right:0;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/tips-hdr-img-bubble3.png) no-repeat;}
 #info-head{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/info-hdr-img.png) no-repeat;height:200px;}
 #info-in{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/clear-bg.png) repeat;margin:20px;padding:10px 20px 20px;width:385px;}
-#add-fac-head{background:url(/images/ui/storagelocator/add-fclty-hdr.png) no-repeat;height:237px;}
+#add-fac-head{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-fclty-hdr.png) no-repeat;height:237px;}
 #add-fac-head a.try-free{background:url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-free.png") no-repeat;color:#fff;display:block;font-size:18px;height:38px;margin:22px;padding:16px 0 0;text-align:center;text-shadow:1px 1px 0 #333;width:181px;}
 #rslt-head{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslt-hdr-img.png) no-repeat}
 .green-head .inner,#tips-head-in{padding:25px 30px;float:left;}
@@ -256,58 +255,57 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a{display:block;float:left;height:25px;margin-left:5px;width:25px;text-indent:-99999px;}
 
+.all-hour-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours.png) no-repeat;}
+.climate-controlled{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate.png) no-repeat;}
+.drive-up-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup.png) no-repeat;}
+.truck-rental{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/truck.png) no-repeat;}
+.automatic-payments{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/auto-pay.png) no-repeat;}
+.boxes-packing-supplies{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/boxes.png) no-repeat;}
+.business-center{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/business.png) no-repeat;}
+.carts-and-dollies{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/carts.png) no-repeat;}
+.deliveries-accepted{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/delivery.png) no-repeat;}
+.electricity-available{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/electric.png) no-repeat;}
+.extended-access-hours{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/extended.png) no-repeat;}
+.move-in-truck-w-rental{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/free-truck.png) no-repeat;}
+.humidity-controlled{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/humidity.png) no-repeat;}
+.keypad-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad.png) no-repeat;}
+.military-discounts{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/military.png) no-repeat;}
+.online-bill-pay{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/online-pay.png) no-repeat;}
+.on-site-manager{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/manager.png) no-repeat;}
+.se-habla-espanol{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish.png) no-repeat;}
+.secure-storage{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/secure-unit.png) no-repeat;}
+.security-cameras{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/security.png) no-repeat;}
+.self-service-kiosk{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/kiosk.png) no-repeat;}
+.senior-discounts{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/senior.png) no-repeat;}
+.gate-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/gate.png) no-repeat;}
+.perimeter-alarm-system{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/security.png) no-repeat;}
+.ac{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/ac.png) no-repeat;}
 
-.all-hour-access{background:url(/images/ui/storagelocator/hours.png) no-repeat;}
-.climate-controlled{background:url(/images/ui/storagelocator/climate.png) no-repeat;}
-.drive-up-access{background:url(/images/ui/storagelocator/driveup.png) no-repeat;}
-.truck-rental{background:url(/images/ui/storagelocator/truck.png) no-repeat;}
-.automatic-payments{background:url(/images/ui/storagelocator/auto-pay.png) no-repeat;}
-.boxes-packing-supplies{background:url(/images/ui/storagelocator/boxes.png) no-repeat;}
-.business-center{background:url(/images/ui/storagelocator/business.png) no-repeat;}
-.carts-and-dollies{background:url(/images/ui/storagelocator/carts.png) no-repeat;}
-.deliveries-accepted{background:url(/images/ui/storagelocator/delivery.png) no-repeat;}
-.electricity-available{background:url(/images/ui/storagelocator/electric.png) no-repeat;}
-.extended-access-hours{background:url(/images/ui/storagelocator/extended.png) no-repeat;}
-.move-in-truck-w-rental{background:url(/images/ui/storagelocator/free-truck.png) no-repeat;}
-.humidity-controlled{background:url(/images/ui/storagelocator/humidity.png) no-repeat;}
-.keypad-access{background:url(/images/ui/storagelocator/keypad.png) no-repeat;}
-.military-discounts{background:url(/images/ui/storagelocator/military.png) no-repeat;}
-.online-bill-pay{background:url(/images/ui/storagelocator/online-pay.png) no-repeat;}
-.on-site-manager{background:url(/images/ui/storagelocator/manager.png) no-repeat;}
-.se-habla-espanol{background:url(/images/ui/storagelocator/spanish.png) no-repeat;}
-.secure-storage{background:url(/images/ui/storagelocator/secure-unit.png) no-repeat;}
-.security-cameras{background:url(/images/ui/storagelocator/security.png) no-repeat;}
-.self-service-kiosk{background:url(/images/ui/storagelocator/kiosk.png) no-repeat;}
-.senior-discounts{background:url(/images/ui/storagelocator/senior.png) no-repeat;}
-.gate-access{background:url(/images/ui/storagelocator/gate.png) no-repeat;}
-.perimeter-alarm-system{background:url(/images/ui/storagelocator/security.png) no-repeat;}
-.ac{background:url(/images/ui/storagelocator/ac.png) no-repeat;}
-
-#rslt-list-bg > div.active > .inner a.all-hour-access,#rslt-list-bg > div > .inner:hover a.all-hour-access{background:url(/images/ui/storagelocator/hours-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.climate-controlled,#rslt-list-bg > div > .inner:hover a.climate-controlled{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.drive-up-access,#rslt-list-bg > div > .inner:hover a.drive-up-access{background:url(/images/ui/storagelocator/driveup-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.truck-rental,#rslt-list-bg > div > .inner:hover a.truck-rental{background:url(/images/ui/storagelocator/truck-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.automatic-payments,#rslt-list-bg > div > .inner:hover a.automatic-payments{background:url(/images/ui/storagelocator/auto-pay-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.boxes-packing-supplies,#rslt-list-bg > div > .inner:hover a.boxes-packing-supplies{background:url(/images/ui/storagelocator/boxes-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.business-center,#rslt-list-bg > div > .inner:hover a.business-center{background:url(/images/ui/storagelocator/business-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.carts-and-dollies,#rslt-list-bg > div > .inner:hover a.carts-and-dollies{background:url(/images/ui/storagelocator/carts-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.deliveries-accepted,#rslt-list-bg > div > .inner:hover a.deliveries-accepted{background:url(/images/ui/storagelocator/delivery-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.electricity-available,#rslt-list-bg > div > .inner:hover a.electricity-available{background:url(/images/ui/storagelocator/electric-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.extended-access-hours,#rslt-list-bg > div > .inner:hover a.extended-access-hours{background:url(/images/ui/storagelocator/extended-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.move-in-truck-w-rental,#rslt-list-bg > div > .inner:hover a.move-in-truck-w-rental{background:url(/images/ui/storagelocator/free-truck-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.humidity-controlled,#rslt-list-bg > div > .inner:hover a.humidity-controlled{background:url(/images/ui/storagelocator/humidity-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.keypad-access,#rslt-list-bg > div > .inner:hover a.keypad-access{background:url(/images/ui/storagelocator/keypad-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.military-discounts,#rslt-list-bg > div > .inner:hover a.military-discounts{background:url(/images/ui/storagelocator/military-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.online-bill-pay,#rslt-list-bg > div > .inner:hover a.online-bill-pay{background:url(/images/ui/storagelocator/online-pay-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.on-site-manager,#rslt-list-bg > div > .inner:hover a.on-site-manager{background:url(/images/ui/storagelocator/manager-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.se-habla-espanol,#rslt-list-bg > div > .inner:hover a.se-habla-espanol{background:url(/images/ui/storagelocator/spanish-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.secure-storage,#rslt-list-bg > div > .inner:hover a.secure-storage{background:url(/images/ui/storagelocator/secure-unit-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.security-cameras,#rslt-list-bg > div > .inner:hover a.security-cameras{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.self-service-kiosk,#rslt-list-bg > div > .inner:hover a.self-service-kiosk{background:url(/images/ui/storagelocator/kiosk-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.senior-discounts,#rslt-list-bg > div > .inner:hover a.senior-discounts{background:url(/images/ui/storagelocator/senior-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.gate-access,#rslt-list-bg > div > .inner:hover a.gate-access{background:url(/images/ui/storagelocator/gate-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.perimeter-alarm-system,#rslt-list-bg > div > .inner a.perimeter-alarm-system:hover{background:url(/images/ui/storagelocator/security-hover.png) no-repeat;}
-#rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.all-hour-access,#rslt-list-bg > div > .inner:hover a.all-hour-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.climate-controlled,#rslt-list-bg > div > .inner:hover a.climate-controlled{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.drive-up-access,#rslt-list-bg > div > .inner:hover a.drive-up-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/driveup-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.truck-rental,#rslt-list-bg > div > .inner:hover a.truck-rental{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/truck-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.automatic-payments,#rslt-list-bg > div > .inner:hover a.automatic-payments{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/auto-pay-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.boxes-packing-supplies,#rslt-list-bg > div > .inner:hover a.boxes-packing-supplies{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/boxes-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.business-center,#rslt-list-bg > div > .inner:hover a.business-center{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/business-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.carts-and-dollies,#rslt-list-bg > div > .inner:hover a.carts-and-dollies{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/carts-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.deliveries-accepted,#rslt-list-bg > div > .inner:hover a.deliveries-accepted{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/delivery-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.electricity-available,#rslt-list-bg > div > .inner:hover a.electricity-available{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/electric-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.extended-access-hours,#rslt-list-bg > div > .inner:hover a.extended-access-hours{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/extended-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.move-in-truck-w-rental,#rslt-list-bg > div > .inner:hover a.move-in-truck-w-rental{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/free-truck-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.humidity-controlled,#rslt-list-bg > div > .inner:hover a.humidity-controlled{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/humidity-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.keypad-access,#rslt-list-bg > div > .inner:hover a.keypad-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/keypad-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.military-discounts,#rslt-list-bg > div > .inner:hover a.military-discounts{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/military-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.online-bill-pay,#rslt-list-bg > div > .inner:hover a.online-bill-pay{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/online-pay-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.on-site-manager,#rslt-list-bg > div > .inner:hover a.on-site-manager{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/manager-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.se-habla-espanol,#rslt-list-bg > div > .inner:hover a.se-habla-espanol{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/spanish-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.secure-storage,#rslt-list-bg > div > .inner:hover a.secure-storage{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/secure-unit-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.security-cameras,#rslt-list-bg > div > .inner:hover a.security-cameras{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.self-service-kiosk,#rslt-list-bg > div > .inner:hover a.self-service-kiosk{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/kiosk-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.senior-discounts,#rslt-list-bg > div > .inner:hover a.senior-discounts{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/senior-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.gate-access,#rslt-list-bg > div > .inner:hover a.gate-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/gate-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.perimeter-alarm-system,#rslt-list-bg > div > .inner a.perimeter-alarm-system:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/security-hover.png) no-repeat;}
+#rslt-list-bg > div.active > .inner a.ac,#rslt-list-bg > div > .inner:hover a.ac{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/climate-hover.png) no-repeat;}
 
 .all-hour-access{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/hours.png) no-repeat;}
 .security-cameras{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/security.png) no-repeat;}
@@ -504,6 +502,7 @@ form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
 #add-fac-form #city{float:left;margin-right:30px;width:263px;}
 #add-fac-form #state{margin-bottom:0;}
 #add-fac-form #submit_wrap{margin-top:15px;float:right;}
+
 #new_client span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:8px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
@@ -713,8 +712,8 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 .sizes_list_in .sl-table .st-pric input{width:72%;}
 .sizes_list_in .sl-table .st-sele{margin-top:11px;height:auto;}
 .sizes_list_in ul li.st-type{width:17%;}
-.sizes_list_in ul li.st-desc{width:37%;height:10px;}
-.sizes_list_in ul li.st-pric{width:12%;}
+.sizes_list_in ul li.st-desc{width:36%;height:10px;}
+.sizes_list_in ul li.st-pric{width:10%;}
 .sizes_list_in ul li.st-avail{width:10%;text-align:center;}
 .sizes_list_in ul li.st-spec{width:17%;font-weight:normal;max-height:45px;overflow:hidden;}
 .sizes_list_in ul li.st-type .predef_dims{display:none;}
@@ -794,6 +793,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #outer_map .wrap1{float:left;width:46%;}
 #outer_map .wrap2{float:right;width:50%;}
 #outer_map h3{margin-bottom:10px;}
+
 #sl-tabs-map{background-color:#ccc;border:2px solid #ccc;float:right;height:340px;width:50%;}
 #sl-tabs-map-in{border:2px solid #fff;height:300px;}
 #sl-tabs-map-in #google_map{height:100%;}
@@ -837,6 +837,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #sl-extra h3{font-size:2em;}
 #sl-extra p{font-size:12px;margin:10px 0px;line-height:1.8em;}
 #sl-logos{border:1px solid #ccc;float:right;background:#f9f9f9;margin-bottom:15px;}
+
 #pop_up #new_comment{padding:0 15px 15px;overflow:hidden;font-size:80%;}
 #pop_up #new_comment label{float:left;display:block;width:65px;}
 #pop_up #new_comment .required{padding:4px;width:100%;border:1px solid #ccc;font-size:100%;}
@@ -887,6 +888,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #client_listing_box .profile_completion p span{font-weight:bold;}
 #ov-units .listing .inner .rslt-miles span{font-size:1.2em;display:block;position:relative;top:30px;left:22px;width:3em;}
 #ov-units .listing .inner .crud_btn{width:108px;position:absolute;right:-10px;}
+
 #ov-services ul li{list-style:none;display:inline;}
 #ov-services ul li a{width:31%;height:174px;margin:0 8px 11px;cursor:pointer;text-align:center;display:block;float:left;font-weight:bold;font-size:100%;text-decoration:none;}
 #ov-services ul li a:link,#ov-reports ul li a:visited{text-decoration:none;color:#666;}
@@ -918,6 +920,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #listing_searcher label{display:block;margin-bottom:4px;font-size:80%;}
 #listing_searcher input.text{width:96.8%;border:1px solid #ccc;padding:3px 5px;}
 #listing_searcher .blue_btn{height:auto;float:right;font-size:80%;padding-bottom:5px;}
+
 .specials_fields{overflow:hidden;border:1px solid #ccc;padding:5px 10px;}
 .specials_fields div{float:left;}
 .specials_fields input.small{width:90%;}
@@ -932,6 +935,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #issn_steps #workflow_nav{left:20px;width:94.8%;}
 #issn_status_option{bottom:10px;margin-top:15px;padding:15px 20px;position:absolute;width:88.5%;}
 #issn_status_option .left a,#issn_status_option .right a{color:#FFF;cursor:pointer;line-height:1.7;}
+
 .client_info_preview ul{font-size:80%;}
 .issn_enable_opts .flash{margin:0;width:auto;}
 .issn_enable_opts .error{position:static;}
@@ -967,6 +971,7 @@ form.edit_reservation{padding-top:10px;overflow:hidden;}
 #controller_list{width:129px;float:left;background:#ccc;padding:10px 0 10px 0;margin:0 0 0 -20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;}
 #pop_up #controller_list{margin:0;}
 #pop_up.admin_box #ajax_wrap{width:78%;}
+
 #controller_list li{padding:0 0 3px 5px;}
 #controller_list li a{display:block;padding:5px 7px 5px 12px;font-weight:bold;border-radius:10px 0 0 10px;-moz-border-radius:10px 0 0 10px;-webkit-border-radius:10px 0 0 10px;}
 #controller_list li a:link,#controller_list li a:visited{color:#777;}
@@ -1051,6 +1056,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 .panel #head a{text-decoration:underline;color:#393;font-size:18px;}
 .panel .facility-intro{margin:10px;}
 .panel h5{color:#4c4bcc;font-size:21px;line-height:29px;margin:0;padding:16px 0 0 24px;}
+
 .panel h5 a{text-decoration:none;}
 .panel .dir-head h5{width:320px;}
 .panel #map_partial h5{height:75px;width:43%;padding:2px 0 0 19px;}
@@ -1065,6 +1071,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #map_partial #dirs{padding:10px;float:left;background:#fff;margin:10px 0 0 -2px;width:99%;}
 #map_partial .ps{clear:both;display:block;float:right;margin-top:10px;}
 .map_wrap{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat center #fff;border-bottom:5px solid #eee;height:260px;width:360px;}
+
 #storage-info-content{padding:10px 30px 0;}
 #storage-info-content h2{color:#4c4bcc;font-size:32px;line-height:36px;margin-bottom:20px;}
 #storage-info-content h3{color:#333;font-size:22px;margin-bottom:15px;padding-top:15px;}
@@ -1086,6 +1093,7 @@ input.slider_val{width:18px;border:1px solid #ccc;border-radius:4px;-moz-border-
 #more_info_div{width:922px;padding:0;margin:0 auto;position:relative;left:4px;z-index:1;/**background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/more-info-bg.png) repeat-x bottom #e6e6e6;**/border-bottom:1px solid #ccc;border-right:1px solid #ccc;border-left:1px solid #ccc;border-radius-bottomright:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;border-radius-bottomleft:10px;-moz-border-radius-bottomleft:10px;-webkit-border-bottom-left-radius:10px;}
 #more_info_div .inner{overflow:hidden;padding:20px 24px;/**background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/more-info-inner-bg.png) repeat-x top center #e5e5e5;border:1px solid #ccc;**/border-radius:10px;/**-moz-border-radius:10px;-webkit-border-radius:10px;**/}
 h4#more-info-header-bg{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/more-info-header.jpg) no-repeat;color:#fff;font-size:26px;height:61px;width:922px;padding:20px 30px;line-height:30px;letter-spacing:1.2px;text-shadow:0 0 5px #000;}
+
 #storage-info-content p{font-size:12px;line-height:18px;margin-bottom:20px;}
 .pagination{margin:20px 0;}
 .pagination a,.pagination span{color:#818181;padding:2px 4px;}
@@ -1106,6 +1114,7 @@ img.right{margin:0 0 10px 10px;}
 #map_step2 #city_nav{width:102%;height:30px;}
 #map_step2 #city_nav a{display:block;padding:3px 0;margin-right:2px;float:left;font-size:120%;color:#fff;text-shadow:1px 1px 0 #666;;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/pop-up-hdr.png) repeat-x;border:1px solid #999;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;text-align:center;width:26px;}
 #map_step2 #city_nav a:hover,#map_step2 #city_nav a:active,#map_step2 #city_nav li.active a{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/purple-bg.png) repeat;}
+
 #map_step2 #cities_list{height:320px;margin-top:14px;overflow:auto;}
 #map_step2 #cities_list li{display:none;position:static;}
 #map_step2 #cities_list li a{width:23.5%;}
@@ -1128,6 +1137,7 @@ img.right{margin:0 0 10px 10px;}
 #add_new_tip input, #add_new_tip textarea{width:98%;padding:3px 5px;border:1px solid #ccc;-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;}
 #tip_created{padding:0 15px 20px;text-align:center;}
 .sizes_list .btn{float:right;margin:0 0 15px 10px;}
+
 /* state page */
 #state_picker h2{font-size:20px;margin-bottom:14px;}
 #state_picker h3{font-size:14px;margin-bottom:7px;}
@@ -1174,6 +1184,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #reviews_empty{margin-left:20px;}
 #write_review{margin:0 5px 0 20px;padding:1px 0 0 22px;font-size:80%;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/comment_small.png) no-repeat left;}
 #write_review a{font-size:100%;}
+
 .sizes_list_in .sl-table-wrap{overflow:hidden;}
 .sizes_list_in .ajax_loader{float:right;position:relative;top:8px;}
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
@@ -1213,6 +1224,7 @@ sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #address_sort .up{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/wht-arrow-up.png) no-repeat right;}
 /*#ov-units-head #add_fac{float:right;height:24px;margin:8px 19px 0 0;padding:1px;width:79px;}*/
 .btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:2.1;text-align:center;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
+
 .my_account .flash{width:96%;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
@@ -1537,6 +1549,7 @@ form .error p{margin:0 0 7px 0;}
 #unit_features a{color:#4c4bcc;display:block;margin-top:2px;padding-left:25px;}
 #unit_features a.toggle_right{color:#333333;font-weight:bold;text-decoration:none;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/right-grn.png) no-repeat 4px 1px;}
 #unit_features a.toggle_down{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/down-grn.png) no-repeat 3px 2px;}
+
 #sub_submit{text-align:center;}
 #advanced_opts #sub_submit input{margin:20px 0 20px 5px;text-align:center;width:173px;}
 
@@ -1624,6 +1637,7 @@ form .error p{margin:0 0 7px 0;}
 #disocunt_pic{margin-top:5px;}
 .strip{height:11px;border-bottom:1px solid #3c3d98;background:#fff;}
 .grn_btn{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat scroll 0 0 transparent;border:2px outset #eee;color:#fff;cursor:pointer;font-size:100%;font-weight:bold;padding:4px 25px;text-shadow:1px 1px 0 #666;text-transform:uppercase;}
+
 .ui-menu .ui-menu-item a{padding:2px 11px;}
 .faded{opacity:.6;filter:alpha(opacity=60);-ms-filter:"alpha(opacity=60)";-khtml-opacity:0.6;-moz-opacity:0.6;}
 .hint_content p{font-size:12px;margin-bottom:10px;}
@@ -1665,7 +1679,7 @@ form .error p{margin:0 0 7px 0;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float:left;margin-top:37px;width:345px;}
-#price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
+#price-block h4.arrow{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
 #price-block a{font-weight:bold;text-decoration:none;}
 #price-block a:hover{color:orange;}
@@ -1737,6 +1751,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #fac-results ul li{font-size:16px;list-style:disc;margin-top:22px;}
 #fac-results p em{color:#4c4bcc;}
+
 #g-res{height:370px;margin-top:40px;}
 #g-res ul{float:left;width:260px;}
 #g-res h4{color:#4c4bcc;font-size:22px;margin:0 0 35px;text-decoration:underline;width:240px;}
@@ -1826,6 +1841,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .help-prof-comp p{font-size:100%;}
 .help-prof-comp ol{margin-left:30px;}
 .help-prof-comp ol li ul{font-style:italic;list-style:alpha;}
+
 #sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
 #sl-tabs-overview  #hed h2#fac_name{border-top:none;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
@@ -2103,7 +2119,7 @@ p.breadcrumb a{color:#fff;}
 #model_sort li a{padding:0 5px;}
 .listings_view .profile_completion{font-size:80%;}
 #fac-features #feats{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-imac.png) no-repeat right 75px;margin: 0 20px 0 30px;}
-#top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(/images/ui/storagelocator/trialbg.png) repeat-x;color:#fff;height:103px;margin-top:30px;overflow:hidden;}
+#top_fac_page #fac-features #heading{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/trialbg.png) repeat-x;color:#fff;height:103px;margin-top:30px;overflow:hidden;}
 #top_fac_page #fac-features #heading h3{display:block;float:left;font-size:30px;font-weight:bold;line-height:30px;margin:17px 0 0 15px;text-shadow: -1px -1px 1px #333;}
 #top_fac_page #heading ul{float:right;margin:0;width:384px;}
 #top_fac_page #heading ul li{display:block;float:left;text-align:center;padding:0;width:96px;}
@@ -2123,7 +2139,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #mem-types tr.even{background:#fff;}
 #mem-types tr.odd{background:#eee;}
 #mem-types .last td{padding-top:10px;}
-#mem-types td#free{background: url("/images/ui/storagelocator/free.png") no-repeat scroll center 10px transparent;}
+#mem-types td#free{background: url("//s3.amazonaws.com/storagelocator/images/ui/storagelocator/free.png") no-repeat scroll center 10px transparent;}
 #mem-types td#free strong{display:none;}
 #mem-types td{font-size:12px;padding:7px 0;text-align:center;}
 #fac-features #mem-types strong{font-size:16px;color:#4c4bcc;}
@@ -2174,7 +2190,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
 #blog_page a{font-size:12px;}
 #blog_page hr, #blog-post hr{margin: 25px auto;border-top: 1px dashed #DDD;border-right: none;border-left: none;border-bottom: none;}
-#blog_page .post_date{background: url(/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
+#blog_page .post_date{background: //s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
 #blog_page .blog_post_info{}
 #blog_page .blog_post_content{float:left;line-height:16px;margin:15px 0 15px;}
 #blog_page .post_metadata{float:left;width:100%;}
@@ -2286,5 +2302,5 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #sec-menu a{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x #339933;border-bottom-left-radius:6px;border-bottom-right-radius:6px;color:#FFFFFF;float:right;font-size:11px;margin-right:20px;padding:4px 15px;text-decoration:none;text-shadow:1px 1px 0 #666666;}
 #sec-menu a:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/reserve-btn-hover.png) repeat-x transparent;}
 
-#social_box #TwitterCounter{background:url(/images/ui/twitter-count.gif) no-repeat center;border:2px solid #ebebeb;float:right;cursor:pointer;font-family:Myriad,arial,sans-serif;text-align:center;font-size:20px;font-weight:bold;height:56px;margin-right:10px;width:69px;}
+#social_box #TwitterCounter{background:url(//s3.amazonaws.com/storagelocator/images/ui/twitter-count.gif) no-repeat center;border:2px solid #ebebeb;float:right;cursor:pointer;font-family:Myriad,arial,sans-serif;text-align:center;font-size:20px;font-weight:bold;height:56px;margin-right:10px;width:69px;}
 #TwitterCounter a{color:#FFF;text-decoration:none;display:block;padding-top:5px;width:100%;height:50px;}

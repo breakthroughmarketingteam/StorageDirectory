@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
   def role_symbols
     [self.role.title.downcase.to_sym]
   end
-
+  
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)

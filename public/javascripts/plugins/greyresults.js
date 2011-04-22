@@ -42,7 +42,7 @@ $(function(){
 	});
 	
 	$('form.size_form', '#unit_sizes').live('submit', function() {
-		var form = $(this),
+		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		
 		if (form.data('valid') && !form.data('saving')) {
@@ -88,7 +88,7 @@ $(function(){
 				size.after(form);
 				size.hide();
 				
-				$('#size_price', form).val(parseInt($('#size_price', form).val()))
+				$('#size_price', form).val(parseInt($('#size_price', form).val()));
 				
 				$('.cancel_link', form).click(function() {
 					ajax_loader.hide();
@@ -562,7 +562,6 @@ $(function(){
 
 		if (special.length == 1)
 			$this[0].href += '&sub_model[1]=PredefinedSpecial&sub_id[1]=' + special.attr('data-special-id');
-			
 	});
 
 	// slide open the panel below a result containing a partial loaded via ajax, as per the rel attr in the clicked tab link
@@ -1156,7 +1155,6 @@ $.setGmap = function(data, el, page) {
 
 } // END setGmap()
 
-
 // updates the info tab count in the listings edit page. the tab text is: <label> (<count>)
 function update_info_tab_count(label, i) {
 	var	tab = $('#tab_'+ label, '#sl-tabs'),
@@ -1196,7 +1194,7 @@ $.activateSizeSelect = function(context) {
 	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){
 		var $this = $(this);
-
+		
 		if ($this.attr('data-url') != '' && !$.any(pre_loaded_size_icons, function() { if (this.src == $this.attr('data-url')) return true; })) {
 			var img = new Image();
 			img.src = $this.attr('data-url');

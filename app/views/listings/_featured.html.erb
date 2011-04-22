@@ -1,5 +1,5 @@
 <% cache get_search.cache_key do %>
-	<% @featured_listing = Listing.get_featured_listing get_search.results unless in_mode?('home') %>
+	<% @featured_listing = Listing.get_featured_listing get_search.results %>
 	<div class="shimmy">
 		<div id="feat_wrap">
 		
@@ -43,6 +43,7 @@
 			</div>
 		<% end %>
 		</div>
+
 		<% unless request.xhr? %>
 		<%= render :partial => 'shared/social_box' %>
 		
@@ -50,5 +51,6 @@
 			<img src="images/ui/storagelocator/activate-block.png"/>
 		</div>
 		<% end %>
+
 	</div>
 <% end %>

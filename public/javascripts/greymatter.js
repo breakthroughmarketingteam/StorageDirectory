@@ -79,7 +79,6 @@ $(function(){
 		$this.addClass('active');
 	});
 	
-	
 	$('.selectable').live('click', function(){
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
@@ -142,7 +141,7 @@ $(function(){
 			}
 			
 			//window.location.href = window.location.href.split('#')[0] + '#' + $this.attr('href');
-			
+
 			ajax_wrap.children().fadeTo('fast', 0.2);
 			ajax_wrap.addClass('loading').load($this.attr('href') + ' #ajax_wrap_inner', function(response, status) {
 				if (status == 'success') {
@@ -1224,7 +1223,7 @@ $.fn.appendParamAndGo = function() {
   				new_href = '',
   				has_param = href.indexOf('?') >= 0,
   				param = (has_param ? '&' : '?') + key +'='+ val;
-
+			
 			if(!val) return false;
 			
 			// replace any preexisting param values if the key is present
@@ -1251,6 +1250,7 @@ $.fn.openDiv = function() {
 			$('#'+div_to_open).slideToggle(600);
 			$this.parent('.bg').toggleClass('expanded');
 			if ($this.hasClass('toggle_right')) $this.toggleClass('toggle_down');
+
 			return false;
 		});
 	});
@@ -1453,7 +1453,6 @@ $.fn.shimmy = function(parent, ops) {
 		$(window).scroll(function() {
 			shimmy_meow($this, this_offset, this_pos, this_height, parent_height, btm_from_top, pad);
 		});
-		
 	});
 }
 
@@ -1671,6 +1670,7 @@ function get_pop_up_and_do(options, params, callback) {
 				$(this).dialog('destroy').remove();
 			}
 		});
+		
 		if (typeof callback == 'function') 
 			callback.call(this, pop_up);
 	});
@@ -1686,6 +1686,7 @@ function get_partial_and_do(params, callback) {
 }
 
 /**************** slide show and workflow object *******************/
+
 // Simple animated slideshow, takes an options object which defines the slides, actions and slide objects, see tips_show
 var GreyShow = function(options) {
 	var self = this;
@@ -1916,7 +1917,7 @@ Ajax.Request = function(url, params) {
 
 String.prototype.replaceAll = function(find, replace) {
     var temp = this, index = temp.indexOf(find);
-
+	
     while (index != -1) {
         temp = temp.replace(find, replace);
         index = temp.indexOf(find);
@@ -2068,4 +2069,3 @@ dateFormat.i18n = {
 Date.prototype.format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
-

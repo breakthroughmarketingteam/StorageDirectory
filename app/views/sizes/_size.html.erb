@@ -12,8 +12,8 @@
 		
 		<li class="st-rese">
 			<% if (in_mode?('profile') || (defined?(pretend_action) && pretend_action == 'edit')) && !@listing.issn_enabled? %>
-				<%= link_to 'Edit', edit_listing_size_path(@listing, size), :class => 'edit_size', 'data-size-id' => size.id %>
-			<% else %>
+				<%= link_to 'Edit', edit_listing_size_path(@listing, size), :class => 'edit_size', :'data-size-id' => size.id %>
+			<% elsif !in_mode?('profile') %>
 				<a href="#" class="rsr-btn">Select</a>
 			<% end %>
 		</li>

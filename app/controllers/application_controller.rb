@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
   # TODO: move this feature into the database and save state through AJAX, using a key-val pair { :controller_name => :view_type }
   def set_default_view_type
     model_class = controller_name.singular.camelcase.constantize rescue nil
-        
+    
     if !params[:view_type].blank?
       session[:view_type] = params[:view_type]
     elsif controller_name == 'site_settings'
@@ -323,7 +323,7 @@ class ApplicationController < ActionController::Base
       eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{@sort_by} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
       
     else
-      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => 'id desc'"
+      eval "@#{controller_name} = #{controller_name.singular.camelcase}.paginate :per_page => #{@per_page || 10}, :page => params[:page], :order => '#{session[:model_sort_by] ? session[:model_sort_by] : 'id'} #{session[:model_sort_dir] ? 'DESC' : 'ASC'}'"
     end
   end
   
