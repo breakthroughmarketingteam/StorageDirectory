@@ -320,8 +320,13 @@ class Listing < ActiveRecord::Base
     @city_and_state ||= [self.city, self.state]
   end
   
-  def city_state_zip; "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}" end
-  def full_address; "#{self.address}#{ " #{self.address2}" unless self.address2.blank?}, #{self.city_state_zip}" end
+  def city_state_zip
+    "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}"
+  end
+  
+  def full_address(sep = ' ')
+    "#{self.address}#{ " #{self.address2}" unless self.address2.blank?},#{sep}#{self.city_state_zip}" 
+  end
   
   def unit_sizes_options_array
     self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
