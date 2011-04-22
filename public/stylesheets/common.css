@@ -93,6 +93,7 @@ span.active{cursor:default;}
 .map_wrap{width:360px;height:260px;position:relative;}
 .map_wrap iframe{height:203px;overflow:hidden;}
 .map_wrap > div{height:202px;}
+.soft-rule{border:1px solid #EBEBEB;margin:9px 6px 5px;}
 /* common colors */
 .white,a.white,a.white:link,a.white:visited{color:#fff;}
 .black,a.black,a.black:link,a.black:visited{color:#222;}

@@ -92,8 +92,8 @@ class AjaxController < ApplicationController
   def get_multipartial
     render :partial => (params[:partial] || '/shared/pop_up'), :locals => { :sub_partial => params[:sub_partial], :locals => _get_model_and_locals }
     
-  rescue => e
-    render_error e
+  #rescue => e
+  #  render_error e
   end
   
   def get_cities # state
