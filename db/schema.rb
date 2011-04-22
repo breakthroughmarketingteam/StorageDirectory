@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20110414214426) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "enabled"
-    t.integer  "position", :default => 0
+    t.integer  "position",           :default => 0
   end
 
   create_table "billing_infos", :force => true do |t|
