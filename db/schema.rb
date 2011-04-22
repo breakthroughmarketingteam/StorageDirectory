@@ -531,7 +531,7 @@ ActiveRecord::Schema.define(:version => 20110414214426) do
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
     t.string   "full_state"
-    t.integer  "phone_views_count"
+    t.integer  "phone_views_count",   :default => 0
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"

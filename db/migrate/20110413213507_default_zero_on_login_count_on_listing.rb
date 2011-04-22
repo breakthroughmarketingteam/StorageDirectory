@@ -1,7 +1,7 @@
 class DefaultZeroOnLoginCountOnListing < ActiveRecord::Migration
   def self.up
     puts '-----> Caching listings'
-    listings = Listing.all :conditions => ['clicks_count IS NULL OR impressions_count IS NULL OR info_requests_count IS NULL']  :limit => 7000
+    listings = Listing.all :conditions => 'clicks_count IS NULL OR impressions_count IS NULL OR info_requests_count IS NULL', :limit => 7000
     count = listings.size
     puts "-----> Cached #{count} listings"
     
