@@ -211,6 +211,12 @@ class Listing < ActiveRecord::Base
     listing.update_attribute :short_url, url.urls
   end
   
+  def short_url
+    u = read_attribute :short_url
+    Listing.set_short_url self if u.blank?
+    read_attribute :short_url
+  end
+  
   # create a stat record => clicks, impressions
   def update_stat(stat, request)
     self.send(stat).create request

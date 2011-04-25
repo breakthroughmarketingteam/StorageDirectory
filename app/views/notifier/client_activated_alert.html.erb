@@ -2,8 +2,8 @@
 
 <p><strong>Account:</strong> <%= edit_client_url @client, :protocol => 'https' %></p>
 
-<p><a href="http://twitter.com/home?status=Check out our newest member storage facility <%=  %>">Share on Twitter</a></p>
-<p><a href="http://facebook.com">Post on Facebook</a></p>
+<p><a href="http://twitter.com/home?status=Check out our newest member storage facility <%= @client.listings.first.short_url %>">Share on Twitter</a></p>
+<p><a href="http://facebook.com/sharer.php?u=<%= @client.listings.first.short_url %>">Post on Facebook</a></p>
 
 <p><strong>Listings:</strong> </p>
 <ul style="list-style-position:inside;margin-left:10px">
