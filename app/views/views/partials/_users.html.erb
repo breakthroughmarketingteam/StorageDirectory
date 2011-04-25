@@ -11,11 +11,11 @@
 			
 			<% if model.respond_to? :listings %>
 				<div class="left_space right note">
-					<%= pluralize model.listings.size, 'Listing' if model.active? %>
+					<%= pluralize model.listings.count, 'Listing' if model.active? %>
 				</div>
 				
 				<div class="left_space right note">
-					<%= pluralize model.claimed_listings.size, 'Claimed Listing' unless model.claimed_listings.empty? %>
+					<%= pluralize model.claimed_listings.count, 'Claimed Listing' unless model.claimed_listings.empty? %>
 				</div>
 			<% end %>
 			

@@ -3411,7 +3411,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
 #blog_page a{font-size:12px;}
 #blog_page hr, #blog-post hr{margin: 25px auto;border-top: 1px dashed #DDD;border-right: none;border-left: none;border-bottom: none;}
-#blog_page .post_date{background: //s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
+#blog_page .post_date{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
 #blog_page .blog_post_info{}
 #blog_page .blog_post_content{float:left;line-height:16px;margin:15px 0 15px;}
 #blog_page .post_metadata{float:left;width:100%;}
