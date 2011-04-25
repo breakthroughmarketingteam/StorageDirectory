@@ -621,14 +621,14 @@ module ApplicationHelper
     
     if controller_name == 'listings' && action_name == 'show'
       if @listing.logo.exists?
-        listing.logo.url
+        @listing.logo.url
 
       elsif (logo = standard_logos.detect { |s| @listing.title =~ /(#{s.gsub '-', ' '})/i })
         standard_logo_path logo
 
       else
         get_listing_logos(request)
-        img_hash = @listing_logos[listing.default_logo || 4] || @listing_logos[4]
+        img_hash = @listing_logos[@listing.default_logo || 4] || @listing_logos[4]
         img_hash[:src]
       end
       
