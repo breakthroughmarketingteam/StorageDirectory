@@ -62,8 +62,6 @@ class Listing < ActiveRecord::Base
   
   named_scope :enabled, :conditions => { :enabled => true }
   
-  require 'bitly'
-  
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
@@ -80,7 +78,7 @@ class Listing < ActiveRecord::Base
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
     self.ensure_both_state_fields_present!
-    self.delay.set_short_url!
+    Listing.delay.set_short_url self
   end
   
   def self.verified_count
@@ -207,12 +205,10 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def set_short_url!
-    Bitly.use_api_version_3
-    b = Bitly.new BITLY_LOGIN, BITLY_APIKEY
-    url = b.shorten "http://#{$root_domain}#{self.full_path}", :history => 1
-    self.short_url = url.short_url
-    self.save
+  def self.set_short_url(listing)
+    @@bitly ||= UrlShortener::Client.new(UrlShortener::Authorize.new(BITLY_LOGIN, BITLY_APIKEY))
+    url = @@bitly.shorten "http://#{$root_domain}#{listing.full_path}"
+    listing.update_attribute :short_url, url.urls
   end
   
   # create a stat record => clicks, impressions

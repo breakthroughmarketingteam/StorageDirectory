@@ -6,7 +6,7 @@ class AddShortUrlsToListings < ActiveRecord::Migration
     puts "-----> Cached #{count} listings"
     
     listings.each_with_index do |listing, i|
-      listing.set_short_url! if listing.profile_completion.blank?
+      Listing.set_short_url(listing)
       puts "-----> #{sprintf("%.2f", (i.to_f / count.to_f * 100))}% done. updated listing #{listing.id}"
     end
     
