@@ -11,7 +11,7 @@
 		<link rel="apple-touch-icon" href="/usssl-iphone-icon.png" />
 		<link rel="alternate" type="application/rss+xml" title="Self Storage Blog" href="http://<%= request.host %>/blog.rss" />
 		<link rel="alternate" type="application/rss+xml" title="Self Storage Tips" href="http://<%= request.host %>/storage-tips.rss" />
-		<link rel="image_src" href="http://<%= $root_domain %>/images/ui/storagelocator/rental-form.png" />
+		<link rel="image_src" href="<%= conditional_facebook_img %>" />
         <title><%= yield :title %></title>
 		
         <!--[if IE]>
