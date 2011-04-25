@@ -115,7 +115,7 @@ class Listing < ActiveRecord::Base
     @listings = begin
       Listing.all options
     rescue ArgumentError 
-      Listing.enabled.find options.except(:within)
+      Listing.enabled.find :all, options.except(:within)
     end
     
     # prioritize the listings order by putting the most specific ones first (according to the search params, if any)
