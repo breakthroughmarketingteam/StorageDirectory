@@ -96,10 +96,8 @@ class ClientsController < ApplicationController
       redirect_to login_path
     else
       case @client.status when 'unverified'
-        @client.status = 'active'
-        @client.activated_at = Time.now
-        @client.enable_listings!
-        @client.save
+        @client.activate!
+        Notifier.deliver_client_activated_alert @client
         
         flash[:quick_login] = [@client.email, @client.temp_password]
         flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'

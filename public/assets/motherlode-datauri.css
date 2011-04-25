@@ -1473,6 +1473,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 */
 .listing .inner .in{height:140px;position:relative;padding:0;}
 .listing ul li{float:left;}
+.listing ul li.right{float:right}
 .listing .rslt-features {float:right;margin:6px 7px 0 0;}
 .listing .rslt-features a{display:block;float:left;height:25px;margin-left:5px;width:25px;text-indent:-99999px;}
 

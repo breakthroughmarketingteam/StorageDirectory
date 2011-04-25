@@ -62,6 +62,8 @@ class Listing < ActiveRecord::Base
   
   named_scope :enabled, :conditions => { :enabled => true }
   
+  require 'bitly'
+  
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
@@ -77,7 +79,8 @@ class Listing < ActiveRecord::Base
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
-    #self.ensure_both_state_fields_present!
+    self.ensure_both_state_fields_present!
+    self.delay.set_short_url!
   end
   
   def self.verified_count
@@ -202,6 +205,14 @@ class Listing < ActiveRecord::Base
     listings.each do |listing|
       listing.update_stat(stat, request) unless user.respond_to?(:listings) && user.listing_ids.include?(listing.id)
     end
+  end
+  
+  def set_short_url!
+    Bitly.use_api_version_3
+    b = Bitly.new BITLY_LOGIN, BITLY_APIKEY
+    url = b.shorten "http://#{$root_domain}#{self.full_path}", :history => 1
+    self.short_url = url.short_url
+    self.save
   end
   
   # create a stat record => clicks, impressions
@@ -371,6 +382,17 @@ class Listing < ActiveRecord::Base
   
   def notify_email
     self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
+  end
+  
+  def full_path(options = {})
+    return '' if self.new_record?
+    s = self.state.size == 2 ? States.name_of(self.state) : self.state.try(:titleize)
+    #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
+    l = "/#{self.storage_type.parameterize}/#{self.city.parameterize}/#{s.parameterize}/#{self.title.parameterize}/#{self.id}"
+    l << "?#{options.to_query}" unless options.values.empty?
+    l
+  rescue
+    $!
   end
   
   # add up a score based on the return values of model methods
