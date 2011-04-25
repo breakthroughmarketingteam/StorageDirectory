@@ -1795,7 +1795,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #feat-list .full{width:100%;}
 #feat-list ul#preview {background:#fff;border:1px solid #ccc;float:left;height:72px;width:68px;}
 #feat-list ul#preview li{float:left;height:27px;margin:4px 1px 3px 4px;width:27px;}
-#feat-list #name{display:none;}
+#feat-list #name{}
 #feat-list #name,#feat-list #address{width:100%;}
 #feat-list #name a{color:#060;font-size:14px;font-weight:bold;}
 #feat-list #phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
