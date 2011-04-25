@@ -36,6 +36,13 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
+  def client_activated_alert(client)
+    @header_img_name = 'new_client'
+    
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Activated!'
+    @body[:client] = client
+  end
+  
   def new_tenant_alert(rental)
     @header_img_name = 'unit_rental'
     

@@ -58,6 +58,13 @@ class Client < User
     self.count :conditions => ['status != ?', 'active']
   end
   
+  def activate!
+    self.status = 'active'
+    self.activated_at = Time.now
+    self.enable_listings!
+    self.save
+  end
+  
   def active?
     self.status == 'active'
   end

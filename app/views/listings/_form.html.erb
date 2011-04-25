@@ -59,7 +59,7 @@
 					<%= f.label :enabled %>
 				</div>
 		
-				<div class="left right_space">
+				<div class="left right_space stack">
 					<%= f.label :status, nil, :class => 'block left w80' %>
 					<%= f.text_field :status, :class => 'tiny_text_field' %>
 				</div>
@@ -68,20 +68,20 @@
 					<%= f.label :user_id, nil, :class => 'block left w80' %>
 					<%= f.text_field :user_id, :class => 'tiny_text_field' %>
 				</div>
-			</div>
-	
-			<div class="stack uncollapse">
+				
 				<div class="left right_space">
 					<%= f.label :category, nil, :class => 'block left w80' %>
 					<%= f.text_field :category, :class => 'required tiny_text_field' %>
 				</div>
-		
+			</div>
+	
+			<div class="stack uncollapse">
 				<div class="left right_space">
 					<%= f.label :storage_types, nil, :class => 'block left w80' %>
 					<%= f.text_field :storage_types, :class => 'required tiny_text_field hintable', :title => 'Separate by comma' %>
 				</div>
 				
-				<div class="left right_space">
+				<div class="left right_space stack">
 					<%= f.label :phone, nil, :class => 'block left w80' %>
 					<%= f.text_field :phone, :class => 'tiny_text_field' %>
 				</div>

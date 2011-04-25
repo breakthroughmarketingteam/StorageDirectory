@@ -1,0 +1,1 @@
+BITLY_LOGIN, BITLY_APIKEY = 'mastermindxs', 'R_38483dc8c51117564e81d8e2bdec1fb5'

@@ -40,6 +40,7 @@ Rails::Initializer.run do |config|
   config.gem 'rmagick', :lib => 'RMagick'
   config.gem 'delayed_job', :version => '~>2.0.4'
   config.gem 'jammit', :source => 'git://github.com/documentcloud/jammit.git'
+  config.gem 'url_shortener'
   # TODO: does heroscale work? their site is down as of feb 2011
   #config.gem "heroscale"
   #require "heroscale"

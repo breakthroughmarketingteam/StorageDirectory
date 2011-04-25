@@ -77,7 +77,8 @@ class Listing < ActiveRecord::Base
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
-    #self.ensure_both_state_fields_present!
+    self.ensure_both_state_fields_present!
+    Listing.delay.set_short_url self if self.short_url.blank?
   end
   
   def self.verified_count
@@ -202,6 +203,18 @@ class Listing < ActiveRecord::Base
     listings.each do |listing|
       listing.update_stat(stat, request) unless user.respond_to?(:listings) && user.listing_ids.include?(listing.id)
     end
+  end
+  
+  def self.set_short_url(listing)
+    @@bitly ||= UrlShortener::Client.new(UrlShortener::Authorize.new(BITLY_LOGIN, BITLY_APIKEY))
+    url = @@bitly.shorten "http://#{$root_domain}#{listing.full_path}"
+    listing.update_attribute :short_url, url.urls
+  end
+  
+  def short_url
+    u = read_attribute :short_url
+    Listing.set_short_url self if u.blank?
+    read_attribute :short_url
   end
   
   # create a stat record => clicks, impressions
@@ -371,6 +384,17 @@ class Listing < ActiveRecord::Base
   
   def notify_email
     self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
+  end
+  
+  def full_path(options = {})
+    return '' if self.new_record?
+    s = self.state.size == 2 ? States.name_of(self.state) : self.state.try(:titleize)
+    #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
+    l = "/#{self.storage_type.parameterize}/#{self.city.parameterize}/#{s.parameterize}/#{self.title.parameterize}/#{self.id}"
+    l << "?#{options.to_query}" unless options.values.empty?
+    l
+  rescue
+    $!
   end
   
   # add up a score based on the return values of model methods
