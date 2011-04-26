@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110425203930) do
+ActiveRecord::Schema.define(:version => 20110426194551) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -600,6 +600,15 @@ ActiveRecord::Schema.define(:version => 20110425203930) do
     t.string   "Name"
     t.float    "Tax"
     t.text     "ErrorMessage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notes", :force => true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.string   "status"
+    t.integer  "created_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

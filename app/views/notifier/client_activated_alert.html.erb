@@ -9,8 +9,8 @@
 <ul style="list-style-position:inside;margin-left:10px">
 <% @client.listings.each do |listing| %>
 	<li>
-	(<%= listing.id %>) <%= listing.title %><br>
-	<%= listing.full_address %>
+	(<%= listing.id %>) <%= listing.title %><br />
+	<%= listing.full_address '<br />' %>
 	</li>
 <% end %>
 </ul>

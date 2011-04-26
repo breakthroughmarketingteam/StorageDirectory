@@ -1084,19 +1084,19 @@ input.tiny_text_field{width:30px;}
 .iconOnly16,a.iconOnly16,
 .block .buttons a.iconOnly16,
 #view_type_link_wrap .iconOnly16{text-indent:-999999px;background-repeat:no-repeat;display:block;height:16px;padding:1px 9px;}
-.add_link{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/plus_sign.png);}
+.add_link{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/plus_sign.png);}
 .delete_link,.inline_delete_link,.block_models_view .buttons a.delete_link,.plain .buttons a.delete_link{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/delete_icon.png);}
-.cancel_link{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/cancel_icon.png);}
-.question_mark{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/question_mark.png);}
-.list_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/list_icon.png);}
-.blog_roll_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/blog_roll_icon.png);}
-.box_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/box_icon.png);}
-.table_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/table_icon.png);}
-.gallery_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/gallery_icon.png);}
-.users_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/users_icon.png);}
+.cancel_link{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/cancel_icon.png);}
+.question_mark{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/question_mark.png);}
+.list_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/list_icon.png);}
+.blog_roll_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/blog_roll_icon.png);}
+.box_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/box_icon.png);}
+.table_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/table_icon.png);}
+.gallery_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/gallery_icon.png);}
+.users_icon{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/users_icon.png);}
 a.loading{padding-left:26px !important;background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-facebook.gif) no-repeat 10% 54% !important;}
 a.toggle_right{padding-left:14px;background:url(//s3.amazonaws.com/storagelocator/images/ui/toggle_icon-right.png) no-repeat left;}
-a.toggle_down{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/s3.amazonaws.com/storagelocator/images/ui/toggle_icon-down.png);}
+a.toggle_down{background-image:url(//s3.amazonaws.com/storagelocator/images/ui/toggle_icon-down.png);}
 .buttons .edit_link,
 .buttons .edit_link:hover,
 .plain .buttons a.edit_link,

@@ -19,4 +19,45 @@ namespace :clients  do
     
     puts "\nDONE\n\n"
   end
+  
+  desc 'Get oldest clients, generate csv, and send as attachment to info'
+  task :oldest do
+    require 'fastercsv'
+    
+    puts 'Caching active clients older than 2 months'
+    clients = Client.activated.all :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at DESC', :include => :listings
+    data = []; t = Time.now; count = clients.count
+    
+    puts "Done.\nGathering data for #{count} clients"
+    
+    clients.each_with_index do |c, i|
+      data << [c.name, {
+        :id => c.id,
+        :email => c.email,
+        :listing => c.company,
+        :num_fac => c.listings.count,
+        :created => c.created_at.strftime("%a %b, %d %Y"),
+        :days_on => (t.to_date - c.created_at.to_date).to_i,
+        :impressions => c.listings.map { |l| l.impressions.count }.sum,
+        :clicks => c.listings.map { |l| l.clicks.count }.sum
+      }]
+      
+      puts "#{sprintf("%.2f", ((i + 1).to_f / count.to_f * 100))}% done. #{c.name}: #{c.company}"
+    end
+    
+    path = "#{RAILS_ROOT}/tmp/csv_data/oldest_clients#{t.strftime '%Y%m%d'}.csv"
+    puts "Done.\nWriting to CSV file in #{path}"
+    
+    f = FasterCSV.open(path, 'w') do |csv|
+      csv << ['Name', 'Email', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks']
+      
+      data.each do |c|
+        csv << [c[0], c[1][:email], c[1][:listing], c[1][:created], c[1][:days_on], c[1][:num_fac], c[1][:impressions], c[1][:clicks]]
+      end
+    end
+    
+    Notifier.deliver_old_client_file path
+    puts 'Done. Sent file to info@usselfstoragelocator.com'
+  end
+  
 end

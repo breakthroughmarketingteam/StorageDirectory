@@ -271,6 +271,10 @@ class Listing < ActiveRecord::Base
     self.reviews
   end
   
+  def new_tracked_num?(params)
+    (self.tracked_number.blank? && !params[:tracked_number].blank?) || (!params[:tracked_number].blank? && self.tracked_number != params[:tracked_number])
+  end
+  
   # TODO: fix this
   def create_comparison_with(params_ids, request)
     extract_other_compare_ids_from(params_ids).each do |id|

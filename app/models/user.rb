@@ -10,12 +10,13 @@ class User < ActiveRecord::Base
   
   has_many :posts
   has_many :blog_posts
-  has_many :images
-  has_one  :profile_image, :class_name => 'Image'
+  has_many :images, :dependent => :destroy
+  has_one  :profile_image, :class_name => 'Image', :dependent => :destroy
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
-  has_many :user_stats
-  has_many :mailing_addresses
+  has_many :user_stats, :dependent => :destroy
+  has_many :notes, :dependent => :destroy
+  has_many :mailing_addresses, :dependent => :destroy
   accepts_nested_attributes_for :mailing_addresses
   
   validates_presence_of :first_name, :email, :role_id
