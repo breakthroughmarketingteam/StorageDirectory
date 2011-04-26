@@ -25,8 +25,8 @@ namespace :clients  do
     require 'fastercsv'
     
     puts 'Caching active clients older than 2 months'
-    clients = Client.activated.all :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at DESC', :include => :listings
-    data = []; t = Time.now; count = clients.count
+    clients = Client.activated.find :all, :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at DESC', :include => :listings
+    data = []; t = Time.now; count = clients.size
     
     puts "Done.\nGathering data for #{count} clients"
     
