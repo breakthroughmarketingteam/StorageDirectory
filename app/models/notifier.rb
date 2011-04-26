@@ -95,7 +95,7 @@ class Notifier < ActionMailer::Base
   
   def old_client_file(file_path)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Oldest Client List'
-    attachment :content_type => 'text/csv', :body => File.read(file_path)
+    attachment :content_type => 'text/csv', :body => File.read(file_path), :filename => file_path.split('/').last
   end
   
   #
