@@ -219,7 +219,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head .sorter a{padding:6px 15px 0;}
 #search-head li#list-name:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-hover.png) no-repeat right #66C;}
 #search-head li#list-name{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort.png) no-repeat right #66C;margin:5px;}
-#search-head li#list-name a{width:273px;}
+#search-head li#list-name a{width:284px;}
 #search-head li#list-miles{background:#66C url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort.png) right no-repeat;margin:5px 0;}
 #search-head li#list-miles:hover{background:#66C url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-hover.png) right  no-repeat;}
 #search-head li#list-miles a{padding:6px 0 0 8px;width:47px;}
@@ -227,7 +227,7 @@ input#results{border:1px solid #ccc;font-weight:bold;padding:0 12px;border-radiu
 #search-head li#list-price{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort.png) no-repeat right #66C;margin:5px;}
 #search-head li#list-price:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-hover.png) no-repeat right #66C;}
 #search-head li#list-price a{width:103px;}
-#search-head li#list-amenities{line-height:32px;text-align:right;width:115px;}
+#search-head li#list-amenities{line-height:32px;text-align:right;width:105px;}
 #type-one-top-bar,#tips_view{border-radius-bottomleft:22px;-moz-border-radius-bottomleft:22px;-webkit-border-radius-bottomleft:22px;border-radius-bottomright:22px;-moz-border-radius-bottomright:22px;-webkit-border-radius-bottomright:22px;margin-bottom:2px;padding-bottom:15px;overflow:hidden;position:relative;width:772px;}
 #listings_controller #type-one-top-bar{width:745px;position:static;border:0 none;overflow:hidden;margin-left:2px;}
 #listings_controller #type-one-top-bar-head{width:auto;position:static;margin-bottom:0;}
@@ -350,7 +350,7 @@ li.rslt-price,li.rslt-miles,li.action_btn,li.rslt-unit-size,.rslt-contact,.listi
 .listing .panel img.ajax_loader{display:none;margin:16px 20px 0 0;}
 .listing .panel #al_write_review{display:inline;float:none;margin:0 0 0 3px;}
 li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
-.rslt-contact{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 10px;padding-right:10px;padding-top:10px;position:relative;width:150px;}
+.rslt-contact{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslts-divider.png) no-repeat scroll right top transparent;height:88px;margin:0 0 0 5px;padding-right:10px;padding-top:10px;position:relative;width:165px;}
 
 .listing .dnp{overflow:hidden;height:100px;}
 #feat-list .dnp{height:auto;}
@@ -1818,7 +1818,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .tooltip{display:none;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/text-bubble.png) no-repeat;height:56px;padding:20px 10px 0 10px;width:81px;font-size:12px;font-weight:bold;color:#4c4bcc;z-index:999;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
-#bluebar .block_content{float: right;width: 362px;}
+.home_action #bluebar .block_content, .locator_action #bluebar .block_content{float: right;width: 362px;}
 #bluebar #toll-free{border-left: 1px solid #7674FF;border-right: 1px solid #7674FF;color: #FFFFFF;float: left;font-size: 14px;margin-top: 14px;padding: 0 15px;}
 
 #fac_name span,.region_head_bar h2 span{font-size:14px;}

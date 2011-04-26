@@ -26,6 +26,7 @@
 		
 			<div class="rslt-contact">
 				<p>
+					<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %><br/>
 					<span class="rslt-address"><%= result.address %>,</span><br />
 					<span class="rslt-citystate"><%= result.city_state_zip %></span>
 				</p>
@@ -40,9 +41,10 @@
 					<% end %>
 				</span></p>
 				
-				<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %>
+				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %><br />
 				
-				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %>
+				
+				
 			</div>
 		
 			<% unit_size = result.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size) %>
