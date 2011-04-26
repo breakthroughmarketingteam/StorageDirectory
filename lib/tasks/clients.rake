@@ -45,7 +45,7 @@ namespace :clients  do
       puts "#{sprintf("%.2f", ((i + 1).to_f / count.to_f * 100))}% done. #{c.name}: #{c.company}"
     end
     
-    path = "#{RAILS_ROOT}/tmp/csv_data/oldest_clients#{t.strftime '%Y%m%d'}.csv"
+    path = "#{RAILS_ROOT}/tmp/oldest_clients#{t.strftime '%Y%m%d'}.csv"
     puts "Done.\nWriting to CSV file in #{path}"
     
     f = FasterCSV.open(path, 'w') do |csv|
