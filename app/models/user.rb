@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :user_hint_placements, :dependent => :destroy
   has_many :user_hints, :through => :user_hint_placements
   has_many :user_stats, :dependent => :destroy
-  has_many :notes, :dependent => :destroy
+  has_many :notes, :foreign_key => 'created_by'
   has_many :mailing_addresses, :dependent => :destroy
   accepts_nested_attributes_for :mailing_addresses
   

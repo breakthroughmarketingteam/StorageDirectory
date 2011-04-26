@@ -124,6 +124,13 @@ module SharedModelMethods #:nodoc:
       end
       timestamp
     end
+    
+    def nice_date(col = :created_at, options = {})
+      if self.respond_to? col
+        format = options[:include_time] ? '%B %d, %Y' : '%r %B %d, %Y'
+        self.send(col).strftime format
+      end
+    end
 
     def content_teaser(limit = 400)
       self.content.stripped_teaser(limit) unless self.content.blank?

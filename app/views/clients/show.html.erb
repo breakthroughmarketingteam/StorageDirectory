@@ -29,6 +29,8 @@
 				<%= render :partial => 'users/user_info', :locals => { :user => @client } %>
 			</div>
 			<%= print_link '#mem_info', '#', :class => 'ps right right_space', :style => 'margin:-20px 17px 0 0' %>
+			
+			<%= render :partial => 'notes/client_notes', :locals => { :client => @client } %>
 		</div>
 		
 		<%= link_to 'Activate Claimed Listings', verify_listings_client_url(@client, :claimed_listing_ids => @client.claimed_listings.map(&:id), :protocol => 'https'), :id => 'activate_listings', :class => 'click_thru grn_btn stack block left' unless @client.claimed_listings.empty? %>

@@ -3168,7 +3168,12 @@ form .note{clear:both;display:block;font-size:80%;}
 #rent_step2 .inner{border:0 none;background:none;margin-top:10px;}
 #rent_step2 .inner .uncollapse{margin-bottom:10px;}
 #new_tenant{padding-right:20px;}
-
+#show_notes{max-height:500px;overflow:auto;margin:;}
+#show_notes .client_note{padding:10px 12px;}
+#show_notes .note_content{font-size:14px;margin:0 0 5px;}
+#show_notes .note_info{color:#999;font-size:12px;}
+#show_notes .delete_link{display:none;}
+#show_notes .client_note:hover .delete_link{display:block;}
 #sl-edit-tabs{margin:1px 0 18px 10px;overflow:hidden;}
 #sl-edit-tabs .save{-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;-webkit-border-radius:4px 4px 4px 4px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/listing-title-bg-hover.png) repeat-x;border:1px outset #666;color:#fff;float:right;font-size:12px;margin-right:10px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;}
 #sl-edit-tabs .hint{display:block;font-size:12px;margin:20px 0;}

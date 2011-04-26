@@ -1,0 +1,13 @@
+<div id="Note_<%= note.id %>" class="client_note <%= cycle 'odd', 'even' %>">
+	<div class="right">
+		<%= link_to 'Delete', delete_client_note_path(client, note), :class => 'iconOnly16 delete_link' %>
+	</div>
+	
+	<div class="note_content">
+		<%= note.content %>
+	</div>
+	
+	<div class="note_info">
+		Created at: <%= note.nice_date :created_at, :include_time => true %>, By: <%= note.user.name %>
+	</div>
+</div>
