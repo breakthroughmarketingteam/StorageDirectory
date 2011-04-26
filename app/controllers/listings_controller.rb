@@ -167,9 +167,12 @@ class ListingsController < ApplicationController
       render :text => render_to_string(:partial => 'logo_form')
       
     when 'admin'
+      new_tracked_num = @listing.new_tracked_num?(params[:listing])
+      
       respond_to do |format|
         format.html do
           if @listing.update_attributes params[:listing]
+            Notifier.delay.deliver_tracking_number_ready @listing.client, @listing
             get_models_paginated
             render :action => 'index'
           else
@@ -179,6 +182,7 @@ class ListingsController < ApplicationController
         
         format.js do
           if @listing.update_attributes params[:listing]
+            Notifier.delay.deliver_tracking_number_ready @listing.client, @listing
             get_models_paginated
             render :action => 'index', :layout => false
           else

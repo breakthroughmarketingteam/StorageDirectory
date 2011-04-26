@@ -93,6 +93,11 @@ class Notifier < ActionMailer::Base
     @body[:list] = list
   end
   
+  def old_client_file(file_path)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Oldest Client List'
+    attachment :content_type => 'text/csv', :body => File.read(file_path), :filename => file_path.split('/').last
+  end
+  
   #
   # TO: Facility staff
   #
@@ -125,17 +130,23 @@ class Notifier < ActionMailer::Base
   end
   
   def copy_to_all_listings_notification(client, listing, what)
-     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your listings have been updated'
-     @body[:client] = client
-     @body[:listing] = listing
-     @body[:what] = what
-   end
+    setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your listings have been updated'
+    @body[:client] = client
+    @body[:listing] = listing
+    @body[:what] = what
+  end
 
-   def activated_listings_notification(client, listings)
-     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Facilities Have Been Activated'
-     @body[:client] = client
-     @body[:listings] = listings
-   end
+  def activated_listings_notification(client, listings)
+    setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Facilities Have Been Activated'
+    @body[:client] = client
+    @body[:listings] = listings
+  end
+
+  def tracking_number_ready(client, listing)
+    setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Tracking Number Is Ready'
+    @body[:client] = client
+    @body[:listing] = listing
+  end
   
   #
   # TO: tenants, reservers, searchers
