@@ -59,3 +59,18 @@ ul{margin-left:10px;}
 /* member info (backend) */
 .member_attributes .label{display:block;float:left;width:150px;}
 .member_attributes input {border:0;}
+
+
+/*  OpenTech Authorization From */
+#print_box #issn_tos p{margin:10px 0;}
+#print_box #issn_tos p, #issn_steps li{font-size:12px;line-height: 16px;}
+#print_box #issn_tos h4{font-size:18px;margin-bottom:10px;}
+#print_box #issn_tos a{text-decoration:underline;color:blue;}
+#print_box #issn_tos td{font-size:12px;width: 200px;}
+#print_box #issn_tos #header{padding-bottom:5px;border-bottom:1px solid #ddd;}
+#print_box #issn_tos #ot-logo{float:left;width:60px;margin: 0 10px 0 0;}
+#print_box #issn_tos h2{font-size:20px;}
+#print_box #issn_tos h3{font-size:18px;margin:20px 0 10px;}
+#print_box #issn_tos dt{float:left;font-size:12px;font-weight:bold;margin-right: 4px;}
+#print_box #issn_tos dd{font-size:12px;margin-bottom: 10px;}
+#print_box #issn_tos .small_framed{padding:0 15px 0 0;}
