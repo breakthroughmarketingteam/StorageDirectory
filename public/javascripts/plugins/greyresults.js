@@ -1036,7 +1036,8 @@ function getMarkerById(id) {
 
 	$.each(GmapMarkers, function(){
 		if (this.listing_id == id) {
-			marker = this; return;
+			marker = this; 
+			return;
 		}
 	});
 
