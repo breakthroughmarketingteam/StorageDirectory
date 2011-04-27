@@ -8182,7 +8182,7 @@ $(function() {
 				
 			} else {
 				var partial = 'clients/issn_steps', 
-					title = 'Activate Real Time Reservations', 
+					title = 'Inventory Synchronization', 
 					height = 'auto';
 
 				get_pop_up_and_do({ title: title, height: height, modal: true }, { sub_partial: partial, model: 'Client', id: $('#client_id').text() }, function(pop_up) {
@@ -8202,7 +8202,7 @@ $(function() {
 								}
 							},
 							{ 
-								pop_up_title : 'Grant Access',
+								pop_up_title : 'Inventory Synchronization',
 								div_id  : 'issnstep_2',
 								nav_vis : [['back', 'fadeIn'], ['next', function(btn, wizard){ btn.text('Done').data('done', true).fadeIn(); }]],
 								action	: function(wizard) {

@@ -31,7 +31,9 @@ ActionController::Routing::Routes.draw do |map|
   map.search_form '/self-storage/:auto_search', :controller => 'listings', :action => 'locator', :requirements => { :auto_search => /(auto_search)/ }
   map.claim_listing '/claim/:listing_id', :controller => 'clients', :action => 'new'
   map.tagged_with '/:model/tagged-with/:tag', :controller => 'tags', :action => 'show'
-                       
+  
+  map.create_client_note '/clients/:id/notes', :controller => 'clients', :action => 'create_note'
+  map.delete_client_note '/clients/:id/notes/:note_id', :controller => 'clients', :action => 'delete_note'                     
   map.client_activate   '/clients/activate/:code', :controller => 'clients', :action => 'activate'
   map.tenant_activate   '/tenants/activate/:code', :controller => 'tenants', :action => 'activate'
   map.resend_activation '/resend_activation/:code', :controller => 'clients', :action => 'resend_activation'
@@ -94,6 +96,7 @@ ActionController::Routing::Routes.draw do |map|
     clients.resources :payments
     clients.resource :settings, :controller => 'account_settings'
     clients.resources :user_stats
+    clients.resources :notes
   end
   
   map.resources :tenants do |tenant|
@@ -149,6 +152,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :links
   map.resources :link_groups
   map.resources :helptexts
+  map.resources :notes
   map.resources :forms
   map.resources :suggestions
   map.resources :reservations

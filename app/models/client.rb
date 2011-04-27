@@ -13,6 +13,7 @@ class Client < User
   has_many :specials, :through => :listings
   has_many :pictures, :through => :listings
   has_many :staff_emails, :through => :listings
+  has_many :notes, :foreign_key => 'user_id', :order => 'created_at DESC'
   
   accepts_nested_attributes_for :listings, :mailing_address, :billing_info
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"

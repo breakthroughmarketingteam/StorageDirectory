@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   
-  ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate, :verify_listings
+  ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate, :verify_listings, :create_note, :delete_note
   skip_before_filter :simple_auth, :only => :activate
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
   before_filter :get_client, :only => [:edit, :edit_info, :verify_listings]
@@ -38,11 +38,11 @@ class ClientsController < ApplicationController
     
   def edit
     redirect_to client_account_path if params[:id] && (current_user && current_user.has_role?('advertiser'))
-    @title = current_user.company
     
     if @client.nil?
       redirect_to new_client_path
     else
+      @title = current_user.company
       @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 10, :page => params[:page], :order => 'id DESC')
       @settings = @client.settings || @client.build_settings
       @client_welcome = Post.tagged_with('client welcome').last.content if !is_admin? && @client.login_count == 1
@@ -150,6 +150,61 @@ class ClientsController < ApplicationController
       respond_to do |format|
         format.html { redirect_back_or_default '/admin' }
         format.js { render :json => { :success => true } }
+      end
+    end
+  end
+  
+  def create_note
+    @client = Client.find params[:id]
+    @note = @client.notes.build params[:note].merge(:created_by => current_user.id)
+    
+    respond_to do |format|
+      format.html do 
+        if @note.save
+          flash[:notice] = @note.title + ' has been created.'
+          redirect_back_or_default :action => 'index'
+        else
+          render :action => 'show'
+        end
+      end
+      
+      format.js do
+        if @note.save
+          flash.now[:notice] = @note.title + ' has been created.'
+          get_models
+          render :action => 'show', :layout => false
+        else
+          flash.now[:error] = model_errors(@note)
+          render :action => 'show', :layout => false
+        end
+      end
+    end
+  end
+  
+  def delete_note
+    @client = Client.find params[:id]
+    @note = @client.notes.find params[:note_id]
+    
+    respond_to do |format|
+      format.html do 
+        if @note.destroy
+          flash[:notice] = @note.title + ' DESTROYED!'
+          redirect_back_or_default notes_path
+        else
+          flash[:error] = 'Error destroying ' + @note.title
+          render :action => 'edit'
+        end
+      end
+      
+      format.js do
+        if @note.destroy
+          flash.now[:notice] = @note.title + ' DESTROYED!'
+          get_models
+          render :action => 'show', :layout => false
+        else
+          flash.now[:error] = 'Error destroying ' + @note.title
+          render :action => 'show', :layout => false
+        end
       end
     end
   end

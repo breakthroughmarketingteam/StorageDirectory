@@ -32,14 +32,16 @@ namespace :clients  do
     
     clients.each_with_index do |c, i|
       data << [c.name, {
-        :id => c.id,
-        :email => c.email,
-        :listing => c.company,
-        :num_fac => c.listings.count,
-        :created => c.created_at.strftime("%a %b, %d %Y"),
-        :days_on => (t.to_date - c.created_at.to_date).to_i,
+        :id          => c.id,
+        :email       => c.email,
+        :phone       => c.phone,
+        :company     => c.company,
+        :num_fac     => c.listings.count,
+        :created     => c.created_at.strftime("%a %b, %d %Y"),
+        :days_on     => (t.to_date - c.created_at.to_date).to_i,
+        :clicks      => c.listings.map { |l| l.clicks.count }.sum,
         :impressions => c.listings.map { |l| l.impressions.count }.sum,
-        :clicks => c.listings.map { |l| l.clicks.count }.sum
+        :phone_views => c.listings.map { |l| l.phone_views.count }.sum
       }]
       
       puts "#{sprintf("%.2f", ((i + 1).to_f / count.to_f * 100))}% done. #{c.name}: #{c.company}"
@@ -48,11 +50,12 @@ namespace :clients  do
     path = "#{RAILS_ROOT}/tmp/oldest_clients#{t.strftime '%Y%m%d'}.csv"
     puts "Done.\nWriting to CSV file in #{path}"
     
-    f = FasterCSV.open(path, 'w') do |csv|
-      csv << ['Name', 'Email', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks']
+    FasterCSV.open(path, 'w') do |csv|
+      csv << ['Name', 'Email', 'Phone', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks', '# Phone Views']
       
       data.each do |c|
-        csv << [c[0], c[1][:email], c[1][:listing], c[1][:created], c[1][:days_on], c[1][:num_fac], c[1][:impressions], c[1][:clicks]]
+        name, info = c[0], c[1]
+        csv << [name, info[:email], info[:phone], info[:company], info[:created], info[:days_on], info[:num_fac], info[:impressions], info[:clicks], info[:phone_views]]
       end
     end
     

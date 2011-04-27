@@ -1,0 +1,13 @@
+<div id="client_notes">
+	<% form_for [client, Note.new], :url => create_client_note_url(client, :protocol => 'https'), :html => { :class => 'stack' } do |f| %>
+		<%= render :partial => 'notes/form', :locals => { :f => f, :client => client } %>
+		
+		<div>
+			<%= f.submit 'Add Note' %>
+		</div>
+	<% end %>
+	
+	<div id="show_notes">
+		<%= render :partial => 'notes/note', :collection => client.notes, :locals => { :client => client } %>
+	</div>
+</div>
