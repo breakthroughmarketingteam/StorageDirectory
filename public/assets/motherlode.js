@@ -7018,19 +7018,19 @@ MapIconMaker.createMarkerIcon = function(opts) {
 
 try {
 	// size of /images/ui/storagelocator/result-number.png
-	G_DEFAULT_ICON.iconSize.width = 29;
-	G_DEFAULT_ICON.iconSize.height = 39;
+	G_DEFAULT_ICON.iconSize.width = 25;
+	G_DEFAULT_ICON.iconSize.height = 38;
 	
 	var iconOptions = {};
-	iconOptions.width = 29;
-	iconOptions.height = 39;
+	iconOptions.width = 25;
+	iconOptions.height = 38;
 	iconOptions.primaryColor = "#0000ff";
 	iconOptions.cornerColor = "#FFFFFF";
 	iconOptions.strokeColor = "#000000";
 	var normalIcon = MapIconMaker.createMarkerIcon(iconOptions);
 
 	// http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|00CC99|000000
-	var startIcon = new GIcon(G_DEFAULT_ICON, 'http://s3.amazonaws.com/storagelocator/images/ui/map_marker.png'); // the 'you are here' icon
+	var startIcon = new GIcon(G_DEFAULT_ICON, '/images/ui/storagelocator/map_marker.png'); // the 'you are here' icon
 	
 	//save the regular icon image url
 	var normalIconImage    = normalIcon.image,
@@ -7054,7 +7054,8 @@ function getMarkerById(id) {
 
 	$.each(GmapMarkers, function(){
 		if (this.listing_id == id) {
-			marker = this; return;
+			marker = this; 
+			return;
 		}
 	});
 
@@ -7098,9 +7099,9 @@ function make_indexed_icon(index) {
 
 function get_marker_img_path(n) { // see app/metal/marker_maker.rb for more query params
 	var p;
-	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=14&offset=10x3';
-	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=14&offset=5x3';
-	else			  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&shadow=1&font_size=11&offset=5x5';
+	if 		(n < 10)  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=10x3';
+	else if (n < 100) p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=14&offset=5x3';
+	else			  p = '/marker_maker?n='+ n +'&color=white&font_weight=bold&font_size=11&offset=5x5';
 	return p;
 }
 
