@@ -1,4 +1,6 @@
 <fieldset id="NewCommentForm">	
+	<p class="stack">For <%= @review.commentable.title %> in <%= @review.commentable.city_state_zip %></p>
+	
 	<div class="stack">
 		<%= f.label :email %>
 		<div class="shadow_wrap">
