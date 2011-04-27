@@ -3,6 +3,9 @@
 	<div class="shimmy">
 		<div id="feat_wrap">
 		
+			<% unless request.xhr? %>
+			<%= render :partial => 'shared/social_box' %>
+		
 		<% unless @featured_listing.nil? %>
 			<div id="feat-list" class="listing">
 				<h2>Featured Listing</h2>
@@ -43,9 +46,14 @@
 			</div>
 		<% end %>
 		</div>
-
-		<% unless request.xhr? %>
-		<%= render :partial => 'shared/social_box' %>
+		
+		<div style="margin:10px 12px 10px 5px;padding: 10px;width: 154px;">
+			<h3 style="font-size:20px;color:#4c4bcc;line-height:22px;">Self Storage Facility Owner?</h3>
+			<hr style="border-top:1px dashed #ccc;border-bottom:none;border-right:none;border-left:none;"/>
+			<p style="line-height:18px;">Your facility is already listed just claim it and easily synchronize your inventory with your profile.</p>
+			<hr style="border-top:1px dashed #ccc;border-bottom:none;border-right:none;border-left:none;"/>
+			<span><a href="/self-storage-advertising" style="font-size:16px;font-weight:bold;color:#4c4bcc;line-height:22px;">Claim Facility</a> or <br/><strong style="font-size:16px;">Call (888) 222-0225</strong></span>
+		</div>
 		
 		<div id="acti-block" style="margin-left: 4px;margin-top: 15px;">
 

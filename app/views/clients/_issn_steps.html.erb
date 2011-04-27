@@ -2,37 +2,61 @@
 	<div class="items">
 		<div id="issnstep_1" class="workflow_step">
 			<%= link_to image_tag('/files/content/issn_networklogo.jpg', :class => 'right'), 'http://www.opentechalliance.com/products/insomniac-network.php' %>
+			<h4>Enable inventory synchronization through OpenTech's INSOMNIAC Self Storage Network (ISSN)</h4>
 		
-			<h4>Online Reservations through the INSOMNIAC Self Storage Network (ISSN)</h4>
-			<blockquote>
-				The INSOMNIAC Self Storage Network (ISSN) is the only real-time reservations platform in the self storage industry. ISSN provides a secure, real-time connection between self storage facilities (Network Members) and marketing companies (Marketing Partners) for the purpose of processing real-time reservations. 
-				<cite title="OpenTech Alliance"><a href="http://www.opentechalliance.com/products/insomniac-network.php" target="_blank">Opentech Alliance</a>.</cite>
-			</blockquote>
-		
-			<h4>Features of the INSOMNIAC Self Storage Network:</h4>
+			<p>USSelfStorageLocator.com uses <a href="http://www.opentechalliance.com/products/insomniac-network.php" target="_blank">ISSN</a> to provide a secure, real-time connection, between self storage facilities (Network Members) and marketing companies (Marketing Partners) for the purpose of providing seamless inventory synchronization.</p>
+			
+			<br/>
+			
+			<h4>Supported Property Management Systems</h4>
+			<table>
+				<tr>
+					<td>
+						<ul>
+							<li>Domico</li>
+							<li>Self Storage Manager</li>
+							<li>SiteLink PC</li>
+							<li>SiteLink Web</li>
+						</ul>
+					</td>
+				
+					<td>
+						<ul>
+							<li>StorageCommander</li>
+							<li>Store 3.1</li>
+							<li>Store 4.0</li>
+							<li>Symbio</li>
+						</ul>
+					</td>
+					<td>
+						<ul>
+							<li>TaskMaster</li>
+							<li>Total Recall</li>
+							<li>WinSen</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			
+			<h4>Benefits of inventory synchronization through ISSN</h4>
 			<ul>
-			    <li>Allows self storage operators to accept online reservations through multiple sales channels</li>
-			    <li>Frees facility managers from wasting time updating their available unit information in multiple systems</li>
-			    <li>Eliminates the need to play phone tag with customers who requested a quote</li>
+			    <li>Allows self storage operators to accept online rentals and reservations through multiple sales channels.</li>
+			    <li>Save time by automatically synchronizing all your facility details, inventory, and availability with your facility's profile.</li>
 			</ul>
-		
-			<p>
-				Choose the option below that applies to you to enable this feature on your account.
-			</p>
-		
+			
 			<div id="issn_status_option" class="uncollapse">
 				<div class="right">
-					<a href="#" id="join_issn" rel="opt_2" class="btn">Authorize</a>
+					<a href="#" id="join_issn" rel="opt_2" class="btn">Next</a>
 				</div>
 			</div>
 		
 		</div> <!-- END step 1 -->
 
 		<div id="issnstep_2" class="workflow_step">
-			<h4>Authorization</h4>
+			<h4>Authorization Form</h4>
 		
 			<p class="stack">
-				Almost done! We just need to authorize the connection with Opentech. We're working hard to make everything as easy as possible. But still, somethings have to work the old way. Your real signature is required for the authorization between Opentech and us (<%= @app_name %>). You'll have to print out this form - which we've kindly filled out for you - sign it and either fax or scan and email it back to us. 
+				Please make sure all the information in this form is accurate before submitting. <strong>To authorize more than one facility</strong> please add/activate them on your main account before continuing with the authorization process.
 			</p>
 		
 			<p>
@@ -42,6 +66,7 @@
 			<div id="print_box">
 				<%= render :partial => 'vendors/issn_tos' %>
 				<div id="client_info_preview"></div>
+				
 			</div>
 		
 			<div id="print_issn_auth">

@@ -1,23 +1,6 @@
 <div id="netmem_agree">
-	<p class="bold">Network Member</p>
-	<span class="np note">You can edit the information below</span>
 	
-	<div id="sig_box">
-		<div class="signature_line"></div>
-		<p class="label">Authorized Signature</p>
-	
-		<div class="signature_line">
-			<%= text_field_tag '', client.name %>
-		</div>
-		<p class="label">Print Name</p>
-	
-		<div class="signature_line">
-			<%= text_field_tag '', Time.now.strftime("%B, %d %Y") %>
-		</div>
-		<p class="label">Date</p>
-	</div>
-	
-	<p class="bold">Network Member Information</p>
+	<h3>Network Member Information</h3>
 	<table>
 		<tr>
 			<th>Name:</th>
@@ -59,7 +42,7 @@
 		<tr>
 			<th>PMSoftware:</th>
 			<td class="value" colspan="3">
-				<p class="np left small_framed">Supported Property Management Systems</p>
+				<span class="np left small_framed">Supported Property Management Systems</span>
 				<%= select_tag 'pm_software', option_tags($_pm_softwares, nil, 'Choose Your System'), :class => 'required np' %>
 			</td>
 		</tr>
@@ -67,13 +50,13 @@
 	
 	<div class="page-break"></div>
 	
-	<p class="bold">Network Member Facility Information</p>
+	<h3>Network Member Facility Information</h3>
 	<div id="client_listings_table">
 		<% client.listings.each do |listing| %>
 			<table>
 				<tr>
 					<th>Action to be Performed</th>
-					<td colspan="3">ADD</td>
+					<td colspan="3">ADD Facility</td>
 				</tr>
 				<tr>
 					<th>Facility Name:</th>
