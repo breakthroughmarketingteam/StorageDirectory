@@ -9,8 +9,8 @@ class BillingInfo < ActiveRecord::Base
   @@credit_cards = ['Visa', 'Amex', 'MasterCard', 'Discover']
   cattr_reader :credit_cards
   
-  @@pbk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/pb_sandwich.pem")
-  @@pvk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/tuna_salad.pem"), 'usssl2119'
+  @@pbk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/pb_sandwich2.pem")
+  @@pvk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/tuna_salad2.pem"), 'usssl2119'
   
   def before_save
     self.card_number   = Base64.encode64 @@pbk.public_encrypt(self.card_number)   if self.card_number
@@ -26,7 +26,7 @@ class BillingInfo < ActiveRecord::Base
   
   def card_number
     s = read_attribute :card_number
-    @@pvk.private_decrypt Base64.decode64(s) if s
+    @@pvk.private_decrypt Base64.decode64(s) if s rescue nil
   end
   
   def card_type
