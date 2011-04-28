@@ -1,41 +1,40 @@
 <div id="owner_info_wrap" class="uncollapse">
-	<!--
 	<div class="ov-info-cnt">
 		<ul>
 			<li>
 				<span class="label">Name:</span>
-				<span class="value"><%#= @client.billing_info.name if @client.billing_info %></span>
+				<span class="value"><%= @client.billing_info.name if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Phone:</span>
-				<span class="value"><%#= @client.billing_info.phone if @client.billing_info %></span>
+				<span class="value"><%= @client.billing_info.phone if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Address:</span>
-				<span class="value" ><%#= @client.billing_info.address if @client.billing_info %></span>
+				<span class="value" ><%= @client.billing_info.address if @client.billing_info %></span>
 			</li>
 			<li class="uncollapse">
-				<span class="value" ><%#= @client.billing_info.city_state_zip if @client.billing_info %></span>
+				<span class="value" ><%= @client.billing_info.city_state_zip if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Card Type:</span>
-				<span class="value"><%#= @client.billing_info.card_type if @client.billing_info %></span>
+				<span class="value"><%= @client.billing_info.card_type if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Card Number:</span>
-				<span class="value"><%#= @client.billing_info.obscured_card_number if @client.billing_info %></span>
+				<span class="value"><%= @client.billing_info.obscured_card_number if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">CVV:</span>
-				<span class="value"><%#= @client.billing_info.cvv if @client.billing_info %></span>
+				<span class="value"><%= @client.billing_info.cvv if @client.billing_info %></span>
 			</li>
 			<li>
 				<span class="label">Expires:</span>
-				<span class="value"><%#= "#{@client.billing_info.expires_month}/#{@client.billing_info.expires_year}" if @client.billing_info %></span>
+				<span class="value"><%= "#{@client.billing_info.expires_month}/#{@client.billing_info.expires_year}" if @client.billing_info %></span>
 			</li>
 		</ul>
 	</div>
-	-->
+	
 	<div class="ov-info-cnt">
 		<ul>
 			<li>

@@ -105,7 +105,12 @@ class Client < User
   end
 
   def enable_listings!
-    self.listings.each { |listing| listing.update_attributes :enabled => true, :status => 'verified', :renting_enabled => self.rental_agree? }
+    self.listings.each do |listing|
+      listing.enabled = true
+      listing.status = 'verified'
+      listing.renting_enabled = self.rental_agree?
+      listing.save
+    end
   end
   
   def ensure_listings_unverified!

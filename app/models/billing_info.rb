@@ -1,5 +1,6 @@
 class BillingInfo < ActiveRecord::Base
   require 'openssl'
+  require 'base64'
   
   belongs_to :client
   belongs_to :tenant, :foreign_key => 'client_id'
@@ -8,20 +9,15 @@ class BillingInfo < ActiveRecord::Base
   @@credit_cards = ['Visa', 'Amex', 'MasterCard', 'Discover']
   cattr_reader :credit_cards
   
-  def pb_sandwich
-    @pbk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/pb_sandwich.pem")
-  end
-  
-  def tuna_salad
-    @pvk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/tuna_salad.pem"), 'usssl2119'
-  end
+  @@pbk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/pb_sandwich.pem")
+  @@pvk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/tuna_salad.pem"), 'usssl2119'
   
   def before_save
-    self.card_number   = pb_sandwich.public_encrypt(self.card_number)   if self.card_number
-    self.card_type     = pb_sandwich.public_encrypt(self.card_type)     if self.card_type
-    self.cvv           = pb_sandwich.public_encrypt(self.cvv)           if self.cvv
-    self.expires_month = pb_sandwich.public_encrypt(self.expires_month) if self.expires_month
-    self.expires_year  = pb_sandwich.public_encrypt(self.expires_year)  if self.expires_year
+    self.card_number   = Base64.encode64 @@pbk.public_encrypt(self.card_number)   if self.card_number
+    self.card_type     = Base64.encode64 @@pbk.public_encrypt(self.card_type)     if self.card_type
+    self.cvv           = Base64.encode64 @@pbk.public_encrypt(self.cvv)           if self.cvv
+    self.expires_month = Base64.encode64 @@pbk.public_encrypt(self.expires_month) if self.expires_month
+    self.expires_year  = Base64.encode64 @@pbk.public_encrypt(self.expires_year)  if self.expires_year
   end
   
   def obscured_card_number
@@ -29,33 +25,28 @@ class BillingInfo < ActiveRecord::Base
   end
   
   def card_number
-    tuna_salad.private_decrypt read_attribute(:card_number)
-  rescue
-    read_attribute :card_number
+    s = read_attribute :card_number
+    @@pvk.private_decrypt Base64.decode64(s) if s
   end
   
   def card_type
-    tuna_salad.private_decrypt read_attribute(:card_type)
-  rescue
-    read_attribute :card_type
+    s = read_attribute :card_type
+    @@pvk.private_decrypt Base64.decode64(s) if s rescue nil
   end
   
   def cvv
-    tuna_salad.private_decrypt read_attribute(:cvv)
-  rescue
-    read_attribute :cvv
+    s = read_attribute :cvv
+    @@pvk.private_decrypt Base64.decode64(s) if s rescue nil
   end
   
   def expires_month
-    tuna_salad.private_decrypt read_attribute(:expires_month)
-  rescue
-    read_attribute :expires_month
+    s = read_attribute :expires_month
+    @@pvk.private_decrypt Base64.decode64(s) if s rescue nil
   end
   
   def expires_year
-    tuna_salad.private_decrypt read_attribute(:expires_year)
-  rescue
-    read_attribute :expires_year
+    s = read_attribute :expires_year
+    @@pvk.private_decrypt Base64.decode64(s) if s rescue nil
   end
   
   def full_address
