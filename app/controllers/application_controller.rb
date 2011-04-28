@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-888-222-0225'
   $_usssl_google_analytics = 'UA-20270920-1'
-  $_pm_softwares = ['Domico', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'TaskMaster', 'Total Recall', 'WinSen']
+  $_pm_softwares = ['Domico', 'QSX Management Software', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'Syrasoft 7', 'Syrasoft 8', 'TaskMaster', 'Total Recall', 'Webselfstorage', 'WinSen']
   
   #before_filter :ensure_domain
   before_filter :simple_auth
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   
   @@app_config = {
     :plugins => 'greyresults, inflector, jquery.formbouncer, jquery.hinty, jquery.iframe, jquery.jqDock.min, jquery.inline-search, jquery.tools.min, jquery.jmap.min, jquery.preloadCssImages, binfo',
-    :title =>  'US Self Storage Locator',
+    :title =>  'USSelfStorageLocator.com',
     :theme => 'storagelocator',
     :widgets => '', 
     :description => "Locate, Save, Rent Self Storage Units Anywhere, Anytime. Advertise your self storage facility on the web's greatest storage directory.",
