@@ -651,7 +651,6 @@ module ApplicationHelper
   
   def extract_img_from_html(str)
     return '' if str.nil?
-    require 'nokogiri'
     doc = Nokogiri::HTML::DocumentFragment.parse str
     doc.search('img').map { |img| img.first[1] }.flatten.first
   rescue
