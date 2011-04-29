@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-  filter_parameter_logging /(password)|(card_number)|(card_type)|(cvv)|(expires)/i
+  filter_parameter_logging /(password)|(card_number)|(card_type)|(cvv)|(expires)|(ekey)|(eiv)/i
+  
   helper_method :current_user_session, :current_user, :benchmark, :_crud, :regions, :view_types, :models, :view_types_dir, :blocks_models,           
                 :model_blocks_for_region, :rest_methods, :_actions, :_controllers, :_field_types, :_page_actions, :_models_having_assoc,    
                 :_models_with_title, :_themes, :_plugins, :_widgets, :_user_hint_places, :in_edit_mode?, :in_mode?, :user_allowed?,

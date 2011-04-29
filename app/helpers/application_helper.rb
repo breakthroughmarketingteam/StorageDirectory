@@ -576,7 +576,11 @@ module ApplicationHelper
   end
   
   def current_path
-    request.env['REQUEST_URI']
+    request.request_uri
+  end
+  
+  def current_url
+    request.protocol + request.host + current_path
   end
   
   def display_top_cities(cities, columns = 5, rows = 10)

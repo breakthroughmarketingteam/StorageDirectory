@@ -20,7 +20,7 @@
 				</li>
 				<li class="state_zip">
 					<%= bf.label :state %>
-					<%= bf.select :state, States.names, :class => 'required' %>
+					<%= bf.select :state, States.names, { :include_blank => true }, :class => 'required' %>
 					<%= bf.text_field :zip, :class => 'required numeric hintable auto_next', :title => 'Zip', :maxlength => 5 %>
 				</li>
 				<li>
@@ -38,7 +38,7 @@
 				<li class="expiry">
 					<%= bf.label :expires %>
 					<%= bf.text_field :expires_month, :value => @billing_info.expires_month, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
-					<%= bf.text_field :expires_year, :value => @billing_info.expires_year, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'YY' %>
+					<%= bf.text_field :expires_year, :value => @billing_info.expires_year, :class => 'required hintable numeric', :maxlength => 2, :title => 'YY' %>
 				</li>
 			</ul>
 		</div>

@@ -1,17 +1,19 @@
 class ChangeBillingInfoColumnsToText < ActiveRecord::Migration
   def self.up
-    change_column :billing_infos, :card_number, :text
-    change_column :billing_infos, :card_type, :text
-    change_column :billing_infos, :cvv, :text
-    change_column :billing_infos, :expires_month, :text
-    change_column :billing_infos, :expires_year, :text
+    remove_column :billing_infos, :card_number
+    remove_column :billing_infos, :card_type
+    remove_column :billing_infos, :cvv
+    remove_column :billing_infos, :expires_month
+    remove_column :billing_infos, :expires_year
+    
+    add_column :billing_infos, :card_number, :binary
+    add_column :billing_infos, :card_type, :binary
+    add_column :billing_infos, :cvv, :binary
+    add_column :billing_infos, :expires_month, :binary
+    add_column :billing_infos, :expires_year, :binary
   end
 
   def self.down
-    change_column :billing_infos, :card_number, :binary
-    change_column :billing_infos, :card_type, :binary
-    change_column :billing_infos, :cvv, :binary
-    change_column :billing_infos, :expires_month, :binary
-    change_column :billing_infos, :expires_year, :binary
+    
   end
 end

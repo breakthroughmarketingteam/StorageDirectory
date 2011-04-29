@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(:version => 20110428161210) do
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
-    t.text     "card_number"
-    t.text     "card_type"
-    t.text     "cvv"
-    t.text     "expires_month"
-    t.text     "expires_year"
+    t.binary   "card_number"
+    t.binary   "card_type"
+    t.binary   "cvv"
+    t.binary   "expires_month"
+    t.binary   "expires_year"
   end
 
   create_table "blast_clicks", :force => true do |t|
