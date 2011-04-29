@@ -643,7 +643,7 @@ module ApplicationHelper
       
     elsif controller_name =~ /(posts)/i
       post = action_name == 'show' ? (@post || @blog_post) : (@posts || @blog_posts).first
-      extract_img_from_html post.content
+      extract_img_from_html(post.content) || default
     else
       default
     end
@@ -654,6 +654,8 @@ module ApplicationHelper
     require 'nokogiri'
     doc = Nokogiri::HTML::DocumentFragment.parse str
     doc.search('img').map { |img| img.first[1] }.flatten.first
+  rescue
+    nil
   end
   
   def help_pop_up_link(target, options = {}, img_ops = {})
