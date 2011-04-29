@@ -1,8 +1,6 @@
+<% declare_content_for %>
 <div id="ajax_wrap_inner">
 	<div id="blog-post">
-		<h2>Self Storage Blog</h2>
-
-		<% declare_content_for %>
 		<h1><%= @blog_post.title %></h1>
 		<div id="post-date"><%= @blog_post.updated_at.strftime "%B %d, %Y" %></div>
 		<%= @blog_post.content %>
