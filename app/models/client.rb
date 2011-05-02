@@ -4,9 +4,9 @@ class Client < User
   has_many :claimed_listings, :dependent => :destroy
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
-  has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
-  has_one :billing_info, :dependent => :destroy
-  has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
+  has_one  :settings, :class_name => 'AccountSetting', :dependent => :destroy
+  has_one  :billing_info, :dependent => :destroy
+  has_one  :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
   has_many :staff_emails, :through => :listings
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
@@ -105,7 +105,12 @@ class Client < User
   end
 
   def enable_listings!
-    self.listings.each { |listing| listing.update_attributes :enabled => true, :status => 'verified', :renting_enabled => self.rental_agree? }
+    self.listings.each do |listing|
+      listing.enabled = true
+      listing.status = 'verified'
+      listing.renting_enabled = self.rental_agree?
+      listing.save
+    end
   end
   
   def ensure_listings_unverified!

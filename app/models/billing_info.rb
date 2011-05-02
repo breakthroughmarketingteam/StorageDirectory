@@ -8,20 +8,20 @@ class BillingInfo < ActiveRecord::Base
   @@credit_cards = ['Visa', 'Amex', 'MasterCard', 'Discover']
   cattr_reader :credit_cards
   
-  def pb_sandwich
-    @pbk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/pb_sandwich.pem")
+  def pbk(pem = "#{RAILS_ROOT}/cert/pb_sandwich3.pem")
+    @pbk ||= OpenSSL::PKey::RSA.new File.read(pem)
   end
   
-  def tuna_salad
-    @pvk ||= OpenSSL::PKey::RSA.new File.read("#{RAILS_ROOT}/cert/tuna_salad.pem"), 'usssl2119'
+  def pvk(pem = "#{RAILS_ROOT}/cert/tuna_salad3.pem", pw = 'usssl2119')
+    @pvk ||= OpenSSL::PKey::RSA.new File.read(pem), pw
   end
   
   def before_save
-    self.card_number   = pb_sandwich.public_encrypt(self.card_number)   if self.card_number
-    self.card_type     = pb_sandwich.public_encrypt(self.card_type)     if self.card_type
-    self.cvv           = pb_sandwich.public_encrypt(self.cvv)           if self.cvv
-    self.expires_month = pb_sandwich.public_encrypt(self.expires_month) if self.expires_month
-    self.expires_year  = pb_sandwich.public_encrypt(self.expires_year)  if self.expires_year
+    self.card_number   = self.pbk.public_encrypt self.card_number   if self.card_number
+    self.card_type     = self.pbk.public_encrypt self.card_type     if self.card_type
+    self.cvv           = self.pbk.public_encrypt self.cvv           if self.cvv
+    self.expires_month = self.pbk.public_encrypt self.expires_month if self.expires_month
+    self.expires_year  = self.pbk.public_encrypt self.expires_year  if self.expires_year
   end
   
   def obscured_card_number
@@ -29,36 +29,32 @@ class BillingInfo < ActiveRecord::Base
   end
   
   def card_number
-    tuna_salad.private_decrypt read_attribute(:card_number)
-  rescue
-    read_attribute :card_number
+    s = read_attribute :card_number
+    self.pvk.private_decrypt s rescue nil
   end
   
   def card_type
-    tuna_salad.private_decrypt read_attribute(:card_type)
-  rescue
-    read_attribute :card_type
+    s = read_attribute :card_type
+    self.pvk.private_decrypt s rescue nil
   end
   
   def cvv
-    tuna_salad.private_decrypt read_attribute(:cvv)
-  rescue
-    read_attribute :cvv
+    s = read_attribute :cvv
+    self.pvk.private_decrypt s rescue nil
   end
   
   def expires_month
-    tuna_salad.private_decrypt read_attribute(:expires_month)
-  rescue
-    read_attribute :expires_month
+    s = read_attribute :expires_month
+    self.pvk.private_decrypt s rescue nil
   end
   
   def expires_year
-    tuna_salad.private_decrypt read_attribute(:expires_year)
-  rescue
-    read_attribute :expires_year
+    s = read_attribute :expires_year
+    self.pvk.private_decrypt s rescue nil
   end
   
   def full_address
     "#{address} #{city}, #{state} #{zip}"
   end
+  
 end

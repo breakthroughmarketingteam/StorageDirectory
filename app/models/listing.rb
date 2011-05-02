@@ -401,6 +401,10 @@ class Listing < ActiveRecord::Base
     $!
   end
   
+  def full_url(options = {})
+    "http://#{$root_domain}#{self.full_path}"
+  end
+  
   # add up a score based on the return values of model methods
   # when the methods returns a collection, calculate the size compared to the integer in the criteria,
   # when its a single object, do the comparison and return 0 or 5

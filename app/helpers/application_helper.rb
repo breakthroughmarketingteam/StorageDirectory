@@ -5,6 +5,11 @@ module ApplicationHelper
   def site_meta_tags
     if @page && (!@page.meta_desc.blank? || !@page.keywords.empty?)
       "\n<meta name='keywords' content=\"#{h geo_keywords(@page)}\" />\n<meta name='description' content=\"#{h @page.meta_desc}\" />"
+      
+    elsif controller_name =~ /(posts)/i && action_name == 'show'
+      post = (@post || @blog_post)
+      "\n<meta name='keywords' content=\"#{h "#{post.tag_list.join(', ')}, #{ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h post.content_teaser}\" />"
+      
     else
       ApplicationController.app_config.map do |name, content|
         "\n<meta name='#{name.to_s}' content=\"#{content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
@@ -576,7 +581,11 @@ module ApplicationHelper
   end
   
   def current_path
-    request.env['REQUEST_URI']
+    request.request_uri
+  end
+  
+  def current_url
+    request.protocol + request.host + current_path
   end
   
   def display_top_cities(cities, columns = 5, rows = 10)
@@ -632,11 +641,21 @@ module ApplicationHelper
         img_hash[:src]
       end
       
-    elsif controller_name == 'blog_posts'
-      default
+    elsif controller_name =~ /(posts)/i
+      post = action_name == 'show' ? (@post || @blog_post) : (@posts || @blog_posts).first
+      extract_img_from_html(post.content) || default
     else
       default
     end
+  end
+  
+  def extract_img_from_html(str)
+    return '' if str.nil?
+    doc = Nokogiri::HTML::DocumentFragment.parse str
+    img_obj = doc.search('img').first
+    img_obj.attributes['src'].value
+  rescue
+    nil
   end
   
   def help_pop_up_link(target, options = {}, img_ops = {})

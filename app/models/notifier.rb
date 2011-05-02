@@ -148,6 +148,12 @@ class Notifier < ActionMailer::Base
     @body[:listing] = listing
   end
   
+  def review_published_notification(review, listing)
+    setup_email listing.client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Someone Has Reviewed Your Facility'
+    @body[:review] = review
+    @body[:listing] = listing
+  end
+  
   #
   # TO: tenants, reservers, searchers
   #

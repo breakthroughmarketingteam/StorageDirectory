@@ -33,4 +33,14 @@ class Comment < ActiveRecord::Base
     self.title = 'Comment ' if self.title.blank?
   end
   
+  def after_update
+    self.notify_if_needed!
+  end
+  
+  def notify_if_needed!
+    case self.commentable_type when 'Listing'
+      Notifier.delay.deliver_review_published_notification self, self.commentable
+    end
+  end
+  
 end
