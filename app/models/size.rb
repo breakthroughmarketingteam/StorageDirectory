@@ -29,7 +29,7 @@ class Size < ActiveRecord::Base
     "#{width} x #{length}"
   end
   
-  def is_close_to?(size, threshold = 3)
+  def is_close_to?(size, threshold = 10)
     sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size
     self.sqft.between? sq - threshold, sq + threshold
   end
