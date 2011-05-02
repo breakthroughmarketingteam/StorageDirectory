@@ -26,7 +26,9 @@
 		
 			<div class="rslt-contact">
 				<p>
-					<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %><br/>
+					<%= claim_listing_link(result, :class => 'claim') if result.claimable? %>
+				</p>
+				<p>
 					<span class="rslt-address"><%= result.address %>,</span><br />
 					<span class="rslt-citystate"><%= result.city_state_zip %></span>
 				</p>
@@ -41,18 +43,19 @@
 					<% end %>
 				</span></p>
 				
-				<%= claim_listing_link(result, :class => 'claim') if result.claimable? %><br />
-				
-				
-				
 			</div>
 		
 			<% unit_size = result.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size) %>
 			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results', :unit_size => unit_size } %>
-		
+			
+			<p>
+				<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %>
+			</p>
+			
 			<div class="action_btn<%= listing_action_btn_class(result) %>">
 				<%= results_main_button(result, unit_size) %>
 			</div>
+			
 		</div>
 		
 		<% if result.premium? %>

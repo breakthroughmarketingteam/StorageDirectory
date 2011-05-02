@@ -358,7 +358,7 @@ li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-title h3{float:left;font-size:19px;height:26px;padding:12px 0 0 20px;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
-.rslt-phone{color:#4c4bcc;font-size:14px;font-weight:bold;}
+.rslt-phone{color:#4c4bcc;font-size:12px;font-weight:bold;}
 #clients_controller .rslt-contact #listing_title{width:105%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-miles{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslts-divider.png) no-repeat top right;padding:0 14px;margin-left:-1px;}
@@ -2200,7 +2200,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #alexa a{float:left;height:65px;width:120px;}
 #alexa p{float:left;font-size:12px;margin:24px 0 0 20px;}
 
-.claim{bottom:12px;font-size:10px;position:absolute;}
+.claim{display: inline-block;font-size: 10px;margin-bottom: 10px;}
 .overlay{background:#000;opacity:.4;position:absolute;top:0;bottom:0;left:0;right:0;}
 .overlay div{position:absolute;top:0;bottom:0;left:0;right:0;background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;}
 .post_date{float:left;height:43px;margin:0 10px 0 0;padding:16px 0 0 2px;text-align:center;width:75px;}
