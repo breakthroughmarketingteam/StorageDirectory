@@ -42,7 +42,7 @@ Rails::Initializer.run do |config|
   config.gem 'jammit', :source => 'git://github.com/documentcloud/jammit.git'
   config.gem 'url_shortener'
   config.gem 'nokogiri'
-  config.gem 'strongbox'
+  #config.gem 'strongbox'
   # TODO: does heroscale work? their site is down as of feb 2011
   #config.gem "heroscale"
   #require "heroscale"
