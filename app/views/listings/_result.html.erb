@@ -44,13 +44,11 @@
 				</span></p>
 				
 			</div>
-		
+			
+			<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'admin-edit' if user_is_a? 'admin', 'staff' %>
+			
 			<% unit_size = result.get_closest_unit_size(@search.unit_size) || Size.get_from_unit_size(@search.unit_size) %>
 			<%= render :partial => 'listings/distance_and_price', :locals => { :listing => result, :feat => false, :context => 'results', :unit_size => unit_size } %>
-			
-			<p>
-				<%= link_to 'Admin Edit', edit_listing_url(result, :protocol => 'https'), :class => 'note' if user_is_a? 'admin', 'staff' %>
-			</p>
 			
 			<div class="action_btn<%= listing_action_btn_class(result) %>">
 				<%= results_main_button(result, unit_size) %>

@@ -359,6 +359,7 @@ li.rslt-price,li.rslt-miles,li.action_btn{text-align:center;}
 .rslt-title h3,.rslt-title h3 a{color:#060;font-size:16px;}
 .rslt-address{display:inline-block;padding-bottom:2px;}
 .rslt-phone{color:#4c4bcc;font-size:12px;font-weight:bold;}
+.admin-edit{color:#ccc;float: right;font-size: 12px;margin-right: 10px;margin-top: 8px;}
 #clients_controller .rslt-contact #listing_title{width:105%;}
 .listing .rslt-contact p.rslt-phone{color:#3F3FCC;font-weight:bold;font-size:1.2em;}
 li.rslt-miles{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rslts-divider.png) no-repeat top right;padding:0 14px;margin-left:-1px;}
