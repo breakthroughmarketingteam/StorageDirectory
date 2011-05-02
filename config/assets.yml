@@ -9,6 +9,7 @@ javascripts:
     - public/javascripts/swfobject_modified.js
     - public/javascripts/jquery.all.js
     - public/javascripts/plugins/inflector.js
+    - public/javascripts/flash_detect.js
     - public/javascripts/plugins/jquery.iframe.js
     - public/javascripts/plugins/jquery.jqDock.min.js
     - public/javascripts/plugins/jquery.inline-search.js

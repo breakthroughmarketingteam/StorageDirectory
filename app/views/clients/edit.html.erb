@@ -29,7 +29,10 @@
 				<p>-&nbsp; Total activity for all your listed facilities.</p>
 	        </div>
 	        <div id="ov-reports-cnt">
-				<div id="stats_graph" class="Xtab_content"></div>
+				<div id="stats_graph" class="Xtab_content">
+					<%= @graph %>
+				</div>
+				
 				<div id="graph_controls">
 					<%= label_tag 'Starting from' %> 
 					<%= select_tag 'months_ago', option_tags([1..24].map(&:to_a).flatten), :class => 'auto_change' %> 

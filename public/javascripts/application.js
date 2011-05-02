@@ -1539,12 +1539,16 @@ $(function() {
 	});
 	
 	$('#account_home_link').click(function() {
+		//if (!FlashDetect.installed) return true;
+		
 		// for some reason the stats_graph div was getting a width of 400px when the page loaded with it hidden (navigated from the listing edit page through one of the client option links)
 		$('#stats_graph').css('width', '700px');
 		init_stats_graph();
 	});
 	
 	$('.auto_change', '#ov-reports-cnt').change(function(){
+		//if (!FlashDetect.installed) return false;
+		
 		$('#stats_graph').children().fadeTo('slow', .5);
 		init_stats_graph({ months_ago : this.value, force: true });
 	});
@@ -1603,7 +1607,11 @@ $(function() {
 			});
 		}
 	}
-	init_stats_graph({ months_ago : $('select.auto_change', '#ov-reports-cnt').val() });
+	
+	//TODO: implement http://pullmonkey.com/projects/open_flash_chart
+	//if (!FlashDetect.installed) {
+		init_stats_graph({ months_ago : $('select.auto_change', '#ov-reports-cnt').val() });
+	//}
 	
 	// Client tips block
 	$('.client_tip:not(:first)', '#tips-box').hide();

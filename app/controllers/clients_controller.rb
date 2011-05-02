@@ -46,6 +46,7 @@ class ClientsController < ApplicationController
       @listings = @client.listings.paginate(:conditions => 'enabled IS TRUE', :per_page => 10, :page => params[:page], :order => 'id DESC')
       @settings = @client.settings || @client.build_settings
       @client_welcome = Post.tagged_with('client welcome').last.content if !is_admin? && @client.login_count == 1
+      #@graph = open_flash_chart_object 700, 300, "/ajax/bar_3d?model=Client&id=#{@client.id}", false
       
       render :layout => false if request.xhr?
     end
