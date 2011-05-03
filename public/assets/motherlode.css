@@ -544,7 +544,7 @@
 /* Autocomplete
 ----------------------------------*/
 .ui-autocomplete{position:absolute;cursor:default;}
-.ui-autocomplete-loading{background:white url(/images/ui/jquery/south_street/ui-anim_basic_16x16.gif?1279210316) right center no-repeat;}
+.ui-autocomplete-loading{background:white url(/images/ui/jquery/south_street/ui-anim_basic_16x16.gif?1304464123) right center no-repeat;}
 /* workarounds */
 * html .ui-autocomplete{width:1px;}
 /* without this,the menu expands to 100% in IE6 */
@@ -1142,7 +1142,7 @@ div.dialog{padding:0 4em;margin:4em auto 0 auto;color:#222;}
 .ajaxful-rating a:active,
 .ajaxful-rating a:focus,
 .ajaxful-rating .show-value{
-    background: url(/images/ajaxful_rating/star.png?1278001521) left -1000px repeat-x;
+    background: url(/images/ajaxful_rating/star.png?1304464123) left -1000px repeat-x;
 }
 .ajaxful-rating{
     position: relative;
@@ -1213,7 +1213,7 @@ z-index: 2;
 .ajaxful-rating.small a:active,
 .ajaxful-rating.small a:focus,
 .ajaxful-rating.small .show-value{
-    background-image: url(/images/ajaxful_rating/star_small.png?1278001521);
+    background-image: url(/images/ajaxful_rating/star_small.png?1304464123);
     line-height: 10px;
     height: 10px;
 }
@@ -2119,7 +2119,7 @@ div.sl-table-exp-form-r{border:none;width:49%;float:right;position:relative;righ
 #ov-services ul li span{position:relative;top:145px;}
 #ov-services ul li a#clicks{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/click-logo.png) no-repeat top center;}
 #ov-services ul li a#calls,#ov-services ul li a#request_log{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/calls-logo.png) no-repeat top center;}
-#ov-services ul li a#reservations{background:url(/files/content/issn_networklogo.jpg?1284048284) no-repeat top center;}
+#ov-services ul li a#reservations{background:url(/files/content/issn_networklogo.jpg?1304464123) no-repeat top center;}
 #ov-settings p{float:left;margin:10px;}
 #ov-settings-cnt table{width:100%;}
 #ov-settings-cnt table th{vertical-align:top;}
