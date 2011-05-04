@@ -37,7 +37,7 @@ gotob.transaction_info({
 })
 
 gotob.card_info({
-  :cc_number => '4444111144441111', # REQUIRED for CC Transactions
+  :cc_number => '6011000000000012', # REQUIRED for CC Transactions
   :cc_exp    => '0112',             # REQUIRED for CC Transactions
   :cc_name   => 'Ester Tester',     # OPTIONAL
   :cc_type   => 'VS',               # OPTIONAL: VS, MC, AX, DC
