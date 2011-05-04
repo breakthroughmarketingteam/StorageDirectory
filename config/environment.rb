@@ -42,7 +42,7 @@ Rails::Initializer.run do |config|
   config.gem 'jammit', :source => 'git://github.com/documentcloud/jammit.git'
   config.gem 'url_shortener'
   config.gem 'nokogiri'
-  config.gem 'strongbox'
+  #config.gem 'strongbox'
   config.gem 'rack-rewrite', '~> 1.0.2'
   require 'rack/rewrite'
   config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
