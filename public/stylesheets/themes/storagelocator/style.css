@@ -737,7 +737,7 @@ p.blue-edit a{color:#fff;text-decoration:none;display:block;width:68px;height:22
 #new_picture .stack{margin-bottom:20px;margin-left:20px;}
 #sl-tabs-pict .gallery{margin:0 20px;}
 .home_action #sl-tabs-pict .gallery{margin:0}
-.sl-table-exp{padding:10px 20px;font-size:100%;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/blue-box-bg.jpg) repeat-x bottom left #fafbff;border-bottom:7px solid #4C4BCC;overflow:hidden;}
+.sl-table-exp{padding:10px 20px;font-size:100%;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/blue-box-bg.jpg) repeat-x bottom left #fafbff;border:1px solid #ccc;overflow:hidden;}
 div.sl-table-exp div input{width:75%;float:left;clear:left;}
 div.sl-table-exp div #agree{width:auto;height:auto;margin-right:5px;}
 .sl-table-exp p label{margin:0 9px 3px 0;float:left;}
