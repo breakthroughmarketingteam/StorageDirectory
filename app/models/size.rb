@@ -10,6 +10,10 @@ class Size < ActiveRecord::Base
 
   attr_accessor :special
   
+  def before_save
+    self.sqft = self.width * self.length
+  end
+  
   def self.unit_type_labels
     ['Upper', 'Lower', 'Drive-up']
   end
@@ -29,9 +33,13 @@ class Size < ActiveRecord::Base
     "#{width} x #{length}"
   end
   
-  def is_close_to?(size, threshold = 3)
+  def is_close_to?(size, threshold = 10)
     sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size
     self.sqft.between? sq - threshold, sq + threshold
+  end
+  
+  def title_matches?(type)
+    self.title =~ /(#{type})|(#{type.split('-').first})|(#{type.sub('-', ' ')})/i
   end
   
   def dollar_price

@@ -312,24 +312,24 @@ class Listing < ActiveRecord::Base
   end
   
   def get_closest_unit_size(size)
-    @unit_size ||= self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
+    self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
   end
   
   def get_upper_type_size(size)
-    @upper_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@upper_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
+    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@upper_types.any? { |type| size.title_matches? type }
     end
   end
   
   def get_drive_up_type_size(size)
-    @drive_up_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@drive_up_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
+    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@drive_up_types.any? { |type| size.title_matches? type }
     end
   end
   
   def get_interior_type_size(size)
-    @interior_type_size ||= self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@lower_types.any? { |type| size.title =~ /(#{type})|(#{type.split('-').first})/i }
+    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
+      @@lower_types.any? { |type| size.title_matches? type }
     end
   end
   

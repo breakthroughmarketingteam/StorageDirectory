@@ -15,6 +15,14 @@ class AjaxController < ApplicationController
     render_error "Error loading Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
   end
   
+  # TODO: make this work http://pullmonkey.com/projects/open_flash_chart
+  def bar_3d
+    chart = OpenFlashChart.new( "MY TITLE" ) do |c|
+      c << BarGlass.new( :values => (1..10).sort_by{rand} )
+    end
+    render :text => chart, :layout => false
+  end
+  
   def get_all
     if (has_name = _get_model_class.first.respond_to?('name')) || _get_model_class.first.respond_to?('title')
       @models = _get_model_class.all(:order => (has_name ? 'name' : 'title'))

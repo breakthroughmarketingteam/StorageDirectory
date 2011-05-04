@@ -14,6 +14,14 @@
 		<link rel="image_src" href="<%= conditional_facebook_img %>" />
         <title><%= yield :title %></title>
 		
+		<%= "<script type='text/javascript' src='//maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) || params[:title] == 'Storage Tips' %>
+		<%= '<script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
+		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin', 'staff') && (in_mode?('new', 'edit') || controller_name == 'admin') %>
+		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user(@user_stat || UserStat.new)}';</script>" if user_is_a? 'advertiser', 'tenant' rescue nil %>
+		<%= "<script type='text/javascript'>var ussslgid = '#{GOOGLE_APPLICATION_ID}'; var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>
+		
+		<%= include_javascripts :motherlode %>
+		
         <!--[if IE]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -129,15 +137,6 @@
 		<div id="pop_up" class="login_box hide">
 			<%= render :partial => 'user_sessions/form' %>
 		</div>
-		
-		<%= "<script type='text/javascript' src='//maps.google.com/maps?file=api&amp;v=2&amp;key=#{GOOGLE_APPLICATION_ID}'></script>" if action_name =~ /(home)|(locator)/ || (controller_name == 'listings' && in_mode?('show')) || params[:title] == 'Storage Tips' %>
-		<%= '<script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#username=mastermindxs"></script>' if params[:title] =~ /(storage-tips)|(blog)/i %>
-		<%= javascript_include_tag 'ckeditor/ckeditor.js' if current_user && current_user.has_role?('admin', 'staff') && (in_mode?('new', 'edit') || controller_name == 'admin') %>
-		<%= "<script type='text/javascript'>var usssl_stat_path = '#{get_stat_path_by_user(@user_stat || UserStat.new)}';</script>" if user_is_a? 'advertiser', 'tenant' rescue $!.message %>
-		<%= "<script type='text/javascript'>var ussslgid = '#{GOOGLE_APPLICATION_ID}'; var Gmaps_data = #{@map_data.to_json}</script>" unless @map_data.nil? %>
-		
-		<%= include_javascripts :motherlode %>
-		
 		
         <script type="text/javascript">
             swfobject.registerObject("FlashID");

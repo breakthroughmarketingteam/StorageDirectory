@@ -1,6 +1,6 @@
 ajaxful_rating
 geokit
-authlogic
+authlogic --version 2.1.6
 will_paginate
 memcached
 aws-s3
