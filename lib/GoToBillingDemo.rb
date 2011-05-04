@@ -51,9 +51,7 @@ puts gotob.url_data
 gotob.process
 
 # Get our response and status
-puts gotob.gateway_response_xml
 response = gotob.response_info
-
 puts 'Status:                  ' + response[:status]
 puts 'Transaction Time:        ' + response[:tran_time]
 puts 'Transaction Date:        ' + response[:tran_date]

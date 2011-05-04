@@ -54,9 +54,9 @@ module GoToBillingLibrary
 	  end
 	  
 	  def url_data
-			data =  'merchant_id='         + @merchant_id
-			data << '&merchant_pin='       + @merchant_pin
-			data << '&ip_address='	       + @ip_address
+			data =  'merchant_id='   + @merchant_id
+			data << '&merchant_pin=' + @merchant_pin
+			data << '&ip_address='	 + @ip_address
 	
 			# optional
 			query_attributes.each_pair do |name, val|
@@ -68,15 +68,11 @@ module GoToBillingLibrary
 	
 		# Send the data to Gotobilling and Retrieve the results
 		def process
-			http = Net::HTTP.new(@gateway_server, 443)
+			http = Net::HTTP.new @gateway_server, 443
 			http.use_ssl = true
 			resp, body = http.post(@gateway_page, url_data)
 			@gateway_response = body		
 			true
-		end
-		
-		def gateway_response_xml
-			@gateway_response
 		end
 		
 		private
@@ -103,7 +99,7 @@ module GoToBillingLibrary
     end
     
     def get_response_val(name)
-	    val = @gateway_response.scan(/<#{name}>(.*)<\/#{name}>/)
+	    val = @gateway_response.scan /<#{name}>(.*)<\/#{name}>/
 			(val.size > 0 && val[0].size > 0) ? val[0][0] : ''
     end
 		
