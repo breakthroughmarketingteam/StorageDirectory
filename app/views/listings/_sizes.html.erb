@@ -19,7 +19,7 @@
 		<div class="uncollapse">
 			<%= render :partial => 'sizes/form', :locals => { :listing => @listing, :size => Size.new } if in_mode?('profile') && !@listing.issn_enabled? %>
 			<hr class="soft-rule" />
-			<%= render :partial => 'sizes/size', :collection => (in_mode?('profile') ? @listing.sizes.sorted : @listing.available_sizes) %>
+			<%= render :partial => 'sizes/size', :collection => (in_mode?('profile') ? @listing.sizes : @listing.available_sizes) %>
 		</div>
 	</div>
 </div>

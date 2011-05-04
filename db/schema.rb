@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110429225349) do
+ActiveRecord::Schema.define(:version => 20110504002308) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20110429225349) do
   end
 
   create_table "billing_infos", :force => true do |t|
-    t.integer  "client_id"
     t.string   "name"
     t.string   "address"
     t.string   "phone"
@@ -58,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20110429225349) do
     t.binary   "cvv_iv"
     t.binary   "expires_month_iv"
     t.binary   "expires_year_iv"
+    t.string   "billable_type"
+    t.integer  "billable_id"
   end
 
   create_table "blast_clicks", :force => true do |t|
