@@ -48,7 +48,7 @@ module GoToBillingLibrary
 	  
 		def response_info
 		  @@response_fields.each do |name|
-		    @response_info[name.to_sym] = get_response_val name
+		    @response_info[name.to_sym] = get_response_val name, @gateway_response
 	    end
 	    @response_info
 	  end
@@ -57,12 +57,10 @@ module GoToBillingLibrary
 			data =  'merchant_id='   + @merchant_id
 			data << '&merchant_pin=' + @merchant_pin
 			data << '&ip_address='	 + @ip_address
-	
 			# optional
 			query_attributes.each_pair do |name, val|
 			  data << "&#{name}=#{val}" unless val.nil?
 		  end
-	
 	    data
 		end
 	
@@ -98,8 +96,8 @@ module GoToBillingLibrary
 		  @query_attributes
     end
     
-    def get_response_val(name)
-	    val = @gateway_response.scan /<#{name}>(.*)<\/#{name}>/
+    def get_response_val(name, data)
+	    val = data.scan /<#{name}>(.*)<\/#{name}>/
 			(val.size > 0 && val[0].size > 0) ? val[0][0] : ''
     end
 		
