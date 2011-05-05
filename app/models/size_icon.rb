@@ -15,11 +15,11 @@ class SizeIcon < ActiveRecord::Base
   access_shared_methods
 
   def self.medium_icons
-    find_all_by_icon_size 'medium', :order => 'width, length'
+    find_all_by_icon_size 'medium', :order => 'sqft'
   end
   
   def self.thumb_icons
-    find_all_by_icon_size 'thumb', :order => 'width, length'
+    find_all_by_icon_size 'thumb', :order => 'sqft'
   end
   
   def self.labels
