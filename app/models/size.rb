@@ -39,7 +39,7 @@ class Size < ActiveRecord::Base
   end
   
   def title_matches?(type)
-    self.title =~ /(#{type})|(#{type.split('-').first})|(#{type.sub('-', ' ')})/i
+    self.title =~ /(#{type})/i
   end
   
   def dollar_price

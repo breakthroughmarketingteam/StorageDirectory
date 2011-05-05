@@ -10,7 +10,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'
 require 'issn_adapter'
 if RAILS_ENV == 'development' # pretty_print
-  require 'PP'
+  require 'ap'
   Hirb.enable :pager => true, :formatter => true if defined? Hirb
 end
 

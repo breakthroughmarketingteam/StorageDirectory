@@ -63,7 +63,7 @@ class Listing < ActiveRecord::Base
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
-  @@drive_up_types = ['drive up', 'outside']
+  @@drive_up_types = ['drive up', 'outside', 'drive-up']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
   @@searchables    = %w(title address city state zip phone)
