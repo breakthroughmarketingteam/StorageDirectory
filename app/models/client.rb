@@ -4,7 +4,9 @@ class Client < User
   has_one :billing_info, :as => :billable, :dependent => :destroy
   has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
   
-  has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
+  has_many :listings, :dependent => :destroy, :foreign_key => 'user_id' do
+    def billable() all.select { |l| l.billing_info.nil? } end
+  end
   has_many :claimed_listings, :dependent => :destroy
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
@@ -21,12 +23,39 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
+  # billing depends on number of listings in the client account
+  # 1-10, 11-25, 26+
+  def self.billing_tiers
+    {
+      1..10     => 54.50,
+      11..25    => 49.50,
+      26..999999 => 44.50
+    }
+  end
+  
+  def billing_tier
+    @billing_tier ||= begin
+      num = self.listings.billable.size
+      amount = 0
+      self.class.billing_tiers.each do |range, amt|
+        if range.include? num
+          amount = amt
+          break
+        end
+      end
+      amount
+    end
+  end
+  
+  def billing_amount
+    @billing_amount ||= sprintf('%.2f', self.billing_tier * self.listings.billable.size.to_f)
+  end
+  
   def initialize(params = {})
     super params[:client]
     
     unless params.blank? 
       ma = self.build_mailing_address((params[:mailing_address] || {}).merge(:name => self.name, :company => self.company))
-      self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
     
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
@@ -43,12 +72,12 @@ class Client < User
                                       :renting_enabled => params[:client][:rental_agree]
       end
     
-      self.role_id = Role.get_role_id 'advertiser'
+      self.role_id           = Role.get_role_id 'advertiser'
       self.report_recipients = self.email
-      self.user_hints = UserHint.all
+      self.user_hints        = UserHint.all
     end
     
-    self.type = self.class.name
+    self.type = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
     self
   end
   
@@ -91,7 +120,8 @@ class Client < User
   end
 
   def update_info(info)
-    if sets = info.delete(:settings)
+    sets = info.delete(:settings)
+    if sets
       settings = self.settings || self.build_settings(sets)
       settings.new_record? ? settings.save : settings.update_attributes(sets)
     end

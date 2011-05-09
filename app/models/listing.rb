@@ -2,7 +2,7 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id', :touch => true, :counter_cache => true
   
-  has_one :billing_info, :as => :billable
+  has_one :billing_info
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact', :dependent => :destroy
   accepts_nested_attributes_for :contact
@@ -80,7 +80,15 @@ class Listing < ActiveRecord::Base
   end
   
   def self.verified_count
-    self.count :conditions => ['status = ?', 'verified']
+    self.count :conditions => { :status => 'verified' }
+  end
+  
+  def billing_amount
+    self.billing_info.nil? ? self.client.billing_amount : self.client.billing_tier
+  end
+  
+  def get_billing_info
+    @billing_info ||= self.billing_info.nil? ? self.client.billing_info : self.billing_info
   end
   
   #

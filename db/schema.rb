@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505154746) do
+ActiveRecord::Schema.define(:version => 20110509154045) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -42,23 +42,14 @@ ActiveRecord::Schema.define(:version => 20110505154746) do
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
-    t.binary   "card_number"
-    t.binary   "card_type"
-    t.binary   "cvv"
-    t.binary   "expires_month"
-    t.binary   "expires_year"
-    t.binary   "card_type_key"
-    t.binary   "card_number_key"
-    t.binary   "cvv_key"
-    t.binary   "expires_month_key"
-    t.binary   "expires_year_key"
-    t.binary   "card_type_iv"
-    t.binary   "card_number_iv"
-    t.binary   "cvv_iv"
-    t.binary   "expires_month_iv"
-    t.binary   "expires_year_iv"
     t.string   "billable_type"
     t.integer  "billable_id"
+    t.integer  "listing_id"
+    t.string   "card_number"
+    t.string   "card_type"
+    t.string   "cvv"
+    t.string   "expires_month"
+    t.string   "expires_year"
   end
 
   create_table "blast_clicks", :force => true do |t|
@@ -400,6 +391,21 @@ ActiveRecord::Schema.define(:version => 20110505154746) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "size_id"
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.integer  "billing_info_id"
+    t.string   "status"
+    t.string   "term_code"
+    t.datetime "tran_date"
+    t.string   "invoice_id"
+    t.string   "tran_time"
+    t.string   "tran_amount"
+    t.string   "auth_code"
+    t.text     "description"
+    t.text     "order_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "issn_facility_features", :force => true do |t|

@@ -1,63 +1,53 @@
-require 'lib/GoToBillingLibrary.rb'
+require 'lib/gtblib.rb'
 
 # Test our plugin class.
-gotob = GoToBilling.new
+gtb = GTB.new
 
 # Make this a debug transaction
-gotob.merchant_info({
-  :merchant_id  => '234568',       # REQUIRED: Enter your merchant ID
-  :merchant_pin => '234568',       # REQUIRED: Enter your merchant Pin
+gtb.merchant_info({
   :ip_address  => '65.83.183.146', # REQUIRED: Pass in your internet facing IP Address
-  :debug       => '1'             # OPTIONAL: A 1 or 0 (1 = on)
+  :debug       => '0'              # OPTIONAL: A 1 or 0 (1 = on)
+  :merchant_id => '236977',
+  :merchant_pin => 'Qh3Q3jxVtaZg'
 })
 
-gotob.customer_info({
-  :customer_id => '1234-54',          # REQUIRED: A unique Customer Identification specified by you
-  :first_name  => 'Ester',            # CONDITIONAL: Either the First and Last name or Company name must be specified
-  :last_name   => 'Tester',           # CONDITIONAL: Either the First and Last name or Company name must be specified
-  :company     => 'Test Company',     # CONDITIONAL: Either the First and Last name or Company name must be specified
-  :address     => '123 main St.',     # OPTIONAL
-  :city        => 'Somewhere',        # OPTIONAL
-  :state       => 'FL',               # OPTIONAL
-  :zip         => '33133',            # OPTIONAL
+gtb.customer_info({
+  :customer_id => '25600',          # REQUIRED: A unique Customer Identification specified by you
+  :first_name  => 'Frank',            # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :last_name   => 'DeFazio',           # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :company     => 'Guardian Storage Solutions',     # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :address     => '5879 Centre Avenue',     # OPTIONAL
+  :city        => 'Pittsburgh',        # OPTIONAL
+  :state       => 'PA',               # OPTIONAL
+  :zip         => '15206',            # OPTIONAL
   :country     => 'US',               # OPTIONAL
-  :phone       => '555-123-1234',     # OPTIONAL
-  :email       => 'email@domain.com'  # OPTIONAL
-})	
+  :phone       => '412-661-7368',     # OPTIONAL
+  :email       => 'fd@guardianstorage.com'  # OPTIONAL
+})
 
-gotob.transaction_info({
-  :transaction_type  => 'AS',                   # REQUIRED: For CC: AS, DS, ES, CR, VO   For ACH: DH, DC   Other: RM
+gtb.transaction_info({
+  :transaction_type  => 'ES',                   # REQUIRED: For CC: AS, DS, ES, CR, VO   For ACH: DH, DC   Other: RM
   :invoice_id        => '123456',               # REQUIRED: A unique ID field specified by you
-  :amount            => '12.56',                # REQUIRED
+  :amount            => '545.00',                # REQUIRED
   :process_date      => '20110501',             # OPTIONAL: Pass a date in YYYYMMDD format
   :memo              => 'This might be a memo', # OPTIONAL
   :notes             => 'This might be a note', # OPTIONAL
-  :occurrence_type   => 'month',                # OPTIONAL: week, biweek, month, bimonth, semiannual, annual
-  :occurrence_number => '3'                     # OPTIONAL
+  :occurrence_type   => 'month'                # OPTIONAL: week, biweek, month, bimonth, semiannual, annual
 })
 
-gotob.card_info({
-  :cc_number => '6011000000000012', # REQUIRED for CC Transactions
-  :cc_exp    => '0112',             # REQUIRED for CC Transactions
-  :cc_name   => 'Ester Tester',     # OPTIONAL
-  :cc_type   => 'VS',               # OPTIONAL: VS, MC, AX, DC
-  :cc_cvv    => '123'               # OPTIONAL
-})					
+gtb.card_info({
+  :cc_number => '376740363891042', # REQUIRED for CC Transactions
+  :cc_exp    => '0714',             # REQUIRED for CC Transactions
+  :cc_name   => 'Frank DeFazio',     # OPTIONAL
+  :cc_type   => 'AX',               # OPTIONAL: VS, MC, AX, DC
+  :cc_cvv    => '9153'               # OPTIONAL
+})
 
 # Retrieve the information being sent to the server.
-puts gotob.url_data
+puts gtb.url_data
 
 # Process our data
-gotob.process
+gtb.process
 
 # Get our response and status
-response = gotob.response_info
-puts 'Status:                  ' + response[:status]
-puts 'Transaction Time:        ' + response[:tran_time]
-puts 'Transaction Date:        ' + response[:tran_date]
-puts 'Order Number:            ' + response[:order_number]
-puts 'Invoice Id:              ' + response[:invoice_id]
-puts 'Termination Description: ' + response[:description]
-puts 'Termination Code:        ' + response[:term_code]
-puts 'Authorization Code:      ' + response[:auth_code]
-puts 'Transaction Amount:      ' + response[:tran_amount]
+puts gtb.response_info.inspect

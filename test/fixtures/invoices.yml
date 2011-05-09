@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  billing_info_id: 1
+  status: MyString
+  term_code: MyString
+  tran_date: 2011-05-06 16:23:03
+  invoice_id: MyString
+  tran_time: MyString
+  tran_amount: MyString
+  auth_code: MyString
+  description: MyText
+  order_number: MyText
+
+two:
+  billing_info_id: 1
+  status: MyString
+  term_code: MyString
+  tran_date: 2011-05-06 16:23:03
+  invoice_id: MyString
+  tran_time: MyString
+  tran_amount: MyString
+  auth_code: MyString
+  description: MyText
+  order_number: MyText
