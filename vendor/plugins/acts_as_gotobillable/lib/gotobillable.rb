@@ -56,12 +56,9 @@ module GoToBillable #:nodoc:
           :cc_cvv    => self.cvv.to_s
         })
       
-        puts "\n-----> cc type #{self.card_type_code}"
         puts "\n\n----->GTB URL DATA\n----->#{gtb.url_data}\n\n"
-      
         gtb.process
         response = gtb.response_info
-      
         puts "\n\n----->GTB RESPONSE ES\n----->#{response.inspect}\n\n"
       
         self.without_callbacks :after_save do |m|
@@ -93,7 +90,6 @@ module GoToBillable #:nodoc:
       
       gtb.process
       response = gtb.response_info
-      
       puts "\n\n----->GTB RESPONSE RM\n----->#{response.inspect}\n\n"
       
       invoice = self.invoices.create response
@@ -110,7 +106,7 @@ module GoToBillable #:nodoc:
     
     def cust_info_hash
       {
-        :customer_id => "C#{self.billable.id.to_s}",
+        :customer_id => self.billable.id.to_s,
         :first_name  => self.name.split(' ').first,
         :last_name   => self.name.split(' ').last,
         :company     => self.name,
