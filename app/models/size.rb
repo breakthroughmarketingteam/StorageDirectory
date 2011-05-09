@@ -38,8 +38,8 @@ class Size < ActiveRecord::Base
   end
   
   def is_close_to?(size)
-    sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size
-    self.sqft.between? sq - Size.threshold, sq + Size.threshold
+    sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size.to_i
+    self.sqft.between?(sq - Size.threshold, sq + Size.threshold)
   end
   
   def title_matches?(type)
@@ -73,7 +73,13 @@ class Size < ActiveRecord::Base
   end
   
   def icon(size = 'thumb')
-    @size_icon ||= SizeIcon.first(:conditions => ['(sqft = :sqft OR (sqft < :max AND sqft > :sqft) OR (sqft > :min AND sqft < :sqft)) AND icon_size = :icon', { :sqft => sqft, :max => sqft + Size.threshold, :min => sqft - Size.threshold, :icon => size }]).try :icon
+    @size_icon ||= begin
+      s = SizeIcon.first(:conditions => ['sqft = :sqft AND icon_size = :icon', { :sqft => self.sqft, :icon => size }])
+      if s.nil?
+        s = SizeIcon.first(:conditions => ['((sqft < :max AND sqft > :sqft) OR (sqft > :min AND sqft < :sqft)) AND icon_size = :icon', { :sqft => sqft, :max => sqft + Size.threshold, :min => sqft - Size.threshold, :icon => size }])
+      end
+      s.try :icon
+    end
   end
   
   def compare_for_uniq

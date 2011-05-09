@@ -298,7 +298,7 @@ module ListingsHelper
   end
   
   def claim_listing_link(listing, options = {})
-    link_to 'Claim and Activate Free', claim_listing_path(listing), options.merge(:title => 'Claim this listing if you are the verifiable owner or manager')
+    link_to 'Join Now Free', claim_listing_path(listing), options.merge(:title => 'Claim this listing if you are the verifiable owner or manager')
   end
   
   def display_comparison(comparison, listing_set)

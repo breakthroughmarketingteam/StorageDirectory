@@ -63,7 +63,7 @@ class Listing < ActiveRecord::Base
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
-  @@drive_up_types = ['drive up', 'outside', 'drive-up']
+  @@drive_up_types = ['drive up', 'outside', 'drive-up', 'drive up access']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
   @@searchables    = %w(title address city state zip phone)
@@ -319,28 +319,6 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def get_closest_unit_size(size)
-    self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
-  end
-  
-  def get_upper_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@upper_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
-  def get_drive_up_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@drive_up_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
-  def get_interior_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@lower_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
   def city_and_state
     @city_and_state ||= [self.city, self.state]
   end
@@ -351,28 +329,6 @@ class Listing < ActiveRecord::Base
   
   def full_address(sep = ' ')
     @full_address ||= "#{self.address}#{ " #{self.address2}" unless self.address2.blank?},#{sep}#{self.city_state_zip}" 
-  end
-  
-  def unit_sizes_options_array
-    @unit_sizes_options_array ||= self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
-  end
-  
-  def available_sizes
-    @available_sizes ||= self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
-  end
-  
-  def available_unit_types
-    @available_unit_types ||= self.available_sizes.map(&:title).uniq
-  end
-  
-  def uniq_avail_sizes
-    @uniq_avail_sizes ||= begin
-      uniques = []
-      self.available_sizes.each do |size|
-        uniques << size unless uniques.any? { |u| u.compare_for_uniq.values == size.compare_for_uniq.values }
-      end
-      uniques
-    end
   end
   
   def average_rate
@@ -460,6 +416,60 @@ class Listing < ActiveRecord::Base
   
   def call_tracking_enabled?
     true
+  end
+  
+  #
+  # Unit Sizes
+  #
+  def get_closest_unit_size(size)
+    @closest_unit_size ||= self.available_sizes.detect { |s| s.sqft == Size.sqft_from_dims_str(size) } || self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
+  end
+  
+  def get_upper_type_size(size)
+    @upper_type_size ||= get_size_by_type(size, @@upper_types)
+  end
+  
+  def get_drive_up_type_size(size)
+    @drive_up_type_size ||= get_size_by_type(size, @@drive_up_types)
+    #raise [@drive_up_type_size, self, size].pretty_inspect if self.id == 85481
+  end
+  
+  def get_interior_type_size(size)
+    @interior_type_size ||= get_size_by_type(size, @@lower_types)
+  end
+  
+  def unit_sizes_options_array
+    @unit_sizes_options_array ||= self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
+  end
+  
+  def available_sizes
+    @available_sizes ||= self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
+  end
+  
+  def available_unit_types
+    @available_unit_types ||= self.available_sizes.map(&:title).uniq
+  end
+  
+  def uniq_avail_sizes
+    @uniq_avail_sizes ||= begin
+      uniques = []
+      self.available_sizes.each do |size|
+        uniques << size unless uniques.any? { |u| u.compare_for_uniq.values == size.compare_for_uniq.values }
+      end
+      uniques
+    end
+  end
+  
+  def get_size_by_type(size, types)
+    found = self.sizes.all(:conditions => ['sqft = ?', size.sqft])
+    
+    if found.empty?
+      found = self.sizes.all(:conditions => ['(sqft > :min AND sqft < :sqft) OR (sqft < :max AND sqft > :sqft)', { :sqft => size.sqft, :min => size.sqft - Size.threshold, :max => size.sqft + Size.threshold }])
+    end
+    
+    found.detect do |size|
+      types.any? { |type| size.title_matches? type }
+    end
   end
   
   #

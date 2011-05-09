@@ -11,6 +11,7 @@ require 'aws/s3'
 require 'issn_adapter'
 if RAILS_ENV == 'development' # pretty_print
   require 'ap'
+  require 'PP'
   Hirb.enable :pager => true, :formatter => true if defined? Hirb
 end
 
