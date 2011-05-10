@@ -10,6 +10,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'
 require 'issn_adapter'
 if RAILS_ENV == 'development' # pretty_print
+  require 'ap'
   require 'PP'
   Hirb.enable :pager => true, :formatter => true if defined? Hirb
 end
@@ -43,16 +44,16 @@ Rails::Initializer.run do |config|
   config.gem 'url_shortener'
   config.gem 'nokogiri'
   #config.gem 'strongbox'
-  # TODO: does heroscale work? their site is down as of feb 2011
-  #config.gem "heroscale"
-  #require "heroscale"
-  #config.middleware.use "Heroscale::Middleware"
   config.gem 'rack-rewrite', '~> 1.0.2'
   require 'rack/rewrite'
   config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
     r301 /.*/,  Proc.new {|path, rack_env| "http://#{rack_env['SERVER_NAME'].gsub(/www\./i, '') }#{path}" },
         :if => Proc.new {|rack_env| rack_env['SERVER_NAME'] =~ /(www\.)|(secure\.)/i}
   end
+  # TODO: does heroscale work? their site is down as of feb 2011
+  #config.gem "heroscale"
+  #require "heroscale"
+  #config.middleware.use "Heroscale::Middleware"
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   before_filter :get_transaction_types, :only => [:new, :edit]
   
-  require 'GoToBillingLibrary'
+  require 'gtblib'
   
   def index
     render :layout => false if request.xhr?

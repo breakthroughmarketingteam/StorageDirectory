@@ -2,7 +2,7 @@ class Tenant < User
   
   has_many :rentals
   has_many :listings, :through => :rentals
-  has_many :billing_infos, :foreign_key => 'client_id', :dependent => :destroy
+  has_many :billing_infos, :as => :billable, :dependent => :destroy
   accepts_nested_attributes_for :billing_infos, :rentals
   
   def initialize(params = {})

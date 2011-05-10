@@ -1,12 +1,15 @@
 class Client < User
   
-  has_many :listings, :dependent => :destroy, :foreign_key => 'user_id'
+  has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
+  has_one :billing_info, :as => :billable, :dependent => :destroy
+  has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
+  
+  has_many :listings, :dependent => :destroy, :foreign_key => 'user_id' do
+    def billable() all.select { |l| l.billing_info.nil? } end
+  end
   has_many :claimed_listings, :dependent => :destroy
   has_many :enabled_listings, :class_name => 'Listing', :foreign_key => 'user_id', :conditions => 'enabled IS TRUE'
   has_many :disabled_specials, :class_name => 'Special', :conditions => 'enabled IS FALSE'
-  has_one  :settings, :class_name => 'AccountSetting', :dependent => :destroy
-  has_one  :billing_info, :dependent => :destroy
-  has_one  :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
   has_many :staff_emails, :through => :listings
   has_many :sizes, :through => :listings
   has_many :rentals, :through => :listings
@@ -20,12 +23,39 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
+  # billing depends on number of listings in the client account
+  # 1-10, 11-25, 26+
+  def self.billing_tiers
+    {
+      1..10     => 54.50,
+      11..25    => 49.50,
+      26..999999 => 44.50
+    }
+  end
+  
+  def billing_tier
+    @billing_tier ||= begin
+      num = self.listings.billable.size
+      amount = 0
+      self.class.billing_tiers.each do |range, amt|
+        if range.include? num
+          amount = amt
+          break
+        end
+      end
+      amount
+    end
+  end
+  
+  def billing_amount
+    @billing_amount ||= sprintf('%.2f', self.billing_tier * self.listings.billable.size.to_f)
+  end
+  
   def initialize(params = {})
     super params[:client]
     
     unless params.blank? 
       ma = self.build_mailing_address((params[:mailing_address] || {}).merge(:name => self.name, :company => self.company))
-      self.build_billing_info :name => self.name, :address => ma.address, :city => ma.city, :state => ma.state, :zip => ma.zip, :phone => ma.phone
     
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
@@ -42,12 +72,12 @@ class Client < User
                                       :renting_enabled => params[:client][:rental_agree]
       end
     
-      self.role_id = Role.get_role_id 'advertiser'
+      self.role_id           = Role.get_role_id 'advertiser'
       self.report_recipients = self.email
-      self.user_hints = UserHint.all
+      self.user_hints        = UserHint.all
     end
     
-    self.type = self.class.name
+    self.type = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
     self
   end
   
@@ -75,12 +105,14 @@ class Client < User
   end
   
   def special
-    self.predefined_specials.last
+    @special ||= self.predefined_specials.last
   end
   
   def active_specials
-    a = self.specials | self.predefined_specials
-    a.sort_by { |s| s.respond_to?(:position) ? s.position : s.get_assign(self.id).position }
+    @active_specials ||= begin
+      a = self.specials | self.predefined_specials
+      a.sort_by { |s| s.respond_to?(:position) ? s.position : s.get_assign(self.id).position }
+    end
   end
   
   def listings_verified?
@@ -88,7 +120,8 @@ class Client < User
   end
 
   def update_info(info)
-    if sets = info.delete(:settings)
+    sets = info.delete(:settings)
+    if sets
       settings = self.settings || self.build_settings(sets)
       settings.new_record? ? settings.save : settings.update_attributes(sets)
     end
@@ -146,15 +179,13 @@ class Client < User
   def get_stats_for_graph(stats_models, start_date, end_date)
     # get date arrays => [year, month, day]
     sd, ed = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
-    date_range = Date.new(sd[0], sd[1], sd[2])..Date.new(ed[0], ed[1], ed[2])
+    date_range = Date.new(*sd)..Date.new(*ed)
     plot_data = {}; counts = []
     
     stats_models.each do |stat|
-      stats = eval <<-RUBY
-        self.listings.map do |listing| 
-          listing.#{stat}.all(:conditions => ['created_at >= ? AND created_at <= ?', sd * '-', ed * '-'], :order => 'created_at')
-        end.flatten
-      RUBY
+      stats = self.listings.map do |listing| 
+        listing.send(stat).all(:conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at')
+      end.flatten
       
       date_range.each do |date|
         d = Time.parse(date.to_s).to_a[3,3]

@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   
   # for the geo_search methods in Listing
   $_listing_search_distance = 20
-  
+  $root_domain = 'usselfstoragelocator.com'
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-888-222-0225'
@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
   $_pm_softwares = ['Domico', 'QSX Management Software', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'Syrasoft 7', 'Syrasoft 8', 'TaskMaster', 'Total Recall', 'Webselfstorage', 'WinSen']
   
   #before_filter :ensure_domain
+  before_filter :get_local_ip
   before_filter :simple_auth
   before_filter :reverse_captcha_check, :only => :create
   before_filter :set_session_vars, :except => [:create, :update, :delete]
@@ -62,6 +63,18 @@ class ApplicationController < ActionController::Base
   
   layout lambda { app_config[:theme] }
   
+  require 'socket'
+  def get_local_ip
+    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+
+    UDPSocket.open do |s|
+      s.connect '64.233.187.99', 1
+      $server_ip = s.addr.last
+    end
+  ensure
+    Socket.do_not_reverse_lookup = orig
+  end
+  
   protected # -----------------------------------------------
   
   def render_optional_error_file(status_code)
@@ -69,7 +82,6 @@ class ApplicationController < ActionController::Base
     render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'error'
   end 
   
-  $root_domain = 'usselfstoragelocator.com'
   def ensure_domain
     host = request.env['HTTP_HOST']
     redirect_to "#{request.protocol}#{$root_domain}" if host['www'] || host['secure']

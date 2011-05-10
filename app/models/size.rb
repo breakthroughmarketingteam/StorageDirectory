@@ -8,6 +8,8 @@ class Size < ActiveRecord::Base
   #validates_presence_of :title, :only => :update
   #validates_numericality_of :width, :length, :price
 
+  @@threshold = 11
+  cattr_reader :threshold
   attr_accessor :special
   
   def before_save
@@ -20,7 +22,9 @@ class Size < ActiveRecord::Base
   
   def self.get_from_unit_size(unit_size)
     return if unit_size.nil?
-    self.first :conditions => ['width = ? AND length = ?', unit_size.split('x')[0], unit_size.split('x')[1]]
+    w, h = *unit_size.split('x').map(&:to_i)
+    sq = w * h
+    self.first :conditions => ['sqft = :sqft OR (sqft < :max AND sqft > :sqft) OR (sqft > :min AND sqft < :sqft)', { :sqft => sq, :max => sq + threshold, :min => sq - threshold }]
   end
   
   def self.sqft_from_dims_str(dims)
@@ -33,13 +37,13 @@ class Size < ActiveRecord::Base
     "#{width} x #{length}"
   end
   
-  def is_close_to?(size, threshold = 10)
-    sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size
-    self.sqft.between? sq - threshold, sq + threshold
+  def is_close_to?(size)
+    sq = size.is_a?(String) ? Size.sqft_from_dims_str(size) : size.to_i
+    self.sqft.between?(sq - Size.threshold, sq + Size.threshold)
   end
   
   def title_matches?(type)
-    self.title =~ /(#{type})|(#{type.split('-').first})|(#{type.sub('-', ' ')})/i
+    self.title =~ /(#{type})/i
   end
   
   def dollar_price
@@ -69,11 +73,17 @@ class Size < ActiveRecord::Base
   end
   
   def icon(size = 'thumb')
-    @size_icon ||= SizeIcon.first(:conditions => ['width = ? AND length = ? AND icon_size = ?', width, length, size.to_s]).try :icon
+    @size_icon ||= begin
+      s = SizeIcon.first(:conditions => ['sqft = :sqft AND icon_size = :icon', { :sqft => self.sqft, :icon => size }])
+      if s.nil?
+        s = SizeIcon.first(:conditions => ['((sqft < :max AND sqft > :sqft) OR (sqft > :min AND sqft < :sqft)) AND icon_size = :icon', { :sqft => sqft, :max => sqft + Size.threshold, :min => sqft - Size.threshold, :icon => size }])
+      end
+      s.try :icon
+    end
   end
   
   def compare_for_uniq
-    { :width => self.width, :length => self.length, :title => self.title.try(:downcase) }
+    { :sqft => self.sqft, :title => self.title.try(:downcase) }
   end
   
   # ISSN methods

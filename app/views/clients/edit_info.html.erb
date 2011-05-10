@@ -25,20 +25,20 @@
 				</li>
 				<li>
 					<%= bf.label :card_type %>
-					<%= bf.select :card_type, BillingInfo.credit_cards, { :selected => @billing_info.card_type.decrypt }, :class => 'required' %>
+					<%= bf.select :card_type, BillingInfo.credit_cards, { :selected => @billing_info.card_type }, :class => 'required' %>
 				</li>
 				<li>
 					<%= bf.label :card_number %>
-					<%= bf.text_field :card_number, :value => @billing_info.card_number.decrypt, :class => 'required numeric auto_next', :maxlength => 16 %>
+					<%= bf.text_field :card_number, :value => @billing_info.obs_card_number, :class => 'required numeric auto_next', :maxlength => 16 %>
 				</li>
 				<li>
 					<%= bf.label :cvv, 'CVV' %>
-					<%= bf.text_field :cvv, :value => @billing_info.cvv.decrypt, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
+					<%= bf.text_field :cvv, :value => @billing_info.cvv, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
 				</li>
 				<li class="expiry">
 					<%= bf.label :expires %>
-					<%= bf.text_field :expires_month, :value => @billing_info.expires_month.decrypt, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
-					<%= bf.text_field :expires_year, :value => @billing_info.expires_year.decrypt, :class => 'required hintable numeric', :maxlength => 2, :title => 'YY' %>
+					<%= bf.text_field :expires_month, :value => @billing_info.expires_month, :class => 'required hintable numeric auto_next', :maxlength => 2, :title => 'MM' %> / 
+					<%= bf.text_field :expires_year, :value => @billing_info.expires_year, :class => 'required hintable numeric', :maxlength => 2, :title => 'YY' %>
 				</li>
 			</ul>
 		</div>

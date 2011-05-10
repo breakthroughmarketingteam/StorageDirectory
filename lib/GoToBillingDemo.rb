@@ -1,59 +1,53 @@
-require "lib/GoToBillingLibrary.rb"
-include GoToBillingLibrary
+require 'lib/gtblib.rb'
 
 # Test our plugin class.
-gotob = GoToBilling.new
-
-# Required Fields
-gotob.SetMerchantId("234568")						# REQUIRED: Enter your merchant ID
-gotob.SetMerchantPin("234568")					# REQUIRED: Enter your merchant Pin
-gotob.SetIpAddress("65.83.183.146")			# REQUIRED: Pass in your internet facing IP Address
+gtb = GTB.new
 
 # Make this a debug transaction
-gotob.SetDebug("1")											# OPTIONAL: A 1 or 0 (1 = on)
+gtb.merchant_info({
+  :ip_address  => '65.83.183.146', # REQUIRED: Pass in your internet facing IP Address
+  :debug       => '0'              # OPTIONAL: A 1 or 0 (1 = on)
+  :merchant_id => '236977',
+  :merchant_pin => 'Qh3Q3jxVtaZg'
+})
 
-gotob.SetCustomerId( '1234-54' )				# REQUIRED: A unique Customer Identification specified by you
-gotob.SetCompany( 'Test Company' )			# CONDITIONAL: Either the First and Last name or Company name must be specified
-gotob.SetFirstName( 'Ester' )						# CONDITIONAL: Either the First and Last name or Company name must be specified
-gotob.SetLastName( 'Tester' )						# CONDITIONAL: Either the First and Last name or Company name must be specified
-gotob.SetAddress1( '123 main St.' )			# OPTIONAL
-gotob.SetCity( 'Somewhere' )						# OPTIONAL
-gotob.SetState( 'ST' )									# OPTIONAL
-gotob.SetZipCode( '12345' )							# OPTIONAL
-gotob.SetCountry( 'US' )								# OPTIONAL
-gotob.SetPhone( '123-555-1234' )				# OPTIONAL
-gotob.SetEmail( 'email@domain.com' )		# OPTIONAL
-gotob.SetTransactionType( 'AS' )				# REQUIRED: For CC: AS, DS, ES, CR, VO   For ACH: DH, DC   Other: RM
-gotob.SetInvoiceId( '1234564' )					# REQUIRED: A unique ID field specified by you
-gotob.SetAmount( '12.56' )							# REQUIRED
-gotob.SetProcessDate( "20080202" )			# OPTIONAL: Pass a date in YYYYMMDD format
-	
-gotob.SetCcName( 'Ester Tester' )				# OPTIONAL
-gotob.SetCcType( 'VS' )									# OPTIONAL: VS, MC, AX, DC
-gotob.SetCcNumber( '4111111111111111' )	# REQUIRED for CC Transactions
-gotob.SetCcExpiration( '0112' )					# REQUIRED for CC Transactions
-gotob.SetCcVerification( '135' )				# OPTIONAL
+gtb.customer_info({
+  :customer_id => '999',          # REQUIRED: A unique Customer Identification specified by you
+  :first_name  => 'Ester',            # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :last_name   => 'Tester',           # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :company     => 'Guardian Storage Solutions',     # CONDITIONAL: Either the First and Last name or Company name must be specified
+  :address     => '123 main',     # OPTIONAL
+  :city        => 'Miami',        # OPTIONAL
+  :state       => 'FL',               # OPTIONAL
+  :zip         => '33162',            # OPTIONAL
+  :country     => 'US',               # OPTIONAL
+  :phone       => '555-555-7368',     # OPTIONAL
+  :email       => 'ester@tester.com'  # OPTIONAL
+})
 
-gotob.SetNotes( 'Notes Field Data' )		# OPTIONAL
-gotob.SetMemo( 'Memo Field Data' )			# OPTIONAL
+gtb.transaction_info({
+  :transaction_type  => 'ES',                   # REQUIRED: For CC: AS, DS, ES, CR, VO   For ACH: DH, DC   Other: RM
+  :invoice_id        => '123456',               # REQUIRED: A unique ID field specified by you
+  :amount            => '1.01',                # REQUIRED
+  :process_date      => '20110501',             # OPTIONAL: Pass a date in YYYYMMDD format
+  :memo              => 'This might be a memo', # OPTIONAL
+  :notes             => 'This might be a note', # OPTIONAL
+  :occurrence_type   => 'month'                # OPTIONAL: week, biweek, month, bimonth, semiannual, annual
+})
 
-gotob.SetOccurrenceType( "month" )			# OPTIONAL: week, biweek, month, bimonth, semiannual, annual
-gotob.SetOccurrenceNumber( "3" )				# OPTIONAL
+gtb.card_info({
+  :cc_number => '6011000000000012', # REQUIRED for CC Transactions
+  :cc_exp    => '0112',             # REQUIRED for CC Transactions
+  :cc_name   => 'Ester Tester',     # OPTIONAL
+  :cc_type   => 'VS',               # OPTIONAL: VS, MC, AX, DC
+  :cc_cvv    => '123'               # OPTIONAL
+})
 
 # Retrieve the information being sent to the server.
-puts gotob.GetUrlData
+puts gtb.url_data
 
 # Process our data
-gotob.process
+gtb.process
 
 # Get our response and status
-puts gotob.GetGatewayResponseXml
-puts "Status: " + gotob.GetStatus
-puts "Termination Code: " + gotob.GetTerminationCode
-puts "Transaction Time: " + gotob.GetTransactionTime
-puts "Transaction Date: " + gotob.GetTransactionDate
-puts "Order Number: " + gotob.GetOrderNumber
-puts "Invoice Id: " + gotob.GetReturnedInvoiceId
-puts "Termination Description: " + gotob.GetTerminationDescription
-puts "Termination Code: " + gotob.GetTerminationCode
-puts "Transaction Amount: " + gotob.GetTransactionAmount
+puts gtb.response_info.inspect

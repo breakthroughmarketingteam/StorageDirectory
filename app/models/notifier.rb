@@ -98,6 +98,20 @@ class Notifier < ActionMailer::Base
     attachment :content_type => 'text/csv', :body => File.read(file_path), :filename => file_path.split('/').last
   end
   
+  def billing_processed_alert(billing_info, invoice)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billed!'
+    @body[:billable] = billing_info.listing || billing_info.billable
+    @body[:billing_info] = billing_info
+    @body[:invoice] = invoice
+  end
+  
+  def billing_removed_alert(billing_info, invoice)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
+    @body[:billable] = billing_info.listing || billing_info.billable
+    @body[:billing_info] = billing_info
+    @body[:invoice] = invoice
+  end
+  
   #
   # TO: Facility staff
   #
@@ -152,6 +166,20 @@ class Notifier < ActionMailer::Base
     setup_email listing.client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Someone Has Reviewed Your Facility'
     @body[:review] = review
     @body[:listing] = listing
+  end
+  
+  def billing_processed_notification(billing_info, invoice)
+    setup_email billing_info.billable.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Billing Info Has Been Updated'
+    @body[:billable] = billing_info.listing || billing_info.billable
+    @body[:billing_info] = billing_info
+    @body[:invoice] = invoice
+  end
+  
+  def billing_removed_notification(billing_info, invoice)
+    setup_email billing_info.billable.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Billing Has Ended'
+    @body[:billable] = billing_info.listing || billing_info.billable
+    @body[:billing_info] = billing_info
+    @body[:invoice] = invoice
   end
   
   #

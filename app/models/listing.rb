@@ -2,6 +2,7 @@ class Listing < ActiveRecord::Base
   
   belongs_to :client, :foreign_key => 'user_id', :touch => true, :counter_cache => true
   
+  has_one :billing_info
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact', :dependent => :destroy
   accepts_nested_attributes_for :contact
@@ -21,10 +22,7 @@ class Listing < ActiveRecord::Base
   has_many :business_hours, :dependent => :destroy
   has_many :access_hours,   :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'access'"
   has_many :office_hours,   :class_name => 'BusinessHour', :conditions => "LOWER(hours_type) = 'office'"
-  
-  has_many :sizes, :dependent => :destroy do
-    def sorted() all.sort_by &:sqft end
-  end
+  has_many :sizes, :dependent => :destroy, :order => :sqft
   
   has_many :reviews, :as => :commentable, :class_name => 'Comment', :foreign_key => 'commentable_id', :dependent => :destroy do
     def published() all(:conditions => { :published => true }) end
@@ -65,7 +63,7 @@ class Listing < ActiveRecord::Base
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
   @@upper_types    = %w(upper)
-  @@drive_up_types = ['drive up', 'outside']
+  @@drive_up_types = ['drive up', 'outside', 'drive-up', 'drive up access']
   @@lower_types    = %w(interior indoor standard lower)
   @@comparables    = %w(distance 24_hour_access climate_controlled drive_up_access truck_rentals boxes_&_supplies business_center keypad_access online_bill_pay security_cameras se_habla_español monthly_rate selected_special move_in_price)
   @@searchables    = %w(title address city state zip phone)
@@ -82,7 +80,15 @@ class Listing < ActiveRecord::Base
   end
   
   def self.verified_count
-    self.count :conditions => ['status = ?', 'verified']
+    self.count :conditions => { :status => 'verified' }
+  end
+  
+  def billing_amount
+    self.billing_info.nil? ? self.client.billing_amount : self.client.billing_tier
+  end
+  
+  def get_billing_info
+    @billing_info ||= self.billing_info.nil? ? self.client.billing_info : self.billing_info
   end
   
   #
@@ -236,11 +242,11 @@ class Listing < ActiveRecord::Base
   end
   
   def specials
-    self.predefined_specials.sort_by &:overall_value
+    @specials ||= self.predefined_specials.sort_by(&:overall_value)
   end
   
   def special
-    self.specials.first
+    @special ||= self.specials.first
   end
   
   def display_special
@@ -248,11 +254,13 @@ class Listing < ActiveRecord::Base
   end
   
   def categories
-    self.storage_types.downcase.split(/,\s?/) rescue []
+    @categories ||= self.storage_types.downcase.split(/,\s?/)
+  rescue 
+    []
   end
   
   def tax_rate
-    (read_attribute(:tax_rate) || 6) / 100.0
+    @tax_rate ||= (read_attribute(:tax_rate) || 6) / 100.0
   end
   
   def hours_filled_out?
@@ -260,15 +268,15 @@ class Listing < ActiveRecord::Base
   end
   
   def siblings
-    self.client ? self.client.listings.select { |l| l != self } : []
+    @siblings ||= self.client ? self.client.listings.select { |l| l != self } : []
   end
   
   def storage_type
-    self.storage_types.blank? ? 'self storage' : self.storage_types.split(',').first
+    @storage_type ||= self.storage_types.blank? ? 'self storage' : self.storage_types.split(',').first
   end
   
   def comments
-    self.reviews
+    @comments ||= self.reviews
   end
   
   def new_tracked_num?(params)
@@ -311,58 +319,16 @@ class Listing < ActiveRecord::Base
     end
   end
   
-  def get_closest_unit_size(size)
-    self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
-  end
-  
-  def get_upper_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@upper_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
-  def get_drive_up_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@drive_up_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
-  def get_interior_type_size(size)
-    self.sizes.all(:conditions => ['sqft = ?', size.sqft]).detect do |size|
-      @@lower_types.any? { |type| size.title_matches? type }
-    end
-  end
-  
   def city_and_state
     @city_and_state ||= [self.city, self.state]
   end
   
   def city_state_zip
-    "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}"
+    @city_state_zip ||= "#{self.city_and_state[0]}, #{self.city_and_state[1]} #{self.zip}"
   end
   
   def full_address(sep = ' ')
-    "#{self.address}#{ " #{self.address2}" unless self.address2.blank?},#{sep}#{self.city_state_zip}" 
-  end
-  
-  def unit_sizes_options_array
-    self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
-  end
-  
-  def available_sizes
-    @available_sizes ||= self.issn_enabled? ? self.sizes.sorted.select { |size| size.unit_type.units_available? } : self.sizes.sorted
-  end
-  
-  def available_unit_types
-    self.available_sizes.map(&:title).uniq
-  end
-  
-  def uniq_avail_sizes
-    uniques = []
-    self.available_sizes.each do |size|
-      uniques << size unless uniques.any? { |u| u.compare_for_uniq.values == size.compare_for_uniq.values }
-    end
-    uniques
+    @full_address ||= "#{self.address}#{ " #{self.address2}" unless self.address2.blank?},#{sep}#{self.city_state_zip}" 
   end
   
   def average_rate
@@ -387,22 +353,24 @@ class Listing < ActiveRecord::Base
   end
   
   def notify_email
-    self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
+    @notify_email ||= self.staff_emails.empty? ? self.client.try(:email) : self.staff_emails.map(&:email)
   end
   
   def full_path(options = {})
     return '' if self.new_record?
-    s = self.state.size == 2 ? States.name_of(self.state) : self.state.try(:titleize)
-    #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
-    l = "/#{self.storage_type.parameterize}/#{self.city.parameterize}/#{s.parameterize}/#{self.title.parameterize}/#{self.id}"
-    l << "?#{options.to_query}" unless options.values.empty?
-    l
+    @full_path ||= begin
+      s = self.state.size == 2 ? States.name_of(self.state) : self.state.try(:titleize)
+      #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?
+      l = "/#{self.storage_type.parameterize}/#{self.city.parameterize}/#{s.parameterize}/#{self.title.parameterize}/#{self.id}"
+      l << "?#{options.to_query}" unless options.values.empty?
+      l
+    end
   rescue
     $!
   end
   
   def full_url(options = {})
-    "http://#{$root_domain}#{self.full_path}"
+    @full_url ||= "http://#{$root_domain}#{self.full_path}"
   end
   
   # add up a score based on the return values of model methods
@@ -450,8 +418,58 @@ class Listing < ActiveRecord::Base
     true
   end
   
-  def call_tracking_num
-    ''
+  #
+  # Unit Sizes
+  #
+  def get_closest_unit_size(size)
+    @closest_unit_size ||= self.available_sizes.detect { |s| s.sqft == Size.sqft_from_dims_str(size) } || self.available_sizes.detect { |s| s.is_close_to? size } || self.available_sizes.first
+  end
+  
+  def get_upper_type_size(size)
+    @upper_type_size ||= get_size_by_type(size, @@upper_types)
+  end
+  
+  def get_drive_up_type_size(size)
+    @drive_up_type_size ||= get_size_by_type(size, @@drive_up_types)
+    #raise [@drive_up_type_size, self, size].pretty_inspect if self.id == 85481
+  end
+  
+  def get_interior_type_size(size)
+    @interior_type_size ||= get_size_by_type(size, @@lower_types)
+  end
+  
+  def unit_sizes_options_array
+    @unit_sizes_options_array ||= self.available_sizes.empty? ? SizeIcon.labels : self.uniq_avail_sizes.map { |s| [s.full_title, s.id] }
+  end
+  
+  def available_sizes
+    @available_sizes ||= self.issn_enabled? ? self.sizes.select { |size| size.unit_type.units_available? } : self.sizes
+  end
+  
+  def available_unit_types
+    @available_unit_types ||= self.available_sizes.map(&:title).uniq
+  end
+  
+  def uniq_avail_sizes
+    @uniq_avail_sizes ||= begin
+      uniques = []
+      self.available_sizes.each do |size|
+        uniques << size unless uniques.any? { |u| u.compare_for_uniq.values == size.compare_for_uniq.values }
+      end
+      uniques
+    end
+  end
+  
+  def get_size_by_type(size, types)
+    found = self.sizes.all(:conditions => ['sqft = ?', size.sqft])
+    
+    if found.empty?
+      found = self.sizes.all(:conditions => ['(sqft > :min AND sqft < :sqft) OR (sqft < :max AND sqft > :sqft)', { :sqft => size.sqft, :min => size.sqft - Size.threshold, :max => size.sqft + Size.threshold }])
+    end
+    
+    found.detect do |size|
+      types.any? { |type| size.title_matches? type }
+    end
   end
   
   #

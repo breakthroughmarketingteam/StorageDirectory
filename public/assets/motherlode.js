@@ -9224,7 +9224,7 @@ $(function() {
 	});
 	
 	function init_stats_graph(options) {
-		if (typeof options == 'undefined') var options = {}
+		if (typeof options == 'undefined') var options = {};
 		var stats_graph = $('#stats_graph'),
 			days_ago 	= options.days_ago 	 || 0,
 			months_ago 	= options.months_ago || 1,
