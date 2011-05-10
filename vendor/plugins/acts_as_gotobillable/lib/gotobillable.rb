@@ -6,18 +6,22 @@ module GoToBillable #:nodoc:
 
   module ClassMethods
     
-    def acts_as_gotobillable
+    def acts_as_gotobillable(settings = {})
       require 'gtblib'
       include GoToBillable::InstanceMethods
+      @@settings = settings
     end
     
     def card_type_codes
       @@card_type_codes ||= { 'Visa' => 'VS', 'Amex' => 'AX', 'MasterCard' => 'MC', 'Discover' => 'DC' }
     end
     
+    def settings
+      @@settings
+    end
+    
   end
   
-  # This module contains instance methods
   module InstanceMethods
     
     def after_save
@@ -29,15 +33,11 @@ module GoToBillable #:nodoc:
       delete_pending_transactions
     end
     
-    def get_merchant_info
-      { :merchant_id => self.class.merchant_id, :merchant_pin => self.class.merchant_pin, :ip_address => $server_ip }
-    end
-    
     def process_billing_info # why does this get called twice?
       unless @already_did_this
         @already_did_this = true
         
-        gtb = GTB.new self.get_merchant_info
+        gtb = GTB.new self.class.settings
         gtb.customer_info self.cust_info_hash
 
         gtb.transaction_info({
