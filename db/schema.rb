@@ -548,7 +548,7 @@ ActiveRecord::Schema.define(:version => 20110509154045) do
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
     t.string   "full_state"
-    t.integer  "phone_views_count"
+    t.integer  "phone_views_count",   :default => 0
     t.string   "short_url"
   end
 
