@@ -4,7 +4,7 @@ class BillingInfo < ActiveRecord::Base
   belongs_to :listing, :touch => true
   has_many :invoices
   access_shared_methods
-  acts_as_gotobillable :merchant_id  = '236977', :merchant_pin = 'Qh3Q3jxVtaZg', :ip_address => $server_ip
+  acts_as_gotobillable :merchant_id => '236977', :merchant_pin => 'Qh3Q3jxVtaZg', :ip_address => $server_ip
   
   @@credit_cards = ['Visa', 'Amex', 'MasterCard', 'Discover']
   @@encryptables = [:card_number, :card_type, :cvv, :expires_month, :expires_year]
