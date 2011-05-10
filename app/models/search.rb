@@ -143,7 +143,7 @@ class Search < ActiveRecord::Base
   end
   
   @@zip_regex    = /\d{5}/
-  @@city_regex   = lambda { |q| /#{q.split(/(,\W?)|(\W*)/) * '|'}/i }
+  @@city_regex   = lambda { |q| /#{q.sub(/[^\w*]/, '').split(/(,\W?)|(\W*)/) * '|'}/i }
   @@states_regex = States::NAMES.map { |s| "(#{s[0]})|(#{s[1]})" } * '|'
   
   def self.is_zip?(q)
