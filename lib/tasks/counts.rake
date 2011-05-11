@@ -16,7 +16,7 @@ namespace :counts do
     html << "</ul>#{fstr}"
     Notifier.deliver_top_cities_list out
     
-    puts out
+    puts plain
   end
   
   desc "returns a list with the cities that have the most active listings"
