@@ -1,6 +1,6 @@
 namespace :clients  do
   
-  desc "activate new clients"
+  desc "Auto (kinda) activate new clients"
   task :activate_new => :environment do
     t = Time.local(2011, 3, 15, 9)
     puts "\nCaching client models created on #{t.asctime}..."
@@ -20,7 +20,7 @@ namespace :clients  do
     puts "\nDONE\n\n"
   end
   
-  desc 'Get oldest clients, generate csv, and send as attachment to info'
+  desc 'Get oldest clients, generate temporary csv and send as attachment to info'
   task :oldest do
     require 'fastercsv'
     
@@ -47,7 +47,7 @@ namespace :clients  do
       puts "#{sprintf("%.2f", ((i + 1).to_f / count.to_f * 100))}% done. #{c.name}: #{c.company}"
     end
     
-    path = "#{RAILS_ROOT}/tmp/oldest_clients#{t.strftime '%Y%m%d'}.csv"
+    path = "#{RAILS_ROOT}/tmp/oldest_clients-#{t.strftime '%Y%m%d'}.csv"
     puts "Done.\nWriting to CSV file in #{path}"
     
     FasterCSV.open(path, 'w') do |csv|
