@@ -48,7 +48,8 @@ namespace :clients  do
     end
     
     path = "#{RAILS_ROOT}/tmp/oldest_clients-#{t.strftime '%Y%m%d'}.csv"
-    puts "Done.\nWriting to CSV file in #{path}"
+    puts "Done.\nSorting and writing to CSV file in #{path}"
+    data = data.sort { |a, b| a[1][:days_on] <=> b[1][:days_on] }.reverse
     
     FasterCSV.open(path, 'w') do |csv|
       csv << ['Name', 'Email', 'Phone', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks', '# Phone Views']
@@ -60,7 +61,7 @@ namespace :clients  do
     end
     
     Notifier.deliver_old_client_file path
-    puts 'Done. Sent file to info@usselfstoragelocator.com'
+    puts 'Done.'
   end
   
 end
