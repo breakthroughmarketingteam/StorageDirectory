@@ -1,4 +1,5 @@
 <% c = controller_name == 'clients' %>
+<% unless @client.nil? %>
 <div id="admin-l-col">
 	<div id="admin-box">
 		<ul>
@@ -11,7 +12,7 @@
 			<li>
 				<a href="<%= c ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-units') %>" class="<%= 'selective_hider' if c %>" rel="ov-units"><span>My Facilities</span></a>
 
-				<% unless @client.nil? || (c || @client.listings.count == 1) %>
+				<% unless c || @client.listings.count == 1 %>
 					<ul id="fac-side-list">
 						<% @client.listings.each_with_index do |listing, i| %>
 							<li<%= ' class="last"' if @client.listings.count == i+1 %>>
@@ -36,3 +37,4 @@
 		</ul>
 	</div>
 </div>
+<% end %>
