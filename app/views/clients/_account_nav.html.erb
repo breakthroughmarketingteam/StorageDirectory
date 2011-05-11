@@ -11,7 +11,7 @@
 			<li>
 				<a href="<%= c ? '#' : admin_conditional_path(@client, :anchor => 'show_ov-units') %>" class="<%= 'selective_hider' if c %>" rel="ov-units"><span>My Facilities</span></a>
 
-				<% unless c || (@client && @client.listings.count == 1) %>
+				<% unless @client.nil? || (c || @client.listings.count == 1) %>
 					<ul id="fac-side-list">
 						<% @client.listings.each_with_index do |listing, i| %>
 							<li<%= ' class="last"' if @client.listings.count == i+1 %>>
