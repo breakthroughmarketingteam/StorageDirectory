@@ -2,7 +2,7 @@ namespace :counts do
   
   desc "returns a list with the cities that have the most active listings"
   task :cities => :environment do
-    plain = ''; html = '<ul>'; totes = 0
+    plain = ''; html = '<ol>'; totes = 0
     listings = Listing.all :conditions => { :status => 'verified' }, :select => 'count(id) as count, city, state', :group => 'city, state', :order => 'count DESC'
     listings.each do |l|
       totes += l.count.to_i
@@ -13,7 +13,7 @@ namespace :counts do
     
     fstr = "\nTotal: #{totes}"
     plain << fstr
-    html << "</ul>#{fstr}"
+    html << "</ol>#{fstr}"
     Notifier.deliver_top_cities_list html
     
     puts plain
