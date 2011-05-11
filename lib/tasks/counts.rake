@@ -6,7 +6,7 @@ namespace :counts do
     listings = Listing.all :conditions => { :status => 'verified' }, :select => 'count(id) as count, city, state', :group => 'city, state', :order => 'count DESC'
     listings.each do |l|
       totes += l.count.to_i
-      str = "(#{l.count}) #{l.city}, #{l.state}"
+      str = "(#{l.count}) #{l.city}, #{l.state}\n"
       plain << str
       html << "<li>#{str}</li>"
     end
@@ -14,7 +14,7 @@ namespace :counts do
     fstr = "\nTotal: #{totes}"
     plain << fstr
     html << "</ul>#{fstr}"
-    Notifier.deliver_top_cities_list out
+    Notifier.deliver_top_cities_list html
     
     puts plain
   end
