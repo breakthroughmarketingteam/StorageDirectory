@@ -1,5 +1,7 @@
-<p><%= @client.name %> is requesting a tracked number.</p>
+<p>(<%= @client.id %>) <%= @client.name %> is requesting a tracked number.</p>
 
-<p><strong>Listing:</strong> (<%= @listing.id %>) <%= @listing.title %></p>
+<p><strong>Listing:</strong> (<%= @listing.id %>) <%= link_to @listing.title, edit_listing_path(@listing) %></p>
 	
 <p><strong>Phone:</strong> <%= @phone %></p>
+
+</p>Show'em some love.</p>

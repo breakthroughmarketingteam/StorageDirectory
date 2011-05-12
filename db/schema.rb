@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110509154045) do
+ActiveRecord::Schema.define(:version => 20110512164516) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -336,6 +336,13 @@ ActiveRecord::Schema.define(:version => 20110509154045) do
     t.datetime "updated_at"
   end
 
+  create_table "helps", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "helptexts", :force => true do |t|
     t.string   "model"
     t.text     "text"
@@ -548,7 +555,7 @@ ActiveRecord::Schema.define(:version => 20110509154045) do
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
     t.string   "full_state"
-    t.integer  "phone_views_count",   :default => 0
+    t.integer  "phone_views_count"
     t.string   "short_url"
   end
 

@@ -1,3 +1,4 @@
+=begin
 require 'open_flash_chart'
 
 ActionView::Base.send :include, OpenFlashChart::View
@@ -7,3 +8,4 @@ ActionController::Base.send :include, OpenFlashChart
 #ActiveRecord::Base.send :include, OpenFlashChart::View
 #ActiveRecord::Base.send :include, OpenFlashChart::Controller
 #ActiveRecord::Base.send :include, OpenFlashChart
+=end

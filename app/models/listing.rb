@@ -370,7 +370,7 @@ class Listing < ActiveRecord::Base
   end
   
   def full_url(options = {})
-    @full_url ||= "http://#{$root_domain}#{self.full_path}"
+    @full_url ||= "http://#{$root_domain}#{self.full_path(options)}"
   end
   
   # add up a score based on the return values of model methods
