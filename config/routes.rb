@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
   
   map.connect '/help', :controller => 'helps', :action => 'index'
-  map.help_with '/help/:topic', :controller => 'helps', :action => 'show'
+  map.help_with '/help/:title', :controller => 'helps', :action => 'show'
   
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }

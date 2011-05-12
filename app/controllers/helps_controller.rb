@@ -2,7 +2,7 @@ class HelpsController < ApplicationController
   
   ssl_required :new, :create, :edit, :update, :destroy
   before_filter :get_models_paginated, :only => :index
-  before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
+  before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   
   def index
     @page = Page.find_by_title 'Help'
@@ -14,6 +14,8 @@ class HelpsController < ApplicationController
   end
 
   def show
+    get_help
+    
     respond_to do |format|
       format.html {}
       format.js do
@@ -92,6 +94,12 @@ class HelpsController < ApplicationController
   def rate
     @help = Help.find params[:id]
     render :json => { :success => @help.rate(params[:stars], current_user, params[:dimension]) }
+  end
+  
+  private
+  
+  def get_help # no pun intended
+    @help = Help.find_by_title(params[:title]) || Help.find_by_title('Help Not Yet Available')
   end
   
 end
