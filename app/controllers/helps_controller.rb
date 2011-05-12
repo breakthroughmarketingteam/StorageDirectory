@@ -5,6 +5,8 @@ class HelpsController < ApplicationController
   before_filter :get_model, :only => [:new, :edit, :update, :destroy]
   
   def index
+    redirect_to help_with_path('coming-soon') if !user_is_a?('admin', 'staff')
+    
     @page = Page.find_by_title 'Help'
     
     respond_to do |format|
