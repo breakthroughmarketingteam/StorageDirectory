@@ -1328,7 +1328,7 @@ p#click-more a{font-size:16px;height:36px;text-shadow:1px 1px 0 #666;display:blo
 #clients_controller #content_bottom{border-right:none;}
 .new_action #content_bottom{border:none;}
 .my_account #content_bottom{margin:15px 0 25px 9px;}
-#posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content,#tags_controller.show_action #content{padding:15px;}
+#posts_controller.show_action #content,#listings_controller.edit_action #content,#user_stats_controller.show_action #content,#tags_controller.show_action #content,#helps_controller.show_action #content{padding:15px;}
 #posts_controller.show_action #content > h2{margin:15px 0 20px 0;}
 #pages_controller #type-one-r-col,#pages_controller.show_action #content,#listings_controller.locator_action #content,#listings_controller.home_action #content,
 #listings_controller.compare_action #content, #listings_controller.edit_action #content,#clients_controller.new_action #content,#posts_controller.show_action #content,
