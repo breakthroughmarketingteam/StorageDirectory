@@ -35,6 +35,9 @@ class Rentalizer
       else
         [404, {'Content-Type' => 'text/html'}, ['Not Found']]
       end
+    rescue => e
+      puts e.message
+      raise e
     end
     
     # read the rentalizer layout file, run it through erb and serve it up

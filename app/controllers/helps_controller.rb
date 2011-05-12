@@ -99,7 +99,7 @@ class HelpsController < ApplicationController
   private
   
   def get_help # no pun intended
-    @help = Help.find_by_title(params[:title]) || Help.find_by_title('Help Not Yet Available')
+    @help = Help.find_available params[:title]
   end
   
 end
