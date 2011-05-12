@@ -25,7 +25,7 @@ namespace :clients  do
     require 'fastercsv'
     
     puts 'Caching active clients older than 2 months'
-    clients = Client.activated.find :all, :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at DESC', :include => :listings
+    clients = Client.activated.find :all, :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at ASC', :include => :listings
     data = []; t = Time.now; count = clients.size
     
     puts "Done.\nGathering data for #{count} clients"
@@ -49,7 +49,9 @@ namespace :clients  do
     
     path = "#{RAILS_ROOT}/tmp/oldest_clients-#{t.strftime '%Y%m%d'}.csv"
     puts "Done.\nSorting and writing to CSV file in #{path}"
-    data = data.sort { |a, b| a[1][:days_on] <=> b[1][:days_on] }.reverse
+
+    # cuz i changed the order to ASC
+    #data = data.sort { |a, b| a[1][:days_on] <=> b[1][:days_on] }.reverse
     
     FasterCSV.open(path, 'w') do |csv|
       csv << ['Name', 'Email', 'Phone', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks', '# Phone Views']

@@ -1,10 +1,13 @@
-Client: <%= @client.name %> <<%= @client.email %>>
+<p><strong>Client:</strong> <%= @client.name %> &lt;<%= @client.email %>&gt;</p>
 
-Account: <%= edit_client_url @client, :protocol => 'https' %>
+<p><strong>Account:</strong> <%= edit_client_url @client, :protocol => 'https' %></p>
 
-Claimed Listings: 
+<p><strong>Claimed Listings: </strong></p>
+
+<ul>
 <% @listings.each do |listing| -%>
-	(<%= listing.id %>) <%= listing.title %>
-	<%= listing.full_address %>
-	
+	<li>(<%= listing.id %>) <%= link_to listing.title, edit_listing_path(listing) %><br>
+		<%= listing.full_address %>	
+	</li>
 <% end %>
+</ul>
