@@ -2281,7 +2281,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-side a{font-size:12px;text-decoration: underline;}
 #blog-side li.year{font-size:14px;margin-left:5px;}
 #blog-side li{margin:4px 0;}
-#blog-side #tags li{float:left;padding:3px 5px;}
+#blog-side #tags li{float:left;padding:0 5px;}
 #blog-side #tags li:hover{background:#ebebeb;}
 #blog-side .months li{margin-left:20px;}
 #blog-side #tags{margin-bottom:20px;overflow:hidden;}
