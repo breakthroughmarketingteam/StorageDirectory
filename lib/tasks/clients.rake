@@ -1,6 +1,6 @@
 namespace :clients  do
   
-  desc "activate new clients"
+  desc "Auto (kinda) activate new clients"
   task :activate_new => :environment do
     t = Time.local(2011, 3, 15, 9)
     puts "\nCaching client models created on #{t.asctime}..."
@@ -20,12 +20,12 @@ namespace :clients  do
     puts "\nDONE\n\n"
   end
   
-  desc 'Get oldest clients, generate csv, and send as attachment to info'
+  desc 'Get oldest clients, generate temporary csv and send as attachment to info'
   task :oldest do
     require 'fastercsv'
     
     puts 'Caching active clients older than 2 months'
-    clients = Client.activated.find :all, :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at DESC', :include => :listings
+    clients = Client.activated.find :all, :conditions => ['created_at <= ?', 2.months.ago], :order => 'created_at ASC', :include => :listings
     data = []; t = Time.now; count = clients.size
     
     puts "Done.\nGathering data for #{count} clients"
@@ -47,8 +47,11 @@ namespace :clients  do
       puts "#{sprintf("%.2f", ((i + 1).to_f / count.to_f * 100))}% done. #{c.name}: #{c.company}"
     end
     
-    path = "#{RAILS_ROOT}/tmp/oldest_clients#{t.strftime '%Y%m%d'}.csv"
-    puts "Done.\nWriting to CSV file in #{path}"
+    path = "#{RAILS_ROOT}/tmp/oldest_clients-#{t.strftime '%Y%m%d'}.csv"
+    puts "Done.\nSorting and writing to CSV file in #{path}"
+
+    # cuz i changed the order to ASC
+    #data = data.sort { |a, b| a[1][:days_on] <=> b[1][:days_on] }.reverse
     
     FasterCSV.open(path, 'w') do |csv|
       csv << ['Name', 'Email', 'Phone', 'Company', 'Joined', 'Days Joined', '# Facilities', '# Impressions', '# Clicks', '# Phone Views']
@@ -60,7 +63,7 @@ namespace :clients  do
     end
     
     Notifier.deliver_old_client_file path
-    puts 'Done. Sent file to info@usselfstoragelocator.com'
+    puts 'Done.'
   end
   
 end

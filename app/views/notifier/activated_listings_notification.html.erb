@@ -1,13 +1,16 @@
-Hi <%= @client.name %>, the facilities you've claimed are now active! You can now log in to your Account and start filling out your facility's information whenever you want. Click the link below to see your Account.
-<%= client_account_url :protocol => 'https' %>
+<p>Hi <%= @client.name %>, the facilities you've claimed are now active! You can now log in to your account and start filling out your facility's information. <a href="<%= client_account_url :protocol => 'https' %>">CLICK HERE</a> or copy the link below to your address bar to sign in.<br>
+<%= client_account_url :protocol => 'https' %></p>
 
-Activated Listings: 
+<p><strong>Activated Listings: </strong></p>
+
+<ul style="list-style-position:inside;margin-left:10px">
 <% @listings.each do |listing| -%>
-	<%= listing.title %>
-	<%= listing.full_address %>
-	
+	<li><%= link_to listing.title, listing.full_url %><br>
+		<%= listing.full_address %>
+	</li>
 <% end %>
+</ul>
 
-Have a great day!
-	- The USSSL Team
+<p>Have a great day!</p>
+<p>	- The USSSL Team</p>
 	

@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
       @allowed = true
     elsif controller_name =~/(user_sessions)|(password_resets)/
       @allowed = true
-    elsif controller_name =~/(blog_posts)/ && action_name == 'index'
+    elsif controller_name =~/(blog_posts)|(helps)/ && action_name == 'index'
       @allowed = true
     elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true

@@ -1,4 +1,12 @@
-<p>A person has requested info from the following listing. <%= ' This listing is a premium member, they were sent a notification.' if @listing.premium? %></p>
+<p>A person has requested info from the following listing. </p>
+
+<p>
+	<% if @listing.premium? %>
+		This listing is a premium member, they were sent a notification. However, it is recommended to follow up with them to make sure.
+	<% else %>
+		This is NOT a premium member. We must notify them promptly.
+	<% end %>
+</p>
 
 <p><strong>Listing:</strong>
 	<a href="<%= edit_listing_url @listing %>"><%= @listing.title %></a><br>

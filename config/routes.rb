@@ -41,6 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   map.create_tip '/create_tip', :controller => 'posts', :action => 'create', :for => 'tip'
   map.tip '/tips/:id', :controller => 'posts', :action => 'show'
   
+  map.connect '/help', :controller => 'helps', :action => 'index'
+  map.help_with '/help/:title', :controller => 'helps', :action => 'show'
+  
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
   
@@ -158,6 +161,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
   map.resources :rentals
   map.resources :specials
+  map.resources :helps
   map.resources :predefined_specials
   map.resources :predef_special_assigns, :member => { :toggle => :post }
   map.resources :info_requests
