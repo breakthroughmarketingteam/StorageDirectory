@@ -2211,7 +2211,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 
 #blog_page{font-size:12px;margin:15px 20px 0;padding:0;}
 #blog_page .blog_post{border-bottom:1px dashed #ccc;padding:0 0 25px;margin-bottom:25px;}
-#blog_page h2{overflow:hidden;}
+#blog_page h2{overflow:visible;}
 #blog_page h2 a{display:block;font-size:28px;line-height:28px;margin:3px 0 8px;text-decoration:none;width:670px;}
 #blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
 #blog_page a{font-size:12px;}
