@@ -1,0 +1,23 @@
+<p>
+	Billing cycle has been canceled. This happens when you update your account, add/remove facility listings, or add a billing account for an individual listing.
+</p>
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="20"></td>
+		<td width="340" valign="top" halign="left">
+			<p>
+				<% if @billable.is_a? Listing %>
+					<strong>Facility Name:</strong><br>
+					<a href="<%= client_listing_url @billable, :protocol => 'https' %>" style="color:green;"><%= @billable.title %></a>
+				<% else %>
+					<strong>Name:</strong><br>
+					<a href="https://<%= $root_domain %>/my_account" style="color:green;"><%= @billable.name %></a>
+				<% end %>
+			</p>
+		</td>
+	</tr>
+</table>
+
+<p>
+	For more information about Billing: <a href="http://<%= $root_domain %>/help/billing">http://<%= $root_domain %>/help/billing</a>
+</p>

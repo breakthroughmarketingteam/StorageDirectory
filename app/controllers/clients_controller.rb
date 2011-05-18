@@ -98,7 +98,7 @@ class ClientsController < ApplicationController
     else
       case @client.status when 'unverified'
         @client.activate!
-        Notifier.deliver_client_activated_alert @client
+        Notifier.delay.deliver_client_activated_alert @client
         
         flash[:quick_login] = [@client.email, @client.temp_password]
         flash[:notice] = 'Congratulations! Your account is ready. Go ahead and log in.'

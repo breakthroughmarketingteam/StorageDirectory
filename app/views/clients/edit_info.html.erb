@@ -21,7 +21,7 @@
 				<li class="state_zip">
 					<%= bf.label :state %>
 					<%= bf.select :state, States.names, { :include_blank => true }, :class => 'required' %>
-					<%= bf.text_field :zip, :class => 'required numeric hintable auto_next', :title => 'Zip', :maxlength => 5 %>
+					<%= bf.text_field :zip, :class => 'required numeric hintable', :title => 'Zip', :maxlength => 5 %>
 				</li>
 				<li>
 					<%= bf.label :card_type %>
@@ -29,11 +29,11 @@
 				</li>
 				<li>
 					<%= bf.label :card_number %>
-					<%= bf.text_field :card_number, :value => @billing_info.obs_card_number, :class => 'required numeric auto_next', :maxlength => 16 %>
+					<%= bf.text_field :card_number, :value => @billing_info.obs_card_number, :class => 'required credit_card', :maxlength => 16 %>
 				</li>
 				<li>
 					<%= bf.label :cvv, 'CVV' %>
-					<%= bf.text_field :cvv, :value => @billing_info.cvv, :class => 'tiny_text_field required numeric auto_next', :maxlength => 4 %>
+					<%= bf.text_field :cvv, :value => @billing_info.cvv, :class => 'tiny_text_field required numeric', :maxlength => 4 %>
 				</li>
 				<li class="expiry">
 					<%= bf.label :expires %>

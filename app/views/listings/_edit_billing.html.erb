@@ -1,0 +1,77 @@
+<h3 class="uncollapse">
+	<a class="openDiv left toggle_action <%= @billing_info.new_record? ? 'toggle_right' : 'toggle_down' %>" rel="billing-info" href="#">Billing Info</a>
+	<p class="right">If you wish to have this facility billed independently. Defaults to your <a href="<%= user_is_a?('admin', 'staff') ? "/clients/#{@client.id}" : '/my_account' %>#show_ov-info">Main Account Billing Info</a></p>
+</h3>
+
+<% form_for @listing, :html => { :id => 'fac_billing_form', :'data-target' => 'billing' } do |f| %>
+	<div class="<%= 'hide' if @billing_info.new_record? %>" id="billing-info">
+		<% fields_for :billing_info, @billing_info do |bf| %>
+		<table cellspacing="0" cellpadding="0" class="fac-details">
+			<tbody>
+				<tr>
+					<td class="col_label"><%= bf.label :name, 'Name' %></td>
+					<td><%= bf.text_field :name, :class => 'required', :maxlength => 64 %></td>
+				</tr>
+
+				<tr>
+					<td class="col_label"><%= bf.label :address %></td>
+					<td><%= bf.text_field :address, :class => 'required', :maxlength => 64 %></td>
+				</tr>
+		
+				<tr>
+					<td class="col_label"><%= bf.label :city %></td>
+					<td><%= bf.text_field :city, :class => 'required' %></td>
+				</tr>
+
+				<tr>
+					<td class="col_label"><%= bf.label :state %></td>
+					<td><%= bf.text_field :state, :class => 'required' %></td>
+				</tr>
+		
+				<tr>
+					<td class="col_label"><%= bf.label :zip, 'Zip Code' %></td>
+					<td><%= bf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+				</tr>
+
+				<tr>
+	           		<td class="col_label"><%= bf.label :phone %></td>
+	           		<td><%= bf.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
+	            </tr>
+
+				<tr>
+	           		<td class="col_label"><%= bf.label :card_type %></td>
+	           		<td><%= bf.select :card_type, BillingInfo.credit_cards, {}, :class => 'required' %></td>
+	            </tr>
+
+				<tr>
+	           		<td class="col_label"><%= bf.label :card_number %></td>
+	           		<td><%= bf.text_field :card_number, :value => @billing_info.obs_card_number, :class => 'required credit_card', :maxlength => 16 %></td>
+	            </tr>
+				<tr>
+					<td colspan="2">
+				
+						<table cellspacing="0" cellpadding="0" class="fac-details" id="card_fields">
+							<tr>
+								<td class="col_label"><%= bf.label :cvv, 'CVV' %></td>
+								<td><%= bf.text_field :cvv, :class => 'required numeric tiny_text_field', :maxlength => 4 %></td>
+								<td class="col_label"><%= bf.label :expires_month, 'Expires' %></td>
+								<td>
+									<%= bf.text_field :expires_month, :class => 'required numeric tiny_text_field hintable auto_next', :title => 'MM', :maxlength => 2 %>
+									<%= bf.text_field :expires_year, :class => 'required numeric tiny_text_field hintable', :title => 'YY', :maxlength => 2 %>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<% end %>
+		
+		<div>
+			<%= hidden_field_tag :from, 'billing' %>
+			<%= f.submit 'Save Changes', :id => 'listing_billing_submit', :class => 'save' %>
+			<%= ajax_loader %>
+		</div>
+	</div>
+	
+<% end %>

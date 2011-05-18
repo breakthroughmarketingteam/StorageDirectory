@@ -5,7 +5,7 @@ class Listing < ActiveRecord::Base
   has_one :billing_info
   # contact info from the csv file, internal use only
   has_one :contact, :class_name => 'ListingContact', :dependent => :destroy
-  accepts_nested_attributes_for :contact
+  accepts_nested_attributes_for :contact, :billing_info
   
   has_many :pictures,      :dependent => :destroy
   has_many :reservations,  :dependent => :destroy
@@ -81,14 +81,6 @@ class Listing < ActiveRecord::Base
   
   def self.verified_count
     self.count :conditions => { :status => 'verified' }
-  end
-  
-  def billing_amount
-    self.billing_info.nil? ? self.client.billing_amount : self.client.billing_tier
-  end
-  
-  def get_billing_info
-    @billing_info ||= self.billing_info.nil? ? self.client.billing_info : self.billing_info
   end
   
   #
@@ -214,7 +206,7 @@ class Listing < ActiveRecord::Base
   def self.set_short_url(listing)
     @@bitly ||= UrlShortener::Client.new(UrlShortener::Authorize.new(BITLY_LOGIN, BITLY_APIKEY))
     url = @@bitly.shorten "http://#{$root_domain}#{listing.full_path}"
-    listing.update_attribute :short_url, url.urls
+    listing.short_url = url.urls
   end
   
   def short_url
@@ -357,7 +349,7 @@ class Listing < ActiveRecord::Base
   end
   
   def full_path(options = {})
-    return '' if self.new_record?
+    return '' if self.title.blank?
     @full_path ||= begin
       s = self.state.size == 2 ? States.name_of(self.state) : self.state.try(:titleize)
       #facility_path listing.storage_type.parameterize.to_s, listing.state.parameterize.to_s, listing.city.parameterize.to_s, listing.title.parameterize.to_s, listing.id, options unless listing.new_record?

@@ -42,6 +42,8 @@ class ApplicationController < ActionController::Base
   $_usssl_phone = '1-888-222-0225'
   $_usssl_google_analytics = 'UA-20270920-1'
   $_pm_softwares = ['Domico', 'QSX Management Software', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'Syrasoft 7', 'Syrasoft 8', 'TaskMaster', 'Total Recall', 'Webselfstorage', 'WinSen']
+  $gtb_merchant = { :id => '236977', :pin => 'Qh3Q3jxVtaZg' }
+  
   
   #before_filter :ensure_domain
   before_filter :get_local_ip
@@ -101,7 +103,9 @@ class ApplicationController < ActionController::Base
       @allowed = true
     elsif controller_name =~/(user_sessions)|(password_resets)/
       @allowed = true
-    elsif controller_name =~/(blog_posts)|(helps)/ && action_name == 'index'
+    elsif controller_name =~/(blog_posts)/ && action_name == 'index'
+      @allowed = true
+    elsif controller_name =~ /(helps)/ && %w(index show).include?(action_name)
       @allowed = true
     elsif controller_name == 'listings' && %w(home locator show compare).include?(action_name)
       @allowed = true

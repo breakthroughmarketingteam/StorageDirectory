@@ -98,17 +98,17 @@ class Notifier < ActionMailer::Base
     attachment :content_type => 'text/csv', :body => File.read(file_path), :filename => file_path.split('/').last
   end
   
-  def billing_processed_alert(billing_info, invoice)
+  def billing_processed_alert(model, billing, invoice)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billed!'
-    @body[:billable] = billing_info.listing || billing_info.billable
-    @body[:billing_info] = billing_info
+    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billing_info] = billing
     @body[:invoice] = invoice
   end
   
-  def billing_removed_alert(billing_info, invoice)
+  def billing_removed_alert(model, billing, invoice)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
-    @body[:billable] = billing_info.listing || billing_info.billable
-    @body[:billing_info] = billing_info
+    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billing_info] = billing
     @body[:invoice] = invoice
   end
   
@@ -168,17 +168,19 @@ class Notifier < ActionMailer::Base
     @body[:listing] = listing
   end
   
-  def billing_processed_notification(billing_info, invoice)
-    setup_email billing_info.billable.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Billing Info Has Been Updated'
-    @body[:billable] = billing_info.listing || billing_info.billable
-    @body[:billing_info] = billing_info
+  def billing_processed_notification(model, billing, invoice)
+    email = model.respond_to?(:email) ? model.email : model.notify_email
+    setup_email email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Billing Info Has Been Updated'
+    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billing_info] = billing
     @body[:invoice] = invoice
   end
   
-  def billing_removed_notification(billing_info, invoice)
-    setup_email billing_info.billable.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Billing Has Ended'
-    @body[:billable] = billing_info.listing || billing_info.billable
-    @body[:billing_info] = billing_info
+  def billing_removed_notification(model, billing, invoice)
+    email = model.respond_to?(:email) ? model.email : model.notify_email
+    setup_email email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Billing Has Ended'
+    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billing_info] = billing
     @body[:invoice] = invoice
   end
   

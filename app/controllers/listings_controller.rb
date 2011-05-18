@@ -1,7 +1,6 @@
 class ListingsController < ApplicationController
   
   ssl_required :index, :create, :profile, :new, :edit, :update, :quick_create, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :claim_listings, :destroy
-  ssl_allowed :show
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:new, :show, :profile, :edit, :destroy, :disable, :copy_to_all, :add_predefined_size, :request_review, :tracking_request, :sync_issn, :redir]
   before_filter :get_client, :only => [:edit, :profile, :disable, :request_review, :tracking_request, :claim_listings]
@@ -156,7 +155,30 @@ class ListingsController < ApplicationController
       else
         render :json => { :success => false, :data => model_errors(@listing) }
       end
+    
+    when 'billing'
+      @client = @listing.client
       
+      if @listing.billing_info.nil?
+        old_billing = @client.billing_info if @client.billing_info
+        @billing_info = @listing.create_billing_info(params[:billing_info])
+      else
+        old_billing = @listing.billing_info.dup
+        @listing.billing_info.update_attributes(params[:billing_info])
+        @billing_info = @listing.billing_info.reload
+      end
+      
+      if @billing_info.valid?
+        @client.update_previous_transaction! old_billing, @billing_info, !@client.listings.billable.empty? if old_billing
+        @client.process_billing_info! @billing_info, :email => @listing.notify_email.first,
+                                                     :billing_amount => @client.billing_tier,
+                                                     :memo => "#{$root_domain} billing set up for single listing, Listing #{@listing.id}, Account #{@client.id}"
+        
+        render :json => { :success => true, :data => render_to_string(:partial => 'edit_billing') }
+      else
+        render :json => { :success => false, :data => model_errors(@billing_info) }
+      end
+  
     when 'uplogo'
       if params[:default_logo]
         @listing.update_attribute(:default_logo, params[:default_logo]) && @listing.logo && @listing.logo.destroy
@@ -176,16 +198,17 @@ class ListingsController < ApplicationController
             get_models_paginated
             render :action => 'index'
           else
+            flash[:error] = model_errors @listing
             render :action => 'edit'
           end
         end
         
         format.js do
           if @listing.update_attributes params[:listing]
-            Notifier.delay.deliver_tracking_number_ready @listing.client, @listing
-            get_models_paginated
-            render :action => 'index', :layout => false
+            Notifier.delay.deliver_tracking_number_ready @listing.client, @listing if new_tracked_num
+            render :action => 'edit', :layout => false
           else
+            flash.now[:error] = model_errors @listing
             render :action => 'edit', :layout => false
           end
         end
@@ -194,7 +217,7 @@ class ListingsController < ApplicationController
     when 'toggle_renting'
       @listing.update_attribute :renting_enabled, (params[:toggle] == 'true')
       render :json => { :success => true, :data => { :href => "#{toggle_renting_listing_path(@listing)}?from=toggle_renting&toggle=#{params[:toggle] == 'true' ? 'false' : 'true'}" } }
-      
+    
     else # regular update
       _scrub_params
       
@@ -343,6 +366,7 @@ class ListingsController < ApplicationController
     
     if in_mode? 'profile'
       @facility_features = FacilityFeature.all.map &:title
+      @billing_info = @listing.billing_info || @listing.build_billing_info
       @specials = @listing.specials
       @hours = @listing.business_hours
     end

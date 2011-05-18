@@ -3,7 +3,6 @@ class Client < User
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
   has_one :billing_info, :as => :billable, :dependent => :destroy
   has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
-  
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id' do
     def billable() all.select { |l| l.billing_info.nil? } end
   end
@@ -23,32 +22,31 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
-  # billing depends on number of listings in the client account
-  # 1-10, 11-25, 26+
-  def self.billing_tiers
-    {
-      1..10     => 54.50,
-      11..25    => 49.50,
-      26..999999 => 44.50
-    }
-  end
-  
-  def billing_tier
-    @billing_tier ||= begin
-      num = self.listings.billable.size
-      amount = 0
-      self.class.billing_tiers.each do |range, amt|
-        if range.include? num
-          amount = amt
-          break
-        end
-      end
-      amount
-    end
-  end
-  
+  acts_as_gotobillable :merchant_id    => $gtb_merchant[:id], 
+                       :merchant_pin   => $gtb_merchant[:pin], 
+                       :ip_address     => $server_ip,
+                       :debug          => (RAILS_ENV == 'development' ? '1' : '0')
+
+  # figure out how much to charge a client based on the product of the amount of units in use (e.g. billable listings) 
+  # and the amount to charge per unit (e.g. 1-10 listings are 54.50 each, 11-25 are 49.50...)
   def billing_amount
-    @billing_amount ||= sprintf('%.2f', self.billing_tier * self.listings.billable.size.to_f)
+    sprintf('%.2f', self.billing_tier * self.tier_multiple)
+  end
+
+  # the amount to charge per unit
+  # set gtb_settings[:billing_tiers] to a hash where the keys are a range and the value is the amount
+  def billing_tier
+    amount = 0
+    { 1..10 => 54.50, 11..25 => 49.50, 26..999999 => 44.50 }.each do |range, amt|
+      amount = amt and break if range.include? self.tier_multiple
+    end
+    amount
+  end
+
+  # the tier_multiple is the amount of units in use by the client
+  def tier_multiple
+    b = self.listings.billable
+    b.size == 0 ? 1 : b.size
   end
   
   def initialize(params = {})
@@ -60,16 +58,18 @@ class Client < User
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
       else
-        listing = self.listings.build :title         => self.company, 
-                                      :status        => 'unverified', 
-                                      :category      => 'Storage', 
-                                      :storage_types => 'self storage', 
-                                      :address       => ma.address, 
-                                      :city          => ma.city, 
-                                      :state         => ma.state, 
-                                      :zip           => ma.zip, 
-                                      :phone         => ma.phone,
-                                      :renting_enabled => params[:client][:rental_agree]
+        listing = self.listings.build({
+          :title         => self.company, 
+          :status        => 'unverified', 
+          :category      => 'Storage', 
+          :storage_types => 'self storage', 
+          :address       => ma.address, 
+          :city          => ma.city, 
+          :state         => ma.state, 
+          :zip           => ma.zip, 
+          :phone         => ma.phone,
+          :renting_enabled => params[:client][:rental_agree]
+        })
       end
     
       self.role_id           = Role.get_role_id 'advertiser'
@@ -127,7 +127,22 @@ class Client < User
     end
     
     self.mailing_address_attributes = info.delete(:mailing_address_attributes) if info[:mailing_address_attributes]
-    self.billing_info_attributes = info.delete(:billing_info_attributes) if info[:billing_info_attributes]
+    
+    if info[:billing_info_attributes]
+      bi = info.delete(:billing_info_attributes)
+      
+      if self.billing_info.nil?
+        self.build_billing_info bi
+        self.process_billing_info!(self.billing_info, :billing_amount => self.billing_amount) if self.billing_info.save
+      else
+        old_billing = self.billing_info
+        
+        if self.billing_info.update_attributes bi
+          new_billing = self.billing_info.reload
+          self.update_previous_transaction! old_billing, new_billing, !self.listings.billable.empty?
+        end
+      end
+    end
     
     if info[:password]
       self.password = info[:password]
@@ -197,6 +212,16 @@ class Client < User
     end
     
     { :data => plot_data, :min => counts.min, :max => counts.max }
+  end
+  
+  def deliver_notifications(billing, invoice, starting)
+    if starting # billing info saved
+      Notifier.deliver_billing_processed_alert self, billing, invoice
+      Notifier.deliver_billing_processed_notification self, billing, invoice
+    else # billing info destroyed
+      Notifier.deliver_billing_removed_alert self, billing, invoice
+      Notifier.deliver_billing_removed_notification self, billing, invoice
+    end
   end
   
   def issn_test(facility_id, enable)

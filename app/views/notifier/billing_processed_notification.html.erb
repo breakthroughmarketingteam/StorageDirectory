@@ -8,15 +8,15 @@
 			<p>
 				<% if @billable.is_a? Listing %>
 					<strong>Facility Name:</strong><br>
-					<a href="https://<%= $root_domain %>/my_account" target="_blank" style="color:green;"><%= link_to @billable.title, edit_listing_path(@billable) %></a>
+					<a href="<%= client_listing_url @billable, :protocol => 'https' %>" style="color:green;"><%= @billable.title %></a>
 				<% else %>
 					<strong>Name:</strong><br>
-					<a href="https://<%= $root_domain %>/my_account" target="_blank" style="color:green;"><%= link_to @billable.name, edit_client_path(@billable) %></a>
+					<a href="https://<%= $root_domain %>/my_account" style="color:green;"><%=@billable.name %></a>
 				<% end %>
 			</p>
 			<p>
 				<strong>Amount:</strong><br>
-				<%= @invoice.tran_amount %> for <%= @billable.is_a?(Listing) ? @billable.title : pluralize(@billable.listings.billable.size, 'listing') %>
+				<%= @invoice.tran_amount %> for <%= @billable.is_a?(Listing) ? @billable.title : pluralize(@billable.tier_multiple, 'listing') %>
 			</p>
 			<p>
 				<strong>Recurring:</strong><br>
@@ -27,5 +27,5 @@
 </table>
 
 <p>
-	For more information about Billing: <a href="http://<%= $root_domain %>/help/call-tracking" target="_blank">http://<%= $root_domain %>/help/billing</a>
+	For more information about Billing: <a href="http://<%= $root_domain %>/help/billing">http://<%= $root_domain %>/help/billing</a>
 </p>

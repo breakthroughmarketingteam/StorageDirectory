@@ -1979,7 +1979,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .blue_btn{border:1px outset #666;color:#fff;display:inline-block;font-size:12px;padding:4px 7px;text-align:center;text-shadow:1px 1px 0 #666;cursor:pointer;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sort-bg.png) repeat-x;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
-#sl-edit-tabs .left{font-size:12px;float:left;padding-bottom:20px;}
+#sl-edit-tabs .stack{font-size:12px;padding-bottom:20px;}
 .copy_all{margin-left:20px;font-size:12px;float:left;}
 #tracking_request p{line-height:1.3;}
 #tracking_request label{font-size:80%;}
@@ -1988,6 +1988,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #tracking_request .blue_btn{float:right;}
 #sl-edit-tabs #email tr{display:block;}
 #sl-edit-tabs p{font-size:12px;line-height:15px;}
+#sl-edit-tabs h3.uncollapse p.right{margin:0;line-height:1;font-weight:normal;color:#444;}
 #sl-edit-tabs p.note{margin:7px 0;}
 .track_req span{padding-right:7px;}
 #sl-edit-tabs #address input, #sl-edit-tabs #email input{margin-top:10px;}
@@ -2098,6 +2099,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #flogo #col2{float:left;width:70%;}
 #sl-edit-tabs #flogo #col2 p{margin:0 0 5px;}
 #sl-edit-tabs #flogo #col2 #upload{margin-bottom:20px;}
+#sl-edit-tabs #card_fields .tiny_text_field{width:26px;}
 
 p.breadcrumb {background:#66c;border:1px solid #4c4bcc;color:#fff;float:left;margin:17px 0 0 21px;padding:4px 8px;}
 p.breadcrumb a{color:#fff;}

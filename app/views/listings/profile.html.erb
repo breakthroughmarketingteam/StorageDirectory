@@ -18,14 +18,23 @@
 					<!-- tab content -->
 					<div id="tab1" class="tab_content">
 						<p class="hint">Here you can change all the details for this facility.</p>
-						<div id="flogo" class="left">
+						
+						<div id="flogo" class="uncollapse stack">
 							<%= render :partial => 'logo_form' %>
 							<%= copy_all_link :facility_logo, @listing, :text => 'Copy to all listings', :title => 'Copy this logo to all your other listings' %>
 						</div>
-						<div id="details" class="left">
+						
+						<div id="details" class="uncollapse stack">
 							<%= render :partial => 'edit_detail' %>
 						</div>
-						<div id="descript" class="left">
+						
+						<% unless @listing.siblings.empty? %>
+					  		<div id="billing" class="uncollapse stack">
+					  			<%= render :partial => 'edit_billing' %>
+					  		</div>
+						<% end %>
+						
+						<div id="descript" class="uncollapse stack">
 							<% form_for @listing, :html => { :id => 'fac_desc_form' } do |f| %>
 								<h3 class="label">Description</h3>
 							
@@ -41,7 +50,7 @@
 								<%= ajax_loader %>
 							<% end %>
 						</div>
-						<div id="hours" class="left">
+						<div id="hours" class="uncollapse stack">
 							<h3 class="label">Hours</h3>
 							<div class="inner">
 								<%= render :partial => 'hours' %>
@@ -59,14 +68,14 @@
 						<p class="hint">Manage your rental settings here.</p>
 						
 						<% form_for @listing, :html => { :id => 'listing_extra_form', :class => (@listing.renting_enabled? ? 'enabled' : 'hide') + ' edit_listing' } do |f| %>
-							<div id="admin_fee" class="left">
+							<div id="admin_fee" class="uncollapse stack">
 								<h3 class="label">Administrative Fee</h3>
 								<div class="inner">
 									$ <%= f.text_field :admin_fee, :size => 8, :maxlength => 6 %> &nbsp; Set your Administrative Fee amount here and it will be charged on every unit rental you make through us.<br />
 								</div>
 							</div>
 							
-							<div id="billing" class="left">
+							<div id="billing" class="uncollapse stack">
 								<h3 class="label">Billing Method</h3>
 								<div class="inner">
 									<ul>
@@ -76,7 +85,7 @@
 								</div>
 							</div>
 							
-							<div id="tax" class="left">
+							<div id="tax" class="uncollapse stack">
 								<h3 class="label">State Tax</h3>
 								<div class="inner">
 									<%= f.text_field :tax_rate, :size => 8, :maxlength => 5 %> % &nbsp; Set your State Tax here so it is added to every unit rental.
@@ -142,7 +151,7 @@
 					</div>
 					<div id="fac_reports" class="tab_content">
 						<p class="hint">See your tracking reports here.</p>
-						<div id="leads" class="left">
+						<div id="leads" class="uncollapse stack">
 							<form class="">Show:
 								<select name="type" class="right_space">
 									<option value="0">Lead Type</option>

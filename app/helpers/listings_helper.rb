@@ -157,11 +157,11 @@ module ListingsHelper
       span = "<span class='#{'w' if listing.default_logo == 1}#{' short' if !listing.new_record? && listing.title.size <= @min_title_len}'>"
       
       begin
-        link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span>", facility_path_for(listing), :class => 'dlogo_wrap' do |name|
-          "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
+        link_to_if listing.premium?, "#{img}#{span}#{selective_abbrev(listing.title).titleize}</span>", facility_path_for(listing), :class => 'dlogo_wrap' do |name|
+          "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).titleize}</span></div>"
         end
       rescue ActionController::RoutingError # for some reason even if listing.premium? returns false the facility_path still gets called
-        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).try(:titleize)}</span></div>"
+        "<div class='dlogo_wrap'>#{img}#{span}#{selective_abbrev(listing.title).titleize}</span></div>"
       end
     end
   end

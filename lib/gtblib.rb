@@ -88,15 +88,15 @@ module GTBLib
 		
 		private
 		
-		def get_or_set(what, info)
+		def get_or_set(what, info = nil)
       fields = eval "@@#{what}_fields"
       attrib = instance_variable_get "@#{what}_info"
       
       fields.each do |name|
         if info.nil? # get
           attrib[name] = instance_variable_get "@#{name}"
-        else # set
-          instance_variable_set "@#{name}", CGI.escape(info[name.to_sym]) unless info[name.to_sym].nil?
+        elsif info[name.to_sym] # set
+          instance_variable_set "@#{name}", CGI.escape(info[name.to_sym])
         end
       end
       attrib
