@@ -22,9 +22,9 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
-  acts_as_gotobillable :merchant_id    => $gtb_merchant[:id], 
-                       :merchant_pin   => $gtb_merchant[:pin], 
-                       :ip_address     => $server_ip,
+  acts_as_gotobillable :merchant_id    => GTB_MERCHANT[:id], 
+                       :merchant_pin   => GTB_MERCHANT[:pin], 
+                       :ip_address     => SERVER_IP,
                        :debug          => (RAILS_ENV == 'development' ? '1' : '0')
 
   # figure out how much to charge a client based on the product of the amount of units in use (e.g. billable listings) 

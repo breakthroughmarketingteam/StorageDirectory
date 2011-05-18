@@ -75,3 +75,16 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   
 end
+
+GTB_MERCHANT = { :id => '236977', :pin => 'Qh3Q3jxVtaZg' }
+SERVER_IP = begin
+  require 'socket'
+  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+
+  UDPSocket.open do |s|
+    s.connect '64.233.187.99', 1
+    $server_ip = s.addr.last
+  end
+ensure
+  Socket.do_not_reverse_lookup = orig
+end
