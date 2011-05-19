@@ -2280,15 +2280,14 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #post-image img{padding:10px;border:1px solid #bbb;}
 
 #blog-side{margin:7px 10px 10px;width: 171px;}
-#blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
+#blog-side h4{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:13px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;text-decoration: underline;}
 #blog-side li.year{font-size:14px;margin-left:5px;}
 #blog-side li{margin:2px 0;}
-#blog-side #tags li{float:left;padding:3px 5px;}
+#blog-side #tags li{float:left;padding:2px 5px;}
 #blog-side #tags li:hover{background:#ebebeb;}
 #blog-side .months li{margin-left:20px;}
-#blog-side #tags{margin-bottom:20px;overflow:hidden;}
-#blog-side #archives{margin-bottom:30px;}
+#blog-side #tags,#blog-side #archives{margin-bottom:20px;overflow:hidden;}
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
@@ -2297,7 +2296,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page li, #blog-post li{list-style:disc;margin-left: 40px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
-#sharing{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;height:24px;margin:20px;padding:5px 0;}
+#sharing{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:13px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;height:24px;margin:20px;padding:5px 0;}
 #sharing #rss{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rss.png) no-repeat;float:left;margin:0 10px;height:24px;width:24px;}
 #sharing #rss:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/rss-over.png) no-repeat;}
 #sharing img{}
