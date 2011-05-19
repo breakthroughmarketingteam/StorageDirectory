@@ -5,6 +5,19 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 STYLESHEET_INCLUDES = ['plugins/jquery.ui', 'plugins/jquery.jqplot', 'common', 'ajaxful_rating', 'themes/storagelocator/style']
 JAVASCRIPT_INCLUDES = ['swfobject_modified', 'jquery.all', "plugins/inflector", "plugins/jquery.iframe", "plugins/jquery.jqDock.min", "plugins/jquery.inline-search", "plugins/jquery.tools.min", 'plugins/excanvas.min', 'plugins/jquery.jqplot.min', 'plugins/jqplot.dateAxisRenderer.min', 'plugins/jqplot.canvasTextRenderer.min', 'plugins/jqplot.canvasAxisTickRenderer.min', 'plugins/jqplot.highlighter.min', 'plugins/jqplot.cursor.min', "plugins/jquery.jmap.min", "plugins/jquery.preloadCssImages", "plugins/binfo", 'greymatter', "plugins/greyresults", 'application']
 
+GTB_MERCHANT = { :id => '236977', :pin => 'Qh3Q3jxVtaZg' }
+SERVER_IP = begin
+  require 'socket'
+  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+
+  UDPSocket.open do |s|
+    s.connect '64.233.187.99', 1
+    s.addr.last
+  end
+ensure
+  Socket.do_not_reverse_lookup = orig
+end
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'

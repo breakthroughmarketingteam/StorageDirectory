@@ -1,0 +1,28 @@
+<% form_for manager, :url => { :controller => 'clients', :action => 'new_manager' }, :html => { :id => 'new_manager' } do |f| %>
+	<fieldset>
+		<div class="stack">
+			<%= f.label :first_name %>
+			<%= f.text_field :first_name, :class => 'required' %>
+		</div>
+		
+		<div class="stack">
+			<%= f.label :last_name %>
+			<%= f.text_field :last_name, :class => 'required' %>
+		</div>
+		
+		<div class="stack">
+			<%= f.label :email %>
+			<%= f.text_field :email, :class => 'required email' %>
+		</div>
+		
+		<ul id="choose_allowed_fac">
+			<li>1 listing</li>
+		</ul>
+		
+		<div>
+			<%= f.submit 'Add', :class => 'blue_btn right' %>
+		</div>
+		
+		<%= render :partial => 'listings/selectable_listing_div' %>
+	</fieldset>
+<% end %>

@@ -38,16 +38,3 @@ GOOGLE_APPLICATION_ID = 'ABQIAAAA0eayw5kiKoZsDZKkyQotDRTE80FJOyH0zSjklzaO53DwmhI
 # Object cache
 require 'active_support/cache/dalli_store23'
 config.cache_store = :dalli_store, ENV['MEMCACHE_SERVERS']
-
-GTB_MERCHANT = { :id => '236977', :pin => 'Qh3Q3jxVtaZg' }
-SERVER_IP = begin
-  require 'socket'
-  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
-
-  UDPSocket.open do |s|
-    s.connect '64.233.187.99', 1
-    $server_ip = s.addr.last
-  end
-ensure
-  Socket.do_not_reverse_lookup = orig
-end

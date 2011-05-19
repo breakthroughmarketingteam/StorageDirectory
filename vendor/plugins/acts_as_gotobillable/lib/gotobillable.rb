@@ -33,7 +33,7 @@ module GoToBillable #:nodoc:
   module InstanceMethods
     
     def before_destroy
-      delete_pending_transactions! self.billing_info, :memo => "#{$root_domain} account canceled. Account #{self.id}"
+      delete_pending_transactions! self.billing_info, :memo => "#{$root_domain} account canceled. Account #{self.id}" if self.billing_info
       super
     end
     
@@ -72,7 +72,7 @@ module GoToBillable #:nodoc:
       puts "\n\n----->GTB RESPONSE ES\n----->#{response.inspect}\n\n"
     
       invoice = @billing.invoices.create response
-      self.deliver_notifications @billing, invoice, true
+      self.send_billing_notifications @billing, invoice, true
     end
     
     def clean_billing_fields
@@ -99,7 +99,7 @@ module GoToBillable #:nodoc:
       puts "\n\n----->GTB RESPONSE RM\n----->#{response.inspect}\n\n"
       
       invoice = @billing.invoices.create response
-      self.deliver_notifications @billing, invoice, false
+      self.send_billing_notifications @billing, invoice, false
     end
     
     def card_type_code

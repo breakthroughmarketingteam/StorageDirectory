@@ -79,6 +79,10 @@ class Listing < ActiveRecord::Base
     Listing.delay.set_short_url self if self.short_url.blank?
   end
   
+  def before_destroy
+    self.client.delete_pending_transactions! self.billing_info, :memo => "#{$root_domain} account canceled. Account #{self.id}" if self.billing_info
+  end
+  
   def self.verified_count
     self.count :conditions => { :status => 'verified' }
   end

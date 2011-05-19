@@ -22,6 +22,7 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
+  acts_as_nested_set
   acts_as_gotobillable :merchant_id    => ::GTB_MERCHANT[:id], 
                        :merchant_pin   => ::GTB_MERCHANT[:pin], 
                        :ip_address     => ::SERVER_IP,
@@ -214,11 +215,11 @@ class Client < User
     { :data => plot_data, :min => counts.min, :max => counts.max }
   end
   
-  def deliver_notifications(billing, invoice, starting)
+  def send_billing_notifications(billing, invoice, starting)
     if starting # billing info saved
       Notifier.deliver_billing_processed_alert self, billing, invoice
       Notifier.deliver_billing_processed_notification self, billing, invoice
-    else # billing info destroyed
+    else # billing canceled
       Notifier.deliver_billing_removed_alert self, billing, invoice
       Notifier.deliver_billing_removed_notification self, billing, invoice
     end

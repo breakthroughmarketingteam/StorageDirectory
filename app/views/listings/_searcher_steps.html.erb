@@ -27,14 +27,7 @@
 			
 			<div class="listings_box hide"></div>
 			
-			<div class="hidden listing_div selectable">
-				<div class="left block num"></div>
-			  	<div class="listing_in">
-					<p class="listing_title"></p>
-					<p class="listing_address"></p>
-					<div class="check"><span><input type="checkbox" class="hidden" name="listing_id" value="" /></span></div>
-				</div>
-			</div>
+			<%= render :partial => 'listings/selectable_listing_div' %>
 		</div> <!-- /#searcher_step2 -->
 		
 		<div id="searcher_step3" class="workflow_step">

@@ -1,9 +1,9 @@
 class ClientsController < ApplicationController
   
-  ssl_required :index, :show, :edit, :edit_info, :update, :verify, :activate, :verify_listings, :create_note, :delete_note
+  ssl_required :index, :show, :edit, :edit_info, :update, :new_manager, :verify, :activate, :verify_listings, :create_note, :delete_note
   skip_before_filter :simple_auth, :only => :activate
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
-  before_filter :get_client, :only => [:edit, :edit_info, :verify_listings]
+  before_filter :get_client, :only => [:edit, :edit_info, :verify_listings, :new_manager]
   
   def index
     options = ops_with_sort(:conditions => { :status => 'active' }, :per_page => @per_page, :page => params[:page])
@@ -87,6 +87,10 @@ class ClientsController < ApplicationController
         end
       end
     end
+  end
+  
+  def new_manager
+    raise [params, @client].pretty_inspect
   end
   
   def activate

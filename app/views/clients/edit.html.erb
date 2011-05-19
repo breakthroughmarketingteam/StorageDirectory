@@ -81,11 +81,31 @@
 	          <% end %>
 	        </div>
 	      </div>
-
+		
+		<!--
+		<%= render_hints_for :managers, 'ov-sub-users' %>
+	      <div id="ov-sub-users" class="hideable">
+	        <div class="ov-item-head">
+	          	<h3><span>Managers</span></h3>
+				<a href="#" id="add_mng" class="btn" title="Add a new manager">New</a>
+	        </div>
+	        <div id="ov-sub-users-cnt">
+				<div>
+					<table cellspacing="0" cellpadding="0">
+						<%= render :partial => 'clients/manager', :collection => User.all(:limit => 3) %>
+					</table>
+				</div>
+				<div id="new_client_box" class="hide">
+					<%= render :partial => 'clients/manager_form', :locals => { :client => @client, :manager => Client.new } %>
+				</div>
+	        </div>
+	      </div>
+		-->
+		
 		<%= render_hints_for :services, 'ov-services' %>
 	      <div id="ov-services" class="hideable">
 	        <div class="ov-item-head">
-	          <h3><span>Services</span></h3>
+	          	<h3><span>Services</span></h3>
 	        </div>
 	        <div id="ov-services-cnt">
 				<div>

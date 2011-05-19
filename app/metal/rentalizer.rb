@@ -72,7 +72,7 @@ class Rentalizer
       
     		discount *= multiplier if (multiplier > 0.5 && multiplier <= 1)
         subtotal =  multiplier * size.dollar_price
-        total    = listing.admin_fee + subtotal - (discount + usssl_discount)
+        total    = (listing.admin_fee || 0) + subtotal - (discount + usssl_discount)
         tax_amt  = total * listing.tax_rate
         total    += tax_amt
       

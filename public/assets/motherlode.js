@@ -8731,6 +8731,16 @@ $(function() {
 		return false;
 	});
 	
+	$('#add_mng', '#ov-sub-users').click(function() {
+		var $this = $(this),
+			manager_box = $('#new_client_box'),
+			ajax_loader = $.new_ajax_loader('before', this).show();
+			
+		manager_box.dialog(default_pop_up_options({ title: 'Add New Manager', width: '400px', height: 'auto' }));
+		
+		return false;
+	});
+	
 	$('.cancel_link', '#client_listing_box').live('click', function() {
 		var $this = $(this),
 			listing = $this.parents('.listing'),
