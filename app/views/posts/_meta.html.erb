@@ -5,7 +5,7 @@
 		</div>
 	
 		<div class="comments_count left">
-			<%= link_to pluralize(post.comments.size, 'Comment'), model_path(post, :anchor => 'disqus_thread'), :'data-disqus-identifier' => post.to_param %>
+			<%= link_to 'Comments', model_path(post, :anchor => 'disqus_thread'), :'data-disqus-identifier' => post.to_param %>
 		</div>
 	
 		<div class="more"><%= link_to 'Read More', url_for(post) %></div>

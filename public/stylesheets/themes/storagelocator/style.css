@@ -2283,11 +2283,12 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog-side h4{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#eee;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;text-decoration: underline;}
 #blog-side li.year{font-size:14px;margin-left:5px;}
-#blog-side li{margin:4px 0;}
+#blog-side li{margin:2px 0;}
 #blog-side #tags li{float:left;padding:3px 5px;}
 #blog-side #tags li:hover{background:#ebebeb;}
 #blog-side .months li{margin-left:20px;}
 #blog-side #tags{margin-bottom:20px;overflow:hidden;}
+#blog-side #archives{margin-bottom:30px;}
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
