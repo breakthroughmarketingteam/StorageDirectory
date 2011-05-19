@@ -83,7 +83,7 @@ class Rentalizer
           :discount       => sprintf("%.2f", discount),
           :usssl_discount => sprintf("%.2f", usssl_discount),
           :subtotal       => sprintf("%.2f", subtotal),
-          :admin_fee      => sprintf("%.2f", listing.admin_fee),
+          :admin_fee      => sprintf("%.2f", (listing.admin_fee || 0)),
           :tax_amt        => sprintf("%.2f", tax_amt),
           :total          => sprintf("%.2f", total)
         }
