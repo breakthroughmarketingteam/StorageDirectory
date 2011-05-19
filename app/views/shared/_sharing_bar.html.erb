@@ -16,7 +16,7 @@
     var disqus_shortname = 'usselfstoragelocator', // required: replace example with your forum shortname
     	disqus_identifier = '<%= @blog_post.to_param %>',
 	    disqus_url = '<%= "http://#{$root_domain}/blog_posts/#{@blog_post.to_param}" %>',
-		disqus_title = <%= @blog_post.title %>,
+		disqus_title = '<%= @blog_post.title %>',
 		disqus_developer = <%= RAILS_ENV == 'development' ? 1 : 0 %>;
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
