@@ -4,18 +4,24 @@
 	<% if @listing.premium? %>
 		This listing is a premium member, they were sent a notification. However, it is recommended to follow up with them to make sure.
 	<% else %>
-		This is NOT a premium member. We must notify them promptly.
+		This is NOT a premium member. We must notify them promptly!
 	<% end %>
 </p>
 
-<p><strong>Listing:</strong>
+<p>
+	<strong>Listing:</strong>
 	<a href="<%= edit_listing_url @listing %>"><%= @listing.title %></a><br>
 	<%= @listing.full_address %>
 </p>
 
-<p><strong>New Info Request:</strong>
-	<%= @info_request.name %> &lt;<%= @info_request.email %>&gt;<br>
-	<%= @info_request.phone %><br>
-	Move in date: <%= @info_request.move_in_date %><br>
-	Duration: <%= @info_request.duration %>
-</p>
+<p><strong>From: </strong><%= @info_request.name %> &lt;<%= @info_request.email %>&gt;</p>
+
+<p><strong>Phone: </strong><%= @info_request.phone %></p>
+
+<p><strong>Move in date:</strong> <%= @info_request.move_in_date %></p>
+
+<p><strong>Duration:</strong> <%= @info_request.duration %></p>
+
+<p><strong>Unit:</strong> <%= @info_request.size_id ? @info_request.size.full_title : @info_request.unit_type_size %></p>
+
+<p>KA team!</p>
