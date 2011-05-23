@@ -113,7 +113,7 @@ class Rentalizer
       days_in_end_month = Date.civil(end_date.year, end_date.month, -1).day
       
       if listing.prorated?
-        puts [move_date.year, move_date.month, months, days_in_end_month].inspect
+        puts [move_date.year, move_date.month, months, days_in_end_month, special].inspect
         Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime tformat
       else
         m = move_date.month + months
