@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110518202852) do
+ActiveRecord::Schema.define(:version => 20110520173450) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -557,6 +557,7 @@ ActiveRecord::Schema.define(:version => 20110518202852) do
     t.string   "full_state"
     t.integer  "phone_views_count"
     t.string   "short_url"
+    t.string   "cs_cust_code"
   end
 
   add_index "listings", ["category"], :name => "index_listings_on_category"

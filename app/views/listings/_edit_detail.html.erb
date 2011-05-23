@@ -17,20 +17,20 @@
                 	<td><%= f.text_field :address2 %></td>
                 </tr>
 
-                <tr>
-                	<td class="col_label"><%= f.label :city %></td>
-                	<td><%= f.text_field :city, :class => 'required' %></td>
-                </tr>
-
-                <tr>
-                	<td class="col_label"><%= f.label :state %></td>
-                	<td><%= f.text_field :state, :class => 'required' %></td>
-                </tr>
-
-                <tr>
-               		<td class="col_label"><%= f.label :zip, 'Zip Code' %></td>
-                	<td><%= f.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
-                </tr>
+				<tr>
+					<td class="col_label"><%= f.label :city %></td>
+					<td class="nopad">
+						<table cellspacing="0" cellpadding="0" class="fac-details fac-details-in">
+							<tr>
+								<td><%= f.text_field :city, :class => 'required' %></td>
+								<td class="col_label"><%= f.label :state %></td>
+								<td><%= f.text_field :state, :class => 'required' %></td>
+								<td class="col_label"><%= f.label :zip, 'Zip Code' %></td>
+								<td><%= f.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 		
 			<tr>
            		<td class="col_label"><%= f.label :phone %></td>

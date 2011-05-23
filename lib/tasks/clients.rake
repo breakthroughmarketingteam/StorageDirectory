@@ -66,4 +66,22 @@ namespace :clients  do
     puts 'Done.'
   end
   
+  desc "In case not all active clients' listings are marked verify"
+  task :ensure_listings_verified do
+    clients = Client.activated
+    
+    if clients.map(&:enabled_listings).flatten.map(&:status).flatten.include?(nil)
+      puts "Correcting nil statuses on active client listings"
+      
+      clients.each do |client|
+        client.listings.each do |listing|
+          next unless listing.status.nil?
+          listing.status = 'verified'
+          listing.save 
+          puts "Updated listing #{listing.id}"
+        end
+      end
+    end
+  end
+  
 end

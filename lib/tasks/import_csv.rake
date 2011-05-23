@@ -200,6 +200,53 @@ namespace :import do
     
     puts "DONE! #{percent_of(geocoded, queued)} Success; Saved: #{saved}; Geocoded: #{geocoded}; Failed: #{failed}; Not Geocoded: #{not_geocoded}"
   end
+  
+  desc "Import from a csv from Callsource reporting"
+  task :cs_list do
+    records  = load_from_csv 'cs_cust_list.csv'
+    total    = records.size
+    grouping = {}
+    
+    records.each_with_index do |row, i|
+      title     = row[0]
+      cust_code = row[1]
+      dphone, phone   = dashed_phone(row[8]), plain_phone(row[8])
+      tdphone, tphone = dashed_phone(row[9]), plain_phone(row[9])
+      id  = cust_code.split('-').first.to_i
+      num = cust_code.split('-').last.to_i
+      
+      listing_finder = Proc.new do |c|
+        l = c.enabled_listings.find :first, :conditions => ['title = ? OR (phone = ? OR phone = ? OR tracked_number = ? OR tracked_number = ?)', title, dphone, phone, tdphone, tphone]
+        l = c.enabled_listings.first if l.nil? && c.enabled_listings.count == 0
+        l
+      end
+      
+      if grouping[id]
+        listing = listing_finder.call grouping[id][:c]
+        grouping[id][:listings] << { :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }
+      else
+        client = Client.find_by_id id
+        
+        if client
+          listing = listing_finder.call client          
+          grouping[id] = { :c => client, :title => title, :listings => [{ :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }] }
+        end
+      end
+    end
+    
+    raise grouping.pretty_inspect
+  end
+  
+end
+
+def dashed_phone(p)
+  return '' if p.nil?
+  p.gsub(/\(|\)/, '').sub(' ', '-').gsub(/\s/, '')
+end
+
+def plain_phone(p)
+  return '' if p.nil?
+  p.gsub /\D/, ''
 end
 
 def load_from_csv(file_name, has_header = true)

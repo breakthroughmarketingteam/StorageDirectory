@@ -133,7 +133,7 @@ module ListingsHelper
   end
   
   def copy_all_link(what, listing, options)
-    listing.client.listings.count > 1 ? "<span class='copy_all'>[#{link_to options[:text], copy_to_all_listing_path(listing, :what => what), :title => options[:title]}]</span>" : ''
+    listing.client.enabled_listings.count > 1 ? "<span class='copy_all'>[#{link_to options[:text], copy_to_all_listing_path(listing, :what => what), :title => options[:title]}]</span>" : ''
   end
   
   def display_logo(listing, options = {})

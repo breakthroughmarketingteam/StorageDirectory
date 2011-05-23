@@ -3,7 +3,7 @@
 		<a class="tip_anchor" name="<%= tip.title.parameterize %>"></a>
 		<h3><%= content_tag :span, tip.title, :class => 'tip_link' %></h3>
 		<p class="updated_at hide"><%= tip.updated_at.to_i %></p>
-		<div class="stack"><%= tip.content_teaser %></div>
+		<div class="stack"><%= tip.content %></div>
 
 		<ul>
 			<li>Rating&nbsp;&nbsp;&nbsp;</li>

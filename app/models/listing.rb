@@ -59,6 +59,7 @@ class Listing < ActiveRecord::Base
   sitemap :order => 'updated_at DESC'
   
   named_scope :enabled, :conditions => { :enabled => true }
+  named_scope :verified, :conditions => { :status => 'verified' }
   
   # the most common unit sizes, to display on a premium listing's result partial
   @@top_types      = %w(upper lower drive_up)
@@ -264,7 +265,7 @@ class Listing < ActiveRecord::Base
   end
   
   def siblings
-    @siblings ||= self.client ? self.client.listings.select { |l| l != self } : []
+    @siblings ||= self.client ? self.client.enabled_listings.select { |l| l != self } : []
   end
   
   def storage_type

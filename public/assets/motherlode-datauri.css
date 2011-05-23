@@ -3102,9 +3102,9 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-tabs-map .get_dir input#from_address{margin-left:3px;width:81%;}
 #sl-tabs-map .get_dir a#get_dirs{background:#4c4bcc;border:1px solid #fff;display:block;float:right;height:17px;margin-right:3px;margin-top:-1px;padding-top:5px;text-align:center;text-decoration:none;width:50px;}
 #sl-tabs-map .get_dir a#get_dirs:hover{background:#393}
-#sl-tabs-in ul.tabular{border-bottom:5px solid #ccc;height:39px;}
+#sl-tabs-in ul.tabular{border-bottom:5px solid #ccc;height:28px;}
 #sl-tabs-in ul.tabular li{display:block;float:left;margin-right:5px;position:relative;text-align:center;}
-#sl-tabs-in ul.tabular li a{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f5f5f5;border:1px solid #ccc;color:#333;display:block;font-size:16px;font-weight:bold;height:14px;padding:12px 20px;position:relative;text-decoration:none;}
+#sl-tabs-in ul.tabular li a{-moz-border-radius-topleft:6px;border-radius-topleft:6px;-webkit-border-radius-topleft:6px;-moz-border-radius-topright:6px;border-radius-topright:6px;-webkit-border-radius-topright:6px;background:#f5f5f5;border:1px solid #ccc;color:#333;display:block;font-size:14px;font-weight:bold;height:11px;padding:8px 20px;position:relative;text-decoration:none;}
 #sl-tabs-in ul.tabular li.active a{background:#fff;}
 #sl-tabs #ratings{color:#666;float:right;font-size:12px;position:relative;}
 
@@ -3201,6 +3201,7 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs #fac_details{margin-top:20px;overflow:hidden;}
 #sl-edit-tabs #sl-tabs-in .inner{padding:0 20px;}
 #sl-edit-tabs .stack{font-size:12px;padding-bottom:20px;}
+#sl-edit-tabs table.fac-details{width:85.5%;}
 .copy_all{margin-left:20px;font-size:12px;float:left;}
 #tracking_request p{line-height:1.3;}
 #tracking_request label{font-size:80%;}
@@ -3303,13 +3304,17 @@ form .note{clear:both;display:block;font-size:80%;}
 #sl-edit-tabs .success_msg{color:#393;float:right;font-weight:bold;margin:8px 10px 0 0;}
 #sl-edit-tabs .ajax_loader{top:2px;}
 #sl-edit-tabs .next{display:block;margin-right:10px;text-align:right;}
-#sl-edit-tabs h2,#sl-edit-tabs h3{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:14px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;margin:0 0 20px;padding:11px 20px 7px;/*color:#4c4bcc;*/}
+#sl-edit-tabs h2,#sl-edit-tabs h3{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);text-shadow:0 1px 0 #fff;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:14px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;margin:0 0 20px;padding:11px 20px 7px;/*color:#4c4bcc;*/}
+#sl-edit-tabs h3 a.toggle_action{font-size:14px;}
 #fac_name{float:left;}
 #flogo h3,#hours h3{margin-bottom:20px;}
 #sl-edit-tabs #details{width:100%;}
 #sl-edit-tabs .fac-details .col_label{font-size:14px;font-weight:bold;text-align:right;width:135px;}
+#sl-edit-tabs .fac-details .fac-details-in{width:100%;}
+#sl-edit-tabs .fac-details .fac-details-in .col_label{width:65px;padding:6px 0;}
 .col_verttop{vertical-align:top;}
 #sl-edit-tabs .fac-details td{padding:6px 12px;}
+#sl-edit-tabs .fac-details td.nopad{padding:0 11px 0 0;}
 #sl-edit-tabs input[type=text]{border:1px solid #CCC;padding:3px 5px;}
 #sl-edit-tabs .fac-details input#state{width:150px;}
 #sl-edit-tabs .fac-details input#zip{width:150px;}
@@ -3435,7 +3440,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #blog_page{font-size:12px;margin:15px 20px 0;padding:0;}
 #blog_page .blog_post{border-bottom:1px dashed #ccc;padding:0 0 25px;margin-bottom:25px;}
 #blog_page h2{overflow:hidden;}
-#blog_page h2 a{display:block;font-size:28px;line-height:28px;margin:3px 0 8px;text-decoration:none;width:670px;}
+#blog_page h2 a{font-size:28px;line-height:28px;margin:3px 0 8px;text-decoration:none;}
 #blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
 #blog_page a{font-size:12px;}
 #blog_page hr, #blog-post hr{margin: 25px auto;border-top: 1px dashed #DDD;border-right: none;border-left: none;border-bottom: none;}
@@ -3491,7 +3496,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 
 #pop_up.admin_box{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat 50% 50%;width:20%;height:300px;}
 
-#blog_page #sharing{float:left;margin:15px 0 0;padding:5px 0;width:100%;}
+#blog_page #sharing{float:left;margin:15px 0 0;padding:5px 0;width:99.8%;}
 #blog_page .post_date p{font-size:18px;text-align:center;}
 #blog_page p{font-size: 12px;line-height: 22px;margin: 0 0 20px;}
 #post-image p.src{color:#bbb;font-size:10px;margin:0 10px 0 0;text-align:right;}
@@ -3500,7 +3505,7 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #post-image img{padding:10px;border:1px solid #bbb;}
 
 #blog-side{margin:7px 10px 10px;width: 171px;}
-#blog-side h4{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:13px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;font-size:16px;margin-bottom:10px;padding:5px;}
+#blog-side h4{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:12px;text-shadow:0 1px 0 #fff;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;font-size:16px;margin-bottom:10px;padding:5px;}
 #blog-side a{font-size:12px;text-decoration: underline;}
 #blog-side li.year{font-size:14px;margin-left:5px;}
 #blog-side li{margin:2px 0;}

@@ -1,5 +1,5 @@
 <p>Hi <%= @client.name %>,<br>
-Your facilities have finished updating. You chose to update the <%= @what.titleize %> from <%= @listing.title %> in <%= @listing.full_address %> to your other <% pluralize @listing.siblings.size, 'facility' %>.</p>
+Your facilities have finished updating. You chose to update the <%= @what.titleize %> from <%= @listing.title %> in <%= @listing.full_address %> to your other <% pluralize @client.enabled_listings.count-1, 'facility' %> in <%= @client.listings_cities.to_sentence %>.</p>
 
 <p>Here's a quick link to your facility page: <%= client_listing_url @listing, :protocol => 'https' %></p>
 

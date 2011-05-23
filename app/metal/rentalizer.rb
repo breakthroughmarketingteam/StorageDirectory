@@ -11,15 +11,14 @@ class Rentalizer
       if env['PATH_INFO'] =~ /^\/rentalizer/
         params = HashWithIndifferentAccess[*split_query(env['QUERY_STRING'])] # query string to hash
         
-        if params[:multi_params]
-          # :multi_params are built like: <listing_id>x<size_id>x<special_id>-<listing_id 2>...
+        if params[:multi_params] # built like: <listing_id>x<size_id>x<special_id>-<listing_id 2>...
           data = params[:multi_params].split('-').map do |str|
             p = str.split('x')
             listing = Listing.find p[0].to_i
             size    = p[1] ? listing.sizes.find_by_id(p[1].to_i) : listing.sizes.first
             special = listing.predefined_specials.find_by_id p[2].to_i
             
-            rental_calc params, listing, (size.nil? ? nil : size), (special.nil? ? nil : special), true
+            rental_calc params, listing, size, special, true
           end
           
           out, mime = { :success => true, :data => data }.to_json, 'application/json'
@@ -31,9 +30,9 @@ class Rentalizer
           out, mime = *(params.has_key?(:show_size_ops) ? rental_form(env, params, listing, size, special) : rental_calc(params, listing, size, special))
         end
         
-        [200, {'Content-Type' => mime}, [out]]
+        [200, { 'Content-Type' => mime }, [out]]
       else
-        [404, {'Content-Type' => 'text/html'}, ['Not Found']]
+        [404, { 'Content-Type' => 'text/html' }, ['Not Found']]
       end
     rescue => e
       puts e.message
@@ -107,20 +106,22 @@ class Rentalizer
     end
     
     def get_paid_thru(listing, move_date, multiplier, special)
+      tformat = '%B %d, %Y'
       months = special ? multiplier : (listing.prorated? ? 0 : multiplier)
       
       end_date = (move_date.month + months).months.from_now
       days_in_end_month = Date.civil(end_date.year, end_date.month, -1).day
       
       if listing.prorated?
-        Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime('%m/%d/%Y')
+        puts [move_date.year, move_date.month, months, days_in_end_month].inspect
+        Time.local(move_date.year, move_date.month + months, days_in_end_month).strftime tformat
       else
         m = move_date.month + months
         end_month = m > 12 ? 1 : m
         end_year = m > 12 ? move_date.year + 1 : move_date.year
         d = move_date.day - 1
         d = d < 1 ? 1 : d
-        Time.local(end_year, end_month, d).strftime('%m/%d/%Y')
+        Time.local(end_year, end_month, d).strftime tformat
       end
     end
     

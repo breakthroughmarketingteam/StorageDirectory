@@ -117,7 +117,7 @@ class Client < User
   end
   
   def listings_verified?
-    self.listings.all? &:verified?
+    self.enabled_listings.all? &:verified?
   end
 
   def update_info(info)
@@ -189,6 +189,10 @@ class Client < User
   
   def reservations
     self.listings.map(&:reservations).flatten
+  end
+  
+  def listings_cities
+    self.enabled_listings.map{ |l| l.city_and_state.join ', ' }.uniq
   end
   
   # generate an array of plot points

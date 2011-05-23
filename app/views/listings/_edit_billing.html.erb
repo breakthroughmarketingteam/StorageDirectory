@@ -6,7 +6,7 @@
 <% form_for @listing, :html => { :id => 'fac_billing_form', :'data-target' => 'billing' } do |f| %>
 	<div class="<%= 'hide' if @billing_info.new_record? %>" id="billing-info">
 		<% fields_for :billing_info, @billing_info do |bf| %>
-		<table cellspacing="0" cellpadding="0" class="fac-details">
+		<table id="billing_t" cellspacing="0" cellpadding="0" class="fac-details">
 			<tbody>
 				<tr>
 					<td class="col_label"><%= bf.label :name, 'Name' %></td>
@@ -20,19 +20,19 @@
 		
 				<tr>
 					<td class="col_label"><%= bf.label :city %></td>
-					<td><%= bf.text_field :city, :class => 'required' %></td>
+					<td class="nopad">
+						<table cellspacing="0" cellpadding="0" class="fac-details fac-details-in">
+							<tr>
+								<td><%= bf.text_field :city, :class => 'required' %></td>
+								<td class="col_label"><%= bf.label :state %></td>
+								<td><%= bf.text_field :state, :class => 'required' %></td>
+								<td class="col_label"><%= bf.label :zip, 'Zip Code' %></td>
+								<td><%= bf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
-
-				<tr>
-					<td class="col_label"><%= bf.label :state %></td>
-					<td><%= bf.text_field :state, :class => 'required' %></td>
-				</tr>
-		
-				<tr>
-					<td class="col_label"><%= bf.label :zip, 'Zip Code' %></td>
-					<td><%= bf.text_field :zip, :class => 'numeric_zip', :maxlength => 5 %></td>
-				</tr>
-
+				
 				<tr>
 	           		<td class="col_label"><%= bf.label :phone %></td>
 	           		<td><%= bf.text_field :phone, :class => 'numeric_phone', :maxlength => 12 %></td>
@@ -48,7 +48,7 @@
 	           		<td><%= bf.text_field :card_number, :value => @billing_info.obs_card_number, :class => 'required credit_card', :maxlength => 16 %></td>
 	            </tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="2" class="nopad">
 				
 						<table cellspacing="0" cellpadding="0" class="fac-details" id="card_fields">
 							<tr>
