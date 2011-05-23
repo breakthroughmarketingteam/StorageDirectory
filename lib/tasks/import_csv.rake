@@ -206,6 +206,9 @@ namespace :import do
     records  = load_from_csv 'cs_cust_list.csv'
     total    = records.size
     grouping = {}
+    found    = 0
+    
+    puts "Ready to process #{total} records"
     
     records.each_with_index do |row, i|
       title     = row[0]
@@ -215,26 +218,52 @@ namespace :import do
       id  = cust_code.split('-').first.to_i
       num = cust_code.split('-').last.to_i
       
-      listing_finder = Proc.new do |c|
-        l = c.enabled_listings.find :first, :conditions => ['title = ? OR (phone = ? OR phone = ? OR tracked_number = ? OR tracked_number = ?)', title, dphone, phone, tdphone, tphone]
-        l = c.enabled_listings.first if l.nil? && c.enabled_listings.count == 0
+      listing_finder = Proc.new do |client, listings|
+        l = listings.find :first, :conditions => ['(title = ? OR (phone = ? OR phone = ? OR tracked_number = ? OR tracked_number = ?)) AND cs_cust_code IS NULL', title, dphone, phone, tdphone, tphone]
+        l = listings.first if (client && client.enabled_listings.count == 1) && (client.enabled_listings.first && client.enabled_listings.first.cs_cust_code.blank?) && l.nil?
         l
       end
       
       if grouping[id]
-        listing = listing_finder.call grouping[id][:c]
-        grouping[id][:listings] << { :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }
+        listing = listing_finder.call grouping[id][:c], (grouping[id][:c].try(:enabled_listings) || Listing)
+        d = { :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing, :cs => cust_code }
+        
+        if grouping[id][:listings]
+          grouping[id][:listings] << d
+        else
+          grouping[id][:listings] = [d]
+        end
       else
         client = Client.find_by_id id
+        listing = listing_finder.call client, (client.try(:enabled_listings) || Listing)
         
-        if client
-          listing = listing_finder.call client          
-          grouping[id] = { :c => client, :title => title, :listings => [{ :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }] }
+        grouping[id] = { :c => client, :title => title, :listings => [] } if client
+        
+        if grouping[id]
+          grouping[id][:listings] = [{ :n => num, :cs => cust_code, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }]
+        else
+          grouping[id] = { :listings => [{ :n => num, :cs => cust_code, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }] }
+        end if listing
+        
+        listing = listing_finder.call nil, Listing if listing.nil?
+        grouping[id] = { :c => nil, :cs => cust_code, :title => title, :listings => [{ :n => num, :t => title, :dp => dphone, :tdp => tdphone, :l => listing }] } if listing
+      end
+      
+      found += 1 if listing
+    end
+    
+    puts "Found #{found} listings, #{percent_of(found, total)} of #{total} matching tracking numbers from the csv file.\nUpdating cust codes:"
+    
+    grouping.each do |id, data|
+      data[:listings].each do |d|
+        unless d[:l].nil?
+          d[:l].cs_cust_code = d[:cs]
+          puts "-----> Updated listing (#{d[:l].id}) #{d[:l].title}"
         end
       end
     end
     
-    raise grouping.pretty_inspect
+    puts "Done"
   end
   
 end

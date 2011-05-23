@@ -18,6 +18,8 @@ ensure
   Socket.do_not_reverse_lookup = orig
 end
 
+$root_domain = 'usselfstoragelocator.com'
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'

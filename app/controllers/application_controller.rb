@@ -36,7 +36,6 @@ class ApplicationController < ActionController::Base
   
   # for the geo_search methods in Listing
   $_listing_search_distance = 20
-  $root_domain = 'usselfstoragelocator.com'
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
   $_usssl_phone = '1-888-222-0225'
