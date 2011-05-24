@@ -210,7 +210,7 @@ class Client < User
     elsif self.trial_days_left.between? 11, 15
       15
     else
-      self.trial_days_left
+      1
     end
   end
   
