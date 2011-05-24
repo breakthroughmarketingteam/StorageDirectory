@@ -72,7 +72,13 @@ module GoToBillable #:nodoc:
       puts "\n\n----->GTB RESPONSE ES\n----->#{response.inspect}\n\n"
     
       invoice = @billing.invoices.create response
-      self.send_billing_notifications @billing, invoice, true
+      
+      if response[:status] == 'G'
+        self.send_billing_notifications @billing, invoice, true
+        self.update_attribute :billing_status, 'paying'
+      else
+        self.update_attribute :billing_status, 'failed'
+      end
     end
     
     def clean_billing_fields

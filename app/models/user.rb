@@ -132,4 +132,8 @@ class User < ActiveRecord::Base
     end
   end
   
+  def unsubbed_from?(list)
+    self.unsubs.map(&:name).include? list
+  end
+  
 end
