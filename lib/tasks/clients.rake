@@ -87,7 +87,7 @@ namespace :clients  do
   desc "Send trial ends notification"
   task :trial_ends do
     puts "Caching clients..."
-    clients = Client.all :conditions => ['billing_status != ? AND email = ?', 'paying', 'diego@usselfstoragelocator.com'], :order => 'created_at ASC'
+    clients = Client.all :conditions => ['billing_status != ?', 'paying'], :order => 'created_at ASC'
     total = clients.size
     sent = 0
     
