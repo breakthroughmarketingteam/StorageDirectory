@@ -172,7 +172,7 @@ class ListingsController < ApplicationController
         @client.update_previous_transaction! old_billing, @billing_info, !@client.listings.billable.empty? if old_billing
         @client.process_billing_info! @billing_info, :email => @listing.notify_email.first,
                                                      :billing_amount => @client.billing_tier,
-                                                     :memo => "#{$root_domain} billing set up for single listing, Listing #{@listing.id}, Account #{@client.id}"
+                                                     :memo => "#{USSSL_DOMAIN} billing set up for single listing, Listing #{@listing.id}, Account #{@client.id}"
         
         render :json => { :success => true, :data => render_to_string(:partial => 'edit_billing') }
       else

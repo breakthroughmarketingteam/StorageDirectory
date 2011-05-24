@@ -11,7 +11,7 @@
 										<td width="300" valign="top">
 											<div style="color: #505050;font-family: Arial;font-size: 10px;line-height: 100%;text-align: left;">
 												<div>
-													<%= @days %> Left Before Your Trial Period Ends. Act Now! Upgrade your account to continue taking advantage of your Premium Plus facility listing.
+													<%= @client.trial_days_left %> Days Left Before Your Trial Period Ends. Act Now! Upgrade your account to continue taking advantage of your Premium Plus facility listing.
 												</div>
 											</div>
 										</td>
@@ -36,7 +36,7 @@
 						<table width="750" cellpadding="0" cellspacing="0" style="border:1px solid #000000;overflow:hidden;border-radius:16px;-moz-border-radius:16px;-webkit-border-radius:16px;">
 							<tr>
 								<td height="34" style="font-size:11px;font-weight:bold;font-family:tahoma;text-align:center;height:34px;background-color:#f2f2f2;-moz-border-radius-topleft:16px;-moz-border-radius-topright:16px;height:34px;">
-									Call us: <span style="color:blue;"><%= $_usssl_phone %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Online: <a href="http://<%= $root_domain %>" target="_blank" style="color:blue;">USSelfStorageLocator.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <a href="mailto:team@usselfstoragelocator.com" target="_blank">team@usselfstoragelocator.com</a>
+									Call us: <span style="color:blue;"><%= $_usssl_phone %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Online: <a href="http://<%= USSSL_DOMAIN %>" target="_blank" style="color:blue;">USSelfStorageLocator.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <a href="mailto:team@usselfstoragelocator.com" target="_blank">team@usselfstoragelocator.com</a>
 								</td>
 							</tr>
 							<tr>
@@ -44,12 +44,12 @@
 							</tr>
 							<tr>
 								<td>
-									<a href="http://usselfstoragelocator.com" target="_blank"><img src="http://<%= $root_domain %>/images/email/premium_client_images/header.jpg" alt="USSelfStorageLocator.com"></a>
+									<a href="http://usselfstoragelocator.com" target="_blank"><img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/header.jpg" alt="USSelfStorageLocator.com"></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="http://usselfstoragelocator.com/self-storage-advertising" target="_blank"><img src="http://<%= $root_domain %>/images/email/premium_client_images/15_days_left.jpg" alt="15 Days Left"></a>
+									<a href="http://usselfstoragelocator.com/self-storage-advertising" target="_blank"><img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/<%= @client.trial_days_left_interval %>_days_left.jpg" alt="<%= @client.trial_days_left_interval %> Days Left"></a>
 								</td>
 							</tr>
 							<tr>
@@ -62,7 +62,7 @@
 							</tr>
 							<tr>
 								<td>
-									<a href="http://usselfstoragelocator.com" target="_blank"><img src="http://<%= $root_domain %>/images/email/premium_client_images/usselfstoragelocator_visit.jpg" style="width:279px;" alt="Visit USSelfStorageLocator.com"></a> <a href="http://facebook.com/storagelocator" target="_blank"><img src="http://<%= $root_domain %>/images/email/premium_client_images/facebook_like.jpg" style="width:224px;" alt="&quot;Like&quot; us on Facebook"></a> <a href="http://twitter.com/storagelocator" target="_blank"><img src="http://<%= $root_domain %>/images/email/premium_client_images/twitter_follow.jpg" style="width:236px;" alt="&quot;Follow&quot; us on Twitter"></a>
+									<a href="http://usselfstoragelocator.com" target="_blank"><img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/usselfstoragelocator_visit.jpg" style="width:279px;" alt="Visit USSelfStorageLocator.com"></a> <a href="http://facebook.com/storagelocator" target="_blank"><img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/facebook_like.jpg" style="width:224px;" alt="&quot;Like&quot; us on Facebook"></a> <a href="http://twitter.com/storagelocator" target="_blank"><img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/twitter_follow.jpg" style="width:236px;" alt="&quot;Follow&quot; us on Twitter"></a>
 								</td>
 							</tr>
 							<tr>
@@ -70,14 +70,14 @@
 							</tr>
 							<tr>
 								<td>
-									<img src="http://<%= $root_domain %>/images/email/premium_client_images/footer.jpg">
+									<img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/footer.jpg">
 								</td>
 							</tr>
 						</table>
 						<table width="750" cellpadding="0" cellspacing="0">
 							<tr>
 								<td>
-									<img src="http://<%= $root_domain %>/images/email/premium_client_images/header2.jpg" alt="Premium Plus Membership Features">
+									<img src="http://<%= USSSL_DOMAIN %>/images/email/premium_client_images/header2.jpg" alt="Premium Plus Membership Features">
 								</td>
 							</tr>
 						</table>
@@ -203,7 +203,7 @@
 				</tr>
 				<tr>
 					<td style="text-align:center;font-family:arial;font-weight:bold;">
-						© 2011 - <a href="http://<%= $root_domain %>" target="_blank" style="text-decoration:none;">USSelfStoragelocator.com</a>, All Rights Reserved.
+						© 2011 - <a href="http://<%= USSSL_DOMAIN %>" target="_blank" style="text-decoration:none;">USSelfStoragelocator.com</a>, All Rights Reserved.
 					</td>
 				</tr>
 			</table>

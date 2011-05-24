@@ -33,7 +33,7 @@ module GoToBillable #:nodoc:
   module InstanceMethods
     
     def before_destroy
-      delete_pending_transactions! self.billing_info, :memo => "#{$root_domain} account canceled. Account #{self.id}" if self.billing_info
+      delete_pending_transactions! self.billing_info, :memo => "#{USSSL_DOMAIN} account canceled. Account #{self.id}" if self.billing_info
       super
     end
     
@@ -41,8 +41,8 @@ module GoToBillable #:nodoc:
     # delete the old transaction and recalculate the new amount and submit it to gtb
     def update_previous_transaction!(old_billing, new_billing, should_rebill = true)
       iid = old_billing.invoice_id
-      delete_pending_transactions! old_billing, :memo => "#{$root_domain} transaction removed. Account #{self.id}, Invoice #{iid}"
-      process_billing_info! new_billing, :billing_amount => self.billing_amount, :memo => "#{$root_domain} billing updated on main account. Account #{self.id}, Invoice #{iid}" if should_rebill
+      delete_pending_transactions! old_billing, :memo => "#{USSSL_DOMAIN} transaction removed. Account #{self.id}, Invoice #{iid}"
+      process_billing_info! new_billing, :billing_amount => self.billing_amount, :memo => "#{USSSL_DOMAIN} billing updated on main account. Account #{self.id}, Invoice #{iid}" if should_rebill
     end
     
     def process_billing_info!(billing, options = {})
@@ -52,7 +52,7 @@ module GoToBillable #:nodoc:
 
       gtb.transaction_info({
         :transaction_type => options[:tran_type] || 'ES',
-        :memo             => options[:memo]      || "#{$root_domain} billing begin",
+        :memo             => options[:memo]      || "#{USSSL_DOMAIN} billing begin",
         :occurrence_type  => options[:tran_type] || 'month',
         :amount           => options[:billing_amount].to_s,
         :invoice_id       => @billing.invoice_id
@@ -90,7 +90,7 @@ module GoToBillable #:nodoc:
       gtb.transaction_info({
         :transaction_type => 'RM',
         :invoice_id       => @billing.invoice_id,
-        :memo             => options[:memo] || "#{$root_domain} billing end"
+        :memo             => options[:memo] || "#{USSSL_DOMAIN} billing end"
       })
       
       puts "\n\n----->GTB URL DATA RM\n----->#{gtb.url_data}\n\n"

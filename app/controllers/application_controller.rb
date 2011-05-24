@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   $_trial_period = USSSL_TRIAL_DAYS
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
-  $_usssl_phone = '1-888-222-0225'
+  $_usssl_phone = USSSL_PHONE
   $_usssl_google_analytics = 'UA-20270920-1'
   $_pm_softwares = ['Domico', 'QSX Management Software', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'Syrasoft 7', 'Syrasoft 8', 'TaskMaster', 'Total Recall', 'Webselfstorage', 'WinSen']
   
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
   
   def ensure_domain
     host = request.env['HTTP_HOST']
-    redirect_to "#{request.protocol}#{$root_domain}" if host['www'] || host['secure']
+    redirect_to "#{request.protocol}#{USSSL_DOMAIN}" if host['www'] || host['secure']
   end
   
   # Pages#show, Listings#home and #locator are allowed by anonymous

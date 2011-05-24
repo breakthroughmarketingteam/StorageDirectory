@@ -92,10 +92,6 @@ class Client < User
     self.count :conditions => ['status != ?', 'active']
   end
   
-  def self.send_trial_ends_notification(clients)
-    clients.each { |c| ClientNotifier.deliver_trial_ends_notification c }
-  end
-  
   def activate!
     self.status = 'active'
     self.activated_at = Time.now
@@ -201,12 +197,28 @@ class Client < User
     self.enabled_listings.map{ |l| l.city_and_state.join ', ' }.uniq
   end
   
+  def trial_days_left
+    self.trial_days - (Time.now.to_date - self.created_at.to_date).to_i
+  end
+  
+  def trial_days_left_interval
+    if self.trial_days_left.between? 0, 5
+      5
+    elsif self.trial_days_left.between? 6, 10
+      10
+    elsif self.trial_days_left.between? 11, 15
+      15
+    else
+      self.trial_days_left
+    end
+  end
+  
   def expires_date
-    (self.created_at + $_trial_period.days).strftime '%B %d, %Y'
+    (self.created_at.to_date + self.trial_days).strftime '%B %d, %Y'
   end
   
   def unsub_url_for(list)
-    "https://#{$root_domain}/clients/unsub/#{list}/#{self.email}"
+    "https://#{USSSL_DOMAIN}/unsub/#{list}/Client/#{self.email}"
   end
   
   # generate an array of plot points

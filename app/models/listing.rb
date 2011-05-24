@@ -81,7 +81,7 @@ class Listing < ActiveRecord::Base
   end
   
   def before_destroy
-    self.client.delete_pending_transactions! self.billing_info, :memo => "#{$root_domain} account canceled. Account #{self.id}" if self.billing_info
+    self.client.delete_pending_transactions! self.billing_info, :memo => "#{USSSL_DOMAIN} account canceled. Account #{self.id}" if self.billing_info
   end
   
   def self.verified_count
@@ -210,7 +210,7 @@ class Listing < ActiveRecord::Base
   
   def self.set_short_url(listing)
     @@bitly ||= UrlShortener::Client.new(UrlShortener::Authorize.new(BITLY_LOGIN, BITLY_APIKEY))
-    url = @@bitly.shorten "http://#{$root_domain}#{listing.full_path}"
+    url = @@bitly.shorten "http://#{USSSL_DOMAIN}#{listing.full_path}"
     listing.short_url = url.urls
   end
   
@@ -367,7 +367,7 @@ class Listing < ActiveRecord::Base
   end
   
   def full_url(options = {})
-    @full_url ||= "http://#{$root_domain}#{self.full_path(options)}"
+    @full_url ||= "http://#{USSSL_DOMAIN}#{self.full_path(options)}"
   end
   
   # add up a score based on the return values of model methods

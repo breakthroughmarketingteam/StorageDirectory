@@ -18,7 +18,8 @@ ensure
   Socket.do_not_reverse_lookup = orig
 end
 
-$root_domain = 'usselfstoragelocator.com'
+USSSL_DOMAIN = 'usselfstoragelocator.com'
+USSSL_PHONE = '1-888-222-0225'
 USSSL_TRIAL_DAYS = 60
 
 # Bootstrap the Rails environment, frameworks, and default configuration
