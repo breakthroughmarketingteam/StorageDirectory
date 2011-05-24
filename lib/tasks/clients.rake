@@ -87,7 +87,7 @@ namespace :clients  do
   desc "Send trial ends notification"
   task :trial_ends do
     puts "Caching clients..."
-    clients = Client.all :conditions => ['billing_status != ?', 'paying'], :order => 'created_at ASC'
+    clients = Client.all :conditions => ['billing_status != ? AND email = ?', 'paying', 'diego@usselfstoragelocator.com'], :order => 'created_at ASC'
     total = clients.size
     puts "Sending to #{total} clients"
     #raise [USSSL_TRIAL_DAYS, (USSSL_TRIAL_DAYS - 15).days.ago, clients.map{ |c| c.nice_date(:created_at) }, clients.first.nice_date(:created_at)].pretty_inspect
@@ -98,7 +98,7 @@ namespace :clients  do
       elsif c.trial_days_left <= 15
         ClientNotifier.deliver_trial_ends_notification c
         puts "-----> (#{sprintf "%.2f", ((i+1).to_f / total.to_f * 100)}% done) Sent ends notification. Days left: #{c.trial_days_left}, Client (#{c.id}) #{c.company} <#{c.email}>"
-      end
+      end unless c.unsubs.map(&:name).include? 'trial_ends_notification'
     end
   end
   

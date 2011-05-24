@@ -178,7 +178,7 @@
 				</tr>
 				<tr>
 					<td style="font-size:12px;color:#cccccc;">
-						Please do not reply to this email, as we are not able to respond to messages sent to this address.
+						
 					</td>
 				</tr>
 			</table>
@@ -189,7 +189,7 @@
 				<tr>
 					<td colspan="2" valign="middle" id="utility">
 						<div>
-							<a href="<%= @client.unsub_url_for :trial_ends_notification %>">unsubscribe from this list</a> | <a href="" target="_blank">update subscription preferences</a> | <a href="" target="_blank">view email in browser</a>
+							<a href="<%= @client.unsub_url_for @list_name %>">Unsubscribe</a> from this list.
 						</div>
 					</td>
 				</tr>

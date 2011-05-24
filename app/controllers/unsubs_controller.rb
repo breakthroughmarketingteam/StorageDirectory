@@ -8,7 +8,7 @@ class UnsubsController < ApplicationController
 
     if @model
       @unsub = model.unsubs.create :name => params[:list]
-      flash[:notice] = "You have been unsubscribe from the list: #{@unsub.name}"
+      flash[:notice] = "You have been unsubscribe from the list: #{@unsub.name.titleize}"
     else
       flash[:error] = "Could not find that subscriber. Is the URL correct?"
     end

@@ -4,12 +4,14 @@ class ClientNotifier < ActionMailer::Base
   
   def trial_ends_notification(client)
     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Premium Trial Ends Soon'
+    @body[:list_name] = @list_name = 'trial_ends_notification'
     @body[:days] = @days = client.trial_days_left
     @body[:client] = client
   end
   
   def trial_ended_notification(client)
     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Premium Trial Has Ended'
+    @body[:list_name] = @list_name = 'trial_ends_notification'
     @body[:days] = @days = 0
     @body[:client] = client
   end
