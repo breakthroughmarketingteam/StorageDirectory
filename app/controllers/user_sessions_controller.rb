@@ -33,7 +33,7 @@ class UserSessionsController < ApplicationController
           when 'advertiser'
             redirect_to @client_link
           when 'tenant'
-            redirect_to tenant_url current_user, :protocol => 'https'
+            redirect_to tenant_url(current_user, :protocol => 'https')
           else
             redirect_back_or_default root_path
           end
