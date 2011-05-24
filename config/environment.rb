@@ -19,6 +19,7 @@ ensure
 end
 
 $root_domain = 'usselfstoragelocator.com'
+USSSL_TRIAL_DAYS = 60
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

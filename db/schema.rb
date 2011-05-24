@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520173450) do
+ActiveRecord::Schema.define(:version => 20110524171706) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -1044,7 +1044,7 @@ ActiveRecord::Schema.define(:version => 20110520173450) do
     t.string   "status"
     t.string   "temp_password"
     t.string   "last_name"
-    t.string   "perishable_token",                                 :null => false
+    t.string   "perishable_token",                                      :null => false
     t.text     "report_recipients"
     t.boolean  "pro_rated"
     t.datetime "verification_sent_at"
@@ -1055,6 +1055,8 @@ ActiveRecord::Schema.define(:version => 20110520173450) do
     t.integer  "parent_id"
     t.integer  "left"
     t.integer  "right"
+    t.integer  "trial_days"
+    t.string   "billing_status",                    :default => "free"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

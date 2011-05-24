@@ -78,7 +78,9 @@ class Client < User
       self.user_hints        = UserHint.all
     end
     
-    self.type = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
+    self.trial_days     = USSSL_TRIAL_DAYS
+    self.billing_status = 'free'
+    self.type           = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
     self
   end
   
@@ -88,6 +90,10 @@ class Client < User
   
   def self.unverified_count
     self.count :conditions => ['status != ?', 'active']
+  end
+  
+  def self.send_trial_ends_notification(clients)
+    clients.each { |c| ClientNotifier.deliver_trial_ends_notification c }
   end
   
   def activate!
@@ -193,6 +199,14 @@ class Client < User
   
   def listings_cities
     self.enabled_listings.map{ |l| l.city_and_state.join ', ' }.uniq
+  end
+  
+  def expires_date
+    (self.created_at + $_trial_period.days).strftime '%B %d, %Y'
+  end
+  
+  def unsub_url_for(list)
+    "https://#{$root_domain}/clients/unsub/#{list}/#{self.email}"
   end
   
   # generate an array of plot points

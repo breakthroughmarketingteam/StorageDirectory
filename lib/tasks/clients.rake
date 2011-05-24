@@ -84,4 +84,10 @@ namespace :clients  do
     end
   end
   
+  desc "Send trial ends notification"
+  task :trial_ends do
+    clients = Client.all :conditions => ['created_at <= ? AND billing_status != ?', (USSSL_TRIAL_DAYS - 15).days.ago, 'paying']
+    raise [USSSL_TRIAL_DAYS, (USSSL_TRIAL_DAYS - 15).days.ago, clients.map{ |c| c.nice_date(:created_at) }].pretty_inspect
+  end
+  
 end
