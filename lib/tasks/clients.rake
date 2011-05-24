@@ -99,6 +99,7 @@ namespace :clients  do
       if c.trial_days_left <= 0
         ClientNotifier.deliver_trial_ended_notification c
         puts "-----> (#{sprintf "%.2f", ((i+1).to_f / total.to_f * 100)}% done) Sent ended notification. Days left: #{c.trial_days_left}, Client (#{c.id}) #{c.company} <#{c.email}>"
+        
       elsif c.trial_days_left <= 15
         ClientNotifier.deliver_trial_ends_notification c
         puts "-----> (#{sprintf "%.2f", ((i+1).to_f / total.to_f * 100)}% done) Sent ends notification. Days left: #{c.trial_days_left}, Client (#{c.id}) #{c.company} <#{c.email}>"

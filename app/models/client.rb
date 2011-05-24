@@ -219,7 +219,7 @@ class Client < User
   end
   
   def unsub_url_for(list)
-    "https://#{USSSL_DOMAIN}/unsub/#{list}/Client/#{self.email}"
+    "https://#{USSSL_DOMAIN}/unsub?list=#{list}&class_name=Client&email=#{self.email}"
   end
   
   # generate an array of plot points
