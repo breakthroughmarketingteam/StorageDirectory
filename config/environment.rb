@@ -18,6 +18,10 @@ ensure
   Socket.do_not_reverse_lookup = orig
 end
 
+USSSL_DOMAIN = 'usselfstoragelocator.com'
+USSSL_PHONE = '1-888-222-0225'
+USSSL_TRIAL_DAYS = 60
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require 'aws/s3'

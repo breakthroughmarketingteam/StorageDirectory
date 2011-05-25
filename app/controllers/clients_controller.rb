@@ -143,7 +143,7 @@ class ClientsController < ApplicationController
   
   def verify_listings
     @claimed_listings = ClaimedListing.find params[:claimed_listing_ids]
-    @listings = Listing.find @claimed_listings.map &:listing_id if @claimed_listings
+    @listings = Listing.find @claimed_listings.map(&:listing_id) if @claimed_listings
     @client.listings << @listings
     
     if @listings

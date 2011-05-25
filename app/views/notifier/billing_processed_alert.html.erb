@@ -8,10 +8,10 @@
 			<p>
 				<% if @billable.is_a? Listing %>
 					<strong>Facility Name:</strong><br>
-					<a href="https://<%= $root_domain %>/listings/<%= @billable.id %>/profile" style="color:green;"><%= @billable.title %></a>
+					<a href="https://<%= USSSL_DOMAIN %>/listings/<%= @billable.id %>/profile" style="color:green;"><%= @billable.title %></a>
 				<% else %>
 					<strong>Name:</strong><br>
-					<a href="https://<%= $root_domain %>/clients/<%= @billable.id %>/edit" style="color:green;"><%= @billable.name %></a>
+					<a href="https://<%= USSSL_DOMAIN %>/clients/<%= @billable.id %>/edit" style="color:green;"><%= @billable.name %></a>
 				<% end %>
 			</p>
 			<p>

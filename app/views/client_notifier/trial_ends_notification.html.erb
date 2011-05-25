@@ -1,0 +1,24 @@
+<p>
+	Dear <%= @client.name %> of <%= @client.company %>,
+</p>
+<p>
+	<strong>Your Free Trial period expires on <%= @client.expires_date %></strong>. <a href="<%= login_url :protocol => 'https' %>">Log in</a> to your account and update your billing information by visiting <a href="<%= login_url :protocol => 'https' %>">USSelfStorageLocator.com</a> or by phone at <%= $_usssl_phone %>.
+</p>
+<p>
+	<strong>Time is running out! You need to act now if you want to continue taking advantage of our Premium Plus self storage facility listing.</strong>
+</p>
+<p>
+	USSelfStorageLocator.com has everything your self storage facility needs to succeed, from Lead Generation and Call Tracking/Recording to our world-class Online Unit Rentals option. Our powerful Marketing Tools and Media Enhanced Facility Profile is second to none.
+</p>
+<p>
+	Thank you for being a <a href="http://<%= USSSL_DOMAIN %>">USSelfStorageLocator.com</a> customer.
+</p><br>
+<br>
+<p>
+	Sincerely, 
+</p>
+<p>
+	<strong>Tony Prada</strong><br>
+	Chief Operations Officer<br>
+	USSelfStorageLocator.com
+</p>

@@ -1,4 +1,4 @@
-<% facility_url_text = "#{$root_domain}/#{@listing.storage_type.parameterize}/#{@listing.state.parameterize}/#{@listing.city.parameterize}/#{@listing.title.parameterize}/#{@listing.id}" %>
+<% facility_url_text = "#{USSSL_DOMAIN}/#{@listing.storage_type.parameterize}/#{@listing.state.parameterize}/#{@listing.city.parameterize}/#{@listing.title.parameterize}/#{@listing.id}" %>
 <p>
 	Thank you for your interest in <a href="http://<%= facility_url_text %>" target="_blank" style="color:green;"><%= @listing.title %>.</a><br>
 	The storage facility will contact you within the next 24-48 hours to complete your request.

@@ -16,6 +16,7 @@ class Client < User
   has_many :pictures, :through => :listings
   has_many :staff_emails, :through => :listings
   has_many :notes, :foreign_key => 'user_id', :order => 'created_at DESC'
+  has_many :unsubs, :as => 'subscriber', :dependent => :destroy
   
   accepts_nested_attributes_for :listings, :mailing_address, :billing_info
   named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
@@ -78,7 +79,9 @@ class Client < User
       self.user_hints        = UserHint.all
     end
     
-    self.type = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
+    self.trial_days     = USSSL_TRIAL_DAYS
+    self.billing_status = 'free'
+    self.type           = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
     self
   end
   
@@ -193,6 +196,30 @@ class Client < User
   
   def listings_cities
     self.enabled_listings.map{ |l| l.city_and_state.join ', ' }.uniq
+  end
+  
+  def trial_days_left
+    self.trial_days - (Time.now.to_date - self.created_at.to_date).to_i
+  end
+  
+  def trial_days_left_interval
+    if self.trial_days_left.between? 0, 5
+      5
+    elsif self.trial_days_left.between? 6, 10
+      10
+    elsif self.trial_days_left.between? 11, 15
+      15
+    else
+      1
+    end
+  end
+  
+  def expires_date
+    (self.created_at.to_date + self.trial_days).strftime '%B %d, %Y'
+  end
+  
+  def unsub_url_for(list)
+    "https://#{USSSL_DOMAIN}/unsub?list=#{list}&class_name=Client&email=#{self.email}"
   end
   
   # generate an array of plot points

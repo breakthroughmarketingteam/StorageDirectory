@@ -23,7 +23,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.create params[:user_session]
     
     if @user_session.valid? && (current_user && current_user.status == 'active')
-      @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : $root_domain))
+      @client_link = client_account_url(:protocol => 'https', :host => (RAILS_ENV == 'development' ? 'localhost' : USSSL_DOMAIN))
       
       respond_to do |format|
         format.html do
@@ -33,7 +33,7 @@ class UserSessionsController < ApplicationController
           when 'advertiser'
             redirect_to @client_link
           when 'tenant'
-            redirect_to tenant_url current_user, :protocol => 'https'
+            redirect_to tenant_url(current_user, :protocol => 'https')
           else
             redirect_back_or_default root_path
           end

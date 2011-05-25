@@ -626,7 +626,7 @@ module ApplicationHelper
   end
   
   def conditional_facebook_img
-    default = "http://#{$root_domain}/images/ui/storagelocator/rental-form.png"
+    default = "http://#{USSSL_DOMAIN}/images/ui/storagelocator/rental-form.png"
     
     if controller_name == 'listings' && action_name == 'show'
       if @listing.logo.exists?

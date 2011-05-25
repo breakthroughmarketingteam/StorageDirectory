@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520173450) do
+ActiveRecord::Schema.define(:version => 20110524184812) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -978,6 +978,14 @@ ActiveRecord::Schema.define(:version => 20110520173450) do
 
   add_index "unit_types", ["listing_id"], :name => "index_unit_types_on_listing_id"
 
+  create_table "unsubs", :force => true do |t|
+    t.string   "name"
+    t.string   "subscriber_type"
+    t.integer  "subscriber_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "us_cities", :force => true do |t|
     t.string   "state"
     t.string   "name"
@@ -1044,7 +1052,7 @@ ActiveRecord::Schema.define(:version => 20110520173450) do
     t.string   "status"
     t.string   "temp_password"
     t.string   "last_name"
-    t.string   "perishable_token",                                 :null => false
+    t.string   "perishable_token",                                      :null => false
     t.text     "report_recipients"
     t.boolean  "pro_rated"
     t.datetime "verification_sent_at"
@@ -1055,6 +1063,8 @@ ActiveRecord::Schema.define(:version => 20110520173450) do
     t.integer  "parent_id"
     t.integer  "left"
     t.integer  "right"
+    t.integer  "trial_days"
+    t.string   "billing_status",                    :default => "free"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

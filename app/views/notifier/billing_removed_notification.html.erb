@@ -11,7 +11,7 @@
 					<a href="<%= client_listing_url @billable, :protocol => 'https' %>" style="color:green;"><%= @billable.title %></a>
 				<% else %>
 					<strong>Name:</strong><br>
-					<a href="https://<%= $root_domain %>/my_account" style="color:green;"><%= @billable.name %></a>
+					<a href="https://<%= USSSL_DOMAIN %>/my_account" style="color:green;"><%= @billable.name %></a>
 				<% end %>
 			</p>
 		</td>
@@ -19,5 +19,5 @@
 </table>
 
 <p>
-	For more information about Billing: <a href="http://<%= $root_domain %>/help/billing">http://<%= $root_domain %>/help/billing</a>
+	For more information about Billing: <a href="http://<%= USSSL_DOMAIN %>/help/billing">http://<%= USSSL_DOMAIN %>/help/billing</a>
 </p>
