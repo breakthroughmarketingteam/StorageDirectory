@@ -555,7 +555,7 @@ ActiveRecord::Schema.define(:version => 20110524184812) do
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
     t.string   "full_state"
-    t.integer  "phone_views_count"
+    t.integer  "phone_views_count",   :default => 0
     t.string   "short_url"
     t.string   "cs_cust_code"
   end
@@ -1063,8 +1063,8 @@ ActiveRecord::Schema.define(:version => 20110524184812) do
     t.integer  "parent_id"
     t.integer  "left"
     t.integer  "right"
-    t.integer  "trial_days"
     t.string   "billing_status",                    :default => "free"
+    t.integer  "trial_days"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
