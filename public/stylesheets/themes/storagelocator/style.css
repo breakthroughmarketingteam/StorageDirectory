@@ -1753,7 +1753,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #login_frame{width:103%;height:164px;overflow:hidden;background: url("//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif") no-repeat scroll 50% 50% transparent;}
 .login #page-cnt-top-bg{width:100%;}
-.login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
+.login .flash{font-weight:normal;margin:0 10px 20px 10px;}
 .login #login-form{width:317px;margin:10px 0 0 10px;}
 .login #type-one-cnt-in{margin:15px 15px 0 !important;}
 .login #forgot_pass_link{color:#4c4bcc;;margin-left:2px;}
