@@ -36,10 +36,10 @@ class ApplicationController < ActionController::Base
   
   # for the geo_search methods in Listing
   $_listing_search_distance = 20
-  $_trial_period = USSSL_TRIAL_DAYS
+  $_trial_period = ::USSSL_TRIAL_DAYS
   $_usssl_percent_off = 0.1
   $_usssl_discount = "#{($_usssl_percent_off * 100).to_i}% Off"
-  $_usssl_phone = USSSL_PHONE
+  $_usssl_phone = ::USSSL_PHONE
   $_usssl_google_analytics = 'UA-20270920-1'
   $_pm_softwares = ['Domico', 'QSX Management Software', 'Self Storage Manager', 'SiteLink PC', 'SiteLink Web', 'StorageCommander', 'Store 3.1', 'Store 4.0', 'Symbio', 'Syrasoft 7', 'Syrasoft 8', 'TaskMaster', 'Total Recall', 'Webselfstorage', 'WinSen']
   

@@ -95,7 +95,7 @@ class Rentalizer
     
     def calculate_special(multiplier, special, subtotal)
       return 0.00 unless special
-    
+      
 	  	case special.function when 'm' # months off
 	  	    subtotal * special.value.to_f
   		  when '%' # percent off
