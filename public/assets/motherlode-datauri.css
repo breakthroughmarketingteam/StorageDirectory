@@ -2918,7 +2918,7 @@ form .error p{margin:0 0 7px 0;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float:left;margin-top:37px;width:345px;}
-#price-block h4.arrow{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
+#price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png?1306428536) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:335px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
 #price-block a{font-weight:bold;text-decoration:none;}
 #price-block a:hover{color:orange;}
@@ -3382,7 +3382,7 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading .left{width:295px;}
 #top_fac_page #heading .right{height:64px;margin:6px 8px 0 0;width:404px;}
 #top_fac_page #heading p{display:inline-block;line-height:17px;margin:6px 0 0 16px;}
-a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
+a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover a.profile_info_link{color:#fff;}
 #mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
@@ -3393,8 +3393,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #mem-types tr.even{background:#fff;}
 #mem-types tr.odd{background:#eee;}
 #mem-types .last td{padding-top:10px;}
-#mem-types td#free{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/free.png) no-repeat scroll center 10px transparent;}
-#mem-types td#free strong{display:none;}
 #mem-types td{font-size:12px;padding:7px 0;text-align:center;}
 #fac-features #mem-types strong{font-size:16px;color:#4c4bcc;}
 #mem-types td.yes{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/cmark.png) no-repeat center center;}

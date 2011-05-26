@@ -1,5 +1,7 @@
 <fieldset id="NewCommentForm">	
-	<p class="stack">For <%= @review.commentable.title %> in <%= @review.commentable.city_state_zip %></p>
+	<p class="stack">
+		For <%= link_to @review.commentable.title, (@review.commentable.respond_to?(:full_path) ? @review.commentable.full_path : @review.commentable) %><%= " in #{@review.commentable.city_state_zip}" if @review.commentable.respond_to?(:city_state_zip) %>
+	</p>
 	
 	<div class="stack">
 		<%= f.label :email %>
