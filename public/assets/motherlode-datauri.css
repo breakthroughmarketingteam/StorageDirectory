@@ -3054,7 +3054,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .show_action #sl-header span{font-size:20px;}
 .tooltip{display:none;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/text-bubble.png) no-repeat;height:56px;padding:20px 10px 0 10px;width:81px;font-size:12px;font-weight:bold;color:#4c4bcc;z-index:999;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
-#bluebar{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;}
+#bluebar{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
 .home_action #bluebar .block_content, .locator_action #bluebar .block_content{float: right;width: 362px;}
 #bluebar #toll-free{border-left: 1px solid #7674FF;border-right: 1px solid #7674FF;color: #FFFFFF;float: left;font-size: 14px;margin-top: 14px;padding: 0 15px;}
 
