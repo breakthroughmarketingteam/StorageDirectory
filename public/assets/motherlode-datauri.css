@@ -2516,10 +2516,10 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #pop_up #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:100px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
-#password_resets_form{margin-top:15px;width:316px;}
-#password_resets_form .notice{font-size:100%;}
-#password_resets_form p.left{color:#666;font-size:70%;line-height:1.2;margin-top:5px;}
-#password_resets_form #send_btn{width:auto;}
+.password_resets{margin-top:15px;width:316px;}
+.password_resets .notice{font-size:100%;}
+.password_resets p.left{color:#666;font-size:70%;line-height:1.2;margin-top:5px;}
+.password_resets #send_btn{width:auto;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;padding-bottom:1px;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}
@@ -2973,7 +2973,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #login_frame{width:103%;height:164px;overflow:hidden;background: url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat scroll 50% 50% transparent;}
 .login #page-cnt-top-bg{width:100%;}
-.login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
+.login .flash{font-weight:normal;margin:0 10px 20px 10px;}
 .login #login-form{width:317px;margin:10px 0 0 10px;}
 .login #type-one-cnt-in{margin:15px 15px 0 !important;}
 .login #forgot_pass_link{color:#4c4bcc;;margin-left:2px;}
