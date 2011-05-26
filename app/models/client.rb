@@ -222,7 +222,7 @@ class Client < User
     "https://#{USSSL_DOMAIN}/unsub?list=#{list}&class_name=Client&email=#{self.email}"
   end
   
-  def cancel_billing
+  def cancel_billing!
     self.delete_pending_transactions! self.billing_info
   end
   
