@@ -7810,7 +7810,7 @@ $(function() {
 		return false;*/
 	});
 	
-	$('#password_resets_form').live('submit', function() {
+	$('#password_resets_formX').live('submit', function() {
 		var form = $(this).runValidation(),
 			ajax_loader = $('.ajax_loader', form);
 		

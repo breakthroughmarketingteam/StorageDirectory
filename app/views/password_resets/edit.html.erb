@@ -2,7 +2,7 @@
 <%= display_message flash %>
 
 <div id="login_page">
-	<% form_for @user, :url => password_reset_path, :html => { :id => 'password_reset' } do |f| %>
+	<% form_for @user, :url => '/password_resets', :html => { :id => 'password_reset' } do |f| %>
 		<fieldset>
 			<h2>Reset your password</h2>
 		
