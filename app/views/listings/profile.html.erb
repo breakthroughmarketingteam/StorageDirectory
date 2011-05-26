@@ -145,6 +145,9 @@
 						<% end %>
 					</div>
 					<div id="fac_pictures" class="tab_content">
+						<!--[if IE]>
+							<p class="flash warning">There is a bug with uploading images using Internet Explorer. This will be fixed soon. Uploading images currently works in <a href="http://firefox.com" target="_blank">Firefox</a>, <a href="http://www.google.com/chrome" target="_blank">Chrome</a>, and <a href="http://www.apple.com/safari/" target="_blank">Safari</a>.</p>
+						<![endif]-->
 						<p class="hint">Customers like seeing pictures of your facility. Upload as many as you can.</p>
 						<h3>Facility Pictures</h3>
 						<%= render :partial => 'pictures' unless in_mode?('show') && @listing.pictures.empty? %>
