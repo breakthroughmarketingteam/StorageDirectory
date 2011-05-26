@@ -2,7 +2,7 @@
 <%= display_message flash %>
 
 <div id="login_page">
-	<% form_for @user, :url => '/password_resets', :html => { :id => 'password_reset', :class => 'password_resets' }, :method => :put do |f| %>
+	<% form_for @user, :url => "/password_resets/#{params[:id]}", :html => { :id => 'password_reset', :class => 'password_resets' }, :method => :put do |f| %>
 		<fieldset>
 			<div class="stack">
 				<%= label_tag 'user[password]', 'Password' %>

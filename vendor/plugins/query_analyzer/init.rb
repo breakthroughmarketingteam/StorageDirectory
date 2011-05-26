@@ -1,1 +1,1 @@
-require 'query_analyzer' if RAILS_ENV == 'development'
+#require 'query_analyzer' if RAILS_ENV == 'development'
