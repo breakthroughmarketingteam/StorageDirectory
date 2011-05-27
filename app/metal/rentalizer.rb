@@ -1,9 +1,9 @@
 # Allow the metal piece to run in isolation
-require(File.read(RAILS_ROOT +'/config/environment.rb')) unless defined?(Rails)
+require(File.read("#{RAILS_ROOT}/config/environment.rb")) unless defined?(Rails)
 
 class Rentalizer
   %w(erb cgi activerecord).each { |lib| require lib }
-  dbconfig = YAML.load(File.read(RAILS_ROOT +'/config/database.yml'))
+  dbconfig = YAML.load(File.read("#{RAILS_ROOT}/config/database.yml"))
   ActiveRecord::Base.establish_connection dbconfig['production']
   
   class << self
