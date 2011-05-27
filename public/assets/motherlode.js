@@ -4301,6 +4301,7 @@ $(function(){
 	$('.shimmy').shimmy('#page-cnt');
 	$('.aProxy').aProxy();
 	$('.click_to_view').phoneNumHider();
+	$('.delayed_render').delayedRender();
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
@@ -5850,6 +5851,22 @@ $.fn.phoneNumHider = function() {
 $.fn.ieOnly = function() {
 	return this.each(function() {
 		if (!$.browser.msie) $(this).hide();
+	});
+}
+
+// fetch a partial after the page loads. Useful for partials that take long to render
+$.fn.delayedRender = function() {
+	return this.each(function() {
+		var $this = $(this),
+			partial = $this.attr('data-partial'),
+			locals = $this.attr('data-locals'),
+			ajax_loader = $.new_ajax_loader('html', this, 'ajax-loader-long-green.gif').show();
+		
+		$.getJSON('/ajax/get_partial?partial='+ partial + locals, function(response) {
+			$.with_json(response, function(data) {
+				$this.html(data);
+			});
+		});
 	});
 }
 
@@ -9250,7 +9267,7 @@ $(function() {
 				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
-			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text(), function(response){
+			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text() +'&listing_id='+ $('#listing_id').text(), function(response){
 				$.with_json(response, function(data) {
 					$.jqplot.preInitHooks.push(function() {
 						stats_graph.children().remove();

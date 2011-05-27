@@ -415,6 +415,22 @@ class Listing < ActiveRecord::Base
     true
   end
   
+  def active_months
+    @active_months ||= (self.created_at.to_date..Time.now.to_date).map { |t| t.strftime '%B' }.uniq
+  end
+  
+  def get_clicks_count_for(month)
+    self.clicks.all.select { |c| c.created_at.strftime('%B') == month }.size
+  end
+  
+  def get_impressions_count_for(month)
+    self.impressions.all.select { |c| c.created_at.strftime('%B') == month }.size
+  end
+  
+  def get_phone_views_count_for(month)
+    self.phone_views.all.select { |c| c.created_at.strftime('%B') == month }.size
+  end
+  
   #
   # Unit Sizes
   #

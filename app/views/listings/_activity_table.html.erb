@@ -1,0 +1,20 @@
+<table id="activity_table" cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Clicks <%= help_pop_up_link 'help-clicks', :title => 'What are clicks?' %></th>
+			<th>Impressions <%= help_pop_up_link 'help-impressions', :title => 'What are impressions?' %></th>
+			<th>Phone Calls <%= help_pop_up_link 'help-phone-calls', :title => 'What are phone calls?' %></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% listing.active_months.each do |month| %>
+			<tr class="<%= cycle 'odd', 'even' %>">
+				<th><%= month %></th>
+				<td><%= listing.get_clicks_count_for month %></td>
+				<td><%= listing.get_impressions_count_for month %></td>
+				<td><%= listing.get_phone_views_count_for month %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

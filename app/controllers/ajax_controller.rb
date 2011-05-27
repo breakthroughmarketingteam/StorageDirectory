@@ -9,7 +9,7 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date])
+    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
     json_response true, data
   rescue => e
     render_error "Error loading Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
@@ -203,7 +203,7 @@ class AjaxController < ApplicationController
     @locals = {}
     return @locals if params[:model].nil?
     
-    @model_class = params[:model].constantize 
+    _get_model_class
     @model = params[:id].blank? ? @model_class.new : @model_class.find(params[:id])
     
     @locals = { params[:model].downcase.to_sym => @model, :pretend_action => params[:pretend_action] }

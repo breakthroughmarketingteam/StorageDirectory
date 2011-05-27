@@ -227,16 +227,19 @@ class Client < User
   end
   
   # generate an array of plot points
-  def get_stats_for_graph(stats_models, start_date, end_date)
+  def get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     # get date arrays => [year, month, day]
     sd, ed = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
     date_range = Date.new(*sd)..Date.new(*ed)
     plot_data = {}; counts = []
+    conditions = { :conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at' }
     
     stats_models.each do |stat|
-      stats = self.listings.map do |listing| 
-        listing.send(stat).all(:conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at')
-      end.flatten
+      stats = if listing_id
+        self.listings.find(listing_id).send(stat).all conditions
+      else
+        self.listings.map { |listing| listing.send(stat).all conditions }.flatten
+      end
       
       date_range.each do |date|
         d = Time.parse(date.to_s).to_a[3,3]

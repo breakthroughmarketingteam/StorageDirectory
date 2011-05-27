@@ -5,8 +5,11 @@
 			<div id="sl-edit-tabs">
 				<div id="sl-tabs-in" class="tabular_content" data-tabs-id="sl-tabs-nav">
 					<%= display_message flash %>
+					<span id="client_id" class="hide"><%= @listing.client.id %></span>
+					<span id="listing_id" class="hide"><%= @listing.id %></span>
 				
 					<ul id="sl-tabs-nav" class="tabular">
+						<%= content_tag :li, link_to("Activity", '#fac_activity_tab', :id => 'tab_Activity', :rel => 'tab0') %>
 						<%= content_tag :li, link_to("Details", '#fac_details_tab', :id => 'tab_Details', :rel => 'tab1') %>
 						<%= content_tag :li, link_to("Rental Settings", '#settings_tab', :id => 'settings', :rel => 'tab2') %>
 						<%= content_tag :li, link_to("Amenities/Specials", '#amenities_tab', :id => 'tab_Details', :rel => 'tab3') %>
@@ -16,6 +19,25 @@
 						<%= content_tag :li, link_to("Reviews", '#reviews_tab', :id => 'reviews', :rel => 'fac_reviews') %>
 					</ul>
 					<!-- tab content -->
+					<div id="tab0" class="tab_content">
+						<p class="hint">Quick glance of activity on this facility.</p>
+						
+						<h3 class="label">Activity Summary</h3>
+						<%= render :partial => 'clients/graph', :locals => { :graph => @graph } %>
+						
+						<h3 class="label">Activity Log</h3>
+						<%= delayed_render 'listings/activity_table', "&model=Listing&id=#{@listing.id}" %>
+						
+						<div id="help-clicks" class="hide side_framed">
+							A click is logged every time a visitor goes to your facility's profile page. Usually by clicking on your listing in the search results page. 
+						</div>
+						<div id="help-impressions" class="hide side_framed">
+							Impressions are logged when your listing appears on the search results page. They signify how many times people see your listing.
+						</div>
+						<div id="help-phone-calls" class="hide side_framed">
+							If you have a tracked phone number we display the number of times a visitor called your facility. If not, people have to click on "View Phone Number" in your listing and we assume they called your facility. Having a tracked number provides more accurate counts.
+						</div>
+					</div>
 					<div id="tab1" class="tab_content">
 						<p class="hint">Here you can change all the details for this facility.</p>
 						

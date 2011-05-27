@@ -684,6 +684,10 @@ module ApplicationHelper
     $!
   end
   
+  def delayed_render(partial, locals = '')
+    "<div class='delayed_render' data-partial='#{partial}' data-locals='#{locals}'></div>"
+  end
+  
   def state_abreev_to_full(a)
     a.size == 2 ? States.name_of(a) : a.try(:titleize)
   end
