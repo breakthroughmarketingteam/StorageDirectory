@@ -3,7 +3,7 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 
 class Rentalizer
   %w(erb cgi activerecord).each { |lib| require lib }
-  dbconfig = YAML.load(File.read(File.dirname(__FILE__) + '/../../config/database.yml'))
+  dbconfig = YAML.load(File.read(RAILS_ROOT +'/config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig['production']
   
   class << self
