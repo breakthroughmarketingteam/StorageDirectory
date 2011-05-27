@@ -2,9 +2,13 @@
 require(File.read("#{RAILS_ROOT}/config/environment.rb")) unless defined?(Rails)
 
 class Rentalizer
-  %w(erb cgi activerecord).each { |lib| require lib }
-  dbconfig = YAML.load(File.read("#{RAILS_ROOT}/config/database.yml"))
-  ActiveRecord::Base.establish_connection dbconfig['production']
+  begin
+    %w(erb cgi activerecord).each { |lib| require lib }
+    dbconfig = YAML.load(File.read("#{RAILS_ROOT}/config/database.yml"))
+    ActiveRecord::Base.establish_connection dbconfig['production']
+  rescue
+    puts $!
+  end
   
   class << self
     def call(env)
