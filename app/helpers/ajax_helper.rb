@@ -17,7 +17,7 @@ module AjaxHelper
   
   def ajax_loader(img = 'ajax-loader-facebook.gif', options = {})
     options.merge! :class => 'ajax_loader'
-    image_tag "#{request.protocol}//s3.amazonaws.com/storagelocator/images/ui/#{img}", options
+    image_tag "#{request.protocol}s3.amazonaws.com/storagelocator/images/ui/#{img}", options
   end
   
 end

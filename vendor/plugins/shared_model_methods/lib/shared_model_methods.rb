@@ -127,7 +127,7 @@ module SharedModelMethods #:nodoc:
     
     def nice_date(col = :created_at, options = {})
       if self.respond_to? col
-        format = options[:include_time] ? '%B %d, %Y' : '%r %B %d, %Y'
+        format = options[:include_time] ? '%r %B %d, %Y' : '%B %d, %Y'
         self.send(col).strftime format
       end
     end

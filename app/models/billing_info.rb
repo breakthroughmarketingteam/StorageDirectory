@@ -9,6 +9,10 @@ class BillingInfo < ActiveRecord::Base
   @@encryptables = [:card_number, :card_type, :cvv, :expires_month, :expires_year]
   cattr_reader :credit_cards, :pass, :merchant_id, :merchant_pin
   
+  def before_destroy
+    (self.listing ? self.listing.client : self.billable).cancel_billing
+  end
+  
   def obs_card_number
     cnum = read_attribute :card_number # the card_number is truncated to the last for on before_save in gotobillable
     return '' if cnum.blank?

@@ -2,7 +2,7 @@
 <%= display_message flash %>
 
 <div id="login_page">
-	<% form_tag '/password_resets', :method => 'post', :id => 'password_resets_form' do  %>
+	<% form_tag '/password_resets', :method => 'post', :id => 'password_resets_form', :class => 'password_resets' do  %>
 		<fieldset>
 			<div class="stack i">
 				<%= label_tag :email, nil, :class => 'hidden' %>

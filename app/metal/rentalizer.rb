@@ -71,8 +71,9 @@ class Rentalizer
       
     		discount *= multiplier if (multiplier > 0.5 && multiplier <= 1)
         subtotal =  multiplier * size.dollar_price
-        total    = (listing.admin_fee || 0) + subtotal - (discount + usssl_discount)
+        total    = (listing.admin_fee || 0) + subtotal - discount
         tax_amt  = total * listing.tax_rate
+        total    -= usssl_discount
         total    += tax_amt
       
         out = {
@@ -95,7 +96,7 @@ class Rentalizer
     
     def calculate_special(multiplier, special, subtotal)
       return 0.00 unless special
-    
+      
 	  	case special.function when 'm' # months off
 	  	    subtotal * special.value.to_f
   		  when '%' # percent off

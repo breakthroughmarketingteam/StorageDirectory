@@ -2516,10 +2516,10 @@ td .reservation_wrap{padding:10px;width:280px;position:absolute;right:10px;z-ind
 #pop_up #login_page{width:auto;margin:0;text-align:left;}
 #new_user_session .ajax_loader{position:absolute;right:100px;top:15px;}
 #pop_up .flash{margin:-8px 0 10px;width:auto;font-size:80%;}
-#password_resets_form{margin-top:15px;width:316px;}
-#password_resets_form .notice{font-size:100%;}
-#password_resets_form p.left{color:#666;font-size:70%;line-height:1.2;margin-top:5px;}
-#password_resets_form #send_btn{width:auto;}
+.password_resets{margin-top:15px;width:316px;}
+.password_resets .notice{font-size:100%;}
+.password_resets p.left{color:#666;font-size:70%;line-height:1.2;margin-top:5px;}
+.password_resets #send_btn{width:auto;}
 #forgot_pass_link{color:#666;margin:11px 0 0 5px;display:block;padding-bottom:1px;}
 #forgot_pass_link:hover, #forgot_pass_link:active{text-decoration:underline;}
 .invalid{background-color:#ffd8d8;border:1px solid #f00 !important;color:#F00;}
@@ -2918,7 +2918,7 @@ form .error p{margin:0 0 7px 0;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float:left;margin-top:37px;width:345px;}
-#price-block h4.arrow{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:361px;}
+#price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png?1306428536) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:11px 0 0 6px;text-align:center;width:335px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
 #price-block a{font-weight:bold;text-decoration:none;}
 #price-block a:hover{color:orange;}
@@ -2973,7 +2973,7 @@ form .note{clear:both;display:block;font-size:80%;}
 
 #login_frame{width:103%;height:164px;overflow:hidden;background: url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-lrg.gif) no-repeat scroll 50% 50% transparent;}
 .login #page-cnt-top-bg{width:100%;}
-.login .flash{border:none;color:#000;font-size:12px;font-weight:normal;margin:0 0 20px 20px;padding:0;}
+.login .flash{font-weight:normal;margin:0 10px 20px 10px;}
 .login #login-form{width:317px;margin:10px 0 0 10px;}
 .login #type-one-cnt-in{margin:15px 15px 0 !important;}
 .login #forgot_pass_link{color:#4c4bcc;;margin-left:2px;}
@@ -3382,7 +3382,7 @@ p.breadcrumb a{color:#fff;}
 #top_fac_page #heading .left{width:295px;}
 #top_fac_page #heading .right{height:64px;margin:6px 8px 0 0;width:404px;}
 #top_fac_page #heading p{display:inline-block;line-height:17px;margin:6px 0 0 16px;}
-a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
+a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0 0 10px;text-decoration:underline;}
 #rslt-list-bg > div.active > .inner .rslt-title h3 .profile_link,#rslt-list-bg > div > .inner:hover a.profile_info_link{color:#fff;}
 #mem-types #types-inner{border:1px solid #ccc;-moz-border-radius-bottomleft:8px;border-radius-bottomleft:8px;-webkit-border-radius-bottomleft:8px;-moz-border-radius-bottomright:8px;border-radius-bottomright:8px;-webkit-border-radius-bottomright:8px;}
 #mem-types table{display:block;margin-left:15px;margin:0 15px;width:680px;}
@@ -3393,8 +3393,6 @@ a.profile_info_link{display:inline-block;font-size:10px;margin:16px 0 0 10px;tex
 #mem-types tr.even{background:#fff;}
 #mem-types tr.odd{background:#eee;}
 #mem-types .last td{padding-top:10px;}
-#mem-types td#free{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/free.png) no-repeat scroll center 10px transparent;}
-#mem-types td#free strong{display:none;}
 #mem-types td{font-size:12px;padding:7px 0;text-align:center;}
 #fac-features #mem-types strong{font-size:16px;color:#4c4bcc;}
 #mem-types td.yes{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/cmark.png) no-repeat center center;}

@@ -222,6 +222,10 @@ class Client < User
     "https://#{USSSL_DOMAIN}/unsub?list=#{list}&class_name=Client&email=#{self.email}"
   end
   
+  def cancel_billing!
+    self.delete_pending_transactions! self.billing_info
+  end
+  
   # generate an array of plot points
   def get_stats_for_graph(stats_models, start_date, end_date)
     # get date arrays => [year, month, day]

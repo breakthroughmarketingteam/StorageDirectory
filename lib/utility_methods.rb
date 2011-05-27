@@ -79,7 +79,7 @@ module UtilityMethods
 
   end
 
-  Hash.class_eval do
+  class Hash
     def except(*keys)
       new_hash = {}
       self.each_pair { |key, val| new_hash.store key, val unless keys.include? key  }
@@ -87,7 +87,7 @@ module UtilityMethods
     end
   end
   
-  Array.class_eval do
+  class Array
     def sum_all
       inject(0.0) { |result, el| result + el }
     end
