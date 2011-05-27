@@ -3181,6 +3181,13 @@ jQuery.fn.runValidation = function(silent) {
 	return form;
 };
 
+Array.prototype.max = function() {
+    return Math.max.apply(Math, this);
+};
+Array.prototype.min = function() {
+    return Math.min.apply(Math, this);
+};
+
 jQuery.ajaxSetup({
   beforeSend: function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });
@@ -5865,8 +5872,60 @@ $.fn.delayedRender = function() {
 		$.getJSON('/ajax/get_partial?partial='+ partial + locals, function(response) {
 			$.with_json(response, function(data) {
 				$this.html(data);
+				
+				// for the activity table
+				$('.bar_graph_cells').barGraphCells();
 			});
 		});
+	});
+}
+
+// add a background to each table cell to make the column look like a sideways bar graph
+$.fn.barGraphCells = function() {
+	return;
+	function get_cell_bg_width(td, col_data) {
+		var $td   = $(td),
+			max   = get_cell_vals(col_data).max(),
+			width = 0;
+		
+		$.each(col_data, function() {
+			if (this.cell == td)
+				width = this.val / max * 100;
+		});
+		
+		return width;
+	}
+	
+	function get_cell_vals(col_data) {
+		var cell_vals = [];
+		
+		$.each(col_data, function() {
+			cell_vals.push(this.val)
+		});
+		
+		return cell_vals;
+	}
+	
+	return this.each(function() {
+		var $this 	 = $(this),
+			tds 	 = $this.children('tr').children('td')
+			col_data = {};
+		
+		// get the values in each cell 
+		tds.each(function() {
+			var td = $(this).css('position', 'relative'),
+				ind = td.index(),
+				val = parseInt(td.children('.n').css({ 'position': 'relative', 'z-index': 2 }).text());
+			
+			col_data[ind] ? col_data[td.index()].push({ 'cell': this, 'val': val }) : col_data[td.index()] = [{ 'cell': td, 'val': val }];
+		});
+		
+		// add the background for each cell with
+		tds.each(function() {
+			var td = $(this),
+				width = get_cell_bg_width(this, col_data[td.index()]);
+			td.css({ background: 'url(/images/ui/blue-bg.png) repeat-x '+ width +'% 0' });
+		})
 	});
 }
 

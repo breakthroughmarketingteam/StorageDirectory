@@ -22,11 +22,13 @@
 					<div id="tab0" class="tab_content">
 						<p class="hint">Quick glance of activity on this facility.</p>
 						
-						<h3 class="label">Activity Summary</h3>
-						<%= render :partial => 'clients/graph', :locals => { :graph => @graph } %>
+						<% cache @listing do %>
+							<h3 class="label">Activity Summary</h3>
+							<%= render :partial => 'clients/graph', :locals => { :graph => @graph } %>
 						
-						<h3 class="label">Activity Log</h3>
-						<%= delayed_render 'listings/activity_table', "&model=Listing&id=#{@listing.id}" %>
+							<h3 class="label">Activity Log</h3>
+							<%= delayed_render 'listings/activity_table', "&model=Listing&id=#{@listing.id}" %>
+						<% end %>
 						
 						<div id="help-clicks" class="hide side_framed">
 							A click is logged every time a visitor goes to your facility's profile page. Usually by clicking on your listing in the search results page. 

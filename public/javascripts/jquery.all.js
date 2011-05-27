@@ -2496,6 +2496,13 @@ jQuery.fn.runValidation = function(silent) {
 	return form;
 };
 
+Array.prototype.max = function() {
+    return Math.max.apply(Math, this);
+};
+Array.prototype.min = function() {
+    return Math.min.apply(Math, this);
+};
+
 jQuery.ajaxSetup({
   beforeSend: function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });

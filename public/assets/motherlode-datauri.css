@@ -2548,9 +2548,10 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #stats_graph{width:700px;height:300px;margin:0 0 0 8px;}
 #stats_graph.loading{background:url(//s3.amazonaws.com/storagelocator/images/ui/ajax-loader-long-green.gif) no-repeat 50% 45%;}
 #graph_controls{color:#555;font-size:80%;padding:20px 0 0 10px;}
-#activity_table{width:95%;margin:0 20px 10px;}
-.delayed_render .ajax_loader{margin:0 auto;display:block;}
-#activity_table th,#activity_table td{padding:7px 12px;}
+#activity_table{width:95%;margin:0 20px 15px;}
+.delayed_render .ajax_loader{margin:40px auto;display:block;}
+#activity_table th,#activity_table td{padding:7px 12px;margin:1px;}
+#activity_table tbody th{width:15%;}
 #Reservation .stack{font-size:120%;}
 #top_fac_page{margin:40px 30px 0;overflow:visible;}
 .error{width:auto;margin:0;padding:0;background:none;color:#c00;border:0 none;opacity:1;font-size:80%;}
