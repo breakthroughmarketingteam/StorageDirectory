@@ -1679,6 +1679,8 @@ form .error p{margin:0 0 7px 0;}
 #fac-features{margin-top:20px;}
 #fac-features a.info{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg.png) repeat-x;color:#fff;display:block;margin:8px 0 0;padding:7px 0 5px;text-align:center;text-decoration:none;width:120px;}
 #fac-features em{color:#4c4bcc;font-weight: bold;}
+#fac-features #heading em{color:#fff;}
+#top_fac_page #fac-features #heading strong{color:#fff;}
 #add-fac-form-extra #fac-features ul li{font-size:14px;list-style:disc;}
 #add-fac-form-extra #fac-features ul li em{color:#4C4BCC;font-size:12px;font-weight:bold;}
 #top_fac_page h3{font-size:28px;line-height:32px;margin-bottom:20px;}
