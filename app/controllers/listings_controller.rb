@@ -88,7 +88,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing.delay.update_search_and_listing_stat(:clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
+    Listing.update_search_and_listing_stat_on(@listing, :clicks, @search, simple_request_obj, current_user) unless user_is_a? 'admin', 'advertiser'
     render :layout => false if request.xhr?
   end
 
@@ -343,7 +343,7 @@ class ListingsController < ApplicationController
         msg = "#{pluralize listings.size, 'Listing'} added to #{@client.name.possessive} account"
       else
         msg = "Thanks for claiming #{listings.size} facilit#{listings.size > 1 ? 'ies' : 'y'}. We will contact you to verify that you really own them. We do this to protect you from would be saboteurs trying to take your listings down. Expect a call from one of us within 24 to 48 hours on business days. Thanks again!"
-        Notifier.delay.deliver_claimed_listings_alert(@client, listings)
+        Notifier.delay.deliver_claimed_listings_alert @client, listings
       end
     end
     
@@ -352,7 +352,6 @@ class ListingsController < ApplicationController
   
   # redirect old facility paths to the new one
   def redir
-    raise params.pretty_inspect
     redirect_to facility_path_for(@listing), :status => 301
   end
   

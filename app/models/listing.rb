@@ -214,6 +214,11 @@ class Listing < ActiveRecord::Base
     listing.short_url = url.urls
   end
   
+  def self.update_search_and_listing_stat_on(listing, stat, search, request, user)
+    listing.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(listing)
+    search.update_attribute :listing_id, listing.id
+  end
+  
   def short_url
     u = read_attribute :short_url
     Listing.set_short_url self if u.blank?
@@ -223,11 +228,6 @@ class Listing < ActiveRecord::Base
   # create a stat record => clicks, impressions
   def update_stat(stat, request)
     self.send(stat).create request
-  end
-  
-  def update_search_and_listing_stat(stat, search, request, user)
-    self.update_stat stat, request unless user.respond_to?(:listings) && user.listings.include?(self)
-    search.update_attribute :listing_id, self.id
   end
   
   def verified?

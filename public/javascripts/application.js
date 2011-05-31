@@ -1589,9 +1589,9 @@ $(function() {
 					var plot_data = [],
 						stats_arr = stats_models.split(/,\W?/);
 						
-					for (i in stats_arr) 
+					for (i in stats_arr) if (stats_arr.hasOwnProperty(i))
 						plot_data.push(data['data'][stats_arr[i]]);
-
+					
 					$.jqplot('stats_graph', plot_data, {
 						axes: {
 							xaxis: { 
