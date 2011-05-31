@@ -9,6 +9,9 @@ module ApplicationHelper
     elsif controller_name =~ /(posts)/i && action_name == 'show'
       post = (@post || @blog_post)
       "\n<meta name='keywords' content=\"#{h "#{post.tag_list.join(', ')}, #{ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h post.content_teaser}\" />"
+    
+    elsif @listing
+      "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ', '}, #{ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h (@listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000))}\" />"
       
     else
       ApplicationController.app_config.map do |name, content|
@@ -19,14 +22,14 @@ module ApplicationHelper
   
   def geo_keywords(page)
     keyword_list = @page.keyword_list.join ', '
+    city  = params[:city]  || @search.city
+    state = params[:state] || @search.state
     
-    if params[:city] && keyword_list.match(/(\$CITY)|(\$STATE)/)
-      keyword_list.gsub('$CITY', params[:city].titleize).gsub('$STATE', @search.state)
+    if city && state && keyword_list.match(/(\$CITY)|(\$STATE)/)
+      keyword_list.gsub('$CITY', city.titleize).gsub('$STATE', state)
     else
       keyword_list
     end
-  rescue
-    keyword_list
   end
   
   def page_name
