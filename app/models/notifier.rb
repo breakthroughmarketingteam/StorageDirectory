@@ -89,24 +89,24 @@ class Notifier < ActionMailer::Base
   end
   
   def top_cities_list(list)
-    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Our Top Active Cities'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Our Top Active Cities'
     @body[:list] = list
   end
   
   def old_client_file(file_path)
-    setup_email 'diego@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Oldest Client List'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Oldest Client List'
     attachment :content_type => 'text/csv', :body => File.read(file_path), :filename => file_path.split('/').last
   end
   
   def billing_processed_alert(model, billing, invoice)
-    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billed!'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billed!'
     @body[:billable] = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
     @body[:invoice] = invoice
   end
   
   def billing_removed_alert(model, billing, invoice)
-    setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
     @body[:billable] = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
     @body[:invoice] = invoice

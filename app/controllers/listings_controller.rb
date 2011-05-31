@@ -370,6 +370,8 @@ class ListingsController < ApplicationController
       @specials = @listing.specials
       @hours = @listing.business_hours
     end
+  rescue
+    mylogger $!
   end
   
   def get_client
