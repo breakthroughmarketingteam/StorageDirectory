@@ -35,7 +35,7 @@
 				<%= link_to 'Delete', listing_url(listing, :protocol => 'https'), :class => 'iconOnly16 delete_link delete_listing click_thru' if user_is_a?('admin', 'staff') %>
 			<% end %>
       		</li>
-			<%= content_tag :li, link_to('Admin Edit', edit_listing_url(listing, :protocol => 'https'), :class => 'note'), :class => 'right' if user_is_a? 'admin', 'staff' %>
+			<%= content_tag :li, link_to('Admin Edit', edit_listing_url(listing, :protocol => 'https'), :class => 'note'), :class => 'right' if !listing.new_record? && user_is_a?('admin', 'staff') %>
     	</ul>
   	</div>
 </div>

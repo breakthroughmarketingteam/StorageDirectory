@@ -1209,10 +1209,9 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 .sizes_list_in .ajax_loader{float:right;position:relative;top:8px;}
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
 #clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
-#clients_controller #ov-units .rslt-contact p .small_text_field{width:93.5%;}
-#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:24%;}
-.rslt-contact #listing_city{float:left;margin-right:3px;width:38%;}
-.rslt-contact #listing_city{margin-right:3px;width:15%;}
+#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}
+.rslt-contact #listing_city.small_text_field{float:left;margin-right:3px;width:47.5%;margin-right:3px;}
+.rslt-contact #listing_address.small_text_field{width:93.5%;}
 #listings_controller .st-type input.small_text_field{font-size:100%;}
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
