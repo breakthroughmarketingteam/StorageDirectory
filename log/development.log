@@ -18971,3 +18971,45 @@ Completed in 4506ms (View: 1046, DB: 856) | 200 OK [http://localhost/ajax/get_au
   [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
 ** has_many_polymorphs: preloading parent model View
 ** has_many_polymorphs: associating View.models
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mSQL (0.2ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+
+
+Processing UserStatsController#update (for 127.0.0.1 at 2011-06-01 12:29:17) [PUT]
+  Parameters: {"browser_vars"=>"code_name: Mozilla\nbrowser_name: Netscape\napp_version: 5.0 (Macintosh)\nuser_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1\nversion_major: 5\nversion_minor: 0\njava_enabled: Yes\nscreen_width: 2560\nscreen_height: 1440\ncolor_depth: 24 bits per pixel (16,777,216 colors -- True Color)\ninner_width: 0\ninner_height: 0\nwindow_left: 0\nwindow_top: 0\nlang: en-US\nplatform: MacIntel\nreferrer: \ndoc_name: http://localhost/self-storage/boca-raton/florida\nlastmod: 06/01/2011 12:29:12\nos: Macintosh\n", "action"=>"update", "_method"=>"put", "id"=>"17859", "client_id"=>"25242", "controller"=>"user_stats"}
+  [4;35;1mUser Load (2.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = E'25242') LIMIT 1[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClient Update (1.1ms)[0m   [0mUPDATE "users" SET "updated_at" = '2011-06-01 16:29:17.313821', "perishable_token" = E'NTVrk1SraJAxaJroBP', "last_request_at" = '2011-06-01 16:29:17.311154' WHERE "id" = 25242[0m
+  [4;36;1mSQL (7.5ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUserStat Load (0.8ms)[0m   [0mSELECT * FROM "user_stats" WHERE ("user_stats"."id" = 17859 AND ("user_stats".user_id = 25242)) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserStat Update (0.5ms)[0m   [0mUPDATE "user_stats" SET "updated_at" = '2011-06-01 16:29:17.337458', "browser_vars" = E'code_name: Mozilla
+browser_name: Netscape
+app_version: 5.0 (Macintosh)
+user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+version_major: 5
+version_minor: 0
+java_enabled: Yes
+screen_width: 2560
+screen_height: 1440
+color_depth: 24 bits per pixel (16,777,216 colors -- True Color)
+inner_width: 0
+inner_height: 0
+window_left: 0
+window_top: 0
+lang: en-US
+platform: MacIntel
+referrer: 
+doc_name: http://localhost/self-storage/boca-raton/florida
+lastmod: 06/01/2011 12:29:12
+os: Macintosh
+' WHERE "id" = 17859[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+Completed in 218ms (View: 3, DB: 13) | 200 OK [http://localhost/clients/25242/user_stats/17859]

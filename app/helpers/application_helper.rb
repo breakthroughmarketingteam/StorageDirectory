@@ -22,8 +22,8 @@ module ApplicationHelper
   end
   
   def geo_placeholders(text)
-    city  = params[:city]  || @search.city
-    state = params[:state] || @search.state
+    city  = params[:city]  || @search.try(:city)
+    state = params[:state] || @search.try(:state)
     
     if city && state && text.match(/(\$CITY)|(\$STATE)/)
       text.gsub('$CITY', city.titleize).gsub('$STATE', state)
