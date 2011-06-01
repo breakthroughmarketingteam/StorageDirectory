@@ -11,7 +11,7 @@ module ApplicationHelper
       "\n<meta name='keywords' content=\"#{h "#{post.tag_list.join(', ')}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h post.content_teaser}\" />"
     
     elsif @listing
-      desc = @listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000).gsub(/(?<!\n)\n(?!\n)/, ' ') # remove line breaks
+      desc = @listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000).gsub(/([^\n])\n([^\n])/, '\1 \2') # remove line breaks
       "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ' '}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h desc}\" />"
       
     else
