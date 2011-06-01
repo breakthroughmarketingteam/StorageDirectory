@@ -12,7 +12,7 @@ module ApplicationHelper
     
     elsif @listing
       desc = @listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000)
-      "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ', '}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h }\" />"
+      "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ', '}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h desc}\" />"
       
     else
       ApplicationController.app_config.map do |name, content|
