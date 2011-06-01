@@ -16,10 +16,10 @@ class ListingsController < ApplicationController
   end
   
   # action is used as the home page of the site (the user navigates to it with a blank url) so we load the page first and then get the results via ajax
-  def home
-    @page = Page.find_by_title 'Self Storage' # we still need this model for the relations to blocks, etc.
-    render :action => 'locator'
-  end
+  #def home
+  #  @page = Page.find_by_title 'Self Storage' # we still need this model for the relations to blocks, etc.
+  #  render :action => 'locator'
+  #end
   
   def locator
     benchmark 'Locator Action Wrap' do

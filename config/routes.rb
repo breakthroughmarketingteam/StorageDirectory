@@ -203,7 +203,7 @@ ActionController::Routing::Routes.draw do |map|
   map.facility    '/:storage_type/:city/:state/:title/:id', :controller => 'listings', :action => 'show'#, :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => 'listings', :action => 'home', :storage_type => 'self storage'
+  map.root :controller => 'listings', :action => 'locator', :storage_type => 'self storage'
   #map.root :controller => 'pages', :action => 'show', :title => 'home'
   
   # See how all your routes lay out with "rake routes"

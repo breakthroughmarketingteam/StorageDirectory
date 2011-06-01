@@ -8,14 +8,15 @@ module ApplicationHelper
       
     elsif controller_name =~ /(posts)/i && action_name == 'show'
       post = (@post || @blog_post)
-      "\n<meta name='keywords' content=\"#{h "#{post.tag_list.join(', ')}, #{ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h post.content_teaser}\" />"
+      "\n<meta name='keywords' content=\"#{h "#{post.tag_list.join(', ')}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h post.content_teaser}\" />"
     
     elsif @listing
-      "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ', '}, #{ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h (@listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000))}\" />"
+      desc = @listing.description.blank? ? ApplicationController.app_config[:description] : @listing.description.truncate(1000)
+      "\n<meta name='keywords' content=\"#{h "#{@listing.title} in #{@listing.city_and_state.join ', '}, #{geo_placeholders ApplicationController.app_config[:keywords]}"}\" />\n<meta name='description' content=\"#{h }\" />"
       
     else
       ApplicationController.app_config.map do |name, content|
-        "\n<meta name='#{name.to_s}' content=\"#{content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
+        "\n<meta name='#{name.to_s}' content=\"#{geo_placeholders content}\" />" if name.to_s =~ /#{@@meta_tag_keys}/i
       end
     end
   end
