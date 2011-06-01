@@ -4,7 +4,7 @@ module ApplicationHelper
   @@meta_tag_keys = '(keywords)|(description)|(google-site-verification)'
   def site_meta_tags
     if @page && (!@page.meta_desc.blank? || !@page.keywords.empty?)
-      "\n<meta name='keywords' content=\"#{h geo_keywords(@page)}\" />\n<meta name='description' content=\"#{h @page.meta_desc}\" />"
+      "\n<meta name='keywords' content=\"#{h geo_placeholders(@page.keyword_list.join(', '))}\" />\n<meta name='description' content=\"#{h geo_placeholders(@page.meta_desc)}\" />"
       
     elsif controller_name =~ /(posts)/i && action_name == 'show'
       post = (@post || @blog_post)
@@ -20,15 +20,14 @@ module ApplicationHelper
     end
   end
   
-  def geo_keywords(page)
-    keyword_list = @page.keyword_list.join ', '
+  def geo_placeholders(text)
     city  = params[:city]  || @search.city
     state = params[:state] || @search.state
     
-    if city && state && keyword_list.match(/(\$CITY)|(\$STATE)/)
-      keyword_list.gsub('$CITY', city.titleize).gsub('$STATE', state)
+    if city && state && text.match(/(\$CITY)|(\$STATE)/)
+      text.gsub('$CITY', city.titleize).gsub('$STATE', state)
     else
-      keyword_list
+      text
     end
   end
   

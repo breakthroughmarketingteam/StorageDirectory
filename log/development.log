@@ -8841,3 +8841,129 @@ Rendered menus/_topnav (8.2ms)
 Rendered pages/_home (7.5ms)
 Rendered user_sessions/_form (7.3ms)
 Completed in 2707ms (View: 1569, DB: 218) | 200 OK [http://localhost/self-storage/doral/florida/abby-mini-storage/68664]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (4.7ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (3.6ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+
+
+Processing UserStatsController#update (for 127.0.0.1 at 2011-05-31 18:17:18) [PUT]
+  Parameters: {"browser_vars"=>"code_name: Mozilla\nbrowser_name: Netscape\napp_version: 5.0 (Macintosh)\nuser_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1\nversion_major: 5\nversion_minor: 0\njava_enabled: Yes\nscreen_width: 2560\nscreen_height: 1440\ncolor_depth: 24 bits per pixel (16,777,216 colors -- True Color)\ninner_width: 0\ninner_height: 0\nwindow_left: 0\nwindow_top: 0\nlang: en-US\nplatform: MacIntel\nreferrer: http://localhost/self-storage\ndoc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664\nlastmod: 05/31/2011 18:17:15\nos: Macintosh\n", "action"=>"update", "_method"=>"put", "id"=>"17852", "client_id"=>"25242", "controller"=>"user_stats"}
+  [4;35;1mUser Load (1.9ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = E'25242') LIMIT 1[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClient Update (1.1ms)[0m   [0mUPDATE "users" SET "updated_at" = '2011-05-31 22:17:19.015216', "perishable_token" = E'7UEGUCvST4kdYjf0Ww5y', "last_request_at" = '2011-05-31 22:17:19.011817' WHERE "id" = 25242[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUserStat Load (0.9ms)[0m   [0mSELECT * FROM "user_stats" WHERE ("user_stats"."id" = 17852 AND ("user_stats".user_id = 25242)) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserStat Update (0.5ms)[0m   [0mUPDATE "user_stats" SET "updated_at" = '2011-05-31 22:17:19.032848', "browser_vars" = E'code_name: Mozilla
+browser_name: Netscape
+app_version: 5.0 (Macintosh)
+user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+version_major: 5
+version_minor: 0
+java_enabled: Yes
+screen_width: 2560
+screen_height: 1440
+color_depth: 24 bits per pixel (16,777,216 colors -- True Color)
+inner_width: 0
+inner_height: 0
+window_left: 0
+window_top: 0
+lang: en-US
+platform: MacIntel
+referrer: http://localhost/self-storage
+doc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664
+lastmod: 05/31/2011 18:17:15
+os: Macintosh
+' WHERE "id" = 17852[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCOMMIT[0m
+Completed in 593ms (View: 5, DB: 7) | 200 OK [http://localhost/clients/25242/user_stats/17852]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+
+
+Processing UserStatsController#update (for 127.0.0.1 at 2011-05-31 18:39:04) [PUT]
+  Parameters: {"browser_vars"=>"code_name: Mozilla\nbrowser_name: Netscape\napp_version: 5.0 (Macintosh)\nuser_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1\nversion_major: 5\nversion_minor: 0\njava_enabled: Yes\nscreen_width: 2560\nscreen_height: 1440\ncolor_depth: 24 bits per pixel (16,777,216 colors -- True Color)\ninner_width: 0\ninner_height: 0\nwindow_left: 0\nwindow_top: 0\nlang: en-US\nplatform: MacIntel\nreferrer: http://localhost/self-storage\ndoc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664\nlastmod: 05/31/2011 18:38:59\nos: Macintosh\n", "action"=>"update", "_method"=>"put", "id"=>"17852", "client_id"=>"25242", "controller"=>"user_stats"}
+  [4;35;1mUser Load (2.9ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = E'25242') LIMIT 1[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClient Update (1.0ms)[0m   [0mUPDATE "users" SET "updated_at" = '2011-05-31 22:39:04.629470', "perishable_token" = E'gyYYtVMVdbIWRCoZ6qKZ', "last_request_at" = '2011-05-31 22:39:04.626059' WHERE "id" = 25242[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUserStat Load (0.9ms)[0m   [0mSELECT * FROM "user_stats" WHERE ("user_stats"."id" = 17852 AND ("user_stats".user_id = 25242)) [0m
+  [4;36;1mSQL (10.4ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserStat Update (6.7ms)[0m   [0mUPDATE "user_stats" SET "updated_at" = '2011-05-31 22:39:04.657959', "browser_vars" = E'code_name: Mozilla
+browser_name: Netscape
+app_version: 5.0 (Macintosh)
+user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+version_major: 5
+version_minor: 0
+java_enabled: Yes
+screen_width: 2560
+screen_height: 1440
+color_depth: 24 bits per pixel (16,777,216 colors -- True Color)
+inner_width: 0
+inner_height: 0
+window_left: 0
+window_top: 0
+lang: en-US
+platform: MacIntel
+referrer: http://localhost/self-storage
+doc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664
+lastmod: 05/31/2011 18:38:59
+os: Macintosh
+' WHERE "id" = 17852[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+Completed in 277ms (View: 3, DB: 23) | 200 OK [http://localhost/clients/25242/user_stats/17852]
+** has_many_polymorphs: autoload hook invoked
+** has_many_polymorphs: preloading parent model Block
+** has_many_polymorphs: associating Block.models
+  [4;35;1mSQL (0.3ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+** has_many_polymorphs: preloading parent model View
+** has_many_polymorphs: associating View.models
+  [4;35;1mSQL (0.1ms)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET client_min_messages TO 'notice'[0m
+
+
+Processing UserStatsController#update (for 127.0.0.1 at 2011-06-01 11:19:15) [PUT]
+  Parameters: {"browser_vars"=>"code_name: Mozilla\nbrowser_name: Netscape\napp_version: 5.0 (Macintosh)\nuser_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1\nversion_major: 5\nversion_minor: 0\njava_enabled: Yes\nscreen_width: 2560\nscreen_height: 1440\ncolor_depth: 24 bits per pixel (16,777,216 colors -- True Color)\ninner_width: 0\ninner_height: 0\nwindow_left: 0\nwindow_top: 0\nlang: en-US\nplatform: MacIntel\nreferrer: http://localhost/self-storage\ndoc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664\nlastmod: 06/01/2011 11:19:12\nos: Macintosh\n", "action"=>"update", "_method"=>"put", "id"=>"17852", "client_id"=>"25242", "controller"=>"user_stats"}
+  [4;35;1mUser Load (6.9ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = E'25242') LIMIT 1[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mClient Update (1.2ms)[0m   [0mUPDATE "users" SET "updated_at" = '2011-06-01 15:19:15.905283', "perishable_token" = E'TinhT4Mb0mom960qzf59', "last_request_at" = '2011-06-01 15:19:15.898776' WHERE "id" = 25242[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUserStat Load (2.0ms)[0m   [0mSELECT * FROM "user_stats" WHERE ("user_stats"."id" = 17852 AND ("user_stats".user_id = 25242)) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUserStat Update (0.4ms)[0m   [0mUPDATE "user_stats" SET "updated_at" = '2011-06-01 15:19:15.927491', "browser_vars" = E'code_name: Mozilla
+browser_name: Netscape
+app_version: 5.0 (Macintosh)
+user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+version_major: 5
+version_minor: 0
+java_enabled: Yes
+screen_width: 2560
+screen_height: 1440
+color_depth: 24 bits per pixel (16,777,216 colors -- True Color)
+inner_width: 0
+inner_height: 0
+window_left: 0
+window_top: 0
+lang: en-US
+platform: MacIntel
+referrer: http://localhost/self-storage
+doc_name: http://localhost/self-storage/doral/florida/abby-mini-storage/68664
+lastmod: 06/01/2011 11:19:12
+os: Macintosh
+' WHERE "id" = 17852[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mCOMMIT[0m
+Completed in 448ms (View: 4, DB: 18) | 200 OK [http://localhost/clients/25242/user_stats/17852]
