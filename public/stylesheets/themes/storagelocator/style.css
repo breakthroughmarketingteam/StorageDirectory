@@ -1228,7 +1228,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #listing_detail{overflow:hidden;margin-bottom:10px;}
-.attr_editable:hover .attr_edit{color:#393;}
+.attr_editable:hover .attr_edit{color:#c00;}
 #sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
 #sl-fac-detail-in-edit input.address{margin-bottom:3px;}
 #sl-fac-detail-in-edit input.address,#sl-fac-detail-in-edit input.title{float:none;width:94%;}
@@ -1243,7 +1243,8 @@ sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #address_sort .up{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/wht-arrow-up.png) no-repeat right;}
 .btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:2.1;text-align:center;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 
-.my_account .flash{width:96%;}
+.my_account .flash{box-shadow:none;clear:both;float:right;font-size:80%;margin:3px 47px 0 0;}
+.my_account .flash p{color:#393;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
 #ov-units-head .ajax_loader{position:absolute;right:110px;top:14px;}

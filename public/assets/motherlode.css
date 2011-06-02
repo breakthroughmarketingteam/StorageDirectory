@@ -2429,10 +2429,9 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 .sizes_list_in .ajax_loader{float:right;position:relative;top:8px;}
 #reserve_step2 .ajax_loader,#reserve_step3 .ajax_loader{position:relative;left:45%;top:auto;float:none;}
 #clients_controller input.small_text_field,#listings_controller input.small_text_field,.sl-table .small_num,#ov-units .tiny_text_field{width:54%;font-size:80%;padding:3px 5px;border:1px solid#ccc;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;}
-#clients_controller #ov-units .rslt-contact p .small_text_field{width:93.5%;}
-#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:24%;}
-.rslt-contact #listing_city{float:left;margin-right:3px;width:38%;}
-.rslt-contact #listing_city{margin-right:3px;width:15%;}
+#clients_controller #ov-units .rslt-contact p .tiny_text_field{width:16%;}
+.rslt-contact #listing_city.small_text_field{float:left;margin-right:3px;width:47.5%;margin-right:3px;}
+.rslt-contact #listing_address.small_text_field{width:93.5%;}
 #listings_controller .st-type input.small_text_field{font-size:100%;}
 #listings_controller .st-desc input.small_text_field{width:85%;font-size:120%;}
 .ov-info-cnt input.small_text_field{float:right;margin-left:10px;width:54%;color:#666;}
@@ -2449,7 +2448,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #sl-fac-dist-in-edit .attr_editable .cancel_btn{top:121px;}
 #listing_detail{overflow:hidden;margin-bottom:10px;}
-.attr_editable:hover .attr_edit{color:#393;}
+.attr_editable:hover .attr_edit{color:#c00;}
 #sl-fac-dist-in-edit input.small_text_field{width:90%;margin:0 auto;text-align:center;}
 #sl-fac-detail-in-edit input.address{margin-bottom:3px;}
 #sl-fac-detail-in-edit input.address,#sl-fac-detail-in-edit input.title{float:none;width:94%;}
@@ -2464,7 +2463,8 @@ sl-fac-detail-in-edit .attr_editable .cancel_btn{top:75%;}
 #address_sort .up{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/wht-arrow-up.png) no-repeat right;}
 .btn{font-weight:bold;display:block;width:81px;height:26px;color:#fff;text-shadow:1px 1px 0px #666;line-height:2.1;text-align:center;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/sl-table-reserve.png) no-repeat;}
 
-.my_account .flash{width:96%;}
+.my_account .flash{box-shadow:none;clear:both;float:right;font-size:80%;margin:3px 47px 0 0;}
+.my_account .flash p{color:#393;}
 #client_listing_picker{padding:0 3px 0 0;}
 .rslt-contact #listing_map_attributes_city{width:45%;float:left;margin-right:4px;}
 #ov-units-head .ajax_loader{position:absolute;right:110px;top:14px;}

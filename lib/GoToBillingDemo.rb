@@ -6,7 +6,7 @@ gtb = GTB.new
 # Make this a debug transaction
 gtb.merchant_info({
   :ip_address  => '65.83.183.146', # REQUIRED: Pass in your internet facing IP Address
-  :debug       => '0'              # OPTIONAL: A 1 or 0 (1 = on)
+  :debug       => '1',             # OPTIONAL: A 1 or 0 (1 = on)
   :merchant_id => '236977',
   :merchant_pin => 'Qh3Q3jxVtaZg'
 })
