@@ -133,7 +133,7 @@ class AjaxController < ApplicationController
     
     params[:models].each do |val, hash|
       model = _get_model(hash[:model], hash[:id])
-      raise [model, hash].pretty_inspect
+      raise [model, hash].inspect
       authorize_and_perform_restful_action_on_model model.class.to_controller_str, 'update' do
         unless model.update_attribute(hash[:attribute], hash[:value])
           errors << "Error updating #{model.class.name} #{model.name_or_title}: #{model_errors(model, false)}"
