@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524184812) do
+ActiveRecord::Schema.define(:version => 20110602164208) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(:version => 20110524184812) do
     t.integer  "listing_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "referrer"
+    t.text     "referrer"
     t.text     "request_uri"
     t.string   "remote_ip"
   end
@@ -555,7 +555,7 @@ ActiveRecord::Schema.define(:version => 20110524184812) do
     t.float    "lng"
     t.integer  "profile_completion",  :default => 0
     t.string   "full_state"
-    t.integer  "phone_views_count",   :default => 0
+    t.integer  "phone_views_count"
     t.string   "short_url"
     t.string   "cs_cust_code"
   end
@@ -1063,8 +1063,8 @@ ActiveRecord::Schema.define(:version => 20110524184812) do
     t.integer  "parent_id"
     t.integer  "left"
     t.integer  "right"
-    t.string   "billing_status",                    :default => "free"
     t.integer  "trial_days"
+    t.string   "billing_status",                    :default => "free"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"

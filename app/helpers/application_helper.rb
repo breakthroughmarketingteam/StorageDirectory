@@ -47,7 +47,7 @@ module ApplicationHelper
       if ['truck rentals', 'moving companies'].include? @search.storage_type.downcase
         title = "#{@search.storage_type.titleize} in #{@search.city}, #{@search.state}"
       else
-        title = "Rent #{(@search.storage_type || 'self storage').titleize} Online#{" in #{@search.city}, #{@search.state.titleize}" if params[:city]}"
+        title = "Rent #{(@search.storage_type || 'self storage').titleize} Online#{" in #{@search.city}, #{@search.state.try :titleize}" if params[:city]}"
       end
     elsif controller_name == 'user_sessions' && action_name == 'new'
       title = 'Login'

@@ -88,7 +88,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    Listing.update_search_and_listing_stat_on(@listing, :clicks, @search, simple_request_obj, current_user) unless @listing.nil? && user_is_a?('admin', 'advertiser')
+    Listing.update_search_and_listing_stat_on(@listing, :clicks, @search, simple_request_obj, current_user) unless @listing.nil? || user_is_a?('admin', 'advertiser')
     render :layout => false if request.xhr?
   end
 
@@ -97,10 +97,10 @@ class ListingsController < ApplicationController
   end
   
   def create
-    @listing = Listing.new params[:listing]
-    @listing.status = 'verified'
+    @listing               = Listing.new params[:listing]
+    @listing.status        = 'verified'
     @listing.storage_types = 'self storage'
-    @listing.enabled = true
+    @listing.enabled       = true
     
     respond_to do |format|
       format.html do
