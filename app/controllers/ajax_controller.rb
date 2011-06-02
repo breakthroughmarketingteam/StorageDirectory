@@ -141,7 +141,7 @@ class AjaxController < ApplicationController
           end
         end
       rescue
-        raise [$!, model, hash].pretty_inspect
+        raise [$!, model, hash].inspect
       end
     end
     
