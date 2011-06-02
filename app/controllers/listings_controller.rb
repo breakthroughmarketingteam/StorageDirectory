@@ -97,10 +97,10 @@ class ListingsController < ApplicationController
   end
   
   def create
-    @listing = Listing.new params[:listing]
-    @listing.status = 'verified'
+    @listing               = Listing.new params[:listing]
+    @listing.status        = 'verified'
     @listing.storage_types = 'self storage'
-    @listing.enabled = true
+    @listing.enabled       = true
     
     respond_to do |format|
       format.html do
