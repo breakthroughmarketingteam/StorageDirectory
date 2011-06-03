@@ -70,14 +70,14 @@ module GoToBillable #:nodoc:
       gtb.process
       response = gtb.response_info
       puts "\n\n----->GTB RESPONSE ES\n----->#{response.inspect}\n\n"
-    
-      invoice = @billing.invoices.create response
       
       if response[:status] == 'G'
+        invoice = @billing.invoices.create response
         self.send_billing_notifications @billing, invoice, true
-        self.update_attribute :billing_status, 'paying'
+        self.billing_status = 'paying'
       else
-        self.update_attribute :billing_status, 'failed'
+        self.billing_status = 'failed'
+        self.errors.add_to_base "Transaction Error: #{response[:description]}" 
       end
     end
     

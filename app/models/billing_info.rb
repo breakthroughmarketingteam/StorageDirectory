@@ -1,6 +1,6 @@
 class BillingInfo < ActiveRecord::Base
   
-  belongs_to :billable, :polymorphic => true, :touch => true
+  belongs_to :billable, :polymorphic => true
   belongs_to :listing
   has_many :invoices
   access_shared_methods

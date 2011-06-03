@@ -276,7 +276,7 @@ $(function() {
 					for (var j = 0, len2 = cities.length; j < len2; j++) {
 						var new_city = city_link.clone(), city = cities[j];
 						
-						new_city.show().attr('href', city_link.attr('href') + wizard.slide_data[1].data.state +'/'+ city.toLowerCase().replaceAll(' ', '-'));
+						new_city.show().attr('href', city_link.attr('href') + city.toLowerCase().replaceAll(' ', '-') +'/'+ wizard.slide_data[1].data.state.toLowerCase());
 						new_city.find('span').hide().after(city);
 						new_list.append(new_city);
 					}
@@ -1457,11 +1457,12 @@ $(function() {
 				});
 
 			} else if ($this.text() == 'Save') {
-				var form = $('#edit_info', wrap.parent()).runValidation();
+				var form = $('#edit_info', wrap.parent()).runValidation(),
+					clink = $('.cancel_link', $this.parent());
 
 				if (!$this.data('saving') && form.data('valid')) {
 					$this.data('saving', true);
-					$('.cancel_link', $this.parent()).remove();
+					clink.hide();
 					ajax_loader.show();
 
 					$.post(form.attr('action'), form.serialize(), function(response) {
@@ -1469,11 +1470,15 @@ $(function() {
 							$this.text('Edit').after('<span class="success_msg">Saved!</span>').next('.success_msg').fadeOutLater('slow', 3000);
 							wrap.show().html(data);
 							form.remove();
+							clink.remove();
+						}, function(error) {
+							$.greyAlert(error);
+							clink.show();
 						});
 
 						$this.data('saving', false);
 						ajax_loader.hide();
-					});
+					}, 'json');
 				}
 			}
 

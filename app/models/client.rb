@@ -153,7 +153,7 @@ class Client < User
       self.password_confirmation = info[:password_confirmation]
     end
     
-    self.save
+    self.errors.empty? && self.save
   end
 
   def enable_listings!

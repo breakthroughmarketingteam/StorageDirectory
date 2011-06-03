@@ -134,10 +134,14 @@ class AjaxController < ApplicationController
     params[:models].each do |val, hash|
       model = _get_model(hash[:model], hash[:id])
       
-      authorize_and_perform_restful_action_on_model model.class.to_controller_str, 'update' do
-        unless model.update_attribute(hash[:attribute], hash[:value])
-          errors << "Error updating #{model.class.name} #{model.name_or_title}: #{model_errors(model, false)}"
+      begin
+        authorize_and_perform_restful_action_on_model model.class.to_controller_str, 'update' do
+          unless model.update_attribute(hash[:attribute], hash[:value])
+            errors << "Error updating #{model.class.name} #{model.name_or_title}: #{model_errors(model, false)}"
+          end
         end
+      rescue
+        raise [$!, model, hash].inspect
       end
     end
     
@@ -187,14 +191,14 @@ class AjaxController < ApplicationController
   end
   
   def _get_model(model_str = nil, id = nil)
-    @model_str = model_str unless model_str.blank?\
+    @model_str = model_str unless model_str.blank?
     @model = _get_model_class(model_str).find_by_id(id || params[:id])
   rescue
     mylogger $!
   end
   
   def _get_model_class(model_str = nil)
-    @model_class ||= ((model_str || @model_str || params[:model]).camelcase.constantize rescue (model_str || @model_str || params[:model]).capitalize.camelcase.constantize)
+    @model_class = ((model_str || @model_str || params[:model]).camelcase.constantize rescue (model_str || @model_str || params[:model]).capitalize.camelcase.constantize)
   rescue
     mylogger $!
   end

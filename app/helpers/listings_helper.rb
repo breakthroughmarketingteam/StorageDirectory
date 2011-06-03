@@ -55,6 +55,8 @@ module ListingsHelper
   def results_main_button(listing, unit_size = nil)
     if listing.renting_enabled? && !listing.available_sizes.empty?
       link_to 'Rent It!', rack_rental_url(listing), :class => 'tab_link reserve_btn', :rel => :reserve
+    elsif !listing.user_id.nil?
+      link_to 'Reserve', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => :request
     else
       link_to 'Request', listing.get_partial_link(:request_info), :class => 'tab_link request_btn', :rel => :request
     end
