@@ -1334,7 +1334,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #activity_table tbody th{width:15%;}
 #Reservation .stack{font-size:120%;}
 #top_fac_page{margin:40px 30px 0;overflow:visible;}
-.error{width:auto;margin:0;padding:0;background:none;color:#c00;border:0 none;opacity:1;font-size:80%;}
+.error{width:auto;margin:0;background:none;color:#c00;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #admin_panel h2.stack{float:left;margin-right:10px;}
