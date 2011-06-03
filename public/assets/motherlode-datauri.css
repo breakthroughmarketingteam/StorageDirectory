@@ -1120,11 +1120,11 @@ input[type='reset'],a.cancel:link{color:#a63217;}
 #view_type_link_wrap .active{border:1px solid #dadada;padding:1px 8px;}
 .subfields{margin:0 0 7px 0;}
 /* Rails defaults */
-.flash{padding:7px 12px;font-weight:bold;border:2px solid;margin:0 0 10px 0;opacity:.7;box-shadow:3px 3px 5px #333;}
+.flash{padding:7px 12px;font-weight:bold;border:2px solid;margin:0 0 10px 0;opacity:.7;}
 .flash p{margin:3px 0;opacity:1;}
 .notice{color:#334215;border-color:#334215;}
 .warning{color:#A55112;background-color:#ff9646;border-color:#A55112;}
-.error,.flash-error{color:#000;background-color:#a63217;border-color:#000;}
+.error,.flash-error{color:#000;background-color:#a63217;}
 .invalid{color:#fff;}
 .fieldWithErrors,.invalid{padding:1px 1px 2px 6px;background-color:#a63217;margin:0;color:#fff;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 #errorExplanation{border:2px solid #a63217;padding:7px;padding-bottom:12px;margin-bottom:20px;background-color:#f0f0f0;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;-moz-box-shadow:1px 1px 5px rgba(100,100,100,0.8);-webkit-box-shadow:1px 1px 5px rgba(100,100,100,0.8);box-shadow:1px 1px 5px rgba(100,100,100,0.8);}
@@ -2554,7 +2554,7 @@ ul.ui-autocomplete{border:1px solid #ccc;border-radius:6px;-moz-border-radius:6p
 #activity_table tbody th{width:15%;}
 #Reservation .stack{font-size:120%;}
 #top_fac_page{margin:40px 30px 0;overflow:visible;}
-.error{width:auto;margin:0;padding:0;background:none;color:#c00;border:0 none;opacity:1;font-size:80%;}
+.error{width:auto;margin:0;background:none;color:#c00;opacity:1;font-size:80%;}
 form .error{position:static;font-size:100%;}
 form .error p{margin:0 0 7px 0;}
 #admin_panel h2.stack{float:left;margin-right:10px;}
@@ -3578,3 +3578,5 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 #credit-cards{border-top:1px dashed #ccc;margin:0 15px 0 10px;padding-top:20px;}
 #credit-cards p{margin-bottom:5px;}
 .self_storage_advertising #credit-cards{border-top:1px dashed #ccc;margin:0 15px 0 5px;padding-top:20px;}
+
+.flash{box-shadow:none;border:none;}

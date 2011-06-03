@@ -9216,6 +9216,7 @@ $(function() {
 							$this.text('Edit').after('<span class="success_msg">Saved!</span>').next('.success_msg').fadeOutLater('slow', 3000);
 							wrap.show().html(data);
 							form.remove();
+							clink.remove();
 						}, function(error) {
 							$.greyAlert(error);
 							clink.show();
