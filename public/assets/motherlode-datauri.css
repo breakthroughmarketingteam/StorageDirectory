@@ -1810,6 +1810,7 @@ ul#specials_list {margin:15px 10px;}
 #foot-box-bottom-bg{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bottom-bg.png) repeat-x top left;height:31px;clear:both;position:relative;top:-15px;}
 #foot-box-ctr{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/footer-box-bg.png) repeat-x top left;background-color:#DCDCDC;position:relative;top:-15px;}
 #type-three-r-col-in{float:right;margin:13px 10px 0 0;width:760px;}
+#admin_controller #type-three-r-col-in{width:780px;}
 #clients_controller.edit_action #type-three-r-col-in{margin-top:7px;}
 #listings_controller.edit_action #type-three-r-col-in,#listings_controller.show_action #type-three-r-col-in{width:755px;}
 #ov-header,#results_header{color:#000;height:47px;line-height:1.6;margin-bottom:10px;overflow:hidden;}

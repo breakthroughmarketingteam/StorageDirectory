@@ -5,8 +5,6 @@
 			<div id="sl-edit-tabs">
 				<div id="sl-tabs-in" class="tabular_content" data-tabs-id="sl-tabs-nav">
 					<%= display_message flash %>
-					<span id="client_id" class="hide"><%= @listing.client.id %></span>
-					<span id="listing_id" class="hide"><%= @listing.id %></span>
 				
 					<ul id="sl-tabs-nav" class="tabular">
 						<%= content_tag :li, link_to("Activity", '#fac_activity_tab', :id => 'tab_Activity', :rel => 'tab0') %>

@@ -9331,7 +9331,7 @@ $(function() {
 				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
-			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text() +'&listing_id='+ $('#listing_id').text(), function(response){
+			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').val() +'&listing_id='+ $('#listing_id').val(), function(response){
 				$.with_json(response, function(data) {
 					$.jqplot.preInitHooks.push(function() {
 						stats_graph.children().remove();
