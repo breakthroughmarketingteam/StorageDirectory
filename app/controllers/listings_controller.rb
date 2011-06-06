@@ -88,6 +88,8 @@ class ListingsController < ApplicationController
   end
 
   def show
+    redirect_to "/#{params[:storage_type].parameterize}/#{params[:city]}/#{params[:state]}", :status => 200 if @listing.nil?
+    
     Listing.update_search_and_listing_stat_on(@listing, :clicks, @search, simple_request_obj, current_user) unless @listing.nil? || user_is_a?('admin', 'advertiser')
     render :layout => false if request.xhr?
   end
