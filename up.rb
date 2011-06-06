@@ -11,9 +11,8 @@ optparse = OptionParser.new do|opts|
   opts.banner = "Usage: up.rb -m 'commit message' ..."
 
   # Define the options, and what they do
-  opts.on( '-m', '--message', 'Set git commit message' ) do |val|
-    puts [opts.default_argv, opts.inspect, val, ARGV[1]]
-    options[:message] = val
+  opts.on( '-m', '--message', 'Set git commit message' ) do
+    options[:message] = opts.default_argv
   end
 
   # This displays the help screen, all programs are
