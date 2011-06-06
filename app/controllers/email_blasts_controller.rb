@@ -119,7 +119,7 @@ class EmailBlastsController < ApplicationController
         unless email.blank?
           sent_to << email
           @token = "test-#{i + 1}"
-          @user = User.new :email => email, :name => 'Test User'
+          @user = Client.find_by_email email
           Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
       end
