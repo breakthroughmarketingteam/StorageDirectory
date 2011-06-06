@@ -67,7 +67,7 @@ class Rentalizer
           multiplier += 1 if special && special.month_limit == 1 && move_date.day > half_month
           discount = calculate_special multiplier, special, subtotal
         elsif special
-          multiplier += 1 if multiplier == 1
+          multiplier += 1 if multiplier == 1 && (special && special.function != '%')
           discount = calculate_special special.month_limit, special, subtotal
         else
           discount = 0.00

@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.blog_archives           '/self-storage-blog/archives/:year/:month', :controller => 'blog_posts', :action => 'index'
   map.blog_rss                '/blog.rss',                :controller => 'blog_posts', :action => 'rss', :format => 'rss'
   map.tips_rss                '/storage-tips.rss',        :controller => 'posts', :action => 'rss', :format => 'rss'
-  map.email_blast_web_version '/look/:title',             :controller => 'email_blasts', :action => 'show'
+  map.email_blast_web_version '/look/:title/:token',      :controller => 'email_blasts', :action => 'show', :token => nil
   map.unsub_from_email_blast  '/unsubscribe/:token',      :controller => 'email_blasts', :action => 'unsub'
   map.client_account          '/my_account',              :controller => 'clients', :action => 'edit'
   map.client_listing          '/my_account/listings/:id', :controller => 'listings', :action => 'profile'
@@ -162,6 +162,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
   map.resources :rentals
   map.resources :specials
+  map.resources :subscribers
   map.resources :helps
   map.resources :predefined_specials
   map.resources :predef_special_assigns, :member => { :toggle => :post }

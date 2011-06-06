@@ -13,12 +13,6 @@ class Notifier < ActionMailer::Base
     @body[:form]    = form
   end
   
-  def subscriber_notification(recipient, user, host)
-    setup_email recipient, user.email, 'New mailing list subscriber'
-    @body[:user] = user
-    @body[:host] = host
-  end
-  
   def new_tip_alert(tip)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New tip created in USSSL!'
     @body[:tip] = tip
@@ -194,6 +188,11 @@ class Notifier < ActionMailer::Base
     setup_email rental.tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
     @body[:tenant] = rental.tenant
     @body[:rental] = rental
+  end
+  
+  def subscriber_notification(subscriber)
+    setup_email subscriber.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Subscription'
+    @body[:subscriber] = subscriber
   end
   
   def tenant_confirmation(reserver, reservation)

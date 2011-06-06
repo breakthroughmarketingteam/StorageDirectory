@@ -1,7 +1,7 @@
 <div class="uncollapse left">
 	<% form_tag '/searches/models/', :id => 'modeL_search', :method => 'get' do %>
-		<%= text_field_tag 'query', params[:query], :class => 'required hintable', :title => "#{data.first.class.searchables.map(&:titleize) * ', ' rescue ''}" %>
-		<%= hidden_field_tag 'model_class', data.first.class %>
+		<%= text_field_tag 'query', params[:query], :class => 'required hintable', :title => "#{model_class_from.searchables.map(&:titleize) * ', ' rescue ''}" %>
+		<%= hidden_field_tag 'model_class', model_class_from %>
 		<%= submit_tag 'Search' %>
 	<% end %>
 </div>

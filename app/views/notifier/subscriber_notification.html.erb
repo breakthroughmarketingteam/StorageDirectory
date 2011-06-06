@@ -1,5 +1,4 @@
-A new subscriber has signed up for the mailing list on <%= @host %>
+<p>Thanks for subscribing to USSelfStorageLocator.com!</p>
 
-Name:  <%= @user.name %>
-Email: <%= @user.email %>
-Time:  <%= @user.created_at.asctime %>
+<p><strong>Email:</strong> <%= @subscriber.email %></p>
+<p><strong>Time:</strong>  <%= @subscriber.nice_date :created_at, :include_time => true %></p>

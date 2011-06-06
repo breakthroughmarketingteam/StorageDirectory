@@ -4,8 +4,7 @@ class EmailBlastsController < ApplicationController
   ssl_allowed :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
-  
-  geocode_ip_address :only => :show
+  before_filter :get_email_blast, :only => :show
   
   def index
     @email_blasts = EmailBlast.all_for_index_view
@@ -13,7 +12,8 @@ class EmailBlastsController < ApplicationController
   end
 
   def show
-    render :layout => 'email_template'
+    @user = User.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
+    render :layout => "email_templates/#{@email_blast.email_template}"
   end
 
   def new
@@ -37,7 +37,7 @@ class EmailBlastsController < ApplicationController
       format.js do
         if @email_blast.save
           flash.now[:notice] = @email_blast.title + ' has been created.'
-          get_models_paginated
+          @email_blasts = EmailBlast.all_for_index_view
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@email_blast)
@@ -67,7 +67,7 @@ class EmailBlastsController < ApplicationController
       format.js do
         if @email_blast.update_attributes(params[:email_blast])
           flash.now[:notice] = @email_blast.title + ' has been updated.'
-          get_models_paginated
+          @email_blasts = EmailBlast.all_for_index_view
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@email_blast)
@@ -93,10 +93,10 @@ class EmailBlastsController < ApplicationController
     
     case params[:blast_type] when 'listing_contacts'
       ListingContact.not_unsub.each do |contact|
-        @contact = contact
+        @user = contact
         @token = contact.unsub_token
         @listing = contact.listing
-        Blaster.delay.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+        Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
       end
       
       @email_blast.update_attribute :blast_date, Time.now
@@ -105,7 +105,8 @@ class EmailBlastsController < ApplicationController
     when 'blast'
        Client.opted_in.each do |client|
           @token = client.perishable_token
-          Blaster.delay.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+          @user = client
+          Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
         
         @email_blast.update_attribute :blast_date, Time.now
@@ -118,7 +119,8 @@ class EmailBlastsController < ApplicationController
         unless email.blank?
           sent_to << email
           @token = "test-#{i + 1}"
-          Blaster.delay.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+          @user = Client.find_by_email email
+          Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
       end
       

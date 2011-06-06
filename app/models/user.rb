@@ -103,8 +103,17 @@ class User < ActiveRecord::Base
     self.role.title
   end
   
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
+  
+  def name=(val)
+    self.first_name = val.split(' ').first
+    self.last_name = val.split(' ').last
+  end
+  
   def phone
-    self.mailing_address.phone
+    self.mailing_address.try :phone
   end
 
   # only allow a user to view and update their own profile

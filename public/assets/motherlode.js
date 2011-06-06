@@ -8798,7 +8798,7 @@ $(function() {
 			});
 			
 		} else { // get a pop up with a listing searcher, much like the add facility workflow
-			get_pop_up_and_do({ title: 'Find Your Listings', width : '450px', height : 'auto', modal: true }, { sub_partial: 'listings/searcher_steps', model: 'Client', id: $('#client_id').text() }, function(pop_up) {
+			get_pop_up_and_do({ title: 'Find Your Listings', width : '450px', height : 'auto', modal: true }, { sub_partial: 'listings/searcher_steps', model: 'Client', id: $('#client_id').val() }, function(pop_up) {
 				new GreyWizard(pop_up.children('#searcher_steps'), new searcher_settings()).begin_workflow_on(0);
 				ajax_loader.hide();
 			});
@@ -8842,7 +8842,7 @@ $(function() {
 	function delete_client_listing(listing_id) {
 		var ajax_loader = $('.ajax_loader', '#ov-units-head').show();
 		
-		$.post('/clients/'+ $('#client_id').text() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
+		$.post('/clients/'+ $('#client_id').val() +'/listings/'+ listing_id.replace('Listing_', '') +'/disable', { authenticity_token: $.get_auth_token() }, function(response) {
 			$.with_json(response, function(data) {
 				$('#Listing'+ listing_id, '#ov-units').slideUpRemove();
 			});
@@ -8866,7 +8866,7 @@ $(function() {
 			tip_inner.text('Enter the street address.');
 			ajax_loader.show();
 			
-			var params = { title: title_input.val(), client_id: $('#client_id').text() };
+			var params = { title: title_input.val(), client_id: $('#client_id').val() };
 			if (listing_id) params['id'] = listing_id;
 			
 			$.post('/listings/quick_create', params, function(response){
@@ -8943,7 +8943,7 @@ $(function() {
 				// SAVE ADDRESS WHEN USER CLICKS SAVE
 				$.post('/listings/'+ listing_id, { _method: 'put', listing: attributes , from: 'quick_create', authenticity_token: $.get_auth_token() }, function(response){
 					$.with_json(response, function(data){
-						button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').text() +'/listings/'+ listing_id +'/edit');
+						button.text('Edit').unbind('click').attr('href', '/clients/'+ $('#client_id').val() +'/listings/'+ listing_id +'/edit');
 						
 						listing = $(data);
 						partial.html(listing.html()).removeClass('active');
@@ -9216,6 +9216,7 @@ $(function() {
 							$this.text('Edit').after('<span class="success_msg">Saved!</span>').next('.success_msg').fadeOutLater('slow', 3000);
 							wrap.show().html(data);
 							form.remove();
+							clink.remove();
 						}, function(error) {
 							$.greyAlert(error);
 							clink.show();
@@ -9330,7 +9331,7 @@ $(function() {
 				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
 
-			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').text() +'&listing_id='+ $('#listing_id').text(), function(response){
+			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').val() +'&listing_id='+ $('#listing_id').val(), function(response){
 				$.with_json(response, function(data) {
 					$.jqplot.preInitHooks.push(function() {
 						stats_graph.children().remove();

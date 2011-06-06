@@ -1,0 +1,12 @@
+<% form_for (@subscriber ||= Subscriber.new) do |f| %>
+	<fieldset>
+		<div class="stack">
+			<%= f.label :email %>
+			<%= f.text_field :email %>
+		</div>
+		
+		<div class="stack">
+			<%= f.submit 'Subscriber To Our Newsletter' %>
+		</div>
+	</fieldset>
+<% end %>

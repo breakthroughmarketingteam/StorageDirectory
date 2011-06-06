@@ -3,7 +3,7 @@
 <div id="ajax_wrap_inner">
 	<%= display_message flash %>
 	
-	<h2 class="stack"><%= contextual_index_view_title((local_assigns.has_key?(:title) ? title : nil)) %></h2>
+	<h2 class="stack"><%= contextual_index_view_title((local_assigns.has_key?(:title) ? title : (model_class_from.name.pluralize rescue nil))) %></h2>
 	<%= model_stats %>
 	<%= render_model_helptext(controller_name) %>
 	
