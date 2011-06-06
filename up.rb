@@ -31,10 +31,13 @@ end
 # the options. What's left is the list of files to resize.
 optparse.parse!
 
+puts "Running: git add ."
 `git add .`
 
+puts "Running: git commit -m '#{options[:message]}'"
 `git commit -m '#{options[:message]}'`
 
+puts "Running: git push heroku master"
 `git push heroku master`
 
 puts "Done pushing."
