@@ -12,8 +12,8 @@ optparse = OptionParser.new do|opts|
 
   # Define the options, and what they do
   options[:message] = false
-  opts.on( '-m', '--message', 'Set git commit message' ) do
-    options[:message] = true
+  opts.on( '-m', '--message', 'Set git commit message' ) do |val|
+    options[:message] = val
   end
 
   # This displays the help screen, all programs are
