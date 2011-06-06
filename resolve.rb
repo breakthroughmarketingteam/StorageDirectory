@@ -6,4 +6,4 @@ puts "Running: git add ."
 puts "Running: git commit -m 'merge'"
 `git commit -m 'merge'`
 
-puts "Done pushing."
+puts "Done resolving."
