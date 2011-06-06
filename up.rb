@@ -11,8 +11,8 @@ optparse = OptionParser.new do|opts|
   opts.banner = "Usage: up.rb -m 'commit message' ..."
 
   # Define the options, and what they do
-  options[:message] = false
   opts.on( '-m', '--message', 'Set git commit message' ) do |val|
+    puts val
     options[:message] = val
   end
 
