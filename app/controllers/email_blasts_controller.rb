@@ -14,7 +14,7 @@ class EmailBlastsController < ApplicationController
 
   def show
     @email_blast = EmailBlast.find_by_title params[:title].titleize
-    @user = User.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token params[:token]
+    @user = User.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
     render :layout => "email_templates/#{@email_blast.email_template}"
   end
 

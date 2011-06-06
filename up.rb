@@ -12,7 +12,7 @@ optparse = OptionParser.new do|opts|
 
   # Define the options, and what they do
   opts.on( '-m', '--message', 'Set git commit message' ) do
-    options[:message] = opts.default_argv
+    options[:message] = opts.default_argv # this probably is the wrong way to get this option
   end
 
   # This displays the help screen, all programs are
