@@ -12,7 +12,7 @@
 			</div>
 			
 			<ul>
-	          	<li>Account #: <span id="client_id"><%= @client.id %></span></li>
+	          	<li>Account #: <span><%= @client.id %></span><%= hidden_field_tag :client_id, @client.id %></li>
 	          	<li>
 					Number of listings: <span id="listings_size"><%= @client.enabled_listings.size %></span>
 					<%= hidden_field_tag 'issn_enabled', @client.issn_enabled? %>
