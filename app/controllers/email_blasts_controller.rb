@@ -5,7 +5,6 @@ class EmailBlastsController < ApplicationController
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
   before_filter :get_email_blast, :only => :show
-  geocode_ip_address :only => :show
   
   def index
     @email_blasts = EmailBlast.all_for_index_view
@@ -120,7 +119,7 @@ class EmailBlastsController < ApplicationController
         unless email.blank?
           sent_to << email
           @token = "test-#{i + 1}"
-          @user = Client.new :email => email, :name => 'Test User'
+          @user = User.new :email => email, :name => 'Test User'
           Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
       end
