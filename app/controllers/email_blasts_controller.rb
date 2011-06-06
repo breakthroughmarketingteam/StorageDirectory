@@ -4,7 +4,7 @@ class EmailBlastsController < ApplicationController
   ssl_allowed :show
   before_filter :get_model_by_title_or_id, :only => :show
   before_filter :get_model, :only => [:new, :edit, :update, :destroy, :blast]
-  
+  before_filter :get_email_blast, :only => :show
   geocode_ip_address :only => :show
   
   def index
@@ -13,7 +13,6 @@ class EmailBlastsController < ApplicationController
   end
 
   def show
-    @email_blast = EmailBlast.find_by_title params[:title].titleize
     @user = User.find_by_perishable_token(params[:token]) || ListingContact.find_by_unsub_token(params[:token])
     render :layout => "email_templates/#{@email_blast.email_template}"
   end
@@ -39,7 +38,7 @@ class EmailBlastsController < ApplicationController
       format.js do
         if @email_blast.save
           flash.now[:notice] = @email_blast.title + ' has been created.'
-          get_models_paginated
+          @email_blasts = EmailBlast.all_for_index_view
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@email_blast)
@@ -69,7 +68,7 @@ class EmailBlastsController < ApplicationController
       format.js do
         if @email_blast.update_attributes(params[:email_blast])
           flash.now[:notice] = @email_blast.title + ' has been updated.'
-          get_models_paginated
+          @email_blasts = EmailBlast.all_for_index_view
           render :action => 'index', :layout => false
         else
           flash.now[:error] = model_errors(@email_blast)
