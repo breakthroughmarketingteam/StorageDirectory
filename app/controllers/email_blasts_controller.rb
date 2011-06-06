@@ -13,7 +13,8 @@ class EmailBlastsController < ApplicationController
   end
 
   def show
-    render :layout => 'email_template'
+    @email_blast = EmailBlast.find_by_title params[:title].titleize
+    render :layout => "email_templates/#{@email_blast.email_template}"
   end
 
   def new
@@ -119,7 +120,7 @@ class EmailBlastsController < ApplicationController
         unless email.blank?
           sent_to << email
           @token = "test-#{i + 1}"
-          @user = User.new :email => email, :name => 'Test User'
+          @user = Client.new :email => email, :name => 'Test User'
           Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
       end
