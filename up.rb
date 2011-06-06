@@ -12,7 +12,7 @@ optparse = OptionParser.new do|opts|
 
   # Define the options, and what they do
   opts.on( '-m', '--message', 'Set git commit message' ) do |val|
-    puts val
+    puts [opts.inspect, val, ARGV[1]]
     options[:message] = val
   end
 
