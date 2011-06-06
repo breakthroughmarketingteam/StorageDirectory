@@ -22,7 +22,7 @@ module SitemapGenerator
     end
 
     def add(model_instance, priority = nil, change_freq = nil)
-      @last_modified = find_last_modified(model_instance)
+      last_modified = find_last_modified(model_instance)
 
       if !VALID_CHANGE_FREQ.include?(change_freq.to_sym) && !change_freq.nil?
         raise "Invalid change frequency #{change_freq}, should be one of #{VALID_CHANGE_FREQ}" 
@@ -33,34 +33,34 @@ module SitemapGenerator
       # monkey patch by d.s. for usssl
       case model_instance.class.name when 'UsCity'
         add_city_to_skipped model_instance
-        @xml.url { @xml.loc(@path); add_xml } unless @@skip
+        @xml.url { @xml.loc(@path); add_xml(last_modified, priority, change_freq) } unless @@skip
         puts "added sitemap record: UsCity [#{@path}]"
       
       when 'Listing'
         @path = "http://#{Options.domain}#{facility_path_for(model_instance)}"
-        @xml.url { @xml.loc(@path); add_xml }
+        @xml.url { @xml.loc(@path); add_xml(last_modified, priority, change_freq) }
         puts "added sitemap record: Listing [#{@path}]"
         
       when 'Page'
         @path = "http://#{Options.domain}#{page_title(model_instance)}"
-        @xml.url { @xml.loc(@path); add_xml }
+        @xml.url { @xml.loc(@path); add_xml(last_modified, priority, change_freq) }
         puts "added sitemap record: Page [#{@path}]"
       
       when 'Post'
         @path = "http://#{Options.domain}#{post_title(model_instance)}"
-        @xml.url { @xml.loc(@path); add_xml }
+        @xml.url { @xml.loc(@path); add_xml(last_modified, priority, change_freq) }
         puts "added sitemap record: Post [#{@path}]"
       
       else
         @path = "http://#{Options.domain}#{Helpers.instance.url_for(model_instance)}"
-        @xml.url { @xml.loc(@path); add_xml }
+        @xml.url { @xml.loc(@path); add_xml(last_modified, priority, change_freq) }
         puts "added sitemap record: #{model_instance.class.name} [#{@path}]"
       end
       
     end
     
-    def add_xml
-      @xml.lastmod Helpers.instance.w3c_date(@last_modified) if @last_modified
+    def add_xml(last_modified, priority, change_freq)
+      @xml.lastmod Helpers.instance.w3c_date(last_modified) if last_modified
       @xml.changefreq change_freq.to_s if change_freq
       @xml.priority priority if priority
     end

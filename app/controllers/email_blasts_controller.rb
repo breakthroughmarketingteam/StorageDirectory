@@ -93,10 +93,10 @@ class EmailBlastsController < ApplicationController
     
     case params[:blast_type] when 'listing_contacts'
       ListingContact.not_unsub.each do |contact|
-        @contact = contact
+        @user = contact
         @token = contact.unsub_token
         @listing = contact.listing
-        Blaster.delay.deliver_email_blast contact.email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+        Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
       end
       
       @email_blast.update_attribute :blast_date, Time.now
@@ -105,7 +105,8 @@ class EmailBlastsController < ApplicationController
     when 'blast'
        Client.opted_in.each do |client|
           @token = client.perishable_token
-          Blaster.delay.deliver_email_blast client.email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+          @user = client
+          Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
         
         @email_blast.update_attribute :blast_date, Time.now
@@ -118,7 +119,8 @@ class EmailBlastsController < ApplicationController
         unless email.blank?
           sent_to << email
           @token = "test-#{i + 1}"
-          Blaster.delay.deliver_email_blast email, @email_blast, render_to_string(:action => 'show', :layout => email_template)
+          @user = User.new :email => email, :name => 'Test User'
+          Blaster.delay.deliver_email_blast @user, @email_blast, render_to_string(:action => 'show', :layout => email_template)
         end
       end
       

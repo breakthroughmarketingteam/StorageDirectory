@@ -19,7 +19,7 @@ class Client < User
   has_many :unsubs, :as => 'subscriber', :dependent => :destroy
   
   accepts_nested_attributes_for :listings, :mailing_address, :billing_info
-  named_scope :opted_in, :conditions => "wants_newsletter IS TRUE OR (status = 'unverified' AND wants_newsletter IS NOT NULL AND wants_newsletter IS TRUE)"
+  named_scope :opted_in, :conditions => 'wants_newsletter IS TRUE'
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
