@@ -1,9 +1,9 @@
 <div id="model_new_btns" class="uncollapse">
 	<%= render :partial => 'shared/model_new_back_buttons' %>
-	<%= render :partial => 'shared/model_search', :locals => { :data => data } if current_model && current_model.respond_to?(:searchables) %>
+	<%= render :partial => 'shared/model_search', :locals => { :data => data } if model_class_from.respond_to?(:searchables) %>
 	<%= render :partial => 'menus/view_type_links' unless data.blank? %>
-	<%= render :partial => 'shared/model_sort', :locals => { :model_class => data.first.class } if data.first && data.first.class.respond_to?(:sortables) %>
+	<%= render :partial => 'shared/model_sort', :locals => { :model_class => model_class_from } if model_class_from.respond_to?(:sortables) %>
 </div>
 
-<%= render :partial => 'shared/model_filter_by_tag', :locals => { :tags => current_model.get_tags } if current_model && current_model.has_association?(:tags) %>
+<%= render :partial => 'shared/model_filter_by_tag', :locals => { :tags => model_class_from.get_tags } if model_class_from.has_association?(:tags) %>
 <%= render :partial => "#{view_types_dir}#{@default_view_type}", :locals => { :data => data } unless data.blank? %>

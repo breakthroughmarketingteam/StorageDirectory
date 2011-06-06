@@ -23,7 +23,8 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
-  acts_as_nested_set
+  access_shared_methods
+  acts_as_nested_set # to have sub users "managers"
   acts_as_gotobillable :merchant_id    => ::GTB_MERCHANT[:id], 
                        :merchant_pin   => ::GTB_MERCHANT[:pin], 
                        :ip_address     => ::SERVER_IP,
@@ -56,7 +57,7 @@ class Client < User
     
     unless params.blank? 
       ma = self.build_mailing_address((params[:mailing_address] || {}).merge(:name => self.name, :company => self.company))
-    
+      
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
       else
@@ -73,7 +74,7 @@ class Client < User
           :renting_enabled => params[:client][:rental_agree]
         })
       end
-    
+      
       self.role_id           = Role.get_role_id 'advertiser'
       self.report_recipients = self.email
       self.user_hints        = UserHint.all
