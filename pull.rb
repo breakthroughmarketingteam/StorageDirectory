@@ -32,6 +32,8 @@ optparse.parse!
 
 puts "Running: git add ."
 `git add .`
+puts "Running: git add -u"
+`git add -u`
 
 puts "Running: git commit -m '#{options[:message]}'"
 `git commit -m '#{options[:message]}'`
