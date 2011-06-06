@@ -9,4 +9,4 @@ puts "Running: git rebase luis"
 puts "Running: git branch -d luis"
 `git branch -d luis`
 
-puts "Done pushing."
+puts "Done rebasing."
