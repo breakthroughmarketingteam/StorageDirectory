@@ -162,6 +162,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
   map.resources :rentals
   map.resources :specials
+  map.resources :subscribers
   map.resources :helps
   map.resources :predefined_specials
   map.resources :predef_special_assigns, :member => { :toggle => :post }
