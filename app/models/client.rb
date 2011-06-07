@@ -228,11 +228,11 @@ class Client < User
   end
   
   def stats_key
-    "ClientStats_#{self.cache_key}"
+    "ClientStats_#{self.id}"
   end
   
-  def listing_stats_key
-    "ClientListingStats_#{self.cache_key}"
+  def listing_stats_key(listing_id)
+    "ClientListingStats_#{self.id}_#{listing_id}"
   end
   
   def stats_cache_expiry
@@ -242,16 +242,17 @@ class Client < User
   
   def generate_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     stats = self.get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
-    ckey = listing_id.blank? ? self.stats_key : self.listing_stats_key
+    ckey = listing_id.blank? ? self.stats_key : self.listing_stats_key(listing_id)
     Rails.cache.write ckey, stats
   end
   
   # generate an array of plot points
   def get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     # get date arrays => [year, month, day]
-    sd, ed = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
+    sd, ed     = Time.parse(start_date).to_a[3,3].reverse, Time.parse(end_date).to_a[3,3].reverse
     date_range = Date.new(*sd)..Date.new(*ed)
-    plot_data = {}; counts = []
+    plot_data  = {}
+    counts     = []
     conditions = { :conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at' }
     
     stats_models.each do |stat|

@@ -9,7 +9,7 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key
+    ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key(params[:listing_id])
       
     if Rails.cache.read ckey
       json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
