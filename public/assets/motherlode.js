@@ -9349,7 +9349,7 @@ $(function() {
 					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
 						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
 							$.with_json(resp, function(data) {
-								build_jqplot_graph(stats_graph, stats_model, data);
+								build_jqplot_graph(stats_graph, stats_models, data);
 								stats_graph.removeClass('loading');
 								
 							}, function(msg) {
