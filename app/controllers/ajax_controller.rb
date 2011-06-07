@@ -1,7 +1,7 @@
 class AjaxController < ApplicationController
   
   skip_before_filter :init
-  ssl_required :get_client_stats, :destroy, :modeL_method
+  ssl_required :generate_client_stats, :get_client_stats, :destroy, :modeL_method
   ssl_allowed :get_partial, :get_multipartial, :find_listings, :get_cities, :get_attributes, :export_csv
   before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :update_stat, :destroy, :get_multipartial, :model_method]
@@ -9,10 +9,25 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
-    json_response true, data
+    ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key
+      
+    if Rails.cache.read ckey
+      json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
+    else
+      json_response false, '.'
+    end
+    
   rescue => e
-    render_error "Error loading Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
+    render_error "Error fetching Activity Tracker: #{e.message.gsub(/<|>/, ' ')}."
+  end
+  
+  def generate_client_stats
+    @client = Client.find params[:client_id]
+    @client.delay.generate_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
+    
+    json_response true, 'Generating Activity Graph'
+  rescue => e
+    render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
   end
   
   # TODO: make this work http://pullmonkey.com/projects/open_flash_chart

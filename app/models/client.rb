@@ -227,6 +227,25 @@ class Client < User
     self.delete_pending_transactions! self.billing_info
   end
   
+  def stats_key
+    "ClientStats_#{self.cache_key}"
+  end
+  
+  def listing_stats_key
+    "ClientListingStats_#{self.cache_key}"
+  end
+  
+  def stats_cache_expiry
+    factor = self.listings.size < 10 ? 10 : self.listings.size
+    (factor * 0.05).minutes
+  end
+  
+  def generate_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
+    stats = self.get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
+    ckey = listing_id.blank? ? self.stats_key : self.listing_stats_key
+    Rails.cache.write ckey, stats
+  end
+  
   # generate an array of plot points
   def get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     # get date arrays => [year, month, day]
@@ -236,7 +255,7 @@ class Client < User
     conditions = { :conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at' }
     
     stats_models.each do |stat|
-      stats = if !listing_id.blank? && listing_id != 'undefined'
+      stats = unless listing_id.nil?
         self.listings.find(listing_id).send(stat).all conditions
       else
         self.listings.map { |listing| listing.send(stat).all conditions }.flatten
