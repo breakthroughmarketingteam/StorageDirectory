@@ -1587,7 +1587,9 @@ $(function() {
 				client_id	 = $('#client_id').val(),
 				gen_query 	 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ client_id,
 				get_query	 = '?client_id='+ client_id,
-				listing_id 	 = $('#listing_id').val();
+				listing_id 	 = $('#listing_id').val(),
+				try_count 	 = 0,
+				int_id;
 			
 			if (listing_id) {
 				gen_query += '&listing_id='+ listing_id;
@@ -1598,7 +1600,7 @@ $(function() {
 				$.with_json(response, function(status) {
 					stats_graph.append(status);
 					
-					$.setInterval(function() { // begin polling the server to check if the stats have been generated
+					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
 						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
 							$.with_json(resp, function(data) {
 								build_jqplot_graph(stats_graph, stats_model, data);
@@ -1606,8 +1608,11 @@ $(function() {
 								
 							}, function(msg) {
 								stats_graph.append(msg);
+								try_count++;
 							});
-						})
+						});
+						
+						if (try_count > 30) clearInterval(int_id);
 					}, 500);
 				});
 			});
