@@ -9349,26 +9349,25 @@ $(function() {
 					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
 						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
 							$.with_json(resp, function(data) {
-								build_jqplot_graph(stats_graph, stats_models, data, issn_enabled);
-								stats_graph.removeClass('loading');
+								build_jqplot_graph(stats_graph, data, stats_models, issn_enabled);
 								clearInterval(int_id);
 								
 							}, function(msg) {
-								stats_graph.append('<span>'+ msg +'</span>');
+								stats_graph.append(msg);
 								try_count++;
 							});
 						});
 						
-						if (try_count > 100) clearInterval(int_id);
-					}, 500);
+						if (try_count > 140) clearInterval(int_id);
+					}, 1000);
 				});
 			});
 		}
 	}
 	
-	function build_jqplot_graph(stats_graph, stats_models, data, issn_enabled) {
+	function build_jqplot_graph(stats_graph, data, stats_models, issn_enabled) {
 		$.jqplot.preInitHooks.push(function() {
-			stats_graph.children().remove();
+			stats_graph.removeClass('loading').children().remove();
 		});
 
 		var plot_data = [],

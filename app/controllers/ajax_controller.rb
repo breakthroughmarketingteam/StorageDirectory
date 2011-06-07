@@ -11,14 +11,10 @@ class AjaxController < ApplicationController
     @client = Client.find params[:client_id]
     ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key(params[:listing_id])
     
-    puts "GET CLIENT STATS FOR CACHE KEY #{ckey}. PARAMS: #{params.inspect}"
-    
     if Rails.cache.read ckey
-      puts "FOUND STATS FOR CACHE KEY #{ckey}"
       json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
     else
-      puts "NO STATS CACHE FOUND FOR CACHE KEY #{ckey}"
-      json_response false, '.'
+      json_response false, '<span>.</span>'
     end
     
   rescue => e
@@ -27,10 +23,9 @@ class AjaxController < ApplicationController
   
   def generate_client_stats
     @client = Client.find params[:client_id]
-    puts "GENERATING CLIENT STATS FOR CLIENT ##{@client.id}. PARAMS: #{params.inspect}"
     @client.delay.generate_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
     
-    json_response true, 'Generating Activity Graph'
+    json_response true, '<span>Generating Activity Graph</span>'
   rescue => e
     render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
   end
