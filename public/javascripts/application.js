@@ -1603,7 +1603,7 @@ $(function() {
 					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
 						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
 							$.with_json(resp, function(data) {
-								build_jqplot_graph(stats_graph, stats_models, data);
+								build_jqplot_graph(stats_graph, stats_models, data, issn_enabled);
 								stats_graph.removeClass('loading');
 								
 							}, function(msg) {
@@ -1619,7 +1619,7 @@ $(function() {
 		}
 	}
 	
-	function build_jqplot_graph(stats_graph, stats_models, data) {
+	function build_jqplot_graph(stats_graph, stats_models, data, issn_enabled) {
 		$.jqplot.preInitHooks.push(function() {
 			stats_graph.children().remove();
 		});
