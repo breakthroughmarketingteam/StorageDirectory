@@ -10,10 +10,13 @@ class AjaxController < ApplicationController
   def get_client_stats
     @client = Client.find params[:client_id]
     ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key(params[:listing_id])
+    puts "GET STATS with CACHE KEY #{ckey}"
     
     if Rails.cache.read ckey
+      puts "FOUND STATS CACHE with CACHE KEY #{ckey}"
       json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
     else
+      puts "NO STATS CACHED YET with CACHE KEY #{ckey}"
       json_response false, '<span>.</span>'
     end
     
@@ -24,6 +27,7 @@ class AjaxController < ApplicationController
   def generate_client_stats
     @client = Client.find params[:client_id]
     @client.delay.generate_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
+    puts "GENERATE CLIENT STATS. PARAMS: #{params.inspect}"
     
     json_response true, '<span>Generating Activity Graph</span>'
   rescue => e

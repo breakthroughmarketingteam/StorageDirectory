@@ -243,6 +243,7 @@ class Client < User
   def generate_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     stats = self.get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
     ckey = listing_id.blank? ? self.stats_key : self.listing_stats_key(listing_id)
+    puts "GENERATE STATS with CACHE KEY #{ckey}"
     Rails.cache.write ckey, stats
   end
   
