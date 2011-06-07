@@ -914,7 +914,7 @@ $.setInterval = function(callback, interval) {
 	setTimeout(function() {
 		callback.call(this);
 		setTimeout(arguments.callee, interval);
-	}, interval)
+	}, interval);
 }
 
 $.setup_autocomplete = function(els, context) {

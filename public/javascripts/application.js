@@ -1581,46 +1581,74 @@ $(function() {
 
 			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
 				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'rentals' : 'info_requests'),
-				d = new Date(), // getMonth returns 0-11
-				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
-
-			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').val() +'&listing_id='+ $('#listing_id').val(), function(response){
-				$.with_json(response, function(data) {
-					$.jqplot.preInitHooks.push(function() {
-						stats_graph.children().remove();
-					});
+				d 			 = new Date(), // getMonth returns 0-11
+				end_date 	 = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
+				start_date 	 = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)), // month in the past
+				client_id	 = $('#client_id').val(),
+				gen_query 	 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ client_id,
+				get_query	 = '?client_id='+ client_id,
+				listing_id 	 = $('#listing_id').val(),
+				try_count 	 = 0,
+				int_id;
+			
+			if (listing_id) {
+				gen_query += '&listing_id='+ listing_id;
+				get_query += '&listing_id='+ listing_id;
+			}
+			
+			$.getJSON('/ajax/generate_client_stats'+ gen_query, function(response) { // send the query to the server so it can generate the stats and save it to cache
+				$.with_json(response, function(status) {
+					stats_graph.append(status);
 					
-					var plot_data = [],
-						stats_arr = stats_models.split(/,\W?/);
+					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
+						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
+							$.with_json(resp, function(data) {
+								build_jqplot_graph(stats_graph, stats_models, data);
+								stats_graph.removeClass('loading');
+								
+							}, function(msg) {
+								stats_graph.append(msg);
+								try_count++;
+							});
+						});
 						
-					for (i in stats_arr) if (stats_arr.hasOwnProperty(i))
-						plot_data.push(data['data'][stats_arr[i]]);
-					
-					$.jqplot('stats_graph', plot_data, {
-						axes: {
-							xaxis: { 
-								renderer: $.jqplot.DateAxisRenderer,
-								rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
-					            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
-							},
-							yaxis: { min: 0, max: parseInt(data['max']) + 1 }
-						},
-						legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
-						series: [ 
-					        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
-					        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
-					        { label: '&nbsp;'+ (issn_enabled ? 'Rentals' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
-					    ],
-						highlighter: { sizeAdjust: 7.5 },
-						cursor: { show: true, zoom: true, followMouse: true, tooltipLocation: 'ne' },
-						grid: { background: '#ffffff' }
-					});
+						if (try_count > 100) clearInterval(int_id);
+					}, 500);
 				});
-
-				stats_graph.removeClass('loading');
 			});
 		}
+	}
+	
+	function build_jqplot_graph(stats_graph, stats_models, data) {
+		$.jqplot.preInitHooks.push(function() {
+			stats_graph.children().remove();
+		});
+
+		var plot_data = [],
+			stats_arr = stats_models.split(/,\W?/);
+
+		for (i in stats_arr) if (stats_arr.hasOwnProperty(i))
+			plot_data.push(data['data'][stats_arr[i]]);
+
+		$.jqplot('stats_graph', plot_data, {
+			axes: {
+				xaxis: { 
+					renderer: $.jqplot.DateAxisRenderer,
+					rendererOptions: { tickRenderer: $.jqplot.CanvasAxisTickRenderer },
+		            tickOptions: { formatString:'%b %#d, %Y', fontSize:'12px' }
+				},
+				yaxis: { min: 0, max: parseInt(data['max']) + 1 }
+			},
+			legend: { show: true, location: 'nw', xoffset: 10, yoffset: 10 },
+			series: [ 
+		        { label: '&nbsp;Clicks', lineWidth: 2, color: '#3333CC', markerOptions: { style: 'diamond', color: '#3333CC' } }, 
+		        { label: '&nbsp;Impressions', lineWidth: 2, color: '#FED747', markerOptions: { size: 7, style:'circle', color: '#FED747' } }, 
+		        { label: '&nbsp;'+ (issn_enabled ? 'Rentals' : 'Requests'), lineWidth: 2, color: '#339933', markerOptions: { style: 'circle', color: '#339933' } }
+		    ],
+			highlighter: { sizeAdjust: 7.5 },
+			cursor: { show: true, zoom: true, followMouse: true, tooltipLocation: 'ne' },
+			grid: { background: '#ffffff' }
+		});
 	}
 	
 	//TODO: implement http://pullmonkey.com/projects/open_flash_chart
