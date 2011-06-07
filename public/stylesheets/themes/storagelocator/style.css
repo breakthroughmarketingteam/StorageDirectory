@@ -38,7 +38,7 @@ span.blue{color:#4c4bcc;}
 #title a{color:#393;text-decoration:none;}
 #title h1{bottom:0;color:#333;font-size:14px;font-weight:normal;position:absolute;}
 #title h1 strong{font-weight:normal;color:#222;}
-#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/usssl-discount.png) no-repeat top left;}
+#a{text-indent:-9999px;width:745px;height:49px;margin-top:8px;background:url(/images/ui/storagelocator/top-b.gif) no-repeat top left;}
 #top-nav{margin-top:4px;width:281px;float:right;height:50px;line-height:25px;text-shadow:1px 1px 2px #555;}
 .authenticated #top-nav{width:370px;margin-left:-80px;}
 #top-nav .left,#top-nav .account_link{text-shadow:none;color:#999;}
@@ -558,7 +558,7 @@ p#foot-text-r{float:right;margin-right:20px}
 #foot-box-cnt-in{float:left;width:940px;}
 p.foot-text{margin:40px;font-weight:bold;}
 #type-two-l-col,#type-one-l-col{position:relative;}
-#add-fac-box{color:#555;margin:4px 0 40px;position:relative;width:175px;}
+#add-fac-box{color:#555;margin:4px 0 30px;position:relative;width:175px;}
 #add-fac-box ul li{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/menu-leaf.gif) no-repeat scroll 0 12px transparent;list-style-image:none;list-style-type:none;border-bottom:1px solid #ddd;margin-left:5px;padding-left:17px;}
 #add-fac-box ul li.bg{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/menu-collapsed.gif) no-repeat scroll 0 12px transparent;}
 #add-fac-box ul li.expanded{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/menu-expanded.gif) no-repeat scroll 0 10px transparent;}
@@ -1766,7 +1766,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .login #forgot_pass_link{color:#4c4bcc;;margin-left:2px;}
 #pop_up_box.confirm_box .ui-dialog-titlebar-close{display:none;}
 .confirm_box,.alert_box{padding-bottom:10px !important;}
-.confirm_box p,.alert_box p{font-size:100%;text-align:center;}
+.confirm_box p,.alert_box p{font-size: 12px;line-height: 16px;text-align:center;}
 .confirm_box .btn,.alert_box .btn{position:absolute;bottom:10px;right:12px;color:#fff;line-height:1.8;z-index:999;}
 .confirm_box #confirm_yes{right:10px;}
 .auth_box #confirm_yes{bottom:0;right:15px;}
@@ -2127,7 +2127,7 @@ p.breadcrumb a{color:#fff;}
 .ui-widget-header .ui-icon:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}
-#signupstep_2 img{margin:10px 0 0 75px;width:50%;}
+#signupstep_2 img{margin:70px 0 0 75px;width:50%;}
 #signupstep_3 img{height:195px;margin:60px 0 0 25px;width:214px;}
 
 .edit_rental input.short{width:100px;}
