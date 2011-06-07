@@ -9358,7 +9358,7 @@ $(function() {
 							});
 						});
 						
-						if (try_count > 30) clearInterval(int_id);
+						if (try_count > 100) clearInterval(int_id);
 					}, 500);
 				});
 			});
