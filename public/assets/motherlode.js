@@ -9351,6 +9351,7 @@ $(function() {
 							$.with_json(resp, function(data) {
 								build_jqplot_graph(stats_graph, stats_models, data, issn_enabled);
 								stats_graph.removeClass('loading');
+								clearInterval(int_id);
 								
 							}, function(msg) {
 								stats_graph.append(msg);
