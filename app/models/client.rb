@@ -236,7 +236,7 @@ class Client < User
     conditions = { :conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at' }
     
     stats_models.each do |stat|
-      stats = if !listing_id.blank?
+      stats = if !listing_id.blank? && listing_id != 'undefined'
         self.listings.find(listing_id).send(stat).all conditions
       else
         self.listings.map { |listing| listing.send(stat).all conditions }.flatten

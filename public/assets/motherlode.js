@@ -9327,15 +9327,11 @@ $(function() {
 
 			var issn_enabled = $('input#issn_enabled').val() == 'false' ? false : true,
 				stats_models = 'clicks,impressions,'+ (issn_enabled ? 'rentals' : 'info_requests'),
-				d 			 = new Date(), // getMonth returns 0-11
-				end_date 	 = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
-				start_date 	 = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)), // month in the past
-				query 		 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').val(),
-				listing_id 	 = $('#listing_id').val();
-			
-			if (listing_id) query += '&listing_id='+ listing_id;
-			
-			$.getJSON('/ajax/get_client_stats'+ query, function(response){
+				d = new Date(), // getMonth returns 0-11
+				end_date = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
+				start_date = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)); // month in the past
+
+			$.getJSON('/ajax/get_client_stats?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ $('#client_id').val() +'&listing_id='+ $('#listing_id').val(), function(response){
 				$.with_json(response, function(data) {
 					$.jqplot.preInitHooks.push(function() {
 						stats_graph.children().remove();
