@@ -1608,7 +1608,7 @@ $(function() {
 								clearInterval(int_id);
 								
 							}, function(msg) {
-								stats_graph.append(msg);
+								stats_graph.append('<span>'+ msg +'</span>');
 								try_count++;
 							});
 						});
