@@ -9349,22 +9349,27 @@ $(function() {
 			} else { // send the query to the server so it can generate the stats and save it to cache
 				$.getJSON('/ajax/generate_client_stats'+ query, function(response) {
 					$.with_json(response, function(status) {
-						stats_graph.append(status);
+						if (status.stats) { // already had a cached version
+							build_jqplot_graph(graph_id, stats_graph, status.stats, stats_models, issn_enabled);
+							
+						} else { // generate stats and cache them on server
+							stats_graph.append(status);
 
-						int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
-							$.getJSON('/ajax/get_client_stats?client_id='+ client_id, function(resp) {
-								$.with_json(resp, function(data) {
-									build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
-									clearInterval(int_id);
+							int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
+								$.getJSON('/ajax/get_client_stats?client_id='+ client_id, function(resp) {
+									$.with_json(resp, function(data) {
+										build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
+										clearInterval(int_id);
 
-								}, function(msg) {
-									stats_graph.append(msg);
-									try_count++;
+									}, function(msg) {
+										stats_graph.append(msg);
+										try_count++;
+									});
 								});
-							});
 
-							if (try_count > 140) clearInterval(int_id);
-						}, 3000);
+								if (try_count > 140) clearInterval(int_id);
+							}, 3000);
+						}
 					});
 				});
 			}

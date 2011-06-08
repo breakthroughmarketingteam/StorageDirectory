@@ -12,7 +12,7 @@ class AjaxController < ApplicationController
     stats = Rails.cache.read @client.cache_key
     
     if stats
-      json_response true, stats
+      json_response true, { :stats => stats }
     else
       @client.delay.generate_client_stats params.except(:controller, :action)
       puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.cache_key} PARAMS: #{params.inspect}"
