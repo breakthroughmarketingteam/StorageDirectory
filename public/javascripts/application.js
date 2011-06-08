@@ -1590,12 +1590,11 @@ $(function() {
 				client_id	 = $('#client_id').val(),
 				listing_id 	 = $('#listing_id').val(),
 				query		 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ client_id,
-				get_query	 = '?client_id='+ client_id,
 				try_count 	 = 0,
 				int_id;
 			
 			if (listing_id) { // get this listings stats right away
-				get_query += '&listing_id='+ listing_id
+				var get_query = query +'&listing_id='+ listing_id
 				
 				$.getJSON('/ajax/get_listing_stats'+ get_query, function(response) { // send the query to the server so it can generate the stats and save it to cache
 					$.with_json(response, function(data) {
