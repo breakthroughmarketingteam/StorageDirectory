@@ -10,7 +10,7 @@ class AjaxController < ApplicationController
   def generate_client_stats
     @client = Client.find params[:client_id]
     @client.delay.generate_client_stats params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date]
-    puts "-----> GENERATE CLIENT STATS. PARAMS: #{params.inspect}"
+    puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.cache_key} PARAMS: #{params.inspect}"
     
     json_response true, '<span>Generating Activity Graph</span>'
   rescue => e
