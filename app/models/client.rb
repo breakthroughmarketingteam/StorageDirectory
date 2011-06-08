@@ -233,8 +233,9 @@ class Client < User
   end
   
   def generate_client_stats(params)
-    stats = self.get_stats_for_graph params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date]
-    Rails.cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
+    #stats = self.get_stats_for_graph params[:stats_models], params[:start_date], params[:end_date]
+    #Rails.cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
+    stats = 'fake'
     Notifier.deliver_diego_a_msg "Generate Stats Done\nCache Key #{self.cache_key}\nExpires #{self.stats_cache_expiry}\nStats: #{stats.inspect}"
   end
   
@@ -247,7 +248,7 @@ class Client < User
     counts     = []
     conditions = { :conditions => ['created_at >= ? AND created_at <= ?', sd.join('-'), ed.join('-')], :order => 'created_at' }
     
-    stats_models.each do |stat|
+    stats_models.split(/,\W?/).each do |stat|
       stats = unless listing_id.nil?
         self.listings.find(listing_id).send(stat).all conditions
       else
