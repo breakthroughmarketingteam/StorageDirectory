@@ -232,10 +232,9 @@ class Client < User
     (factor * 0.05).minutes
   end
   
-  def generate_client_stats(stats_models, start_date, end_date, cache)
+  def generate_client_stats(stats_models, start_date, end_date)
     stats = self.get_stats_for_graph stats_models, start_date, end_date
-    puts "!----> GENERATING STATS with CACHE KEY #{self.cache_key}"
-    cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
+    Rails.cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
   end
   
   # generate an array of plot points
