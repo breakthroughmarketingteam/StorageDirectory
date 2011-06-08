@@ -38,7 +38,7 @@ class AjaxController < ApplicationController
   
   def get_listing_stats
     @client = Client.find params[:client_id]
-    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
+    data = @client.get_stats_for_graph(params[:stats_models], params[:start_date], params[:end_date], params[:listing_id])
     
     json_response true, data
   rescue => e
