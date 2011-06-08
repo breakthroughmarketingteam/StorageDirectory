@@ -7,7 +7,7 @@ class InfoRequest < ActiveRecord::Base
   access_shared_methods
   
   def validate
-  	errors.add(:move_in_date, 'is out of range. Must be within 15 days.') unless move_in_date && move_in_date.between? 1.day.ago, 15.days.from_now
+  	errors.add(:move_in_date, 'is out of range. Must be within 15 days.') unless move_in_date && move_in_date.between?(1.day.ago, 15.days.from_now)
   end
   
   def deliver_emails
