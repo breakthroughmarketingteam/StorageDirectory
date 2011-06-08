@@ -5,6 +5,10 @@ class Notifier < ActionMailer::Base
   #
   # TO: admins
   #
+  def diego_a_msg(msg)
+    setup_email "diego@#{$root_domain}", "server@#{$root_domain}", 'SERVER MESSAGE'
+    @body[:msg] = msg
+  end
   
   def comment_notification(recipient, comment, host, form)
     setup_email recipient, comment.email, 'New website comment'

@@ -235,6 +235,7 @@ class Client < User
   def generate_client_stats(params)
     stats = self.get_stats_for_graph params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date]
     Rails.cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
+    Notifier.deliver_diego_a_msg "Generate Stats Done\nCache Key #{self.cache_key}\nExpires #{self.stats_cache_expiry}\nStats: #{stats.inspect}"
   end
   
   # generate an array of plot points
