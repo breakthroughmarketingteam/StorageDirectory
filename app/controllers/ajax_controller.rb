@@ -12,12 +12,10 @@ class AjaxController < ApplicationController
     stats = Rails.cache.read @client.stats_cache_key
     
     if stats
-      json_response true, { :stats => stats }
+      json_response true, stats
     else
       @client.delay.generate_client_stats params.except(:controller, :action)
-      puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.stats_cache_key} PARAMS: #{params.inspect}"
-    
-      json_response true, '<span>Generating Activity Graph</span>'
+      json_response false, '<span>Generating Activity Graph</span>'
     end
   rescue => e
     render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
@@ -25,16 +23,11 @@ class AjaxController < ApplicationController
   
   def get_client_stats
     @client = Client.find params[:client_id]
-    puts "-----> GET STATS with CACHE KEY #{@client.stats_cache_key}"
     stats = Rails.cache.read @client.stats_cache_key
 
-    puts "-----> CACHE read: #{stats.inspect}"
-    
     if stats
-      puts "-----> FOUND STATS CACHE with CACHE KEY #{@client.stats_cache_key}"
       json_response true, stats
     else
-      puts "-----> NO STATS CACHED YET with CACHE KEY #{@client.stats_cache_key}"
       json_response false, '<span>.</span>'
     end
     
