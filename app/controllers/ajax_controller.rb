@@ -7,31 +7,30 @@ class AjaxController < ApplicationController
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :update_stat, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv, :destroy]
   
-  def get_client_stats
-    @client = Client.find params[:client_id]
-    ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key(params[:listing_id])
-    puts "-----> GET STATS with CACHE KEY #{ckey}"
-    
-    if Rails.cache.read ckey
-      puts "-----> FOUND STATS CACHE with CACHE KEY #{ckey}"
-      json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
-    else
-      puts "-----> NO STATS CACHED YET with CACHE KEY #{ckey}"
-      json_response false, '<span>.</span>'
-    end
-    
-  rescue => e
-    render_error "Error fetching Activity Tracker: #{e.message.gsub(/<|>/, ' ')}."
-  end
-  
   def generate_client_stats
     @client = Client.find params[:client_id]
-    @client.delay.generate_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
+    @client.delay.generate_client_stats params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], Rails.cache
     puts "-----> GENERATE CLIENT STATS. PARAMS: #{params.inspect}"
     
     json_response true, '<span>Generating Activity Graph</span>'
   rescue => e
     render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
+  end
+  
+  def get_client_stats
+    @client = Client.find params[:client_id]
+    puts "-----> GET STATS with CACHE KEY #{@client.cache_key}"
+    
+    if data = Rails.cache.read(@client.cache_key)
+      puts "-----> FOUND STATS CACHE with CACHE KEY #{@client.cache_key}"
+      json_response true, data
+    else
+      puts "-----> NO STATS CACHED YET with CACHE KEY #{@client.cache_key}"
+      json_response false, '<span>.</span>'
+    end
+    
+  rescue => e
+    render_error "Error fetching Activity Tracker: #{e.message.gsub(/<|>/, ' ')}."
   end
   
   def get_listing_stats

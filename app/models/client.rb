@@ -227,24 +227,15 @@ class Client < User
     self.delete_pending_transactions! self.billing_info
   end
   
-  def stats_key
-    "ClientStats_#{self.id}"
-  end
-  
-  def listing_stats_key(listing_id)
-    "ClientListingStats_#{self.id}_#{listing_id}"
-  end
-  
   def stats_cache_expiry
     factor = self.listings.size < 10 ? 10 : self.listings.size
     (factor * 0.05).minutes
   end
   
-  def generate_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
-    stats = self.get_stats_for_graph(stats_models, start_date, end_date, listing_id = nil)
-    ckey = listing_id.blank? ? self.stats_key : self.listing_stats_key(listing_id)
-    puts "GENERATE STATS with CACHE KEY #{ckey}"
-    Rails.cache.write ckey, stats
+  def generate_client_stats(stats_models, start_date, end_date, cache)
+    stats = self.get_stats_for_graph stats_models, start_date, end_date
+    puts "!----> GENERATING STATS with CACHE KEY #{self.cache_key}"
+    cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
   end
   
   # generate an array of plot points
