@@ -9,10 +9,16 @@ class AjaxController < ApplicationController
   
   def generate_client_stats
     @client = Client.find params.delete(:client_id)
-    @client.delay.generate_client_stats params.except(:controller, :action)
-    puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.cache_key} PARAMS: #{params.inspect}"
+    stats = Rails.cache.read @client.cache_key
     
-    json_response true, '<span>Generating Activity Graph</span>'
+    if stats
+      json_response true, stats
+    else
+      @client.delay.generate_client_stats params.except(:controller, :action)
+      puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.cache_key} PARAMS: #{params.inspect}"
+    
+      json_response true, '<span>Generating Activity Graph</span>'
+    end
   rescue => e
     render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
   end
@@ -20,13 +26,13 @@ class AjaxController < ApplicationController
   def get_client_stats
     @client = Client.find params[:client_id]
     puts "-----> GET STATS with CACHE KEY #{@client.cache_key}"
-    data = Rails.cache.read @client.cache_key
+    stats = Rails.cache.read @client.cache_key
 
-    puts "-----> CACHE read: #{data.inspect}"
+    puts "-----> CACHE read: #{stats.inspect}"
     
-    if data
+    if stats
       puts "-----> FOUND STATS CACHE with CACHE KEY #{@client.cache_key}"
-      json_response true, data
+      json_response true, stats
     else
       puts "-----> NO STATS CACHED YET with CACHE KEY #{@client.cache_key}"
       json_response false, '<span>.</span>'
