@@ -1,22 +1,22 @@
 class AjaxController < ApplicationController
   
   skip_before_filter :init
-  ssl_required :generate_client_stats, :get_client_stats, :destroy, :modeL_method
+  ssl_required :generate_client_stats, :get_client_stats, :get_listing_stats, :destroy, :modeL_method
   ssl_allowed :get_partial, :get_multipartial, :find_listings, :get_cities, :get_attributes, :export_csv
-  before_filter :validate_params, :except => [:find_listings, :get_client_stats, :get_cities]
+  before_filter :validate_params, :except => [:find_listings, :get_cities]
   before_filter :_get_model, :only => [:get_model, :get_listing, :update, :update_stat, :destroy, :get_multipartial, :model_method]
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv, :destroy]
   
   def get_client_stats
     @client = Client.find params[:client_id]
     ckey = params[:listing_id].blank? ? @client.stats_key : @client.listing_stats_key(params[:listing_id])
-    puts "GET STATS with CACHE KEY #{ckey}"
+    puts "-----> GET STATS with CACHE KEY #{ckey}"
     
     if Rails.cache.read ckey
-      puts "FOUND STATS CACHE with CACHE KEY #{ckey}"
+      puts "-----> FOUND STATS CACHE with CACHE KEY #{ckey}"
       json_response true, Rails.cache.read(ckey, :expires_in => @client.stats_cache_expiry)
     else
-      puts "NO STATS CACHED YET with CACHE KEY #{ckey}"
+      puts "-----> NO STATS CACHED YET with CACHE KEY #{ckey}"
       json_response false, '<span>.</span>'
     end
     
@@ -27,11 +27,20 @@ class AjaxController < ApplicationController
   def generate_client_stats
     @client = Client.find params[:client_id]
     @client.delay.generate_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
-    puts "GENERATE CLIENT STATS. PARAMS: #{params.inspect}"
+    puts "-----> GENERATE CLIENT STATS. PARAMS: #{params.inspect}"
     
     json_response true, '<span>Generating Activity Graph</span>'
   rescue => e
     render_error "Error generating Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
+  end
+  
+  def get_listing_stats
+    @client = Client.find params[:client_id]
+    data = @client.get_stats_for_graph(params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date], params[:listing_id])
+    
+    json_response true, data
+  rescue => e
+    render_error "Error Getting Activity Tracker: #{e.message.gsub(/<|>/, ' ')}<br />Please contact support if this happens again."
   end
   
   # TODO: make this work http://pullmonkey.com/projects/open_flash_chart
