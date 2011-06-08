@@ -232,8 +232,8 @@ class Client < User
     (factor * 0.05).minutes
   end
   
-  def generate_client_stats(stats_models, start_date, end_date)
-    stats = self.get_stats_for_graph stats_models, start_date, end_date
+  def generate_client_stats(params)
+    stats = self.get_stats_for_graph params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date]
     Rails.cache.write self.cache_key, stats, :expires_in => self.stats_cache_expiry
   end
   

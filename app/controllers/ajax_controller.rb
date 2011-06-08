@@ -8,8 +8,8 @@ class AjaxController < ApplicationController
   before_filter :_get_model_class, :only => [:find, :get_listing, :get_attributes, :model_method, :export_csv, :destroy]
   
   def generate_client_stats
-    @client = Client.find params[:client_id]
-    @client.delay.generate_client_stats params[:stats_models].split(/,\W?/), params[:start_date], params[:end_date]
+    @client = Client.find params.delete(:client_id)
+    @client.delay.generate_client_stats params.except(:controller, :action)
     puts "-----> GENERATE CLIENT STATS. CACHE KEY: #{@client.cache_key} PARAMS: #{params.inspect}"
     
     json_response true, '<span>Generating Activity Graph</span>'
