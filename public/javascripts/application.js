@@ -1555,7 +1555,7 @@ $(function() {
 		return false;
 	});
 	
-	$('#account_home_link').click(function() {
+	$('#account_home_link', '#clients_controller').click(function() {
 		//if (!FlashDetect.installed) return true;
 		
 		// for some reason the stats_graph div was getting a width of 400px when the page loaded with it hidden (navigated from the listing edit page through one of the client option links)
