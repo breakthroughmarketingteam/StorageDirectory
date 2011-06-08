@@ -9340,9 +9340,7 @@ $(function() {
 				int_id;
 			
 			if (listing_id) { // get this listings stats right away
-				var get_query = query +'&listing_id='+ listing_id
-				
-				$.getJSON('/ajax/get_listing_stats'+ get_query, function(response) { // send the query to the server so it can generate the stats and save it to cache
+				$.getJSON('/ajax/get_listing_stats'+ query +'&listing_id='+ listing_id, function(response) { // send the query to the server so it can generate the stats and save it to cache
 					$.with_json(response, function(data) {
 						build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
 					});
@@ -9354,7 +9352,7 @@ $(function() {
 						stats_graph.append(status);
 
 						int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
-							$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
+							$.getJSON('/ajax/get_client_stats?client_id='+ client_id, function(resp) {
 								$.with_json(resp, function(data) {
 									build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
 									clearInterval(int_id);
