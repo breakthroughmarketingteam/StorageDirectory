@@ -229,7 +229,7 @@ class Client < User
   
   def stats_cache_expiry
     factor = self.listings.size < 10 ? 10 : self.listings.size
-    (factor * 0.05).minutes
+    (factor * 0.8).minutes
   end
   
   def generate_client_stats(params)
