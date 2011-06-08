@@ -9364,7 +9364,7 @@ $(function() {
 							});
 
 							if (try_count > 140) clearInterval(int_id);
-						}, 1000);
+						}, 3000);
 					});
 				});
 			}

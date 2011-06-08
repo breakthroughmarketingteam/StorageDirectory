@@ -20,8 +20,8 @@ class AjaxController < ApplicationController
   def get_client_stats
     @client = Client.find params[:client_id]
     puts "-----> GET STATS with CACHE KEY #{@client.cache_key}"
-    data = Rails.cache.read(@client.cache_key)
-    
+    data = Rails.cache.read @client.cache_key
+
     puts "-----> CACHE read: #{data.inspect}"
     
     if data
