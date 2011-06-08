@@ -6,7 +6,7 @@ class Notifier < ActionMailer::Base
   # TO: admins
   #
   def diego_a_msg(msg)
-    setup_email "diego@#{$root_domain}", "server@#{$root_domain}", 'SERVER MESSAGE'
+    setup_email "diego@usselfstoragelocator.com", "server@usselfstoragelocator.com", 'SERVER MESSAGE'
     @body[:msg] = msg
   end
   
