@@ -833,6 +833,8 @@ $(function() {
 			return false;
 		});
 		
+		
+		
 	} // END page clients edit
 	
 	// client and listing edit page
@@ -1553,7 +1555,7 @@ $(function() {
 		return false;
 	});
 	
-	$('#account_home_link').click(function() {
+	$('#account_home_link', '#clients_controller').click(function() {
 		//if (!FlashDetect.installed) return true;
 		
 		// for some reason the stats_graph div was getting a width of 400px when the page loaded with it hidden (navigated from the listing edit page through one of the client option links)
@@ -1570,7 +1572,8 @@ $(function() {
 	
 	function init_stats_graph(options) {
 		if (typeof options == 'undefined') var options = {};
-		var stats_graph = $('#stats_graph'),
+		var graph_id	= 'stats_graph',
+			stats_graph = $('#'+ graph_id),
 			days_ago 	= options.days_ago 	 || 0,
 			months_ago 	= options.months_ago || 1,
 			years_ago 	= options.years_ago  || 0,
@@ -1585,43 +1588,49 @@ $(function() {
 				end_date 	 = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1),
 				start_date 	 = new Date((d.getFullYear() - years_ago), (d.getMonth() - months_ago), (d.getDate() - days_ago)), // month in the past
 				client_id	 = $('#client_id').val(),
-				gen_query 	 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ client_id,
-				get_query	 = '?client_id='+ client_id,
 				listing_id 	 = $('#listing_id').val(),
+				query		 = '?start_date='+ start_date +'&end_date='+ end_date +'&stats_models='+ stats_models +'&client_id='+ client_id,
 				try_count 	 = 0,
 				int_id;
 			
-			if (listing_id) {
-				gen_query += '&listing_id='+ listing_id;
-				get_query += '&listing_id='+ listing_id;
-			}
-			
-			$.getJSON('/ajax/generate_client_stats'+ gen_query, function(response) { // send the query to the server so it can generate the stats and save it to cache
-				$.with_json(response, function(status) {
-					stats_graph.append(status);
-					
-					int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
-						$.getJSON('/ajax/get_client_stats'+ get_query, function(resp) {
-							$.with_json(resp, function(data) {
-								build_jqplot_graph(stats_graph, stats_models, data);
-								stats_graph.removeClass('loading');
-								
-							}, function(msg) {
-								stats_graph.append(msg);
-								try_count++;
-							});
-						});
-						
-						if (try_count > 100) clearInterval(int_id);
-					}, 500);
+			if (listing_id) { // get this listings stats right away
+				$.getJSON('/ajax/get_listing_stats'+ query +'&listing_id='+ listing_id, function(response) { // send the query to the server so it can generate the stats and save it to cache
+					$.with_json(response, function(data) {
+						build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
+					});
 				});
-			});
+				
+			} else { // send the query to the server so it can generate the stats and save it to cache
+				$.getJSON('/ajax/generate_client_stats'+ query, function(response) {
+					$.with_json(response, function(data) { // found cached version of stats
+						build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
+						
+					}, function(status) { // the server is still generating stats
+						stats_graph.append(status);
+
+						int_id = setInterval(function() { // begin polling the server to check if the stats have been generated
+							$.getJSON('/ajax/get_client_stats?client_id='+ client_id, function(resp) {
+								$.with_json(resp, function(data) {
+									build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled);
+									clearInterval(int_id);
+
+								}, function(msg) {
+									stats_graph.append(msg);
+									try_count++;
+								});
+							});
+
+							if (try_count > 140) clearInterval(int_id);
+						}, 3000);
+					});
+				});
+			}
 		}
 	}
 	
-	function build_jqplot_graph(stats_graph, stats_models, data) {
+	function build_jqplot_graph(graph_id, stats_graph, data, stats_models, issn_enabled) {
 		$.jqplot.preInitHooks.push(function() {
-			stats_graph.children().remove();
+			stats_graph.removeClass('loading').children().remove();
 		});
 
 		var plot_data = [],
@@ -1630,7 +1639,7 @@ $(function() {
 		for (i in stats_arr) if (stats_arr.hasOwnProperty(i))
 			plot_data.push(data['data'][stats_arr[i]]);
 
-		$.jqplot('stats_graph', plot_data, {
+		$.jqplot(graph_id, plot_data, {
 			axes: {
 				xaxis: { 
 					renderer: $.jqplot.DateAxisRenderer,
