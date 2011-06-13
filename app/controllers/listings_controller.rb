@@ -25,7 +25,6 @@ class ListingsController < ApplicationController
     benchmark 'Locator Action Wrap' do
       # we replaced a normal page model by a controller action, but we still need data from the model to describe this "page"
       @page = Page.find_by_title 'Self Storage' unless request.xhr?
-      
       @location = @search.location
       
       benchmark 'Calling @search.results' do

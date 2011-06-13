@@ -41,12 +41,12 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
-  def new_tenant_alert(rental)
+  def new_tenant_alert(tenant)
     @header_img_name = 'unit_rental'
     
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
-    @body[:tenant] = rental.tenant
-    @body[:rental] = rental
+    @body[:tenant] = tenant
+    @body[:rental] = tenant.rental
   end
   
   def new_info_request_alert(info_request)
@@ -71,8 +71,8 @@ class Notifier < ActionMailer::Base
     
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Call Tracking Request'
     @body[:listing] = listing
-    @body[:client] = client
-    @body[:phone] = phone
+    @body[:client]  = client
+    @body[:phone]   = phone
   end
   
   def review_alert(review)
@@ -82,7 +82,7 @@ class Notifier < ActionMailer::Base
   
   def claimed_listings_alert(client, listings)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'A Client Has Claimed More Listings'
-    @body[:client] = client
+    @body[:client]   = client
     @body[:listings] = listings
   end
   
@@ -98,16 +98,31 @@ class Notifier < ActionMailer::Base
   
   def billing_processed_alert(model, billing, invoice)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billed!'
-    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billable]     = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
-    @body[:invoice] = invoice
+    @body[:invoice]      = invoice
   end
   
   def billing_removed_alert(model, billing, invoice)
     setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
-    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billable]     = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
-    @body[:invoice] = invoice
+    @body[:invoice]      = invoice
+  end
+  
+  def tenant_billing_processed_alert(tenant)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billed!'
+    @body[:tenant]  = tenant
+    @body[:rental]  = tenant.rental
+    @body[:listing] = tenant.listing
+    @body[:invoice] = tenant.invoice
+  end
+  
+  def tenant_billing_removed_alert(tenant, billing, invoice)
+    setup_email 'info@usselfstoragelocator.com', 'USSSL Admin <notifier@usselfstoragelocator.com>', 'Client Billing Removed'
+    @body[:billable]     = billing.listing ? billing.listing : model
+    @body[:billing_info] = billing
+    @body[:invoice]      = invoice
   end
   
   #
@@ -124,13 +139,12 @@ class Notifier < ActionMailer::Base
     @body[:client] = client
   end
   
-  def rental_notification(rental)
+  def rental_notification(tenant)
     @header_img_name = 'unit_rental'
-    
-    setup_email rental.listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Tenant!'
-    @body[:tenant] = rental.tenant
-    @body[:rental] = rental
-    @body[:listing] = rental.listing
+    setup_email tenant.listing.notify_email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'New Rental!'
+    @body[:tenant]  = tenant
+    @body[:rental]  = tenant.rental
+    @body[:listing] = tenant.listing
   end
   
   def info_request_client_notification(info_request)
@@ -143,55 +157,55 @@ class Notifier < ActionMailer::Base
   
   def copy_to_all_listings_notification(client, listing, what)
     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your listings have been updated'
-    @body[:client] = client
+    @body[:client]  = client
     @body[:listing] = listing
-    @body[:what] = what
+    @body[:what]    = what
   end
 
   def activated_listings_notification(client, listings)
     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Facilities Have Been Activated'
-    @body[:client] = client
+    @body[:client]   = client
     @body[:listings] = listings
   end
 
   def tracking_number_ready(client, listing)
     setup_email client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Tracking Number Is Ready'
-    @body[:client] = client
+    @body[:client]  = client
     @body[:listing] = listing
   end
   
   def review_published_notification(review, listing)
     setup_email listing.client.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Someone Has Reviewed Your Facility'
-    @body[:review] = review
+    @body[:review]  = review
     @body[:listing] = listing
   end
   
   def billing_processed_notification(model, billing, invoice)
     email = model.respond_to?(:email) ? model.email : model.notify_email
     setup_email email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Your Billing Info Has Been Updated'
-    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billable]     = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
-    @body[:invoice] = invoice
+    @body[:invoice]      = invoice
   end
   
   def billing_removed_notification(model, billing, invoice)
     email = model.respond_to?(:email) ? model.email : model.notify_email
     setup_email email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'Billing Has Ended'
-    @body[:billable] = billing.listing ? billing.listing : model
+    @body[:billable]     = billing.listing ? billing.listing : model
     @body[:billing_info] = billing
-    @body[:invoice] = invoice
+    @body[:invoice]      = invoice
   end
   
   #
   # TO: tenants, reservers, searchers
   #
   
-  def tenant_notification(rental)
+  def tenant_notification(tenant)
     @header_img_name = 'rental_confirm'
     
-    setup_email rental.tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', 'Your Self Storage Rental'
-    @body[:tenant] = rental.tenant
-    @body[:rental] = rental
+    setup_email tenant.email, 'USSelfStorageLocator.com <info@usselfstoragelocator.com>', "Your #{tenant.listing.storage_type.try(:titleize) || 'Self Storage'} Rental"
+    @body[:tenant] = tenant
+    @body[:rental] = tenant.rental
   end
   
   def subscriber_notification(subscriber)
@@ -211,7 +225,7 @@ class Notifier < ActionMailer::Base
     @header_img_name = 'info_request'
     
     setup_email info_request.email, 'USSSL Notifier <notifier@usselfstoragelocator.com>', 'We Received Your Request'
-    @body[:listing] = info_request.listing
+    @body[:listing]      = info_request.listing
     @body[:info_request] = info_request
   end
   
@@ -219,7 +233,7 @@ class Notifier < ActionMailer::Base
     setup_email recipient, client.email, 'Please review my facility'
     @body[:message] = message
     @body[:listing] = listing
-    @body[:client] = client
+    @body[:client]  = client
   end
   
   #

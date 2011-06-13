@@ -19,6 +19,7 @@ class IssnAdapter
   #
   # Data Retrieval
   #
+  
   def self.find_facilities(args = {})
     query = "&sPostalCode=#{escape_query args[:zip] || '85021'}&sCity=#{escape_query args[:city]}&sState=#{escape_query args[:state]}&sStreetAddress=#{escape_query args[:address]}&sMilesDistance=#{escape_query args[:within] || '15'}&sSizeCodes=#{escape_query args[:size_code]}&sFacilityFeatureCodes=#{escape_query args[:facility_feature_code]}&sSizeTypeFeatureCodes=#{escape_query args[:size_type_feature_code]}&sOrderBy=#{escape_query args[:order]}"
     call_and_parse 'findFacilities', query
@@ -66,6 +67,52 @@ class IssnAdapter
   def self.get_reserve_cost(facility_id, args = {})
     query = "&sFacilityId=#{facility_id}&sFacilityUnitTypesId=#{escape_query args[:type_id]}&sUnitId=#{escape_query args[:unit_id]}&sForDateYMD=#{escape_query args[:date]}"
     call_and_parse 'getReserveCost', query
+  end
+  
+  def self.build_issn_tenant_args(tenant, billing_info, rental)
+    usa = 'United States of America'
+    args = {
+      :type_id            => rental.size.unit_type.try(:sID),
+      :reserve_until_date => parse_date_to_YMD(rental.move_in_date),
+      :pay_months         => 0,
+      :tenant => {
+        :first_name => tenant.first_name,
+        :last_name  => tenant.last_name,
+        :address    => billing_info.address,
+        :address2   => '',
+        :city       => billing_info.city,
+        :state      => billing_info.state,
+        :zip        => billing_info.zip.to_s,
+        :country    => usa,
+        :home_phone => '',
+        :email      => tenant.email,
+        :billing => {
+          :address  => billing_info.address,
+          :address2 => '',
+          :city     => billing_info.city,
+          :state    => billing_info.state,
+          :zip      => billing_info.zip.to_s,
+          :country  => usa
+        },
+        :alt => {},
+        :military => {},
+      },
+      :pay_type => 'CC',
+      :credit_card => {
+        :type         => billing_info.card_type,
+        :name_on_card => billing_info.name,
+        :number       => billing_info.card_number,
+        :zip          => billing_info.zip.to_s,
+        :cvv          => billing_info.cvv.to_s,
+        :expires => {
+          :month => billing_info.expires_month,
+          :year  => "20#{billing_info.expires_year}"
+        }
+      },
+      :bank => {},
+      :check_number => '',
+      :amount_to_apply => rental.total.to_s
+    }
   end
   
   def self.process_new_tenant(facility_id, args = {})
