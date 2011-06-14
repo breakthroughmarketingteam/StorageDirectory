@@ -52,8 +52,9 @@ module GoToBillable #:nodoc:
 
       gtb.transaction_info({
         :transaction_type => options[:tran_type] || 'ES',
-        :memo             => options[:memo]      || "#{USSSL_DOMAIN} billing begin",
-        :occurrence_type  => options[:tran_type] || 'month',
+        :notes            => options[:notes]     || "#{USSSL_DOMAIN} billing begin",
+        :occurrence_type  => options[:occurence_type] || 'month',
+        :process_date     => options[:process_date],
         :amount           => options[:billing_amount].to_s,
         :invoice_id       => @billing.invoice_id
       })
@@ -73,19 +74,15 @@ module GoToBillable #:nodoc:
       
       if response[:status] == 'G'
         invoice = @billing.invoices.create response
-        self.send_billing_notifications @billing, invoice, true
+        self.send_billing_notifications @billing, invoice if self.is_a? Client
         self.billing_status = 'paying'
       else
         self.billing_status = 'failed'
         self.errors.add_to_base "Transaction Error: #{response[:description]}" 
       end
-    end
-    
-    def clean_billing_fields
-      cnum = m.billing_info.card_number
-      last4 = cnum[cnum.size - 4, cnum.size]
-      m.billing_info.card_number = last4
-      m.save
+      
+      self.clean_billing_fields!
+      response
     end
     
     def delete_pending_transactions!(billing, options = {})
@@ -105,7 +102,8 @@ module GoToBillable #:nodoc:
       puts "\n\n----->GTB RESPONSE RM\n----->#{response.inspect}\n\n"
       
       invoice = @billing.invoices.create response
-      self.send_billing_notifications @billing, invoice, false
+      self.send_billing_notifications @billing, invoice, false if self.is_a? Client
+      response
     end
     
     def card_type_code
@@ -126,6 +124,26 @@ module GoToBillable #:nodoc:
         :phone       => @billing.phone, 
         :email       => options[:email]
       }
+    end
+    
+    def clean_billing_fields!
+      self.billing_info.card_number = last4 self.billing_info.card_number
+      self.billing_info.save
+    end
+    
+    def billing_diff?(billing_attr)
+      return true unless billing_attr
+      cnum1 = last4 self.card_number
+      cnum2 = last4 billing_attr[:card_number]
+      cnum1 != cnum2
+    end
+    
+    def last4(c)
+      c[c.size - 4, c.size]
+    end
+    
+    def format_date(date)
+      date.strftime '%Y%m%d'
     end
    
   end # END InstanceMethods

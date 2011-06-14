@@ -5611,14 +5611,21 @@ $.fn.formatPhoneNum = function() {
 	return this.each(function(){
 		var $this = $(this);
 		
-		$this.keyup(function(e){
-			var curchr = $this.val().length,
-				curval = $this.val();
+		$this.blur(function() {
+			var len = $this.val().length,
+				val = $this.val(),
+				formatted;
 				
-			if (curchr == 3)
-				$this.val(curval + "-");
-			else if (curchr == 7)
-				$this.val(curval + "-");
+			switch (len) {
+				case 10:
+					formatted = val.substring(0,3) +'-'+ val.substring(3,6) +'-'+ val.substring(6,10);
+					$this.val(formatted);
+				break;
+				case 11:
+					formatted = val.substring(0,1) +'-'+ val.substring(1,4) +'-'+ val.substring(4,7) +'-'+ val.substring(7,11);
+					$this.val(formatted);
+				break;
+			}
 		});
 	});
 }
@@ -6770,6 +6777,7 @@ $(function(){
 					}
 					
 					$.setGmap(data.maps_data, 'main_map', last_index-1);
+					$('.click_to_view').phoneNumHider();
 					
 					// this updates the page count so the next time the user clicks, we pull the correct data
 					$('input[name=page]').val(page + 1);
@@ -7484,7 +7492,7 @@ $.activateSizeSelect = function(context) {
 	var $size_picker = $('.size_picker', context),
 		$size_img = $('img', $size_picker),
 		$size_select = $('.sizes_select', context);
-
+	
 	// preload
 	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){

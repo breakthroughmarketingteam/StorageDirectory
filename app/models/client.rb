@@ -133,7 +133,7 @@ class Client < User
     
     self.mailing_address_attributes = info.delete(:mailing_address_attributes) if info[:mailing_address_attributes]
     
-    if info[:billing_info_attributes]
+    if self.billing_diff? info[:billing_info_attributes]
       bi = info.delete(:billing_info_attributes)
       
       if self.billing_info.nil?
@@ -233,7 +233,7 @@ class Client < User
   
   def stats_cache_expiry
     factor = self.listings.size < 10 ? 10 : self.listings.size
-    (factor * 0.8).minutes
+    (factor * 7).minutes
   end
   
   def generate_client_stats(params)
@@ -269,7 +269,7 @@ class Client < User
     { :data => plot_data, :min => counts.min, :max => counts.max }
   end
   
-  def send_billing_notifications(billing, invoice, starting)
+  def send_billing_notifications(billing, invoice, starting = true)
     if starting # billing info saved
       Notifier.deliver_billing_processed_alert self, billing, invoice
       Notifier.deliver_billing_processed_notification self, billing, invoice

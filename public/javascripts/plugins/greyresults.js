@@ -476,6 +476,7 @@ $(function(){
 					}
 					
 					$.setGmap(data.maps_data, 'main_map', last_index-1);
+					$('.click_to_view').phoneNumHider();
 					
 					// this updates the page count so the next time the user clicks, we pull the correct data
 					$('input[name=page]').val(page + 1);
@@ -1190,7 +1191,7 @@ $.activateSizeSelect = function(context) {
 	var $size_picker = $('.size_picker', context),
 		$size_img = $('img', $size_picker),
 		$size_select = $('.sizes_select', context);
-
+	
 	// preload
 	var pre_loaded_size_icons = [];
 	$('option', $size_select).each(function(){

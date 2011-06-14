@@ -9,6 +9,10 @@ class BillingInfo < ActiveRecord::Base
   @@encryptables = [:card_number, :card_type, :cvv, :expires_month, :expires_year]
   cattr_reader :credit_cards, :pass, :merchant_id, :merchant_pin
   
+  def before_save
+    self.name = billable.name if self.name.blank?
+  end
+  
   def before_destroy
     (self.listing ? self.listing.client : self.billable).cancel_billing
   end
@@ -26,6 +30,10 @@ class BillingInfo < ActiveRecord::Base
   
   def invoice_id
     "#{self.listing ? "L-#{self.listing.id}" : "C-#{self.billable.id}"}-#{self.updated_at.to_i}"
+  end
+  
+  def invoice
+    self.invoices.last
   end
   
   def expires
