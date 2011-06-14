@@ -125,7 +125,8 @@ module GoToBillable #:nodoc:
     end
     
     def clean_billing_fields!
-      self.billing_info.update_attribute :card_number, last4(self.billing_info.card_number)
+      self.billing_info.card_number = last4 self.billing_info.card_number
+      self.billing_info.save
     end
     
     def billing_diff?(billing_attr)

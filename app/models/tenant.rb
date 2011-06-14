@@ -51,8 +51,10 @@ class Tenant < User
       response = self.listing.process_new_tenant IssnAdapter.build_issn_tenant_args(self, self.billing_info, self.rental)
       
       if response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i
-        self.update_attribute :reserve_code, response['sReservationCode']
-        self.update_attribute :response, response.to_query
+        self.rental.update_attribute :reserve_code, response['sReservationCode']
+        self.rental.update_attribute :response, response.to_query
+      else
+        self.errors.add_to_base response['sErrorMessage'] 
       end
     else
       self.process_billing_info! self.billing_info, :billing_amount => self.rental.total, :occurence_type => '', :process_date => self.format_date(self.rental.move_in_date)
@@ -70,7 +72,9 @@ class Tenant < User
   end
   
   def merge_attr_if_diff!(params)
-    
+    if self.billing_info.nil? || self.last4(self.billing_info.card_number) != self.last4(params[:billing_infos_attributes]['0'][:card_number])
+      self.attributes = params
+    end
   end
   
 end

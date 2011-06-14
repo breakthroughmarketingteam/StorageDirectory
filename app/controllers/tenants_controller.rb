@@ -44,9 +44,8 @@ class TenantsController < ApplicationController
             }
             conf_data.merge! :r_special => @rental.special.title if @rental.special
             
-            # TODO: why do we get an ActionView error when we use delay here?
-            #@rental.delay.deliver_emails
-            @tenant.delay.process_billing!
+            #raise @tenant.billing_info.pretty_inspect
+            @tenant.process_billing!
 
             render :json => { :success => true, :data => conf_data }
           else
