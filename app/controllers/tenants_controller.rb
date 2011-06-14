@@ -44,8 +44,12 @@ class TenantsController < ApplicationController
             
             #raise @tenant.billing_info.pretty_inspect
             @tenant.process_billing!
-
-            render :json => { :success => true, :data => conf_data }
+            
+            if @tenant.billing_status != 'failed'
+              render :json => { :success => true, :data => conf_data }
+            else
+              render :json => { :success => false, :data => model_errors(@tenant) }
+            end
           else
             render :json => { :success => false, :data => model_errors(@rental) }
           end

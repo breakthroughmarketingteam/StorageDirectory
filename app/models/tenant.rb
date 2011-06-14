@@ -59,7 +59,7 @@ class Tenant < User
     else
       response = self.process_billing_info! self.billing_info, :billing_amount => self.rental.total, :occurence_type => '', :process_date => self.format_date(self.rental.move_in_date)
       self.rental.update_attribute :conf_num, "#{self.id}-#{self.rental.id}"
-      self.rental.update_attribute :response, response.to_query
+      self.rental.update_attribute :response, response.inspect
     end
     
     self.deliver_emails

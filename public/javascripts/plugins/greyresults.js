@@ -1402,6 +1402,7 @@ $.fn.rental_form = function() {
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		$.activateSizeSelect(form);
 		$('.auto_next', '#new_tenant').autoNext();
+		$('.card_auto_select').cardAutoSelect();
 		
 		// pop up login form
 		$('#already_member', '#new_tenant').click(function() {

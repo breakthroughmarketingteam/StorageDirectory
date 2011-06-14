@@ -212,16 +212,22 @@
 								<div class="right">
 									<div class="stack">
 										<label class="block" for="tenant_billing_infos_attributes_0_card_type">Card Type:</label> 
-										<img alt="Credit Cards Accepted" src="/images/ui/storagelocator/credit-cards.jpg">
-										<select id="tenant_billing_infos_attributes_0_card_type" name="tenant[billing_infos_attributes][0][card_type]">
+										
+										<div id="cc_icons">
 											<% BillingInfo.credit_cards.each do |card| %>
-												<option value="<%= card %>"><%= card %></option>
+												<span class="cc_icon <%= card.downcase %>" title="<%= card %>"></span>
+											<% end %>
+										</div>
+										
+										<select class="hide card_select" id="tenant_billing_infos_attributes_0_card_type" name="tenant[billing_infos_attributes][0][card_type]">
+											<% BillingInfo.credit_cards.each do |card| %>
+												<option value="<%= card.downcase %>"><%= card %></option>
 											<% end %>
 										</select>
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_card_number">Card Number:</label> 
-										<input class="required credit_card" id="tenant_billing_infos_attributes_0_card_number" maxlength="16" name="tenant[billing_infos_attributes][0][card_number]" size="16" type="text" />
+										<input class="required credit_card card_auto_select" id="tenant_billing_infos_attributes_0_card_number" maxlength="16" name="tenant[billing_infos_attributes][0][card_number]" size="16" type="text" />
 									</div>
 									<div>
 										<label class="block" for="tenant_billing_infos_attributes_0_cvv">CVV:</label> 
