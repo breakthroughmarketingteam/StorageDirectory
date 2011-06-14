@@ -1852,8 +1852,10 @@ form .note{clear:both;display:block;font-size:80%;}
 .tooltip{display:none;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/text-bubble.png) no-repeat;height:56px;padding:20px 10px 0 10px;width:81px;font-size:12px;font-weight:bold;color:#4c4bcc;z-index:999;}
 #admin_hint{font-size:200%;font-weight:bold;color:#666;margin-top:100px;text-align:center;}
 #bluebar{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/header-border.png) no-repeat;height:75px;margin:0 auto;position:relative;top:-99px;width:996px;z-index:100;}
-.home_action #bluebar .block_content, .locator_action #bluebar .block_content{float: right;width: 362px;}
-#bluebar #toll-free{border-left: 1px solid #7674FF;border-right: 1px solid #7674FF;color: #FFFFFF;float: left;font-size: 14px;margin-top: 14px;padding: 0 15px;}
+.home_action #bluebar .block_content, .locator_action #bluebar .block_content{float: right;width: 380px;}
+#bluebar #toll-free{border-left: 1px solid #7674FF;border-right: 1px solid #7674FF;color: #FFFFFF;float: left;font-size: 12px;margin-top: 13px;padding: 0 15px;}
+#bluebar #toll-free .num{font-size:22px;}
+#bluebar #toll-free .lang{float:right;font-size:10px;}
 
 #fac_name span,.region_head_bar h2 span{font-size:14px;}
 #sl-tabs #sl-phone{color:#393;float:right;font-size:28px;font-weight:normal;margin-top:5px;}
@@ -2373,3 +2375,11 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 .self_storage_advertising #credit-cards{border-top:1px dashed #ccc;margin:0 15px 0 5px;padding-top:20px;}
 
 .flash{box-shadow:none;border:none;}
+
+#dsq-combo-widget #dsq-combo-content ul,
+#dsq-combo-widget #dsq-combo-content li,
+#dsq-combo-widget #dsq-combo-content ol,
+#dsq-combo-widget #dsq-combo-content div,
+#dsq-combo-widget #dsq-combo-content p,
+#dsq-combo-widget #dsq-combo-content a,
+#dsq-combo-widget #dsq-combo-content cite, 
