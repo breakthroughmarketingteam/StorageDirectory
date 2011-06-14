@@ -2678,9 +2678,10 @@ form .error p{margin:0 0 7px 0;}
 .new_action #workflow_nav .next{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}
-#rent-pop{margin:0 20px 15px;line-height:1.1;}
-#rent-pop p{margin-bottom:10px;}
+#rent-pop{margin:0 20px 15px;line-height:16px;}
+#rent-pop p{font-size: 12px;margin-bottom: 15px;}
 #rent-pop ul{list-style-position:inside;margin-left:20px;font-size:80%;}
+#rent-pop ul li{font-size: 12px;list-style: disc;}
 
 #body{width:872px;margin:0 auto;text-align:left;}
 #topbar{min-width:965px;border-bottom:1px solid #c0bedf;height:27px;background:#fff;}
@@ -3539,10 +3540,12 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 #smpl-lstng{margin:0 0 20px -7px;}
 #smpl-rentals{margin:0 0 20px -11px;}
 #social_box{overflow:hidden;margin-top:15px;padding-top: 2px;}
-#rent-pop .rent_continue{text-transform:none;}
-#rent_no{margin-top:8px}
+#rent-pop .rent_continue{border:1px solid #666;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;font-size: 14px;text-transform: none;text-decoration:none;font-weight:normal;}
+#rent-pop .rent_continue:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x scroll 0 0 transparent;}
+#rent_no{}
 #add_helptext_link{right:40px;top:47px;}
 #signup_agree_btns{float:right;width:30%;}
+#signup_agree_btns a{color:#4C4BCC;}
 
 /* Zendesk support tab */
 #zenbox_tab{border:solid 1px;cursor:pointer;height:108px;overflow:hidden;position:fixed;text-indent:-5000px;top:25%;width:33px;z-index:10000;}

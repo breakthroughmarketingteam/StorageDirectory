@@ -50,14 +50,16 @@ class Tenant < User
     if self.listing.issn_enabled?
       response = self.listing.process_new_tenant IssnAdapter.build_issn_tenant_args(self, self.billing_info, self.rental)
       
-      if response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i
-        self.rental.update_attribute :reserve_code, response['sReservationCode']
+      unless response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i
+        self.rental.update_attribute :conf_num, response['sReservationCode']
         self.rental.update_attribute :response, response.to_query
       else
         self.errors.add_to_base response['sErrorMessage'] 
       end
     else
-      self.process_billing_info! self.billing_info, :billing_amount => self.rental.total, :occurence_type => '', :process_date => self.format_date(self.rental.move_in_date)
+      response = self.process_billing_info! self.billing_info, :billing_amount => self.rental.total, :occurence_type => '', :process_date => self.format_date(self.rental.move_in_date)
+      self.rental.update_attribute :conf_num, "#{self.id}-#{self.rental.id}"
+      self.rental.update_attribute :response, response.to_query
     end
     
     self.deliver_emails

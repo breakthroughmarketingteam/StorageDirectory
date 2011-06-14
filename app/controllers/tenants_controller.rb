@@ -30,8 +30,6 @@ class TenantsController < ApplicationController
           @rental.apply_savings! params
 
           if @rental.save
-            @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
-
             conf_data = { 
               :r_name         => @tenant.name,
               :r_email        => @tenant.email,

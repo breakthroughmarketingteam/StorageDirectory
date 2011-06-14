@@ -82,6 +82,7 @@ module GoToBillable #:nodoc:
       end
       
       self.clean_billing_fields!
+      response
     end
     
     def delete_pending_transactions!(billing, options = {})
@@ -102,6 +103,7 @@ module GoToBillable #:nodoc:
       
       invoice = @billing.invoices.create response
       self.send_billing_notifications @billing, invoice, false if self.is_a? Client
+      response
     end
     
     def card_type_code
