@@ -35,7 +35,7 @@
 				
 				<p><span class="rslt-phone">
 					<% if result.premium? && result.tracked_number %>
-						<%= result.tracked_number %>
+						<span style="font-size:16px;"><%= result.tracked_number %></span>
 					<% elsif !result.any_phone.blank? %>
 						<a class="click_to_view" data-num="<%= result.any_phone  %>" href="/ajax/update_stat?model=Listing&amp;id=<%= result.id %>&amp;stat=phone_views">
 							View Phone Number
