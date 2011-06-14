@@ -62,7 +62,7 @@ class Tenant < User
       self.rental.update_attribute :response, response.inspect
     end
     
-    self.deliver_emails
+    self.deliver_emails if self.errors.empty?
   end
   
   # TODO: find out why i would get the following error when using the delay method outside of this method on an instance of rental
