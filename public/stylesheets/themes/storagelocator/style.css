@@ -2225,9 +2225,9 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 
 #blog_page{font-size:12px;margin:15px 20px 0;padding:0;}
 #blog_page .blog_post{border-bottom:1px dashed #ccc;padding:0 0 25px;margin-bottom:25px;}
-#blog_page h2{overflow:hidden;}
+#blog_page h2{overflow:hidden;font-size: 18px;padding-bottom: 15px;}
 #blog_page h2 a{font-size:28px;line-height:28px;margin:3px 0 8px;text-decoration:none;}
-#blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
+#blog_page h3, #blog-post h3{font-size: 18px;margin-bottom: 15px;margin-top: 25px;}
 #blog_page a{font-size:12px;}
 #blog_page hr, #blog-post hr{margin: 25px auto;border-top: 1px dashed #DDD;border-right: none;border-left: none;border-bottom: none;}
 #blog_page .post_date{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
@@ -2302,8 +2302,7 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
-#blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
-#blog-post p{font-size:12px;line-height:22px;margin-bottom:15px;}
+#blog-post p{font-size:12px;line-height:22px;margin-bottom:20px;}
 #blog_page li, #blog-post li{list-style:disc;margin-left: 40px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
