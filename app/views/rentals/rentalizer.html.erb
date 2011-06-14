@@ -116,25 +116,19 @@
 											<input type="hidden" name="rental[subtotal]" class="subtotal" />
 										</li>
 										<li class="admin_fee_wrap">
-											Admin Fees: 
+											One-time Admin Fee: 
 											<span class="right">
 												$<span class="admin_fee"><%= listing.admin_fee %></span>
 											</span>
 										</li>
 										<% unless listing.specials.empty? %>
-											<li class="discount_wrap">Specials: 
+											<li class="discount_wrap">Chosen Special: 
 												<span class="right">
 													-$<span class="discount"></span>
 												</span>
 												<input type="hidden" name="discount" class="discount" />
 											</li>
 										<% end %>
-										<li class="usssl_discount_wrap">
-											USSSL Discount: 
-											<span class="right">
-												-$<span class="usssl_discount"></span>
-											</span>
-										</li>
 										<li class="tax_wrap">
 											Tax: 
 											<span class="right">

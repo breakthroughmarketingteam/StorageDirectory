@@ -57,5 +57,6 @@
 				<span class="value" ><%= @client.mailing_address.city_state_zip if @client.mailing_address %></span>
 			</li>
 		</ul>
+		<%= hidden_field_tag :partial, 'owner_info' %>
 	</div>
 </div>

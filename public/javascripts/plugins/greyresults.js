@@ -1377,7 +1377,6 @@ $.fn.rental_form = function() {
 				month_rate : $('.month_rate', form),
 				paid_thru  : $('.paid_thru', form),
 				discount   : $('.discount' ,form),
-				usssl_discount : $('.usssl_discount' ,form),
 				admin_fee  : $('.admin_fee ', form),
 				tax_amt    : $('.tax_amt', form),
 				total	   : $('.total', form)

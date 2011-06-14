@@ -753,7 +753,7 @@ div.sl-table-exp .rental_duration ul li{font-size:80%;margin-right:10px;}
 
 #cc_icons{overflow:hidden;}
 .cc_icon{display:block;cursor:pointer;float:left;width:37px;height:24px;margin-right:5px;border:2px solid #fff;background-image:url(/images/ui/storagelocator/credit-cards.jpg);background-repeat:no-repeat;}
-#cc_icons .selected{border-color:#999;}
+#cc_icons .selected{border-color:#393;}
 .visa{background-position:0 0;}
 .discover{background-position:-75px 0;}
 .mastercard{background-position:-37px 0;}

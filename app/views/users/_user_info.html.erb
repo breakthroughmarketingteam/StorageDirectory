@@ -4,10 +4,15 @@
 			<% group.each do |key, val| %>
 				<li>
 					<span class="label"><%= key.to_s.titleize %>:</span>
-					<span><%= text_field_tag key, nice_output_by_type(val), :class => 'click_sel ps' %></span>
+					<span><%= f.text_field key, :value => nice_output_by_type(val), :class => 'click_sel ps' %></span>
 					<span class="dp"><%= nice_output_by_type(val) %></span>
 				</li>
 			<% end %>
 		</ul>
 	<% end %>
+	
+	<div class="stack right">
+		<%= hidden_field_tag :partial, 'user_info' %>
+		<%= f.submit 'Update' %>
+	</div>
 <% end %>

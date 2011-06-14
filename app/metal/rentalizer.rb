@@ -67,7 +67,7 @@ class Rentalizer
           multiplier += 1 if special && special.month_limit == 1 && move_date.day > half_month
           discount = calculate_special multiplier, special, subtotal
         elsif special
-          multiplier += 1 if multiplier == 1 && (special && special.function != '%')
+          multiplier += 1 if multiplier == 1 && (special && special.function != '%' && special.month_limit > 1)
           discount = calculate_special special.month_limit, special, subtotal
         else
           discount = 0.00
@@ -85,14 +85,13 @@ class Rentalizer
           :multiplier     => sprintf("%.2f", multiplier),
           :month_rate     => sprintf("%.2f", size.dollar_price),
           :discount       => sprintf("%.2f", discount),
-          :usssl_discount => sprintf("%.2f", usssl_discount),
           :subtotal       => sprintf("%.2f", subtotal),
           :admin_fee      => sprintf("%.2f", (listing.admin_fee || 0)),
           :tax_amt        => sprintf("%.2f", tax_amt),
           :total          => sprintf("%.2f", total)
         }
       else
-        out = { :paid_thru => 'N/A', :multiplier => 0, :month_rate => 0, :discount => 0, :usssl_discount => 0, :subtotal => 0, :admin_fee => 0, :tax_amt => 0, :total => 0 }
+        out = { :paid_thru => 'N/A', :multiplier => 0, :month_rate => 0, :discount => 0, :subtotal => 0, :admin_fee => 0, :tax_amt => 0, :total => 0 }
       end
       
       multi ? { :listing_id => listing.id, :calculation => out } : [{ :success => true, :data => out }.to_json, 'application/json']
