@@ -2366,3 +2366,11 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 .self_storage_advertising #credit-cards{border-top:1px dashed #ccc;margin:0 15px 0 5px;padding-top:20px;}
 
 .flash{box-shadow:none;border:none;}
+
+#dsq-combo-widget #dsq-combo-content ul,
+#dsq-combo-widget #dsq-combo-content li,
+#dsq-combo-widget #dsq-combo-content ol,
+#dsq-combo-widget #dsq-combo-content div,
+#dsq-combo-widget #dsq-combo-content p,
+#dsq-combo-widget #dsq-combo-content a,
+#dsq-combo-widget #dsq-combo-content cite, 
