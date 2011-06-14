@@ -62,7 +62,6 @@ class Reservation < ActiveRecord::Base
       :check_number => '',
       :amount_to_apply => self.fee.to_s + '0'
     }
-    puts args.inspect
     response = self.listing.process_new_tenant args
     
     if response['sErrorMessage'].blank? || response['sErrorMessage'] =~ /(Account Created)/i

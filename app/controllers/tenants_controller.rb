@@ -19,6 +19,7 @@ class TenantsController < ApplicationController
   
   def create
     @tenant = Tenant.find_by_email(params[:tenant][:email]) || Tenant.new(params[:tenant])
+    # TODO: work on this method
     @tenant.merge_attr_if_diff! params[:tenant] unless @tenant.new_record?
     
     respond_to do |format|
@@ -29,10 +30,6 @@ class TenantsController < ApplicationController
           @rental.apply_savings! params
 
           if @rental.save
-            @rental.update_attribute :conf_num, "#{@tenant.id}-#{@rental.id}"
-            # TODO: why do we get an ActionView error when we use delay here?
-            @rental.deliver_emails
-
             conf_data = { 
               :r_name         => @tenant.name,
               :r_email        => @tenant.email,
@@ -44,6 +41,9 @@ class TenantsController < ApplicationController
               :r_total        => "$#{sprintf("%.2f", @rental.total)}" 
             }
             conf_data.merge! :r_special => @rental.special.title if @rental.special
+            
+            #raise @tenant.billing_info.pretty_inspect
+            @tenant.process_billing!
 
             render :json => { :success => true, :data => conf_data }
           else
