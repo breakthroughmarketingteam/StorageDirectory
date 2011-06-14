@@ -5887,6 +5887,52 @@ $.fn.delayedRender = function() {
 	});
 }
 
+$.fn.cardAutoSelect = function() {
+	var card_regexes = {
+			amex: 		/^3[47]\d+/,
+			visa: 		/^4\d+/,
+			mastercard: /^5[1-5]\d+/,
+			discover: 	/^6(?:011|5[0-9]{2})/
+		},
+		card_finder = function(field, card_select, card_icons, blur) {
+			if (!blur && (field.value.length < 2 || field.value.length > 4)) return;
+			
+			for (card in card_regexes) {
+				if (card_regexes.hasOwnProperty(card)) {
+					if (card_regexes[card].test(field.value)) {
+						card_select.val(card);
+						$('.'+ card, card_icons).addClass('selected');
+						break;
+						
+					} else {
+						card_select.val('');
+						card_icons.children().removeClass('selected');
+					}
+				}
+			}
+		};
+	
+	return this.each(function() {
+		var card_field	= $(this),
+			card_icons 	= $('#cc_icons'),
+			card_select = $('select.card_select', card_icons.parent());
+			
+		card_field.keyup(function() {
+			card_finder(this, card_select, card_icons);
+			
+		}).blur(function() {
+			card_finder(this, card_select, card_icons, true);
+		});
+		
+		$('.cc_icon', card_icons).click(function() {
+			var icon = $(this);
+				
+			card_select.val(icon.attr('title').toLowerCase());
+			icon.addClass('selected');
+		});
+	});
+}
+
 // add a background to each table cell to make the column look like a sideways bar graph
 $.fn.barGraphCells = function() {
 	return;
@@ -7703,6 +7749,7 @@ $.fn.rental_form = function() {
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		$.activateSizeSelect(form);
 		$('.auto_next', '#new_tenant').autoNext();
+		$('.card_auto_select').cardAutoSelect();
 		
 		// pop up login form
 		$('#already_member', '#new_tenant').click(function() {
