@@ -1423,12 +1423,12 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_2 .found_box p.display span {color:#3333CB;font-weight:bold;}
 #workflow_steps .intro{margin:0 0 0 20px;}
 #signupstep_3 p{font-size:12px;line-height:18px;}
-#signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 20px;width:428px;}
+#signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 0 10px 20px;width:450px;}
 #signupstep_3 #contact_info_form p{overflow:hidden;}
 #signupstep_3 .right{width:43%;padding-right:10px;}
 #signupstep_3 label,#signupstep_3 input{margin:0 0 10px 0;}
 #signupstep_3 label{margin:0 0 2px;}
-#signupstep_3 input{color:#393;float:none;font-size:14px;font-weight:bold;width:186px;}
+#signupstep_3 input, #signupstep_5 input{color:#393;float:none;font-size:14px;font-weight:bold;width:186px;}
 #signupstep_3 #first_name{float:left;margin-right:10px;}
 #signupstep_3 .state{float:left;margin-right:10px;}
 #signupstep_3 #listing_state{width:121px;}
@@ -1439,6 +1439,32 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_3 .opt_in{float:left;}
 #signupstep_3 .opt_in label{display:block;float:left;margin:4px 0 0 10px;cursor:pointer;}
 #signupstep_3 #wants_newsletter{width:auto;margin:1px 0 0;float:left;}
+#signupstep_4 #list{margin: 50px 0 0 40px;}
+#signupstep_4 h4{margin-bottom: 15px;}
+#signupstep_4 #list ul{}
+#signupstep_4 #list li{background: url(/images/ui/storagelocator/check1.png) no-repeat 0 3px;font-size: 14px;height: 20px;margin-bottom: 5px;padding-left: 35px;padding-top: 8px;}
+#signupstep_4 #mem_options{background:#F2F7FF;border: 5px solid #ccc;border-radius: 12px;margin: 35px 10px 0 0;padding: 10px 20px;width: 345px;}
+#signupstep_4 #mem_options p span{text-decoration:underline;}
+#signupstep_4 #mem_options #btns{float: right;margin-right: 15px;margin-top: 20px;}
+#signupstep_4 #mem_options #btns li{background:url(/images/ui/storagelocator/memb_btn_off.png) no-repeat;height:37px;width:224px;}
+#signupstep_4 #mem_options #btns li:hover{background:url(/images/ui/storagelocator/memb_btn_hover.png) no-repeat;}
+#signupstep_4 #mem_options #btns li span{display: block;float: right;font-size: 14px;margin-right: 9px;margin-top: 12px;width: 175px;}
+#signupstep_4 #prices{margin-top: 32px;text-align: right;width: 85px;}
+#signupstep_4 #prices li{font-size: 14px;height: 37px;}
+#signupstep_5 #billing_info_form{background:#F2F7FF;border: 5px solid #ccc;border-radius: 12px;float:left;margin: 35px 10px 0 20px;padding: 10px 0 10px 20px;width: 450px;}
+#signupstep_5 .notice{text-decoration:underline;color:blue;}
+#signupstep_5 #billing_info_form input{width:186px;margin:0 10px 10px 0;padding:3px 6px;border: 1px solid #ccc;border-radius: 4px 4px 4px 4px;height: 22px;}
+#signupstep_5 #billing_info_form .req{color:red;font-size: 14px;font-weight: bold;}
+#signupstep_5 #billing_info_form .left{margin:0;width:50%;}
+#signupstep_5 #billing_info_form #cc_icons{margin-bottom: 12px;}
+#signupstep_5 #billing_info_form .state{float:left;}
+#signupstep_5 #billing_info_form #billing_state{width:115px;}
+#signupstep_5 #billing_info_form #billing_zip{width:47px;}
+#signupstep_5 #billing_info_form #billing_cc_number{width:128px;}
+#signupstep_5 #billing_info_form #billing_cc_cvc{width:34px;}
+#signupstep_5 #billing_info_form .cc_number{float:left;}
+#signupstep_5 #billing_info_form select.month{margin-right:10px;}
+#signupstep_5 img{margin:50px 0 0 20px;}
 #signupstep_6 > .left{height:295px;}
 #signupstep_6 > .left h4,#signupstep_6 .left .opt_in,#review_contact .email{margin-bottom:7px;}
 #signupstep_6 .listing_div{margin:0 0 7px 0;cursor:default;}
@@ -1459,7 +1485,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_6 #terms_use{float:right;margin-top:20px;width:200px;}
 #signupstep_6 #terms_use a{color:#4c4bcc;}
 #signupstep_6 #terms_use input{float:left;margin:0 10px 20px 0;}
-#signupstep_6 img{margin:30px 0 0 30px;}
+#signupstep_6 img{margin:60px 0 30px 75px;}
 #review_contact .listing_title{font-size:14px;margin-bottom:0;}
 #review_contact .listing_address{font-size:70%;}
 #signupstep_6 .left .opt_in{font-size:80%;padding:6px 0 4px 32px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/opt_in.png) no-repeat left center;}
