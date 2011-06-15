@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110602164208) do
+ActiveRecord::Schema.define(:version => 20110614213117) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -793,12 +793,13 @@ ActiveRecord::Schema.define(:version => 20110602164208) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "duration"
-    t.integer  "total"
+    t.float    "total"
     t.datetime "paid_thru"
     t.float    "savings"
     t.float    "tax_amt"
     t.float    "subtotal"
     t.string   "conf_num"
+    t.text     "response"
   end
 
   create_table "reservations", :force => true do |t|
@@ -1063,8 +1064,8 @@ ActiveRecord::Schema.define(:version => 20110602164208) do
     t.integer  "parent_id"
     t.integer  "left"
     t.integer  "right"
-    t.integer  "trial_days"
     t.string   "billing_status",                    :default => "free"
+    t.integer  "trial_days"
   end
 
   add_index "users", ["id", "email", "type", "company"], :name => "index_users_on_id_and_email_and_type_and_company"
