@@ -115,12 +115,6 @@
 											</span>
 											<input type="hidden" name="rental[subtotal]" class="subtotal" />
 										</li>
-										<li class="admin_fee_wrap">
-											One-time Admin Fee: 
-											<span class="right">
-												$<span class="admin_fee"><%= listing.admin_fee %></span>
-											</span>
-										</li>
 										<% unless listing.specials.empty? %>
 											<li class="discount_wrap">Chosen Special: 
 												<span class="right">
@@ -136,11 +130,23 @@
 											</span>
 											<input type="hidden" name="rental[tax_amt]" class="tax_amt" />
 										</li>
-										<li><hr /></li>
 										<li class="total_wrap">
+											Subtotal: 
+											<span class="right">
+												$<span class="total"></span>
+											</span>
+										</li>
+										<li class="admin_fee_wrap">
+											One-time Admin Fee: 
+											<span class="right">
+												$<span class="admin_fee"><%= listing.admin_fee %></span>
+											</span>
+										</li>
+										<li><hr /></li>
+										<li class="nettotal_wrap">
 											Move-In Total: 
 											<span class="right">
-												$<span class="total">0.00</span>
+												$<span class="nettotal">0.00</span>
 											</span>
 											<input type="hidden" name="rental[total]" class="total" />
 										</li>

@@ -71,12 +71,15 @@ class Listing < ActiveRecord::Base
   @@categories     = ['self storage', 'mobile storage', 'cold storage', 'car storage', 'boat storage', 'rv storage', 'truck rentals', 'moving companies']
   @@sortables      = %w(profile_completion state city clicks_count impressions_count info_requests_count)
   @@proration      = 0.03333
-  cattr_reader :top_types, :comparables, :searchables, :categories, :sortables
+  @@specials_limit = 3
+  cattr_reader :top_types, :comparables, :searchables, :categories, :sortables, :specials_limit
   
   def before_update
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
     self.ensure_both_state_fields_present!
+    self.can_only_have_limited_specials(3)
+    
     Listing.delay.set_short_url self if self.short_url.blank?
   end
   

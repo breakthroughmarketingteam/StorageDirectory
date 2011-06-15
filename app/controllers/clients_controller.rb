@@ -63,13 +63,14 @@ class ClientsController < ApplicationController
   
   def update    
     respond_to do |format|
-      if @client.update_info params[:client]
+      if @client.update_info params[:client], params[:billing_update]
         format.html do
           flash[:notice] = "#{params[:partial].titleize} updated successfully"
           redirect_to :action => 'edit'
         end
         
         format.js do
+          
           render :json => { :success => true, :data => render_to_string(:partial => params[:partial]) }
         end
         

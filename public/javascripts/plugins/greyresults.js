@@ -1379,19 +1379,26 @@ $.fn.rental_form = function() {
 				discount   : $('.discount' ,form),
 				admin_fee  : $('.admin_fee ', form),
 				tax_amt    : $('.tax_amt', form),
-				total	   : $('.total', form)
+				total	   : $('.total', form),
+				nettotal   : $('.nettotal', form)
 			};
 		
 		form.submit(function() {
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					for (key in data) {
-						inputs[key].each(function() {
-							if (this.tagName.toLowerCase() == 'input')
-								$(this).val(data[key]);
-							else
-								$(this).text(data[key]); 
-						});
+						try {
+							if (data.hasOwnProperty(key)) {
+								inputs[key].each(function() {
+									if (this.tagName.toLowerCase() == 'input')
+										$(this).val(data[key]);
+									else
+										$(this).text(data[key]); 
+								});
+							}
+						} catch(e) {
+							console.log(key, data, inputs)
+						}
 					}
 				});
 			});

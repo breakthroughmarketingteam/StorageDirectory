@@ -23,13 +23,15 @@ class Client < User
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
+  @@attribute_order << 'billing_status'
+  
   access_shared_methods
   acts_as_nested_set # to have sub users "managers"
   acts_as_gotobillable :merchant_id    => ::GTB_MERCHANT[:id], 
                        :merchant_pin   => ::GTB_MERCHANT[:pin], 
                        :ip_address     => ::SERVER_IP,
                        :debug          => (RAILS_ENV == 'development' ? '1' : '0')
-
+  
   # figure out how much to charge a client based on the product of the amount of units in use (e.g. billable listings) 
   # and the amount to charge per unit (e.g. 1-10 listings are 54.50 each, 11-25 are 49.50...)
   def billing_amount
@@ -124,7 +126,7 @@ class Client < User
     self.enabled_listings.all? &:verified?
   end
 
-  def update_info(info)
+  def update_info(info, billing_update = false)
     sets = info.delete(:settings)
     if sets
       settings = self.settings || self.build_settings(sets)
@@ -133,7 +135,7 @@ class Client < User
     
     self.mailing_address_attributes = info.delete(:mailing_address_attributes) if info[:mailing_address_attributes]
     
-    if self.billing_diff? info[:billing_info_attributes]
+    if billing_update && self.billing_diff?(info[:billing_info_attributes])
       bi = info.delete(:billing_info_attributes)
       
       if self.billing_info.nil?

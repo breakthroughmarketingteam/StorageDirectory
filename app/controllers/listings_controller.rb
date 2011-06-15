@@ -128,6 +128,8 @@ class ListingsController < ApplicationController
   end
   
   def profile
+    redirect_to edit_listing_path(@listing) if @listing.client.nil?
+    
     # when a user creates a listing, a partial pops up and they fill in the address and click edit, sending data via GET
     # we intercept those those values here and save it to the map that was created when they clicked new and typed in a title (blur event on the title input)
     unless params[:map].blank?

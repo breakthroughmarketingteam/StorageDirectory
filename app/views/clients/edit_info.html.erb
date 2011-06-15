@@ -1,4 +1,6 @@
 <% form_for @client, :html => { :id => 'edit_info' } do |f| %>
+	<%= hidden_field_tag :billing_update, 1 %>
+	
 	<% f.fields_for :billing_info, @billing_info do |bf| %>
 		<div class="ov-info-cnt right_space">
 			<ul>

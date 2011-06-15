@@ -74,11 +74,11 @@ class Rentalizer
         end
       
     		discount *= multiplier if (multiplier > 0.5 && multiplier <= 1)
-        subtotal =  multiplier * size.dollar_price
-        total    = (listing.admin_fee || 0) + subtotal - discount
+        subtotal = multiplier * size.dollar_price
+        total    = subtotal - discount
         tax_amt  = total * listing.tax_rate
-        total    -= usssl_discount
         total    += tax_amt
+        nettotal = total + (listing.admin_fee || 0)
       
         out = {
           :paid_thru      => get_paid_thru(listing, move_date, multiplier, special),
@@ -88,7 +88,8 @@ class Rentalizer
           :subtotal       => sprintf("%.2f", subtotal),
           :admin_fee      => sprintf("%.2f", (listing.admin_fee || 0)),
           :tax_amt        => sprintf("%.2f", tax_amt),
-          :total          => sprintf("%.2f", total)
+          :total          => sprintf("%.2f", total),
+          :nettotal       => sprintf("%.2f", nettotal)
         }
       else
         out = { :paid_thru => 'N/A', :multiplier => 0, :month_rate => 0, :discount => 0, :subtotal => 0, :admin_fee => 0, :tax_amt => 0, :total => 0 }
