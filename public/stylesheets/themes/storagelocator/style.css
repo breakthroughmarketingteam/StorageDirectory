@@ -1397,8 +1397,10 @@ form .error p{margin:0 0 7px 0;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
 #signupstep_2 .small_listings{float:right;}
-#signupstep_2 .small_listings,#signupstep_6 > .left{height:334px;width:100%;overflow-y:auto;}
-#signupstep_6 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
+#signupstep_2 .small_listings,#signupstep_4 > .left{height:334px;width:100%;overflow-y:auto;}
+#signupstep_4 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
+#workflow_steps .note{margin-top:10px;font-style:normal;color:#000;}
+#workflow_steps .note strong{font-size:12px;}
 #workflow_steps .right,#signupstep_2 .left{width:46%;}
 #workflow_steps .left{margin:0 0 0 20px;}
 #contact_info_form .left{margin:0;width:50%;}
@@ -1421,20 +1423,48 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_2 .found_box p.display span {color:#3333CB;font-weight:bold;}
 #workflow_steps .intro{margin:0 0 0 20px;}
 #signupstep_3 p{font-size:12px;line-height:18px;}
-#signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 20px;width:428px;}
+#signupstep_3 #contact_info_form{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;margin:20px 0 0 20px;padding:10px 0 10px 20px;width:450px;}
 #signupstep_3 #contact_info_form p{overflow:hidden;}
 #signupstep_3 .right{width:43%;padding-right:10px;}
 #signupstep_3 label,#signupstep_3 input{margin:0 0 10px 0;}
 #signupstep_3 label{margin:0 0 2px;}
-#signupstep_3 input{color:#393;float:none;font-size:14px;font-weight:bold;width:186px;}
+#signupstep_3 input, #signupstep_5 input{color:#393;float:none;font-size:14px;font-weight:bold;width:186px;}
 #signupstep_3 #first_name{float:left;margin-right:10px;}
-#signupstep_3 #listing_zip{width:20%;}
+#signupstep_3 .state{float:left;margin-right:10px;}
+#signupstep_3 #listing_state{width:121px;}
+#signupstep_3 #listing_zip{width:41px;}
 #signupstep_3 .city_state_zip input{width:10%;display:inline;}
 #signupstep_3 .city_state_zip #listing_city{margin-right:8px;width:48%;}
 #signupstep_3 .city_state_zip #listing_state{margin-right:8px;}
 #signupstep_3 .opt_in{float:left;}
 #signupstep_3 .opt_in label{display:block;float:left;margin:4px 0 0 10px;cursor:pointer;}
 #signupstep_3 #wants_newsletter{width:auto;margin:1px 0 0;float:left;}
+#signupstep_4 #list{margin: 50px 0 0 40px;}
+#signupstep_4 h4{margin-bottom: 15px;}
+#signupstep_4 #list ul{}
+#signupstep_4 #list li{background: url(/images/ui/storagelocator/check1.png) no-repeat 0 3px;font-size: 14px;height: 20px;margin-bottom: 5px;padding-left: 35px;padding-top: 8px;}
+#signupstep_4 #mem_options{background:#F2F7FF;border: 5px solid #ccc;border-radius: 12px;margin: 35px 10px 0 0;padding: 10px 20px;width: 345px;}
+#signupstep_4 #mem_options p span{text-decoration:underline;}
+#signupstep_4 #mem_options #btns{float: right;margin-right: 15px;margin-top: 20px;}
+#signupstep_4 #mem_options #btns li{background:url(/images/ui/storagelocator/memb_btn_off.png) no-repeat;height:37px;width:224px;}
+#signupstep_4 #mem_options #btns li:hover{background:url(/images/ui/storagelocator/memb_btn_hover.png) no-repeat;}
+#signupstep_4 #mem_options #btns li span{display: block;float: right;font-size: 14px;margin-right: 9px;margin-top: 12px;width: 175px;}
+#signupstep_4 #prices{margin-top: 32px;text-align: right;width: 85px;}
+#signupstep_4 #prices li{font-size: 14px;height: 37px;}
+#signupstep_5 #billing_info_form{background:#F2F7FF;border: 5px solid #ccc;border-radius: 12px;float:left;margin: 35px 10px 0 20px;padding: 10px 0 10px 20px;width: 450px;}
+#signupstep_5 .notice{text-decoration:underline;color:blue;}
+#signupstep_5 #billing_info_form input{width:186px;margin:0 10px 10px 0;padding:3px 6px;border: 1px solid #ccc;border-radius: 4px 4px 4px 4px;height: 22px;}
+#signupstep_5 #billing_info_form .req{color:red;font-size: 14px;font-weight: bold;}
+#signupstep_5 #billing_info_form .left{margin:0;width:50%;}
+#signupstep_5 #billing_info_form #cc_icons{margin-bottom: 12px;}
+#signupstep_5 #billing_info_form .state{float:left;}
+#signupstep_5 #billing_info_form #billing_state{width:115px;}
+#signupstep_5 #billing_info_form #billing_zip{width:47px;}
+#signupstep_5 #billing_info_form #billing_cc_number{width:128px;}
+#signupstep_5 #billing_info_form #billing_cc_cvc{width:34px;}
+#signupstep_5 #billing_info_form .cc_number{float:left;}
+#signupstep_5 #billing_info_form select.month{margin-right:10px;}
+#signupstep_5 img{margin:50px 0 0 20px;}
 #signupstep_6 > .left{height:295px;}
 #signupstep_6 > .left h4,#signupstep_6 .left .opt_in,#review_contact .email{margin-bottom:7px;}
 #signupstep_6 .listing_div{margin:0 0 7px 0;cursor:default;}
@@ -1455,7 +1485,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_6 #terms_use{float:right;margin-top:20px;width:200px;}
 #signupstep_6 #terms_use a{color:#4c4bcc;}
 #signupstep_6 #terms_use input{float:left;margin:0 10px 20px 0;}
-#signupstep_6 img{margin:30px 0 0 30px;}
+#signupstep_6 img{margin:60px 0 30px 75px;}
 #review_contact .listing_title{font-size:14px;margin-bottom:0;}
 #review_contact .listing_address{font-size:70%;}
 #signupstep_6 .left .opt_in{font-size:80%;padding:6px 0 4px 32px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/opt_in.png) no-repeat left center;}
@@ -2137,7 +2167,7 @@ p.breadcrumb a{color:#fff;}
 .ui-widget-header .ui-icon:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/close-btn-hover.png) no-repeat;}
 #clients_controller.new_action #workflow_steps #contact{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/phone.png) no-repeat;bottom:5px;font-size:14px;height:30px;left:20px;padding-left:40px;padding-top:8px;position:absolute;}
 #clients_controller.new_action #workflow_steps #contact strong{color:#4c4bcc;}
-#signupstep_2 img{margin:70px 0 0 75px;width:50%;}
+#signupstep_2 img{margin:50px 0 0 75px;width:50%;}
 #signupstep_3 img{height:195px;margin:60px 0 0 25px;width:214px;}
 
 .edit_rental input.short{width:100px;}
@@ -2234,9 +2264,9 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 
 #blog_page{font-size:12px;margin:15px 20px 0;padding:0;}
 #blog_page .blog_post{border-bottom:1px dashed #ccc;padding:0 0 25px;margin-bottom:25px;}
-#blog_page h2{overflow:hidden;}
+#blog_page h2{overflow:hidden;font-size: 18px;padding-bottom: 15px;}
 #blog_page h2 a{font-size:28px;line-height:28px;margin:3px 0 8px;text-decoration:none;}
-#blog_page h3, #blog-post h3{font-size: 22px;margin-bottom: 10px;}
+#blog_page h3, #blog-post h3{font-size: 18px;margin-bottom: 15px;margin-top: 25px;}
 #blog_page a{font-size:12px;}
 #blog_page hr, #blog-post hr{margin: 25px auto;border-top: 1px dashed #DDD;border-right: none;border-left: none;border-bottom: none;}
 #blog_page .post_date{background: url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/post-date-bg.png) no-repeat;color: #fff;text-shadow: 1px 1px 0 #666;}
@@ -2311,9 +2341,9 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 #blog-post{margin:20px;}
 #blog-post #post-date{font-size:12px;font-weight:bold;margin-bottom:10px;}
 #blog-post h1{color:#4C4BCC;font-size:28px;line-height:32px;margin-bottom:10px;}
-#blog-post h2{border-bottom:1px dashed #ccc;margin-bottom:20px;padding-bottom:15px;}
-#blog-post p{font-size:12px;line-height:22px;margin-bottom:15px;}
-#blog_page li, #blog-post li{list-style:disc;margin-left: 40px;}
+#blog-post p{font-size:12px;line-height:22px;margin-bottom:20px;}
+#blog_page ol li, #blog-post ol li{margin-left: 40px;}
+#blog_page ul li, #blog-post ul li{list-style:disc;margin-left: 40px;}
 #blog-post #tags h4{display:block;float:left;font-size:16px;margin-right:10px;}
 
 #sharing{background:url("http://mediacdn.disqus.com/1305767460/images/themes/houdini/backgrounds-sprite.png") repeat-x 0 0;border:1px solid rgba(0,0,0,0.15);border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:13px;line-height:14px;max-height:36px;overflow:hidden;position:relative;white-space:nowrap;height:24px;margin:20px;padding:5px 0;}
