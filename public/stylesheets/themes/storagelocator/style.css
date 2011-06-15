@@ -1397,13 +1397,13 @@ form .error p{margin:0 0 7px 0;}
 .workflow_step h3{font-size:32px;margin-bottom:10px;}
 .map_flow_step h3{font-size:28px;margin-bottom:15px;}
 #signupstep_2 .small_listings{float:right;}
-#signupstep_2 .small_listings,#signupstep_4 > .left{height:334px;width:100%;overflow-y:auto;}
-#signupstep_4 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
+#signupstep_2 .small_listings,#signupstep_6 > .left{height:334px;width:100%;overflow-y:auto;}
+#signupstep_6 > .left{background:#fff;height:265px;padding:15px;border:1px solid #ccc;border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px;}
 #workflow_steps .right,#signupstep_2 .left{width:46%;}
 #workflow_steps .left{margin:0 0 0 20px;}
 #contact_info_form .left{margin:0;width:50%;}
 #workflow_steps p{font-size:12px;line-height:16px;}
-#signupstep_4 .left{width:50%}
+#signupstep_6 .left{width:50%}
 #workflow_steps .check{-moz-border-radius:4px;border-radius:4px;-webkit-border-radius:4px;background:#fff;border:1px solid #ccc;height:8px;padding:3px 4px 5px;position:absolute;right:10px;top:35%;width:8px;}
 #workflow_steps .selected .check span{position:absolute;top:-13px;left:-5px;width:26px;height:26px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-check.png) no-repeat top left;}
 #workflow_steps .listing_div,.listings_box .listing_div{height:60px;margin:4px 6px;position:relative;cursor:pointer;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-bg.png) no-repeat left top #fff;border:1px solid #ccc;border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;}
@@ -1435,35 +1435,35 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_3 .opt_in{float:left;}
 #signupstep_3 .opt_in label{display:block;float:left;margin:4px 0 0 10px;cursor:pointer;}
 #signupstep_3 #wants_newsletter{width:auto;margin:1px 0 0;float:left;}
-#signupstep_4 > .left{height:295px;}
-#signupstep_4 > .left h4,#signupstep_4 .left .opt_in,#review_contact .email{margin-bottom:7px;}
-#signupstep_4 .listing_div{margin:0 0 7px 0;cursor:default;}
-#signupstep_4 div#review_contact{line-height:1.3;margin-top:10px;padding:0 10px 0;}
-#signupstep_4 .wraped,#signupstep_5 .wraped{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;height:240px;margin:20px 0 0 20px;padding:5px;width:455px;}
-#signupstep_5 .wraped{height:210px;padding:15px;width:425px;}
-#signupstep_5 .wraped a{color:#33c;}
-#signupstep_4 .wraped .inner{height:230px;overflow-y:auto;padding:10px 20px 0;}
-#signupstep_4 #review_contact .label{color:#999;float:left;font-size:12px;line-height:20px;margin-right:10px;text-align:right;width:105px;}
-#signupstep_4 #review_contact #name{margin-top:5px;}
-#signupstep_4 #review_contact p.name{margin-top:5px;}
-#signupstep_4 #review_contact #address{height:35px;}
-#signupstep_4 h4{font-size:16px;}
-#signupstep_4 h4#listings{margin:10px 0;}
-#signupstep_4 #review_contact p{line-height:20px;}
-#signupstep_4 p.opt_in{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-yes.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
-#signupstep_4 p.opt_out{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-no.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
-#signupstep_4 #terms_use{float:right;margin-top:20px;width:200px;}
-#signupstep_4 #terms_use a{color:#4c4bcc;}
-#signupstep_4 #terms_use input{float:left;margin:0 10px 20px 0;}
-#signupstep_4 img{margin:30px 0 0 30px;}
+#signupstep_6 > .left{height:295px;}
+#signupstep_6 > .left h4,#signupstep_6 .left .opt_in,#review_contact .email{margin-bottom:7px;}
+#signupstep_6 .listing_div{margin:0 0 7px 0;cursor:default;}
+#signupstep_6 div#review_contact{line-height:1.3;margin-top:10px;padding:0 10px 0;}
+#signupstep_6 .wraped,#signupstep_7 .wraped{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;height:240px;margin:20px 0 0 20px;padding:5px;width:455px;}
+#signupstep_7 .wraped{height:210px;padding:15px;width:425px;}
+#signupstep_7 .wraped a{color:#33c;}
+#signupstep_6 .wraped .inner{height:230px;overflow-y:auto;padding:10px 20px 0;}
+#signupstep_6 #review_contact .label{color:#999;float:left;font-size:12px;line-height:20px;margin-right:10px;text-align:right;width:105px;}
+#signupstep_6 #review_contact #name{margin-top:5px;}
+#signupstep_6 #review_contact p.name{margin-top:5px;}
+#signupstep_6 #review_contact #address{height:35px;}
+#signupstep_6 h4{font-size:16px;}
+#signupstep_6 h4#listings{margin:10px 0;}
+#signupstep_6 #review_contact p{line-height:20px;}
+#signupstep_6 p.opt_in{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-yes.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
+#signupstep_6 p.opt_out{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/newsletter-no.png) no-repeat;height:23px;margin-left:94px;padding:2px 0 0 30px;}
+#signupstep_6 #terms_use{float:right;margin-top:20px;width:200px;}
+#signupstep_6 #terms_use a{color:#4c4bcc;}
+#signupstep_6 #terms_use input{float:left;margin:0 10px 20px 0;}
+#signupstep_6 img{margin:30px 0 0 30px;}
 #review_contact .listing_title{font-size:14px;margin-bottom:0;}
 #review_contact .listing_address{font-size:70%;}
-#signupstep_4 .left .opt_in{font-size:80%;padding:6px 0 4px 32px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/opt_in.png) no-repeat left center;}
-#signupstep_5 #wrap{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;height:210px;margin:20px 0 0 20px;padding:20px;width:435px;}
-#signupstep_5 #wrap strong{color:#060;display:block;font-size:18px;margin-bottom:15px;}
-#signupstep_5 #wrap a{color:#4c4bcc;}
-#signupstep_5 img{margin:65px 0 0 40px;}
-#signupstep_5 .ajax_loader{margin:0;}
+#signupstep_6 .left .opt_in{font-size:80%;padding:6px 0 4px 32px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/opt_in.png) no-repeat left center;}
+#signupstep_7 #wrap{-moz-border-radius:12px;border-radius:12px;-webkit-border-radius:12px;background:#f2f7ff;border:5px solid #ccc;float:left;height:210px;margin:20px 0 0 20px;padding:20px;width:435px;}
+#signupstep_7 #wrap strong{color:#060;display:block;font-size:18px;margin-bottom:15px;}
+#signupstep_7 #wrap a{color:#4c4bcc;}
+#signupstep_7 img{margin:65px 0 0 40px;}
+#signupstep_7 .ajax_loader{margin:0;}
 .new_action #workflow_nav .next{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}

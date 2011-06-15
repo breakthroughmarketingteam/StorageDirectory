@@ -78,8 +78,16 @@
 			<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/step1b.png"/>
 	
 		</div> <!-- END step 3 -->
-
+		
 		<div id="signupstep_4" class="workflow_step">
+			STEP 4
+		</div>
+		
+		<div id="signupstep_5" class="workflow_step">
+			STEP 5
+		</div>
+		
+		<div id="signupstep_6" class="workflow_step">
 			<div class="intro">
 				<h3>What happens next...</h3>
 				<p>
@@ -89,7 +97,42 @@
 			</div>
 			
 			<div class="wraped">
-				<div class="inner hidden"></div>
+				<div class="inner hide">
+					<h4>Contact Information:</h4>
+
+					<div id="review_contact">
+						<div class="label">Company Name:</div> 
+						<p class="listing_title"></p>
+						
+						<div id="address" class="label">Company Address:</div> 
+						<p class="listing_address"></p>
+						
+						<div id="name" class="label">Name:</div> 
+						<p class="name"></p>
+
+						<div class="label">Phone:</div> 
+						<p class="phone"></p>
+
+						<div class="label">Email:</div> 
+						<p class="email"></p>
+					</div>
+
+					<p class="opt_choice"></p>
+
+					<div id="chosen_listings" class="hide">
+						<h4 id="listings">My Listings:</h4>
+						
+						<div class="small_listings">
+							<div class="listing_div">
+								<div class="left block num"></div>
+								<div class="listing_in">
+									<p class="listing_title"></p>
+									<p class="listing_address"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<img src="<%= request.protocol %>s3.amazonaws.com/storagelocator/images/ui/storagelocator/step4.png"/>
 			
@@ -130,7 +173,7 @@
 			
 		</div> <!-- END step 4 -->
 		
-		<div id="signupstep_5" class="workflow_step">
+		<div id="signupstep_7" class="workflow_step">
 			<div id="signup_processing">
 				<div class="intro">
 					<h3>Your account is being created.</h3>

@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   acts_as_csv
   
   @@searchables = %w(first_name last_name email)
-  @@attribute_order = %w(first_name last_name email company status report_recipients wants_newsletter login_count failed_login_count temp_password activation_code role_title current_login_at current_login_ip last_login_at last_login_ip last_request_at created_at updated_at)
+  @@attribute_order = %w(first_name last_name email company status report_recipients wants_newsletter login_count failed_login_count temp_password billing_status activation_code role_title current_login_at current_login_ip last_login_at last_login_ip last_request_at created_at updated_at)
   @@basic_attributes = %w(name email company status wants_newsletter login_count last_login_at)
   @@statuses = %w(unverified active suspended)
   @@sortables = %w(first_name last_name email company login_count failed_login_count last_request_at)

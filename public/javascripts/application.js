@@ -1820,46 +1820,82 @@ var workflow_settings = {
 			div_id  : 'signupstep_2',
 			action  : workflow_step2,
 			nav_vis : [
-				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
-				['skip', function(btn, wizard) { btn.fadeIn().bind('click', ensure_no_listings_checked) }],
-				['back', function(btn, wizard) { btn.show().unbind('click', close_pop_up_and_focus_on_fac_name).bind('click', close_pop_up_and_focus_on_fac_name) }]
+				['next', 'show'],
+				['skip', function(btn, wizard) { 
+					btn.fadeIn().bind('click', ensure_no_listings_checked) 
+				}],
+				['back', function(btn, wizard) { 
+					btn.show().unbind('click', close_pop_up_and_focus_on_fac_name).bind('click', close_pop_up_and_focus_on_fac_name) 
+				}]
 			]
 		},
 		{ 
 			div_id  : 'signupstep_3',
 			action  : workflow_step3,
 			nav_vis : [
-				['next', function(btn, wizard) { btn.text('Next').data('done', false).show() }],
-				['skip', function(btn, wizard) { btn.fadeOut().unbind('click', ensure_no_listings_checked) }],
-				['back', function(btn, wizard) { btn.unbind('click', close_pop_up_and_focus_on_fac_name) }]
+				['next', 'show'],
+				['skip', function(btn, wizard) { 
+					btn.fadeOut().unbind('click', ensure_no_listings_checked) 
+				}],
+				['back', function(btn, wizard) { 
+					btn.unbind('click', close_pop_up_and_focus_on_fac_name) 
+				}]
 			],
-			validate : function(wizard){ return $('#contact_info_form', wizard.workflow).runValidation().data('valid'); }
+			validate : function(wizard){ 
+				return true//$('#contact_info_form', wizard.workflow).runValidation().data('valid'); 
+			}
 		},
 		{ 
 			div_id  : 'signupstep_4',
 			action  : workflow_step4,
 			nav_vis : [
-				['next', function(btn, wizard) { btn.text('Submit').data('done', false); }],
+				['next', 'show'],
 				['skip', 'hide'],
 				['back', 'fadeIn']
 			],
 			validate : function(wizard) {
-				return $('#terms_use_check', wizard.workflow).runValidation().data('valid');
+				return true//$('#terms_use_check', wizard.workflow).runValidation().data('valid');
 			}
 		},
 		{ 
 			div_id  : 'signupstep_5',
 			action : workflow_step5,
 			nav_vis : [
-				['next', function(btn, wizard){ btn.text('Done').data('done', true); }],
+				['next', 'show'],
+				['skip', 'hide'],
+				['back', 'fadeIn']
+			]
+		},
+		{ 
+			div_id  : 'signupstep_6',
+			action  : workflow_step6,
+			nav_vis : [
+				['next', function(btn, wizard) { 
+					btn.text('Submit').data('done', false); 
+				}],
+				['skip', 'hide'],
+				['back', 'fadeIn']
+			],
+			validate : function(wizard) {
+				return true//$('#terms_use_check', wizard.workflow).runValidation().data('valid');
+			}
+		},
+		{ 
+			div_id  : 'signupstep_7',
+			action : workflow_step7,
+			nav_vis : [
+				['next', function(btn, wizard){ 
+					btn.text('Done').data('done', true); 
+				}],
 				['skip', 'hide'],
 				['back', 'fadeIn']
 			]
 		}
 	],
 	finish_action : function(wizard){ 
+		var msg = '<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>';
 		wizard.workflow.parent().dialog('destroy').remove();
-		$('#add-fac-form', '#top_fac_page').html('<span class="sub_head">Thanks for signing up! We\'ll contact you soon to help get you started.</span><span class="sub_head right"> -The USSSL Team</span>').css('width', '93.3%');
+		$('#add-fac-form', '#top_fac_page').html(msg).css('width', '93.3%');
 		$('#price-block',  '#top_fac_page').hide();
 		$('#chk_avail, .ajax_loader', '#new_client').hide();
 	}
@@ -1919,9 +1955,16 @@ function workflow_step3(wizard) {
 	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 }
 
-function workflow_step4() { // form data review
-	var wizard    = arguments[0],
-		review	  = $('#signupstep_4 .inner', wizard.workflow).html(''), // reset before filling in again if the user clicked back
+function workflow_step4(wizard) {
+
+}
+
+function workflow_step5(wizard) {
+
+}
+
+function workflow_step6(wizard) { // form data review
+	var review	  = $('#signupstep_6 .inner', wizard.workflow).hide(), // reset before filling in again if the user clicked back
 		listings  = $('#signupstep_2 .small_listings', wizard.workflow).find('input:checked'),
 		info	  = $('#signupstep_3 #contact_info_form', wizard.workflow).find('input'),
 		company	  = $('#client_company', '#new_client').val(),
@@ -1946,49 +1989,47 @@ function workflow_step4() { // form data review
 		}
 	});
 	
-	var review_html = '<h4>Contact Information:</h4>';
-	
-	review_html += '<div id="review_contact">';
-		review_html += '<div class="label">Company Name:</div> <p class="listing_title">'+ titleize(company) +'</p>';
-		review_html += '<div id="address" class="label">Company Address:</div> <p class="listing_address">' + 
-							wizard.form_data.mailing_address['address'] +'<br />'+ 
-							capitalize(wizard.form_data.mailing_address['city']) +', '+ 
-							capitalize(wizard.form_data.mailing_address['state']) +' '+ 
-							wizard.form_data.mailing_address['zip'] +'</p>';
-		review_html += '<div id="name" class="label">Name:</div> <p class="name">'+ wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name'] +'</p>';
-		
-		if (wizard.form_data.mailing_address['phone'] && wizard.form_data.mailing_address['phone'] != 'Phone Number') 
-			review_html += '<div class="label">Phone:</div> <p class="phone">'+ wizard.form_data.mailing_address['phone'] +'</p>';
-			
-		review_html += '<div class="label">Email:</div> <p class="email">'+ email +'</p>';
-	review_html += '</div>';
-	
-	review_html += (wizard.form_data.client['wants_newsletter'] ? '<p class="opt_in">Send' : '<p class="opt_out">Don\'t send') +' me the monthly newsletter.</p>';
+	$('p.listing_title', review).html(titleize(company));
+	$('p.listing_address', review).html(
+		wizard.form_data.mailing_address['address'] +'<br />'+ 
+		capitalize(wizard.form_data.mailing_address['city']) +', '+ 
+		capitalize(wizard.form_data.mailing_address['state']) +' '+ 
+		wizard.form_data.mailing_address['zip']
+	);
+	$('p.name', review).html(wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name']);
+	$('p.phone').html(wizard.form_data.mailing_address['phone']);
+	$('p.email', review).html(email);
+	$('p.opt_choice', review).html(wizard.form_data.client['wants_newsletter'] ? 'Send.' : 'Don\'t send me the newsletter');
+	$('p.email', review).html(email);
+	$('p.email', review).html(email);
 	
 	if (listings.length > 0) {
-		$('.attribute_fields .listing,.attribute_fields .map', review.next()).remove();
+		$('.attribute_fields .listing, .attribute_fields .map', review.next()).remove();
 		wizard.form_data.listings = [];
-		review_html += '<h4 id="listings">My Listings:</h4><div class="small_listings">';
+		var listing_box = $('div.small_listings', review),
+			listing_div = $('div.listing_div', review).hide(),
+			the_clone 	= listing.clone();
 		
 		listings.each(function(i) {
-			var title 	= titleize($('#Listing_'+ this.value +' .listing_title', wizard.workflow).text()),
-				address = titleize($('#Listing_'+ this.value +' .listing_address', wizard.workflow).html());
-			
 			wizard.form_data.listings.push(this.value);
+			var title 	   = titleize($('#Listing_'+ this.value +' .listing_title', wizard.workflow).text()),
+				address    = titleize($('#Listing_'+ this.value +' .listing_address', wizard.workflow).html()),
+				this_clone = the_clone.clone();
 			
-			review_html += '<div class="listing_div"><div class="left block num">'+ (i+1) +'</div><div class="listing_in">';
-			review_html += '<p class="listing_title">'+ title +'</p><p class="listing_address">'+ address +'</p></div></div>';
+			$('div.num', this_clone).html(i + 1);
+			$('p.listing_title', this_clone).html(title);
+			$('p.listing_address', this_clone).html(address);
+			
+			this_clone.appendTo(listing_box).show();
 		});
-		
-		review_html += '</div>';
 	}
 	
-	review.append(review_html);
-	
-	setTimeout(function(){ review.fadeIn(wizard.settings.fade_speed) }, 350);
+	setTimeout(function(){ 
+		review.fadeIn(wizard.settings.fade_speed);
+	}, 350);
 }
 
-function workflow_step5(wizard) {
+function workflow_step7(wizard) {
 	var post_this_thang = function() {
 		var nav_btns = $('.button', wizard.nav_bar).hide(),
 			ajax_loader = $('#signup_processing .ajax_loader', wizard.workflow).fadeIn(),
