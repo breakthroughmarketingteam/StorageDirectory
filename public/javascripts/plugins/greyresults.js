@@ -1377,7 +1377,6 @@ $.fn.rental_form = function() {
 				month_rate : $('.month_rate', form),
 				paid_thru  : $('.paid_thru', form),
 				discount   : $('.discount' ,form),
-				usssl_discount : $('.usssl_discount' ,form),
 				admin_fee  : $('.admin_fee ', form),
 				tax_amt    : $('.tax_amt', form),
 				total	   : $('.total', form)
@@ -1402,6 +1401,7 @@ $.fn.rental_form = function() {
 		new GreyWizard(form.parents('#rent_steps'), rent_workflow).begin_workflow_on(0);
 		$.activateSizeSelect(form);
 		$('.auto_next', '#new_tenant').autoNext();
+		$('.card_auto_select').cardAutoSelect();
 		
 		// pop up login form
 		$('#already_member', '#new_tenant').click(function() {
