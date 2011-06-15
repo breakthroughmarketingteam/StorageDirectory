@@ -33,7 +33,7 @@ $(function(){
 	
 	$('.focus_onload').eq(0).focus();
 	// highlight text within a text field or area when focused
-	$('.click_sel').live('focus', function() { $(this).select() });
+	$('.click_sel').live('focus', function() { $(this).select(); });
 	$('#auth_yourself').hide();
 	$('.ie_only').ieOnly(); // hidden unless ie
 	
