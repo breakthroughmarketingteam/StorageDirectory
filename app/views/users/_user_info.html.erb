@@ -2,9 +2,9 @@
 	<% user.ordered_attributes.in_groups_of(10, false).each do |group| %>
 		<ul class="member_attributes">
 			<% group.each do |key, val| %>
-				<li>
+				<li class="<%= user.class.editable_attr.include?(key) ? 'editable' : '' %>">
 					<span class="label"><%= key.to_s.titleize %>:</span>
-					<span><%= f.text_field key, :value => nice_output_by_type(val), :class => 'click_sel ps' %></span>
+					<span><%= f.text_field key, :value => nice_output_by_type(val), :class => 'click_sel np' %></span>
 					<span class="dp"><%= nice_output_by_type(val) %></span>
 				</li>
 			<% end %>

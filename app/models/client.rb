@@ -24,6 +24,8 @@ class Client < User
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
   @@attribute_order << 'billing_status'
+  @@editable_attr = %w(billing_status first_name last_name report_recipients temp_password status email company wants_newsletter)
+  cattr_reader :editable_attr
   
   access_shared_methods
   acts_as_nested_set # to have sub users "managers"
@@ -127,6 +129,8 @@ class Client < User
   end
 
   def update_info(info, billing_update = false)
+    self.merge_editable_with_params info, @@editable_attr if info[:email]
+    
     sets = info.delete(:settings)
     if sets
       settings = self.settings || self.build_settings(sets)
@@ -157,6 +161,12 @@ class Client < User
     end
     
     self.errors.empty? && self.save
+  end
+  
+  def merge_editable_with_params(params, editable)
+    params.each do |key, val|
+      self.send :"#{key}=", val if editable.include? key
+    end
   end
 
   def enable_listings!

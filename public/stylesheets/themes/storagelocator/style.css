@@ -2235,7 +2235,8 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 .member_attributes{overflow:hidden;width:50%;float:left;}
 .member_attributes li{font-size:80%;margin:0 0 5px 0;}
 .member_attributes .label{display:block;float:left;width:31%;font-weight:bold;text-align:right;margin-right:5px;}
-.member_attributes input{background:#EBEBEB;border:0 none;padding:0 2px;width:65%;}
+.member_attributes input{background:#EBEBEB;border:1px solid #ebebeb;padding:0 2px;width:65%;}
+.member_attributes .editable input{background:#fff;}
 .admin_listing_form legend{background:#EBEBEB;display:block;margin:10px 0;padding:5px 10px;width:98%;}
 .admin_listing_form input[type="text"],.admin_listing_form textarea{width:75%;}
 .admin_listing_form .shorter div.left{width:48%;}

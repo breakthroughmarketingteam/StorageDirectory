@@ -70,8 +70,11 @@ class ClientsController < ApplicationController
         end
         
         format.js do
-          
-          render :json => { :success => true, :data => render_to_string(:partial => params[:partial]) }
+          case params[:partial] when 'user_info'
+            render :action => :show, :layout => false
+          else
+            render :json => { :success => true, :data => render_to_string(:partial => params[:partial]) }
+          end
         end
         
       else
