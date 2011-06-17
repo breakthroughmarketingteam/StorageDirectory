@@ -9750,11 +9750,12 @@ var workflow_settings = {
 					billing_form = $('#signupstep_5 #billing_info_form', wizard.workflow);
 
 				$('#billing_name', billing_form).val($('#first_name', contact_form).val() +' '+ $('#last_name', contact_form).val());
-				$('#billing_address', billing_form).val($('#listing_address', contact_form).val()).select();
 				$('#billing_city', billing_form).val($('#listing_city', contact_form).val());
 				$('#billing_state', billing_form).val($('#listing_state', contact_form).val());
 				$('#billing_zip', billing_form).val($('#listing_zip', contact_form).val());
 				$('#billing_phone', billing_form).val($('#listing_phone', contact_form).val());
+				
+				setTimeout(function(){ $('#billing_address', billing_form).val($('#listing_address', contact_form).val()).select(); }, 350);
 			}
 		},
 		{ 
