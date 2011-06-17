@@ -80,7 +80,7 @@ $(function(){
 		$this.addClass('active');
 	});
 	
-	$('.selectable').live('click', function(){
+	$('.selectable').live('click', function() {
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
 			
@@ -119,11 +119,13 @@ $(function(){
 		if ($this.children('.radio_select').children(':radio').is(':checked'))
 			$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
 	});
-	radios.live('click', function() {
+	radios.live('click', radio_select);
+	$('#radio_wrap').live('click', radio_select);
+	function radio_select() {
 		var $this = $(this);
 		$this.siblings().removeClass('selected').find('.radio_select').find(':radio').attr('checked', false);
 		$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
-	});
+	}
 	
 	// Admin index page menu
 	if ($.on_page([['index', 'admin']])) {
@@ -1647,8 +1649,8 @@ $.fn.cardAutoSelect = function() {
 		
 		$('.cc_icon', card_icons).click(function() {
 			var icon = $(this);
-				
 			card_select.val(icon.attr('title').toLowerCase());
+			icon.siblings().removeClass('selected');
 			icon.addClass('selected');
 		});
 	});
@@ -1982,10 +1984,16 @@ var GreyWizard = function(container, settings) {
 	}
 	
 	this.may_move = function(step) {
-		var validated = true;
+		var validated = true,
+			validate = self.slide_data[self.current].validate;
 		
-		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) 
-			validated = self.slide_data[self.current].validate.call(this, self);
+		if (step > 0) {
+			if (typeof validate == 'function') 
+				validated = self.slide_data[self.current].validate.call(this, self);
+			else if (typeof validate == 'string') {
+				validated = $(validate, self.workflow).runValidation().data('valid');
+			}
+		}
 		
 		return validated && ((self.current + step) >= 0 && (self.current + step) < self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
 	}
@@ -2064,4 +2072,27 @@ function capitalize_addr(addr) {
 	});
 	
 	return capped;
+}
+
+// parse a query string
+function QueryData(queryString, preserveDuplicates) {
+    if (typeof queryString == 'undefined') queryString = location.search ? location.search: '';
+    if (queryString.charAt(0) == '?') queryString = queryString.substring(1);
+
+    if (queryString.length > 0) {
+        queryString = queryString.replace(/\+/g, ' ');
+        var queryComponents = queryString.split(/[&;]/g);
+
+        for (var index = 0, len = queryComponents.length; index < len; index++) {
+            var keyValuePair = queryComponents[index].split('='),
+				key 		 = decodeURIComponent(keyValuePair[0]),
+				value		 = keyValuePair.length > 1 ? decodeURIComponent(keyValuePair[1]) : '';
+
+            if (preserveDuplicates) {
+                if (! (key in this)) this[key] = [];
+                this[key].push(value);
+
+            } else this[key] = value;
+        }
+    }
 }

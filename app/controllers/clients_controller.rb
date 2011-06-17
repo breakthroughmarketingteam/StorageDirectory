@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   
-  ssl_required :index, :show, :edit, :edit_info, :update, :new_manager, :verify, :activate, :verify_listings, :create_note, :delete_note
+  ssl_required :index, :new, :create, :show, :edit, :edit_info, :update, :new_manager, :verify, :activate, :verify_listings, :create_note, :delete_note
   skip_before_filter :simple_auth, :only => :activate
   before_filter :get_model, :only => [:show, :update, :destroy, :verify]
   before_filter :get_client, :only => [:edit, :edit_info, :verify_listings, :new_manager]

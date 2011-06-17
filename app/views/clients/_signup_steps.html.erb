@@ -32,50 +32,50 @@
 				<p>This name and address will be used on your main Administrator Account, you'll have full access to all the facilities added to this account.</p>
 			</div>
 		
-		    <form action="" method="" id="contact_info_form" class="silent">
+		    <form id="contact_info_form" class="silent">
 				<div class="left">
 					<p>
-						<label>First Name:</label><br />
-						<input type="text" id="first_name" name="first_name" class="required" />
+						<label><span class="req">* </span>First Name:</label><br />
+						<input type="text" id="first_name" name="client[first_name]" class="required" />
 					</p>
 					<p>	
-						<label>Last Name:</label><br />
-						<input type="text" id="last_name" name="last_name" class="required" />
+						<label><span class="req">* </span>Last Name:</label><br />
+						<input type="text" id="last_name" name="client[last_name]" class="required" />
 					</p>	
 					<p>
-						<label>Facility Address (Line 1):</label><br />
-						<input type="text" id="listing_address" name="listing_address" class="required" />
+						<label><span class="req">* </span>Office Address:</label><br />
+						<input type="text" id="listing_address" name="client[mailing_address_attributes][address]" class="required" />
 					</p>
 					<p>
-						<label>Facility Address (Line 2):</label><br />
-						<input type="text" id="listing_address2" name="listing_address2" />
+						<label>Office Address 2:</label><br />
+						<input type="text" id="listing_address2" name="client[mailing_address_attributes][address2]" />
 					</p>
 				</div>
 				<div class="left">
 					<p>
-						<label>City:</label><br />
-						<input type="text" id="listing_city" name="listing_city" class="required autocomplete" data-autocomp-source="UsCity_names|5" />
+						<label><span class="req">* </span>City:</label><br />
+						<input type="text" id="listing_city" name="client[mailing_address_attributes][city]" class="required autocomplete" data-autocomp-source="UsCity_names|5" />
 					</p>
 					<p class="state">
-						<label>State:</label><br />
-						<input type="text" id="listing_state" name="listing_state" class="required autocomplete" data-autocomp-source="States_abbrevs|1" />
+						<label><span class="req">* </span>State:</label><br />
+						<input type="text" id="listing_state" name="client[mailing_address_attributes][state]" class="required autocomplete" data-autocomp-source="States_abbrevs|1" />
 					</p>
 					<p>
-						<label>Zip Code:</label><br />
-						<input type="text" id="listing_zip" maxlength="5" name="listing_zip" class="numeric_zip" />
+						<label><span class="req">* </span>Zip Code:</label><br />
+						<input type="text" id="listing_zip" maxlength="5" name="client[mailing_address_attributes][zip]" class="numeric_zip" />
 					</p>
 					<p>
-						<label>Phone Number:</label><br />
-						<input type="text" id="listing_phone" maxlength="14" name="listing_phone" class="numeric_phone" />
+						<label><span class="req">* </span>Phone Number:</label><br />
+						<input type="text" id="listing_phone" maxlength="14" name="client[mailing_address_attributes][phone]" class="numeric_phone" />
 					</p>
 					<p>
-						<label>Email:</label><br />
-						<input type="text" id="listing_email"/>
+						<label><span class="req">* </span>Email:</label><br />
+						<input type="text" id="listing_email" name="client[email]" />
 					</p>
 			
 				</div>
 				<p class="opt_in">
-					<input type="checkbox" name="wants_newsletter" id="wants_newsletter" value="1" checked="checked" />
+					<input type="checkbox" name="client[wants_newsletter]" id="wants_newsletter" value="1" checked="checked" />
 					<label for="wants_newsletter">Send me the latest news.</label>
 				</p>
 			</form>
@@ -95,15 +95,23 @@
 			<div id="mem_options" class="right">
 				<h4>Select a Membership Option</h4>
 				<p><span>30 Day Free Trial</span> will be included with all membership options.</p>
-				<ul id="btns">
-					<li><span>Monthly</span></li>
-					<li><span>Every 3 Months ($49.50/m)</span></li>
-					<li><span>Every 6 Months ($44.50/m)</span></li>
+				
+				<% @payment_plans = PaymentPlan.sorted %>
+				
+				<ul id="btns" class="mem_ops">
+					<% @payment_plans.each do |plan| %>
+						<li id="PaymentPlan_<%= plan.id %>" class="radio_wrap">
+							<span class="radio_select hide">
+								<%= radio_button_tag 'client[payment_plan_assign_attributes][payment_plan_id]', plan.id, false, :class => 'required payplan' %>
+							</span>
+							<span class="desc"><%= plan.description %></span>
+						</li>
+					<% end %>
 				</ul>
 				<ul id="prices">
-					<li>$54.50</li>
-					<li>$148.50</li>
-					<li>$267.00</li>
+					<% @payment_plans.each do |plan| %>
+						<li id="PaymentPlanPrice_<%= plan.id %>"><%= number_to_currency plan.recurring_cost %></li>
+					<% end %>
 				</ul>
 				<p style="margin-top:10px;">10 or more Facilities? Call us for more membership options.</p>
 			</div>
@@ -112,9 +120,9 @@
 				<h4>Rated Best Value for the Price</h4>
 				<ul>
 					<li>Increased Online Exposure</li>
-					<li>SEO &#38; Media Enhanced Facility Profile</li>
-					<li>Lead Tracking &#38; Periodic Reporting</li>
-					<li>Call Tracking &#38; Online Unit Rentals</li>
+					<li>SEO &amp; Media Enhanced Facility Profile</li>
+					<li>Lead Tracking &amp; Periodic Reporting</li>
+					<li>Call Tracking &amp; Online Unit Rentals</li>
 					<li>Inventory Synchronization</li>
 				</ul>
 			</div>
@@ -125,35 +133,42 @@
 		
 			<div class="intro">
 				<h3>Billing Information</h3> 
-				<p>Your account will not be billed at this time. <a class="notice" href="">After 30 days your account will be automatically renewed and your credit card billed unless your membership is cancelled.</a></p>
+				<p>You will <span class="underline">not</span> be billed until your 30 day trial has passed. This is a no obligation pay per month service and you can cancel at any time.</p>
 			</div>
 		
-		    <form action="" method="" id="billing_info_form" class="silent">
+		    <form id="billing_info_form" class="silent">
 				<div class="left">
 					<p>
-						<label><span class="req">* </span>Address:</label><br />
-						<input type="text" id="billing_address" name="billing_address" class="required" />
+						<label for="billing_address"><span class="req">* </span>Address:</label><br />
+						<input type="text" id="billing_address" name="client[billing_info_attributes][address]" class="required" />
 					</p>
 					<p>	
-						<label><span class="req">* </span>City:</label><br />
-						<input type="text" id="billing_city" name="billing_city" class="required" />
+						<label for="billing_city"><span class="req">* </span>City:</label><br />
+						<input type="text" id="billing_city" name="client[billing_info_attributes][city]" class="required" />
 					</p>	
-					<p class="state">
-						<label><span class="req">* </span>State:</label><br />
-						<input type="text" id="billing_state" name="billing_state" class="required" />
+					<p class="state uncollapse">
+						<span id="state_wrap" class="small_wrap">
+							<label for="billing_state"><span class="req">* </span>State:</label><br />
+							<input type="text" id="billing_state" name="client[billing_info_attributes][state]" class="required" />
+						</span>
+						<span id="zip_wrap" class="small_wrap">
+							<label for="billing_zip"><span class="req">* </span>Zip Code:</label><br />
+							<input type="text" id="billing_zip" name="client[billing_info_attributes][zip]" maxlength="5" class="required numeric_zip" />
+						</span>
 					</p>
 					<p>
-						<label><span class="req">* </span>Zip Code:</label><br />
-						<input type="text" id="billing_zip" name="billing_zip" maxlength="5" class="required numeric_zip" />
-					</p>
-					<p>
-						<label><span class="req">* </span>Phone Number:</label><br />
-						<input type="text" id="billing_phone" name="billing_phone" maxlength="14" class="required numeric_phone" />
+						<label for="billing_phone"><span class="req">* </span>Phone Number:</label><br />
+						<input type="text" id="billing_phone" name="client[billing_info_attributes][phone]" maxlength="14" class="required numeric_phone" />
 					</p>
 				</div>
 				<div class="left">
 					<p>
-						<label class="block" for="tenant_billing_infos_attributes_0_card_type"><span class="req">* </span>Card Type:</label> 
+						<label for="billing_name"><span class="req">* </span>Name on Credit Card:</label><br />
+						<input type="text" id="billing_name" name="client[billing_info_attributes][name]" class="required" />
+					</p>
+					
+					<div>
+						<p><label class="block"><span class="req">* </span>Card Type:</label> </p>
 						
 						<div id="cc_icons">
 							<% BillingInfo.credit_cards.each do |card| %>
@@ -161,58 +176,43 @@
 							<% end %>
 						</div>
 						
-						<select class="hide card_select" id="tenant_billing_infos_attributes_0_card_type" name="tenant[billing_infos_attributes][0][card_type]">
+						<select class="hide card_select" id="billing_card_type" name="client[billing_info_attributes][card_type]">
 							<% BillingInfo.credit_cards.each do |card| %>
 								<option value="<%= card.downcase %>"><%= card %></option>
 							<% end %>
 						</select>
-					</p>
-					<p>
-						<label><span class="req">* </span>Name on Credit Card:</label><br />
-						<input type="text" id="billing_cc_name" name="billing_cc_name" class="required" />
-					</p>
+					</div>
+					
 					<p class="cc_number">
-						<label><span class="req">* </span>Card Number:</label><br />
-						<input type="text" id="billing_cc_number" maxlength="16" name="billing_cc_number" class="required" />
+						<label for="billing_card_number"><span class="req">* </span>Card Number:</label><br />
+						<input type="text" id="billing_card_number" maxlength="16" name="client[billing_info_attributes][card_number]" class="required credit_card card_auto_select" />
 					</p>
-					<p>
-						<label><span class="req">* </span>CVC:</label><br />
-						<input type="text" id="billing_cc_cvc" maxlength="4" name="billing_cc_cvc" class="required" />
-					</p>
-					<p>
-						<label><span class="req">* </span>Expiration:</label><br />
-						<select name="month" class="month required" >
-						  	<option value="January">January</option>
-						  	<option value="February">February</option>
-						  	<option value="March">March</option>
-							<option value="April">April</option>
-							<option value="May">May</option>
-							<option value="June">June</option>
-							<option value="July">July</option>
-							<option value="August">August</option>
-							<option value="September">September</option>
-							<option value="October">October</option>
-							<option value="November">November</option>
-							<option value="December">December</option>
-						</select>
-						<select name="year" class="year required" >
-						  	<option value="2011">2011</option>
-						  	<option value="2012">2012</option>
-						  	<option value="2013">2013</option>
-							<option value="2014">2014</option>
-							<option value="2015">2015</option>
-							<option value="2016">2016</option>
-							<option value="2017">2017</option>
-							<option value="2018">2018</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-						</select>
+					<p class="uncollapse">
+						<span id="cvv_wrap" class="small_wrap">
+							<label for="billing_cvv"><span class="req">* </span>CVC:</label><br />
+							<input type="text" id="billing_cvv" maxlength="4" name="client[billing_info_attributes][cvv]" class="required" />
+						</span>
+						
+						<span id="expires_wrap" class="small_wrap">
+							<label><span class="req">* </span>Expiration:</label>
+							<select name="client[billing_info_attributes][expires_month]" id="billing_expires_month" class="month required" >
+							  	<% 1.upto(12) do |i| %>
+									<%= num = i < 10 ? "0#{i}" : i %>
+									<option value="<%= num %>"><%= num %></option>
+								<% end %>
+							</select>
+							<select name="client[billing_info_attributes][expires_year]" id="billing_expires_year" class="year required" >
+							  	<% 0.upto(11) do |i| %>
+									<option value="<%= year_from_now_plus i %>"><%= year_from_now_plus i %></option>
+								<% end %>
+							</select>
+						</span>
 					</p>
 			
 				</div>
 			</form>
 	  		
-			<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/step4.png">
+			<img src="http://s3.amazonaws.com/storagelocator/images/ui/storagelocator/step4.png" alt="" />
 	
 		</div> <!-- END step 5 -->
 		
@@ -228,29 +228,69 @@
 				<div class="inner hide">
 					<h4>Contact Information:</h4>
 
-					<div id="review_contact">
+					<div class="review_info">
 						<div class="label">Company Name:</div> 
-						<p class="listing_title"></p>
+						<p class="listing_title" data-field="client[company]"></p>
 						
-						<div id="address" class="label">Company Address:</div> 
-						<p class="listing_address"></p>
+						<div class="label address">Company Address:</div> 
+						<p class="listing_address" data-field="client[mailing_address_attributes][address]"></p>
+						<p class="listing_address" data-field="client[mailing_address_attributes][address2]"></p>
 						
-						<div id="name" class="label">Name:</div> 
-						<p class="name"></p>
+						<div class="label name">Name:</div> 
+						<p class="name" data-field="name"></p>
 
 						<div class="label">Phone:</div> 
-						<p class="phone"></p>
+						<p class="phone" data-field="client[mailing_address_attributes][phone]"></p>
 
-						<div class="label">Email:</div> 
-						<p class="email"></p>
+						<div class="label">Email:</div>
+						<p class="email" data-field="client[email]"></p>
+						
+						<p class="opt_choice" data-field="client[wants_newsletter]"></p>
 					</div>
+					
+					<h4>Billing Information:</h4>
+					
+					<div class="review_info">
+						<div class="label">Name on Card:</div> 
+						<p class="billing_name" data-field="client[billing_info_attributes][name]"></p>
+						
+						<div class="label">Card Type:</div> 
+						<p class="billing_zip" data-field="client[billing_info_attributes][card_type]"></p>
+						
+						<div class="label">Card Number:</div> 
+						<p class="billing_zip" data-field="client[billing_info_attributes][card_number]"></p>
+						
+						<div class="label">CVV:</div> 
+						<p class="billing_zip" data-field="client[billing_info_attributes][cvv]"></p>
+						
+						<div class="label">Expires:</div> 
+						<p class="billing_zip" data-field="expires"></p>
+						
+						<div class="label address">Address:</div> 
+						<p class="billing_address" data-field="client[billing_info_attributes][address]"></p>
+						
+						<div class="label">City:</div> 
+						<p class="billing_city" data-field="client[billing_info_attributes][city]"></p>
 
-					<p class="opt_choice"></p>
+						<div class="label">State:</div> 
+						<p class="billing_state" data-field="client[billing_info_attributes][state]"></p>
 
+						<div class="label">Zip:</div> 
+						<p class="billing_zip" data-field="client[billing_info_attributes][zip]"></p>
+					</div>
+					
+					<h4>Membership Option:</h4>
+					<ul id="review_btns" class="mem_ops">
+						<li class="selected">
+							<span class="desc"></span>
+						</li>
+					</ul>
+					<p class="topbtm_framed">Cost: <span id="plan_cost"></span> (Charged only after your 30 day free trial)</p>
+					
 					<div id="chosen_listings" class="hide">
 						<h4 id="listings">My Listings:</h4>
 						
-						<div class="small_listings">
+						<div class="listings_summary">
 							<div class="listing_div">
 								<div class="left block num"></div>
 								<div class="listing_in">
@@ -262,7 +302,7 @@
 					</div>
 				</div>
 			</div>
-			<img src="/images/ui/storagelocator/step6.png"/>
+			<img class="graphic" src="/images/ui/storagelocator/step6.png" alt="" />
 			
 			<div id="signup_agree_btns">
 				<p id="terms_use_check" class="agree_check">
@@ -272,7 +312,7 @@
 			
 				<p class="agree_check">
 					<input type="checkbox" name="client[rental_agree]" id="rental_agree" value="1" />
-					<label for="rental_agree"><%= auto_pop_up_link 'I&rsquo;m interested in Online Rentals!', 'rent-pop', { :title => 'Activate Online Rentals', :width => '500px', :height => 'auto', :modal => false } %></label>
+					<label for="rental_agree">I'm interested in Online Rentals! <%= help_pop_up_link 'rent-pop', :title => 'Activate Online Rentals' %></label>
 				</p>
 			</div>
 			<div id="rent-pop" class="hide">

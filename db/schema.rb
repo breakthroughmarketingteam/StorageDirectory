@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614213117) do
+ActiveRecord::Schema.define(:version => 20110617211729) do
 
   create_table "account_settings", :force => true do |t|
     t.integer  "client_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20110614213117) do
     t.string   "cvv"
     t.string   "expires_month"
     t.string   "expires_year"
+    t.string   "address2"
   end
 
   create_table "blast_clicks", :force => true do |t|
@@ -576,6 +577,7 @@ ActiveRecord::Schema.define(:version => 20110614213117) do
     t.string   "city"
     t.string   "state"
     t.string   "zip"
+    t.string   "address2"
   end
 
   add_index "mailing_addresses", ["user_id", "city", "state"], :name => "index_mailing_addresses_on_client_id_and_city_and_state"
@@ -655,6 +657,21 @@ ActiveRecord::Schema.define(:version => 20110614213117) do
   end
 
   add_index "pages", ["id", "title", "parent_id", "show_in_nav"], :name => "index_pages_on_id_and_title_and_parent_id_and_show_in_nav"
+
+  create_table "payment_plan_assigns", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "payment_plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payment_plans", :force => true do |t|
+    t.string   "title"
+    t.float    "price"
+    t.integer  "recurs",     :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payments", :force => true do |t|
     t.integer  "amount"

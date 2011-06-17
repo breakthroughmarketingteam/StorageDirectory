@@ -699,4 +699,8 @@ module ApplicationHelper
 		"<img id='siteseal' width='132' height='31' alt='Secured Site' src='#{request.protocol}seal.godaddy.com/images/3/siteseal_gd_3_h_l_m.gif' />"
   end
   
+  def year_from_now_plus(i)
+    Time.now.year + i
+  end
+  
 end

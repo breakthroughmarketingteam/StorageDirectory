@@ -3,6 +3,9 @@ class Client < User
   has_one :settings, :class_name => 'AccountSetting', :dependent => :destroy
   has_one :billing_info, :as => :billable, :dependent => :destroy
   has_one :mailing_address, :dependent => :destroy, :foreign_key => 'user_id'
+  has_one :payment_plan_assign, :dependent => :destroy
+  has_one :payment_plan, :through => :payment_plan_assign
+  
   has_many :listings, :dependent => :destroy, :foreign_key => 'user_id' do
     def billable() all.select { |l| l.billing_info.nil? } end
   end
@@ -18,7 +21,8 @@ class Client < User
   has_many :notes, :foreign_key => 'user_id', :order => 'created_at DESC'
   has_many :unsubs, :as => 'subscriber', :dependent => :destroy
   
-  accepts_nested_attributes_for :listings, :mailing_address, :billing_info
+  accepts_nested_attributes_for :listings, :mailing_address, :billing_info, :payment_plan_assign
+  
   named_scope :opted_in, :conditions => 'wants_newsletter IS TRUE'
   named_scope :activated, :conditions => { :status => 'active' }, :order => 'activated_at DESC'
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
@@ -61,6 +65,7 @@ class Client < User
     
     unless params.blank? 
       ma = self.build_mailing_address((params[:mailing_address] || {}).merge(:name => self.name, :company => self.company))
+      #self.build_and_process_billing_info self.billing_info, true, :billing_amount => self.payment_plan.price, :process_date => self.format_date(1.month.from_now)
       
       unless params[:listings].blank?
         self.listing_ids = params[:listings]
@@ -138,13 +143,23 @@ class Client < User
     end
     
     self.mailing_address_attributes = info.delete(:mailing_address_attributes) if info[:mailing_address_attributes]
+    self.build_and_process_billing_info info, billing_update, :billing_amount => self.billing_amount
     
+    if info[:password]
+      self.password = info[:password]
+      self.password_confirmation = info[:password_confirmation]
+    end
+    
+    self.errors.empty? && self.save
+  end
+  
+  def build_and_process_billing_info(info, billing_update = false, options = {})
     if billing_update && self.billing_diff?(info[:billing_info_attributes])
       bi = info.delete(:billing_info_attributes)
       
       if self.billing_info.nil?
         self.build_billing_info bi
-        self.process_billing_info!(self.billing_info, :billing_amount => self.billing_amount) if self.billing_info.save
+        self.process_billing_info!(self.billing_info, options) if self.billing_info.save
       else
         old_billing = self.billing_info
         
@@ -154,13 +169,6 @@ class Client < User
         end
       end
     end
-    
-    if info[:password]
-      self.password = info[:password]
-      self.password_confirmation = info[:password_confirmation]
-    end
-    
-    self.errors.empty? && self.save
   end
   
   def merge_editable_with_params(params, editable)

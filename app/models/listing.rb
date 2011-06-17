@@ -78,7 +78,6 @@ class Listing < ActiveRecord::Base
     self.storage_types = self.storage_types.join(',') if self.storage_types && self.storage_types.is_a?(Array)
     self.profile_completion = self.percent_complete
     self.ensure_both_state_fields_present!
-    self.can_only_have_limited_specials(3)
     
     Listing.delay.set_short_url self if self.short_url.blank?
   end

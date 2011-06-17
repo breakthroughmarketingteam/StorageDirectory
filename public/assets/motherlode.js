@@ -3049,12 +3049,12 @@ jQuery.fn.formBouncer = function(){
 jQuery.fn.runValidation = function(silent) {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
 		valid_phone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-		valid_date = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
-		valid_zip = /\d{5}/,
+		valid_date 	= /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
+		valid_zip 	= /\d{5}/,
 		numeric_class_regex = /(numeric_)/,
-		form  = $(this),
-		silent = silent || form.hasClass('silent');
-		errors = '';
+		form  		= $(this),
+		silent 		= silent || form.hasClass('silent'),
+		errors 		= '';
 		
 	function valid_credit_card(value) {
 		// accept only digits, dashes or spaces
@@ -3100,7 +3100,7 @@ jQuery.fn.runValidation = function(silent) {
 		if (!input.hasClass('invalid')) input.addClass('invalid').removeClass('hint_text');
 		$('.invalid', form).eq(0).focus();
 
-		$('.invalid', form).blur(function(){
+		$('.invalid:not(:radio, :checkbox)', form).blur(function(){
 			$(this).parent().runValidation(form.hasClass('silent'));
 		});
 	}
@@ -3123,7 +3123,7 @@ jQuery.fn.runValidation = function(silent) {
 					error = error_html(input, 'must be checked');
 					markInvalid(input, form);
 					
-				} else if (input.is(':radio') && !$('input[name='+ input.attr('name') +']:checked').length) {
+				} else if (input.is(':radio') && !$('input[name="'+ input.attr('name') +'"]:checked').length) {
 					error = '<p>pick one</p>';
 					markInvalid(input, form);
 					
@@ -3176,7 +3176,7 @@ jQuery.fn.runValidation = function(silent) {
 
 	});
 
-	errors != '' ? form.data('valid', false) : form.data('valid', true);
+	form.data('valid', errors == '');
 	
 	return form;
 };
@@ -4359,7 +4359,7 @@ $(function(){
 		$this.addClass('active');
 	});
 	
-	$('.selectable').live('click', function(){
+	$('.selectable').live('click', function() {
 		var $this = $(this),
 			checkbox = $('input[type=checkbox]', $this);
 			
@@ -4398,11 +4398,13 @@ $(function(){
 		if ($this.children('.radio_select').children(':radio').is(':checked'))
 			$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
 	});
-	radios.live('click', function() {
+	radios.live('click', radio_select);
+	$('#radio_wrap').live('click', radio_select);
+	function radio_select() {
 		var $this = $(this);
 		$this.siblings().removeClass('selected').find('.radio_select').find(':radio').attr('checked', false);
 		$this.addClass('selected').find('.radio_select').find(':radio').attr('checked', true);
-	});
+	}
 	
 	// Admin index page menu
 	if ($.on_page([['index', 'admin']])) {
@@ -5926,8 +5928,8 @@ $.fn.cardAutoSelect = function() {
 		
 		$('.cc_icon', card_icons).click(function() {
 			var icon = $(this);
-				
 			card_select.val(icon.attr('title').toLowerCase());
+			icon.siblings().removeClass('selected');
 			icon.addClass('selected');
 		});
 	});
@@ -6261,10 +6263,16 @@ var GreyWizard = function(container, settings) {
 	}
 	
 	this.may_move = function(step) {
-		var validated = true;
+		var validated = true,
+			validate = self.slide_data[self.current].validate;
 		
-		if (typeof self.slide_data[self.current].validate == 'function' && step > 0) 
-			validated = self.slide_data[self.current].validate.call(this, self);
+		if (step > 0) {
+			if (typeof validate == 'function') 
+				validated = self.slide_data[self.current].validate.call(this, self);
+			else if (typeof validate == 'string') {
+				validated = $(validate, self.workflow).runValidation().data('valid');
+			}
+		}
 		
 		return validated && ((self.current + step) >= 0 && (self.current + step) < self.num_slides) && (step < 0 || (step > 0 && !$('.next', self.workflow).data('done')));
 	}
@@ -6343,6 +6351,29 @@ function capitalize_addr(addr) {
 	});
 	
 	return capped;
+}
+
+// parse a query string
+function QueryData(queryString, preserveDuplicates) {
+    if (typeof queryString == 'undefined') queryString = location.search ? location.search: '';
+    if (queryString.charAt(0) == '?') queryString = queryString.substring(1);
+
+    if (queryString.length > 0) {
+        queryString = queryString.replace(/\+/g, ' ');
+        var queryComponents = queryString.split(/[&;]/g);
+
+        for (var index = 0, len = queryComponents.length; index < len; index++) {
+            var keyValuePair = queryComponents[index].split('='),
+				key 		 = decodeURIComponent(keyValuePair[0]),
+				value		 = keyValuePair.length > 1 ? decodeURIComponent(keyValuePair[1]) : '';
+
+            if (preserveDuplicates) {
+                if (! (key in this)) this[key] = [];
+                this[key].push(value);
+
+            } else this[key] = value;
+        }
+    }
 }
 
 // Greyresults 
@@ -7726,19 +7757,26 @@ $.fn.rental_form = function() {
 				discount   : $('.discount' ,form),
 				admin_fee  : $('.admin_fee ', form),
 				tax_amt    : $('.tax_amt', form),
-				total	   : $('.total', form)
+				total	   : $('.total', form),
+				nettotal   : $('.nettotal', form)
 			};
 		
 		form.submit(function() {
 			$.getJSON(form.attr('action'), form.serialize(), function(response) {
 				$.with_json(response, function(data) {
 					for (key in data) {
-						inputs[key].each(function() {
-							if (this.tagName.toLowerCase() == 'input')
-								$(this).val(data[key]);
-							else
-								$(this).text(data[key]); 
-						});
+						try {
+							if (data.hasOwnProperty(key)) {
+								inputs[key].each(function() {
+									if (this.tagName.toLowerCase() == 'input')
+										$(this).val(data[key]);
+									else
+										$(this).text(data[key]); 
+								});
+							}
+						} catch(e) {
+							console.log(key, data, inputs)
+						}
 					}
 				});
 			});
@@ -8415,6 +8453,7 @@ $(function() {
 							
 						} else wizard.begin_workflow_on(1);
 						
+						$('.card_auto_select').cardAutoSelect();
 						signup_form.data('saving', false);
 					});
 					
@@ -8476,8 +8515,8 @@ $(function() {
 		var $this = $(this);
 		$this.parents('.rent-pop').dialog('destroy');
 		
-		if ($this.attr('id') == 'rent_yes') $('#rental_agree', '#signupstep_4').attr('checked', true);
-		else $('#rental_agree', '#signupstep_4').attr('checked', false);
+		if ($this.attr('id') == 'rent_yes') $('#rental_agree', '#signupstep_6').attr('checked', true);
+		else $('#rental_agree', '#signupstep_6').attr('checked', false);
 		
 		return false;
 	});
@@ -9618,7 +9657,6 @@ var workflow_settings = {
 	slides : [
 		{
 			div_id  : 'signupstep_2',
-			action  : workflow_step2,
 			nav_vis : [
 				['next', 'show'],
 				['skip', function(btn, wizard) { 
@@ -9627,11 +9665,28 @@ var workflow_settings = {
 				['back', function(btn, wizard) { 
 					btn.show().unbind('click', close_pop_up_and_focus_on_fac_name).bind('click', close_pop_up_and_focus_on_fac_name) 
 				}]
-			]
+			],
+			action : function(wizard) {
+				var listings_box = $('.small_listings', wizard.workflow);
+
+				if (listings_box.children().length == 0) {
+					listings_box.hide();
+					var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
+					$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
+					$.appendListingDataToBox(wizard.slide_data[0].data, listing_prototype, listings_box);
+
+					setTimeout(function(){
+						listings_box.fadeIn(wizard.settings.fade_speed);
+						var listing_id = $.get_param_value('listing_id');
+
+						if (listing_id) 
+							$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
+					}, 350);
+				}
+			}
 		},
 		{ 
 			div_id  : 'signupstep_3',
-			action  : workflow_step3,
 			nav_vis : [
 				['next', 'show'],
 				['skip', function(btn, wizard) { 
@@ -9641,30 +9696,66 @@ var workflow_settings = {
 					btn.unbind('click', close_pop_up_and_focus_on_fac_name) 
 				}]
 			],
-			validate : function(wizard){ 
-				return true//$('#contact_info_form', wizard.workflow).runValidation().data('valid'); 
+			validate : '#contact_info_form',
+			action : function(wizard) {
+				var addresses = $.get_checked_listings_addresses(wizard),
+					city 	  = $('#listing_city', '#new_client').val(),
+					state 	  = $('#listing_state', '#new_client').val(),
+					zips	  = $.get_checked_listings_addresses(wizard, 'zip'),
+					email	  = $('#client_email', '#new_client').val();
+
+				if (addresses.length) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
+				if (zips.length) $('#listing_zip', wizard.workflow).val(zips[0]);
+
+				$('#listing_city', wizard.workflow).val(capitalize(city));
+				$('#listing_state', wizard.workflow).val(state.toUpperCase());
+				$('#listing_email', wizard.workflow).val(email);
+
+				// bind plugins and change pop_up title
+				$('.hintable', wizard.workflow).hinty();
+				$('.numeric_phone', wizard.workflow).formatPhoneNum();
+				$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
+
+				setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
 			}
 		},
 		{ 
 			div_id  : 'signupstep_4',
-			action  : workflow_step4,
 			nav_vis : [
 				['next', 'show'],
 				['skip', 'hide'],
 				['back', 'fadeIn']
 			],
-			validate : function(wizard) {
-				return true//$('#terms_use_check', wizard.workflow).runValidation().data('valid');
+			validate : '#btns',
+			action : function(wizard) {
+				if ($('.payplan:checked', '#mem_options').length == 0) {
+					var op = $('.payplan').eq(1); // the middle option
+					op.attr('checked', true);
+					op.parents('.radio_wrap').addClass('selected');
+				}
 			}
 		},
 		{ 
 			div_id  : 'signupstep_5',
-			action : workflow_step5,
 			nav_vis : [
-				['next', 'show'],
+				['next', function(btn, wizard) {
+					btn.text('Next');
+				}],
 				['skip', 'hide'],
 				['back', 'fadeIn']
-			]
+			],
+			validate : '#billing_info_form',
+			action : function(wizard) {
+				var contact_form = $('#signupstep_3 #contact_info_form', wizard.workflow),
+					billing_form = $('#signupstep_5 #billing_info_form', wizard.workflow);
+
+				$('#billing_name', billing_form).val($('#first_name', contact_form).val() +' '+ $('#last_name', contact_form).val());
+				$('#billing_address', billing_form).val($('#listing_address', contact_form).val()).select();
+				$('#billing_city', billing_form).val($('#listing_city', contact_form).val());
+				$('#billing_state', billing_form).val($('#listing_state', contact_form).val());
+				$('#billing_zip', billing_form).val($('#listing_zip', contact_form).val());
+				$('#billing_phone', billing_form).val($('#listing_phone', contact_form).val());
+			}
 		},
 		{ 
 			div_id  : 'signupstep_6',
@@ -9676,9 +9767,7 @@ var workflow_settings = {
 				['skip', 'hide'],
 				['back', 'fadeIn']
 			],
-			validate : function(wizard) {
-				return true//$('#terms_use_check', wizard.workflow).runValidation().data('valid');
-			}
+			validate : '#terms_use_check'
 		},
 		{ 
 			div_id  : 'signupstep_7',
@@ -9710,105 +9799,48 @@ function close_pop_up_and_focus_on_fac_name(event){
 	$('#client_company', '#new_client').focus();
 }
 
-function workflow_step2(wizard) {
-	var listings_box = $('.small_listings', wizard.workflow);
-	
-	if (listings_box.children().length == 0) {
-		listings_box.hide();
-		var listing_prototype = $('.listing_div', arguments[0].workflow).eq(0).removeClass('hidden').remove();
-		$('.found_box p span', wizard.workflow).text(wizard.slide_data[0].data.length); // number of listings returned
-		$.appendListingDataToBox(wizard.slide_data[0].data, listing_prototype, listings_box);
-		
-		setTimeout(function(){
-			listings_box.fadeIn(wizard.settings.fade_speed);
-			var listing_id = $.get_param_value('listing_id');
-			
-			if (listing_id) 
-				$('#Listing_'+ listing_id, listings_box).addClass('selected').find(':checkbox[name=listing_id]').attr('checked', true);
-		}, 350);
-	}
-	
-}
-
-function workflow_step3(wizard) {
-	var addresses = $.get_checked_listings_addresses(wizard),
-		city 	  = $('#listing_city', '#new_client').val(),
-		state 	  = $('#listing_state', '#new_client').val(),
-		zips	  = $.get_checked_listings_addresses(wizard, 'zip');
-	
-	$.setup_autocomplete('#listing_city', wizard.workflow);
-	
-	if (addresses.length == 1) $('#listing_address', wizard.workflow).val(capitalize_addr(addresses[0]));
-	else if (addresses.length > 1) $('#listing_address', wizard.workflow).autocomplete({ source: capitalize_addr(addresses || []) });
-	
-	if (zips.length == 1) $('#listing_zip', wizard.workflow).val(zips[0]);
-	else if (zips.length > 1) $('#listing_zip', wizard.workflow).autocomplete({ source: zips });
-	
-	$('#listing_city', wizard.workflow).val(capitalize(city));
-	$('#listing_state', wizard.workflow).val(state.toUpperCase());
-	
-	// bind plugins and change pop_up title
-	$('.hintable', wizard.workflow).hinty();
-	$('.numeric_phone', wizard.workflow).formatPhoneNum();
-	$('.city_state_zip .autocomplete', wizard.workflow).autocomplete();
-	
-	setTimeout(function(){ $('#first_name', wizard.workflow).focus() }, 350);
-}
-
-function workflow_step4(wizard) {
-
-}
-
-function workflow_step5(wizard) {
-
-}
-
 function workflow_step6(wizard) { // form data review
 	var review	  = $('#signupstep_6 .inner', wizard.workflow).hide(), // reset before filling in again if the user clicked back
 		listings  = $('#signupstep_2 .small_listings', wizard.workflow).find('input:checked'),
-		info	  = $('#signupstep_3 #contact_info_form', wizard.workflow).find('input'),
-		company	  = $('#client_company', '#new_client').val(),
-		email 	  = $('#client_email', '#new_client').val();
+		query_str = unescape($('#signupstep_3 #contact_info_form, #signupstep_4 #btns :checked, #signupstep_5 #billing_info_form', wizard.workflow).serialize());
 	
-	wizard.form_data.client = {};
-	wizard.form_data.mailing_address = {};
-	wizard.form_data.client['company'] = company;
-	wizard.form_data.client['email'] = email;
-	wizard.form_data['authenticity_token'] = $.get_auth_token();
-	
-	info.each(function() {
-		switch (this.name) {
-			case 'first_name' 		: wizard.form_data.client['first_name'] 	  = capitalize(this.value); break;
-			case 'last_name' 		: wizard.form_data.client['last_name'] 		  = capitalize(this.value); break;
-			case 'listing_address' 	: wizard.form_data.mailing_address['address'] = this.value; 	   		break;               
-			case 'listing_city' 	: wizard.form_data.mailing_address['city'] 	  = capitalize(this.value);	break;               
-			case 'listing_state' 	: wizard.form_data.mailing_address['state']   = this.value; 	   		break;               
-			case 'listing_zip' 		: wizard.form_data.mailing_address['zip'] 	  = this.value; 	   		break;               
-			case 'listing_phone' 	: wizard.form_data.mailing_address['phone']   = this.value || ''; 		break;
-			case 'wants_newsletter' : wizard.form_data.client[this.name] 	  	  = this.checked; 			break;
+	wizard.form_data = new QueryData(query_str);
+	wizard.form_data['client[company]'] = $('#client_company', '#new_client').val();
+	console.log(wizard.form_data)
+	for (field in wizard.form_data) {
+		if (wizard.form_data.hasOwnProperty(field)) {
+			console.log(field)
+			switch (field) {
+				case 'client[first_name]':
+				case 'client[last_name]':
+					$('p[data-field="name"]', '#signupstep_6').text(wizard.form_data['client[first_name]'] +' '+ wizard.form_data['client[last_name]']);
+					break;
+				case 'client[billing_info_attributes][expires_month]':
+				case 'client[billing_info_attributes][expires_year]':
+					$('p[data-field="expires"]', '#signupstep_6').text(wizard.form_data['client[billing_info_attributes][expires_month]'] +'/'+ wizard.form_data['client[billing_info_attributes][expires_year]']);
+					break;
+				case 'client[wants_newsletter]':
+					$('p[data-field="'+ field +'"]', '#signupstep_6').text((wizard.form_data[field] == '1' ? 'Send' : 'Don\'t send') + ' me the newsletter');
+					break;
+				default:
+					$('p[data-field="'+ field +'"]', '#signupstep_6').text(wizard.form_data[field]);
+			}
 		}
-	});
+	}
 	
-	$('p.listing_title', review).html(titleize(company));
-	$('p.listing_address', review).html(
-		wizard.form_data.mailing_address['address'] +'<br />'+ 
-		capitalize(wizard.form_data.mailing_address['city']) +', '+ 
-		capitalize(wizard.form_data.mailing_address['state']) +' '+ 
-		wizard.form_data.mailing_address['zip']
-	);
-	$('p.name', review).html(wizard.form_data.client['first_name'] +' '+ wizard.form_data.client['last_name']);
-	$('p.phone').html(wizard.form_data.mailing_address['phone']);
-	$('p.email', review).html(email);
-	$('p.opt_choice', review).html(wizard.form_data.client['wants_newsletter'] ? 'Send.' : 'Don\'t send me the newsletter');
-	$('p.email', review).html(email);
-	$('p.email', review).html(email);
+	var plan_id 	 = wizard.form_data['client[payment_plan_assign_attributes][payment_plan_id]'],
+		payment_plan = $('#PaymentPlan_'+ plan_id, '#signupstep_4'),
+		plan_cost 	 = $('#PaymentPlanPrice_'+ plan_id, '#signupstep_4');
+		
+	$('.desc', '#review_btns').text($('.desc', payment_plan).text());
+	$('#plan_cost', '#signupstep_6').text(plan_cost.text());
 	
 	if (listings.length > 0) {
 		$('.attribute_fields .listing, .attribute_fields .map', review.next()).remove();
 		wizard.form_data.listings = [];
-		var listing_box = $('div.small_listings', review),
+		var listing_box = $('div.listings_summary', review),
 			listing_div = $('div.listing_div', review).hide(),
-			the_clone 	= listing.clone();
+			the_clone 	= listing_div.clone();
 		
 		listings.each(function(i) {
 			wizard.form_data.listings.push(this.value);
@@ -9822,6 +9854,8 @@ function workflow_step6(wizard) { // form data review
 			
 			this_clone.appendTo(listing_box).show();
 		});
+		
+		listing_box.parent().fadeIn(wizard.settings.fade_speed);
 	}
 	
 	setTimeout(function(){ 

@@ -2364,12 +2364,12 @@ jQuery.fn.formBouncer = function(){
 jQuery.fn.runValidation = function(silent) {
 	var valid_email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
 		valid_phone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-		valid_date = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
-		valid_zip = /\d{5}/,
+		valid_date 	= /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/,
+		valid_zip 	= /\d{5}/,
 		numeric_class_regex = /(numeric_)/,
-		form  = $(this),
-		silent = silent || form.hasClass('silent');
-		errors = '';
+		form  		= $(this),
+		silent 		= silent || form.hasClass('silent'),
+		errors 		= '';
 		
 	function valid_credit_card(value) {
 		// accept only digits, dashes or spaces
@@ -2415,7 +2415,7 @@ jQuery.fn.runValidation = function(silent) {
 		if (!input.hasClass('invalid')) input.addClass('invalid').removeClass('hint_text');
 		$('.invalid', form).eq(0).focus();
 
-		$('.invalid', form).blur(function(){
+		$('.invalid:not(:radio, :checkbox)', form).blur(function(){
 			$(this).parent().runValidation(form.hasClass('silent'));
 		});
 	}
@@ -2438,7 +2438,7 @@ jQuery.fn.runValidation = function(silent) {
 					error = error_html(input, 'must be checked');
 					markInvalid(input, form);
 					
-				} else if (input.is(':radio') && !$('input[name='+ input.attr('name') +']:checked').length) {
+				} else if (input.is(':radio') && !$('input[name="'+ input.attr('name') +'"]:checked').length) {
 					error = '<p>pick one</p>';
 					markInvalid(input, form);
 					
@@ -2491,7 +2491,7 @@ jQuery.fn.runValidation = function(silent) {
 
 	});
 
-	errors != '' ? form.data('valid', false) : form.data('valid', true);
+	form.data('valid', errors == '');
 	
 	return form;
 };
