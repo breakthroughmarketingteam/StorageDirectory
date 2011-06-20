@@ -311,11 +311,8 @@ class Listing < ActiveRecord::Base
   end
   
   def ensure_both_state_fields_present!
-    if self.state.blank?
-      self.state = States.abbrev_of(self.full_state)
-    elsif self.full_state.blank?
-      self.state = States.name_of(self.state)
-    end
+    self.state = States.abbrev_of(self.full_state) if self.state.blank?
+    self.full_state = States.name_of(self.state) if self.full_state.blank?
   end
   
   def city_and_state

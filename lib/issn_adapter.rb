@@ -241,7 +241,7 @@ class IssnAdapter
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     
-    full_url = uri.path + path_str(method, query)
+    full_url = @@host + uri.path + path_str(method, query)
     puts '*******************************************'
     puts "SENDING ISSN REQUEST: #{full_url}"
     puts '*******************************************'
