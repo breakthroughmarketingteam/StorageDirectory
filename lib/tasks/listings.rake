@@ -65,5 +65,12 @@ namespace :listings do
       puts "DONE!"
     end
     
+    desc "Purge data from all issn facilities"
+    task :purge do
+      fi = FacilityInfo.all
+      ls = fi.map &:listing
+      ls.each { |l| l.purge_issn_data; l.purge_own_data; puts "Purged data (#{l.id}) #{l.title} in #{l.full_address}" }
+    end
+    
   end
 end
