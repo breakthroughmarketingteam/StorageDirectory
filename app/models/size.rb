@@ -12,7 +12,7 @@ class Size < ActiveRecord::Base
   cattr_reader :threshold
   attr_accessor :special
   
-  def before_save
+  def before_update
     self.sqft = self.width * self.length
   end
   

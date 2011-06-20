@@ -700,7 +700,7 @@ class Listing < ActiveRecord::Base
   def sync_sizes_with_unit_types
     Size.transaction(:requires_new => true) do
       self.unit_types.each do |unit_type|
-        size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.build
+        size = self.sizes.find_by_id(unit_type.size_id) || self.sizes.create
         unit_type.update_attribute :size_id, size.id
         unit_type.update_features
         
@@ -709,12 +709,12 @@ class Listing < ActiveRecord::Base
         args = {
           :width       => unit_type.ActualWidth,
           :length      => unit_type.ActualLength,
+          :sqft        => unit_type.ActualLength.to_i * unit_type.ActualWidth.to_i,
           :price       => unit_type.RentalRate * 100, # convert to cents (integer)
           :title       => type,
           :description => (unit_type.features.first.long_description || type)
         }
-        size.attributes.merge args
-        size.save unless size.width.blank?
+        size.update_attributes args
       end
     end
   end
@@ -722,10 +722,9 @@ class Listing < ActiveRecord::Base
   def sync_specials_with_promos
     Special.transaction(:requires_new => true) do
       self.promos.each do |promo|
-        special = self.specials.find_by_id(promo.special_id) || self.specials.build
+        special = self.specials.find_by_id(promo.special_id) || self.specials.create
         promo.update_attribute :special_id, special.id
-        special.attributes.merge :title => promo.Description, :code => promo.Code
-        special.save
+        special.update_attributes :title => promo.Description, :code => promo.Code
       end
     end
   end
