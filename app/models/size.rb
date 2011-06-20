@@ -13,7 +13,7 @@ class Size < ActiveRecord::Base
   attr_accessor :special
   
   def before_save
-    self.sqft = (self.width || 0) * (self.length || 0)
+    self.sqft = self.width * self.length
   end
   
   def self.unit_type_labels
