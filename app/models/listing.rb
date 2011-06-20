@@ -739,7 +739,7 @@ class Listing < ActiveRecord::Base
   
   def purge_own_data
     self.sizes = []
-    self.specials = []
+    #self.specials = []
     self.save
   end
   
