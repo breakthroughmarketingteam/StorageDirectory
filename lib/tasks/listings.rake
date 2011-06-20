@@ -64,5 +64,6 @@ namespace :listings do
       
       puts "DONE!"
     end
+    
   end
 end

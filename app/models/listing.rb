@@ -676,7 +676,7 @@ class Listing < ActiveRecord::Base
     transaction do
       self.update_attributes :title =>  @fi.MS_Name, 
                              :description =>  @fi.O_FacilityName,
-                             :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
+                             :address => @fi.O_Address + (" #{@fi.O_Address2}" if @fi.O_Address2).to_s,
                              :city    => @fi.O_City,
                              :state   => @fi.O_StateOrProvince,
                              :zip     => @fi.O_PostalCode,
@@ -705,7 +705,7 @@ class Listing < ActiveRecord::Base
         unit_type.update_features
         
         type = unit_type.features.first.short_description
-      
+        
         args = {
           :width       => unit_type.ActualWidth,
           :length      => unit_type.ActualLength,
@@ -714,7 +714,7 @@ class Listing < ActiveRecord::Base
           :description => (unit_type.features.first.long_description || type)
         }
         size.attributes.merge args
-        size.save
+        size.save unless size.width.blank?
       end
     end
   end
