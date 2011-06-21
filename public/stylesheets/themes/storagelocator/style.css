@@ -1917,7 +1917,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .help-prof-comp ol{margin-left:30px;}
 .help-prof-comp ol li ul{font-style:italic;list-style:alpha;}
 
-#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
+#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;margin: 0 0 10px 20px;}
 #sl-tabs-overview  #hed h2#fac_name{border-top:none;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
 #sl-tabs #sl-phone{color:#339933;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
@@ -2409,10 +2409,4 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 
 .flash{box-shadow:none;border:none;}
 
-#dsq-combo-widget #dsq-combo-content ul,
-#dsq-combo-widget #dsq-combo-content li,
-#dsq-combo-widget #dsq-combo-content ol,
-#dsq-combo-widget #dsq-combo-content div,
-#dsq-combo-widget #dsq-combo-content p,
-#dsq-combo-widget #dsq-combo-content a,
-#dsq-combo-widget #dsq-combo-content cite, 
+#listings_controller.show_action #fb-share{float:right;width:151px;}
