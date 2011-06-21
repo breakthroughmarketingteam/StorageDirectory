@@ -1748,12 +1748,12 @@ form .error p{margin:0 0 7px 0;}
 #text-box2 p{color:#000;font-size:16px;line-height:22px;margin:0;}
 
 #price-block{float: left;font-size: 22px;line-height: 29px;margin-top: 11px;text-align: center;width: 345px;}
-#price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-size:15px;height:118px;line-height:28px;margin:0 0 0 5px;padding:14px 0 0 12px;text-align:center;width:335px;}
-#price-block .arrow strong{font-size:40px;}
+#price-block h4.arrow{background:url(/images/ui/storagelocator/try-now-bg.png) no-repeat;color:#000;font-family:arial;font-size:24px;font-weight: normal;height:128px;line-height:28px;margin:19px 0 0 5px;padding:10px 0 0 5px;text-align:center;width:335px;}
+#price-block .arrow strong{font-size:48px;}
 #price-block h4{color:#000;font-size:15px;line-height:28px;margin:0;padding:0;text-align:center;width:390px;}
 #price-block a{font-weight:bold;text-decoration:none;}
 #price-block a:hover{color:orange;}
-#price-block p{color:#000;font-size:14px;font-style:italic;line-height:20px;margin:15px 0 0 0;text-align:center;}
+#price-block p{color:#000;font-size:14px;font-style:italic;line-height:20px;margin:10px 0 0 10px;text-align:center;}
 #price-block strong{color:#4C4BCC;font-size:30px;font-weight:bold;line-height:1.1;}
 #price-block span{font-weight:bold;}
 
@@ -1917,7 +1917,7 @@ form .note{clear:both;display:block;font-size:80%;}
 .help-prof-comp ol{margin-left:30px;}
 .help-prof-comp ol li ul{font-style:italic;list-style:alpha;}
 
-#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;}
+#sl-tabs-overview h2#fac_name{font-size:12px;font-weight:normal;float:left;margin: 0 0 10px 20px;}
 #sl-tabs-overview  #hed h2#fac_name{border-top:none;}
 #sl-tabs-overview h2#fac_name span{color:#4c4bcc;font-size:26px;font-weight:bold;}
 #sl-tabs #sl-phone{color:#339933;float:right;font-size:28px;font-weight:bold;margin-top:5px;}
@@ -2409,10 +2409,4 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 
 .flash{box-shadow:none;border:none;}
 
-#dsq-combo-widget #dsq-combo-content ul,
-#dsq-combo-widget #dsq-combo-content li,
-#dsq-combo-widget #dsq-combo-content ol,
-#dsq-combo-widget #dsq-combo-content div,
-#dsq-combo-widget #dsq-combo-content p,
-#dsq-combo-widget #dsq-combo-content a,
-#dsq-combo-widget #dsq-combo-content cite, 
+#listings_controller.show_action #fb-share{float:right;width:151px;}
