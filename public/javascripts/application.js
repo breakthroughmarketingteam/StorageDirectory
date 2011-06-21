@@ -2048,7 +2048,9 @@ function workflow_step7(wizard) {
 					$('#resend_link', wizard.workflow).attr('href', '/resend_activation/'+ data.activation_code);
 				}, function(data) {
 					// rerun this function if they click ok on the confirm dialog
-					$.greyConfirm('Uh oh, I got an error: <br />'+ data +"<br />Click Yes to try again. If this keeps happening, Cancel and <a href=\"/contact-us\">contact us</a>.", post_this_thang);
+					$.greyConfirm('Uh oh, I got an error: <br />'+ data +"<br />Click Yes to try again. If this keeps happening, Cancel and <a href=\"/contact-us\">contact us</a>.", post_this_thang, function() {
+						$('.back', wizard.nav_bar).click();
+					});
 					$('.button.back', wizard.nav_bar).fadeIn();
 				});
 
