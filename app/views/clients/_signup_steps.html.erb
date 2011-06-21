@@ -133,7 +133,11 @@
 		
 			<div class="intro">
 				<h3>Billing Information</h3> 
-				<p>You will <span class="underline">not</span> be billed until your 30 day trial has passed. <%= auto_pop_up_link 'This is a no obligation' %> pay per month service and you can cancel at any time.</p>
+				<p>You will <span class="underline">not</span> be billed until your 30 day trial has passed. <%= auto_pop_up_link 'This is a no obligation', 'on-ob', :title => 'No Obligation Membership' %> pay per month service and you can cancel at any time.</p>
+				<div id="on-ob">
+					<p>Try USSelfStorageLocator.com <strong>FREE for 30-Days</strong>. No Risk. No obligation. No billing.</p> 
+					<p>We require a valid credit card number should you decide to continue your subscription service after the free trial period has expired.  You will be sent a reminder notice prior to the trial period expiration. You can continue your service with USSelfStorageLocator.com on a monthly basis and cancel at any time. For more information regarding our service, contact USSelfStorageLocator.com at <%= USSSL_PHONE %>, and we will answer any questions regarding our free trial offer. Skip the trial-period now to receive greater savings. Call to find out how!</p>
+				</div>
 			</div>
 		
 		    <form id="billing_info_form" class="silent">
