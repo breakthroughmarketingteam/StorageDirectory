@@ -54,7 +54,7 @@ class Listing < ActiveRecord::Base
   validates_presence_of :title, :message => 'Facility Name can\'t be blank'
   
   access_shared_methods
-  acts_as_mappable :auto_geocode => { :field => :full_address, :error_message => 'could not be geocoded' }
+  acts_as_mappable
   ajaxful_rateable
   sitemap :order => 'updated_at DESC'
   
@@ -82,12 +82,25 @@ class Listing < ActiveRecord::Base
     Listing.delay.set_short_url self if self.short_url.blank?
   end
   
+  def after_create
+    self.delay.geocode_address
+  end
+  
   def before_destroy
     self.client.delete_pending_transactions! self.billing_info, :memo => "#{USSSL_DOMAIN} account canceled. Account #{self.id}" if self.billing_info
   end
   
   def self.verified_count
     self.count :conditions => { :status => 'verified' }
+  end
+  
+  def geocode_address
+    self.auto_geocode_address
+    self.save
+  end
+  
+  def auto_geocode_field
+    :full_address
   end
   
   #

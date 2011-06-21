@@ -1390,14 +1390,11 @@ $.fn.rental_form = function() {
 						try {
 							if (data.hasOwnProperty(key)) {
 								inputs[key].each(function() {
-									if (this.tagName.toLowerCase() == 'input')
-										$(this).val(data[key]);
-									else
-										$(this).text(data[key]); 
+									this.tagName.toLowerCase() == 'input' ? $(this).val(data[key]) : $(this).text(data[key]);
 								});
 							}
 						} catch(e) {
-							console.log(key, data, inputs)
+							//console.log(key, data, inputs)
 						}
 					}
 				});

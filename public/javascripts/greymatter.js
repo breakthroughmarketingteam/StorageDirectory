@@ -1913,8 +1913,17 @@ var GreyWizard = function(container, settings) {
 		self.set_nav();
 		
 		// bind events
-		self.nav_bar.find('.next, .skip').click(self.next);
+		self.nav_bar.find('.next, .skip').click(self.next)
 		self.nav_bar.find('.back').click(self.prev);
+		
+		$(self.workflow).keyup(function(e) {
+			var tag = e.target.tagName.toLowerCase();
+			
+			switch (e.which) {
+				case 13: case 39: // enter or right arrow
+					self.next(); break;
+			}
+		});
 		
 		if (self.title_bar.length) self.title_bar.change(function(){
 			if (self.slide_data[self.current].pop_up_title) $(this).text(self.slide_data[self.current].pop_up_title);

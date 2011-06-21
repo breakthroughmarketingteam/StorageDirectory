@@ -60,38 +60,42 @@ class Client < User
     b.size == 0 ? 1 : b.size
   end
   
+  def before_create
+    self.mailing_address.name    = self.name
+    self.mailing_address.company = self.company
+  end
+  
   def initialize(params = {})
-    super params[:client]
-    
-    unless params.blank? 
-      ma = self.build_mailing_address((params[:mailing_address] || {}).merge(:name => self.name, :company => self.company))
-      #self.build_and_process_billing_info self.billing_info, true, :billing_amount => self.payment_plan.price, :process_date => self.format_date(1.month.from_now)
+    # TODO: process billing with correct billing intervals
+    #self.build_and_process_billing_info self.billing_info, true, :billing_amount => self.payment_plan.price, :process_date => self.format_date(1.month.from_now)
+    unless params.blank?
+      super params[:client]
       
-      unless params[:listings].blank?
+      if params[:listings]
         self.listing_ids = params[:listings]
       else
-        listing = self.listings.build({
-          :title         => self.company, 
-          :status        => 'unverified', 
-          :category      => 'Storage', 
-          :storage_types => 'self storage', 
-          :address       => ma.address, 
-          :city          => ma.city, 
-          :state         => ma.state, 
-          :zip           => ma.zip, 
-          :phone         => ma.phone,
+        self.listings.build({
+          :title           => self.company, 
+          :status          => 'unverified', 
+          :category        => 'Storage', 
+          :storage_types   => 'self storage', 
+          :address         => params[:client][:mailing_address_attributes][:address], 
+          :city            => params[:client][:mailing_address_attributes][:city], 
+          :state           => params[:client][:mailing_address_attributes][:state], 
+          :zip             => params[:client][:mailing_address_attributes][:zip], 
+          :phone           => params[:client][:mailing_address_attributes][:phone],
           :renting_enabled => params[:client][:rental_agree]
         })
       end
       
-      self.role_id           = Role.get_role_id 'advertiser'
-      self.report_recipients = self.email
       self.user_hints        = UserHint.all
     end
     
-    self.trial_days     = USSSL_TRIAL_DAYS
-    self.billing_status = 'free'
-    self.type           = self.class.name # for some reason rails doesn't automagically set this like its supposed to!
+    super params[:client]
+    self.role_id           = Role.get_role_id 'advertiser'
+    self.report_recipients = self.email
+    self.trial_days        = USSSL_TRIAL_DAYS
+    self.billing_status    = 'free'
     self
   end
   

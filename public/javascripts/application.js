@@ -18,7 +18,7 @@ $(function() {
 	var twitcount = $("#TwitterCounter");
 	if (twitcount.length > 0) {
 		$.getJSON('http://api.twitter.com/1/users/show.json', { screen_name: 'StorageLocator' }, function(data) {
-			console.log(data)
+			//console.log(data)
 			twitcount.children('span').html(data.followers_count);
 	    });
 	}
@@ -1972,10 +1972,9 @@ function workflow_step6(wizard) { // form data review
 	
 	wizard.form_data = new QueryData(query_str);
 	wizard.form_data['client[company]'] = $('#client_company', '#new_client').val();
-	console.log(wizard.form_data)
+	
 	for (field in wizard.form_data) {
 		if (wizard.form_data.hasOwnProperty(field)) {
-			console.log(field)
 			switch (field) {
 				case 'client[first_name]':
 				case 'client[last_name]':

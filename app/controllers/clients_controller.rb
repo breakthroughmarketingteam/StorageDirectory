@@ -26,7 +26,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new params
     
-    if @client.save_without_session_maintenance
+    if @client.save
       Notifier.delay.deliver_client_notification @client
       Notifier.delay.deliver_new_client_alert @client
       
@@ -34,6 +34,8 @@ class ClientsController < ApplicationController
     else
       render :json => { :success => false, :data => model_errors(@client) }
     end
+  rescue
+    raise [@client, @client.errors.full_messages].pretty_inspect
   end
     
   def edit
