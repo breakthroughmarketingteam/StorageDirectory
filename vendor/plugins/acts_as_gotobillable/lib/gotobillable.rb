@@ -55,7 +55,7 @@ module GoToBillable #:nodoc:
         :occurrence_type   => options[:occurence_type] || 'month',
         :occurrence_number => options[:occurrence_number].to_s,
         :process_date      => options[:process_date],
-        :amount            => (options[:billing_amount] || 0).to_s,
+        :amount            => options[:billing_amount].to_s,
         :invoice_id        => (@billing.new_record? ? '' : @billing.invoice_id),
         :notes             => options[:notes]     || "#{USSSL_DOMAIN} billing begin",
       })

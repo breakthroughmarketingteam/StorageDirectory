@@ -14,7 +14,7 @@ class BillingInfo < ActiveRecord::Base
   end
   
   def before_destroy
-    (self.listing ? self.listing.client : self.billable).cancel_billing
+    #(self.listing ? self.listing.client : self.billable).cancel_billing
   end
   
   def obs_card_number
