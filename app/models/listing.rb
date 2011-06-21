@@ -311,11 +311,8 @@ class Listing < ActiveRecord::Base
   end
   
   def ensure_both_state_fields_present!
-    if self.state.blank?
-      self.state = States.abbrev_of(self.full_state)
-    elsif self.full_state.blank?
-      self.state = States.name_of(self.state)
-    end
+    self.state = States.abbrev_of(self.full_state) if self.state.blank?
+    self.full_state = States.name_of(self.state) if self.full_state.blank?
   end
   
   def city_and_state
@@ -679,7 +676,7 @@ class Listing < ActiveRecord::Base
     transaction do
       self.update_attributes :title =>  @fi.MS_Name, 
                              :description =>  @fi.O_FacilityName,
-                             :address => @fi.O_Address + (" ##{@fi.O_Address2}" if @fi.O_Address2).to_s,
+                             :address => @fi.O_Address + (" #{@fi.O_Address2}" if @fi.O_Address2).to_s,
                              :city    => @fi.O_City,
                              :state   => @fi.O_StateOrProvince,
                              :zip     => @fi.O_PostalCode,
@@ -708,10 +705,11 @@ class Listing < ActiveRecord::Base
         unit_type.update_features
         
         type = unit_type.features.first.short_description
-      
+        
         args = {
           :width       => unit_type.ActualWidth,
           :length      => unit_type.ActualLength,
+          :sqft        => unit_type.ActualLength.to_i * unit_type.ActualWidth.to_i,
           :price       => unit_type.RentalRate * 100, # convert to cents (integer)
           :title       => type,
           :description => (unit_type.features.first.long_description || type)
@@ -741,7 +739,7 @@ class Listing < ActiveRecord::Base
   
   def purge_own_data
     self.sizes = []
-    self.specials = []
+    #self.specials = []
     self.save
   end
   

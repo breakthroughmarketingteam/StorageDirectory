@@ -9755,7 +9755,10 @@ var workflow_settings = {
 				$('#billing_zip', billing_form).val($('#listing_zip', contact_form).val());
 				$('#billing_phone', billing_form).val($('#listing_phone', contact_form).val());
 				
-				setTimeout(function(){ $('#billing_address', billing_form).val($('#listing_address', contact_form).val()).select(); }, 350);
+				setTimeout(function(){ 
+					var adr = $('#listing_address', contact_form).val();
+					$('#billing_address', billing_form).val(adr).select(); 
+				}, 350);
 			}
 		},
 		{ 

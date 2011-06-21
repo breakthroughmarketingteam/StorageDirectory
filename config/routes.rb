@@ -189,6 +189,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ajax '/ajax/:action', :controller => 'ajax', :action => nil 
   map.paperclip_attachment '/images/:id', :controller => 'images', :action => 'show'#, :requirements => { :id => /\d*/ }
   
+  map.connect '/self-storage/washington-dc', :controller => 'listings', :action => 'locator', :storage_type => 'self storage', :city => 'Washington DC'
   map.old_facility '/self-storage/:title/:id', :controller => 'listings', :action => 'redir', :requirements => { :title => /\w+-?/, :id => /\d+/ }
   
   # for building routes
@@ -201,7 +202,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.truck_rentals '/truck-rentals', :controller => 'listings', :action => 'locator', :storage_type => 'Truck Rentals'
   map.moving_companies '/moving-companies', :controller => 'listings', :action => 'locator', :storage_type => 'Moving Companies'
-  map.facility    '/:storage_type/:city/:state/:title/:id', :controller => 'listings', :action => 'show'#, :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
+  map.facility '/:storage_type/:city/:state/:title/:id', :controller => 'listings', :action => 'show'#, :requirements => { :title => /[a-z]-?/, :storage_type => /(storage)/, :id => /[0-9]/ }
   
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'listings', :action => 'locator', :storage_type => 'self storage'
