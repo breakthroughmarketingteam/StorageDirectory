@@ -33,7 +33,9 @@ module GoToBillable #:nodoc:
   module InstanceMethods
     
     def before_destroy
-      delete_pending_transactions! self.billing_info, :memo => "#{USSSL_DOMAIN} account canceled. Account #{self.id}" if self.billing_info
+      if self.billing_info && self.billing_status == 'paying'
+        delete_pending_transactions! self.billing_info, :memo => "#{USSSL_DOMAIN} account canceled. Account #{self.id}"
+      end
       super
     end
     
