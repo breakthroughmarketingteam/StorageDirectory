@@ -61,7 +61,7 @@
 						<input type="text" id="listing_state" name="client[mailing_address_attributes][state]" class="required autocomplete" data-autocomp-source="States_abbrevs|1" />
 					</p>
 					<p>
-						<label><span class="req">* </span>Zip Code:</label><br />
+						<label><span class="req">* </span>Zip:</label><br />
 						<input type="text" id="listing_zip" maxlength="5" name="client[mailing_address_attributes][zip]" class="numeric_zip" />
 					</p>
 					<p>
@@ -133,7 +133,7 @@
 		
 			<div class="intro">
 				<h3>Billing Information</h3> 
-				<p>You will <span class="underline">not</span> be billed until your 30 day trial has passed. This is a no obligation pay per month service and you can cancel at any time.</p>
+				<p>You will <span class="underline">not</span> be billed until your 30 day trial has passed. <%= auto_pop_up_link 'This is a no obligation' %> pay per month service and you can cancel at any time.</p>
 			</div>
 		
 		    <form id="billing_info_form" class="silent">
@@ -203,7 +203,7 @@
 							</select>
 							<select name="client[billing_info_attributes][expires_year]" id="billing_expires_year" class="year required" >
 							  	<% 0.upto(11) do |i| %>
-									<option value="<%= year_from_now_plus i %>"><%= year_from_now_plus i %></option>
+									<option value="<%= year_from_now_plus(i).to_s[2,3] %>"><%= year_from_now_plus i %></option>
 								<% end %>
 							</select>
 						</span>

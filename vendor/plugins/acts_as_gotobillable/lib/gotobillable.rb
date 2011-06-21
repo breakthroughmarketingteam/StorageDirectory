@@ -51,12 +51,13 @@ module GoToBillable #:nodoc:
       gtb.customer_info self.cust_info_hash(options)
 
       gtb.transaction_info({
-        :transaction_type => options[:tran_type] || 'ES',
-        :notes            => options[:notes]     || "#{USSSL_DOMAIN} billing begin",
-        :occurrence_type  => options[:occurence_type] || 'month',
-        :process_date     => options[:process_date],
-        :amount           => options[:billing_amount].to_s,
-        :invoice_id       => @billing.invoice_id
+        :transaction_type  => options[:tran_type] || 'ES',
+        :occurrence_type   => options[:occurence_type] || 'month',
+        :occurrence_number => options[:occurrence_number].to_s,
+        :process_date      => options[:process_date],
+        :amount            => (options[:billing_amount] || 0).to_s,
+        :invoice_id        => (@billing.new_record? ? '' : @billing.invoice_id),
+        :notes             => options[:notes]     || "#{USSSL_DOMAIN} billing begin",
       })
 
       gtb.card_info({
@@ -72,16 +73,21 @@ module GoToBillable #:nodoc:
       response = gtb.response_info
       puts "\n\n----->GTB RESPONSE ES\n----->#{response.inspect}\n\n"
       
-      if response[:status] == 'G'
-        invoice = @billing.invoices.build response
-        self.send_billing_notifications @billing, invoice if self.is_a? Client
-        self.billing_status = 'paying'
+      if block_given?
+        yield response
       else
-        self.billing_status = 'failed'
-        self.errors.add_to_base "Transaction Error: #{response[:description]}" 
+        if response[:status] == 'G'
+          invoice = @billing.invoices.build response
+          self.send_billing_notifications @billing, invoice if self.is_a? Client
+          self.billing_status = 'paying'
+        else
+          self.billing_status = 'failed'
+          self.errors.add_to_base "Transaction Error: #{response[:description]}" 
+        end
+
+        self.clean_billing_fields!
       end
       
-      self.clean_billing_fields!
       response
     end
     

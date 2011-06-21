@@ -27,15 +27,23 @@ class ClientsController < ApplicationController
     @client = Client.new params
     
     if @client.save
-      Notifier.delay.deliver_client_notification @client
-      Notifier.delay.deliver_new_client_alert @client
+      # authorize card only
+      @client.process_billing_info! @client.billing_info, :tran_type => 'AS', :occurence_number => 1, :notes => 'USSSL Sign Up Authorization' do |response|
+        @client.errors.add_to_base "Authorization Error: #{response[:description]}" if response[:status] != 'G'
+      end
       
-      render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
+      if @client.errors.empty?
+        Notifier.delay.deliver_client_notification @client
+        Notifier.delay.deliver_new_client_alert @client
+      
+        render :json => { :success => true, :data => { :activation_code => @client.activation_code } }
+      else
+        @client.destroy
+        render :json => { :success => false, :data => model_errors(@client) }
+      end
     else
       render :json => { :success => false, :data => model_errors(@client) }
     end
-  rescue
-    raise [@client, @client.errors.full_messages].pretty_inspect
   end
     
   def edit

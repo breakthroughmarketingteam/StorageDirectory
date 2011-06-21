@@ -6,7 +6,7 @@ class Client < User
   has_one :payment_plan_assign, :dependent => :destroy
   has_one :payment_plan, :through => :payment_plan_assign
   
-  has_many :listings, :dependent => :destroy, :foreign_key => 'user_id' do
+  has_many :listings, :foreign_key => 'user_id' do
     def billable() all.select { |l| l.billing_info.nil? } end
   end
   has_many :claimed_listings, :dependent => :destroy
@@ -66,8 +66,6 @@ class Client < User
   end
   
   def initialize(params = {})
-    # TODO: process billing with correct billing intervals
-    #self.build_and_process_billing_info self.billing_info, true, :billing_amount => self.payment_plan.price, :process_date => self.format_date(1.month.from_now)
     unless params.blank?
       super params[:client]
       
@@ -88,10 +86,11 @@ class Client < User
         })
       end
       
-      self.user_hints        = UserHint.all
+      self.user_hints = UserHint.all
+    else
+      super params[:client]
     end
     
-    super params[:client]
     self.role_id           = Role.get_role_id 'advertiser'
     self.report_recipients = self.email
     self.trial_days        = USSSL_TRIAL_DAYS
@@ -155,24 +154,6 @@ class Client < User
     end
     
     self.errors.empty? && self.save
-  end
-  
-  def build_and_process_billing_info(info, billing_update = false, options = {})
-    if billing_update && self.billing_diff?(info[:billing_info_attributes])
-      bi = info.delete(:billing_info_attributes)
-      
-      if self.billing_info.nil?
-        self.build_billing_info bi
-        self.process_billing_info!(self.billing_info, options) if self.billing_info.save
-      else
-        old_billing = self.billing_info
-        
-        if self.billing_info.update_attributes bi
-          new_billing = self.billing_info.reload
-          self.update_previous_transaction! old_billing, new_billing, !self.listings.billable.empty?
-        end
-      end
-    end
   end
   
   def merge_editable_with_params(params, editable)

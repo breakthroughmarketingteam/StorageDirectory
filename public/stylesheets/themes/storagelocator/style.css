@@ -1204,7 +1204,7 @@ body.locator_action form.new_listing_request,body.home_action form.new_listing_r
 #new_client #email_check .ajax_loader{position:static;float:right;margin:5px 8px 0 0;}
 #chk_avail{color:#ddd;float:right;font-size:11px;margin:2px 6px 0 0;padding:2px 0;text-transform:uppercase;}
 #chk_avail.avail{padding-right:24px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/checkmark.png) no-repeat right center;}
-#chk_avail.not_avail{padding-right:18px;background:url(//s3.amazonaws.com/storagelocator/images/ui/cancel_icon.png) no-repeat right center;}
+#chk_avail.not_avail{padding-right:18px;color:#900;background:url(//s3.amazonaws.com/storagelocator/images/ui/cancel_icon.png) no-repeat right center;}
 #new_client a.search-button{-moz-border-radius:6px;border-radius:6px;-webkit-border-radius:6px;background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;border:2px solid #ddd;color:#fff;float:right;font-size:16px;height:31px;line-height:1.9;margin-bottom:0;margin-top:0;text-align:center;text-decoration:none;text-shadow:1px 1px 0 #666;width:130px;}
 #new_client a.search-button:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #narrow-box a.search-btn{text-shadow:1px 1px 0 #333;line-height:1.8;}
