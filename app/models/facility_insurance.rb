@@ -5,16 +5,17 @@ class FacilityInsurance < ActiveRecord::Base
   
   def update_from_issn
     fi = self.listing.get_facility_insurance
-    return unless fi['sErrorMessage'].blank?
     
     transaction do
       fi.each do |name, value|
-        name = name.sub /^s/, '' unless name == 'sID'
-        self.update_attribute name, value if self.respond_to? name
+        begin
+          name = name.sub /^s/, '' unless name == 'sID'
+          self.update_attribute name, value if self.respond_to? name
+        rescue
+          raise [$!, name, value].pretty_inspect
+        end
       end
     end
-  rescue
-    raise fi.inspect
   end
   
 end

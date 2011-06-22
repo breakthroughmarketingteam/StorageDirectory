@@ -644,7 +644,7 @@ module ApplicationHelper
         img_hash[:src]
       end
       
-    elsif controller_name =~ /(posts)/i
+    elsif controller_name =~ /(posts)/i && action_name == 'show'
       post = action_name == 'show' ? (@post || @blog_post) : (@posts || @blog_posts).first
       extract_img_from_html(post.content) || default
     else
