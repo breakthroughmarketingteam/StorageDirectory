@@ -13,6 +13,8 @@ class FacilityInsurance < ActiveRecord::Base
         self.update_attribute name, value if self.respond_to? name
       end
     end
+  rescue
+    raise fi.inspect
   end
   
 end
