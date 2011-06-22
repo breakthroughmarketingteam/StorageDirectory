@@ -2689,6 +2689,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_5 #billing_info_form .small_wrap{float:left;width:50%;}
 #signupstep_5 #billing_info_form select.month{margin-right:10px;}
 #signupstep_5 img{margin:50px 0 0 20px;}
+#signupstep_5 .intro a:link,#signupstep_5 .intro a:active{color:#33c;text-decoration:underline;}
 #signupstep_6 > .left{height:295px;}
 #signupstep_6 > .left h4,#signupstep_6 .left .opt_in,.review_info .email{margin-bottom:7px;}
 #signupstep_6 .listing_div{margin:0 0 7px 0;cursor:default;}
@@ -2717,6 +2718,8 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_7 #wrap a{color:#4c4bcc;}
 #signupstep_7 img{margin:65px 0 0 40px;}
 #signupstep_7 .ajax_loader{margin:0;}
+#on-ob{padding:0 20px;}
+#on-ob p{margin:0 0 10px 0;}
 .new_action #workflow_nav .next{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}

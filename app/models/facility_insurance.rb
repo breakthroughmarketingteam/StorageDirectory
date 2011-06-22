@@ -1,7 +1,6 @@
 class FacilityInsurance < ActiveRecord::Base
   
-  belongs_to :listing
-  
+  belongs_to :listing  
   after_create :update_from_issn
   
   def update_from_issn

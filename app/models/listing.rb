@@ -638,7 +638,7 @@ class Listing < ActiveRecord::Base
   
   def update_facility_insurance
     puts "\nUpdating Facility Insurance...\n"
-    self.facility_insurances.empty? ? self.facility_insurances.create : self.facility_insurances.update_from_issn
+    self.facility_insurances.empty? ? self.facility_insurances.create : self.facility_insurances.map(&:update_from_issn)
   end
   
   def update_unit_types

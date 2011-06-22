@@ -24,7 +24,7 @@ namespace :listings do
   namespace :issn do
     
     desc "Get authorized facilities from ISSN and find a match in our database and add the new IDs to matching listing"
-    task :get_new do
+    task :get do
       @issn_facs = IssnAdapter.get_authorized_facilities
     
       @issn_facs.each do |fac|
@@ -43,7 +43,7 @@ namespace :listings do
           fi = listing.build_facility_info :O_FacilityId => fac['sFacilityId']
         
           fac_info.each do |key, val|
-            fi.send "#{key}=", val if fi.respond_to?(key)
+            fi.send "#{key}=", val if fi.respond_to? key
           end
         
           puts "Create facility info for listing (#{listing.id}) #{listing.title} in #{listing.full_address}" if listing.save
@@ -67,9 +67,13 @@ namespace :listings do
     
     desc "Purge data from all issn facilities"
     task :purge do
-      fi = FacilityInfo.all
-      ls = fi.map &:listing
-      ls.each { |l| l.purge_issn_data; l.purge_own_data; puts "Purged data (#{l.id}) #{l.title} in #{l.full_address}" }
+      puts 'Are you really sure? y/n'
+      
+      if gets == 'y'
+        fi = FacilityInfo.all
+        ls = fi.map &:listing
+        ls.each { |l| l.purge_issn_data; l.purge_own_data; puts "Purged data (#{l.id}) #{l.title} in #{l.full_address}" }
+      end
     end
     
   end
