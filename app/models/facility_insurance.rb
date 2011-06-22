@@ -12,7 +12,7 @@ class FacilityInsurance < ActiveRecord::Base
           name = name.sub /^s/, '' unless name == 'sID'
           self.update_attribute name, value if self.respond_to? name
         rescue
-          raise [$!, name, value].pretty_inspect
+          raise [$!, name, value].inspect
         end
       end
     end
