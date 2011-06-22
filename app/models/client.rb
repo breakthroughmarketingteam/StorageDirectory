@@ -29,7 +29,6 @@ class Client < User
   
   @@attribute_order << 'billing_status'
   @@editable_attr | %w(billing_status report_recipients company)
-  cattr_reader :editable_attr
   
   access_shared_methods
   acts_as_nested_set # to have sub users "managers"
