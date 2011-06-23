@@ -172,8 +172,9 @@ class Listing < ActiveRecord::Base
   end
   
   def self.get_featured_listing(listings)
-    min = (listings.size/2).ceil
-    listings[min..listings.size][rand(min)]
+    ls = listings.select { |l| !l.user_id.blank? }
+    min = (ls.size / 2).ceil
+    ls[min..listings.size][rand(min)]
   end
   
   def self.temp_featured_listing(search)
