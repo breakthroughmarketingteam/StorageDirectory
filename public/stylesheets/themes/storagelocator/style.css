@@ -1499,7 +1499,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_7 img{margin:65px 0 0 40px;}
 #signupstep_7 .ajax_loader{margin:0;}
 #on-ob{padding:0 20px;}
-#on-ob p{margin:0 0 10px 0;}
+#on-ob p{font-size: 12px;line-height: 16px;margin: 0 0 15px;}
 .new_action #workflow_nav .next{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}
