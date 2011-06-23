@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   
   ssl_required :index, :edit, :update, :destroy
+  ssl_allowed :create
   before_filter :get_models_paginated, :only => :index
   before_filter :get_model, :only => [:show, :new, :edit, :update, :destroy]
   
@@ -31,7 +32,9 @@ class CommentsController < ApplicationController
     
     if @comment.save
       if @form && @form.should_send_email?
-        Notifier.deliver_comment_notification(@form.recipient, @comment, request.host, @form)
+        Notifier.delay.deliver_comment_notification(@form.recipient, @comment, request.host, @form)
+      else
+        Notifier.delay.deliver_comment_notification('info@usselfstoragelocator.com', @comment, request.host)
       end
       
       if params[:target_type].blank?

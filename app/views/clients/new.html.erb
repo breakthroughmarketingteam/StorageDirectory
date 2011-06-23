@@ -80,6 +80,38 @@
 							<p>Today's businesses thrive on internet exposure and your potential customers are turning to specialized search engine websites like ours to find professional services.</p>
            
                         </div>           
+
+						<div id="send_msg">
+							<% form_for Comment.new do |f| %>
+								<fieldset>
+									<div class="stack">
+										<%= f.label :name %>
+										<%= f.text_field :name, :class => 'required' %>
+									</div>
+									
+									<div class="stack">
+										<%= f.label :title, 'Facility/Company Name' %>
+										<%= f.text_field :title, :class => 'required' %>
+									</div>
+									
+									<div class="stack">
+										<%= f.label :email %>
+										<%= f.text_field :email, :class => 'required email' %>
+									</div>
+									
+									<div class="stack">
+										<%= f.label :comment %>
+										<%= f.text_area :comment, :class => 'required small_textarea' %>
+									</div>
+									
+									<div>
+										<%= f.hidden_field :commentable_type, :value => 'Page' %>
+										<%= f.hidden_field :commentable_id, :value => @page.id %>
+										<%= f.submit 'Send' %>
+									</div>
+								</fieldset>
+							<% end %>
+						</div>
                    
                         <div class="hr-divider"></div>
 						<div>

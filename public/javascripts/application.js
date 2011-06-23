@@ -683,6 +683,18 @@ $(function() {
 		return false;
 	});
 	
+	$('form#new_comment', '#send_msg').submit(function() {
+		var form = $(this);
+
+		$.safeSubmit(this, {
+			success: function(data) {
+				form.replaceWith('<p class="framed center">'+ data +'</p>');
+			}
+		});
+
+		return false;
+	});
+	
 	// CLIENT EDIT page
 	if ($.on_page([['edit', 'clients']])) {
 		$('.selective_hider').live('click', function(){
