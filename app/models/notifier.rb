@@ -10,7 +10,7 @@ class Notifier < ActionMailer::Base
     @body[:msg] = msg
   end
   
-  def comment_notification(recipient, comment, host, form)
+  def comment_notification(recipient, comment, host, form = nil)
     setup_email recipient, comment.email, 'New website comment'
     @body[:comment] = comment
     @body[:host]    = host

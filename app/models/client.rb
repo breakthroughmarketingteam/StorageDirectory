@@ -28,8 +28,7 @@ class Client < User
   named_scope :inactive, :conditions => ['status != ?', 'active'], :order => 'created_at DESC'
   
   @@attribute_order << 'billing_status'
-  @@editable_attr = %w(billing_status first_name last_name report_recipients temp_password status email company wants_newsletter)
-  cattr_reader :editable_attr
+  @@editable_attr | %w(billing_status report_recipients company)
   
   access_shared_methods
   acts_as_nested_set # to have sub users "managers"

@@ -1720,29 +1720,30 @@ li.share a.socialmediathree{background:url(//s3.amazonaws.com/storagelocator/ima
 .listing .review ul{overflow:hidden;}
 .panel .review p{font-size:100%;}
 /* Start the add facility page styles here */
-form#new_client{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;background:none repeat scroll 0 0 #4C4BCC;border:3px solid #ccc;float:left;height:255px;margin-top:10px;padding:15px;width:330px;position:relative;}
+form#new_client,#send_msg form{-moz-border-radius:8px;border-radius:8px;-webkit-border-radius:8px;background:none repeat scroll 0 0 #4C4BCC;border:3px solid #ccc;float:left;height:255px;margin-top:10px;padding:15px;width:330px;position:relative;}
 form#new_client .ajax_loader{bottom:30px;position:absolute;right:120px;}
-#add-fac-form .label{color:#99f;display:block;font-size:12px;margin-bottom:5px;}
+#add-fac-form .label,#send_msg label{color:#99f;display:block;font-size:12px;margin-bottom:5px;}
 #add-fac-form .email-label{color:#99f;display:inline-block;font-size:12px;margin-bottom:4px;}
 #add-fac-form #city{float:left;margin-right:30px;width:263px;}
 #add-fac-form #state{margin-bottom:0;}
 #add-fac-form #submit_wrap{margin-top:15px;float:right;}
-
 #new_client span.sub_head{color:#fff;display:block;font-size:20px;margin-bottom:15px;}
 #new_client > div{margin-bottom:8px;}
 #new_client p{list-style:none;height:48px;clear:both;position:relative;font-size:100%;margin-bottom:7px;width:101%;}
 #new_client .flash p{height:auto;margin:0;font-size:80%;width:auto;position:absolute;right:0;top:-15px;}
-#new_client input,#signupstep_3 input{border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;border:1px solid #ccc;font-size:14px;height:22px;padding:3px 6px;}
+#new_client input,#signupstep_3 input,#send_msg input,#send_msg textarea{border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;border:1px solid #ccc;font-size:14px;height:22px;padding:3px 6px;}
 #new_client input{width:313px;}
 #new_client #listing_state,#new_client #listing_city{float:none;}
 #new_client #listing_city{width:97%;}
 #new_client #listing_state{width:20px;}
-#add-fac-txt{float:left;width:705px;}
 #add-fac-txt a{color:#4c4bcc;font-size:22px;}
 #add-fac-txt a:hover{text-decoration:underline;}
 #add-fac-txt h3{color:#000;font-size:28px;line-height:36px;margin:0;}
 #add-fac-txt h4{font-size:14px;}
 #add-fac-form-extra{position:relative;}
+#send_msg form{height:auto;width:auto;float:none;}
+#send_msg #comment_comment{width:98%;}
+#send_msg textarea{height:100px;}
 #clients_controller.new_action #type-one-r-col ul.tabular{border:none;margin-left:15px;margin-top:-40px;}
 #clients_controller.new_action #type-one-r-col ul.tabular li{display:block;float:left;height:39px;margin-right:2px;position:relative;text-align:center;width:136px;}
 #clients_controller.new_action #type-one-r-col ul.tabular li a{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/add-tabs-bg-inactive.png) no-repeat scroll 0 0 transparent;color:#fff;display:block;height:39px;padding:14px 0 0;text-align:center;text-shadow:1px 1px 0 #666;width:138px;}

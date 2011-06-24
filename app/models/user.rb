@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
   @@basic_attributes = %w(name email company status wants_newsletter login_count last_login_at)
   @@statuses = %w(unverified active suspended)
   @@sortables = %w(first_name last_name email company login_count failed_login_count last_request_at)
-  cattr_reader :searchables, :exportables, :attribute_order, :basic_attributes, :statuses, :sortables
+  @@editable_attr = %w(first_name last_name temp_password status email wants_newsletter)
+  cattr_reader :searchables, :exportables, :attribute_order, :basic_attributes, :statuses, :sortables, :editable_attr
   
   # Class Methods
   
