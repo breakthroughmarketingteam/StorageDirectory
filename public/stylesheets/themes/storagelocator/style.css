@@ -1500,7 +1500,7 @@ form .error p{margin:0 0 7px 0;}
 #signupstep_7 img{margin:65px 0 0 40px;}
 #signupstep_7 .ajax_loader{margin:0;}
 #on-ob{padding:0 20px;}
-#on-ob p{margin:0 0 10px 0;}
+#on-ob p{font-size: 12px;line-height: 16px;margin: 0 0 15px;}
 .new_action #workflow_nav .next{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg1.png) repeat-x;text-shadow:1px 1px 0 #666;}
 .new_action #workflow_nav .next:hover{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/green-btn-bg2.png) repeat-x;}
 #quote_done{padding:10px;float:left;}
@@ -1738,7 +1738,7 @@ form .error p{margin:0 0 7px 0;}
 #top_fac_page h3{font-size:28px;line-height:32px;margin-bottom:20px;}
 #top_fac_page .t-span{color:#4c4bcc;font-size: 24px;}
 #add-fac-form-extra, #add-fac-form-extra-in, #add-fac-form-extra ul li{list-style:circle inside none;padding-bottom:10px;}
-#add-fac-form-extra ul{margin:0 20px 0 30px}
+#add-fac-form-extra ul{margin:0;}
 #add-fac-form-extra ul li{list-style:none;}
 #add-fac-form-extra ul li a.toggle_down{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/down-grn.png) no-repeat 3px 5px;}
 #add-fac-form-extra ul li a.toggle_right{background:url(//s3.amazonaws.com/storagelocator/images/ui/storagelocator/right-grn.png) no-repeat 0px 4px;}
@@ -2414,3 +2414,17 @@ a.profile_info_link{display:inline-block;float:left;font-size:10px;margin:16px 0
 .flash{box-shadow:none;border:none;}
 
 #listings_controller.show_action #fb-share{float:right;width:151px;}
+
+#mem-description p{margin-top: 0;}
+#mem-description ul p{margin-top: 20px;}
+#mem-description ul li{list-style: disc;margin: 0 0 0 20px;padding: 0;}
+#mem-description ul li strong{color:#4c4bcc;font-size: 14px;}
+
+#faq p{margin-top:2px;}
+#faq strong{color: #4C4BCC;font-size: 14px;}
+
+#contact-methods #imgs{float: right;margin-left: 20px;text-align:center;width: 337px;}
+#contact-methods span{display:block;margin:2px 0;}
+#contact-methods .hdng{font-size: 28px;}
+#contact-methods  p{margin: 10px 0 25px;}
+#contact-methods  p strong{color:#4c4bcc;}
