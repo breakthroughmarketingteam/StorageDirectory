@@ -9,14 +9,13 @@ module GoToBillable #:nodoc:
     def acts_as_gotobillable(settings = {})
       require 'gtblib'
       include GoToBillable::InstanceMethods
-      raise ArgumentError, 'One of gtb_settings values are missing.' unless has_required_gtb_settings? settings
-      
       @@gtb_settings = settings
+      raise ArgumentError, 'One of gtb_settings values are missing.' unless has_required_gtb_settings?
     end
     
     def has_required_gtb_settings?(settings)
       [:ip_address, :merchant_pin, :merchant_id].all? do |setting|
-        settings.keys.include? setting
+        @@gtb_settings.keys.include? setting
       end
     end
     

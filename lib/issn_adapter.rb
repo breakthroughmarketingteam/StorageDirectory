@@ -248,7 +248,7 @@ class IssnAdapter
     response = http.start { |h| h.get full_url }
     puts response.body
     
-    return response
+    response
   end
   
   def self.path_str(method, query)
